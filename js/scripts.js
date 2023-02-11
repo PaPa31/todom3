@@ -2,10 +2,10 @@ const form = document.querySelector("form");
 const ul = document.querySelector("ul");
 const button = document.querySelector("button");
 const input = document.getElementById("item");
-const itemsArray = [];
 
-localStorage.setItem("items", JSON.stringify(itemsArray));
-const data = JSON.parse(localStorage.getItem("items"));
+let itemsArray = localStorage.getItem("items")
+  ? JSON.parse(localStorage.getItem("items"))
+  : [];
 
 const liMaker = (text) => {
   const li = document.createElement("li");
@@ -23,7 +23,7 @@ form.addEventListener("submit", function (e) {
   input.value = "";
 });
 
-data.forEach((item) => {
+itemsArray?.forEach((item) => {
   liMaker(item);
 });
 
