@@ -28,7 +28,8 @@ itemsArray?.forEach((item) => {
 });
 
 button.addEventListener("click", function () {
-  localStorage.clear();
+  localStorage.removeItem("items");
+  itemsArray = [];
   while (ul.firstChild) {
     ul.removeChild(ul.firstChild);
   }
