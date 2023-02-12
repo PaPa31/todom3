@@ -27,10 +27,14 @@ itemsArray?.forEach((item) => {
   liMaker(item);
 });
 
-button.addEventListener("click", function () {
-  localStorage.removeItem("items");
-  itemsArray = [];
-  while (ul.firstChild) {
-    ul.removeChild(ul.firstChild);
+button.addEventListener("click", function (e) {
+  if (confirm("Are you sure?")) {
+    localStorage.removeItem("items");
+    itemsArray = [];
+    while (ul.firstChild) {
+      ul.removeChild(ul.firstChild);
+    }
+  } else {
+    e.preventDefault();
   }
 });
