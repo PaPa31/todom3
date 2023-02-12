@@ -115,6 +115,14 @@ body.dark {
   background: var(--button-dark);
 }
 
+a.delete-one-item {
+  margin-left: 5px;
+}
+
+a.delete-one-item:hover {
+  text-decoration: none;
+}
+
 @media (min-width: 768px) {
   .button_label {
     transform: scale(1.5);

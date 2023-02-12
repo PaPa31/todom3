@@ -11,6 +11,26 @@ const liMaker = (text) => {
   const li = document.createElement("li");
   li.textContent = text;
   ul.appendChild(li);
+  aMaker(li);
+};
+
+const aMaker = (liTag) => {
+  const aTag = document.createElement("a");
+  aTag.setAttribute("class", "delete-one-item");
+  aTag.setAttribute("href", "javascript: void(0)");
+  aTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
+  aTag.setAttribute("title", "Delete item");
+  aTag.innerHTML = "del";
+
+  liTag.appendChild(aTag);
+};
+
+const deleteOneItem = (item) => {
+  ul.removeChild(item);
+  const itemDeleteIndex = itemsArray.indexOf(item.firstChild.data);
+  itemsArray.splice(itemDeleteIndex, 1);
+  localStorage.removeItem("items");
+  localStorage.setItem("items", JSON.stringify(itemsArray));
 };
 
 form.addEventListener("submit", function (e) {
