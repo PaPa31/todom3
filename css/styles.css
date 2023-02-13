@@ -183,6 +183,16 @@ li > div :first-child {
   flex: 0 0 auto;
 }
 
+#list-order {
+  transition: transform 0.2s linear;
+}
+
+.reversed #list-order {
+  -moz-transform: rotate(-180deg) translateY(5px);
+  -webkit-transform: rotate(-180deg) translateY(5px);
+  transform: rotate(-180deg) translateY(5px);
+}
+
 h2,
 #list-order {
   display: inline-block;
@@ -191,6 +201,7 @@ h2,
 #list-order {
   font-size: 2em;
   cursor: pointer;
+  color: #02c402;
 }
 /*change list order*/
 
