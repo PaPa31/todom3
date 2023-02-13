@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>TODOshka</title>
+    <title>TODOmd</title>
 
     <link
       rel="stylesheet"
@@ -15,18 +15,27 @@
 
   <body>
     <div class="small-container">
-      <h1>TODOshka</h1>
+      <h1>TODOmd</h1>
+      <div id="content"></div>
 
       <form>
-        <input id="item" type="text" placeholder="New" required />
+        <textarea
+          id="item"
+          name="content"
+          data-provide="markdown"
+          rows="10"
+          placeholder="New"
+          required
+        ></textarea>
+        <button type="submit" class="btn">Submit</button>
       </form>
 
       <h2>Items</h2>
-      <ul></ul>
+      <ol></ol>
 
-      <button>Clear All</button>
+      <button class="btn">Clear All</button>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="js/scripts.js"></script>
     <script type="text/javascript" src="js/dark-toggle.js"></script>
   </body>

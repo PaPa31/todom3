@@ -2,6 +2,11 @@
 
 :root {
   --button-dark: #6c5100;
+  --border-color-dark: #777;
+  --border-color-items-dark: #444;
+  --border-color-hover-dark: #888;
+  --color-dark: #ddd;
+  --background-color-dark: #2d2d2d;
 }
 
 html {
@@ -30,8 +35,8 @@ body {
   max-width: 660px;
 }
 body.dark {
-  background-color: #2d2d2d;
-  color: #ddd;
+  background-color: var(--background-color-dark);
+  color: var(--color-dark);
 }
 .checkbox {
   opacity: 0;
@@ -84,16 +89,18 @@ body.dark {
 }
 
 .dark .button_label {
-  background-color: #2d2d2d;
+  background-color: var(--background-color-dark);
 }
 
-.dark [type="text"] {
-  color: #ddd;
-  border: 1px solid #777;
+.dark [type="text"],
+.dark textarea {
+  color: var(--color-dark);
+  border: 1px solid var(--border-color-dark);
 }
 
-.dark [type="text"]:hover {
-  border: 1px solid #888;
+.dark [type="text"]:hover,
+.dark textarea:hover {
+  border: 1px solid var(--border-color-hover-dark);
 }
 
 .dark h1,
@@ -117,10 +124,39 @@ body.dark {
 
 a.delete-one-item {
   margin-left: 5px;
+  clear: left;
 }
 
 a.delete-one-item:hover {
   text-decoration: none;
+}
+
+li div {
+  width: 95%;
+  float: left;
+  padding: 10px;
+  border-radius: 5px;
+  color: var(--color-dark);
+  border: 1px solid var(--border-color-items-dark);
+}
+
+li {
+  width: 100%;
+  display: inline flow-root list-item;
+  padding-bottom: 10px;
+}
+
+ol,
+ul {
+  padding-left: 20px;
+}
+
+li p:last-child {
+  margin-bottom: 0;
+}
+
+li > div :first-child {
+  margin-top: 0;
 }
 
 @media (min-width: 768px) {

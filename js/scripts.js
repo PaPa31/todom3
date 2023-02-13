@@ -1,5 +1,5 @@
 const form = document.querySelector("form");
-const ul = document.querySelector("ul");
+const ol = document.querySelector("ol");
 const button = document.querySelector("button");
 const input = document.getElementById("item");
 
@@ -7,11 +7,20 @@ let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
   : [];
 
+let counter = 0;
+// lightweight array to avoid redundant logic and waste of resources
+let indexedItemsArray = [];
+
 const liMaker = (text) => {
   const li = document.createElement("li");
-  li.textContent = text;
-  ul.appendChild(li);
+  const div = document.createElement("div");
+  div.innerHTML = marked.parse(text);
+  li.id = counter;
+  li.appendChild(div);
+  ol.appendChild(li);
   aMaker(li);
+  indexedItemsArray.push(counter.toString());
+  counter++;
 };
 
 const aMaker = (liTag) => {
@@ -26,9 +35,13 @@ const aMaker = (liTag) => {
 };
 
 const deleteOneItem = (item) => {
-  ul.removeChild(item);
-  const itemDeleteIndex = itemsArray.indexOf(item.firstChild.data);
-  itemsArray.splice(itemDeleteIndex, 1);
+  const indexToDelete = indexedItemsArray.indexOf(item.id);
+
+  ol.removeChild(item);
+
+  itemsArray.splice(indexToDelete, 1);
+  indexedItemsArray.splice(indexToDelete, 1);
+
   localStorage.removeItem("items");
   localStorage.setItem("items", JSON.stringify(itemsArray));
 };
@@ -47,12 +60,14 @@ itemsArray?.forEach((item) => {
   liMaker(item);
 });
 
-button.addEventListener("click", function (e) {
+document.querySelectorAll("button")[1].addEventListener("click", function (e) {
   if (confirm("Are you sure?")) {
     localStorage.removeItem("items");
+    indexedItemsArray = [];
     itemsArray = [];
-    while (ul.firstChild) {
-      ul.removeChild(ul.firstChild);
+    counter = 0;
+    while (ol.firstChild) {
+      ol.removeChild(ol.firstChild);
     }
   } else {
     e.preventDefault();
