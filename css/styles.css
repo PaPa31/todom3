@@ -2,8 +2,11 @@
 
 :root {
   --button-dark: #6c5100;
+  --border-color-ligth: #aaa;
   --border-color-dark: #777;
+  --border-color-items-light: #ccc;
   --border-color-items-dark: #444;
+  --border-color-hover-light: #555;
   --border-color-hover-dark: #888;
   --color-dark: #ddd;
   --background-color-dark: #2d2d2d;
@@ -92,6 +95,14 @@ body.dark {
   background-color: var(--background-color-dark);
 }
 
+textarea {
+  border: 1px solid var(--border-color-ligth);
+}
+
+textarea:hover {
+  border: 1px solid var(--border-color-hover-light);
+}
+
 .dark [type="text"],
 .dark textarea {
   color: var(--color-dark);
@@ -136,6 +147,10 @@ li div {
   float: left;
   padding: 10px;
   border-radius: 5px;
+  border: 1px solid var(--border-color-items-light);
+}
+
+.dark li div {
   color: var(--color-dark);
   border: 1px solid var(--border-color-items-dark);
 }
