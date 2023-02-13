@@ -16,7 +16,6 @@
   <body>
     <div class="small-container">
       <h1>TODOmd</h1>
-      <div id="content"></div>
 
       <form>
         <textarea
@@ -30,13 +29,17 @@
         <button type="submit" class="btn">Submit</button>
       </form>
 
-      <h2>Items</h2>
-      <ol></ol>
+      <div id="content">
+        <h2>Items</h2>
+        <div id="list-order" title="Toggle Reverse Order">↑↓</div>
+        <ol></ol>
+      </div>
 
       <button class="btn">Clear All</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="js/scripts.js"></script>
     <script type="text/javascript" src="js/dark-toggle.js"></script>
+    <script type="text/javascript" src="js/list-order.js"></script>
   </body>
 </html>
