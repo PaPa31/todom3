@@ -11,6 +11,10 @@ let counter = 0;
 // lightweight array to avoid redundant logic and waste of resources
 let indexedItemsArray = [];
 
+let twoClick = false;
+let lastClickId;
+let lastItem;
+
 const liMaker = (text) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
@@ -35,15 +39,25 @@ const aMaker = (liTag) => {
 };
 
 const deleteOneItem = (item) => {
-  const indexToDelete = indexedItemsArray.indexOf(item.id);
+  if (twoClick && item.id === lastClickId) {
+    const indexToDelete = indexedItemsArray.indexOf(item.id);
 
-  ol.removeChild(item);
+    ol.removeChild(item);
 
-  itemsArray.splice(indexToDelete, 1);
-  indexedItemsArray.splice(indexToDelete, 1);
+    itemsArray.splice(indexToDelete, 1);
+    indexedItemsArray.splice(indexToDelete, 1);
 
-  localStorage.removeItem("items");
-  localStorage.setItem("items", JSON.stringify(itemsArray));
+    localStorage.removeItem("items");
+    localStorage.setItem("items", JSON.stringify(itemsArray));
+    twoClick = false;
+    lastClickId = undefined;
+  } else {
+    if (lastItem) lastItem.lastChild.style = null;
+    lastClickId = item.id;
+    item.lastChild.style = "color: red;";
+    lastItem = item;
+    twoClick = true;
+  }
 };
 
 form.addEventListener("submit", function (e) {
