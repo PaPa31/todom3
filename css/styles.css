@@ -185,7 +185,7 @@ li > div :first-child {
 }
 
 #list-order {
-  transition: transform 0.2s linear;
+  transition: all 0.2s linear;
 }
 
 .reversed #list-order {

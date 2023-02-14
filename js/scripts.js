@@ -24,6 +24,7 @@ const liMaker = (text) => {
   ol.appendChild(li);
   aMaker(li);
   indexedItemsArray.push(counter.toString());
+  showArrows(ol.childElementCount);
   counter++;
 };
 
@@ -43,6 +44,7 @@ const deleteOneItem = (item) => {
     const indexToDelete = indexedItemsArray.indexOf(item.id);
 
     ol.removeChild(item);
+    showArrows(ol.childElementCount);
 
     itemsArray.splice(indexToDelete, 1);
     indexedItemsArray.splice(indexToDelete, 1);
@@ -57,6 +59,16 @@ const deleteOneItem = (item) => {
     item.lastChild.style = "color: red;";
     lastItem = item;
     twoClick = true;
+  }
+};
+
+const showArrows = (count) => {
+  const arrows = document.getElementById("list-order");
+  if (count > 1) {
+    //with only opacity rule the arrows are hidden but still clickable
+    arrows.style = "visibility: visible; opacity: 1";
+  } else {
+    arrows.style = "visibility: hidden; opacity: 0";
   }
 };
 
@@ -80,6 +92,7 @@ document.querySelectorAll("button")[1].addEventListener("click", function (e) {
     indexedItemsArray = [];
     itemsArray = [];
     counter = 0;
+    showArrows(0);
     while (ol.firstChild) {
       ol.removeChild(ol.firstChild);
     }
