@@ -10,6 +10,7 @@
   --border-color-hover-dark: #888;
   --color-dark: #ddd;
   --background-color-dark: #2d2d2d;
+  --border-color-cite-dark: #333;
 }
 
 html {
@@ -131,6 +132,10 @@ textarea:hover {
   color: #dfdfdf;
   border: 1px solid var(--button-dark);
   background: var(--button-dark);
+}
+
+.dark blockquote {
+  border-color: var(--border-color-cite-dark);
 }
 
 a.delete-one-item {
