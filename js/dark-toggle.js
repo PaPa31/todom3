@@ -28,6 +28,7 @@ if (document.getElementById("checkbox")) {
   checkbox.addEventListener(
     "click",
     function (e) {
+      e.stopPropagation();
       toggleLocalStorageItem();
       toggleDark();
     },

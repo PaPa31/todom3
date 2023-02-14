@@ -1,3 +1,4 @@
+const html = document.documentElement;
 const form = document.querySelector("form");
 const ol = document.querySelector("ol");
 const button = document.querySelector("button");
@@ -33,13 +34,13 @@ const aMaker = (liTag) => {
   aTag.setAttribute("class", "delete-one-item");
   aTag.setAttribute("href", "javascript: void(0)");
   aTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
-  aTag.setAttribute("title", "Delete item");
-  aTag.innerHTML = "del";
+  aTag.setAttribute("title", "Double click to delete");
 
   liTag.appendChild(aTag);
 };
 
 const deleteOneItem = (item) => {
+  window.event.stopPropagation();
   if (twoClick && item.id === lastClickId) {
     const indexToDelete = indexedItemsArray.indexOf(item.id);
 
@@ -56,7 +57,8 @@ const deleteOneItem = (item) => {
   } else {
     if (lastItem) lastItem.lastChild.style = null;
     lastClickId = item.id;
-    item.lastChild.style = "color: red;";
+    item.lastChild.style =
+      "filter: brightness(0.5) sepia(1) hue-rotate(-70deg) saturate(5);";
     lastItem = item;
     twoClick = true;
   }
@@ -71,6 +73,11 @@ const showArrows = (count) => {
     arrows.style = "visibility: hidden; opacity: 0";
   }
 };
+
+html.addEventListener("click", function () {
+  if (twoClick) lastItem.lastChild.style = null;
+  twoClick = false;
+});
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
