@@ -15,36 +15,51 @@
   </head>
 
   <body>
-    <div class="small-container">
+    <div class="container">
       <h1>TODOmd</h1>
 
-      <form>
-        <textarea
-          id="item"
-          name="content"
-          data-provide="markdown"
-          rows="10"
-          placeholder="New"
-          required
-        ></textarea>
-        <button type="submit" class="btn">Submit</button>
-      </form>
-
-      <div id="content">
-        <h2>
-          Items<span
-            id="list-order"
-            title="Toggle Reverse Order"
-            style="visibility: hidden"
-          >
-            ↓↓
-          </span>
-        </h2>
+      <div class="flex-row">
+        <div class="flex-small">
+          Input
+          <form>
+            <textarea
+              id="item"
+              name="content"
+              data-provide="markdown"
+              rows="10"
+              placeholder="New"
+              required
+            ></textarea>
+            <button type="submit" class="btn">Submit</button>
+          </form>
+        </div>
+        <div class="flex-small">
+          <div class="small-container">
+            Preview
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div id="content" class="small-container">
+        <div class="flex-row">
+          <div class="flex-small one-fourth vertical-center">
+            <h2>
+              Items<span
+                id="list-order"
+                title="Toggle Reverse Order"
+                style="visibility: hidden"
+              >
+                ↓↓
+              </span>
+            </h2>
+          </div>
+          <div class="flex-small vertical-center">
+            <button class="btn">Clear All</button>
+          </div>
+        </div>
 
         <ol></ol>
       </div>
-
-      <button class="btn">Clear All</button>
     </div>
     <!--<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>-->
     <script src="js/marked.min.js"></script>
