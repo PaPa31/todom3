@@ -245,8 +245,8 @@ h2,
 }
 /*change list order*/
 
-h1,
-h2,
+.container > h1,
+.flex-small > h2,
 #list-order {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
