@@ -2,6 +2,7 @@
 
 :root {
   --button-dark: #6c5100;
+  --button-hover-dark: #5a4500;
   --border-color-ligth: #aaa;
   --border-color-dark: #777;
   --border-color-items-light: #ccc;
@@ -123,15 +124,20 @@ textarea:hover {
   color: #9d9d9d;
 }
 
-.dark .button,
-.dark a.button,
-.dark button,
 .dark [type="submit"],
 .dark [type="reset"],
 .dark [type="button"] {
   color: #dfdfdf;
   border: 1px solid var(--button-dark);
   background: var(--button-dark);
+}
+
+.dark [type="submit"]:hover,
+.dark [type="reset"]:hover,
+.dark [type="button"]:hover {
+  color: #dfdfdf;
+  border: 1px solid var(--button-hover-dark);
+  background: var(--button-hover-dark);
 }
 
 .dark blockquote {
@@ -191,6 +197,21 @@ a.delete-one-item {
 
 .align-center {
   align-items: center;
+}
+
+.dark .muted-button,
+.dark a.muted-button {
+  background: transparent;
+  border: 1px solid var(--border-color-items-dark);
+  color: var(--border-color-dark);
+}
+
+.dark .muted-button:hover,
+.dark .muted-button:focus,
+.dark .muted-button:active {
+  color: var(--border-color-dark);
+  border: 1px solid var(--border-color-hover-dark);
+  background: transparent;
 }
 
 /*change list order*/
