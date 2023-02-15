@@ -150,11 +150,6 @@ a.delete-one-item {
   background-position: right 0px top 0px;
 }
 
-a:hover,
-a:focus {
-  text-decoration: none;
-}
-
 li div {
   width: 95%;
   float: left;
