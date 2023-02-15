@@ -212,11 +212,22 @@ h2,
 }
 
 #list-order {
-  font-size: 2em;
   cursor: pointer;
   color: #02c402;
+  margin-left: 10px;
 }
 /*change list order*/
+
+h1,
+h2,
+#list-order {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 @media (min-width: 768px) {
   .button_label {
