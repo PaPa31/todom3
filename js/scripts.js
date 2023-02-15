@@ -3,6 +3,7 @@ const form = document.querySelector("form");
 const ol = document.querySelector("ol");
 const button = document.querySelector("button");
 const input = document.getElementById("item");
+const preview = document.getElementById("preview");
 
 let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
@@ -74,6 +75,13 @@ const showArrows = (count) => {
   }
 };
 
+input.addEventListener("input", function (e) {
+  const markdownString = e.target.value;
+  marked.parse(markdownString, (err, html) => {
+    preview.innerHTML = html;
+  });
+});
+
 html.addEventListener("click", function () {
   if (twoClick) lastItem.lastChild.style = null;
   twoClick = false;
@@ -87,6 +95,7 @@ form.addEventListener("submit", function (e) {
 
   liMaker(input.value);
   input.value = "";
+  preview.innerHTML = "";
 });
 
 itemsArray?.forEach((item) => {
