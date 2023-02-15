@@ -32,6 +32,26 @@
             ></textarea>
             <button type="submit" class="btn">Submit</button>
           </form>
+          <div id="content" class="markdown-body">
+            <div class="flex-row">
+              <div class="flex-small one-fourth vertical-center">
+                <h2>
+                  Items<span
+                    id="list-order"
+                    title="Toggle Reverse Order"
+                    style="visibility: hidden"
+                  >
+                    ↓↓
+                  </span>
+                </h2>
+              </div>
+              <div class="flex-small vertical-center">
+                <button class="btn">Clear All</button>
+              </div>
+            </div>
+
+            <ol></ol>
+          </div>
         </div>
         <div class="flex-small">
           <div class="small-container">
@@ -39,26 +59,6 @@
             <div id="preview" class="markdown-body"></div>
           </div>
         </div>
-      </div>
-      <div id="content" class="small-container markdown-body">
-        <div class="flex-row">
-          <div class="flex-small one-fourth vertical-center">
-            <h2>
-              Items<span
-                id="list-order"
-                title="Toggle Reverse Order"
-                style="visibility: hidden"
-              >
-                ↓↓
-              </span>
-            </h2>
-          </div>
-          <div class="flex-small vertical-center">
-            <button class="btn">Clear All</button>
-          </div>
-        </div>
-
-        <ol></ol>
       </div>
     </div>
     <!--<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>-->
