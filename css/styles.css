@@ -185,6 +185,14 @@ a.delete-one-item {
   width: 660px;
 }
 
+.w-1440 {
+  width: 1440px;
+}
+
+.align-center {
+  align-items: center;
+}
+
 /*change list order*/
 .reversed > ol {
   display: flex;
