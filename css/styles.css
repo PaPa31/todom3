@@ -1,19 +1,32 @@
 @charset "UTF-8";
 
 :root {
+  --color-dark: #ddd;
+
   --button-dark: #6c5100;
+
   --button-hover-dark: #5a4500;
-  --border-color-ligth: #aaa;
+
+  --border-color: #aaa;
   --border-color-dark: #777;
 
   --border-color-items: #ccc;
   --border-color-items-dark: #444;
+
   --border-color-hover: #555;
   --border-color-hover-dark: #888;
-  --color-dark: #ddd;
-  --background-color-dark: #2d2d2d;
+
+  --background-color-dark: #2b2b2b;
+
   --border-color-cite-dark: #333;
 
+  --color-cite-link-muted: #5b92df;
+  --color-cite-link-muted-dark: #6ca872;
+
+  --color-bg-default: #f7f7f7;
+  --color-bg-default-dark: #2d2d2d;
+
+  /*from GitHub*/
   --color-border-default: #d0d7de;
   --color-border-default-dark: #444c56;
 
@@ -25,13 +38,16 @@
 
   --color-fg-default: #24292f;
   --color-fg-default-dark: #adbac7;
+
   --color-fg-muted: #57606a;
   --color-fg-muted-dark: #768390;
 
-  --color-canvas-subtle: #f6f8fa;
+  --color-canvas-subtle: #eaeef2;
   --color-canvas-subtle-dark: #2d333b;
+
   --color-neutral-muted: #afb8c133;
   --color-neutral-muted-dark: #636e7b66;
+  /*from GitHub*/
 }
 
 html {
@@ -47,7 +63,6 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  /*height: 100px;*/
   margin: 0;
   transition: background 0.2s linear;
   position: fixed;
@@ -118,7 +133,8 @@ body.dark {
 }
 
 textarea {
-  border: 1px solid var(--border-color-ligth);
+  border: 1px solid var(--border-color);
+  background-color: var(--color-bg-default);
 }
 
 textarea:hover {
@@ -129,6 +145,7 @@ textarea:hover {
 .dark textarea {
   color: var(--color-dark);
   border: 1px solid var(--border-color-dark);
+  background-color: var(--color-bg-default-dark);
 }
 
 .dark [type="text"]:hover,
@@ -182,11 +199,13 @@ a.delete-one-item {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid var(--border-color-items);
+  background-color: var(--color-bg-default);
 }
 
 .dark .markdown-body > ol > li > div {
   color: var(--color-dark);
   border: 1px solid var(--border-color-items-dark);
+  background-color: var(--color-bg-default-dark);
 }
 
 .markdown-body > ol > li {
@@ -269,8 +288,9 @@ pre code {
     Liberation Mono, monospace;
 }
 
+/*(Firefox) if less than 0.06em, instead of three <hr> shows two */
 .markdown-body hr {
-  height: 0.25em;
+  height: 0.06em;
   padding: 0;
   margin: 24px 0;
   background-color: var(--color-border-default);
@@ -296,10 +316,6 @@ table {
 
 .flex-row {
   flex-wrap: nowrap;
-}
-
-.flex-small {
-  /*width: 660px;*/
 }
 
 .w-1440 {
@@ -348,21 +364,33 @@ h5 {
 .markdown-body h1 {
   padding-bottom: 0.3em;
   font-size: 2em;
-  border-bottom: 1px solid var(--color-border-muted);
-}
-
-.dark .markdown-body h1 {
-  border-color: var(--color-border-muted-dark);
 }
 
 .markdown-body h2 {
   padding-bottom: 0.3em;
   font-size: 1.5em;
-  border-bottom: 1px solid var(--color-border-muted);
 }
 
-.dark .markdown-body h2 {
-  border-color: var(--color-border-muted-dark);
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: 0.875em;
+}
+
+.markdown-body h6 {
+  font-size: 0.85em;
+  color: var(--color-fg-muted);
+}
+
+.dark .markdown-body h6 {
+  font-size: 0.85em;
+  color: var(--color-fg-muted-dark);
 }
 
 .markdown-body h1,
@@ -375,6 +403,14 @@ h5 {
   margin-bottom: 16px;
   font-weight: var(--base-text-weight-semibold, 600);
   line-height: 1.25;
+}
+
+.markdown-body cite a {
+  color: var(--color-cite-link-muted);
+}
+
+.dark .markdown-body cite a {
+  color: var(--color-cite-link-muted-dark);
 }
 
 .markdown-body > ol {
@@ -428,7 +464,6 @@ h5 {
 
 .small-container {
   width: 100%;
-  /*max-width: 660px;*/
   float: left;
   padding: 0;
 }
