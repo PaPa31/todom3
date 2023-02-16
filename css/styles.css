@@ -186,6 +186,11 @@ a.delete-one-item {
   background-size: 14px 20px;
   background-repeat: no-repeat;
   background-position: right 0px top 0px;
+  opacity: 0.6;
+}
+
+a.delete-one-item:hover {
+  opacity: 1;
 }
 
 .markdown-body > ol > li > div {
