@@ -15,7 +15,7 @@
   </head>
 
   <body>
-    <div class="container">
+    <div id="content" class="container">
       <h1>TODOmd</h1>
 
       <div class="flex-row w-1440">
@@ -32,31 +32,34 @@
             ></textarea>
             <button type="submit" class="btn">Submit</button>
           </form>
-          <div id="content" class="markdown-body">
-            <div class="flex-row align-center">
-              <div class="flex-small">
-                <h2>
-                  Items<span
-                    id="list-order"
-                    title="Toggle Reverse Order"
-                    style="visibility: hidden"
-                  >
-                    ↓↓
-                  </span>
-                </h2>
-              </div>
-              <div class="flex-small text-right">
-                <button class="muted-button btn">Clear All</button>
-              </div>
+          <div class="flex-row align-center">
+            <div class="flex-small">
+              <h2>
+                Items<span
+                  id="list-order"
+                  title="Toggle Reverse Order"
+                  style="visibility: hidden"
+                >
+                  ↓↓
+                </span>
+              </h2>
             </div>
-
+            <div class="flex-small text-right">
+              <button class="muted-button btn">Clear All</button>
+            </div>
+          </div>
+          <div class="markdown-body">
             <ol></ol>
           </div>
         </div>
         <div class="flex-small">
-          <div class="small-container">
+          <div class="small-container markdown-body">
             Preview
-            <div id="preview" class="markdown-body"></div>
+            <ol class="border-out">
+              <li>
+                <div id="preview"></div>
+              </li>
+            </ol>
           </div>
         </div>
       </div>
