@@ -4,6 +4,7 @@ const ol = document.querySelector("ol");
 const button = document.querySelector("button");
 const input = document.getElementById("item");
 const preview = document.getElementById("preview");
+const xbutton = document.getElementById("x-button");
 
 let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
@@ -115,4 +116,9 @@ document.querySelectorAll("button")[1].addEventListener("click", function (e) {
   } else {
     e.preventDefault();
   }
+});
+
+xbutton.addEventListener("click", function (e) {
+  input.value = "";
+  preview.innerHTML = "";
 });
