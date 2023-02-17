@@ -17,6 +17,11 @@ let indexedItemsArray = [];
 let twoClick = false;
 let lastClickId;
 let lastItem;
+let lastInputValue = localStorage.getItem("last")
+  ? localStorage.getItem("last")
+  : "";
+
+input.value = lastInputValue;
 
 const liMaker = (text) => {
   const li = document.createElement("li");
@@ -84,6 +89,9 @@ const convertToMarkdown = (markdownString) => {
 };
 
 input.addEventListener("input", function (e) {
+  lastInputValue = e.target.value;
+  console.log(lastInputValue);
+  localStorage.setItem("last", lastInputValue);
   convertToMarkdown(e.target.value);
 });
 
@@ -99,6 +107,7 @@ form.addEventListener("submit", function (e) {
   localStorage.setItem("items", JSON.stringify(itemsArray));
 
   liMaker(input.value);
+  localStorage.removeItem("last");
   input.value = "";
   preview.innerHTML = "";
 });
