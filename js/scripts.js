@@ -76,11 +76,15 @@ const showArrows = (count) => {
   }
 };
 
-input.addEventListener("input", function (e) {
-  const markdownString = e.target.value;
+const convertToMarkdown = (markdownString) => {
   marked.parse(markdownString, (err, html) => {
     preview.innerHTML = html;
+    if (err) console.log(err);
   });
+};
+
+input.addEventListener("input", function (e) {
+  convertToMarkdown(e.target.value);
 });
 
 html.addEventListener("click", function () {
@@ -122,3 +126,5 @@ xbutton.addEventListener("click", function (e) {
   input.value = "";
   preview.innerHTML = "";
 });
+
+convertToMarkdown(input.value);
