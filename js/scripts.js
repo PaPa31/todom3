@@ -22,6 +22,7 @@ let lastInputValue = localStorage.getItem("last")
   : "";
 
 input.value = lastInputValue;
+input.scrollTop = input.scrollHeight;
 
 const liMaker = (text) => {
   const li = document.createElement("li");
@@ -84,13 +85,13 @@ const showArrows = (count) => {
 const convertToMarkdown = (markdownString) => {
   marked.parse(markdownString, (err, html) => {
     preview.innerHTML = html;
+    preview.scrollTop = preview.scrollHeight;
     if (err) console.log(err);
   });
 };
 
 input.addEventListener("input", function (e) {
   lastInputValue = e.target.value;
-  console.log(lastInputValue);
   localStorage.setItem("last", lastInputValue);
   convertToMarkdown(e.target.value);
 });
