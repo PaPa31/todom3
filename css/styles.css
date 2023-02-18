@@ -151,24 +151,24 @@ textarea:hover {
   border: 1px solid var(--border-color);
 }
 
-textarea::-webkit-scrollbar {
+.scroll::-webkit-scrollbar {
   width: 6px;
 }
 
-textarea::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 3px;
 }
 
-.dark textarea::-webkit-scrollbar-thumb {
+.dark .scroll::-webkit-scrollbar-thumb {
   background: var(--border-color-dark);
 }
 
-textarea::-webkit-scrollbar-thumb:hover {
+.scroll::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-hover);
 }
 
-.dark textarea::-webkit-scrollbar-thumb:hover {
+.dark .scroll::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-hover-dark);
 }
 
@@ -231,6 +231,12 @@ a.delete-one-item:hover {
   border-radius: 5px;
   border: 1px solid var(--border-color-items);
   background-color: var(--color-bg-default);
+}
+
+#preview {
+  width: 100%;
+  height: 160px;
+  overflow-x: auto;
 }
 
 .dark .markdown-body > ol > li > div {
@@ -516,8 +522,8 @@ h5 {
 
 .x-inside {
   position: absolute;
-  right: 2px;
-  top: 47px;
+  right: 5px;
+  top: 51px;
   cursor: pointer;
   width: 20px;
   height: 20px;
@@ -544,6 +550,19 @@ a.delete-one-item {
 
 a.delete-one-item:hover {
   opacity: 1;
+}
+
+.container > .flex-row {
+  flex-direction: column-reverse;
+}
+
+@media (min-width: 1420px) {
+  .container > .flex-row {
+    flex-direction: row;
+  }
+  #preview {
+    height: initial;
+  }
 }
 
 @media (min-width: 768px) {
