@@ -132,6 +132,7 @@ document.querySelectorAll("button")[1].addEventListener("click", function (e) {
 });
 
 xbutton.addEventListener("click", function (e) {
+  localStorage.removeItem("last");
   input.value = "";
   preview.innerHTML = "";
 });
