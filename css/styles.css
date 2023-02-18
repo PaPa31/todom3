@@ -231,19 +231,13 @@ a.delete-one-item:hover {
   border-radius: 5px;
   border: 1px solid var(--border-color-items);
   background-color: var(--color-bg-default);
-}
-
-#preview {
-  width: 100%;
-  height: 160px;
-  overflow-x: auto;
+  word-wrap: break-word;
 }
 
 .dark .markdown-body > ol > li > div {
   color: var(--color-dark);
   border: 1px solid var(--border-color-items-dark);
   background-color: var(--color-bg-default-dark);
-  word-wrap: break-word;
 }
 
 .markdown-body > ol > li {
@@ -554,6 +548,12 @@ a.delete-one-item:hover {
 
 .container > .flex-row {
   flex-direction: column-reverse;
+}
+
+#preview {
+  width: 100%;
+  height: 160px;
+  overflow-x: auto;
 }
 
 @media (min-width: 1420px) {
