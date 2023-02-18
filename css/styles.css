@@ -237,6 +237,7 @@ a.delete-one-item:hover {
   color: var(--color-dark);
   border: 1px solid var(--border-color-items-dark);
   background-color: var(--color-bg-default-dark);
+  word-wrap: break-word;
 }
 
 .markdown-body > ol > li {
@@ -497,6 +498,10 @@ h5 {
   width: 100%;
   float: left;
   padding: 0;
+}
+
+.flex-small {
+  width: 660px;
 }
 
 .border-out {
