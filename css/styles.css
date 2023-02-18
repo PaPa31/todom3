@@ -445,16 +445,16 @@ h5 {
   color: var(--color-cite-link-muted-dark);
 }
 
-.markdown-body > ol {
+.markdown-body > ol.list-items {
   display: flex;
   flex-direction: column;
 }
 
 /*change list order*/
-.reversed .markdown-body > ol {
+.reversed .markdown-body > ol.list-items {
   flex-direction: column-reverse;
 }
-.reversed .markdown-body > ol > li {
+.reversed .markdown-body > ol.list-items > li {
   flex: 0 0 auto;
 }
 
@@ -504,13 +504,9 @@ h5 {
   width: 660px;
 }
 
-.border-out {
+.preview-outer {
   list-style: none;
   padding: 0;
-}
-
-.border-out li {
-  width: 100%;
 }
 
 .x-outside {
