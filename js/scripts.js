@@ -138,4 +138,9 @@ xbutton.addEventListener("click", function (e) {
   preview.innerHTML = "";
 });
 
+window.addEventListener(
+  "resize",
+  () => (preview.scrollTop = preview.scrollHeight)
+);
+
 convertToMarkdown(input.value);
