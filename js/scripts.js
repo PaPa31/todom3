@@ -42,7 +42,7 @@ const aMaker = (liTag) => {
   aTag.setAttribute("class", "delete-one-item");
   aTag.setAttribute("href", "javascript: void(0)");
   aTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
-  aTag.setAttribute("title", "Double click to delete");
+  aTag.setAttribute("title", "Double click to delete item");
 
   liTag.appendChild(aTag);
 };
