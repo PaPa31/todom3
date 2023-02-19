@@ -552,7 +552,7 @@ a.delete-one-item:hover {
 
 #preview {
   width: 100%;
-  height: 160px;
+  max-height: 160px;
   overflow-x: auto;
 }
 
@@ -561,7 +561,7 @@ a.delete-one-item:hover {
     flex-direction: row;
   }
   #preview {
-    height: initial;
+    max-height: 328px;
   }
 }
 
