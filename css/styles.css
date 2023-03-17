@@ -26,8 +26,8 @@
   --color-cite-link-muted: #5b92df;
   --color-cite-link-muted-dark: #6ca872;
 
-  --color-bg-default: #f7f7f7;
-  --color-bg-default-dark: #2d2d2d;
+  --color-bg-default: #f0f0f0;
+  --color-bg-default-dark: #313131;
 
   /*from GitHub*/
   --color-border-default: #d0d7de;
@@ -45,10 +45,10 @@
   --color-fg-muted: #57606a;
   --color-fg-muted-dark: #768390;
 
-  --color-canvas-subtle: #eaeef2;
-  --color-canvas-subtle-dark: #2d333b;
+  --color-canvas-subtle: #dce5ee;
+  --color-canvas-subtle-dark: #313842;
 
-  --color-neutral-muted: #afb8c133;
+  --color-neutral-muted: #a0a8b033;
   --color-neutral-muted-dark: #636e7b66;
   /*from GitHub*/
 }
@@ -229,14 +229,14 @@ a.delete-one-item:hover {
   float: left;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid var(--border-color-items);
+  /*border: 1px solid var(--border-color-items);*/
   background-color: var(--color-bg-default);
   word-wrap: break-word;
 }
 
 .dark .markdown-body > ol > li > div {
   color: var(--color-dark);
-  border: 1px solid var(--border-color-items-dark);
+  /*border: 1px solid var(--border-color-items-dark);*/
   background-color: var(--color-bg-default-dark);
 }
 
