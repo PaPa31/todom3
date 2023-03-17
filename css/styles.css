@@ -437,11 +437,11 @@ h5 {
   line-height: 1.25;
 }
 
-.markdown-body cite a {
+.markdown-body blockquote a {
   color: var(--color-cite-link-muted);
 }
 
-.dark .markdown-body cite a {
+.dark .markdown-body blockquote a {
   color: var(--color-cite-link-muted-dark);
 }
 
