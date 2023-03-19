@@ -229,14 +229,12 @@ a.delete-one-item:hover {
   float: left;
   padding: 10px;
   border-radius: 5px;
-  /*border: 1px solid var(--border-color-items);*/
   background-color: var(--color-bg-default);
   word-wrap: break-word;
 }
 
 .dark .markdown-body > ol > li > div {
   color: var(--color-dark);
-  /*border: 1px solid var(--border-color-items-dark);*/
   background-color: var(--color-bg-default-dark);
 }
 
@@ -572,34 +570,8 @@ a.delete-one-item:hover {
   margin: 0;
 }
 
-/*#preview::before {
-  content: "Preview:";
-  position: absolute;
-  top: 0;
-}
-
-#preview:empty::before {
-  content: "";
-}*/
-
-/*#input,
-#output {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font: 14px/1 monospace;
-  padding: 5px;
-  border: 1px solid #999;
-  white-space: pre;
-  margin: 0;
-  background: transparent;
-  width: 300px;
-  max-width: 300px;
-}*/
-/* make sure the textarea isn't obscured by clone */
 #input {
   z-index: 2;
-  /*min-height: 200px;*/
 }
 
 #output,
@@ -631,19 +603,20 @@ a.delete-one-item:hover {
   display: block;
 }
 
-/* hide the span visually using opacity (not display:none), so it's still measurable; make it break long words inside like textarea does. */
-#output span,
+#output,
 #position {
   opacity: 0;
+}
+
+#output,
+#position,
+#preview {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
-/* the cursor position indicator */
-#xy {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: #f00;
+
+code {
+  white-space: break-spaces;
 }
 
 @media (min-width: 1420px) {

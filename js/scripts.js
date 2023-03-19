@@ -8,8 +8,7 @@ const preview = document.getElementById("preview");
 const xbutton = document.getElementById("x-button");
 
 var output = document.getElementById("output").firstChild,
-  position = document.getElementById("position"),
-  xy = document.getElementById("xy");
+  position = document.getElementById("position");
 
 let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
@@ -97,51 +96,16 @@ const showArrows = (count) => {
 const convertToMarkdown = (markdownString) => {
   marked.parse(markdownString, (err, html) => {
     preview.innerHTML = html;
-    //scrollTop = output.scrollTop;
-    //const valueEqualTo100Proc = input.scrollHeight;
-    //const proc1 = valueEqualTo100Proc / 100;
-    //const amountOfProc = (scrollTop / valueEqualTo100Proc) * 100;
-    //console.log("raznica:::", input.scrollHeight - Math.round(input.scrollTop));
-    //console.log("this.clientHeight:", input.clientHeight);
-    //console.log(input.top);
-    //console.log(proc1);
-    //console.log("input.scrollHeight:", input.scrollHeight);
-    //console.log("input.scrollTop:", scrollTop);
-    //console.log(amountOfProc);
-    //console.log(input.offsetTop);
-    //console.log("input.offsetHeight:", input.offsetHeight);
-    //const offsetSum = input.offsetTop + input.offsetHeight;
-    //console.log(offsetSum);
-    //var percentage =
-    //  input.scrollTop / (input.scrollHeight - input.offsetHeight);
-    //console.log(percentage);
-    //console.log(input.getBoundingClientRect().top);
-    //console.log(getOffsetTop / input.innerHeight);
 
-    //var position = input.startOffset;
-    //console.log(position);
-
-    //preview.scrollTop = scrollTop;
-
-    //preview.scrollTop = preview.scrollHeight;
-    //preview.scrollIntoView({
-    //  behavior: "smooth",
-    //  block: "nearest",
-    //  inline: "start",
-    //});
     if (err) console.log(err);
   });
 };
 
 const debounce = (func, wait, immediate) => {
   let timeout;
-  let count = 0;
   return function counter() {
-    count += 1;
     const context = this,
       args = arguments;
-    //console.log("count: ", count);
-    //console.log("context = ", context);
     const later = function () {
       timeout = null;
       if (!immediate) func.apply(context, args);
@@ -209,97 +173,21 @@ xbutton.addEventListener("click", function (e) {
   preview.innerHTML = "";
 });
 
-window.addEventListener(
-  "resize",
-  debounce(
-    (e) => {
-      //console.log("hello");
-      //console.log(e.target.innerHeight);
-      //console.log("preview.offsetHeight = ", preview.offsetHeight);
-      //console.log(preview.__proto__);
-      //console.log(preview.toString());
-      //console.log(preview.currentTarget.nodeName);
-      if (preview.offsetHeight > 160) {
-        scrollTop = output.scrollTop;
-        //console.log("> 160");
-        //preview.scrollTop = preview.scrollHeight;
-        preview.scrollTop = scrollTop;
-        //preview.scrollIntoView({
-        //  behavior: "smooth",
-        //  block: "nearest",
-        //  inline: "start",
-        //});
-      }
-    },
-    200,
-    false
-  ),
-  false
-);
-
 convertToMarkdown(input.value);
 
-//handleScroll(e) {
-//    let scrollInfo = codeMirror.getScrollInfo();
-
-//    // get line number of the top line in the page
-//    let lineNumber = codeMirror.lineAtHeight(scrollInfo.top, 'local');
-//    // get the text content from the start to the target line
-//    let range = codeMirror.getRange({line: 0, ch: null}, {line: lineNumber, ch: null});
-//    var parser = new DOMParser();
-//    var doc = parser.parseFromString(marked(range), 'text/html');
-//    let totalLines = doc.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, pre, blockquote, hr, table');
-//    return totalLines.length;
-//}
-
-//shouldPreviewScroll(length) {
-//    let body = React.findDOMNode(this.refs.body);
-//    let elems = body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, pre, blockquote, hr, table');
-//    if (elems.length > 0) {
-//        $(body).stop();
-//        $(body).animate({ scrollTop: elems[this.props.state.currentLine].offsetTop, queue: false });
-//    }
-//}
-
 const update = function () {
-  console.log("hi");
   output.innerHTML = input.value
     .substr(0, input.selectionStart)
     .replace(/\n$/, "\n\x001");
 
   marked.parse(output.innerHTML, (err, html) => {
     position.innerHTML = html;
-
-    const scrollTop1 =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    const scrollLeft1 =
-      document.documentElement.scrollLeft || document.body.scrollLeft;
-
-    var rects = position.getClientRects();
-    var lastRect = rects[rects.length - 1];
-    console.log("lastRect", lastRect);
-    console.log(position.scrollTop);
-    //var top = position.scrollHeight - 55;
-    //var left = position.offsetLeft;
-
-    //var top = lastRect.top - position.scrollTop;
-    //var left = lastRect.left + lastRect.width;
-
-    var top = `${lastRect.top + scrollTop1}px`;
-    var left = `${lastRect.left + scrollLeft1}px`;
-
-    //console.log(lastRect);
-    xy.style.cssText = "top: " + top + "px;left: " + left + "px";
-
-    scrollTop = position.scrollHeight - 55;
-    console.log(position.scrollLeft);
-    console.log("position.scrollHeight - 55:", scrollTop);
+    scrollTop = position.scrollHeight - 70;
     preview.scrollTop = scrollTop;
-
     if (err) console.log(err);
   });
 };
 
 input.addEventListener("keyup", update);
 input.addEventListener("mouseup", update);
-input.addEventListener("scroll", update);
+//input.addEventListener("scroll", update);
