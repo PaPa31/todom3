@@ -86,6 +86,11 @@ body.dark {
   position: absolute;
 }*/
 
+#form1 {
+  padding-top: 10px;
+  position: relative;
+}
+
 button#dark-button,
 button#dark-button:active,
 button#dark-button:focus {
@@ -384,7 +389,7 @@ table {
 }
 
 .muted-button:hover {
-  color: var(--border-color);
+  /*color: var(--border-color);*/
   border: 1px solid var(--border-color-hover);
 }
 
@@ -397,7 +402,7 @@ table {
 }
 
 .dark .muted-button:hover {
-  color: var(--border-color-dark);
+  /*color: var(--border-color-dark);*/
   border: 1px solid var(--border-color-hover-dark);
 }
 
@@ -531,15 +536,10 @@ ol.preview-outer li {
   padding-bottom: 0;
 }
 
-.x-outside {
-  position: relative;
-  width: 100%;
-}
-
 .x-inside {
   position: absolute;
-  right: 5px;
-  top: 51px;
+  right: 2px;
+  top: 13px;
   cursor: pointer;
   width: 20px;
   height: 20px;
