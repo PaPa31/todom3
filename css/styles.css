@@ -245,11 +245,13 @@ a.delete-one-item:hover {
   padding-bottom: 10px;
 }
 
-.markdown-body > ol > li > div > :first-child {
+.markdown-body > ol > li > div > :first-child,
+.markdown-body > ol > li > div > span > :first-child {
   margin-top: 0;
 }
 
-.markdown-body > ol > li > div > :last-child {
+.markdown-body > ol > li > div > :last-child,
+.markdown-body > ol > li > div > span > :last-child {
   margin-bottom: 0;
 }
 
@@ -555,14 +557,17 @@ a.delete-one-item:hover {
   flex-direction: column-reverse;
 }
 
-#preview {
+#preview,
+#position {
   width: 100%;
   max-height: 160px;
   overflow-x: auto;
   margin-top: 10px;
+  scroll-behavior: smooth;
 }
 
-#preview:empty {
+#preview:empty,
+#position:empty {
   padding: 0;
   margin: 0;
 }
@@ -577,11 +582,76 @@ a.delete-one-item:hover {
   content: "";
 }*/
 
+/*#input,
+#output {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font: 14px/1 monospace;
+  padding: 5px;
+  border: 1px solid #999;
+  white-space: pre;
+  margin: 0;
+  background: transparent;
+  width: 300px;
+  max-width: 300px;
+}*/
+/* make sure the textarea isn't obscured by clone */
+#input {
+  z-index: 2;
+  /*min-height: 200px;*/
+}
+
+#output,
+#position {
+  position: absolute;
+  border: 1px solid transparent;
+  z-index: -1;
+}
+
+#output {
+  top: 44px;
+  width: 682.5px;
+  display: inline-block;
+  resize: none;
+  overflow: auto;
+  height: auto;
+}
+
+#position {
+  width: 680.5px;
+  resize: none;
+  overflow: auto;
+  height: auto;
+}
+
+#output span {
+  padding: 0.75em;
+  height: 186px;
+  display: block;
+}
+
+/* hide the span visually using opacity (not display:none), so it's still measurable; make it break long words inside like textarea does. */
+#output span,
+#position {
+  opacity: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+/* the cursor position indicator */
+#xy {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #f00;
+}
+
 @media (min-width: 1420px) {
   .container > .flex-row {
     flex-direction: row;
   }
-  #preview {
+  #preview,
+  #position {
     max-height: 328px;
   }
 }

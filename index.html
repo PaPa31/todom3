@@ -24,7 +24,7 @@
           <form>
             <label for="item">Input</label>
             <textarea
-              id="item"
+              id="input"
               class="scroll"
               name="content"
               data-provide="markdown"
@@ -32,6 +32,7 @@
               placeholder="New"
               required
             ></textarea>
+            <div id="output"><span></span></div>
             <button type="submit" class="btn">Submit</button>
           </form>
           <div class="flex-row align-center">
@@ -59,6 +60,8 @@
             <ol class="preview-outer">
               <li>
                 <div id="preview" class="scroll"></div>
+                <div id="xy"></div>
+                <div id="position"></div>
               </li>
             </ol>
           </div>
