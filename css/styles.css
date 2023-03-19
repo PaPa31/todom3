@@ -131,11 +131,6 @@ button#dark-button:focus {
   position: absolute;
 }
 
-.dark a.link,
-.dark a {
-  color: #abffb4;
-}
-
 button {
   transition: all 0.2s ease;
 }
@@ -211,27 +206,10 @@ textarea:hover {
   border-color: var(--border-color-cite-dark);
 }
 
-a.delete-one-item {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-left: 5px;
-  margin-top: 5px;
-  background-image: url(../img/trash.svg);
-  background-size: 14px 20px;
-  background-repeat: no-repeat;
-  background-position: right 0px top 0px;
-  opacity: 0.6;
-}
-
-a.delete-one-item:hover {
-  opacity: 1;
-}
-
 .markdown-body > ol > li > div {
-  width: 95%;
+  width: 93%;
   float: left;
-  padding: 10px;
+  padding: 10px 0 10px 10px;
   border-radius: 5px;
   background-color: var(--color-bg-default);
   word-wrap: break-word;
@@ -505,7 +483,7 @@ h5 {
 }
 
 .flex-small {
-  width: 660px;
+  width: 699px;
 }
 
 .preview-outer {
@@ -520,11 +498,11 @@ ol.preview-outer li {
 
 .x-inside {
   position: absolute;
-  right: 2px;
-  top: 13px;
+  right: 5px;
+  top: 16px;
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  width: 29px;
+  height: 29px;
   background-image: url(../img/cross.svg);
   opacity: 0.6;
 }
@@ -533,21 +511,28 @@ ol.preview-outer li {
   opacity: 1;
 }
 
-a.delete-one-item {
+button.delete-one-item {
   display: inline-block;
   width: 20px;
-  height: 20px;
-  margin-left: 5px;
-  margin-top: 5px;
+  height: 30px;
+  margin: 5px 6px;
+  padding: 5px 15px;
   background-image: url(../img/trash.svg);
-  background-size: 14px 20px;
+  background-size: 20px 30px;
   background-repeat: no-repeat;
-  background-position: right 0px top 0px;
   opacity: 0.6;
+  background-color: initial;
+  border: initial;
+  background-position: center center;
 }
 
-a.delete-one-item:hover {
+button.delete-one-item:hover {
   opacity: 1;
+}
+
+.dark a.link,
+.dark a {
+  color: #abffb4;
 }
 
 .container > .flex-row {
@@ -626,16 +611,4 @@ code {
   #position {
     max-height: 328px;
   }
-}
-
-@media (min-width: 768px) {
-  /*.button-label {
-    transform: scale(1.5);
-  }*/
-}
-
-@media (min-width: 720px) {
-  /*.button-label {
-    transform: scale(1.5);
-  }*/
 }

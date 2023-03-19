@@ -38,7 +38,7 @@ const liMaker = (text) => {
   li.appendChild(div);
   ol.appendChild(li);
   spanMaker(li);
-  aMaker(li);
+  buttonMaker(li);
   indexedItemsArray.push(counter.toString());
   showArrows(ol.childElementCount);
   counter++;
@@ -49,14 +49,13 @@ const spanMaker = (liTag) => {
   liTag.appendChild(spanTag);
 };
 
-const aMaker = (liTag) => {
-  const aTag = document.createElement("a");
-  aTag.setAttribute("class", "delete-one-item");
-  aTag.setAttribute("href", "javascript: void(0)");
-  aTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
-  aTag.setAttribute("title", "Double click to delete item");
+const buttonMaker = (liTag) => {
+  const buttonTag = document.createElement("button");
+  buttonTag.setAttribute("class", "delete-one-item");
+  buttonTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
+  buttonTag.setAttribute("title", "Double click to delete item");
 
-  liTag.appendChild(aTag);
+  liTag.appendChild(buttonTag);
 };
 
 const deleteOneItem = (item) => {
