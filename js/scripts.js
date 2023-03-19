@@ -6,6 +6,7 @@ const button = document.querySelector("button");
 const input = document.getElementById("input");
 const preview = document.getElementById("preview");
 const xbutton = document.getElementById("x-button");
+const deleteAllItems = document.getElementById("delete-all-items");
 
 var output = document.getElementById("output").firstChild,
   position = document.getElementById("position");
@@ -152,7 +153,7 @@ itemsArray?.forEach((item) => {
   liMaker(item);
 });
 
-document.querySelectorAll("button")[1].addEventListener("click", function (e) {
+deleteAllItems.addEventListener("click", function (e) {
   if (confirm("Are you sure?")) {
     localStorage.removeItem("items");
     indexedItemsArray = [];
