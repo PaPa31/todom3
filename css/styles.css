@@ -63,14 +63,6 @@ html {
   box-sizing: border-box;
 }
 
-#dark-button {
-  width: 79px;
-  height: 41px;
-  background-color: #fff;
-  border-radius: 6px;
-  position: relative;
-  opacity: 0.6;
-}
 body {
   transition: background 0.2s linear;
 }
@@ -84,6 +76,18 @@ body.dark {
   position: relative;
 }
 
+#dark-button {
+  width: 69px;
+  height: 36px;
+  border-radius: 6px;
+  position: relative;
+  opacity: 0.6;
+}
+
+#dark-button:hover {
+  opacity: 1;
+}
+
 button#dark-button,
 button#dark-button:active,
 button#dark-button:focus {
@@ -93,8 +97,8 @@ button#dark-button:focus {
 }
 
 .ball {
-  width: 39px;
-  height: 39px;
+  width: 34px;
+  height: 34px;
   background-color: #626262;
   position: absolute;
   top: -1px;
@@ -103,21 +107,20 @@ button#dark-button:focus {
   transition: transform 0.2s linear;
 }
 
-/*  target the elemenent after the label*/
 .dark #dark-button .ball {
-  transform: translateX(37px);
+  transform: translateX(32px);
 }
 
 .light-toggle-icon {
   color: #c40022;
-  left: 43px;
-  top: 5px;
+  left: 36px;
+  top: 2px;
 }
 
 .dark-toggle-icon {
   color: #a4a400;
-  left: 6px;
-  top: 4px;
+  left: 4px;
+  top: 2px;
 }
 
 .light-toggle-icon,
@@ -133,8 +136,8 @@ button#dark-button:focus {
   color: #abffb4;
 }
 
-.dark .button-label {
-  background-color: var(--background-color-dark);
+button {
+  transition: all 0.2s ease;
 }
 
 textarea {
