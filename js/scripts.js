@@ -23,6 +23,7 @@ let indexedItemsArray = [];
 let deletedItemsArray = [];
 
 let twoClick = false;
+let nullInItemsStorage = false;
 let lastClickId;
 let lastItem;
 let lastInputValue = localStorage.getItem("last")
@@ -172,9 +173,19 @@ form.addEventListener("submit", function (e) {
   preview.innerHTML = "";
 });
 
-itemsArray?.forEach((item) => {
-  liMaker(item);
+itemsArray?.forEach((item, key) => {
+  if (item) {
+    liMaker(item);
+  } else {
+    itemsArray.splice(key, 1);
+    nullInItemsStorage = true;
+    console.log(`items: ${key} item is null and ignored!`);
+  }
 });
+
+if (nullInItemsStorage) {
+  localStorage.setItem("items", JSON.stringify(itemsArray));
+}
 
 deleteAllItems.addEventListener("click", function (e) {
   if (confirm("Are you sure?")) {
@@ -208,15 +219,15 @@ rbutton.addEventListener("click", function () {
 });
 
 ubutton.addEventListener("click", function () {
-  const len = deletedItemsArray.length;
+  let len = deletedItemsArray.length;
+  console.log(len);
   if (len !== 0) {
     const deletedItem = deletedItemsArray.pop();
-    console.log(len);
-
     itemsArray.push(deletedItem);
     localStorage.setItem("items", JSON.stringify(itemsArray));
 
     liMaker(deletedItem);
+    len = len - 1;
   }
   if (len === 0) ubutton.style = "display:none";
 });
