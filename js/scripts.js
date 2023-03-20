@@ -23,8 +23,16 @@ let itemsArray = localStorage.getItem("items")
 let counter = 0;
 // lightweight array to avoid redundant logic and waste of resources
 let indexedItemsArray = [];
-let deletedItemsArray = [];
+let trashArray = localStorage.getItem("trash")
+  ? JSON.parse(localStorage.getItem("trash"))
+  : [];
 
+if (trashArray.length) {
+  deletedCounter.innerText = trashArray.length;
+  trashManager.style = "visibility: visible; opacity: 1";
+} else {
+  trashManager.style = "visibility: hidden; opacity: 0";
+}
 let twoClick = false;
 let nullInItemsStorage = false;
 let lastClickId;
@@ -32,18 +40,19 @@ let lastItem;
 let lastInputValue = localStorage.getItem("last")
   ? localStorage.getItem("last")
   : "";
-var scrollTop = input.scrollTop;
-
-input.value = lastInputValue;
-input.scrollTop = input.scrollHeight;
 
 if (lastInputValue) {
   xbutton.style = "display:block";
 } else {
   xbutton.style = "display:none";
 }
+
+var scrollTop = input.scrollTop;
+
+input.value = lastInputValue;
+input.scrollTop = input.scrollHeight;
+
 returnButton.style = "display:none";
-trashManager.style = "visibility: hidden; opacity: 0";
 
 const liMaker = (text) => {
   const li = document.createElement("li");
@@ -81,9 +90,10 @@ const deleteOneItem = (item) => {
     ol.removeChild(item);
     showArrows(ol.childElementCount);
 
-    deletedItemsArray.push(itemsArray[indexToDelete]);
-    deletedCounter.innerText = deletedItemsArray.length;
+    trashArray.push(itemsArray[indexToDelete]);
+    deletedCounter.innerText = trashArray.length;
     trashManager.style = "visibility: visible; opacity: 1";
+    localStorage.setItem("trash", JSON.stringify(trashArray));
 
     itemsArray.splice(indexToDelete, 1);
     indexedItemsArray.splice(indexToDelete, 1);
@@ -222,21 +232,26 @@ returnButton.addEventListener("click", function () {
 });
 
 restoreButton.addEventListener("click", function () {
-  let len = deletedItemsArray.length;
+  let len = trashArray.length;
   if (len !== 0) {
-    const deletedItem = deletedItemsArray.pop();
+    const deletedItem = trashArray.pop();
     itemsArray.push(deletedItem);
     localStorage.setItem("items", JSON.stringify(itemsArray));
+    localStorage.setItem("trash", JSON.stringify(trashArray));
 
     liMaker(deletedItem);
     len = len - 1;
     deletedCounter.innerText = len;
   }
-  if (len === 0) trashManager.style = "visibility: hidden; opacity: 0";
+  if (len === 0) {
+    trashManager.style = "visibility: hidden; opacity: 0";
+    localStorage.removeItem("trash");
+  }
 });
 
 clearTrash.addEventListener("click", function () {
-  deletedItemsArray = [];
+  trashArray = [];
+  localStorage.removeItem("trash");
   trashManager.style = "visibility: hidden; opacity: 0";
 });
 
