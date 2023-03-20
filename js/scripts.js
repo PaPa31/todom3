@@ -7,9 +7,11 @@ const input = document.getElementById("input");
 const preview = document.getElementById("preview");
 const xbutton = document.getElementById("x-button");
 const deleteAllItems = document.getElementById("delete-all-items");
-const rbutton = document.getElementById("return-last-input-button");
-const ubutton = document.getElementById("undo-delete-item");
-const dcounter = document.getElementById("deleted-counter");
+const returnButton = document.getElementById("return-last-input-button");
+const undoButton = document.getElementById("undo-delete-item");
+const deletedCounter = document.getElementById("deleted-counter");
+const trashManager = document.getElementById("trash-manager");
+const clearTrash = document.getElementById("clear-trash");
 
 var output = document.getElementById("output").firstChild,
   position = document.getElementById("position");
@@ -40,8 +42,8 @@ if (lastInputValue) {
 } else {
   xbutton.style = "display:none";
 }
-rbutton.style = "display:none";
-ubutton.style = "visibility: hidden; opacity: 0";
+returnButton.style = "display:none";
+trashManager.style = "visibility: hidden; opacity: 0";
 
 const liMaker = (text) => {
   const li = document.createElement("li");
@@ -66,7 +68,7 @@ const buttonMaker = (liTag) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-one-item");
   buttonTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
-  buttonTag.setAttribute("title", "Double click to delete item");
+  buttonTag.setAttribute("title", "Double-click to trash");
 
   liTag.appendChild(buttonTag);
 };
@@ -80,8 +82,8 @@ const deleteOneItem = (item) => {
     showArrows(ol.childElementCount);
 
     deletedItemsArray.push(itemsArray[indexToDelete]);
-    dcounter.innerText = deletedItemsArray.length;
-    ubutton.style = "visibility: visible; opacity: 1";
+    deletedCounter.innerText = deletedItemsArray.length;
+    trashManager.style = "visibility: visible; opacity: 1";
 
     itemsArray.splice(indexToDelete, 1);
     indexedItemsArray.splice(indexToDelete, 1);
@@ -144,7 +146,7 @@ input.addEventListener(
       } else {
         xbutton.style = "display:none";
       }
-      rbutton.style = "display:none";
+      returnButton.style = "display:none";
 
       localStorage.setItem("last", lastInputValue);
       convertToMarkdown(e.target.value);
@@ -168,7 +170,7 @@ form.addEventListener("submit", function (e) {
 
   liMaker(input.value);
   localStorage.removeItem("last");
-  rbutton.style = "display:block";
+  returnButton.style = "display:block";
   xbutton.style = "display:none";
   input.value = "";
   preview.innerHTML = "";
@@ -203,23 +205,23 @@ deleteAllItems.addEventListener("click", function (e) {
   }
 });
 
-xbutton.addEventListener("click", function (e) {
+xbutton.addEventListener("click", function () {
   localStorage.removeItem("last");
-  rbutton.style = "display:block";
+  returnButton.style = "display:block";
   xbutton.style = "display:none";
   input.value = "";
   preview.innerHTML = "";
 });
 
-rbutton.addEventListener("click", function () {
+returnButton.addEventListener("click", function () {
   input.value = lastInputValue;
   convertToMarkdown(input.value);
   localStorage.setItem("last", lastInputValue);
-  rbutton.style = "display:none";
+  returnButton.style = "display:none";
   xbutton.style = "display:block";
 });
 
-ubutton.addEventListener("click", function () {
+undoButton.addEventListener("click", function () {
   let len = deletedItemsArray.length;
   if (len !== 0) {
     const deletedItem = deletedItemsArray.pop();
@@ -228,9 +230,14 @@ ubutton.addEventListener("click", function () {
 
     liMaker(deletedItem);
     len = len - 1;
-    dcounter.innerText = len;
+    deletedCounter.innerText = len;
   }
-  if (len === 0) ubutton.style = "visibility: hidden; opacity: 0";
+  if (len === 0) trashManager.style = "visibility: hidden; opacity: 0";
+});
+
+clearTrash.addEventListener("click", function () {
+  deletedItemsArray = [];
+  trashManager.style = "visibility: hidden; opacity: 0";
 });
 
 convertToMarkdown(input.value);

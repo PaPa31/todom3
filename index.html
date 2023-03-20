@@ -42,6 +42,9 @@
               </button>
             </div>
             <div class="flex-small text-right">
+              <button id="delete-all-items" class="muted-button btn">
+                Delete All Items
+              </button>
               <button id="dark-button"></button>
             </div>
           </div>
@@ -60,18 +63,19 @@
               </h2>
             </div>
             <div class="flex-small text-right">
-              <button
-                id="undo-delete-item"
-                class="muted-button btn"
-                title="Undo delete item"
-                style="visibility: hidden"
-              >
-                <img src="img/repeat.svg" />
-                <span id="deleted-counter"></span>
-              </button>
-              <button id="delete-all-items" class="muted-button btn">
-                Delete All Items
-              </button>
+              <span id="trash-manager" style="visibility: hidden">
+                <button
+                  id="undo-delete-item"
+                  class="muted-button btn"
+                  title="Undo delete item"
+                >
+                  <img src="img/repeat.svg" />
+                  <span id="deleted-counter"></span>
+                </button>
+                <button id="clear-trash" class="muted-button btn">
+                  Clear Trash
+                </button>
+              </span>
             </div>
           </div>
           <div class="markdown-body">
