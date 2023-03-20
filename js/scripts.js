@@ -9,6 +9,7 @@ const xbutton = document.getElementById("x-button");
 const deleteAllItems = document.getElementById("delete-all-items");
 const rbutton = document.getElementById("return-last-input-button");
 const ubutton = document.getElementById("undo-delete-item");
+const dcounter = document.getElementById("deleted-counter");
 
 var output = document.getElementById("output").firstChild,
   position = document.getElementById("position");
@@ -79,7 +80,7 @@ const deleteOneItem = (item) => {
     showArrows(ol.childElementCount);
 
     deletedItemsArray.push(itemsArray[indexToDelete]);
-    console.log(deletedItemsArray.length);
+    dcounter.innerText = deletedItemsArray.length;
     ubutton.style = "display:inline-block";
 
     itemsArray.splice(indexToDelete, 1);
@@ -220,7 +221,6 @@ rbutton.addEventListener("click", function () {
 
 ubutton.addEventListener("click", function () {
   let len = deletedItemsArray.length;
-  console.log(len);
   if (len !== 0) {
     const deletedItem = deletedItemsArray.pop();
     itemsArray.push(deletedItem);
@@ -228,6 +228,7 @@ ubutton.addEventListener("click", function () {
 
     liMaker(deletedItem);
     len = len - 1;
+    dcounter.innerText = len;
   }
   if (len === 0) ubutton.style = "display:none";
 });
