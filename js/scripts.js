@@ -41,7 +41,7 @@ if (lastInputValue) {
   xbutton.style = "display:none";
 }
 rbutton.style = "display:none";
-ubutton.style = "display:none";
+ubutton.style = "visibility: hidden; opacity: 0";
 
 const liMaker = (text) => {
   const li = document.createElement("li");
@@ -81,7 +81,7 @@ const deleteOneItem = (item) => {
 
     deletedItemsArray.push(itemsArray[indexToDelete]);
     dcounter.innerText = deletedItemsArray.length;
-    ubutton.style = "display:inline-block";
+    ubutton.style = "visibility: visible; opacity: 1";
 
     itemsArray.splice(indexToDelete, 1);
     indexedItemsArray.splice(indexToDelete, 1);
@@ -230,7 +230,7 @@ ubutton.addEventListener("click", function () {
     len = len - 1;
     dcounter.innerText = len;
   }
-  if (len === 0) ubutton.style = "display:none";
+  if (len === 0) ubutton.style = "visibility: hidden; opacity: 0";
 });
 
 convertToMarkdown(input.value);

@@ -209,7 +209,7 @@ textarea:hover {
 .markdown-body > ol > li > div {
   width: 93%;
   float: left;
-  padding: 10px 0 10px 10px;
+  padding: 10px;
   border-radius: 5px;
   background-color: var(--color-bg-default);
   word-wrap: break-word;
@@ -460,7 +460,8 @@ h5 {
 
 .container > h1,
 .flex-small > h2,
-#list-order {
+#list-order,
+.flex-row {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -544,6 +545,7 @@ button.delete-one-item:hover {
 #undo-delete-item {
   padding: 5px;
   border-width: 2px;
+  transition: opacity 0.2s ease;
 }
 
 #undo-delete-item img {
