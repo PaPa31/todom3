@@ -494,7 +494,7 @@ ol.preview-outer li {
 }
 
 #x-button,
-#return-button {
+#return-last-input-button {
   position: absolute;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -509,7 +509,7 @@ ol.preview-outer li {
   top: 16px;
 }
 
-#return-button {
+#return-last-input-button {
   background-image: url(../img/repeat.svg);
   width: 23px;
   height: 23px;
@@ -518,7 +518,7 @@ ol.preview-outer li {
 }
 
 #x-button:hover,
-#return-button:hover {
+#return-last-input-button:hover {
   opacity: 1;
 }
 

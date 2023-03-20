@@ -20,7 +20,7 @@
         <div id="content" class="flex-small">
           <form id="form1">
             <div id="x-button" title="Clear Input"></div>
-            <div id="return-button" title="Return last Input"></div>
+            <div id="return-last-input-button" title="Return last Input"></div>
             <textarea
               id="input"
               class="scroll"
@@ -42,13 +42,6 @@
               </button>
             </div>
             <div class="flex-small text-right">
-              <button
-                id="delete-all-items"
-                class="muted-button btn"
-                class="btn"
-              >
-                Clear All Items
-              </button>
               <button id="dark-button"></button>
             </div>
           </div>
@@ -62,10 +55,18 @@
                   style="visibility: hidden"
                 >
                   ↓↓
-                </>
+                </button>
               </h2>
             </div>
-            <div class="flex-small text-right"></div>
+            <div class="flex-small text-right">
+              <button
+                id="delete-all-items"
+                class="muted-button btn"
+                class="btn"
+              >
+                Delete All Items
+              </button>
+            </div>
           </div>
           <div class="markdown-body">
             <ol class="list-items"></ol>

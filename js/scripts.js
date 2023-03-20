@@ -7,7 +7,7 @@ const input = document.getElementById("input");
 const preview = document.getElementById("preview");
 const xbutton = document.getElementById("x-button");
 const deleteAllItems = document.getElementById("delete-all-items");
-const rbutton = document.getElementById("return-button");
+const rbutton = document.getElementById("return-last-input-button");
 
 var output = document.getElementById("output").firstChild,
   position = document.getElementById("position");
