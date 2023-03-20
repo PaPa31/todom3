@@ -7,7 +7,7 @@ const input = document.getElementById("input");
 const preview = document.getElementById("preview");
 const xbutton = document.getElementById("x-button");
 const deleteAllItems = document.getElementById("delete-all-items");
-const rbutton = document.getElementById("repeat-button");
+const rbutton = document.getElementById("return-button");
 
 var output = document.getElementById("output").firstChild,
   position = document.getElementById("position");
@@ -129,9 +129,14 @@ input.addEventListener(
   "input",
   debounce(
     function (e) {
-      rbutton.style = "display:none";
-      xbutton.style = "display:block";
       lastInputValue = e.target.value;
+      if (lastInputValue) {
+        xbutton.style = "display:block";
+      } else {
+        xbutton.style = "display:none";
+      }
+      rbutton.style = "display:none";
+
       localStorage.setItem("last", lastInputValue);
       convertToMarkdown(e.target.value);
     },

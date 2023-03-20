@@ -497,7 +497,7 @@ ol.preview-outer li {
 }
 
 #x-button,
-#repeat-button {
+#return-button {
   position: absolute;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -512,7 +512,7 @@ ol.preview-outer li {
   top: 16px;
 }
 
-#repeat-button {
+#return-button {
   background-image: url(../img/repeat.svg);
   width: 23px;
   height: 23px;
@@ -521,7 +521,7 @@ ol.preview-outer li {
 }
 
 #x-button:hover,
-#repeat-button:hover {
+#return-button:hover {
   opacity: 1;
 }
 
