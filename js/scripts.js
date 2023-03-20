@@ -33,8 +33,12 @@ if (trashArray.length) {
 } else {
   trashManager.style = "visibility: hidden; opacity: 0";
 }
-let twoClick = false;
+
+let twoClickToTrash = false;
+let twoClickTrashClear = false;
+
 let nullInItemsStorage = false;
+
 let lastClickId;
 let lastItem;
 let lastInputValue = localStorage.getItem("last")
@@ -84,7 +88,7 @@ const buttonMaker = (liTag) => {
 
 const deleteOneItem = (item) => {
   window.event.stopPropagation();
-  if (twoClick && item.id === lastClickId) {
+  if (twoClickToTrash && item.id === lastClickId) {
     const indexToDelete = indexedItemsArray.indexOf(item.id);
 
     ol.removeChild(item);
@@ -100,7 +104,7 @@ const deleteOneItem = (item) => {
 
     localStorage.removeItem("items");
     localStorage.setItem("items", JSON.stringify(itemsArray));
-    twoClick = false;
+    twoClickToTrash = false;
     lastClickId = undefined;
   } else {
     if (lastItem) lastItem.lastChild.style = null;
@@ -108,7 +112,7 @@ const deleteOneItem = (item) => {
     item.lastChild.style =
       "filter: brightness(0.5) sepia(1) hue-rotate(-70deg) saturate(5);";
     lastItem = item;
-    twoClick = true;
+    twoClickToTrash = true;
   }
 };
 
@@ -168,8 +172,10 @@ input.addEventListener(
 );
 
 html.addEventListener("click", function () {
-  if (twoClick) lastItem.lastChild.style = null;
-  twoClick = false;
+  if (twoClickTrashClear) clearTrash.classList.remove("border-red");
+  twoClickTrashClear = false;
+  if (twoClickToTrash) lastItem.lastChild.style = null;
+  twoClickToTrash = false;
 });
 
 form.addEventListener("submit", function (e) {
@@ -249,10 +255,18 @@ restoreButton.addEventListener("click", function () {
   }
 });
 
-clearTrash.addEventListener("click", function () {
-  trashArray = [];
-  localStorage.removeItem("trash");
-  trashManager.style = "visibility: hidden; opacity: 0";
+clearTrash.addEventListener("click", function (e) {
+  e.stopPropagation();
+  if (twoClickTrashClear) {
+    trashArray = [];
+    localStorage.removeItem("trash");
+    trashManager.style = "visibility: hidden; opacity: 0";
+    clearTrash.classList.remove("border-red");
+    twoClickTrashClear = false;
+  } else {
+    clearTrash.classList.add("border-red");
+    twoClickTrashClear = true;
+  }
 });
 
 convertToMarkdown(input.value);
