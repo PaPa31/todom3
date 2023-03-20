@@ -445,19 +445,16 @@ h5 {
 }
 
 .reversed #list-order {
-  -moz-transform: rotate(-180deg) translateY(-5px);
-  -webkit-transform: rotate(-180deg) translateY(-5px);
-  transform: rotate(-180deg) translateY(-5px);
+  -moz-transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+  transform: rotate(-180deg);
 }
 
 #list-order {
-  display: inline-block;
-}
-
-#list-order {
-  cursor: pointer;
-  color: #02c402;
   margin-left: 10px;
+  font-size: 20px;
+  padding: 6px;
+  border-width: 2px;
 }
 /*change list order*/
 
