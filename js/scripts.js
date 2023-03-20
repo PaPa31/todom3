@@ -7,6 +7,7 @@ const input = document.getElementById("input");
 const preview = document.getElementById("preview");
 const xbutton = document.getElementById("x-button");
 const deleteAllItems = document.getElementById("delete-all-items");
+const rbutton = document.getElementById("repeat-button");
 
 var output = document.getElementById("output").firstChild,
   position = document.getElementById("position");
@@ -29,6 +30,13 @@ var scrollTop = input.scrollTop;
 
 input.value = lastInputValue;
 input.scrollTop = input.scrollHeight;
+
+if (lastInputValue) {
+  xbutton.style = "display:block";
+} else {
+  xbutton.style = "display:none";
+}
+rbutton.style = "display:none";
 
 const liMaker = (text) => {
   const li = document.createElement("li");
@@ -121,6 +129,8 @@ input.addEventListener(
   "input",
   debounce(
     function (e) {
+      rbutton.style = "display:none";
+      xbutton.style = "display:block";
       lastInputValue = e.target.value;
       localStorage.setItem("last", lastInputValue);
       convertToMarkdown(e.target.value);
@@ -144,6 +154,8 @@ form.addEventListener("submit", function (e) {
 
   liMaker(input.value);
   localStorage.removeItem("last");
+  rbutton.style = "display:block";
+  xbutton.style = "display:none";
   input.value = "";
   preview.innerHTML = "";
 });
@@ -169,11 +181,22 @@ deleteAllItems.addEventListener("click", function (e) {
 
 xbutton.addEventListener("click", function (e) {
   localStorage.removeItem("last");
+  rbutton.style = "display:block";
+  xbutton.style = "display:none";
   input.value = "";
   preview.innerHTML = "";
 });
 
+rbutton.addEventListener("click", function (e) {
+  input.value = lastInputValue;
+  convertToMarkdown(input.value);
+  localStorage.setItem("last", lastInputValue);
+  rbutton.style = "display:none";
+  xbutton.style = "display:block";
+});
+
 convertToMarkdown(input.value);
+//preview.scrollTop = preview.scrollHeight;
 
 const update = function () {
   output.innerHTML = input.value

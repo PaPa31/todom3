@@ -496,18 +496,32 @@ ol.preview-outer li {
   padding-bottom: 0;
 }
 
-.x-inside {
+#x-button,
+#repeat-button {
   position: absolute;
-  right: 5px;
-  top: 16px;
+  background-repeat: no-repeat;
   cursor: pointer;
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/cross.svg);
   opacity: 0.6;
 }
 
-.x-inside:hover {
+#x-button {
+  background-image: url(../img/cross.svg);
+  width: 29px;
+  height: 29px;
+  right: 5px;
+  top: 16px;
+}
+
+#repeat-button {
+  background-image: url(../img/repeat.svg);
+  width: 23px;
+  height: 23px;
+  right: 8px;
+  top: 19px;
+}
+
+#x-button:hover,
+#repeat-button:hover {
   opacity: 1;
 }
 
