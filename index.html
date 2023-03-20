@@ -37,7 +37,7 @@
               <button form="form1" type="submit" class="btn" type="button">
                 Save item
               </button>
-              <button class="btn" type="submit" class="btn" type="button">
+              <button class="btn" type="submit" type="button">
                 Save as a file
               </button>
             </div>
@@ -60,10 +60,13 @@
             </div>
             <div class="flex-small text-right">
               <button
-                id="delete-all-items"
+                id="undo-delete-item"
                 class="muted-button btn"
-                class="btn"
+                title="Undo delete item"
               >
+                <img src="img/repeat.svg" />
+              </button>
+              <button id="delete-all-items" class="muted-button btn">
                 Delete All Items
               </button>
             </div>

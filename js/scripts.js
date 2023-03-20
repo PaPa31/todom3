@@ -8,6 +8,7 @@ const preview = document.getElementById("preview");
 const xbutton = document.getElementById("x-button");
 const deleteAllItems = document.getElementById("delete-all-items");
 const rbutton = document.getElementById("return-last-input-button");
+const ubutton = document.getElementById("undo-delete-item");
 
 var output = document.getElementById("output").firstChild,
   position = document.getElementById("position");
@@ -19,6 +20,7 @@ let itemsArray = localStorage.getItem("items")
 let counter = 0;
 // lightweight array to avoid redundant logic and waste of resources
 let indexedItemsArray = [];
+let deletedItemsArray = [];
 
 let twoClick = false;
 let lastClickId;
@@ -37,6 +39,7 @@ if (lastInputValue) {
   xbutton.style = "display:none";
 }
 rbutton.style = "display:none";
+ubutton.style = "display:none";
 
 const liMaker = (text) => {
   const li = document.createElement("li");
@@ -73,6 +76,10 @@ const deleteOneItem = (item) => {
 
     ol.removeChild(item);
     showArrows(ol.childElementCount);
+
+    deletedItemsArray.push(itemsArray[indexToDelete]);
+    console.log(deletedItemsArray.length);
+    ubutton.style = "display:inline-block";
 
     itemsArray.splice(indexToDelete, 1);
     indexedItemsArray.splice(indexToDelete, 1);
@@ -192,12 +199,26 @@ xbutton.addEventListener("click", function (e) {
   preview.innerHTML = "";
 });
 
-rbutton.addEventListener("click", function (e) {
+rbutton.addEventListener("click", function () {
   input.value = lastInputValue;
   convertToMarkdown(input.value);
   localStorage.setItem("last", lastInputValue);
   rbutton.style = "display:none";
   xbutton.style = "display:block";
+});
+
+ubutton.addEventListener("click", function () {
+  const len = deletedItemsArray.length;
+  if (len !== 0) {
+    const deletedItem = deletedItemsArray.pop();
+    console.log(len);
+
+    itemsArray.push(deletedItem);
+    localStorage.setItem("items", JSON.stringify(itemsArray));
+
+    liMaker(deletedItem);
+  }
+  if (len === 0) ubutton.style = "display:none";
 });
 
 convertToMarkdown(input.value);
