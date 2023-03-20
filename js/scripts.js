@@ -8,7 +8,7 @@ const preview = document.getElementById("preview");
 const xbutton = document.getElementById("x-button");
 const deleteAllItems = document.getElementById("delete-all-items");
 const returnButton = document.getElementById("return-last-input-button");
-const undoButton = document.getElementById("undo-delete-item");
+const restoreButton = document.getElementById("restore-deleted-item");
 const deletedCounter = document.getElementById("deleted-counter");
 const trashManager = document.getElementById("trash-manager");
 const clearTrash = document.getElementById("clear-trash");
@@ -221,7 +221,7 @@ returnButton.addEventListener("click", function () {
   xbutton.style = "display:block";
 });
 
-undoButton.addEventListener("click", function () {
+restoreButton.addEventListener("click", function () {
   let len = deletedItemsArray.length;
   if (len !== 0) {
     const deletedItem = deletedItemsArray.pop();

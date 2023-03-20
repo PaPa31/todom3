@@ -541,13 +541,13 @@ button.delete-one-item:hover {
   opacity: 1;
 }
 
-#undo-delete-item {
+#restore-deleted-item {
   padding: 5px;
   border-width: 2px;
   transition: opacity 0.2s ease;
 }
 
-#undo-delete-item img {
+#restore-deleted-item img {
   width: 22px;
   padding: 0px;
   vertical-align: middle;
