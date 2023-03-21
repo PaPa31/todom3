@@ -565,6 +565,11 @@ button.delete-one-item:hover {
   border: initial;
 }
 
+.visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 #restore-deleted-item {
   padding: 5px;
   border-width: 2px;

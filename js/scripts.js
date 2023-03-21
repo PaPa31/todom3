@@ -14,7 +14,6 @@ const restoreItemButton = document.getElementById("restore-deleted-item");
 const clearTrashButton = document.getElementById("clear-trash");
 
 const deletedCounter = document.getElementById("deleted-counter");
-const trashManager = document.getElementById("trash-manager");
 
 const output = document.getElementById("output").firstChild;
 const position = document.getElementById("position");
@@ -32,9 +31,11 @@ let trashArray = localStorage.getItem("trash")
 
 if (trashArray.length) {
   deletedCounter.innerText = trashArray.length;
-  trashManager.style = "visibility: visible; opacity: 1";
+  restoreItemButton.classList.add("visible");
+  clearTrashButton.classList.add("visible");
 } else {
-  trashManager.style = "visibility: hidden; opacity: 0";
+  restoreItemButton.classList.remove("visible");
+  clearTrashButton.classList.remove("visible");
 }
 
 let twoClickToTrash = false;
@@ -99,7 +100,8 @@ const deleteOneItem = (item) => {
 
     trashArray.push(itemsArray[indexToDelete]);
     deletedCounter.innerText = trashArray.length;
-    trashManager.style = "visibility: visible; opacity: 1";
+    restoreItemButton.classList.add("visible");
+    clearTrashButton.classList.add("visible");
     localStorage.setItem("trash", JSON.stringify(trashArray));
 
     itemsArray.splice(indexToDelete, 1);
@@ -252,7 +254,8 @@ restoreItemButton.addEventListener("click", function () {
     deletedCounter.innerText = len;
   }
   if (len === 0) {
-    trashManager.style = "visibility: hidden; opacity: 0";
+    restoreItemButton.classList.remove("visible");
+    clearTrashButton.classList.remove("visible");
     localStorage.removeItem("trash");
   }
 });
@@ -261,8 +264,10 @@ clearTrashButton.addEventListener("click", function (e) {
   e.stopPropagation();
   if (twoClickTrashClear) {
     trashArray = [];
+    deletedCounter.innerText = "";
     localStorage.removeItem("trash");
-    trashManager.style = "visibility: hidden; opacity: 0";
+    restoreItemButton.classList.remove("visible");
+    clearTrashButton.classList.remove("visible");
     clearTrashButton.classList.remove("border-red");
     twoClickTrashClear = false;
   } else {

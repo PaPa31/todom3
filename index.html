@@ -73,23 +73,23 @@
               </h2>
             </div>
             <div class="flex-small text-right">
-              <span id="trash-manager" style="visibility: hidden">
-                <button
-                  id="restore-deleted-item"
-                  class="muted-button btn"
-                  title="Restore last deleted item"
-                >
-                  <img src="img/repeat.svg" />
-                  <span id="deleted-counter"></span>
-                </button>
-                <button
-                  id="clear-trash"
-                  class="muted-button btn"
-                  title="Double-click to clear Trash"
-                >
-                  Clear Trash
-                </button>
-              </span>
+              <button
+                id="restore-deleted-item"
+                class="muted-button btn"
+                title="Restore last deleted item"
+                style="visibility: collapse; opacity: 0"
+              >
+                <img src="img/repeat.svg" />
+                <span id="deleted-counter"></span>
+              </button>
+              <button
+                id="clear-trash"
+                class="muted-button btn"
+                title="Double-click to clear Trash"
+                style="visibility: collapse; opacity: 0"
+              >
+                Clear Trash
+              </button>
             </div>
           </div>
           <div class="markdown-body">
