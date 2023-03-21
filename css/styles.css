@@ -460,7 +460,7 @@ h5 {
 .container > h1,
 .flex-small > h2,
 #list-order,
-.flex-row {
+.content .flex-row {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
