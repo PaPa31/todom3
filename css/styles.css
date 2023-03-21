@@ -503,7 +503,7 @@ ol.preview-outer li {
 }
 
 #x-button,
-#return-last-input-button {
+#return-last-input {
   position: absolute;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -518,7 +518,7 @@ ol.preview-outer li {
   top: 16px;
 }
 
-#return-last-input-button {
+#return-last-input {
   background-image: url(../img/repeat.svg);
   width: 23px;
   height: 23px;
@@ -527,7 +527,7 @@ ol.preview-outer li {
 }
 
 #x-button:hover,
-#return-last-input-button:hover {
+#return-last-input:hover {
   opacity: 1;
 }
 
@@ -552,6 +552,17 @@ button.delete-one-item:hover {
 
 .filter-red {
   filter: brightness(0.5) sepia(1) hue-rotate(-70deg) saturate(5);
+}
+
+.bared {
+  padding: initial;
+  background-color: initial !important;
+  border: initial !important;
+}
+
+.bared:hover {
+  background: initial;
+  border: initial;
 }
 
 #restore-deleted-item {

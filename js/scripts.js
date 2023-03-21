@@ -2,19 +2,22 @@
 const html = document.documentElement;
 const form = document.querySelector("form");
 const ol = document.querySelector("ol");
-const button = document.querySelector("button");
+
 const input = document.getElementById("input");
 const preview = document.getElementById("preview");
-const xbutton = document.getElementById("x-button");
-const deleteAllItems = document.getElementById("delete-all-items");
-const returnButton = document.getElementById("return-last-input-button");
-const restoreButton = document.getElementById("restore-deleted-item");
+
+const xButton = document.getElementById("x-button");
+const returnInputButton = document.getElementById("return-last-input");
+
+const deleteAllItemsButton = document.getElementById("delete-all-items");
+const restoreItemButton = document.getElementById("restore-deleted-item");
+const clearTrashButton = document.getElementById("clear-trash");
+
 const deletedCounter = document.getElementById("deleted-counter");
 const trashManager = document.getElementById("trash-manager");
-const clearTrash = document.getElementById("clear-trash");
 
-var output = document.getElementById("output").firstChild,
-  position = document.getElementById("position");
+const output = document.getElementById("output").firstChild;
+const position = document.getElementById("position");
 
 let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
@@ -46,9 +49,9 @@ let lastInputValue = localStorage.getItem("last")
   : "";
 
 if (lastInputValue) {
-  xbutton.style = "display:block";
+  xButton.style = "display:block";
 } else {
-  xbutton.style = "display:none";
+  xButton.style = "display:none";
 }
 
 var scrollTop = input.scrollTop;
@@ -56,7 +59,7 @@ var scrollTop = input.scrollTop;
 input.value = lastInputValue;
 input.scrollTop = input.scrollHeight;
 
-returnButton.style = "display:none";
+returnInputButton.style = "display:none";
 
 const liMaker = (text) => {
   const li = document.createElement("li");
@@ -155,11 +158,11 @@ input.addEventListener(
     function (e) {
       lastInputValue = e.target.value;
       if (lastInputValue) {
-        xbutton.style = "display:block";
+        xButton.style = "display:block";
       } else {
-        xbutton.style = "display:none";
+        xButton.style = "display:none";
       }
-      returnButton.style = "display:none";
+      returnInputButton.style = "display:none";
 
       localStorage.setItem("last", lastInputValue);
       convertToMarkdown(e.target.value);
@@ -171,7 +174,7 @@ input.addEventListener(
 );
 
 html.addEventListener("click", function () {
-  if (twoClickTrashClear) clearTrash.classList.remove("border-red");
+  if (twoClickTrashClear) clearTrashButton.classList.remove("border-red");
   twoClickTrashClear = false;
   if (twoClickToTrash) lastItem.lastChild.classList.remove("filter-red");
   twoClickToTrash = false;
@@ -185,8 +188,8 @@ form.addEventListener("submit", function (e) {
 
   liMaker(input.value);
   localStorage.removeItem("last");
-  returnButton.style = "display:block";
-  xbutton.style = "display:none";
+  returnInputButton.style = "display:block";
+  xButton.style = "display:none";
   input.value = "";
   preview.innerHTML = "";
 });
@@ -205,7 +208,7 @@ if (nullInItemsStorage) {
   localStorage.setItem("items", JSON.stringify(itemsArray));
 }
 
-deleteAllItems.addEventListener("click", function (e) {
+deleteAllItemsButton.addEventListener("click", function (e) {
   if (confirm("Are you sure?")) {
     localStorage.removeItem("items");
     indexedItemsArray = [];
@@ -220,23 +223,23 @@ deleteAllItems.addEventListener("click", function (e) {
   }
 });
 
-xbutton.addEventListener("click", function () {
+xButton.addEventListener("click", function () {
   localStorage.removeItem("last");
-  returnButton.style = "display:block";
-  xbutton.style = "display:none";
+  returnInputButton.style = "display:block";
+  xButton.style = "display:none";
   input.value = "";
   preview.innerHTML = "";
 });
 
-returnButton.addEventListener("click", function () {
+returnInputButton.addEventListener("click", function () {
   input.value = lastInputValue;
   convertToMarkdown(input.value);
   localStorage.setItem("last", lastInputValue);
-  returnButton.style = "display:none";
-  xbutton.style = "display:block";
+  returnInputButton.style = "display:none";
+  xButton.style = "display:block";
 });
 
-restoreButton.addEventListener("click", function () {
+restoreItemButton.addEventListener("click", function () {
   let len = trashArray.length;
   if (len !== 0) {
     const deletedItem = trashArray.pop();
@@ -254,16 +257,16 @@ restoreButton.addEventListener("click", function () {
   }
 });
 
-clearTrash.addEventListener("click", function (e) {
+clearTrashButton.addEventListener("click", function (e) {
   e.stopPropagation();
   if (twoClickTrashClear) {
     trashArray = [];
     localStorage.removeItem("trash");
     trashManager.style = "visibility: hidden; opacity: 0";
-    clearTrash.classList.remove("border-red");
+    clearTrashButton.classList.remove("border-red");
     twoClickTrashClear = false;
   } else {
-    clearTrash.classList.add("border-red");
+    clearTrashButton.classList.add("border-red");
     twoClickTrashClear = true;
   }
 });
