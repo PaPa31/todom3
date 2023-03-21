@@ -81,7 +81,7 @@ const buttonMaker = (liTag) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-one-item");
   buttonTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
-  buttonTag.setAttribute("title", "Double-click to trash");
+  buttonTag.setAttribute("title", "Double-click to move to Trash");
 
   liTag.appendChild(buttonTag);
 };
@@ -107,10 +107,9 @@ const deleteOneItem = (item) => {
     twoClickToTrash = false;
     lastClickId = undefined;
   } else {
-    if (lastItem) lastItem.lastChild.style = null;
+    if (lastItem) lastItem.lastChild.classList.remove("filter-red");
     lastClickId = item.id;
-    item.lastChild.style =
-      "filter: brightness(0.5) sepia(1) hue-rotate(-70deg) saturate(5);";
+    item.lastChild.classList.add("filter-red");
     lastItem = item;
     twoClickToTrash = true;
   }
@@ -174,7 +173,7 @@ input.addEventListener(
 html.addEventListener("click", function () {
   if (twoClickTrashClear) clearTrash.classList.remove("border-red");
   twoClickTrashClear = false;
-  if (twoClickToTrash) lastItem.lastChild.style = null;
+  if (twoClickToTrash) lastItem.lastChild.classList.remove("filter-red");
   twoClickToTrash = false;
 });
 
