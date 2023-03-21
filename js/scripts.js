@@ -79,7 +79,7 @@ const spanMaker = (liTag) => {
 
 const buttonMaker = (liTag) => {
   const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "delete-one-item");
+  buttonTag.setAttribute("class", "delete-one-item btn");
   buttonTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
   buttonTag.setAttribute("title", "Double-click to move to Trash");
 

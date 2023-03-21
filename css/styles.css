@@ -135,6 +135,15 @@ button {
   transition: all 0.2s ease;
 }
 
+.btn:focus-visible {
+  outline: 1px solid black;
+  outline-offset: 2px;
+}
+
+.dark .btn:focus-visible {
+  outline-color: white;
+}
+
 textarea {
   resize: none;
   border: 1px solid var(--border-color);
