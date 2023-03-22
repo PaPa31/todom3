@@ -286,12 +286,19 @@ const update = function () {
 
   marked.parse(output.innerHTML, (err, html) => {
     position.innerHTML = html;
-    scrollTop = position.scrollHeight - 70;
-    preview.scrollTop = scrollTop;
+    scrollTop = position.scrollHeight;
+    //console.log(scrollTop);
+
+    position.scrollTop = scrollTop;
+
+    const scrolll = position.scrollTop;
+    //console.log(scrolll);
+    preview.scrollTop = scrolll;
+
     if (err) console.log(err);
   });
 };
 
 input.addEventListener("keyup", update);
 input.addEventListener("mouseup", update);
-//input.addEventListener("scroll", update);
+position.addEventListener("scroll", debounce(update, 50, false));
