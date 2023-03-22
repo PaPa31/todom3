@@ -74,6 +74,8 @@ body.dark {
 #form1 {
   padding-top: 10px;
   position: relative;
+  width: 95%;
+  margin: 0 auto;
 }
 
 #dark-button {
@@ -133,6 +135,10 @@ button#dark-button:focus {
 
 button {
   transition: all 0.2s ease;
+}
+
+button.first {
+  margin-right: 5px;
 }
 
 .btn:focus-visible {
@@ -337,12 +343,18 @@ table {
   margin: 0 0 1rem 0;
 }
 
-.flex-row {
-  flex-wrap: nowrap;
+.container {
+  max-width: 1440px;
 }
 
-.w-1440 {
-  width: 1425px;
+.flex-row {
+  flex-wrap: nowrap;
+  padding: 0;
+  margin: 0;
+}
+
+.flex-row:nth-child(2) {
+  margin: 0 1rem 0.5rem 1rem;
 }
 
 .align-center {
@@ -449,6 +461,11 @@ h5 {
   flex: 0 0 auto;
 }
 
+.flex-small > h2 {
+  display: inline-block;
+  margin: 0 0 0 5px;
+}
+
 .container > h1,
 .flex-small > h2,
 #list-order,
@@ -461,10 +478,6 @@ h5 {
   user-select: none;
 }
 
-.container {
-  max-width: 1440px;
-}
-
 .small-container {
   width: 100%;
   float: left;
@@ -472,7 +485,7 @@ h5 {
 }
 
 .flex-small {
-  width: 699px;
+  padding: 0;
 }
 
 .preview-outer {
@@ -493,22 +506,23 @@ ol.preview-outer li {
   background-repeat: no-repeat;
   cursor: pointer;
   opacity: 0.6;
+  z-index: 5;
 }
 
 #x-button {
   background-image: url(../img/cross.svg);
   width: 29px;
   height: 29px;
-  right: 5px;
-  top: 16px;
+  right: 7px;
+  top: 18px;
 }
 
 #return-last-input {
-  background-image: url(../img/return-2.svg);
+  background-image: url(../img/return-3.svg);
   width: 23px;
   height: 23px;
-  right: 8px;
-  top: 19px;
+  right: 11px;
+  top: 22px;
 }
 
 .sort-ascending,
@@ -648,12 +662,15 @@ button.delete-one-item:hover {
 }
 
 #output {
-  top: 44px;
-  width: 682.5px;
+  top: 10px;
+  width: 100%;
   display: inline-block;
   resize: none;
   overflow: auto;
   height: auto;
+  padding: 0.75em;
+  height: 186px;
+  display: block;
 }
 
 #position {
@@ -661,12 +678,6 @@ button.delete-one-item:hover {
   resize: none;
   overflow: auto;
   height: auto;
-}
-
-#output span {
-  padding: 0.75em;
-  height: 186px;
-  display: block;
 }
 
 /*#preview {
@@ -700,5 +711,12 @@ code {
   #position {
     width: 680.5px;
     max-height: 288px;
+  }
+  .container > .flex-row > .flex-small:first-child {
+    padding-right: 10px;
+  }
+
+  .container > .flex-row > .flex-small:last-child {
+    padding-left: 10px;
   }
 }

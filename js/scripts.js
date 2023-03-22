@@ -15,7 +15,7 @@ const clearTrashButton = document.getElementById("clear-trash");
 
 const deletedCounter = document.getElementById("deleted-counter");
 
-const output = document.getElementById("output").firstChild;
+const output = document.getElementById("output");
 const position = document.getElementById("position");
 
 let itemsArray = localStorage.getItem("items")
