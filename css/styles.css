@@ -657,7 +657,6 @@ button.delete-one-item:hover {
 }
 
 #position {
-  /*width: 680.5px;*/
   width: 667px;
   resize: none;
   overflow: auto;
@@ -699,6 +698,7 @@ code {
     max-height: 328px;
   }
   #position {
+    width: 680.5px;
     max-height: 288px;
   }
 }
