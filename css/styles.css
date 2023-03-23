@@ -71,13 +71,6 @@ body.dark {
   color: var(--color-dark);
 }
 
-#form1 {
-  padding-top: 10px;
-  position: relative;
-  width: 95%;
-  margin: 0 auto;
-}
-
 #dark-button {
   width: 69px;
   height: 36px;
@@ -150,21 +143,6 @@ button.first {
   outline-color: white;
 }
 
-textarea {
-  resize: none;
-  border: 1px solid var(--border-color);
-  background-color: var(--color-bg-default);
-}
-
-textarea:focus,
-textarea:active {
-  border: 1px solid var(--border-color);
-}
-
-textarea:hover {
-  border: 1px solid var(--border-color);
-}
-
 .scroll::-webkit-scrollbar {
   width: 6px;
 }
@@ -184,13 +162,6 @@ textarea:hover {
 
 .dark .scroll::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-hover-dark);
-}
-
-.dark [type="text"],
-.dark textarea {
-  color: var(--color-dark);
-  border: 1px solid var(--border-color-dark);
-  background-color: var(--color-bg-default-dark);
 }
 
 .dark h1,
@@ -634,6 +605,37 @@ button.delete-one-item:hover {
   flex-direction: column-reverse;
 }
 
+#form1 {
+  padding-top: 10px;
+  position: relative;
+  width: 95%;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+
+textarea {
+  resize: none;
+  border: 1px solid var(--border-color);
+  background-color: var(--color-bg-default);
+}
+
+textarea:focus,
+textarea:active {
+  border: 1px solid var(--border-color);
+}
+
+textarea:hover {
+  border: 1px solid var(--border-color);
+}
+
+.dark [type="text"],
+.dark textarea {
+  color: var(--color-dark);
+  border: 1px solid var(--border-color-dark);
+  background-color: var(--color-bg-default-dark);
+}
+
 #preview,
 #position {
   width: 100%;
@@ -659,38 +661,51 @@ button.delete-one-item:hover {
 
 #output,
 #position {
-  position: absolute;
+  /*position: absolute;*/
   border: 1px solid transparent;
+  border-color: red;
   z-index: -1;
+  resize: none;
+  overflow: auto;
+  height: auto;
 }
 
 #output {
-  top: 10px;
+  /*top: 10px;*/
   width: 100%;
-  display: inline-block;
-  resize: none;
-  overflow: auto;
-  height: auto;
+  /*display: inline-block;*/
   padding: 0.75em;
   height: 186px;
-  display: block;
+  /*display: block;*/
+  border-radius: 4px;
+}
+
+#output {
+  /*width: 100%;*/
+  /*position: relative;*/
+  margin-top: -196px;
+  margin-bottom: 10px;
 }
 
 #position {
-  width: 667px;
-  resize: none;
-  overflow: auto;
-  height: auto;
+  /*width: 673px;*/
+  width: 100%;
+  position: relative;
+  margin-top: -160px;
 }
 
-/*#preview {
+#input {
   opacity: 0.3;
-}*/
+}
 
-#output,
+#preview {
+  opacity: 0.3;
+}
+
+/*#output,
 #position {
   opacity: 0;
-}
+}*/
 
 #output,
 #position,
@@ -707,13 +722,13 @@ code {
   .container > .flex-row {
     flex-direction: row;
   }
-  #preview,
-  #position {
+  #preview {
     max-height: 328px;
   }
   #position {
-    width: 680.5px;
+    /*width: 680.5px;*/
     max-height: 288px;
+    margin-top: -328px;
   }
   .container > .flex-row > .flex-small:first-child {
     padding-right: 10px;

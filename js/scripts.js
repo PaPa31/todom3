@@ -55,7 +55,7 @@ if (lastInputValue) {
   xButton.style = "display:none";
 }
 
-var scrollTop = input.scrollTop;
+//var scrollTop = input.scrollTop;
 
 input.value = lastInputValue;
 input.scrollTop = input.scrollHeight;
@@ -284,13 +284,18 @@ convertToMarkdown(input.value);
 //preview.scrollTop = preview.scrollHeight;
 
 const update = function () {
-  output.innerHTML = input.value
+  output.value = input.value
     .substr(0, input.selectionStart)
     .replace(/\n$/, "\n\x001");
 
-  marked.parse(output.innerHTML, (err, html) => {
+  const outputScrollTop = output.scrollHeight;
+  output.scrollTop = outputScrollTop;
+
+  //const ou = output.scrollTop
+
+  marked.parse(output.value, (err, html) => {
     position.innerHTML = html;
-    scrollTop = position.scrollHeight;
+    const scrollTop = position.scrollHeight;
     //console.log(scrollTop);
 
     position.scrollTop = scrollTop;
