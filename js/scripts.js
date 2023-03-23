@@ -118,6 +118,8 @@ const deleteOneItem = (item) => {
     lastItem = item;
     twoClickToTrash = true;
   }
+  if (twoClickTrashClear) clearTrashButton.classList.remove("border-red");
+  twoClickTrashClear = false;
 };
 
 const showArrows = (count) => {
@@ -274,6 +276,8 @@ clearTrashButton.addEventListener("click", function (e) {
     clearTrashButton.classList.add("border-red");
     twoClickTrashClear = true;
   }
+  if (twoClickToTrash) lastItem.lastChild.classList.remove("filter-red");
+  twoClickToTrash = false;
 });
 
 convertToMarkdown(input.value);
