@@ -351,6 +351,7 @@ table {
   flex-wrap: nowrap;
   padding: 0;
   margin: 0;
+  max-width: 100%;
 }
 
 .flex-row:nth-child(2) {
@@ -450,7 +451,12 @@ h5 {
 
 .markdown-body > ol.list-items {
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: column;
+  /*flex-wrap: wrap;
+  flex-direction: row;*/
+  /*max-width don't work in MX Viewer*/
+  width: 100%;
 }
 
 /*change list order*/
@@ -479,9 +485,10 @@ h5 {
 }
 
 .small-container {
-  width: 100%;
   float: left;
   padding: 0;
+  max-width: initial;
+  width: 100%;
 }
 
 .flex-small {
@@ -715,8 +722,10 @@ code {
   .container > .flex-row > .flex-small:first-child {
     padding-right: 10px;
   }
-
   .container > .flex-row > .flex-small:last-child {
     padding-left: 10px;
+  }
+  .flex-small {
+    max-width: 50%;
   }
 }
