@@ -258,10 +258,6 @@ textarea:hover {
   max-width: 100%;
 }
 
-.markdown-body li + li {
-  margin-top: 0.25em;
-}
-
 ::selection {
   background-color: var(--color-accent-muted);
 }
