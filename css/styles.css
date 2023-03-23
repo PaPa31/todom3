@@ -347,11 +347,11 @@ table {
   flex-wrap: nowrap;
   padding: 0;
   margin: 0;
-  max-width: 100%;
 }
 
 .flex-row:nth-child(2) {
-  margin: 0 1rem 0.5rem 1rem;
+  margin: 0 auto 0.5em;
+  width: 95%;
 }
 
 .align-center {
