@@ -664,7 +664,7 @@ textarea:hover {
 
 #output,
 #position {
-  /*position: absolute;*/
+  position: absolute;
   border: 1px solid transparent;
   border-color: red;
   z-index: -1;
@@ -685,30 +685,29 @@ textarea:hover {
 
 #output {
   /*width: 100%;*/
-  /*position: relative;*/
-  /*margin-top: -196px;*/
+  /*position: relative;
+  margin-top: -196px;*/
   margin-bottom: 10px;
 }
 
 #position {
-  /*width: 673px;*/
-  width: 100%;
+  width: 688px;
+  /*width: 100%;
   position: relative;
-  margin-top: -160px;
+  margin-top: -160px;*/
 }
 
-#input {
-  opacity: 0.3;
-}
-
+/*#input,
 #preview {
-  opacity: 0.3;
-}
+  opacity: 0.6;
+  color: red;
+}*/
 
-/*#output,
+#output,
 #position {
   opacity: 0;
-}*/
+  visibility: collapse;
+}
 
 #output,
 #position,
