@@ -610,9 +610,8 @@ button.delete-one-item:hover {
   position: relative;
   width: 95%;
   margin: 0 auto;
-  flex-direction: column;
+  /*flex-direction: column;*/
 }
-
 
 textarea {
   resize: none;
@@ -683,7 +682,7 @@ textarea:hover {
 #output {
   /*width: 100%;*/
   /*position: relative;*/
-  margin-top: -196px;
+  /*margin-top: -196px;*/
   margin-bottom: 10px;
 }
 

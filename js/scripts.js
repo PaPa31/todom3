@@ -283,29 +283,169 @@ clearTrashButton.addEventListener("click", function (e) {
 convertToMarkdown(input.value);
 //preview.scrollTop = preview.scrollHeight;
 
+const untilNewLine = function () {};
+
+function testInput(re) {
+  const midstring = re.test("\n") ? "contains" : "does not contain";
+  console.log(`${"\n"} ${midstring} ${re.source}`);
+}
+
+function regexLastIndexOf(str, regex) {
+  regex = regex.global
+    ? regex
+    : new RegExp(
+        regex.source,
+        "g" + (regex.ignoreCase ? "i" : "") + (regex.multiLine ? "m" : "")
+      );
+  var lastIndexOf = -1;
+  var nextStop = 0;
+  var result;
+  while ((result = regex.exec(str)) != null) {
+    lastIndexOf = result.index;
+    regex.lastIndex = ++nextStop;
+  }
+  return lastIndexOf;
+}
+
+function regexFirstIndexOf(str, regex) {
+  regex = regex.global
+    ? regex
+    : new RegExp(
+        regex.source,
+        "g" + (regex.ignoreCase ? "i" : "") + (regex.multiLine ? "m" : "")
+      );
+  var IndexOf = -1;
+  var nextStop = 0;
+  var result;
+  while ((result = regex.exec(str)) != null) {
+    IndexOf = result.index;
+    regex.lastIndex = ++nextStop;
+  }
+  return IndexOf;
+}
+
 const update = function () {
-  output.value = input.value
-    .substr(0, input.selectionStart)
-    .replace(/\n$/, "\n\x001");
+  const str = input.value.substr(0, input.selectionStart);
+  //.replace(/\n$/, "\n\x001");
+  //output.value = input.value.substr(0, input.selectionStart);
+  //.replace(/\n$/, "\n");
+
+  output.value = str;
+
+  output.value = output.value.replace(/\n\n/g, "\n\x001\n");
+
+  const len = str.length;
+  const re = /\n/;
+
+  //console.log(str.lastIndexOf("\n$"));
+
+  //var matches = str.match(/\n$/g);
+  //var lastMatch = matches[matches.length - 1];
+
+  //console.log(lastMatch);
+
+  //var pos = -1;
+  //while ((match = re.exec(str)) != null) pos = match.index;
+
+  //console.log("last match found at " + pos);
+
+  const las = regexLastIndexOf(output.value, re);
+  console.log("las:", las);
+
+  //if (re.test(str[len - 1])) console.log(str[len - 1]);
+  //testInput(input.selectionStart);
+
+  //console.log(input.selectionStart);
 
   const outputScrollTop = output.scrollHeight;
   output.scrollTop = outputScrollTop;
 
   //const ou = output.scrollTop
 
-  marked.parse(output.value, (err, html) => {
+  //while
+
+  //console.log(input.value.length);
+
+  const inp2 = input.value.substr(las, input.value.length);
+  //console.log(inp2);
+
+  //var index = inp2.search(/\n$/);
+  //var index = inp2.match(/\n$/).index;
+  //console.log(index);
+
+  //var re = /\b/g,
+  //  str = "hello world";
+  //var match;
+  //var guard = 10;
+  //while ((match = re.exec(inp2)) != null) {
+  //  console.log("match found at " + match.index);
+  //  if (guard-- < 0) {
+  //    console.error("Infinite loop detected");
+  //    break;
+  //  }
+  //}
+
+  const firs = regexFirstIndexOf(inp2, re);
+  //console.log(firs);
+
+  //var match1;
+  //while ((match1 = re.exec(inp2)) != null) {
+  //  console.log(match1.index + " " + re.lastIndex);
+  //}
+  //const splitInput = text.substring(text.length - 4);
+
+  //const firs = /[\n]*/.exec(inp2)[0];
+  //console.log("firs:", firs);
+
+  //marked.parse(output.value.substr(0, las + 1), (err, html) => {
+
+  //let rep = /\x001\n$/gm;
+  //rep = rep.global
+  //  ? rep
+  //  : new RegExp(
+  //      rep.source,
+  //      "g" + (rep.ignoreCase ? "i" : "") + (rep.multiLine ? "m" : "")
+  //    );
+  //console.log(str[len - 1]);
+  //console.log(output.value[len - 1]);
+  //console.log(output.value.substr(0, las + 1));
+
+  if (output.value[len - 1] == "�") console.log("Happy");
+
+  let stri = output.value.substr(0, las + 1);
+  //if (rep.test(output.value[len - 1])) {
+
+  //if (output.value[len - 1] == "\x001") {
+  //  console.log("alone new line");
+  //  stri = output.value;
+  //} else {
+  //  stri = output.value.substr(0, las + 1);
+  //}
+
+  //const stri = rep.test(output.value)
+  //  ? output.value.substr(0, las + 1)
+  //  : output.value;
+
+  //console.log(stri);
+
+  marked.parse(stri, (err, html) => {
     position.innerHTML = html;
+
     const scrollTop = position.scrollHeight;
-    //console.log(scrollTop);
 
     position.scrollTop = scrollTop;
 
     const scrolll = position.scrollTop;
-    //console.log(scrolll);
     preview.scrollTop = scrolll;
 
     if (err) console.log(err);
   });
+
+  //if (position.scrollTop == preview.scrollTop) {
+  //  console.log("hi");
+  //} else {
+  //  console.log("bye");
+  //}
 };
 
 input.addEventListener("keyup", update);
