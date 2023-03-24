@@ -635,13 +635,16 @@ textarea:hover {
   background-color: var(--color-bg-default-dark);
 }
 
+#preview {
+  scroll-behavior: smooth;
+}
+
 #preview,
 #position {
   width: 100%;
   max-height: 160px;
   overflow-x: auto;
   margin-top: 10px;
-  scroll-behavior: smooth;
 }
 
 #position {
