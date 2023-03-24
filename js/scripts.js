@@ -330,9 +330,11 @@ const update = function () {
   //output.value = input.value.substr(0, input.selectionStart);
   //.replace(/\n$/, "\n");
 
+  //console.log(input.value.length);
+  //const lent = input.value.length;
   output.value = str;
 
-  output.value = output.value.replace(/\n\n/g, "\n\x001\n");
+  //output.value = output.value.replace(/\n\n/g, "\n\x001\n");
 
   const len = str.length;
   const re = /\n/;
@@ -350,7 +352,7 @@ const update = function () {
   //console.log("last match found at " + pos);
 
   const las = regexLastIndexOf(output.value, re);
-  console.log("las:", las);
+  //console.log("las:", las);
 
   //if (re.test(str[len - 1])) console.log(str[len - 1]);
   //testInput(input.selectionStart);
@@ -386,7 +388,7 @@ const update = function () {
   //}
 
   const firs = regexFirstIndexOf(inp2, re);
-  //console.log(firs);
+  //console.log("firs:", firs);
 
   //var match1;
   //while ((match1 = re.exec(inp2)) != null) {
@@ -399,7 +401,7 @@ const update = function () {
 
   //marked.parse(output.value.substr(0, las + 1), (err, html) => {
 
-  //let rep = /\x001\n$/gm;
+  let rep = /\n\n/;
   //rep = rep.global
   //  ? rep
   //  : new RegExp(
@@ -410,18 +412,46 @@ const update = function () {
   //console.log(output.value[len - 1]);
   //console.log(output.value.substr(0, las + 1));
 
-  if (output.value[len - 1] == "�") console.log("Happy");
+  //let stri = output.value.substr(0, las + 1);
+  //.replace(/\n$/g, "\n\x001");
+  //if (rep.test(output.value)) {
+  let stri;
+  if (output.value.slice(-2) == "\n\n" || (firs === 0 && las !== -1)) {
+    //console.log("Happy");
 
-  let stri = output.value.substr(0, las + 1);
-  //if (rep.test(output.value[len - 1])) {
+    //if (output.value[len - 1] == "\x001") {
+    //console.log("alone new line");
+    stri = output.value;
+  } else {
+    stri = output.value.substr(0, las + 1);
+  }
 
-  //if (output.value[len - 1] == "\x001") {
-  //  console.log("alone new line");
-  //  stri = output.value;
-  //} else {
-  //  stri = output.value.substr(0, las + 1);
+  //console.log(output.value.length);
+
+  if (firs === 0 && las !== -1) {
+    //console.log("krai");
+    stri = stri.replace(/\n\x001\n/, "\n\n");
+    //stri = stri.replace(/\n$/, "\n\x001");
+    //stri = stri.replace(/(.*)$/, "$1\n\x001\n");
+
+    const gap = input.value.length - str.length;
+    console.log("gap:", gap);
+    //const replaceThis = /(.)\`${gap}`$/;
+    //console.log(replaceThis);
+    //output.value = output.value.replace(/(\n.*)$/, "$1\n");
+    //const repl = new RegExp(`${replaceThis}`, "g");
+    //str.replace(re, withThis);
+    //stri = stri.replace(/(\n.*)$/, "$1\nbuba");
+    stri = input.value; //.replace(/(\n.*)$/, "$1\n");
+    //position.value = input.value.replace(/(\n.*)$/, "$1\nbuba");
+    //console.log(stri);
+  } else {
+    stri = stri.replace(/\n\n$/, "\n\x001\n");
+  }
+  //if (output.value.length == input.value.length) {
+  //  console.log("krai");
+  //  stri.replace(/.$/, "\n\x001");
   //}
-
   //const stri = rep.test(output.value)
   //  ? output.value.substr(0, las + 1)
   //  : output.value;
@@ -433,10 +463,18 @@ const update = function () {
 
     const scrollTop = position.scrollHeight;
 
-    position.scrollTop = scrollTop;
+    //console.log("position.scrollHeight:", position.scrollHeight);
 
-    const scrolll = position.scrollTop;
-    preview.scrollTop = scrolll;
+    //console.log("position.scrollTop", position.scrollTop);
+
+    position.scrollTop = scrollTop;
+    //console.log("position.scrollTop", position.scrollTop);
+    preview.scrollTop = position.scrollTop;
+    //preview.scrollHeight = position.scrollHeight;
+    //const scrolll = position.scrollTop;
+    //preview.scrollTop = scrolll;
+    //console.log("preview.scrollHeight", preview.scrollHeight);
+    //console.log("preview.scrollTop", preview.scrollTop);
 
     if (err) console.log(err);
   });
@@ -450,4 +488,4 @@ const update = function () {
 
 input.addEventListener("keyup", update);
 input.addEventListener("mouseup", update);
-position.addEventListener("scroll", debounce(update, 50, false));
+//position.addEventListener("scroll", debounce(update, 50, false));
