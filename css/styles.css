@@ -666,7 +666,7 @@ textarea:hover {
 #position {
   position: absolute;
   border: 1px solid transparent;
-  border-color: red;
+  /*border-color: red;*/
   z-index: -1;
   resize: none;
   overflow: auto;
