@@ -501,19 +501,28 @@ ol.preview-outer li {
 
 .sort-ascending,
 .sort-descending {
-  width: 38px;
-  height: 38px;
-  right: 0;
-  top: 0;
-  fill: white;
+  width: 29px;
+  right: 1px;
+  top: 1px;
+  fill: #777;
 }
 
 .sort-ascending {
-  background-image: url(../img/sorting-1-2.svg);
+  /*background-image: url(../img/sorting-1-2.svg);*/
+  opacity: 1;
 }
 
 .sort-descending {
-  background-image: url(../img/sorting-2-1.svg);
+  /*background-image: url(../img/sorting-1-2-revert-5.svg);*/
+  opacity: 0;
+}
+
+.reversed .sort-ascending {
+  opacity: 0;
+}
+
+.reversed .sort-descending {
+  opacity: 1;
 }
 
 .reversed #list-order {
@@ -526,7 +535,7 @@ ol.preview-outer li {
   border-width: 2px;
   transition: all 0.2s linear;
   position: relative;
-  padding: 19px;
+  padding: 16px;
 }
 
 #x-button:hover,
