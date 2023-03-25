@@ -699,13 +699,17 @@ textarea:hover {
 
 /*#input,
 #preview {
-  opacity: 0.6;
+  opacity: 0.5;
+}*/
+
+/*#position * {
   color: red;
 }*/
 
 #output,
 #position {
   opacity: 0;
+  /*color: red;*/
   visibility: collapse;
 }
 
