@@ -335,11 +335,12 @@ const update = function () {
     } else {
       if (head.slice(-2) == "\n\n") {
         //console.log("double newline");
-        stringToPreview = head.replace(/\n\n$/, "\n\x001\n");
+        stringToPreview = head; //.replace(/\n\n$/, "\n\x001\n");
       } else {
         //console.log("single newline");
         stringToPreview = head.substr(0, endHead + 1);
       }
+      stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
     }
 
   //console.log(stringToPreview);
