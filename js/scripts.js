@@ -319,28 +319,29 @@ const update = function () {
   //const gap = input.value.length - head.length;
   //console.log("gap:", gap);
 
-  const startTail = headLastNewLine != -1 ? headLastNewLine : head.length;
+  const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
 
-  const tail = input.value.substr(startTail, input.value.length);
+  const tail = input.value.substr(endHead, input.value.length);
   //console.log(tail);
 
   const tailLastNewLine = regexLastIndexOf(tail, re);
   //console.log("tailLastNewLine:", tailLastNewLine);
 
-  let stringToPreview;
-  if (head.slice(-2) == "\n\n" || tailLastNewLine == 0) {
-    //console.log("alone new line");
-    stringToPreview = head;
-  } else {
-    stringToPreview = head.substr(0, headLastNewLine + 1);
-  }
-
+  let stringToPreview = "";
   if (head.length)
     if (tailLastNewLine == 0) {
+      //console.log("stop! we are on the edge!");
       stringToPreview = input.value;
     } else {
-      stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
+      if (head.slice(-2) == "\n\n") {
+        //console.log("double newline");
+        stringToPreview = head.replace(/\n\n$/, "\n\x001\n");
+      } else {
+        //console.log("single newline");
+        stringToPreview = head.substr(0, endHead + 1);
+      }
     }
+
   //console.log(stringToPreview);
 
   marked.parse(stringToPreview, (err, html) => {
