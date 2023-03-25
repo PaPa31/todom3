@@ -543,14 +543,18 @@ ol.preview-outer li {
   opacity: 1;
 }
 
-button.delete-one-item {
-  display: inline-block;
+#item-control {
+  position: relative;
+  display: flex;
+}
+
+button.delete-one-item,
+button.edit-item {
   width: 20px;
   height: 30px;
   margin: 5px 6px;
   padding: 5px 15px;
-  background-image: url(../img/trash.svg);
-  background-size: 20px 30px;
+  background-size: auto;
   background-repeat: no-repeat;
   opacity: 0.6;
   background-color: initial;
@@ -558,7 +562,27 @@ button.delete-one-item {
   background-position: center center;
 }
 
-button.delete-one-item:hover {
+button.edit-item {
+  position: absolute;
+}
+
+button.delete-one-item {
+  display: inline-block;
+  background-image: url(../img/trash.svg);
+}
+
+button.edit-item {
+  background-image: url(../img/edit.svg);
+  left: -41px;
+  opacity: 0;
+}
+
+ol.list-items > li > div:hover + span#item-control > button {
+  opacity: 0.6;
+}
+
+.delete-one-item:hover,
+ol.list-items > li > div + span#item-control > button:hover {
   opacity: 1;
 }
 

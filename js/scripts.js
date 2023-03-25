@@ -70,7 +70,7 @@ const liMaker = (text) => {
   li.appendChild(div);
   ol.appendChild(li);
   spanMaker(li);
-  buttonMaker(li);
+  trashButtonMaker(li);
   indexedItemsArray.push(counter.toString());
   showArrows(ol.childElementCount);
   counter++;
@@ -78,10 +78,22 @@ const liMaker = (text) => {
 
 const spanMaker = (liTag) => {
   const spanTag = document.createElement("span");
+  spanTag.setAttribute("id", "item-control");
   liTag.appendChild(spanTag);
+
+  editButtonMaker(spanTag);
 };
 
-const buttonMaker = (liTag) => {
+const editButtonMaker = (spanTag) => {
+  const buttonTag = document.createElement("button");
+  buttonTag.setAttribute("class", "edit-item btn");
+  buttonTag.setAttribute("onclick", "editItem(this.parentElement)");
+  buttonTag.setAttribute("title", "Edit item");
+
+  spanTag.appendChild(buttonTag);
+};
+
+const trashButtonMaker = (liTag) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-one-item btn");
   buttonTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
