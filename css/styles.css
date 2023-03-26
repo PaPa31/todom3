@@ -544,8 +544,10 @@ ol.preview-outer li {
 }
 
 #item-control {
-  position: relative;
-  display: flex;
+  /*position: relative;*/
+  margin-left: -41px;
+  height: 100%;
+  display: inline-block;
 }
 
 button.delete-one-item,
@@ -563,26 +565,27 @@ button.edit-item {
 }
 
 button.edit-item {
-  position: absolute;
+  /*position: absolute;*/
 }
 
 button.delete-one-item {
-  display: inline-block;
+  /*display: inline-block;*/
   background-image: url(../img/trash.svg);
 }
 
 button.edit-item {
   background-image: url(../img/edit.svg);
-  left: -41px;
+  /*left: -41px;*/
   opacity: 0;
 }
 
-ol.list-items > li > div:hover + span#item-control > button {
+/*ol.list-items > li > div:hover + span#item-control > button*/
+span#item-control:hover > button {
   opacity: 0.6;
 }
 
 .delete-one-item:hover,
-ol.list-items > li > div + span#item-control > button:hover {
+span#item-control > button:hover {
   opacity: 1;
 }
 
