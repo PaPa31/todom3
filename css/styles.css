@@ -545,7 +545,7 @@ ol.preview-outer li {
 
 #item-control {
   /*position: relative;*/
-  margin-left: -41px;
+  margin-left: -51px;
   height: 100%;
   display: inline-block;
 }
@@ -576,13 +576,14 @@ button.delete-one-item {
 button.edit-item {
   background-image: url(../img/edit.svg);
   /*left: -41px;*/
-  opacity: 0;
+  opacity: 0.6;
+  padding: 18px;
 }
 
 /*ol.list-items > li > div:hover + span#item-control > button*/
-span#item-control:hover > button {
+/*span#item-control:hover > button {
   opacity: 0.6;
-}
+}*/
 
 .delete-one-item:hover,
 span#item-control > button:hover {
