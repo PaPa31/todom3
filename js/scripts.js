@@ -62,6 +62,9 @@ input.scrollTop = input.scrollHeight;
 
 returnInputButton.style = "display:none";
 
+let indexToEdit;
+let editedItem;
+
 const liMaker = (text) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
@@ -87,7 +90,10 @@ const spanMaker = (liTag) => {
 const editButtonMaker = (spanTag) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "edit-item btn");
-  buttonTag.setAttribute("onclick", "editItem(this.parentElement)");
+  buttonTag.setAttribute(
+    "onclick",
+    "editItem(this.parentElement.parentElement)"
+  );
   buttonTag.setAttribute("title", "Edit item");
 
   spanTag.appendChild(buttonTag);
@@ -100,6 +106,19 @@ const trashButtonMaker = (liTag) => {
   buttonTag.setAttribute("title", "Double-click to move to Trash");
 
   liTag.appendChild(buttonTag);
+};
+
+const editItem = (item) => {
+  console.log(item.firstChild);
+  window.event.stopPropagation();
+  indexToEdit = indexedItemsArray.indexOf(item.id);
+
+  editedItem = item;
+
+  console.log("indexToEdit:", indexToEdit);
+
+  input.value = itemsArray[indexToEdit];
+  convertToMarkdown(input.value);
 };
 
 const deleteOneItem = (item) => {
@@ -198,11 +217,23 @@ html.addEventListener("click", function () {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
+  console.log("indexToEdit:", indexToEdit);
+  if (indexToEdit != null) {
+    console.log("old");
+    itemsArray[indexToEdit] = input.value;
+    indexToEdit = null;
+    //ol.removeChild(item);
+    //const editedItem = document.getElementById(indexToEdit);
+    console.log("editedItem:", editedItem);
+    editedItem.firstChild.innerHTML = marked.parse(input.value);
+  } else {
+    console.log("new");
+    itemsArray.push(input.value);
+    liMaker(input.value);
+  }
 
-  itemsArray.push(input.value);
   localStorage.setItem("items", JSON.stringify(itemsArray));
 
-  liMaker(input.value);
   localStorage.removeItem("last");
   returnInputButton.style = "display:block";
   xButton.style = "display:none";
