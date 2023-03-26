@@ -109,13 +109,13 @@ const trashButtonMaker = (liTag) => {
 };
 
 const editItem = (item) => {
-  console.log(item.firstChild);
+  //console.log(item.firstChild);
   window.event.stopPropagation();
   indexToEdit = indexedItemsArray.indexOf(item.id);
 
   editedItem = item;
 
-  console.log("indexToEdit:", indexToEdit);
+  //console.log("indexToEdit:", indexToEdit);
 
   input.value = itemsArray[indexToEdit];
   convertToMarkdown(input.value);
@@ -326,22 +326,15 @@ clearTrashButton.addEventListener("click", function (e) {
 convertToMarkdown(input.value);
 //preview.scrollTop = preview.scrollHeight;
 
-function regexLastIndexOf(str, regex) {
-  regex = regex.global
-    ? regex
-    : new RegExp(
-        regex.source,
-        "g" + (regex.ignoreCase ? "i" : "") + (regex.multiLine ? "m" : "")
-      );
-  var lastIndexOf = -1;
-  var nextStop = 0;
-  var result;
-  while ((result = regex.exec(str)) != null) {
-    lastIndexOf = result.index;
-    regex.lastIndex = ++nextStop;
+const lastNewLine = function (str) {
+  let caret = str.length - 1;
+  let sym = str[caret];
+  while (sym != "\n" && caret > 0) {
+    caret--;
+    sym = str[caret];
   }
-  return lastIndexOf;
-}
+  return caret;
+};
 
 const update = function () {
   const head = input.value.substr(0, input.selectionStart);
@@ -354,9 +347,7 @@ const update = function () {
 
   output.scrollTop = output.scrollHeight;
 
-  const re = /\n/;
-
-  const headLastNewLine = regexLastIndexOf(head, re);
+  const headLastNewLine = lastNewLine(head);
   //console.log("headLastNewLine:", headLastNewLine);
 
   //const gap = input.value.length - head.length;
@@ -367,7 +358,7 @@ const update = function () {
   const tail = input.value.substr(endHead, input.value.length);
   //console.log(tail);
 
-  const tailLastNewLine = regexLastIndexOf(tail, re);
+  const tailLastNewLine = lastNewLine(tail);
   //console.log("tailLastNewLine:", tailLastNewLine);
 
   let stringToPreview = "";
@@ -378,7 +369,7 @@ const update = function () {
     } else {
       if (head.slice(-2) == "\n\n") {
         //console.log("double newline");
-        stringToPreview = head; //.replace(/\n\n$/, "\n\x001\n");
+        stringToPreview = head;
       } else {
         //console.log("single newline");
         stringToPreview = head.substr(0, endHead + 1);
