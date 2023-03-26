@@ -118,7 +118,7 @@ const editItem = (item) => {
   //console.log("indexToEdit:", indexToEdit);
 
   input.value = itemsArray[indexToEdit];
-  convertToMarkdown(input.value);
+  mdToPreview(input.value);
 };
 
 const deleteOneItem = (item) => {
@@ -163,7 +163,7 @@ const showArrows = (count) => {
   }
 };
 
-const convertToMarkdown = (markdownString) => {
+const mdToPreview = (markdownString) => {
   marked.parse(markdownString, (err, html) => {
     preview.innerHTML = html;
 
@@ -200,7 +200,7 @@ input.addEventListener(
       returnInputButton.style = "display:none";
 
       localStorage.setItem("last", lastInputValue);
-      convertToMarkdown(e.target.value);
+      mdToPreview(e.target.value);
     },
     200,
     false
@@ -280,7 +280,7 @@ xButton.addEventListener("click", function () {
 
 returnInputButton.addEventListener("click", function () {
   input.value = lastInputValue;
-  convertToMarkdown(input.value);
+  mdToPreview(input.value);
   localStorage.setItem("last", lastInputValue);
   returnInputButton.style = "display:none";
   xButton.style = "display:block";
@@ -323,7 +323,7 @@ clearTrashButton.addEventListener("click", function (e) {
   twoClickToTrash = false;
 });
 
-convertToMarkdown(input.value);
+mdToPreview(input.value);
 //preview.scrollTop = preview.scrollHeight;
 
 const lastNewLine = function (str) {
