@@ -697,6 +697,7 @@ textarea:hover {
 
 #input {
   z-index: 2;
+  scroll-behavior: smooth;
 }
 
 #output,

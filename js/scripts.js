@@ -119,13 +119,14 @@ const editItem = (item) => {
 
   input.value = itemsArray[indexToEdit];
 
-  input.focus();
   input.scrollIntoView({
     behavior: "smooth",
     inline: "center",
     block: "center",
   });
-
+  window.setTimeout(function () {
+    input.focus();
+  }, 1000);
   mdToPreview(input.value);
 };
 
