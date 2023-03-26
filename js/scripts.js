@@ -118,6 +118,14 @@ const editItem = (item) => {
   //console.log("indexToEdit:", indexToEdit);
 
   input.value = itemsArray[indexToEdit];
+
+  input.focus();
+  input.scrollIntoView({
+    behavior: "smooth",
+    inline: "center",
+    block: "center",
+  });
+
   mdToPreview(input.value);
 };
 
@@ -215,6 +223,17 @@ html.addEventListener("click", function () {
   twoClickToTrash = false;
 });
 
+function scrollToTargetAdjusted(targetElement, offset) {
+  const element = document.getElementById(targetElement);
+  const elementPosition = element.getBoundingClientRect().top;
+  const offsetPosition = elementPosition + offset;
+
+  window.scrollBy({
+    top: offsetPosition,
+    behavior: "smooth",
+  });
+}
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   console.log("indexToEdit:", indexToEdit);
@@ -226,6 +245,16 @@ form.addEventListener("submit", function (e) {
     //const editedItem = document.getElementById(indexToEdit);
     console.log("editedItem:", editedItem);
     editedItem.firstChild.innerHTML = marked.parse(input.value);
+
+    //editedItem.focus();
+    //editedItem.scrollIntoView({
+    //  behavior: "smooth",
+    //  inline: "center",
+    //  block: "center",
+    //});
+    //editedItem.offset = preview.scrollTop;
+    //preview.scrollTop = preview.scrollHeight;
+    scrollToTargetAdjusted(editedItem.id, preview.scrollTop);
   } else {
     console.log("new");
     itemsArray.push(input.value);
