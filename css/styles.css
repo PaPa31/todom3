@@ -545,7 +545,8 @@ ol.preview-outer li {
 
 #item-control {
   /*position: relative;*/
-  margin-left: -51px;
+  margin-left: -46px;
+  margin-top: -3px;
   height: 100%;
   display: inline-block;
 }
@@ -577,7 +578,7 @@ button.edit-item {
   background-image: url(../img/edit.svg);
   /*left: -41px;*/
   opacity: 0.6;
-  padding: 18px;
+  padding: 16px;
 }
 
 /*ol.list-items > li > div:hover + span#item-control > button*/
