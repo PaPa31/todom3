@@ -118,6 +118,7 @@ const editItem = (item) => {
   //console.log("indexToEdit:", indexToEdit);
 
   input.value = itemsArray[indexToEdit];
+  lastInputValue = input.value;
 
   input.scrollIntoView({
     behavior: "smooth",
