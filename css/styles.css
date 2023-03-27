@@ -193,7 +193,8 @@ button.first {
 }
 
 .markdown-body > ol > li > div {
-  width: 93%;
+  /*width: 93%;*/
+  width: 100%;
   float: left;
   padding: 10px;
   border-radius: 5px;
@@ -208,7 +209,8 @@ button.first {
 
 .markdown-body > ol > li {
   width: 100%;
-  padding-bottom: 10px;
+  /*padding-bottom: 10px;*/
+  padding: 5px;
 }
 
 .markdown-body > ol > li > div > :first-child,
@@ -544,50 +546,46 @@ ol.preview-outer li {
 }
 
 #item-control {
-  /*position: relative;*/
-  margin-left: -46px;
-  margin-top: -3px;
-  height: 100%;
-  display: inline-block;
+  margin-left: -85px;
+  width: 83px;
+  padding: 5px 0;
+  background-color: #31313180;
+  /*border: 1px solid red;*/
+  /*margin-top: 4px;*/
 }
 
 button.delete-one-item,
 button.edit-item {
-  width: 20px;
+  width: 30px;
   height: 30px;
-  margin: 5px 6px;
-  padding: 5px 15px;
   background-size: auto;
   background-repeat: no-repeat;
   opacity: 0.6;
   background-color: initial;
   border: initial;
   background-position: center center;
-}
-
-button.edit-item {
-  /*position: absolute;*/
+  padding: 0;
+  margin: 0 5px;
+  display: block;
+  float: left;
 }
 
 button.delete-one-item {
-  /*display: inline-block;*/
   background-image: url(../img/trash.svg);
 }
 
 button.edit-item {
   background-image: url(../img/edit.svg);
-  /*left: -41px;*/
   opacity: 0.6;
-  padding: 16px;
 }
 
 /*ol.list-items > li > div:hover + span#item-control > button*/
-/*span#item-control:hover > button {
+/*#item-control:hover > button {
   opacity: 0.6;
 }*/
 
 .delete-one-item:hover,
-span#item-control > button:hover {
+#item-control > button:hover {
   opacity: 1;
 }
 

@@ -73,18 +73,18 @@ const liMaker = (text) => {
   li.appendChild(div);
   ol.appendChild(li);
   spanMaker(li);
-  trashButtonMaker(li);
   indexedItemsArray.push(counter.toString());
   showArrows(ol.childElementCount);
   counter++;
 };
 
 const spanMaker = (liTag) => {
-  const spanTag = document.createElement("span");
+  const spanTag = document.createElement("div");
   spanTag.setAttribute("id", "item-control");
   liTag.appendChild(spanTag);
 
   editButtonMaker(spanTag);
+  trashButtonMaker(spanTag);
 };
 
 const editButtonMaker = (spanTag) => {
