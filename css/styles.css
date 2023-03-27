@@ -549,9 +549,13 @@ ol.preview-outer li {
   margin-left: -85px;
   width: 83px;
   padding: 5px 0;
-  background-color: #31313180;
+  background-color: #f0f0f073;
   /*border: 1px solid red;*/
   /*margin-top: 4px;*/
+}
+
+.dark #item-control {
+  background-color: #31313180;
 }
 
 button.delete-one-item,
