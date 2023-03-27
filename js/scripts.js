@@ -225,14 +225,19 @@ html.addEventListener("click", function () {
 });
 
 function scrollToTargetAdjusted(targetElement, offset) {
-  const element = document.getElementById(targetElement);
-  const elementPosition = element.getBoundingClientRect().top;
+  //const element = document.getElementById(targetElement);
+  const elementPosition = targetElement.getBoundingClientRect().top;
   const offsetPosition = elementPosition + offset;
 
   window.scrollBy({
     top: offsetPosition,
     behavior: "smooth",
   });
+
+  targetElement.style = "background-color:orange";
+  window.setTimeout(function () {
+    targetElement.style = "";
+  }, 300);
 }
 
 form.addEventListener("submit", function (e) {
@@ -255,7 +260,7 @@ form.addEventListener("submit", function (e) {
     //});
     //editedItem.offset = preview.scrollTop;
     //preview.scrollTop = preview.scrollHeight;
-    scrollToTargetAdjusted(editedItem.id, preview.scrollTop);
+    scrollToTargetAdjusted(editedItem, preview.scrollTop);
   } else {
     console.log("new");
     itemsArray.push(input.value);
