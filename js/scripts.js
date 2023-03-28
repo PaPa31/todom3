@@ -132,11 +132,7 @@ const editItem = (item) => {
   input.value = itemsArray[indexToEdit];
   //lastInputValue = input.value;
 
-  input.scrollIntoView({
-    behavior: "smooth",
-    inline: "center",
-    block: "center",
-  });
+  preview.scrollIntoView(true);
   input.focus();
   input.parentElement.style =
     "background-color: #95712f; border-color: #5a4c30;";
@@ -248,10 +244,10 @@ function scrollToTargetAdjusted(targetElement, offset) {
   const elementPosition = targetElement.getBoundingClientRect().top;
   const offsetPosition = elementPosition + offset;
 
-  window.scrollBy({
-    top: offsetPosition,
-    behavior: "smooth",
-  });
+  if (window.innerHeight < offsetPosition)
+    window.scrollBy({
+      top: offsetPosition,
+    });
 
   targetElement.style = "background-color:orange";
   window.setTimeout(function () {
@@ -262,6 +258,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   console.log("indexToEdit:", indexToEdit);
+  preview.innerHTML = "";
   if (indexToEdit != null) {
     console.log("old");
     itemsArray[indexToEdit] = input.value;
@@ -295,7 +292,6 @@ form.addEventListener("submit", function (e) {
   returnInputButton.style = "display:block";
   xButton.style = "display:none";
   input.value = "";
-  preview.innerHTML = "";
 });
 
 itemsArray?.forEach((item, key) => {
