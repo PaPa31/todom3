@@ -19,6 +19,7 @@
   --scrollbar-hover: #777;
   --scrollbar-hover-dark: #999;
 
+  --background-color: #fff;
   --background-color-dark: #2b2b2b;
 
   --border-color-cite-dark: #333;
@@ -28,6 +29,8 @@
 
   --color-bg-default: #f0f0f0;
   --color-bg-default-dark: #313131;
+
+  --color-button-dark: #dfdfdf;
 
   /*from GitHub*/
   --color-border-default: #d0d7de;
@@ -140,7 +143,7 @@ button.first {
 }
 
 .dark .btn:focus-visible {
-  outline-color: white;
+  outline-color: var(--background-color);
 }
 
 .scroll::-webkit-scrollbar {
@@ -175,7 +178,7 @@ button.first {
 .dark [type="submit"],
 .dark [type="reset"],
 .dark [type="button"] {
-  color: #dfdfdf;
+  color: var(--color-button-dark);
   border: 1px solid var(--button-dark);
   background: var(--button-dark);
 }
@@ -183,7 +186,7 @@ button.first {
 .dark [type="submit"]:hover,
 .dark [type="reset"]:hover,
 .dark [type="button"]:hover {
-  color: #dfdfdf;
+  color: var(--color-button-dark);
   border: 1px solid var(--button-hover-dark);
   background: var(--button-hover-dark);
 }
@@ -688,7 +691,8 @@ textarea:hover {
 .dark textarea {
   color: var(--color-dark);
   border: 1px solid var(--border-color-dark);
-  background-color: var(--color-bg-default-dark);
+  /*background-color: var(--color-bg-default-dark);*/
+  background-color: var(--background-color-dark);
 }
 
 #input-label {
@@ -700,21 +704,23 @@ textarea:hover {
   margin-right: auto;
   width: fit-content;
   transition: opacity 0.2s ease;
-  top: -5px;
+  top: -6px;
+  border-left: 2px solid var(--background-color);
 }
 
 .dark #input-label {
   color: var(--border-color-dark);
+  border-color: var(--background-color-dark);
 }
 
 #input-label > * {
-  padding: 1px 4px;
-  height: 19px;
+  padding: 0 4px;
+  height: 18px;
   display: inline-block;
 }
 
 #input-label > div {
-  background: white;
+  background: var(--background-color);
   border-radius: 3px;
 }
 
@@ -724,12 +730,12 @@ textarea:hover {
 
 #input-label span:first-child {
   background: #6c5100;
-  color: #dfdfdf;
+  color: var(--color-button-dark);
   border-radius: 3px 0 0 3px;
 }
 
 #input-label span:last-child {
-  background: white;
+  background: var(--background-color);
   border-radius: 0 3px 3px 0;
 }
 
