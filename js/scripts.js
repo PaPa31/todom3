@@ -138,7 +138,8 @@ const editItem = (item) => {
     block: "center",
   });
   input.focus();
-  input.parentElement.style = "background-color: #95712f";
+  input.parentElement.style =
+    "background-color: #95712f; border-color: #5a4c30;";
   //window.setTimeout(function () {
   //  input.focus();
   //}, 1000);
