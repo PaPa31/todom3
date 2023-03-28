@@ -671,13 +671,13 @@ textarea {
   resize: none;
   border: 1px solid var(--border-color);
   background-color: var(--color-bg-default);
+  border-color: inherit !important;
 }
 
 textarea:focus,
 textarea:active {
   border: 1px solid var(--border-color);
   box-shadow: none;
-  border-color: inherit !important;
 }
 
 textarea:hover {
