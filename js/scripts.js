@@ -137,9 +137,11 @@ const editItem = (item) => {
     inline: "center",
     block: "center",
   });
-  window.setTimeout(function () {
-    input.focus();
-  }, 1000);
+  input.focus();
+  input.parentElement.style = "background-color: #95712f";
+  //window.setTimeout(function () {
+  //  input.focus();
+  //}, 1000);
   mdToPreview(input.value);
 };
 
@@ -276,6 +278,7 @@ form.addEventListener("submit", function (e) {
     //});
     //editedItem.offset = preview.scrollTop;
     //preview.scrollTop = preview.scrollHeight;
+    input.parentElement.style = null;
     scrollToTargetAdjusted(editedItem, preview.scrollTop);
   } else {
     console.log("new");

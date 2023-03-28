@@ -658,10 +658,11 @@ button.edit-item {
 }
 
 #form1 {
-  padding-top: 12px;
   position: relative;
   width: 95%;
-  margin: 0 auto;
+  margin: 12px auto 5px;
+  padding: 5px;
+  border-radius: 4px;
   /*flex-direction: column;*/
 }
 
@@ -698,14 +699,10 @@ textarea:hover {
   width: fit-content;
   transition: opacity 0.2s ease;
   top: 3px;
-  background-color: white;
-  padding: 0 1px;
-  height: 10px;
 }
 
 .dark #input-label {
   color: var(--border-color-dark);
-  background-color: #2b2b2b;
 }
 
 #input-label > * {
@@ -764,6 +761,7 @@ textarea:hover {
 #input {
   z-index: 2;
   scroll-behavior: smooth;
+  margin: 0;
 }
 
 #output,
@@ -785,13 +783,13 @@ textarea:hover {
   height: 186px;
   /*display: block;*/
   border-radius: 4px;
+  margin: 0;
 }
 
 #output {
   /*width: 100%;*/
   /*position: relative;
   margin-top: -196px;*/
-  margin-bottom: 10px;
 }
 
 #position {
