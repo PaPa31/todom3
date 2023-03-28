@@ -58,6 +58,10 @@ if (lastInputValue) {
   xButton.style = "display:none";
 }
 
+input.style = null;
+input.classList.add("border");
+//inputLabel.classList.add("bg");
+
 //var scrollTop = input.scrollTop;
 
 input.value = lastInputValue;
@@ -134,8 +138,7 @@ const editItem = (item) => {
 
   preview.scrollIntoView(false);
   input.focus();
-  input.parentElement.style =
-    "background-color: #95712f; border-color: #5a4c30;";
+  input.style = "border-color: #5a4c30;";
   //window.setTimeout(function () {
   //  input.focus();
   //}, 1000);
@@ -214,6 +217,7 @@ input.addEventListener(
     function (e) {
       lastInputValue = e.target.value;
       if (lastInputValue) {
+        inputLabel.innerHTML = "<div>New</div>";
         inputLabel.classList.add("visible");
         xButton.style = "display:block";
       } else {
@@ -262,6 +266,7 @@ form.addEventListener("submit", function (e) {
   preview.innerHTML = "";
   if (indexToEdit != null) {
     console.log("old");
+
     itemsArray[indexToEdit] = input.value;
     indexToEdit = null;
     //ol.removeChild(item);
@@ -277,7 +282,7 @@ form.addEventListener("submit", function (e) {
     //});
     //editedItem.offset = preview.scrollTop;
     //preview.scrollTop = preview.scrollHeight;
-    input.parentElement.style = null;
+    input.style = null;
     scrollToTargetAdjusted(editedItem, previewOffset);
   } else {
     console.log("new");
@@ -288,9 +293,18 @@ form.addEventListener("submit", function (e) {
   localStorage.setItem("items", JSON.stringify(itemsArray));
 
   localStorage.removeItem("last");
-  inputLabel.innerHTML = "<div>New</div>";
+  //input.classList.add("border");
   inputLabel.classList.remove("visible");
-  returnInputButton.style = "display:block";
+  window.setTimeout(function () {
+    inputLabel.innerHTML = "<div>New</div>";
+  }, 300);
+
+  if (lastInputValue) {
+    returnInputButton.style = "display:block";
+  } else {
+    xButton.style = "display:none";
+  }
+
   xButton.style = "display:none";
   input.value = "";
 });
