@@ -132,7 +132,7 @@ const editItem = (item) => {
   input.value = itemsArray[indexToEdit];
   //lastInputValue = input.value;
 
-  preview.scrollIntoView(true);
+  preview.scrollIntoView(false);
   input.focus();
   input.parentElement.style =
     "background-color: #95712f; border-color: #5a4c30;";
@@ -258,6 +258,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   console.log("indexToEdit:", indexToEdit);
+  const previewOffset = preview.scrollTop;
   preview.innerHTML = "";
   if (indexToEdit != null) {
     console.log("old");
@@ -277,7 +278,7 @@ form.addEventListener("submit", function (e) {
     //editedItem.offset = preview.scrollTop;
     //preview.scrollTop = preview.scrollHeight;
     input.parentElement.style = null;
-    scrollToTargetAdjusted(editedItem, preview.scrollTop);
+    scrollToTargetAdjusted(editedItem, previewOffset);
   } else {
     console.log("new");
     itemsArray.push(input.value);
