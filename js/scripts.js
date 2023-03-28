@@ -18,6 +18,8 @@ const deletedCounter = document.getElementById("deleted-counter");
 const output = document.getElementById("output");
 const position = document.getElementById("position");
 
+const inputLabel = document.getElementById("input-label");
+
 let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
   : [];
@@ -51,6 +53,7 @@ let lastInputValue = localStorage.getItem("last")
 
 if (lastInputValue) {
   xButton.style = "display:block";
+  inputLabel.classList.add("visible");
 } else {
   xButton.style = "display:none";
 }
@@ -102,7 +105,10 @@ const editButtonMaker = (spanTag) => {
 const trashButtonMaker = (liTag) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-one-item btn");
-  buttonTag.setAttribute("onclick", "deleteOneItem(this.parentElement)");
+  buttonTag.setAttribute(
+    "onclick",
+    "deleteOneItem(this.parentElement.parentElement)"
+  );
   buttonTag.setAttribute("title", "Double-click to move to Trash");
 
   liTag.appendChild(buttonTag);
@@ -111,6 +117,12 @@ const trashButtonMaker = (liTag) => {
 const editItem = (item) => {
   //console.log(item.firstChild);
   window.event.stopPropagation();
+  inputLabel.classList.add("visible");
+  returnInputButton.style = "display:none";
+  xButton.style = "display:block";
+  inputLabel.innerHTML = `<span>Edit: </span><span>#${
+    Number(item.id) + 1
+  }</span>`;
   indexToEdit = indexedItemsArray.indexOf(item.id);
 
   editedItem = item;
@@ -118,7 +130,7 @@ const editItem = (item) => {
   //console.log("indexToEdit:", indexToEdit);
 
   input.value = itemsArray[indexToEdit];
-  lastInputValue = input.value;
+  //lastInputValue = input.value;
 
   input.scrollIntoView({
     behavior: "smooth",
@@ -153,9 +165,9 @@ const deleteOneItem = (item) => {
     twoClickToTrash = false;
     lastClickId = undefined;
   } else {
-    if (lastItem) lastItem.lastChild.classList.remove("filter-red");
+    if (lastItem) lastItem.lastChild.lastChild.classList.remove("filter-red");
     lastClickId = item.id;
-    item.lastChild.classList.add("filter-red");
+    item.lastChild.lastChild.classList.add("filter-red");
     lastItem = item;
     twoClickToTrash = true;
   }
@@ -203,8 +215,10 @@ input.addEventListener(
     function (e) {
       lastInputValue = e.target.value;
       if (lastInputValue) {
+        inputLabel.classList.add("visible");
         xButton.style = "display:block";
       } else {
+        inputLabel.classList.remove("visible");
         xButton.style = "display:none";
       }
       returnInputButton.style = "display:none";
@@ -221,7 +235,8 @@ input.addEventListener(
 html.addEventListener("click", function () {
   if (twoClickTrashClear) clearTrashButton.classList.remove("border-red");
   twoClickTrashClear = false;
-  if (twoClickToTrash) lastItem.lastChild.classList.remove("filter-red");
+  if (twoClickToTrash)
+    lastItem.lastChild.lastChild.classList.remove("filter-red");
   twoClickToTrash = false;
 });
 
@@ -271,6 +286,8 @@ form.addEventListener("submit", function (e) {
   localStorage.setItem("items", JSON.stringify(itemsArray));
 
   localStorage.removeItem("last");
+  inputLabel.innerHTML = "<div>New</div>";
+  inputLabel.classList.remove("visible");
   returnInputButton.style = "display:block";
   xButton.style = "display:none";
   input.value = "";
@@ -307,19 +324,27 @@ deleteAllItemsButton.addEventListener("click", function (e) {
 });
 
 xButton.addEventListener("click", function () {
-  localStorage.removeItem("last");
+  if (indexToEdit != null) {
+    lastInputValue = input.value;
+  } else {
+    localStorage.removeItem("last");
+    inputLabel.classList.remove("visible");
+  }
   returnInputButton.style = "display:block";
   xButton.style = "display:none";
   input.value = "";
   preview.innerHTML = "";
+  input.focus();
 });
 
 returnInputButton.addEventListener("click", function () {
   input.value = lastInputValue;
   mdToPreview(input.value);
   localStorage.setItem("last", lastInputValue);
+  inputLabel.classList.add("visible");
   returnInputButton.style = "display:none";
   xButton.style = "display:block";
+  input.focus();
 });
 
 restoreItemButton.addEventListener("click", function () {
@@ -355,7 +380,8 @@ clearTrashButton.addEventListener("click", function (e) {
     clearTrashButton.classList.add("border-red");
     twoClickTrashClear = true;
   }
-  if (twoClickToTrash) lastItem.lastChild.classList.remove("filter-red");
+  if (twoClickToTrash)
+    lastItem.lastChild.lastChild.classList.remove("filter-red");
   twoClickToTrash = false;
 });
 

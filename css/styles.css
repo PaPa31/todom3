@@ -658,7 +658,7 @@ button.edit-item {
 }
 
 #form1 {
-  padding-top: 10px;
+  padding-top: 12px;
   position: relative;
   width: 95%;
   margin: 0 auto;
@@ -674,6 +674,7 @@ textarea {
 textarea:focus,
 textarea:active {
   border: 1px solid var(--border-color);
+  box-shadow: none;
 }
 
 textarea:hover {
@@ -685,6 +686,56 @@ textarea:hover {
   color: var(--color-dark);
   border: 1px solid var(--border-color-dark);
   background-color: var(--color-bg-default-dark);
+}
+
+#input-label {
+  position: absolute;
+  z-index: 11;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  transition: opacity 0.2s ease;
+  top: 3px;
+  background-color: white;
+  padding: 0 1px;
+  height: 10px;
+}
+
+.dark #input-label {
+  color: var(--border-color-dark);
+  background-color: #2b2b2b;
+}
+
+#input-label > * {
+  padding: 1px 4px;
+  height: 19px;
+  display: inline-block;
+}
+
+#input-label > div {
+  background: white;
+  border-radius: 3px;
+}
+
+.dark #input-label > div {
+  background: var(--background-color-dark);
+}
+
+#input-label span:first-child {
+  background: #6c5100;
+  color: #dfdfdf;
+  border-radius: 3px 0 0 3px;
+}
+
+#input-label span:last-child {
+  background: white;
+  border-radius: 0 3px 3px 0;
+}
+
+.dark #input-label span:last-child {
+  background: var(--background-color-dark);
 }
 
 #preview {
