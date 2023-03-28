@@ -501,16 +501,16 @@ ol.preview-outer li {
   background-image: url(../img/cross.svg);
   width: 29px;
   height: 29px;
-  right: 7px;
-  top: 18px;
+  right: 13px;
+  top: 13px;
 }
 
 #return-last-input {
   background-image: url(../img/return-3.svg);
   width: 23px;
   height: 23px;
-  right: 11px;
-  top: 22px;
+  right: 17px;
+  top: 17px;
 }
 
 .sort-ascending,
@@ -663,7 +663,7 @@ button.edit-item {
   margin: 12px auto 5px;
   padding: 5px;
   border-radius: 4px;
-  /*flex-direction: column;*/
+  flex-direction: column;
 }
 
 textarea {
@@ -698,7 +698,7 @@ textarea:hover {
   margin-right: auto;
   width: fit-content;
   transition: opacity 0.2s ease;
-  top: 3px;
+  top: -5px;
 }
 
 .dark #input-label {
@@ -776,6 +776,7 @@ textarea:hover {
 }
 
 #output {
+  position: relative;
   /*top: 10px;*/
   width: 100%;
   /*display: inline-block;*/
@@ -784,6 +785,7 @@ textarea:hover {
   /*display: block;*/
   border-radius: 4px;
   margin: 0;
+  margin-top: -186px;
 }
 
 #output {
