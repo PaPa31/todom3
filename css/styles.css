@@ -673,7 +673,6 @@ button.edit-item {
 textarea {
   resize: none;
   border: 1px solid var(--border-color);
-  background-color: var(--color-bg-default);
   border-color: inherit !important;
 }
 
@@ -692,7 +691,7 @@ textarea:hover {
   color: var(--color-dark);
   border: 1px solid var(--border-color-dark);
   /*background-color: var(--color-bg-default-dark);*/
-  background-color: var(--background-color-dark);
+  /*background-color: var(--background-color-dark);*/
 }
 
 #input-label {
@@ -705,27 +704,31 @@ textarea:hover {
   width: fit-content;
   transition: opacity 0.2s ease;
   top: -6px;
-  border-left: 2px solid var(--background-color);
+  /*border-left: 1px solid;
+  border-right: 1px solid;
+  border-color: var(--background-color);*/
 }
 
 .dark #input-label {
   color: var(--border-color-dark);
-  border-color: var(--background-color-dark);
+  /*border-color: var(--background-color-dark);*/
 }
 
-#input-label > * {
+#input-label > span {
   padding: 0 4px;
   height: 18px;
   display: inline-block;
 }
 
 #input-label > div {
-  background: var(--background-color);
   border-radius: 3px;
+  padding: 2px 4px 0 2px;
+  height: 19px;
+  /*background-color: var(--background-color);*/
 }
 
 .dark #input-label > div {
-  background: var(--background-color-dark);
+  /*background-color: var(--background-color-dark);*/
 }
 
 #input-label span:first-child {
