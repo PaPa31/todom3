@@ -217,7 +217,6 @@ input.addEventListener(
     function (e) {
       lastInputValue = e.target.value;
       if (lastInputValue) {
-        inputLabel.innerHTML = "<div>New</div>";
         inputLabel.classList.add("visible");
         xButton.style = "display:block";
       } else {
