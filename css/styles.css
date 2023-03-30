@@ -1,62 +1,72 @@
 @charset "UTF-8";
 
 :root {
+  --color: #404040;
+  --color-muted: #24292f;
+  --color-extra-muted: #57606a;
+
   --color-dark: #ddd;
+  --color-muted-dark: #adbac7;
+  --color-extra-muted-dark: #768390;
 
-  --button-dark: #6c5100;
+  --bg: #fff;
+  --bg-muted: #dce5ee;
+  --bg-extra-muted: #dfdfdf;
 
+  --bg-dark: #2b2b2b;
+  --bg-muted-dark: #313842;
+  --bg-extra-muted-dark: #464646;
+
+  --bg-item: #eee;
+  --bg-item-dark: #333;
+
+  --bg-selection: #9ebfea;
+  --bg-selection-dark: #783c42;
+
+  --bg-input-translucent: #ffffffa3;
+  --bg-input-translucent-dark: #2b2b2bb2;
+
+  --bg-item-translucent: #eeeeee91;
+  --bg-item-translucent-dark: #33333385;
+
+  --border: #aaa;
+  --border-dark: #777;
+
+  --border-extra: #d0d7de;
+  --border-extra-dark: #444c56;
+
+  --border-cite: #f0f0f0;
+  --border-cite-dark: #353535;
+
+  --button-default: #0366ee;
+  --button-default-dark: #6c5100;
+
+  --button-default-color: #fff;
+  --button-default-color-dark: #dfdfdf;
+
+  --button-hover: #0250bc;
   --button-hover-dark: #5a4500;
 
-  --border-color: #aaa;
-  --border-color-dark: #777;
+  --button-muted-color: #aaa;
+  --button-muted-color-dark: #9f9f9f;
 
-  --border-color-items: #ccc;
-  --border-color-items-dark: #444;
+  --button-muted-color-hover: #404040;
+  --button-muted-color-hover-dark: #ddd;
 
-  --border-color-hover: #555;
-  --border-color-hover-dark: #888;
+  --button-muted-border: #ccc;
+  --button-muted-border-dark: #444;
+
+  --button-muted-border-hover: #555;
+  --button-muted-border-hover-dark: #888;
 
   --scrollbar-hover: #777;
   --scrollbar-hover-dark: #999;
 
-  --background-color: #fff;
-  --background-color-dark: #2b2b2b;
+  --link-cite-muted-color: #5b92df;
+  --link-cite-muted-color-dark: #6ca872;
 
-  --border-color-cite-dark: #333;
-
-  --color-cite-link-muted: #5b92df;
-  --color-cite-link-muted-dark: #6ca872;
-
-  --color-bg-default: #f0f0f0;
-  --color-bg-default-dark: #313131;
-
-  --color-button-dark: #dfdfdf;
-
-  --translucent-bg: #ffffffa3;
-  --translucent-bg-dark: #2b2b2bb2;
-
-  /*from GitHub*/
-  --color-border-default: #d0d7de;
-  --color-border-default-dark: #444c56;
-
-  --color-border-muted: #d8dee4;
-  --color-border-muted-dark: #373e47;
-
-  --color-accent-muted: #4184e466;
-  --color-accent-muted-dark: #e4414166;
-
-  --color-fg-default: #24292f;
-  --color-fg-default-dark: #adbac7;
-
-  --color-fg-muted: #57606a;
-  --color-fg-muted-dark: #768390;
-
-  --color-canvas-subtle: #dce5ee;
-  --color-canvas-subtle-dark: #313842;
-
-  --color-neutral-muted: #a0a8b033;
-  --color-neutral-muted-dark: #636e7b66;
-  /*from GitHub*/
+  /*--border-muted: #d8dee4;
+  --border-muted-dark: #373e47;*/
 }
 
 html {
@@ -71,10 +81,23 @@ html {
 
 body {
   /*transition: background 0.2s linear;*/
+  color: var(--color);
+  background-color: var(--bg);
 }
 body.dark {
-  background-color: var(--background-color-dark);
+  background-color: var(--bg-dark);
   color: var(--color-dark);
+}
+
+.button,
+a.button,
+button,
+[type="submit"],
+[type="reset"],
+[type="button"] {
+  border: 1px solid var(--button-default);
+  background-color: var(--button-default);
+  color: var(--button-default-color);
 }
 
 #dark-button {
@@ -146,7 +169,7 @@ button.first {
 }
 
 .dark .btn:focus-visible {
-  outline-color: var(--background-color);
+  outline-color: var(--bg);
 }
 
 .scroll::-webkit-scrollbar {
@@ -154,20 +177,20 @@ button.first {
 }
 
 .scroll::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background-color: var(--border);
   border-radius: 3px;
 }
 
 .dark .scroll::-webkit-scrollbar-thumb {
-  background: var(--border-color-dark);
+  background-color: var(--border-dark);
 }
 
 .scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-hover);
+  background-color: var(--scrollbar-hover);
 }
 
 .dark .scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-hover-dark);
+  background-color: var(--scrollbar-hover-dark);
 }
 
 .dark h1,
@@ -178,24 +201,12 @@ button.first {
   color: #9d9d9d;
 }
 
-.dark [type="submit"],
-.dark [type="reset"],
-.dark [type="button"] {
-  color: var(--color-button-dark);
-  border: 1px solid var(--button-dark);
-  background: var(--button-dark);
-}
-
-.dark [type="submit"]:hover,
-.dark [type="reset"]:hover,
-.dark [type="button"]:hover {
-  color: var(--color-button-dark);
-  border: 1px solid var(--button-hover-dark);
-  background: var(--button-hover-dark);
+blockquote {
+  border-color: var(--border-cite);
 }
 
 .dark blockquote {
-  border-color: var(--border-color-cite-dark);
+  border-color: var(--border-cite-dark);
 }
 
 .markdown-body > ol > li > div {
@@ -204,13 +215,13 @@ button.first {
   float: left;
   padding: 10px;
   border-radius: 5px;
-  background-color: var(--color-bg-default);
+  background-color: var(--bg-item);
   word-wrap: break-word;
 }
 
 .dark .markdown-body > ol > li > div {
   color: var(--color-dark);
-  background-color: var(--color-bg-default-dark);
+  background-color: var(--bg-item-dark);
 }
 
 .markdown-body > ol > li {
@@ -250,11 +261,11 @@ button.first {
 }
 
 ::selection {
-  background-color: var(--color-accent-muted);
+  background-color: var(--bg-selection);
 }
 
 .dark ::selection {
-  background-color: var(--color-accent-muted-dark);
+  background-color: var(--bg-selection-dark);
 }
 
 .markdown-body :not(pre) > code {
@@ -263,25 +274,25 @@ button.first {
   margin: 0;
   font-size: 85%;
   white-space: break-spaces;
-  background-color: var(--color-neutral-muted);
+  background-color: var(--bg-extra-muted);
   border-radius: 6px;
 }
 
 .dark .markdown-body :not(pre) > code {
   color: var(--color-dark);
-  background-color: var(--color-neutral-muted-dark);
+  background-color: var(--bg-extra-muted-dark);
 }
 
 .markdown-body blockquote {
   font-size: 1em;
   padding: 0 1em;
-  color: var(--color-fg-muted);
-  border-left: 0.25em solid var(--color-border-default);
+  color: var(--color-extra-muted);
+  border-left: 0.25em solid var(--border-extra);
 }
 
 .dark .markdown-body blockquote {
-  color: var(--color-fg-muted-dark);
-  border-left: 0.25em solid var(--color-border-default-dark);
+  color: var(--color-extra-muted-dark);
+  border-left: 0.25em solid var(--border-extra-dark);
 }
 
 .markdown-body pre {
@@ -289,14 +300,14 @@ button.first {
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  color: var(--color-fg-default);
-  background-color: var(--color-canvas-subtle);
+  color: var(--color-muted);
+  background-color: var(--bg-muted);
   border-radius: 6px;
 }
 
 .dark .markdown-body pre {
-  color: var(--color-fg-default-dark);
-  background-color: var(--color-canvas-subtle-dark);
+  color: var(--color-muted-dark);
+  background-color: var(--bg-muted-dark);
 }
 
 pre code {
@@ -309,12 +320,12 @@ pre code {
   height: 0.06em;
   padding: 0;
   margin: 24px 0;
-  background-color: var(--color-border-default);
+  background-color: var(--border-extra);
   border: 0;
 }
 
 .dark .markdown-body hr {
-  background-color: var(--color-border-default-dark);
+  background-color: var(--border-extra-dark);
 }
 
 /* to overset the 'ol li ol' rule in _scaffolding.scss */
@@ -349,30 +360,42 @@ table {
   align-items: center;
 }
 
-.muted-a,
-.muted-button:focus,
-.muted-button:active {
-  background: transparent;
-  border: 1px solid var(--border-color-items);
-  color: var(--border-color);
+.muted-button {
+  background-color: transparent;
+  border: 1px solid var(--button-muted-border);
+  color: var(--button-muted-color);
+}
+
+.dark .muted-button {
+  border: 1px solid var(--button-muted-border-dark);
+  color: var(--button-muted-color-dark);
 }
 
 .muted-button:hover {
-  /*color: var(--border-color);*/
-  border: 1px solid var(--border-color-hover);
-}
-
-.dark .muted-button,
-.dark .muted-button:focus,
-.dark .muted-button:active {
-  background: transparent;
-  border: 1px solid var(--border-color-items-dark);
-  color: var(--border-color-dark);
+  background-color: transparent;
+  border: 1px solid var(--button-muted-border-hover);
+  color: var(--button-muted-color-hover);
 }
 
 .dark .muted-button:hover {
-  /*color: var(--border-color-dark);*/
-  border: 1px solid var(--border-color-hover-dark);
+  border: 1px solid var(--button-muted-border-hover-dark);
+  color: var(--button-muted-color-hover-dark);
+}
+
+.dark [type="submit"],
+.dark [type="reset"],
+.dark [type="button"] {
+  color: var(--button-default-color-dark);
+  border: 1px solid var(--button-default-dark);
+  background-color: var(--button-default-dark);
+}
+
+.dark [type="submit"]:hover,
+.dark [type="reset"]:hover,
+.dark [type="button"]:hover {
+  color: var(--button-default-color-dark);
+  border: 1px solid var(--button-hover-dark);
+  background-color: var(--button-hover-dark);
 }
 
 h1,
@@ -408,12 +431,12 @@ h5 {
 
 .markdown-body h6 {
   font-size: 0.85em;
-  color: var(--color-fg-muted);
+  color: var(--color-extra-muted);
 }
 
 .dark .markdown-body h6 {
   font-size: 0.85em;
-  color: var(--color-fg-muted-dark);
+  color: var(--color-extra-muted-dark);
 }
 
 .markdown-body h1,
@@ -429,11 +452,11 @@ h5 {
 }
 
 .markdown-body blockquote a {
-  color: var(--color-cite-link-muted);
+  color: var(--link-cite-muted-color);
 }
 
 .dark .markdown-body blockquote a {
-  color: var(--color-cite-link-muted-dark);
+  color: var(--link-cite-muted-color-dark);
 }
 
 .markdown-body > ol.list-items {
@@ -568,13 +591,13 @@ ol.preview-outer li {
   margin-left: -85px;
   width: 83px;
   padding: 5px 0;
-  background-color: #f0f0f073;
+  background-color: var(--bg-item-translucent);
   /*border: 1px solid red;*/
   /*margin-top: 4px;*/
 }
 
 .dark #item-control {
-  background-color: #31313180;
+  background-color: var(--bg-item-translucent-dark);
 }
 
 button.delete-one-item,
@@ -623,7 +646,7 @@ button.edit-item {
 }
 
 .bared:hover {
-  background: initial;
+  background-color: initial;
   border: initial;
 }
 
@@ -675,34 +698,34 @@ button.edit-item {
 
 textarea {
   resize: none;
-  /*border: 1px solid var(--border-color);*/
+  /*border: 1px solid var(--border);*/
   /*border-color: inherit !important;*/
 }
 
 textarea:focus,
 textarea:active {
-  /*border: 1px solid var(--border-color);*/
+  /*border: 1px solid var(--border);*/
   box-shadow: none;
 }
 
 textarea:hover {
-  /*border: 1px solid var(--border-color);*/
+  /*border: 1px solid var(--border);*/
 }
 
 .dark [type="text"],
 .dark textarea {
   color: var(--color-dark);
-  /*border: 1px solid var(--border-color-dark);*/
-  /*background-color: var(--color-bg-default-dark);*/
-  /*background-color: var(--background-color-dark);*/
+  /*border: 1px solid var(--border-dark);*/
+  /*background-color: var(--bg-item-dark);*/
+  /*background-color: var(--bg-dark);*/
 }
 
 .border {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
 }
 
 .dark .border {
-  border: 1px solid var(--border-color-dark);
+  border: 1px solid var(--border-dark);
 }
 
 #input-label {
@@ -718,14 +741,14 @@ textarea:hover {
   /*top: -6px;*/
   /*border-left: 1px solid;
   border-right: 1px solid;
-  border-color: var(--background-color);*/
-  background: var(--translucent-bg);
+  border-color: var(--bg);*/
+  background-color: var(--bg-input-translucent);
 }
 
 .dark #input-label {
-  color: var(--border-color-dark);
-  /*border-color: var(--background-color-dark);*/
-  background: var(--translucent-bg-dark);
+  color: var(--border-dark);
+  /*border-color: var(--bg-dark);*/
+  background-color: var(--bg-input-translucent-dark);
 }
 
 #input-label > span {
@@ -744,16 +767,16 @@ textarea:hover {
 }
 
 /*.bg {
-  background-color: var(--background-color);
+  background-color: var(--bg);
 }
 
 .dark .bg {
-  background-color: var(--background-color-dark);
+  background-color: var(--bg-dark);
 }*/
 
 #input-label span:first-child {
-  /*background: #5a4c30;
-  color: var(--color-button-dark);*/
+  /*background-color: #5a4c30;
+  color: var(--button-default-color-dark);*/
   border-radius: 0 0 0 3px;
   color: #780000;
 }
@@ -763,13 +786,13 @@ textarea:hover {
 }
 
 #input-label span:last-child {
-  /*background: var(--background-color);*/
+  /*background-color: var(--bg);*/
   border-radius: 0 3px 3px 0;
   color: #780000;
 }
 
 .dark #input-label span:last-child {
-  /*background: var(--background-color-dark);*/
+  /*background-color: var(--bg-dark);*/
   color: #bd9006;
 }
 
