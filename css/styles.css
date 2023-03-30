@@ -32,6 +32,9 @@
 
   --color-button-dark: #dfdfdf;
 
+  --translucent-bg: #ffffffa3;
+  --translucent-bg-dark: #2b2b2bb2;
+
   /*from GitHub*/
   --color-border-default: #d0d7de;
   --color-border-default-dark: #444c56;
@@ -716,11 +719,13 @@ textarea:hover {
   /*border-left: 1px solid;
   border-right: 1px solid;
   border-color: var(--background-color);*/
+  background: var(--translucent-bg);
 }
 
 .dark #input-label {
   color: var(--border-color-dark);
   /*border-color: var(--background-color-dark);*/
+  background: var(--translucent-bg-dark);
 }
 
 #input-label > span {
@@ -747,18 +752,25 @@ textarea:hover {
 }*/
 
 #input-label span:first-child {
-  background: #5a4c30;
-  color: var(--color-button-dark);
+  /*background: #5a4c30;
+  color: var(--color-button-dark);*/
   border-radius: 0 0 0 3px;
+  color: #780000;
+}
+
+.dark #input-label span:first-child {
+  color: #bd9006;
 }
 
 #input-label span:last-child {
   /*background: var(--background-color);*/
   border-radius: 0 3px 3px 0;
+  color: #780000;
 }
 
 .dark #input-label span:last-child {
-  background: var(--background-color-dark);
+  /*background: var(--background-color-dark);*/
+  color: #bd9006;
 }
 
 #preview {
