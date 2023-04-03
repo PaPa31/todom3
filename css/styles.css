@@ -912,7 +912,7 @@ code {
   .container > .flex-row > .flex-small:last-child {
     /*padding-left: 10px;*/
   }
-  /*.flex-small {
-    max-width: 50%;
-  }*/
+  .flex-small {
+    width: 50%;
+  }
 }
