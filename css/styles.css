@@ -831,7 +831,6 @@ textarea:hover {
 #output,
 #position {
   position: absolute;
-  border: 1px solid transparent;
   /*border-color: red;*/
   z-index: -1;
   resize: none;
@@ -840,6 +839,7 @@ textarea:hover {
 }
 
 #output {
+  border: 1px solid transparent;
   position: relative;
   /*top: 10px;*/
   width: 100%;
@@ -859,7 +859,7 @@ textarea:hover {
 }
 
 #position {
-  width: 688px;
+  width: 678px;
   /*width: 100%;
   position: relative;
   margin-top: -160px;*/
@@ -878,7 +878,7 @@ textarea:hover {
 #position {
   opacity: 0;
   /*color: red;*/
-  visibility: collapse;
+  visibility: hidden;
 }
 
 #output,
@@ -903,7 +903,8 @@ code {
     max-height: 328px;
   }
   #position {
-    /*width: 680.5px;*/
+    position: relative;
+    width: 684px;
     max-height: 288px;
     margin-top: -328px;
   }
