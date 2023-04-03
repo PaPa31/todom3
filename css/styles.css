@@ -696,6 +696,7 @@ button.edit-item {
   padding: 5px;
   border-radius: 4px;
   flex-direction: column;
+  transition: background-color 0.3s ease-in-out;
 }
 
 textarea {
@@ -768,13 +769,13 @@ textarea:hover {
 .dark #input-label > div {
 }
 
-/*.bg {
+.bg {
   background-color: var(--bg);
 }
 
 .dark .bg {
   background-color: var(--bg-dark);
-}*/
+}
 
 #input-label span:first-child {
   /*background-color: #5a4c30;

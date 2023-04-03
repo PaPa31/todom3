@@ -139,6 +139,9 @@ const editItem = (item) => {
   preview.scrollIntoView(false);
   input.focus();
   input.style = "border-color: #5a4c30;";
+  input.classList.add("bg");
+  intervalFocus(form, "background-color: orange;", 300);
+
   //window.setTimeout(function () {
   //  input.focus();
   //}, 1000);
@@ -242,6 +245,13 @@ html.addEventListener("click", function () {
   twoClickToTrash = false;
 });
 
+const intervalFocus = (element, cssRule, interval) => {
+  element.style = cssRule;
+  window.setTimeout(function () {
+    element.style = null;
+  }, interval);
+};
+
 function scrollToTargetAdjusted(targetElement, offset) {
   //const element = document.getElementById(targetElement);
   const elementPosition = targetElement.getBoundingClientRect().top;
@@ -252,10 +262,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
       top: offsetPosition,
     });
 
-  targetElement.style = "background-color:orange";
-  window.setTimeout(function () {
-    targetElement.style = "";
-  }, 300);
+  intervalFocus(targetElement, "background-color: orange;", 300);
 }
 
 form.addEventListener("submit", function (e) {
@@ -282,6 +289,7 @@ form.addEventListener("submit", function (e) {
     //editedItem.offset = preview.scrollTop;
     //preview.scrollTop = preview.scrollHeight;
     input.style = null;
+    input.classList.remove("bg");
     scrollToTargetAdjusted(editedItem, previewOffset);
   } else {
     console.log("new");
