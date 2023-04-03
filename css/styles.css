@@ -38,6 +38,9 @@
   --border-cite: #f0f0f0;
   --border-cite-dark: #353535;
 
+  --border-edit: #e8a41c;
+  --border-edit-dark: #5a4c30;
+
   --button-default: #0366ee;
   --button-default-dark: #6c5100;
 
@@ -729,6 +732,14 @@ textarea:hover {
 
 .dark .border {
   border: 1px solid var(--border-dark);
+}
+
+.border-edit {
+  border: 1px solid var(--border-edit);
+}
+
+.dark .border-edit {
+  border: 1px solid var(--border-edit-dark);
 }
 
 #input-label {

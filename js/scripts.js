@@ -138,7 +138,7 @@ const editItem = (item) => {
 
   preview.scrollIntoView(false);
   input.focus();
-  input.style = "border-color: #5a4c30;";
+  input.classList.replace("border", "border-edit");
   input.classList.add("bg");
   intervalFocus(form, "background-color: orange;", 300);
 
@@ -288,7 +288,8 @@ form.addEventListener("submit", function (e) {
     //});
     //editedItem.offset = preview.scrollTop;
     //preview.scrollTop = preview.scrollHeight;
-    input.style = null;
+
+    input.classList.replace("border-edit", "border");
     input.classList.remove("bg");
     scrollToTargetAdjusted(editedItem, previewOffset);
   } else {
@@ -348,7 +349,7 @@ deleteAllItemsButton.addEventListener("click", function (e) {
 xButton.addEventListener("click", function () {
   if (indexToEdit != null) {
     //lastInputValue = input.value;
-    input.style = null;
+    input.classList.replace("border-edit", "border");
     input.classList.remove("bg");
   } else {
     localStorage.removeItem("last");
