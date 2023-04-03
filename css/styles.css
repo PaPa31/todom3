@@ -371,6 +371,9 @@ figure {
   --color-muted-dark: #adbac7;
   --color-extra-muted-dark: #768390;
 
+  --color-edit: #a41111;
+  --color-edit-dark: #e8a41c;
+
   --bg: #fff;
   --bg-muted: #dce5ee;
   --bg-extra-muted: #dfdfdf;
@@ -1166,22 +1169,6 @@ textarea:hover {
   /*background-color: var(--bg-dark);*/
 }
 
-.border {
-  border: 1px solid var(--border);
-}
-
-.dark .border {
-  border: 1px solid var(--border-dark);
-}
-
-.border-edit {
-  border: 1px solid var(--border-edit);
-}
-
-.dark .border-edit {
-  border: 1px solid var(--border-edit-dark);
-}
-
 #input-label {
   position: absolute;
   z-index: 11;
@@ -1220,6 +1207,22 @@ textarea:hover {
 .dark #input-label > div {
 }
 
+.border {
+  border: 1px solid var(--border);
+}
+
+.dark .border {
+  border: 1px solid var(--border-dark);
+}
+
+.border-edit {
+  border: 1px solid var(--border-edit);
+}
+
+.dark .border-edit {
+  border: 1px solid var(--border-edit-dark);
+}
+
 .bg {
   background-color: var(--bg);
 }
@@ -1228,26 +1231,20 @@ textarea:hover {
   background-color: var(--bg-dark);
 }
 
-#input-label span:first-child {
-  /*background-color: #5a4c30;
-  color: var(--button-default-color-dark);*/
-  border-radius: 0 0 0 3px;
-  color: #780000;
+#input-label span {
+  color: var(--color-edit);
 }
 
-.dark #input-label span:first-child {
-  color: #bd9006;
+.dark #input-label span {
+  color: var(--color-edit-dark);
+}
+
+#input-label span:first-child {
+  border-radius: 0 0 0 3px;
 }
 
 #input-label span:last-child {
-  /*background-color: var(--bg);*/
   border-radius: 0 3px 3px 0;
-  color: #780000;
-}
-
-.dark #input-label span:last-child {
-  /*background-color: var(--bg-dark);*/
-  color: #bd9006;
 }
 
 #preview {
