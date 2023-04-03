@@ -347,14 +347,31 @@ deleteAllItemsButton.addEventListener("click", function (e) {
 
 xButton.addEventListener("click", function () {
   if (indexToEdit != null) {
-    lastInputValue = input.value;
+    //lastInputValue = input.value;
+    input.style = null;
+    input.classList.remove("bg");
   } else {
     localStorage.removeItem("last");
-    inputLabel.classList.remove("visible");
+    //inputLabel.classList.remove("visible");
   }
-  returnInputButton.style = "display:block";
+  //returnInputButton.style = "display:block";
+  //xButton.style = "display:none";
+  //input.value = "";
+
+  inputLabel.classList.remove("visible");
+  window.setTimeout(function () {
+    inputLabel.innerHTML = "<div>New</div>";
+  }, 300);
+
+  if (lastInputValue) {
+    returnInputButton.style = "display:block";
+  } else {
+    xButton.style = "display:none";
+  }
+
   xButton.style = "display:none";
   input.value = "";
+
   preview.innerHTML = "";
   input.focus();
 });
