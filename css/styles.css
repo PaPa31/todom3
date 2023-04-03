@@ -342,7 +342,8 @@ table {
 }
 
 .container {
-  max-width: 1440px;
+  max-width: 720px;
+  margin-left: 0;
 }
 
 .flex-row {
@@ -503,6 +504,7 @@ h5 {
 
 .flex-small {
   padding: 0;
+  max-width: 720px;
 }
 
 .preview-outer {
@@ -889,7 +891,10 @@ code {
   white-space: break-spaces;
 }
 
-@media (min-width: 1420px) {
+@media (min-width: 1320px) {
+  .container {
+    max-width: initial;
+  }
   .container > .flex-row {
     flex-direction: row;
   }
@@ -902,12 +907,12 @@ code {
     margin-top: -328px;
   }
   .container > .flex-row > .flex-small:first-child {
-    padding-right: 10px;
+    /*padding-right: 10px;*/
   }
   .container > .flex-row > .flex-small:last-child {
-    padding-left: 10px;
+    /*padding-left: 10px;*/
   }
-  .flex-small {
+  /*.flex-small {
     max-width: 50%;
-  }
+  }*/
 }
