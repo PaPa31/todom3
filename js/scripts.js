@@ -133,6 +133,7 @@ const editItem = (item) => {
   window.event.stopPropagation();
   inputLabel.classList.replace("invisible", "visible");
   returnInputButton.style = "display:none";
+  xButton.title = "Cancel edit";
   xButton.style = "display:block";
   inputLabel.innerHTML = `<span>Edit: </span><span>#${
     Number(item.id) + 1
@@ -319,10 +320,9 @@ form.addEventListener("submit", function (e) {
 
   if (lastInputValue) {
     returnInputButton.style = "display:block";
-  } else {
-    xButton.style = "display:none";
   }
 
+  xButton.title = "Clear input";
   xButton.style = "display:none";
   input.value = "";
 });
@@ -376,10 +376,9 @@ xButton.addEventListener("click", function () {
 
   if (lastInputValue) {
     returnInputButton.style = "display:block";
-  } else {
-    xButton.style = "display:none";
   }
 
+  xButton.title = "Clear input";
   xButton.style = "display:none";
   input.value = "";
 
