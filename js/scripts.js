@@ -31,13 +31,16 @@ let trashArray = localStorage.getItem("trash")
   ? JSON.parse(localStorage.getItem("trash"))
   : [];
 
+clearTrashButton.classList.add("invisible");
+clearTrashButton.style = null;
+
 if (trashArray.length) {
   deletedCounter.innerText = trashArray.length;
   restoreItemButton.classList.add("visible");
-  clearTrashButton.classList.add("visible");
+  clearTrashButton.classList.replace("invisible", "visible");
 } else {
   restoreItemButton.classList.remove("visible");
-  clearTrashButton.classList.remove("visible");
+  clearTrashButton.classList.replace("visible", "invisible");
 }
 
 let twoClickToTrash = false;
@@ -162,7 +165,7 @@ const deleteOneItem = (item) => {
     trashArray.push(itemsArray[indexToDelete]);
     deletedCounter.innerText = trashArray.length;
     restoreItemButton.classList.add("visible");
-    clearTrashButton.classList.add("visible");
+    clearTrashButton.classList.replace("invisible", "visible");
     localStorage.setItem("trash", JSON.stringify(trashArray));
 
     itemsArray.splice(indexToDelete, 1);
@@ -404,7 +407,7 @@ restoreItemButton.addEventListener("click", function () {
   }
   if (len === 0) {
     restoreItemButton.classList.remove("visible");
-    clearTrashButton.classList.remove("visible");
+    clearTrashButton.classList.replace("visible", "invisible");
     localStorage.removeItem("trash");
   }
 });
@@ -416,7 +419,7 @@ clearTrashButton.addEventListener("click", function (e) {
     deletedCounter.innerText = "";
     localStorage.removeItem("trash");
     restoreItemButton.classList.remove("visible");
-    clearTrashButton.classList.remove("visible");
+    clearTrashButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.remove("border-red");
     twoClickTrashClear = false;
   } else {
