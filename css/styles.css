@@ -374,6 +374,9 @@ figure {
   --color-edit: #a41111;
   --color-edit-dark: #e8a41c;
 
+  --color-new: #0079ff;
+  --color-new-dark: #76b3f0;
+
   --bg: #fff;
   --bg-muted: #dce5ee;
   --bg-extra-muted: #dfdfdf;
@@ -388,7 +391,7 @@ figure {
   --bg-selection: #9ebfea;
   --bg-selection-dark: #783c42;
 
-  --bg-input-translucent: #ffffffa3;
+  --bg-input-translucent: #ffffffbd;
   --bg-input-translucent-dark: #2b2b2bb2;
 
   --bg-item-translucent: #eeeeee91;
@@ -404,7 +407,7 @@ figure {
   --border-cite-dark: #353535;
 
   --border-edit: #e8a41c;
-  --border-edit-dark: #5a4c30;
+  --border-edit-dark: #866728;
 
   --button-default: #0366ee;
   --button-default-dark: #6c5100;
@@ -1204,12 +1207,14 @@ textarea:hover {
 }
 
 #input-label > div {
-  /*border-radius: 3px;
-  padding: 2px 4px 0 2px;
-  height: 19px;*/
+  border-radius: 3px;
+  padding: 1px 4px 0;
+  height: 19px;
+  color: var(--color-new);
 }
 
 .dark #input-label > div {
+  color: var(--color-new-dark);
 }
 
 #input-label:hover {
