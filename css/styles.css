@@ -780,17 +780,17 @@ table {
 .dark [type="submit"],
 .dark [type="reset"],
 .dark [type="button"] {
-  color: var(--button-default-color-dark);
-  border: 1px solid var(--button-default-dark);
-  background-color: var(--button-default-dark);
+  /*color: var(--button-default-color-dark);*/
+  /*border: 1px solid var(--button-default-dark);*/
+  /*background-color: var(--button-default-dark);*/
 }
 
 .dark [type="submit"]:hover,
 .dark [type="reset"]:hover,
 .dark [type="button"]:hover {
-  color: var(--button-default-color-dark);
-  border: 1px solid var(--button-hover-dark);
-  background-color: var(--button-hover-dark);
+  /*color: var(--button-default-color-dark);*/
+  /*border: 1px solid var(--button-hover-dark);*/
+  /*background-color: var(--button-hover-dark);*/
 }
 
 h1,
