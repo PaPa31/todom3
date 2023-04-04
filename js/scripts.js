@@ -135,10 +135,8 @@ const editItem = (item) => {
   returnInputButton.style = "display:none";
   xButton.title = "Cancel edit";
   xButton.style = "display:block";
-  inputLabel.innerHTML = `<span>Edit: </span><span>#${
-    Number(item.id) + 1
-  }</span>`;
-  indexToEdit = indexedItemsArray.indexOf(item.id);
+  indexToEdit = indexedItemsArray.indexOf(item.id) * 1;
+  inputLabel.innerHTML = `<span>Edit: </span><span>#${indexToEdit + 1}</span>`;
 
   editedItem = item;
 
@@ -162,7 +160,35 @@ const editItem = (item) => {
 const deleteOneItem = (item) => {
   window.event.stopPropagation();
   if (twoClickToTrash && item.id === lastClickId) {
-    const indexToDelete = indexedItemsArray.indexOf(item.id);
+    const indexToDelete = indexedItemsArray.indexOf(item.id) * 1;
+
+    console.log(indexToDelete + 1);
+    console.log(indexToEdit + 1);
+
+    if (indexToEdit != null && indexToEdit >= indexToDelete) {
+      console.log("Need correction!");
+
+      if (indexToEdit == indexToDelete) {
+        indexToEdit = indexToEdit - 1;
+        console.log("= ");
+        indexToEdit = null;
+        input.classList.replace("border-edit", "border");
+        input.classList.remove("bg");
+        inputLabel.innerHTML = "<div>New</div>";
+        //if (lastInputValue) {
+        //  returnInputButton.style = "display:block";
+        //}
+        xButton.title = "Clear input";
+        //xButton.style = "display:none";
+      } else {
+        indexToEdit = indexToEdit - 1;
+        console.log("> ");
+        inputLabel.innerHTML = `<span>Edit: </span><span>#${
+          indexToEdit + 1
+        }</span>`;
+      }
+      console.log("indexToEdit after correction:", indexToEdit + 1);
+    }
 
     ol.removeChild(item);
     showArrows(ol.childElementCount);
