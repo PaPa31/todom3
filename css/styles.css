@@ -391,7 +391,7 @@ figure {
   --bg-selection: #9ebfea;
   --bg-selection-dark: #783c42;
 
-  --bg-input-translucent: #ffffffbd;
+  --bg-input-translucent: #ffffffd6;
   --bg-input-translucent-dark: #2b2b2bb2;
 
   --bg-item-translucent: #eeeeee91;
@@ -1195,7 +1195,7 @@ textarea:hover {
 }
 
 .dark #input-label {
-  color: var(--border-dark);
+  /*color: var(--border-dark);*/
   /*border-color: var(--bg-dark);*/
   background-color: var(--bg-input-translucent-dark);
 }
@@ -1208,13 +1208,12 @@ textarea:hover {
 
 #input-label > div {
   border-radius: 3px;
-  padding: 1px 4px 0;
-  height: 19px;
-  color: var(--color-new);
+  padding: 0 4px;
+  color: var(--color-extra-muted);
 }
 
 .dark #input-label > div {
-  color: var(--color-new-dark);
+  color: var(--color-muted-dark);
 }
 
 #input-label:hover {
