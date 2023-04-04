@@ -1212,6 +1212,10 @@ textarea:hover {
 .dark #input-label > div {
 }
 
+#input-label:hover {
+  opacity: 0;
+}
+
 .border {
   border: 1px solid var(--border);
 }
