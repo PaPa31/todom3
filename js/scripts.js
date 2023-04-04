@@ -51,9 +51,12 @@ let lastInputValue = localStorage.getItem("last")
   ? localStorage.getItem("last")
   : "";
 
+inputLabel.classList.add("invisible");
+inputLabel.style = null;
+
 if (lastInputValue) {
   xButton.style = "display:block";
-  inputLabel.classList.add("visible");
+  inputLabel.classList.replace("invisible", "visible");
 } else {
   xButton.style = "display:none";
 }
@@ -121,7 +124,7 @@ const trashButtonMaker = (liTag) => {
 const editItem = (item) => {
   //console.log(item.firstChild);
   window.event.stopPropagation();
-  inputLabel.classList.add("visible");
+  inputLabel.classList.replace("invisible", "visible");
   returnInputButton.style = "display:none";
   xButton.style = "display:block";
   inputLabel.innerHTML = `<span>Edit: </span><span>#${
@@ -220,10 +223,10 @@ input.addEventListener(
     function (e) {
       lastInputValue = e.target.value;
       if (lastInputValue) {
-        inputLabel.classList.add("visible");
+        inputLabel.classList.replace("invisible", "visible");
         xButton.style = "display:block";
       } else {
-        inputLabel.classList.remove("visible");
+        inputLabel.classList.replace("visible", "invisible");
         xButton.style = "display:none";
       }
       returnInputButton.style = "display:none";
@@ -302,7 +305,7 @@ form.addEventListener("submit", function (e) {
 
   localStorage.removeItem("last");
   //input.classList.add("border");
-  inputLabel.classList.remove("visible");
+  inputLabel.classList.replace("visible", "invisible");
   window.setTimeout(function () {
     inputLabel.innerHTML = "<div>New</div>";
   }, 300);
@@ -353,13 +356,13 @@ xButton.addEventListener("click", function () {
     input.classList.remove("bg");
   } else {
     localStorage.removeItem("last");
-    //inputLabel.classList.remove("visible");
+    //inputLabel.classList.replace("visible", "invisible");
   }
   //returnInputButton.style = "display:block";
   //xButton.style = "display:none";
   //input.value = "";
 
-  inputLabel.classList.remove("visible");
+  inputLabel.classList.replace("visible", "invisible");
   window.setTimeout(function () {
     inputLabel.innerHTML = "<div>New</div>";
   }, 300);
@@ -381,7 +384,7 @@ returnInputButton.addEventListener("click", function () {
   input.value = lastInputValue;
   mdToPreview(input.value);
   localStorage.setItem("last", lastInputValue);
-  inputLabel.classList.add("visible");
+  inputLabel.classList.replace("invisible", "visible");
   returnInputButton.style = "display:none";
   xButton.style = "display:block";
   input.focus();

@@ -1088,8 +1088,13 @@ button.edit-item {
 }
 
 .visible {
-  visibility: visible !important;
-  opacity: 1 !important;
+  visibility: visible;
+  opacity: 1;
+}
+
+.invisible {
+  visibility: hidden;
+  opacity: 0;
 }
 
 #restore-deleted-item {
