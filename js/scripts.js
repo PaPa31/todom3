@@ -70,9 +70,6 @@ if (lastInputValue) {
 
 input.style = null;
 input.classList.add("border");
-//inputLabel.classList.add("bg");
-
-//var scrollTop = input.scrollTop;
 
 input.value = lastInputValue;
 input.scrollTop = input.scrollHeight;
@@ -271,7 +268,6 @@ const intervalFocus = (element, cssRule, interval) => {
 };
 
 function scrollToTargetAdjusted(targetElement, offset) {
-  //const element = document.getElementById(targetElement);
   const elementPosition = targetElement.getBoundingClientRect().top;
   const offsetPosition = elementPosition + offset;
 
@@ -303,9 +299,7 @@ form.addEventListener("submit", function (e) {
   localStorage.removeItem("last");
 
   hideInputLabel();
-
   ifReturnAndNoneX();
-
   clearInputAndPreviewAreas();
 });
 
@@ -337,14 +331,6 @@ deleteAllItemsButton.addEventListener("click", function (e) {
     e.preventDefault();
   }
 });
-
-//const newMode = () => {
-
-//}
-
-const enterEditMode = () => {};
-
-const exitEditMode = () => {};
 
 const defaultMarkers = () => {
   input.classList.replace("border-edit", "border");
@@ -379,11 +365,8 @@ xButton.addEventListener("click", function () {
   }
 
   hideInputLabel();
-
   ifReturnAndNoneX();
-
   clearInputAndPreviewAreas();
-
   input.focus();
 });
 
@@ -451,45 +434,26 @@ const lastNewLine = function (str) {
 const update = function () {
   const head = input.value.substr(0, input.selectionStart);
 
-  //console.log("head.length:", head.length);
-
-  //console.log("input.value.length:", input.value.length);
-
   output.value = head;
-
   output.scrollTop = output.scrollHeight;
 
   const headLastNewLine = lastNewLine(head);
-  //console.log("headLastNewLine:", headLastNewLine);
-
-  //const gap = input.value.length - head.length;
-  //console.log("gap:", gap);
-
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
-
   const tail = input.value.substr(endHead, input.value.length);
-  //console.log(tail);
-
   const tailLastNewLine = lastNewLine(tail);
-  //console.log("tailLastNewLine:", tailLastNewLine);
 
   let stringToPreview = "";
   if (head.length)
     if (tailLastNewLine == 0) {
-      //console.log("stop! we are on the edge!");
       stringToPreview = input.value;
     } else {
       if (head.slice(-2) == "\n\n") {
-        //console.log("double newline");
         stringToPreview = head;
       } else {
-        //console.log("single newline");
         stringToPreview = head.substr(0, endHead + 1);
       }
       stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
     }
-
-  //console.log(stringToPreview);
 
   marked.parse(stringToPreview, (err, html) => {
     position.innerHTML = html;
