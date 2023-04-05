@@ -162,15 +162,15 @@ const deleteOneItem = (item) => {
   if (twoClickToTrash && item.id === lastClickId) {
     const indexToDelete = indexedItemsArray.indexOf(item.id) * 1;
 
-    console.log(indexToDelete + 1);
-    console.log(indexToEdit + 1);
+    //console.log(indexToDelete + 1);
+    //console.log(indexToEdit + 1);
 
     if (indexToEdit != null && indexToEdit >= indexToDelete) {
-      console.log("Need correction!");
+      //console.log("Need correction!");
 
       if (indexToEdit == indexToDelete) {
         indexToEdit = indexToEdit - 1;
-        console.log("= ");
+        //console.log("= ");
         indexToEdit = null;
         input.classList.replace("border-edit", "border");
         input.classList.remove("bg");
@@ -182,12 +182,12 @@ const deleteOneItem = (item) => {
         //xButton.style = "display:none";
       } else {
         indexToEdit = indexToEdit - 1;
-        console.log("> ");
+        //console.log("> ");
         inputLabel.innerHTML = `<span>Edit: </span><span>#${
           indexToEdit + 1
         }</span>`;
       }
-      console.log("indexToEdit after correction:", indexToEdit + 1);
+      //console.log("indexToEdit after correction:", indexToEdit + 1);
     }
 
     ol.removeChild(item);
@@ -304,17 +304,18 @@ function scrollToTargetAdjusted(targetElement, offset) {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  console.log("indexToEdit:", indexToEdit);
+  //console.log("indexToEdit:", indexToEdit);
   const previewOffset = preview.scrollTop;
   preview.innerHTML = "";
   if (indexToEdit != null) {
-    console.log("old");
+    //console.log("old");
 
     itemsArray[indexToEdit] = input.value;
     indexToEdit = null;
     //ol.removeChild(item);
     //const editedItem = document.getElementById(indexToEdit);
-    console.log("editedItem:", editedItem);
+
+    //console.log("editedItem:", editedItem);
     editedItem.firstChild.innerHTML = marked.parse(input.value);
 
     //editedItem.focus();
@@ -330,7 +331,7 @@ form.addEventListener("submit", function (e) {
     input.classList.remove("bg");
     scrollToTargetAdjusted(editedItem, previewOffset);
   } else {
-    console.log("new");
+    //console.log("new");
     itemsArray.push(input.value);
     liMaker(input.value);
   }
