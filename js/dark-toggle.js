@@ -35,7 +35,7 @@ function isDark() {
 }
 
 function toggleDark() {
-  document.body.classList.toggle("dark");
+  document.documentElement.classList.toggle("dark");
 }
 
 function toggleLocalStorageItem() {

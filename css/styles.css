@@ -441,6 +441,7 @@ figure {
 }
 
 html {
+  /*transition: background 0.2s linear;*/
   width: 100%;
   overflow-x: hidden;
   font: normal normal normal 1rem/1.3 -apple-system, BlinkMacSystemFont,
@@ -452,13 +453,12 @@ html {
 }
 
 body {
-  /*transition: background 0.2s linear;*/
   color: var(--color);
   background-color: var(--bg);
   margin: 0;
   font-size: 1rem;
 }
-body.dark {
+.dark body {
   background-color: var(--bg-dark);
   color: var(--color-dark);
 }
