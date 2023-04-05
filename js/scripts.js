@@ -157,7 +157,6 @@ const deleteOneItem = (item) => {
 
     if (indexToEdit != null && indexToEdit >= indexToDelete) {
       if (indexToEdit == indexToDelete) {
-        indexToEdit = null;
         defaultMarkers();
         inputLabel.innerHTML = "<div>New</div>";
       } else {
@@ -285,9 +284,7 @@ form.addEventListener("submit", function (e) {
   preview.innerHTML = "";
   if (indexToEdit != null) {
     itemsArray[indexToEdit] = input.value;
-    indexToEdit = null;
     editedItem.firstChild.innerHTML = marked.parse(input.value);
-
     defaultMarkers();
     scrollToTargetAdjusted(editedItem, previewOffset);
   } else {
@@ -319,6 +316,10 @@ if (nullInItemsStorage) {
 
 deleteAllItemsButton.addEventListener("click", function (e) {
   if (confirm("Are you sure?")) {
+    if (indexToEdit != null) {
+      defaultMarkers();
+      inputLabel.innerHTML = "<div>New</div>";
+    }
     localStorage.removeItem("items");
     indexedItemsArray = [];
     itemsArray = [];
@@ -333,6 +334,7 @@ deleteAllItemsButton.addEventListener("click", function (e) {
 });
 
 const defaultMarkers = () => {
+  indexToEdit = null;
   input.classList.replace("border-edit", "border");
   input.classList.remove("bg");
   xButton.title = "Clear input";
