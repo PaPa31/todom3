@@ -129,31 +129,27 @@ const trashButtonMaker = (liTag) => {
 };
 
 const editItem = (item) => {
-  //console.log(item.firstChild);
   window.event.stopPropagation();
-  inputLabel.classList.replace("invisible", "visible");
-  returnInputButton.style = "display:none";
-  xButton.title = "Cancel edit";
-  xButton.style = "display:block";
-  indexToEdit = indexedItemsArray.indexOf(item.id) * 1;
-  inputLabel.innerHTML = `<span>Edit: </span><span>#${indexToEdit + 1}</span>`;
 
   editedItem = item;
-
-  //console.log("indexToEdit:", indexToEdit);
-
+  indexToEdit = indexedItemsArray.indexOf(item.id) * 1;
   input.value = itemsArray[indexToEdit];
-  //lastInputValue = input.value;
+
+  input.classList.replace("border", "border-edit");
+  input.classList.add("bg");
+  xButton.title = "Cancel edit";
+
+  inputLabel.innerHTML = `<span>Edit: </span><span>#${indexToEdit + 1}</span>`;
+  inputLabel.classList.replace("invisible", "visible");
+
+  returnInputButton.style = "display:none";
+  xButton.style = "display:block";
 
   preview.scrollIntoView(false);
   input.focus();
-  input.classList.replace("border", "border-edit");
-  input.classList.add("bg");
+
   intervalFocus(form, "background-color: orange;", 300);
 
-  //window.setTimeout(function () {
-  //  input.focus();
-  //}, 1000);
   mdToPreview(input.value);
 };
 
@@ -162,32 +158,17 @@ const deleteOneItem = (item) => {
   if (twoClickToTrash && item.id === lastClickId) {
     const indexToDelete = indexedItemsArray.indexOf(item.id) * 1;
 
-    //console.log(indexToDelete + 1);
-    //console.log(indexToEdit + 1);
-
     if (indexToEdit != null && indexToEdit >= indexToDelete) {
-      //console.log("Need correction!");
-
       if (indexToEdit == indexToDelete) {
-        indexToEdit = indexToEdit - 1;
-        //console.log("= ");
         indexToEdit = null;
-        input.classList.replace("border-edit", "border");
-        input.classList.remove("bg");
+        defaultMarkers();
         inputLabel.innerHTML = "<div>New</div>";
-        //if (lastInputValue) {
-        //  returnInputButton.style = "display:block";
-        //}
-        xButton.title = "Clear input";
-        //xButton.style = "display:none";
       } else {
         indexToEdit = indexToEdit - 1;
-        //console.log("> ");
         inputLabel.innerHTML = `<span>Edit: </span><span>#${
           indexToEdit + 1
         }</span>`;
       }
-      //console.log("indexToEdit after correction:", indexToEdit + 1);
     }
 
     ol.removeChild(item);
@@ -304,54 +285,28 @@ function scrollToTargetAdjusted(targetElement, offset) {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  //console.log("indexToEdit:", indexToEdit);
   const previewOffset = preview.scrollTop;
   preview.innerHTML = "";
   if (indexToEdit != null) {
-    //console.log("old");
-
     itemsArray[indexToEdit] = input.value;
     indexToEdit = null;
-    //ol.removeChild(item);
-    //const editedItem = document.getElementById(indexToEdit);
-
-    //console.log("editedItem:", editedItem);
     editedItem.firstChild.innerHTML = marked.parse(input.value);
 
-    //editedItem.focus();
-    //editedItem.scrollIntoView({
-    //  behavior: "smooth",
-    //  inline: "center",
-    //  block: "center",
-    //});
-    //editedItem.offset = preview.scrollTop;
-    //preview.scrollTop = preview.scrollHeight;
-
-    input.classList.replace("border-edit", "border");
-    input.classList.remove("bg");
+    defaultMarkers();
     scrollToTargetAdjusted(editedItem, previewOffset);
   } else {
-    //console.log("new");
     itemsArray.push(input.value);
     liMaker(input.value);
   }
 
   localStorage.setItem("items", JSON.stringify(itemsArray));
-
   localStorage.removeItem("last");
-  //input.classList.add("border");
-  inputLabel.classList.replace("visible", "invisible");
-  window.setTimeout(function () {
-    inputLabel.innerHTML = "<div>New</div>";
-  }, 300);
 
-  if (lastInputValue) {
-    returnInputButton.style = "display:block";
-  }
+  hideInputLabel();
 
-  xButton.title = "Clear input";
-  xButton.style = "display:none";
-  input.value = "";
+  ifReturnAndNoneX();
+
+  clearInputAndPreviewAreas();
 });
 
 itemsArray?.forEach((item, key) => {
@@ -383,33 +338,52 @@ deleteAllItemsButton.addEventListener("click", function (e) {
   }
 });
 
-xButton.addEventListener("click", function () {
-  if (indexToEdit != null) {
-    //lastInputValue = input.value;
-    input.classList.replace("border-edit", "border");
-    input.classList.remove("bg");
-  } else {
-    localStorage.removeItem("last");
-    //inputLabel.classList.replace("visible", "invisible");
-  }
-  //returnInputButton.style = "display:block";
-  //xButton.style = "display:none";
-  //input.value = "";
+//const newMode = () => {
 
+//}
+
+const enterEditMode = () => {};
+
+const exitEditMode = () => {};
+
+const defaultMarkers = () => {
+  input.classList.replace("border-edit", "border");
+  input.classList.remove("bg");
+  xButton.title = "Clear input";
+};
+
+const hideInputLabel = () => {
   inputLabel.classList.replace("visible", "invisible");
   window.setTimeout(function () {
     inputLabel.innerHTML = "<div>New</div>";
   }, 300);
+};
 
+const ifReturnAndNoneX = () => {
   if (lastInputValue) {
     returnInputButton.style = "display:block";
   }
-
-  xButton.title = "Clear input";
   xButton.style = "display:none";
-  input.value = "";
+};
 
+const clearInputAndPreviewAreas = () => {
+  input.value = "";
   preview.innerHTML = "";
+};
+
+xButton.addEventListener("click", function () {
+  if (indexToEdit != null) {
+    defaultMarkers();
+  } else {
+    localStorage.removeItem("last");
+  }
+
+  hideInputLabel();
+
+  ifReturnAndNoneX();
+
+  clearInputAndPreviewAreas();
+
   input.focus();
 });
 
