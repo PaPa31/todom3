@@ -282,7 +282,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 
 saveAsFileButton.addEventListener("click", function (e) {
   if (input.value) {
-    var myFile = new File([input.value], "demo.md", {
+    var myFile = new File([input.value], "README.md", {
       type: "text/plain;charset=utf-8",
     });
     saveAs(myFile);
