@@ -769,22 +769,6 @@ table {
   color: var(--button-muted-color-hover-dark);
 }
 
-.dark [type="submit"],
-.dark [type="reset"],
-.dark [type="button"] {
-  /*color: var(--button-default-color-dark);*/
-  /*border: 1px solid var(--button-default-dark);*/
-  /*background-color: var(--button-default-dark);*/
-}
-
-.dark [type="submit"]:hover,
-.dark [type="reset"]:hover,
-.dark [type="button"]:hover {
-  /*color: var(--button-default-color-dark);*/
-  /*border: 1px solid var(--button-hover-dark);*/
-  /*background-color: var(--button-hover-dark);*/
-}
-
 h1,
 h2,
 h3,
@@ -1127,26 +1111,16 @@ textarea {
   max-width: 100%;
   overflow: auto;
   height: auto;
-  /*border: 1px solid var(--border);*/
-  /*border-color: inherit !important;*/
 }
 
 textarea:focus,
 textarea:active {
-  /*border: 1px solid var(--border);*/
   box-shadow: none;
-}
-
-textarea:hover {
-  /*border: 1px solid var(--border);*/
 }
 
 .dark [type="text"],
 .dark textarea {
   color: var(--color-dark);
-  /*border: 1px solid var(--border-dark);*/
-  /*background-color: var(--bg-item-dark);*/
-  /*background-color: var(--bg-dark);*/
 }
 
 #input-label {
@@ -1159,16 +1133,10 @@ textarea:hover {
   width: fit-content;
   transition: opacity 0.2s ease;
   margin-top: 1px;
-  /*top: -6px;*/
-  /*border-left: 1px solid;
-  border-right: 1px solid;
-  border-color: var(--bg);*/
   background-color: var(--bg-input-translucent);
 }
 
 .dark #input-label {
-  /*color: var(--border-dark);*/
-  /*border-color: var(--bg-dark);*/
   background-color: var(--bg-input-translucent-dark);
 }
 
