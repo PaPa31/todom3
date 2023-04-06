@@ -20,6 +20,8 @@ const position = document.getElementById("position");
 
 const inputLabel = document.getElementById("input-label");
 
+const saveAsFileButton = document.getElementById("save-as-file");
+
 let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
   : [];
@@ -277,6 +279,15 @@ function scrollToTargetAdjusted(targetElement, offset) {
 
   intervalFocus(targetElement, "background-color: orange;", 300);
 }
+
+saveAsFileButton.addEventListener("click", function (e) {
+  if (input.value) {
+    var myFile = new File([input.value], "demo.md", {
+      type: "text/plain;charset=utf-8",
+    });
+    saveAs(myFile);
+  }
+});
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
