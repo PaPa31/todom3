@@ -749,24 +749,24 @@ table {
 
 .muted-button {
   background-color: transparent;
-  border: 1px solid var(--button-muted-border);
-  color: var(--button-muted-color);
-}
-
-.dark .muted-button {
-  border: 1px solid var(--button-muted-border-dark);
-  color: var(--button-muted-color-dark);
-}
-
-.muted-button:hover {
-  background-color: transparent;
   border: 1px solid var(--button-muted-border-hover);
   color: var(--button-muted-color-hover);
 }
 
-.dark .muted-button:hover {
+.dark .muted-button {
   border: 1px solid var(--button-muted-border-hover-dark);
   color: var(--button-muted-color-hover-dark);
+}
+
+.muted-button:hover {
+  background-color: transparent;
+  border: 1px solid var(--button-muted-border);
+  color: var(--button-muted-color);
+}
+
+.dark .muted-button:hover {
+  border: 1px solid var(--button-muted-border-dark);
+  color: var(--button-muted-color-dark);
 }
 
 .header-button {
