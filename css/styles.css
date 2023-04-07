@@ -424,6 +424,9 @@ figure {
   --button-muted-color-hover: #404040;
   --button-muted-color-hover-dark: #ddd;
 
+  --button-color-dimmed: #dcdfe3;
+  --button-color-dimmed-dark: #54575b;
+
   --button-muted-border: #ccc;
   --button-muted-border-dark: #444;
 
@@ -435,9 +438,6 @@ figure {
 
   --link-cite-muted-color: #5b92df;
   --link-cite-muted-color-dark: #6ca872;
-
-  /*--border-muted: #d8dee4;
-  --border-muted-dark: #373e47;*/
 }
 
 html {
@@ -481,8 +481,8 @@ button,
   font-size: 1rem;
   text-transform: none;
   padding: 0.75rem 1.25rem;
-  margin: 0 0 0.5rem 0;
-  margin-right: 0px;
+  /*margin: 0 0 0.5rem 0;
+  margin-right: 0px;*/
   vertical-align: middle;
   text-align: center;
   cursor: pointer;
@@ -738,7 +738,7 @@ table {
   margin: 0;
 }
 
-.flex-row:nth-child(2) {
+#content .flex-row {
   margin: 0 auto 0.5em;
   width: 95%;
 }
@@ -769,8 +769,38 @@ table {
   color: var(--button-muted-color-dark);
 }
 
+.reversable-blocks {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .header-button {
+  padding: 0 5px;
+  /*float: right;*/
+}
+
+.between-buttons {
+  vertical-align: middle;
+}
+
+.no-border {
   border: none !important;
+}
+
+.dimmed {
+  color: var(--button-muted-color) !important;
+}
+
+.dark .dimmed {
+  color: var(--button-muted-color-dark) !important;
+}
+
+.dimmed:hover {
+  color: var(--button-color-dimmed) !important;
+}
+
+.dark .dimmed:hover {
+  color: var(--button-color-dimmed-dark) !important;
 }
 
 h1,
@@ -871,12 +901,12 @@ h6 {
   flex: 0 0 auto;
 }
 
-.flex-small > .header-button {
+.flex-small .header-button {
   display: inline-block;
   margin: 0 0 0 5px;
 }
 
-.flex-small > .header-button,
+.flex-small .header-button,
 #list-order,
 .content .flex-row {
   -webkit-touch-callout: none;
@@ -1091,7 +1121,7 @@ button.edit-item {
   flex-direction: column-reverse;
 }
 
-#form1 {
+#content #form1 {
   position: relative;
   width: 95%;
   margin: 12px auto 5px;
