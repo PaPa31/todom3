@@ -769,14 +769,8 @@ table {
   color: var(--button-muted-color-dark);
 }
 
-.reversable-blocks {
-  display: inline-block;
-  vertical-align: middle;
-}
-
 .header-button {
   padding: 0 5px;
-  /*float: right;*/
 }
 
 .between-buttons {
@@ -801,6 +795,16 @@ table {
 
 .dark .dimmed:hover {
   color: var(--button-color-dimmed-dark) !important;
+}
+
+.fold:before,
+.unfold:after {
+  content: "<";
+}
+
+.fold:after,
+.unfold:before {
+  content: ">";
 }
 
 h1,
