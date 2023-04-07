@@ -796,7 +796,7 @@ h6,
 .dark h4,
 .dark h5,
 .dark h6,
-.header-button {
+.dark .header-button {
   color: var(--color-dark);
 }
 
@@ -1063,7 +1063,6 @@ button.edit-item {
 #restore-deleted-item {
   padding: 5px;
   border-width: 2px;
-  transition: opacity 0.2s ease;
 }
 
 #restore-deleted-item img {
