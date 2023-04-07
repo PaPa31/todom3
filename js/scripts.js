@@ -12,6 +12,7 @@ const returnInputButton = document.getElementById("return-last-input");
 const deleteAllItemsButton = document.getElementById("delete-all-items");
 const restoreItemButton = document.getElementById("restore-deleted-item");
 const clearTrashButton = document.getElementById("clear-trash");
+const saveAsFileButton = document.getElementById("save-as-file");
 
 const deletedCounter = document.getElementById("deleted-counter");
 
@@ -19,8 +20,6 @@ const output = document.getElementById("output");
 const position = document.getElementById("position");
 
 const inputLabel = document.getElementById("input-label");
-
-const saveAsFileButton = document.getElementById("save-as-file");
 
 let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
