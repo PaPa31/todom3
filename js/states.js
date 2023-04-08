@@ -1,0 +1,54 @@
+const firstHeaderButton = document.getElementById("first-header");
+const secondHeaderButton = document.getElementById("second-header");
+
+// starting in Item state & Unfolded view
+let isFileState = false;
+let isFoldedView = false;
+
+firstHeaderButton.addEventListener("click", function (e) {
+  if (isFoldedView) {
+    // Unfolded view
+    firstHeaderButton.classList.replace("fold", "unfold");
+  } else {
+    // Folded view
+    firstHeaderButton.classList.replace("unfold", "fold");
+  }
+  isFoldedView = !isFoldedView;
+});
+
+//-----File state-----
+const closeItemState = () => {
+  ol.innerHTML = "";
+};
+
+const initializeFileState = () => {};
+
+const fileState = () => {
+  closeItemState();
+  initializeFileState();
+};
+
+//-----Item state-----
+const closeFileState = () => {
+  ol.innerHTML = "";
+};
+
+const initializeItemState = () => {};
+
+const itemState = () => {
+  closeItemState();
+  initializeFileState();
+};
+
+secondHeaderButton.addEventListener("click", function (e) {
+  if (isFileState) {
+    firstHeaderButton.innerText = "Items";
+    secondHeaderButton.innerText = "Files";
+    itemState();
+  } else {
+    firstHeaderButton.innerText = "Files";
+    secondHeaderButton.innerText = "Items";
+    fileState();
+  }
+  isFileState = !isFileState;
+});

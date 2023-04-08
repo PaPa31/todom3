@@ -21,9 +21,6 @@ const position = document.getElementById("position");
 
 const inputLabel = document.getElementById("input-label");
 
-const firstHeaderButton = document.getElementById("first-header");
-const secondHeaderButton = document.getElementById("second-header");
-
 let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
   : [];
@@ -54,8 +51,6 @@ if (trashArray.length) {
 let twoClickToTrash = false;
 let twoClickTrashClear = false;
 let nullInItemsStorage = false;
-let isHeaderItems = false;
-let isFirstFold = false;
 
 let lastClickId;
 let lastItem;
@@ -432,31 +427,6 @@ clearTrashButton.addEventListener("click", function (e) {
   if (twoClickToTrash)
     lastItem.lastChild.lastChild.classList.remove("filter-red");
   twoClickToTrash = false;
-});
-
-firstHeaderButton.addEventListener("click", function (e) {
-  if (!isFirstFold) {
-    // Fold view
-    firstHeaderButton.classList.replace("unfold", "fold")
-  }
-  else {
-    // Unfold view
-    firstHeaderButton.classList.replace("fold", "unfold")
-  }
-  isFirstFold = !isFirstFold
-});
-
-secondHeaderButton.addEventListener("click", function (e) {
-  if (isHeaderItems) {
-    // Items state
-    firstHeaderButton.innerText = "Items";
-    secondHeaderButton.innerText = "Files";
-  } else {
-    // Files state
-    firstHeaderButton.innerText = "Files";
-    secondHeaderButton.innerText = "Items";
-  }
-  isHeaderItems = !isHeaderItems;
 });
 
 mdToPreview(input.value);
