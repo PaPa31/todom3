@@ -304,7 +304,7 @@ form.addEventListener("submit", function (e) {
   localStorage.setItem("items", JSON.stringify(itemsArray));
   localStorage.removeItem("last");
 
-  hideInputLabel();
+  hideAndNewInputLabel();
   ifReturnAndNoneX();
   clearInputAndPreviewAreas();
 });
@@ -349,7 +349,7 @@ const defaultMarkers = () => {
   xButton.title = "Clear input";
 };
 
-const hideInputLabel = () => {
+const hideAndNewInputLabel = () => {
   inputLabel.classList.replace("visible", "invisible");
   window.setTimeout(function () {
     inputLabel.innerHTML = "<div>New</div>";
@@ -375,7 +375,7 @@ xButton.addEventListener("click", function () {
     localStorage.removeItem("last");
   }
 
-  hideInputLabel();
+  hideAndNewInputLabel();
   ifReturnAndNoneX();
   clearInputAndPreviewAreas();
   input.focus();
