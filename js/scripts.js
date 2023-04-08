@@ -334,9 +334,10 @@ deleteAllItemsButton.addEventListener("click", function (e) {
     itemsArray = [];
     counter = 0;
     showArrows(0);
-    while (ol.firstChild) {
-      ol.removeChild(ol.firstChild);
-    }
+    ol.innerHTML = ""
+    //while (ol.firstChild) {
+    //  ol.removeChild(ol.firstChild);
+    //}
   } else {
     e.preventDefault();
   }
