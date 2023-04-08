@@ -10,21 +10,21 @@ if (document.getElementById("list-order")) {
     "click",
     function (e) {
       toggleLocalStorageReversedMode();
-      toggleStyle();
+      toggleReversedMode();
     },
     false
   );
 }
 
 if (isReversed()) {
-  toggleStyle();
+  toggleReversedMode();
 }
 
 function isReversed() {
   return localStorage.getItem("reversed-mode");
 }
 
-function toggleStyle() {
+function toggleReversedMode() {
   document.getElementById("content").classList.toggle("reversed");
 }
 
