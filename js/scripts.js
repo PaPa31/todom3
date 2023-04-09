@@ -25,7 +25,7 @@ let itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
   : [];
 
-let counter = 0;
+let counterItems = 0;
 // lightweight array to avoid redundant logic and waste of resources
 let indexedItemsArray = [];
 let trashArray = localStorage.getItem("trash")
@@ -83,13 +83,13 @@ const liMaker = (text) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
   div.innerHTML = marked.parse(text);
-  li.id = counter;
+  li.id = counterItems;
   li.appendChild(div);
   ol.appendChild(li);
   spanMaker(li);
-  indexedItemsArray.push(counter.toString());
-  showArrows(ol.childElementCount);
-  counter++;
+  indexedItemsArray.push(counterItems.toString());
+  showItemSortingArrows(ol.childElementCount);
+  counterItems++;
 };
 
 const spanMaker = (liTag) => {
@@ -168,7 +168,7 @@ const deleteOneItem = (item) => {
     }
 
     ol.removeChild(item);
-    showArrows(ol.childElementCount);
+    showItemSortingArrows(ol.childElementCount);
 
     trashArray.push(itemsArray[indexToDelete]);
     deletedCounter.innerText = trashArray.length;
@@ -194,7 +194,7 @@ const deleteOneItem = (item) => {
   twoClickTrashClear = false;
 };
 
-const showArrows = (count) => {
+const showItemSortingArrows = (count) => {
   const arrows = document.getElementById("list-order");
   if (count > 1) {
     //with only opacity rule the arrows are hidden but still clickable
@@ -323,21 +323,25 @@ if (nullInItemsStorage) {
   localStorage.setItem("items", JSON.stringify(itemsArray));
 }
 
+const defaultItemStateVars = () => {
+  if (indexToEdit != null) {
+    defaultMarkers();
+    inputLabel.innerHTML = "<div>New</div>";
+  }
+  indexedItemsArray = [];
+  itemsArray = [];
+  counterItems = 0;
+  showItemSortingArrows(0);
+  ol.innerHTML = "";
+  //while (ol.firstChild) {
+  //  ol.removeChild(ol.firstChild);
+  //}
+};
+
 deleteAllItemsButton.addEventListener("click", function (e) {
   if (confirm("Are you sure?")) {
-    if (indexToEdit != null) {
-      defaultMarkers();
-      inputLabel.innerHTML = "<div>New</div>";
-    }
+    defaultItemStateVars();
     localStorage.removeItem("items");
-    indexedItemsArray = [];
-    itemsArray = [];
-    counter = 0;
-    showArrows(0);
-    ol.innerHTML = ""
-    //while (ol.firstChild) {
-    //  ol.removeChild(ol.firstChild);
-    //}
   } else {
     e.preventDefault();
   }
