@@ -1,5 +1,28 @@
 const http = require("http");
 const fs = require("fs");
+const path = require("path");
+
+//import { createServer } from "http";
+//import { readFile } from "fs";
+
+const PORT = 8000;
+
+const MIME_TYPES = {
+  default: "application/octet-stream",
+  html: "text/html; charset=UTF-8",
+  js: "application/javascript",
+  css: "text/css",
+  png: "image/png",
+  jpg: "image/jpg",
+  gif: "image/gif",
+  ico: "image/x-icon",
+  svg: "image/svg+xml",
+};
+
+//const STATIC_PATH = path.join(process.cwd(), "./static");
+const STATIC_PATH = path.join(process.cwd(), "");
+
+const toBool = [() => true, () => false];
 
 let html;
 let css;
@@ -67,9 +90,27 @@ fs.readFile("./js/states.js", function (err, data) {
   states = data;
 });
 
+const prepareFile = async (url) => {
+  const paths = [STATIC_PATH, url];
+  if (url.endsWith("/")) paths.push("index.html");
+  const filePath = path.join(...paths);
+  const pathTraversal = !filePath.startsWith(STATIC_PATH);
+  const exists = await fs.promises.access(filePath).then(...toBool);
+  const found = !pathTraversal && exists;
+  const streamPath = found ? filePath : STATIC_PATH + "/404.html";
+  const ext = path.extname(streamPath).substring(1).toLowerCase();
+  const stream = fs.createReadStream(streamPath);
+  return { found, ext, stream };
+};
+
 http
-  .createServer((req, res) => {
-    res.statusCode = 200;
+  .createServer(async (req, res) => {
+    const file = await prepareFile(req.url);
+    const statusCode = file.found ? 200 : 404;
+    const mimeType = MIME_TYPES[file.ext] || MIME_TYPES.default;
+
+    //res.statusCode = 200;
+    res.statusCode = statusCode;
 
     if (req.url.indexOf("dark-toggle.js") != -1) {
       res.writeHead(200, { "Content-Type": "text/javascript" });
@@ -119,8 +160,18 @@ http
       res.end();
       return;
     }
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.write(html);
-    res.end();
+
+    if (req.url.indexOf("index.html") != -1) {
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.write(html);
+      res.end();
+      return;
+    }
+
+    res.writeHead(statusCode, { "Content-type": mimeType });
+    file.stream.pipe(res);
+    console.log(`${req.method} ${req.url} ${statusCode}`);
   })
-  .listen(8080);
+  .listen(PORT);
+
+console.log(`Server running at http://127.0.0.1:${PORT}/`);

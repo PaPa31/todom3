@@ -225,7 +225,7 @@ var _getAllFilesFromFolder = function (dir) {
 
 var phrase = "README.md";
 
-previewFile();
+//previewFile();
 
 //loadFile2(phrase);
 //readTextFile("demo.txt");
@@ -234,13 +234,13 @@ previewFile();
 //  ol.innerHTML = requestPhrase.responseText;
 //});
 
-//const logFileText = async (file) => {
-//  const response = await fetch(file);
-//  const text = await response.text();
-//  console.log(text);
-//};
+const logFileText = async (file) => {
+  const response = await fetch(file);
+  const text = await response.text();
+  ol.innerHTML = text;
+};
 
-//logFileText(phrase);
+logFileText(phrase);
 
 async function loadText(url) {
   text = await fetch(url);
