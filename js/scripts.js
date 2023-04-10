@@ -21,109 +21,23 @@ const position = document.getElementById("position");
 
 const inputLabel = document.getElementById("input-label");
 
-let itemsArray = localStorage.getItem("items")
-  ? JSON.parse(localStorage.getItem("items"))
-  : [];
+clearTrashButton.classList.add("invisible");
+clearTrashButton.style = null;
 
-let counterItems = 0;
-// lightweight array to avoid redundant logic and waste of resources
-let indexedItemsArray = [];
 let trashArray = localStorage.getItem("trash")
   ? JSON.parse(localStorage.getItem("trash"))
   : [];
 
-clearTrashButton.classList.add("invisible");
-clearTrashButton.style = null;
-
 restoreItemButton.classList.add("invisible");
 restoreItemButton.style = null;
-
-if (trashArray.length) {
-  deletedCounter.innerText = trashArray.length;
-  restoreItemButton.classList.replace("invisible", "visible");
-
-  clearTrashButton.classList.replace("invisible", "visible");
-} else {
-  restoreItemButton.classList.replace("visible", "invisible");
-  clearTrashButton.classList.replace("visible", "invisible");
-}
-
-let twoClickToTrash = false;
-let twoClickTrashClear = false;
-let nullInItemsStorage = false;
-
-let lastClickId;
-let lastItem;
-let lastInputValue = localStorage.getItem("last")
-  ? localStorage.getItem("last")
-  : "";
 
 inputLabel.classList.add("invisible");
 inputLabel.style = null;
 
-if (lastInputValue) {
-  xButton.style = "display:block";
-  inputLabel.classList.replace("invisible", "visible");
-} else {
-  xButton.style = "display:none";
-}
-
 input.style = null;
 input.classList.add("border");
 
-input.value = lastInputValue;
-input.scrollTop = input.scrollHeight;
-
 returnInputButton.style = "display:none";
-
-let indexToEdit;
-let editedItem;
-
-const liMaker = (text) => {
-  const li = document.createElement("li");
-  const div = document.createElement("div");
-  div.innerHTML = marked.parse(text);
-  li.id = counterItems;
-  li.appendChild(div);
-  ol.appendChild(li);
-  spanMaker(li);
-  indexedItemsArray.push(counterItems.toString());
-  showItemSortingArrows(ol.childElementCount);
-  counterItems++;
-};
-
-const spanMaker = (liTag) => {
-  const spanTag = document.createElement("div");
-  spanTag.setAttribute("id", "item-control");
-  liTag.appendChild(spanTag);
-
-  editButtonMaker(spanTag);
-  trashButtonMaker(spanTag);
-};
-
-const editButtonMaker = (spanTag) => {
-  const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "edit-item btn");
-  buttonTag.setAttribute(
-    "onclick",
-    "editItem(this.parentElement.parentElement)"
-  );
-  buttonTag.setAttribute("title", "Edit item");
-
-  spanTag.appendChild(buttonTag);
-};
-
-const trashButtonMaker = (liTag) => {
-  const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "delete-one-item btn");
-  buttonTag.setAttribute(
-    "onclick",
-    "deleteOneItem(this.parentElement.parentElement)"
-  );
-  buttonTag.setAttribute("title", "Double-click to move to Trash");
-
-  liTag.appendChild(buttonTag);
-};
 
 const editItem = (item) => {
   window.event.stopPropagation();
@@ -308,20 +222,6 @@ form.addEventListener("submit", function (e) {
   ifReturnAndNoneX();
   clearInputAndPreviewAreas();
 });
-
-itemsArray?.forEach((item, key) => {
-  if (item) {
-    liMaker(item);
-  } else {
-    itemsArray.splice(key, 1);
-    nullInItemsStorage = true;
-    console.log(`items: ${key} item is null and ignored!`);
-  }
-});
-
-if (nullInItemsStorage) {
-  localStorage.setItem("items", JSON.stringify(itemsArray));
-}
 
 const defaultItemStateVars = () => {
   if (indexToEdit != null) {
