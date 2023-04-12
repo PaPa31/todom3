@@ -2,11 +2,11 @@ const firstHeaderButton = document.getElementById("first-header");
 const secondHeaderButton = document.getElementById("second-header");
 
 //const fileSelect = document.getElementById("fileSelect");
-const fileElem = document.getElementById("fileElem");
+let fileElem = document.getElementById("fileElem");
 //const fileList = document.getElementById("fileList");
 //const fileSend = document.getElementById("sendFile");
 
-const file = document.querySelector("input[type=file]");
+//const file = document.querySelector("input[type=file]");
 
 // starting in Item state & Unfolded view
 let isFileState = false;
@@ -57,33 +57,31 @@ const spanMaker = (liTag, obj) => {
   trashButtonMaker(spanTag);
 };
 
-const editFile = (obj) => {
-  const reader = new FileReader();
-  reader.readAsText(file.files[obj]);
-  reader.onload = (e) => {
-    input.value = e.target.result;
-  };
-  //input.value = reader.result;
-};
-
 const editButtonMaker = (spanTag, obj) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "edit-item btn");
-  if (!isFileState) {
+  if (isFileState) {
+    buttonTag.setAttribute("onclick", `editFile(${obj})`);
+  } else {
     buttonTag.setAttribute(
       "onclick",
       "editItem(this.parentElement.parentElement)"
     );
-  } else {
-    //const ur = URL.revokeObjectURL(url);
-    //console.log(url);
-    buttonTag.setAttribute("onclick", `editFile(${obj})`);
-    //buttonTag.setAttribute("onclick", "editFile(obj)");
-    //buttonTag.onclick = editItem(text);
   }
   buttonTag.setAttribute("title", "Edit item");
 
   spanTag.appendChild(buttonTag);
+};
+
+const editFile = (obj) => {
+  window.event.stopPropagation();
+  const reader = new FileReader();
+  reader.readAsText(fileElem.files[obj]);
+  reader.onload = (e) => {
+    input.value = e.target.result;
+  };
+  //input.value = reader.result;
+  editUI(fileElem.files[obj].name);
 };
 
 const trashButtonMaker = (liTag) => {
@@ -107,6 +105,7 @@ firstHeaderButton.addEventListener("click", function (e) {
     firstHeaderButton.classList.replace("unfold", "fold");
   }
   isFoldedView = !isFoldedView;
+  e.stopPropagation();
 });
 
 const hideTrash = () => {
@@ -134,69 +133,30 @@ const logFileText = async (file) => {
 };
 
 function handleFiles() {
-  //file = file.files;
-  console.log(file.files);
-  //console.log([file].files);
-  if (!this.files.length) {
+  console.log(fileElem.files);
+  if (!fileElem.files.length) {
     ol.innerHTML = "<p>No files selected!</p>";
   } else {
     ol.innerHTML = "";
-    //const list = document.createElement("ul");
-    //ol.appendChild(list);
-    for (let i = 0; i < this.files.length; i++) {
-      const file = this.files[i];
+    for (let i = 0; i < fileElem.files.length; i++) {
+      const file = fileElem.files[i];
 
       //if (!file.type.startsWith("text/")) {
       //  continue;
       //}
 
       const reader = new FileReader();
-      //const urll = URL.createObjectURL(this.files[i]);
-      //console.log(urll);
-      //reader.sr;
-
-      //const a = document.createElement("a");
-      //a.href = URL.createObjectURL(this.files[i]);
-      //const ur = URL.createObjectURL(this.files[i]);
-
-      //reader.addEventListener(
-      //  "load",
-      //  () => {
-      //    liMaker(reader.result, );
-      //  },
-      //  false
-      //);
-
       reader.onload = (e) => {
-        //const urr = URL.revokeObjectURL(ur);
-        //console.log(urr);
-        //console.log(URL.createObjectURL(this.files[i]));
-        //console.log(URL.createObjectURL(e.target.result));
-        //console.log(URL.createObjectURL(reader.result));
         liMaker(e.target.result, i);
-        //URL.revokeObjectURL(reader.result);
-        //URL.revokeObjectURL(this.files[i]);
       };
-
-      //if (this.files[i]) {
-      //  reader.readAsText(this.files[i]);
-      //}
-
       reader.readAsText(file);
-
-      //const img = document.createElement("img");
-      //img.src = URL.createObjectURL(this.files[i]);
-      //img.height = 60;
-      //img.onload = () => {
-      //  URL.revokeObjectURL(img.src);
-      //};
-      //li.appendChild(img);
-      //const info = document.createElement("span");
-      //info.innerHTML = `${this.files[i].name}: ${this.files[i].size} bytes`;
-      //li.appendChild(info);
     }
   }
 }
+
+fileElem.addEventListener("click", function (e) {
+  e.stopPropagation();
+});
 
 fileElem.addEventListener("change", handleFiles, false);
 
@@ -208,9 +168,13 @@ const initializeFileState = () => {
   if (window.location.protocol === "file:") {
     ol.innerHTML = ``;
 
-    if (fileElem) {
+    if (!fileElem.files.length) {
       fileElem.click();
+    } else {
+      handleFiles();
     }
+    //handleFiles();
+    //window.event.stopPropagation();
     //e.preventDefault(); // prevent navigation to "#"
   } else {
     logFileText(phrase);
@@ -278,4 +242,5 @@ secondHeaderButton.addEventListener("click", function (e) {
     fileState();
   }
   isFileState = !isFileState;
+  e.stopPropagation();
 });

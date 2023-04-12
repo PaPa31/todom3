@@ -39,20 +39,12 @@ input.classList.add("border");
 
 returnInputButton.style = "display:none";
 
-const editItem = (item) => {
-  window.event.stopPropagation();
-  if (!isFileState) {
-    editedItem = item;
-    indexToEdit = indexedItemsArray.indexOf(item.id) * 1;
-    input.value = itemsArray[indexToEdit];
-  } else {
-  }
-
+const editUI = (label) => {
   input.classList.replace("border", "border-edit");
   input.classList.add("bg");
   xButton.title = "Cancel edit";
 
-  inputLabel.innerHTML = `<span>Edit: </span><span>#${indexToEdit + 1}</span>`;
+  inputLabel.innerHTML = `<span>Edit: </span><span>${label}</span>`;
   inputLabel.classList.replace("invisible", "visible");
 
   returnInputButton.style = "display:none";
@@ -64,6 +56,18 @@ const editItem = (item) => {
   intervalFocus(form, "background-color: orange;", 300);
 
   mdToPreview(input.value);
+};
+
+const editItem = (item) => {
+  window.event.stopPropagation();
+  if (!isFileState) {
+    editedItem = item;
+    indexToEdit = indexedItemsArray.indexOf(item.id) * 1;
+    input.value = itemsArray[indexToEdit];
+  } else {
+  }
+
+  editUI("#" + (indexToEdit + 1));
 };
 
 const deleteOneItem = (item) => {
