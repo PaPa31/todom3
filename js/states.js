@@ -12,7 +12,7 @@ let isFoldedView = false;
 
 let itemsArray = [];
 
-let nullInItemsStorage = false;
+let nullGotIntoStorage = false;
 
 let counterItems = 0;
 // lightweight array to avoid redundant logic and waste of resources
@@ -187,19 +187,19 @@ const initializeItemState = () => {
 
   lastInputValue = localStorage.getItem("last") && localStorage.getItem("last");
 
-  nullInItemsStorage = false;
+  nullGotIntoStorage = false;
 
   itemsArray?.forEach((item, key) => {
     if (item) {
       liMaker(item);
     } else {
       itemsArray.splice(key, 1);
-      nullInItemsStorage = true;
+      nullGotIntoStorage = true;
       console.log(`items: ${key} item is null and ignored!`);
     }
   });
 
-  if (nullInItemsStorage) {
+  if (nullGotIntoStorage) {
     localStorage.setItem("items", JSON.stringify(itemsArray));
   }
 
