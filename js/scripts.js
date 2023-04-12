@@ -41,10 +41,12 @@ returnInputButton.style = "display:none";
 
 const editItem = (item) => {
   window.event.stopPropagation();
-
-  editedItem = item;
-  indexToEdit = indexedItemsArray.indexOf(item.id) * 1;
-  input.value = itemsArray[indexToEdit];
+  if (!isFileState) {
+    editedItem = item;
+    indexToEdit = indexedItemsArray.indexOf(item.id) * 1;
+    input.value = itemsArray[indexToEdit];
+  } else {
+  }
 
   input.classList.replace("border", "border-edit");
   input.classList.add("bg");
