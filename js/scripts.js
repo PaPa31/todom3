@@ -230,10 +230,10 @@ form.addEventListener("submit", function (e) {
 });
 
 const defaultItemStateVars = () => {
-  if (indexToEdit != null) {
-    defaultMarkers();
-    inputLabel.innerHTML = "<div>New</div>";
-  }
+  //if (indexToEdit != null) {
+  defaultMarkers();
+  inputLabel.innerHTML = "<div>New</div>";
+  //}
   indexedItemsArray = [];
   itemsArray = [];
   counterItems = 0;

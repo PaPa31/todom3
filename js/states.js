@@ -3,13 +3,15 @@ const secondHeaderButton = document.getElementById("second-header");
 
 //const fileSelect = document.getElementById("fileSelect");
 let fileElem = document.getElementById("fileElem");
+console.log(fileElem);
+//fileElem.files = FileList[];
 //const fileList = document.getElementById("fileList");
 //const fileSend = document.getElementById("sendFile");
 
 //const file = document.querySelector("input[type=file]");
 
-// starting in Item state & Unfolded view
-let isFileState = false;
+// starting in File state & Unfolded view
+let isFileState = true;
 let isFoldedView = false;
 
 let itemsArray = [];
@@ -18,6 +20,8 @@ let itemsArray = [];
 let nullGotIntoStorage = false;
 
 let counterItems = 0;
+let counterFiles = 0;
+
 // lightweight array to avoid redundant logic and waste of resources
 let indexedItemsArray = [];
 //let indexedFilesArray = [];
@@ -34,18 +38,16 @@ let editedItem;
 
 let editedFile;
 
-const liMaker = (text, obj) => {
+const liMaker = (text, count, obj) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
   div.innerHTML = marked.parse(text);
-  li.id = counterItems;
+  li.id = count;
   li.appendChild(div);
   ol.appendChild(li);
   //console.log("URL =", url);
   spanMaker(li, obj);
-  indexedItemsArray.push(counterItems.toString());
   showItemSortingArrows(ol.childElementCount);
-  counterItems++;
 };
 
 const spanMaker = (liTag, obj) => {
@@ -120,9 +122,9 @@ const hideTrash = () => {
 };
 
 //-----File state-----
-const hideItemState = () => {
-  defaultItemStateVars();
-};
+//const hideItemState = () => {
+//  defaultItemStateVars();
+//};
 
 var phrase = "README.md";
 
@@ -147,7 +149,8 @@ function handleFiles() {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        liMaker(e.target.result, i);
+        liMaker(e.target.result, i, i);
+        counterFiles++;
       };
       reader.readAsText(file);
     }
@@ -162,11 +165,12 @@ fileElem.addEventListener("change", handleFiles, false);
 
 const initializeFileState = () => {
   ol.innerHTML = "";
+  counterFiles = 0;
 
   console.log(window.location.protocol);
 
   if (window.location.protocol === "file:") {
-    ol.innerHTML = ``;
+    //ol.innerHTML = ``;
 
     if (!fileElem.files.length) {
       fileElem.click();
@@ -181,18 +185,21 @@ const initializeFileState = () => {
   }
 };
 
-const fileState = () => {
-  hideItemState();
-  hideTrash();
-  initializeFileState();
-};
+//const fileState = () => {
+//  //hideItemState();
+
+//  initializeFileState();
+//};
 
 //-----Item state-----
-const hideFileState = () => {
-  ol.innerHTML = "";
-};
+//const hideFileState = () => {
+//  ol.innerHTML = "";
+//};
 
 const initializeItemState = () => {
+  ol.innerHTML = "";
+  counterItems = 0;
+  indexedItemsArray = [];
   itemsArray =
     localStorage.getItem("items") && JSON.parse(localStorage.getItem("items"));
 
@@ -200,7 +207,9 @@ const initializeItemState = () => {
 
   itemsArray?.forEach((item, key) => {
     if (item) {
-      liMaker(item);
+      liMaker(item, key);
+      indexedItemsArray.push(counterItems.toString());
+      counterItems++;
     } else {
       itemsArray.splice(key, 1);
       nullGotIntoStorage = true;
@@ -225,22 +234,26 @@ const initializeItemState = () => {
   input.scrollTop = input.scrollHeight;
 };
 
-const itemState = () => {
-  hideFileState();
-  hideTrash();
-  initializeItemState();
-};
+//const itemState = () => {
+//  //hideFileState();
+//  //hideTrash();
+//  initializeItemState();
+//};
 
 secondHeaderButton.addEventListener("click", function (e) {
+  isFileState = !isFileState;
+  hideTrash();
+  showItemSortingArrows(0);
   if (isFileState) {
     firstHeaderButton.innerText = "Items";
     secondHeaderButton.innerText = "Files";
-    itemState();
+    initializeItemState();
+    //itemState();
   } else {
     firstHeaderButton.innerText = "Files";
     secondHeaderButton.innerText = "Items";
-    fileState();
+    initializeFileState();
+    //fileState();
   }
-  isFileState = !isFileState;
   e.stopPropagation();
 });
