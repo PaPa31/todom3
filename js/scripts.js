@@ -280,7 +280,7 @@ const clearInputAndPreviewAreas = () => {
 };
 
 xButton.addEventListener("click", function () {
-  if (itemIndexToEdit != null) {
+  if (itemIndexToEdit != null || fileIndexToEdit != null) {
     defaultMarkers();
   } else {
     localStorage.removeItem("last");
