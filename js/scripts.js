@@ -60,12 +60,12 @@ const editUI = (label) => {
 
 const editItem = (item) => {
   window.event.stopPropagation();
-  if (!isFileState) {
-    editedItem = item;
-    indexToEdit = indexedItemsArray.indexOf(item.id) * 1;
-    input.value = itemsArray[indexToEdit];
-  } else {
-  }
+  //if (isFileState) {
+  editedItem = item;
+  indexToEdit = indexedItemsArray.indexOf(item.id) * 1;
+  input.value = itemsArray[indexToEdit];
+  //} else {
+  //}
 
   editUI("#" + (indexToEdit + 1));
 };

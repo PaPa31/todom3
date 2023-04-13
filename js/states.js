@@ -61,12 +61,12 @@ const editButtonMaker = (spanTag, obj) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "edit-item btn");
   if (isFileState) {
-    buttonTag.setAttribute("onclick", `editFile(${obj})`);
-  } else {
     buttonTag.setAttribute(
       "onclick",
       "editItem(this.parentElement.parentElement)"
     );
+  } else {
+    buttonTag.setAttribute("onclick", `editFile(${obj})`);
   }
   buttonTag.setAttribute("title", "Edit item");
 
