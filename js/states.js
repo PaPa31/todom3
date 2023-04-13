@@ -3,7 +3,9 @@ const secondHeaderButton = document.getElementById("second-header");
 
 //const fileSelect = document.getElementById("fileSelect");
 let fileElem = document.getElementById("fileElem");
-console.log(fileElem);
+// emptying the FileList
+fileElem.value = null;
+
 //fileElem.files = FileList[];
 //const fileList = document.getElementById("fileList");
 //const fileSend = document.getElementById("sendFile");
@@ -57,7 +59,7 @@ const spanMaker = (liTag, obj) => {
   liTag.appendChild(spanTag);
 
   editButtonMaker(spanTag, obj);
-  trashButtonMaker(spanTag);
+  trashButtonMaker(spanTag, obj);
 };
 
 const editButtonMaker = (spanTag, obj) => {
@@ -76,6 +78,22 @@ const editButtonMaker = (spanTag, obj) => {
   spanTag.appendChild(buttonTag);
 };
 
+const trashButtonMaker = (liTag, obj) => {
+  const buttonTag = document.createElement("button");
+  buttonTag.setAttribute("class", "delete-one-item btn");
+  if (isFileState) {
+    buttonTag.setAttribute(
+      "onclick",
+      "deleteOneItem(this.parentElement.parentElement)"
+    );
+  } else {
+    buttonTag.setAttribute("onclick", `deleteOneFile(${obj})`);
+  }
+  buttonTag.setAttribute("title", "Double-click to move to Trash");
+
+  liTag.appendChild(buttonTag);
+};
+
 const editFile = (obj) => {
   window.event.stopPropagation();
   editedFile = fileElem.files[obj];
@@ -90,16 +108,8 @@ const editFile = (obj) => {
   editUI(fileElem.files[obj].name);
 };
 
-const trashButtonMaker = (liTag) => {
-  const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "delete-one-item btn");
-  buttonTag.setAttribute(
-    "onclick",
-    "deleteOneItem(this.parentElement.parentElement)"
-  );
-  buttonTag.setAttribute("title", "Double-click to move to Trash");
-
-  liTag.appendChild(buttonTag);
+const deleteOneFile = (obj) => {
+  console.log("Removal begins");
 };
 
 firstHeaderButton.addEventListener("click", function (e) {
