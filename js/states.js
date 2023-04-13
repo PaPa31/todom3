@@ -33,9 +33,10 @@ let lastClickId;
 let lastItem;
 let lastInputValue = "";
 
-let indexToEdit;
+let itemIndexToEdit;
 let editedItem;
 
+let fileIndexToEdit;
 let editedFile;
 
 const liMaker = (text, count, obj) => {
@@ -77,6 +78,9 @@ const editButtonMaker = (spanTag, obj) => {
 
 const editFile = (obj) => {
   window.event.stopPropagation();
+  editedFile = fileElem.files[obj];
+  fileIndexToEdit = obj;
+  console.log("editedFile:", editedFile);
   const reader = new FileReader();
   reader.readAsText(fileElem.files[obj]);
   reader.onload = (e) => {
