@@ -261,13 +261,13 @@ secondHeaderButton.addEventListener("click", function (e) {
   hideTrash();
   showItemSortingArrows(0);
   if (isFileState) {
-    firstHeaderButton.innerText = "Items";
-    secondHeaderButton.innerText = "Files";
+    //firstHeaderButton.innerText = "Items";
+    secondHeaderButton.innerText = "Items";
     initializeItemState();
     //itemState();
   } else {
-    firstHeaderButton.innerText = "Files";
-    secondHeaderButton.innerText = "Items";
+    //firstHeaderButton.innerText = "Files";
+    secondHeaderButton.innerText = "Files";
     initializeFileState();
     //fileState();
   }

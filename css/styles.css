@@ -1330,6 +1330,11 @@ code {
   white-space: break-spaces;
 }
 
+#second-header {
+  width: 200px;
+  line-height: inherit;
+}
+
 @media (min-width: 600px) {
   .flex-small {
     flex: 1;
