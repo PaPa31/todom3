@@ -149,7 +149,7 @@ const logFileText = async (file) => {
 };
 
 function handleFiles() {
-  console.log(fileElem.files);
+  //console.log(fileElem.files);
   if (!fileElem.files.length) {
     ol.innerHTML = "<p>No files selected!</p>";
   } else {
@@ -157,9 +157,11 @@ function handleFiles() {
     for (let i = 0; i < fileElem.files.length; i++) {
       const file = fileElem.files[i];
 
-      //if (!file.type.startsWith("text/")) {
-      //  continue;
-      //}
+      //console.log(file.type);
+
+      if (!file.type.startsWith("text/markdown")) {
+        continue;
+      }
 
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -181,7 +183,7 @@ const initializeFileState = () => {
   ol.innerHTML = "";
   counterFiles = 0;
 
-  console.log(window.location.protocol);
+  //console.log(window.location.protocol);
 
   if (window.location.protocol === "file:") {
     //ol.innerHTML = ``;
