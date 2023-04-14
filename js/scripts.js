@@ -12,7 +12,7 @@ const returnInputButton = document.getElementById("return-last-input");
 const deleteAllItemsButton = document.getElementById("delete-all-items");
 const restoreItemButton = document.getElementById("restore-deleted-item");
 const clearTrashButton = document.getElementById("clear-trash");
-const saveAsFileButton = document.getElementById("save-as-file");
+//const saveAsFileButton = document.getElementById("save-as-file");
 
 const deletedCounter = document.getElementById("deleted-counter");
 
@@ -58,11 +58,11 @@ const editUI = (label) => {
   mdToPreview(input.value);
 };
 
-const editItem = (item) => {
+const editItem = (element) => {
   window.event.stopPropagation();
-  //if (isFileState) {
-  editedItem = item;
-  itemIndexToEdit = indexedItemsArray.indexOf(item.id) * 1;
+  //if (isItemState) {
+  editedItemElementDOM = element;
+  itemIndexToEdit = indexedItemsArray.indexOf(element.id) * 1;
   input.value = itemsArray[itemIndexToEdit];
   //} else {
   //}
@@ -198,32 +198,101 @@ function scrollToTargetAdjusted(targetElement, offset) {
   intervalFocus(targetElement, "background-color: orange;", 300);
 }
 
-saveAsFileButton.addEventListener("click", function (e) {
+//saveAsFileButton.addEventListener("click", function (e) {
+//  if (input.value) {
+//    var myFile = new File([input.value], "README.md", {
+//      type: "text/plain;charset=utf-8",
+//    });
+//    saveAs(myFile);
+//  }
+//});
+
+//window.addEventListener("message", function (e) {
+//  console.log("Hei");
+//});
+
+const saveFile = (offset) => {
+  let fileName;
+
   if (input.value) {
-    var myFile = new File([input.value], "README.md", {
-      type: "text/plain;charset=utf-8",
-    });
-    saveAs(myFile);
+    if (fileIndexToEdit != null) {
+      fileName = fileElem.files[fileIndexToEdit].name;
+      const myFile = new File([input.value], fileName, {
+        type: "text/markdown;charset=utf-8",
+      });
+
+      var blob = new Blob([input.value], {
+        type: "text/plain;charset=utf-8",
+      });
+      //saveAs(blob, "hello world.txt");
+
+      //saveAs(myFile);
+
+      const blobURL = URL.createObjectURL(blob);
+      // Create the `<a download>` element and append it invisibly.
+      const a = document.createElement("a");
+      a.href = blobURL;
+      a.download = fileName;
+      a.onload = () => {
+        //URL.revokeObjectURL(img.src);
+        console.log("TTT");
+      };
+      a.style.display = "none";
+      document.body.append(a);
+      a.addEventListener("click", () => {
+        inputGlobal = input.value;
+        offsetGlobal = offset;
+        initialize();
+        //URL.revokeObjectURL(blobURL);
+        //a.remove();
+      });
+      // Programmatically click the element.
+      a.click();
+      // Revoke the blob URL and remove the element.
+      setTimeout(() => {
+        URL.revokeObjectURL(blobURL);
+        a.remove();
+      }, 1000);
+    } else {
+      fileName = "README.md";
+      const myFile = new File([input.value], fileName, {
+        type: "text/markdown;charset=utf-8",
+      });
+      saveAs(myFile);
+      liMaker(input.value, counterFiles);
+      counterFiles++;
+    }
+
+    if (fileName) {
+    }
   }
-});
+};
+
+const saveItem = (offset) => {
+  if (itemIndexToEdit != null) {
+    itemsArray[itemIndexToEdit] = input.value;
+    editedItemElementDOM.firstChild.innerHTML = marked.parse(input.value);
+    defaultMarkers();
+    scrollToTargetAdjusted(editedItemElementDOM, offset);
+  } else {
+    itemsArray.push(input.value);
+    liMaker(input.value, counterItems);
+    counterItems++;
+  }
+  localStorage.setItem("items", JSON.stringify(itemsArray));
+};
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   const previewOffset = preview.scrollTop;
   preview.innerHTML = "";
-  if (itemIndexToEdit != null) {
-    itemsArray[itemIndexToEdit] = input.value;
-    editedItem.firstChild.innerHTML = marked.parse(input.value);
-    defaultMarkers();
-    scrollToTargetAdjusted(editedItem, previewOffset);
+  if (isItemState) {
+    saveItem(previewOffset);
   } else {
-    itemsArray.push(input.value);
-    liMaker(input.value);
+    saveFile(previewOffset);
   }
 
-  localStorage.setItem("items", JSON.stringify(itemsArray));
   localStorage.removeItem("last");
-
   hideAndNewInputLabel();
   ifReturnAndNoneX();
   clearInputAndPreviewAreas();
@@ -310,7 +379,8 @@ restoreItemButton.addEventListener("click", function () {
     localStorage.setItem("items", JSON.stringify(itemsArray));
     localStorage.setItem("trash", JSON.stringify(trashArray));
 
-    liMaker(deletedItem);
+    liMaker(deletedItem, counterItems);
+    counterItems++;
     len = len - 1;
     deletedCounter.innerText = len;
   }

@@ -12,8 +12,8 @@ fileElem.value = null;
 
 //const file = document.querySelector("input[type=file]");
 
-// starting in File state & Unfolded view
-let isFileState = true;
+// starting in Item state & Unfolded view
+let isItemState = true;
 let isFoldedView = false;
 
 let itemsArray = [];
@@ -36,12 +36,15 @@ let lastItem;
 let lastInputValue = "";
 
 let itemIndexToEdit;
-let editedItem;
+let editedItemElementDOM;
 
 let fileIndexToEdit;
-let editedFile;
+let editedFileElementDOM;
 
-const liMaker = (text, count, obj) => {
+let inputGlobal;
+let offsetGlobal;
+
+const liMaker = (text, count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
   div.innerHTML = marked.parse(text);
@@ -49,7 +52,7 @@ const liMaker = (text, count, obj) => {
   li.appendChild(div);
   ol.appendChild(li);
   //console.log("URL =", url);
-  spanMaker(li, obj);
+  spanMaker(li, count);
   showItemSortingArrows(ol.childElementCount);
 };
 
@@ -65,15 +68,18 @@ const spanMaker = (liTag, obj) => {
 const editButtonMaker = (spanTag, obj) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "edit-item btn");
-  if (isFileState) {
+  if (isItemState) {
     buttonTag.setAttribute(
       "onclick",
       "editItem(this.parentElement.parentElement)"
     );
   } else {
-    buttonTag.setAttribute("onclick", `editFile(${obj})`);
+    buttonTag.setAttribute(
+      "onclick",
+      `editFile(this.parentElement.parentElement, ${obj})`
+    );
   }
-  buttonTag.setAttribute("title", "Edit item");
+  buttonTag.setAttribute("title", "Edit instance");
 
   spanTag.appendChild(buttonTag);
 };
@@ -81,24 +87,28 @@ const editButtonMaker = (spanTag, obj) => {
 const trashButtonMaker = (liTag, obj) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-one-item btn");
-  if (isFileState) {
+  if (isItemState) {
     buttonTag.setAttribute(
       "onclick",
       "deleteOneItem(this.parentElement.parentElement)"
     );
   } else {
-    buttonTag.setAttribute("onclick", `deleteOneFile(${obj})`);
+    buttonTag.setAttribute(
+      "onclick",
+      `deleteOneFile(this.parentElement.parentElement, ${obj})`
+    );
   }
   buttonTag.setAttribute("title", "Double-click to move to Trash");
 
   liTag.appendChild(buttonTag);
 };
 
-const editFile = (obj) => {
+const editFile = (element, obj) => {
   window.event.stopPropagation();
-  editedFile = fileElem.files[obj];
+  editedFileElementDOM = element;
+  //editedFileElementDOM = fileElem.files[obj];
   fileIndexToEdit = obj;
-  console.log("editedFile:", editedFile);
+  console.log("editedFileElementDOM:", editedFileElementDOM);
   const reader = new FileReader();
   reader.readAsText(fileElem.files[obj]);
   reader.onload = (e) => {
@@ -125,7 +135,7 @@ firstHeaderButton.addEventListener("click", function (e) {
 });
 
 const hideTrash = () => {
-  if (isFileState && trashArray.length) {
+  if (isItemState && trashArray.length) {
     deletedCounter.innerText = trashArray.length;
     restoreItemButton.classList.replace("invisible", "visible");
     clearTrashButton.classList.replace("invisible", "visible");
@@ -165,7 +175,7 @@ function handleFiles() {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        liMaker(e.target.result, i, i);
+        liMaker(e.target.result, i);
         counterFiles++;
       };
       reader.readAsText(file);
@@ -173,7 +183,39 @@ function handleFiles() {
   }
 }
 
+// Define a function to be called
+// when the input is focused
+function initialize() {
+  document.body.onfocus = checkIt;
+  console.log("initializing");
+}
+
+// Define a function to check if
+// the user failed to upload file
+function checkIt() {
+  // Check if the number of files
+  // is not zero
+
+  editedFileElementDOM.firstChild.innerHTML = marked.parse(inputGlobal);
+  defaultMarkers();
+  scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
+
+  //if (fileElem.value.length) {
+  //alert("Files Loaded");
+  //}
+
+  // Alert the user if the number
+  // of file is zero
+
+  //else {
+  //  alert("Cancel clicked");
+  //}
+  document.body.onfocus = null;
+  console.log("checked");
+}
+
 fileElem.addEventListener("click", function (e) {
+  //initialize();
   e.stopPropagation();
 });
 
@@ -257,10 +299,10 @@ const initializeItemState = () => {
 //};
 
 secondHeaderButton.addEventListener("click", function (e) {
-  isFileState = !isFileState;
+  isItemState = !isItemState;
   hideTrash();
   showItemSortingArrows(0);
-  if (isFileState) {
+  if (isItemState) {
     //firstHeaderButton.innerText = "Items";
     secondHeaderButton.innerText = "Items";
     initializeItemState();
