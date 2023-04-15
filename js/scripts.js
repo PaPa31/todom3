@@ -217,9 +217,9 @@ const saveFile = (offset) => {
   if (input.value) {
     if (fileIndexToEdit != null) {
       fileName = fileElem.files[fileIndexToEdit].name;
-      const myFile = new File([input.value], fileName, {
-        type: "text/markdown;charset=utf-8",
-      });
+      //const myFile = new File([input.value], fileName, {
+      //  type: "text/markdown;charset=utf-8",
+      //});
 
       var blob = new Blob([input.value], {
         type: "text/plain;charset=utf-8",
@@ -233,16 +233,21 @@ const saveFile = (offset) => {
       const a = document.createElement("a");
       a.href = blobURL;
       a.download = fileName;
-      a.onload = () => {
-        //URL.revokeObjectURL(img.src);
-        console.log("TTT");
-      };
+      //a.onload = () => {
+      //  //URL.revokeObjectURL(img.src);
+      //  console.log("TTT");
+      //};
       a.style.display = "none";
       document.body.append(a);
-      a.addEventListener("click", () => {
+      console.log("a", a);
+      a.addEventListener("click", (e) => {
+        e.stopPropagation();
         inputGlobal = input.value;
         offsetGlobal = offset;
         initialize();
+
+        //e.preventDefault();
+
         //URL.revokeObjectURL(blobURL);
         //a.remove();
       });
@@ -283,6 +288,8 @@ const saveItem = (offset) => {
 };
 
 form.addEventListener("submit", function (e) {
+  window.event.stopPropagation();
+  e.stopPropagation();
   e.preventDefault();
   const previewOffset = preview.scrollTop;
   preview.innerHTML = "";
@@ -348,7 +355,8 @@ const clearInputAndPreviewAreas = () => {
   preview.innerHTML = "";
 };
 
-xButton.addEventListener("click", function () {
+xButton.addEventListener("click", function (e) {
+  e.stopPropagation();
   if (itemIndexToEdit != null || fileIndexToEdit != null) {
     defaultMarkers();
   } else {

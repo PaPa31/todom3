@@ -17,7 +17,7 @@ let isItemState = true;
 let isFoldedView = false;
 
 let itemsArray = [];
-//let filesArray = [];
+let filesArray = [];
 
 let nullGotIntoStorage = false;
 
@@ -52,20 +52,20 @@ const liMaker = (text, count) => {
   li.appendChild(div);
   ol.appendChild(li);
   //console.log("URL =", url);
-  spanMaker(li, count);
+  spanMaker(li);
   showItemSortingArrows(ol.childElementCount);
 };
 
-const spanMaker = (liTag, obj) => {
+const spanMaker = (liTag) => {
   const spanTag = document.createElement("div");
   spanTag.setAttribute("id", "item-control");
   liTag.appendChild(spanTag);
 
-  editButtonMaker(spanTag, obj);
-  trashButtonMaker(spanTag, obj);
+  editButtonMaker(spanTag);
+  trashButtonMaker(spanTag);
 };
 
-const editButtonMaker = (spanTag, obj) => {
+const editButtonMaker = (spanTag) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "edit-item btn");
   if (isItemState) {
@@ -76,15 +76,15 @@ const editButtonMaker = (spanTag, obj) => {
   } else {
     buttonTag.setAttribute(
       "onclick",
-      `editFile(this.parentElement.parentElement, ${obj})`
+      `editFile(this.parentElement.parentElement)`
     );
   }
-  buttonTag.setAttribute("title", "Edit instance");
+  buttonTag.setAttribute("title", "Edit");
 
   spanTag.appendChild(buttonTag);
 };
 
-const trashButtonMaker = (liTag, obj) => {
+const trashButtonMaker = (liTag) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-one-item btn");
   if (isItemState) {
@@ -95,7 +95,7 @@ const trashButtonMaker = (liTag, obj) => {
   } else {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneFile(this.parentElement.parentElement, ${obj})`
+      `deleteOneFile(this.parentElement.parentElement)`
     );
   }
   buttonTag.setAttribute("title", "Double-click to move to Trash");
@@ -103,22 +103,23 @@ const trashButtonMaker = (liTag, obj) => {
   liTag.appendChild(buttonTag);
 };
 
-const editFile = (element, obj) => {
+const editFile = (element) => {
   window.event.stopPropagation();
   editedFileElementDOM = element;
-  //editedFileElementDOM = fileElem.files[obj];
-  fileIndexToEdit = obj;
+  fileIndexToEdit = element.id;
+  const fileName = fileElem.files[fileIndexToEdit].name;
   console.log("editedFileElementDOM:", editedFileElementDOM);
-  const reader = new FileReader();
-  reader.readAsText(fileElem.files[obj]);
-  reader.onload = (e) => {
-    input.value = e.target.result;
-  };
+  //const reader = new FileReader();
+  //reader.readAsText(fileElem.files[element.id]);
+  //reader.onload = (e) => {
+  //  input.value = e.target.result;
+  //};
   //input.value = reader.result;
-  editUI(fileElem.files[obj].name);
+  input.value = filesArray[fileIndexToEdit];
+  editUI(fileName);
 };
 
-const deleteOneFile = (obj) => {
+const deleteOneFile = (element) => {
   console.log("Removal begins");
 };
 
@@ -175,6 +176,7 @@ function handleFiles() {
 
       const reader = new FileReader();
       reader.onload = (e) => {
+        filesArray[i] = e.target.result;
         liMaker(e.target.result, i);
         counterFiles++;
       };
@@ -196,6 +198,7 @@ function checkIt() {
   // Check if the number of files
   // is not zero
 
+  filesArray[fileIndexToEdit] = inputGlobal;
   editedFileElementDOM.firstChild.innerHTML = marked.parse(inputGlobal);
   defaultMarkers();
   scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
