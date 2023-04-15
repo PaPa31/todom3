@@ -59,7 +59,7 @@ const editUI = (label) => {
 };
 
 const editItem = (element) => {
-  window.event.stopPropagation();
+  //window.event.stopPropagation();
   //if (isItemState) {
   editedItemElementDOM = element;
   itemIndexToEdit = indexedItemsArray.indexOf(element.id) * 1;
@@ -288,8 +288,6 @@ const saveItem = (offset) => {
 };
 
 form.addEventListener("submit", function (e) {
-  window.event.stopPropagation();
-  e.stopPropagation();
   e.preventDefault();
   const previewOffset = preview.scrollTop;
   preview.innerHTML = "";
@@ -356,7 +354,6 @@ const clearInputAndPreviewAreas = () => {
 };
 
 xButton.addEventListener("click", function (e) {
-  e.stopPropagation();
   if (itemIndexToEdit != null || fileIndexToEdit != null) {
     defaultMarkers();
   } else {

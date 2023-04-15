@@ -104,7 +104,7 @@ const trashButtonMaker = (liTag) => {
 };
 
 const editFile = (element) => {
-  window.event.stopPropagation();
+  //window.event.stopPropagation();
   editedFileElementDOM = element;
   fileIndexToEdit = element.id;
   const fileName = fileElem.files[fileIndexToEdit].name;
