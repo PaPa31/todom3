@@ -185,34 +185,17 @@ function handleFiles() {
   }
 }
 
-// Define a function to be called
-// when the input is focused
 function initialize() {
   document.body.onfocus = checkIt;
   console.log("initializing");
 }
 
-// Define a function to check if
-// the user failed to upload file
 function checkIt() {
-  // Check if the number of files
-  // is not zero
-
   filesArray[fileIndexToEdit] = inputGlobal;
   editedFileElementDOM.firstChild.innerHTML = marked.parse(inputGlobal);
   defaultMarkers();
   scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
 
-  //if (fileElem.value.length) {
-  //alert("Files Loaded");
-  //}
-
-  // Alert the user if the number
-  // of file is zero
-
-  //else {
-  //  alert("Cancel clicked");
-  //}
   document.body.onfocus = null;
   console.log("checked");
 }

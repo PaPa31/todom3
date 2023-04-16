@@ -207,9 +207,28 @@ function scrollToTargetAdjusted(targetElement, offset) {
 //  }
 //});
 
-//window.addEventListener("message", function (e) {
-//  console.log("Hei");
-//});
+const aDownload = (fileName) => {
+  var blob = new Blob([input.value], {
+    type: "text/plain;charset=utf-8",
+  });
+
+  const blobURL = URL.createObjectURL(blob);
+  // Create the `<a download>` element and append it invisibly.
+  const a = document.createElement("a");
+  a.href = blobURL;
+  a.download = fileName;
+  a.style.display = "none";
+  document.body.append(a);
+  a.addEventListener("click", (e) => {
+    e.stopPropagation();
+    initialize();
+  });
+  a.click();
+  setTimeout(() => {
+    URL.revokeObjectURL(blobURL);
+    a.remove();
+  }, 1000);
+};
 
 const saveFile = (offset) => {
   let fileName;
@@ -217,47 +236,15 @@ const saveFile = (offset) => {
   if (input.value) {
     if (fileIndexToEdit != null) {
       fileName = fileElem.files[fileIndexToEdit].name;
-      //const myFile = new File([input.value], fileName, {
-      //  type: "text/markdown;charset=utf-8",
-      //});
-
-      var blob = new Blob([input.value], {
-        type: "text/plain;charset=utf-8",
+      const myFile = new File([input.value], fileName, {
+        type: "text/markdown;charset=utf-8",
       });
-      //saveAs(blob, "hello world.txt");
 
+      inputGlobal = input.value;
+      offsetGlobal = offset;
       //saveAs(myFile);
-
-      const blobURL = URL.createObjectURL(blob);
-      // Create the `<a download>` element and append it invisibly.
-      const a = document.createElement("a");
-      a.href = blobURL;
-      a.download = fileName;
-      //a.onload = () => {
-      //  //URL.revokeObjectURL(img.src);
-      //  console.log("TTT");
-      //};
-      a.style.display = "none";
-      document.body.append(a);
-      console.log("a", a);
-      a.addEventListener("click", (e) => {
-        e.stopPropagation();
-        inputGlobal = input.value;
-        offsetGlobal = offset;
-        initialize();
-
-        //e.preventDefault();
-
-        //URL.revokeObjectURL(blobURL);
-        //a.remove();
-      });
-      // Programmatically click the element.
-      a.click();
-      // Revoke the blob URL and remove the element.
-      setTimeout(() => {
-        URL.revokeObjectURL(blobURL);
-        a.remove();
-      }, 1000);
+      //initialize();
+      aDownload(fileName);
     } else {
       fileName = "README.md";
       const myFile = new File([input.value], fileName, {
