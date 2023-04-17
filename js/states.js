@@ -185,6 +185,13 @@ function handleFiles() {
   }
 }
 
+const handleFilesArray = () => {
+  for (let i = 0; i < filesArray.length; i++) {
+    liMaker(filesArray[i], i);
+    counterFiles++;
+  }
+};
+
 function initialize() {
   document.body.onfocus = checkIt;
 
@@ -221,7 +228,7 @@ const initializeFileState = () => {
     if (!fileElem.files.length) {
       fileElem.click();
     } else {
-      handleFiles();
+      handleFilesArray();
     }
     //handleFiles();
     //window.event.stopPropagation();
