@@ -187,6 +187,7 @@ function handleFiles() {
 
 function initialize() {
   document.body.onfocus = checkIt;
+
   console.log("initializing");
 }
 

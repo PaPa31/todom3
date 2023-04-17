@@ -208,6 +208,14 @@ function scrollToTargetAdjusted(targetElement, offset) {
 //});
 
 const aDownload = (fileName) => {
+  //var data = new FormData();
+  //data.append("upfile", new Blob([input.value], { type: "text/plain" }));
+  //fetch(fileElem.files[fileIndexToEdit], { method: "POST", body: data });
+
+  //const blob = await fetch(fileElem.files[fileIndexToEdit]).then((r) =>
+  //  r.blob()
+  //);
+
   var blob = new Blob([input.value], {
     type: "text/plain;charset=utf-8",
   });
@@ -219,6 +227,7 @@ const aDownload = (fileName) => {
   a.download = fileName;
   a.style.display = "none";
   document.body.append(a);
+
   a.addEventListener("click", (e) => {
     e.stopPropagation();
     initialize();
@@ -236,12 +245,11 @@ const saveFile = (offset) => {
   if (input.value) {
     if (fileIndexToEdit != null) {
       fileName = fileElem.files[fileIndexToEdit].name;
-      const myFile = new File([input.value], fileName, {
-        type: "text/markdown;charset=utf-8",
-      });
-
       inputGlobal = input.value;
       offsetGlobal = offset;
+      //const myFile = new File([input.value], fileName, {
+      //  type: "text/markdown;charset=utf-8",
+      //});
       //saveAs(myFile);
       //initialize();
       aDownload(fileName);
