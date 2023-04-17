@@ -108,7 +108,7 @@ const editFile = (element) => {
   editedFileElementDOM = element;
   fileIndexToEdit = element.id;
   const fileName = fileElem.files[fileIndexToEdit].name;
-  console.log("editedFileElementDOM:", editedFileElementDOM);
+  //console.log("editedFileElementDOM:", editedFileElementDOM);
   //const reader = new FileReader();
   //reader.readAsText(fileElem.files[element.id]);
   //reader.onload = (e) => {
@@ -188,17 +188,18 @@ function handleFiles() {
 function initialize() {
   document.body.onfocus = checkIt;
 
-  console.log("initializing");
+  //console.log("initializing");
 }
 
 function checkIt() {
   filesArray[fileIndexToEdit] = inputGlobal;
+  clearInputAndPreviewAreas();
   editedFileElementDOM.firstChild.innerHTML = marked.parse(inputGlobal);
   defaultMarkers();
   scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
 
   document.body.onfocus = null;
-  console.log("checked");
+  //console.log("checked");
 }
 
 fileElem.addEventListener("click", function (e) {

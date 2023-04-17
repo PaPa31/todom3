@@ -291,6 +291,7 @@ form.addEventListener("submit", function (e) {
   preview.innerHTML = "";
   if (isItemState) {
     saveItem(previewOffset);
+    clearInputAndPreviewAreas();
   } else {
     saveFile(previewOffset);
   }
@@ -298,7 +299,6 @@ form.addEventListener("submit", function (e) {
   localStorage.removeItem("last");
   hideAndNewInputLabel();
   ifReturnAndNoneX();
-  clearInputAndPreviewAreas();
 });
 
 const defaultItemStateVars = () => {
