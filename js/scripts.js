@@ -207,36 +207,39 @@ function scrollToTargetAdjusted(targetElement, offset) {
 //  }
 //});
 
-const aDownload = (fileName) => {
-  //var data = new FormData();
-  //data.append("upfile", new Blob([input.value], { type: "text/plain" }));
-  //fetch(fileElem.files[fileIndexToEdit], { method: "POST", body: data });
-
-  //const blob = await fetch(fileElem.files[fileIndexToEdit]).then((r) =>
-  //  r.blob()
-  //);
-
+const fileDownload = (fileName) => {
   var blob = new Blob([input.value], {
     type: "text/plain;charset=utf-8",
   });
 
-  const blobURL = URL.createObjectURL(blob);
-  // Create the `<a download>` element and append it invisibly.
-  const a = document.createElement("a");
-  a.href = blobURL;
-  a.download = fileName;
-  a.style.display = "none";
-  document.body.append(a);
+  if (typeof window.navigator.msSaveBlob !== "undefined") {
+    window.navigator.msSaveBlob(blob, fileName);
+  } else {
+    var blobURL =
+      window.URL && window.URL.createObjectURL
+        ? window.URL.createObjectURL(blob)
+        : window.webkitURL.createObjectURL(blob);
+    var tempLink = document.createElement("a");
+    tempLink.style.display = "none";
+    tempLink.href = blobURL;
+    tempLink.setAttribute("download", fileName);
 
-  a.addEventListener("click", (e) => {
-    e.stopPropagation();
-    initialize();
-  });
-  a.click();
-  setTimeout(() => {
-    URL.revokeObjectURL(blobURL);
-    a.remove();
-  }, 1000);
+    if (typeof tempLink.download === "undefined") {
+      tempLink.setAttribute("target", "_blank");
+    }
+    tempLink.addEventListener("click", (e) => {
+      e.stopPropagation();
+      initialize();
+    });
+
+    document.body.appendChild(tempLink);
+    tempLink.click();
+
+    setTimeout(function () {
+      document.body.removeChild(tempLink);
+      window.URL.revokeObjectURL(blobURL);
+    }, 1000);
+  }
 };
 
 const saveFile = (offset) => {
@@ -252,7 +255,7 @@ const saveFile = (offset) => {
       //});
       //saveAs(myFile);
       //initialize();
-      aDownload(fileName);
+      fileDownload(fileName);
     } else {
       fileName = "README.md";
       const myFile = new File([input.value], fileName, {
