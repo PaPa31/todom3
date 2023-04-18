@@ -160,29 +160,26 @@ const logFileText = async (file) => {
 };
 
 function handleFiles() {
-  //console.log(fileElem.files);
-  if (!fileElem.files.length) {
-    ol.innerHTML = "<p>No files selected!</p>";
-  } else {
-    ol.innerHTML = "";
-    for (let i = 0; i < fileElem.files.length; i++) {
-      const file = fileElem.files[i];
-
-      //console.log(file.type);
-
-      if (!file.type.startsWith("text/markdown")) {
-        continue;
+  Promise.all(
+    (function* () {
+      for (let file of fileElem.files) {
+        if (!file.type.startsWith("text/markdown")) {
+          continue;
+        }
+        yield new Promise((resolve) => {
+          let reader = new FileReader();
+          reader.onload = (event) => resolve(event.target.result);
+          reader.readAsText(file);
+        });
       }
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        filesArray[i] = e.target.result;
-        liMaker(e.target.result, i);
-        counterFiles++;
-      };
-      reader.readAsText(file);
-    }
-  }
+    })()
+  ).then((texts) => {
+    texts.map((text, i) => {
+      filesArray[i] = text;
+      liMaker(filesArray[i], i);
+      counterFiles++;
+    });
+  });
 }
 
 const handleFilesArray = () => {
