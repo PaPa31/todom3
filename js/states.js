@@ -159,10 +159,10 @@ const logFileText = async (file) => {
   ol.innerHTML = text;
 };
 
-function handleFiles() {
+function handleFiles(files) {
   Promise.all(
     (function* () {
-      for (let file of fileElem.files) {
+      for (let file of files) {
         if (!file.type.startsWith("text/markdown")) {
           continue;
         }
@@ -180,6 +180,49 @@ function handleFiles() {
       counterFiles++;
     });
   });
+}
+
+function addFiles(e) {
+  e.stopPropagation();
+  e.preventDefault();
+
+  // if directory support is available
+  if (e.dataTransfer && e.dataTransfer.items) {
+    var items = e.dataTransfer.items;
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i].webkitGetAsEntry();
+
+      if (item) {
+        addDirectory(item);
+      }
+    }
+    return;
+  }
+
+  // Fallback
+  var files = e.target.files || e.dataTransfer.files;
+  if (!files.length) {
+    alert("File type not accepted");
+    return;
+  }
+
+  handleFiles(files);
+}
+
+function addDirectory(item) {
+  var _this = this;
+  if (item.isDirectory) {
+    var directoryReader = item.createReader();
+    directoryReader.readEntries(function (entries) {
+      entries.forEach(function (entry) {
+        _this.addDirectory(entry);
+      });
+    });
+  } else {
+    item.file(function (file) {
+      handleFiles([file], 0);
+    });
+  }
 }
 
 const handleFilesArray = () => {
@@ -211,7 +254,14 @@ fileElem.addEventListener("click", function (e) {
   e.stopPropagation();
 });
 
-fileElem.addEventListener("change", handleFiles, false);
+//fileElem.addEventListener("change", handleFiles, false);
+fileElem.addEventListener(
+  "change",
+  function (e) {
+    addFiles(e);
+  },
+  false
+);
 
 const initializeFileState = () => {
   ol.innerHTML = "";
