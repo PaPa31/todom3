@@ -107,7 +107,8 @@ const editFile = (element) => {
   //window.event.stopPropagation();
   editedFileElementDOM = element;
   fileIndexToEdit = element.id;
-  const fileName = fileElem.files[fileIndexToEdit].name;
+  const fileName = filesArray[fileIndexToEdit].name;
+
   //console.log("editedFileElementDOM:", editedFileElementDOM);
   //const reader = new FileReader();
   //reader.readAsText(fileElem.files[element.id]);
@@ -115,7 +116,7 @@ const editFile = (element) => {
   //  input.value = e.target.result;
   //};
   //input.value = reader.result;
-  input.value = filesArray[fileIndexToEdit];
+  input.value = filesArray[fileIndexToEdit].text;
   editUI(fileName);
 };
 
@@ -167,17 +168,19 @@ function handleFiles(files) {
           continue;
         }
         yield new Promise((resolve) => {
+          const obj = { name: file.name };
+          filesArray.push(obj);
           let reader = new FileReader();
           reader.onload = (event) => resolve(event.target.result);
           reader.readAsText(file);
+          counterFiles++;
         });
       }
     })()
   ).then((texts) => {
     texts.map((text, i) => {
-      filesArray[i] = text;
-      liMaker(filesArray[i], i);
-      counterFiles++;
+      filesArray[i].text = text;
+      liMaker(filesArray[i].text, i);
     });
   });
 }
@@ -227,7 +230,7 @@ function addDirectory(item) {
 
 const handleFilesArray = () => {
   for (let i = 0; i < filesArray.length; i++) {
-    liMaker(filesArray[i], i);
+    liMaker(filesArray[i].text, i);
     counterFiles++;
   }
 };
@@ -239,7 +242,7 @@ function initialize() {
 }
 
 function checkIt() {
-  filesArray[fileIndexToEdit] = inputGlobal;
+  filesArray[fileIndexToEdit].text = inputGlobal;
   clearInputAndPreviewAreas();
   editedFileElementDOM.firstChild.innerHTML = marked.parse(inputGlobal);
   defaultMarkers();

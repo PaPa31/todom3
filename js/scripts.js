@@ -247,7 +247,7 @@ const saveFile = (offset) => {
 
   if (input.value) {
     if (fileIndexToEdit != null) {
-      fileName = fileElem.files[fileIndexToEdit].name;
+      fileName = filesArray[fileIndexToEdit].name;
       inputGlobal = input.value;
       offsetGlobal = offset;
       //const myFile = new File([input.value], fileName, {
