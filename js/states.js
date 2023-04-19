@@ -148,6 +148,7 @@ const deleteOneFile = (element) => {
 
     filesArray.splice(indexToDelete, 1);
     indexedFilesArray.splice(indexToDelete, 1);
+    counterFiles--;
 
     //localStorage.removeItem("items");
     //localStorage.setItem("items", JSON.stringify(itemsArray));
