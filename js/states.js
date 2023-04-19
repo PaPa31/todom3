@@ -173,14 +173,14 @@ function handleFiles(files) {
           let reader = new FileReader();
           reader.onload = (event) => resolve(event.target.result);
           reader.readAsText(file);
-          counterFiles++;
         });
       }
     })()
   ).then((texts) => {
-    texts.map((text, i) => {
-      filesArray[i].text = text;
-      liMaker(filesArray[i].text, i);
+    texts.map((text) => {
+      filesArray[counterFiles].text = text;
+      liMaker(filesArray[counterFiles].text, counterFiles);
+      counterFiles++;
     });
   });
 }
