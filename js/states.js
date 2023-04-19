@@ -269,6 +269,7 @@ fileElem.addEventListener(
 const initializeFileState = () => {
   ol.innerHTML = "";
   counterFiles = 0;
+  saveButton.innerText = "Save file";
 
   //console.log(window.location.protocol);
 
@@ -303,6 +304,7 @@ const initializeItemState = () => {
   ol.innerHTML = "";
   counterItems = 0;
   indexedItemsArray = [];
+  saveButton.innerText = "Save item";
   itemsArray =
     localStorage.getItem("items") && JSON.parse(localStorage.getItem("items"));
 

@@ -12,6 +12,7 @@ const returnInputButton = document.getElementById("return-last-input");
 const deleteAllItemsButton = document.getElementById("delete-all-items");
 const restoreItemButton = document.getElementById("restore-deleted-item");
 const clearTrashButton = document.getElementById("clear-trash");
+const saveButton = document.getElementById("save-button");
 //const saveAsFileButton = document.getElementById("save-as-file");
 
 const deletedCounter = document.getElementById("deleted-counter");
