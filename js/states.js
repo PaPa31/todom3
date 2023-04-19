@@ -270,7 +270,6 @@ const initializeFileState = () => {
   ol.innerHTML = "";
   counterFiles = 0;
   saveButton.innerText = "Save file";
-  fileElem.setAttribute("webkitdirectory", "true")
 
   //console.log(window.location.protocol);
 
@@ -358,6 +357,7 @@ secondHeaderButton.addEventListener("click", function (e) {
   } else {
     //firstHeaderButton.innerText = "Files";
     secondHeaderButton.innerText = "Files";
+    fileElem.setAttribute("webkitdirectory", "true");
     initializeFileState();
     //fileState();
   }
