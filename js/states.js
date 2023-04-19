@@ -26,7 +26,7 @@ let counterFiles = 0;
 
 // lightweight array to avoid redundant logic and waste of resources
 let indexedItemsArray = [];
-//let indexedFilesArray = [];
+let indexedFilesArray = [];
 
 let twoClickToTrash = false;
 let twoClickTrashClear = false;
@@ -106,7 +106,8 @@ const trashButtonMaker = (liTag) => {
 const editFile = (element) => {
   //window.event.stopPropagation();
   editedFileElementDOM = element;
-  fileIndexToEdit = element.id;
+  //fileIndexToEdit = element.id;
+  fileIndexToEdit = indexedFilesArray.indexOf(element.id) * 1;
   const fileName = filesArray[fileIndexToEdit].name;
 
   //console.log("editedFileElementDOM:", editedFileElementDOM);
@@ -122,6 +123,45 @@ const editFile = (element) => {
 
 const deleteOneFile = (element) => {
   console.log("Removal begins");
+  window.event.stopPropagation();
+  if (twoClickToTrash && element.id === lastClickId) {
+    const indexToDelete = indexedFilesArray.indexOf(element.id) * 1;
+
+    if (fileIndexToEdit != null && fileIndexToEdit >= indexToDelete) {
+      if (fileIndexToEdit == indexToDelete) {
+        defaultMarkers();
+        inputLabel.innerHTML = "<div>New</div>";
+      } else {
+        fileIndexToEdit = fileIndexToEdit - 1;
+        inputLabel.innerHTML = "";
+      }
+    }
+
+    ol.removeChild(element);
+    showItemSortingArrows(ol.childElementCount);
+
+    //trashArray.push(itemsArray[indexToDelete]);
+    //deletedCounter.innerText = trashArray.length;
+    //restoreItemButton.classList.replace("invisible", "visible");
+    //clearTrashButton.classList.replace("invisible", "visible");
+    //localStorage.setItem("trash", JSON.stringify(trashArray));
+
+    filesArray.splice(indexToDelete, 1);
+    indexedFilesArray.splice(indexToDelete, 1);
+
+    //localStorage.removeItem("items");
+    //localStorage.setItem("items", JSON.stringify(itemsArray));
+    twoClickToTrash = false;
+    lastClickId = undefined;
+  } else {
+    if (lastItem) lastItem.lastChild.lastChild.classList.remove("filter-red");
+    lastClickId = element.id;
+    element.lastChild.lastChild.classList.add("filter-red");
+    lastItem = element;
+    twoClickToTrash = true;
+  }
+  //if (twoClickTrashClear) clearTrashButton.classList.remove("border-red");
+  //twoClickTrashClear = false;
 };
 
 firstHeaderButton.addEventListener("click", function (e) {
@@ -180,6 +220,7 @@ function handleFiles(files) {
     texts.map((text) => {
       filesArray[counterFiles].text = text;
       liMaker(filesArray[counterFiles].text, counterFiles);
+      indexedFilesArray.push(counterFiles.toString());
       counterFiles++;
     });
   });
@@ -231,6 +272,7 @@ function addDirectory(item) {
 const handleFilesArray = () => {
   for (let i = 0; i < filesArray.length; i++) {
     liMaker(filesArray[i].text, i);
+    indexedFilesArray.push(counterFiles.toString());
     counterFiles++;
   }
 };
@@ -267,8 +309,8 @@ fileElem.addEventListener(
 );
 
 const initializeFileState = () => {
-  ol.innerHTML = "";
   counterFiles = 0;
+  indexedFilesArray = [];
   saveButton.innerText = "Save file";
 
   //console.log(window.location.protocol);
@@ -301,7 +343,6 @@ const initializeFileState = () => {
 //};
 
 const initializeItemState = () => {
-  ol.innerHTML = "";
   counterItems = 0;
   indexedItemsArray = [];
   saveButton.innerText = "Save item";
@@ -349,6 +390,8 @@ secondHeaderButton.addEventListener("click", function (e) {
   isItemState = !isItemState;
   hideTrash();
   showItemSortingArrows(0);
+  twoClickToTrash = false;
+  ol.innerHTML = "";
   if (isItemState) {
     //firstHeaderButton.innerText = "Items";
     secondHeaderButton.innerText = "Items";
