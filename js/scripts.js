@@ -200,9 +200,8 @@ function scrollToTargetAdjusted(targetElement, offset) {
 }
 
 openFileButton.addEventListener("click", function (e) {
-  fileElem.removeAttribute("webkitdirectory")
+  fileElem.removeAttribute("webkitdirectory");
   fileElem.click();
-
 });
 
 const fileDownload = (fileName) => {
@@ -462,3 +461,5 @@ const update = function () {
 input.addEventListener("keyup", update);
 input.addEventListener("mouseup", update);
 //position.addEventListener("scroll", debounce(update, 50, false));
+
+initializeItemState();
