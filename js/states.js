@@ -2,7 +2,7 @@ const firstHeaderButton = document.getElementById("first-header");
 const secondHeaderButton = document.getElementById("second-header");
 
 //const fileSelect = document.getElementById("fileSelect");
-let fileElem = document.getElementById("fileElem");
+let fileElem = document.getElementById("file-elem");
 // emptying the FileList
 fileElem.value = null;
 
@@ -270,6 +270,7 @@ const initializeFileState = () => {
   ol.innerHTML = "";
   counterFiles = 0;
   saveButton.innerText = "Save file";
+  fileElem.setAttribute("webkitdirectory", "true")
 
   //console.log(window.location.protocol);
 

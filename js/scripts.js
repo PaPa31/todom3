@@ -13,7 +13,7 @@ const deleteAllItemsButton = document.getElementById("delete-all-items");
 const restoreItemButton = document.getElementById("restore-deleted-item");
 const clearTrashButton = document.getElementById("clear-trash");
 const saveButton = document.getElementById("save-button");
-//const saveAsFileButton = document.getElementById("save-as-file");
+const openFileButton = document.getElementById("open-file");
 
 const deletedCounter = document.getElementById("deleted-counter");
 
@@ -199,14 +199,11 @@ function scrollToTargetAdjusted(targetElement, offset) {
   intervalFocus(targetElement, "background-color: orange;", 300);
 }
 
-//saveAsFileButton.addEventListener("click", function (e) {
-//  if (input.value) {
-//    var myFile = new File([input.value], "README.md", {
-//      type: "text/plain;charset=utf-8",
-//    });
-//    saveAs(myFile);
-//  }
-//});
+openFileButton.addEventListener("click", function (e) {
+  fileElem.removeAttribute("webkitdirectory")
+  fileElem.click();
+
+});
 
 const fileDownload = (fileName) => {
   var blob = new Blob([input.value], {
