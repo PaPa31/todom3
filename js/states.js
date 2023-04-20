@@ -190,6 +190,14 @@ const hideTrash = () => {
   }
 };
 
+const hideDeleteAllItems = () => {
+  if (isItemState && itemsArray.length) {
+    saveAsFileButton.classList.replace("invisible", "visible");
+  } else {
+    saveAsFileButton.classList.replace("visible", "invisible");
+  }
+};
+
 //-----File state-----
 //const hideItemState = () => {
 //  defaultItemStateVars();
@@ -315,6 +323,9 @@ const initializeFileState = () => {
   counterFiles = 0;
   indexedFilesArray = [];
   saveButton.innerText = "Save file";
+  saveAsFileButton.classList.replace("visible", "invisible");
+  openFileButton.classList.replace("invisible", "visible");
+  openDirButton.classList.replace("invisible", "visible");
 
   //console.log(window.location.protocol);
 
@@ -349,6 +360,9 @@ const initializeItemState = () => {
   counterItems = 0;
   indexedItemsArray = [];
   saveButton.innerText = "Save item";
+  saveAsFileButton.classList.replace("invisible", "visible");
+  openFileButton.classList.replace("visible", "invisible");
+  openDirButton.classList.replace("visible", "invisible");
   itemsArray =
     localStorage.getItem("items") && JSON.parse(localStorage.getItem("items"));
 

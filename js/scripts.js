@@ -13,8 +13,9 @@ const deleteAllItemsButton = document.getElementById("delete-all-items");
 const restoreItemButton = document.getElementById("restore-deleted-item");
 const clearTrashButton = document.getElementById("clear-trash");
 const saveButton = document.getElementById("save-button");
-const openFileButton = document.getElementById("open-file");
 const saveAsFileButton = document.getElementById("save-as-file");
+const openFileButton = document.getElementById("open-file");
+const openDirButton = document.getElementById("open-dir");
 
 const deletedCounter = document.getElementById("deleted-counter");
 
@@ -29,6 +30,14 @@ clearTrashButton.style = null;
 let trashArray = localStorage.getItem("trash")
   ? JSON.parse(localStorage.getItem("trash"))
   : [];
+
+//saveAsFileButton.classList.add("visible");
+
+openFileButton.classList.add("invisible");
+openFileButton.style = null;
+
+openDirButton.classList.add("invisible");
+openDirButton.style = null;
 
 restoreItemButton.classList.add("invisible");
 restoreItemButton.style = null;
