@@ -181,7 +181,7 @@ firstHeaderButton.addEventListener("click", function (e) {
 });
 
 const showOrHideTrash = () => {
-  if (trashArray.length) {
+  if (isItemState && trashArray.length) {
     deletedCounter.innerText = trashArray.length;
     restoreItemButton.classList.replace("invisible", "visible");
     clearTrashButton.classList.replace("invisible", "visible");
@@ -191,7 +191,7 @@ const showOrHideTrash = () => {
   }
 };
 
-const hideDeleteAllItems = () => {
+const showOrHideDeleteAllItems = () => {
   if (isItemState && itemsArray && itemsArray.length) {
     deleteAllItemsButton.classList.replace("invisible", "visible");
   } else {
@@ -390,8 +390,6 @@ const initializeItemState = () => {
     ? JSON.parse(localStorage.getItem("trash"))
     : [];
 
-  showOrHideTrash();
-
   lastInputValue = localStorage.getItem("last")
     ? localStorage.getItem("last")
     : "";
@@ -431,5 +429,7 @@ secondHeaderButton.addEventListener("click", function (e) {
     initializeFileState();
     //fileState();
   }
+  showOrHideDeleteAllItems();
+  showOrHideTrash();
   e.stopPropagation();
 });

@@ -102,7 +102,6 @@ const deleteOneItem = (item) => {
 
     trashArray.push(itemsArray[indexToDelete]);
     deletedCounter.innerText = trashArray.length;
-    deleteAllItemsButton.classList.replace("invisible", "visible");
     restoreItemButton.classList.replace("invisible", "visible");
     clearTrashButton.classList.replace("invisible", "visible");
     localStorage.setItem("trash", JSON.stringify(trashArray));
@@ -110,7 +109,7 @@ const deleteOneItem = (item) => {
     itemsArray.splice(indexToDelete, 1);
     indexedItemsArray.splice(indexToDelete, 1);
 
-    hideDeleteAllItems();
+    showOrHideDeleteAllItems();
 
     localStorage.removeItem("items");
     if (itemsArray.length == 0) {
@@ -495,3 +494,5 @@ input.addEventListener("mouseup", update);
 //position.addEventListener("scroll", debounce(update, 50, false));
 
 initializeItemState();
+showOrHideDeleteAllItems();
+showOrHideTrash();
