@@ -31,7 +31,10 @@ let trashArray = localStorage.getItem("trash")
   ? JSON.parse(localStorage.getItem("trash"))
   : [];
 
-//saveAsFileButton.classList.add("visible");
+deleteAllItemsButton.classList.add("invisible");
+deleteAllItemsButton.style = null;
+
+saveAsFileButton.classList.add("inline-block");
 
 openFileButton.classList.add("invisible");
 openFileButton.style = null;
@@ -109,6 +112,8 @@ const deleteOneItem = (item) => {
 
     itemsArray.splice(indexToDelete, 1);
     indexedItemsArray.splice(indexToDelete, 1);
+
+    hideDeleteAllItems();
 
     localStorage.removeItem("items");
     localStorage.setItem("items", JSON.stringify(itemsArray));
@@ -322,6 +327,7 @@ const defaultItemStateVars = () => {
   defaultMarkers();
   inputLabel.innerHTML = "<div>New</div>";
   //}
+  deleteAllItemsButton.classList.replace("visible", "invisible");
   indexedItemsArray = [];
   itemsArray = [];
   counterItems = 0;
@@ -392,6 +398,7 @@ returnInputButton.addEventListener("click", function () {
 });
 
 restoreItemButton.addEventListener("click", function () {
+  deleteAllItemsButton.classList.replace("invisible", "visible");
   let len = trashArray.length;
   if (len !== 0) {
     const deletedItem = trashArray.pop();

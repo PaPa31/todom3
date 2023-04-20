@@ -1094,6 +1094,14 @@ button.edit-item {
   opacity: 0;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
+.none {
+  display: none;
+}
+
 #restore-deleted-item {
   padding: 5px;
   border-width: 2px;
