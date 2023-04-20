@@ -1376,7 +1376,7 @@ code {
   .container > .flex-row > .flex-small:last-child {
     padding-left: 10px;
   }
-  #content.flex-small {
+  .container > .flex-row > .flex-small {
     width: 50%;
   }
 }
