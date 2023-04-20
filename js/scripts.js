@@ -27,10 +27,6 @@ const inputLabel = document.getElementById("input-label");
 clearTrashButton.classList.add("invisible");
 clearTrashButton.style = null;
 
-let trashArray = localStorage.getItem("trash")
-  ? JSON.parse(localStorage.getItem("trash"))
-  : [];
-
 deleteAllItemsButton.classList.add("invisible");
 deleteAllItemsButton.style = null;
 
@@ -106,6 +102,7 @@ const deleteOneItem = (item) => {
 
     trashArray.push(itemsArray[indexToDelete]);
     deletedCounter.innerText = trashArray.length;
+    deleteAllItemsButton.classList.replace("invisible", "visible");
     restoreItemButton.classList.replace("invisible", "visible");
     clearTrashButton.classList.replace("invisible", "visible");
     localStorage.setItem("trash", JSON.stringify(trashArray));
@@ -116,7 +113,11 @@ const deleteOneItem = (item) => {
     hideDeleteAllItems();
 
     localStorage.removeItem("items");
-    localStorage.setItem("items", JSON.stringify(itemsArray));
+    if (itemsArray.length == 0) {
+      localStorage.removeItem("items");
+    } else {
+      localStorage.setItem("items", JSON.stringify(itemsArray));
+    }
     twoClickToTrash = false;
     lastClickId = undefined;
   } else {
@@ -284,6 +285,7 @@ const saveFile = (offset) => {
       });
       saveAs(myFile);
       liMaker(input.value, counterFiles);
+      indexedFilesArray.push(counterFiles.toString());
       counterFiles++;
     }
 
@@ -301,6 +303,7 @@ const saveItem = (offset) => {
   } else {
     itemsArray.push(input.value);
     liMaker(input.value, counterItems);
+    indexedItemsArray.push(counterItems.toString());
     counterItems++;
   }
   localStorage.setItem("items", JSON.stringify(itemsArray));
@@ -397,8 +400,8 @@ returnInputButton.addEventListener("click", function () {
   input.focus();
 });
 
-restoreItemButton.addEventListener("click", function () {
-  deleteAllItemsButton.classList.replace("invisible", "visible");
+restoreItemButton.addEventListener("click", function (e) {
+  e.stopPropagation();
   let len = trashArray.length;
   if (len !== 0) {
     const deletedItem = trashArray.pop();
@@ -407,6 +410,7 @@ restoreItemButton.addEventListener("click", function () {
     localStorage.setItem("trash", JSON.stringify(trashArray));
 
     liMaker(deletedItem, counterItems);
+    indexedItemsArray.push(counterItems.toString());
     counterItems++;
     len = len - 1;
     deletedCounter.innerText = len;
@@ -416,6 +420,7 @@ restoreItemButton.addEventListener("click", function () {
     clearTrashButton.classList.replace("visible", "invisible");
     localStorage.removeItem("trash");
   }
+  deleteAllItemsButton.classList.replace("invisible", "visible");
 });
 
 clearTrashButton.addEventListener("click", function (e) {

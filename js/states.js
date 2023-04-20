@@ -18,6 +18,7 @@ let isFoldedView = false;
 
 let itemsArray = [];
 let filesArray = [];
+let trashArray = [];
 
 let nullGotIntoStorage = false;
 
@@ -179,8 +180,8 @@ firstHeaderButton.addEventListener("click", function (e) {
   e.stopPropagation();
 });
 
-const hideTrash = () => {
-  if (isItemState && trashArray.length) {
+const showOrHideTrash = () => {
+  if (trashArray.length) {
     deletedCounter.innerText = trashArray.length;
     restoreItemButton.classList.replace("invisible", "visible");
     clearTrashButton.classList.replace("invisible", "visible");
@@ -191,7 +192,7 @@ const hideTrash = () => {
 };
 
 const hideDeleteAllItems = () => {
-  if (isItemState && itemsArray.length) {
+  if (isItemState && itemsArray && itemsArray.length) {
     deleteAllItemsButton.classList.replace("invisible", "visible");
   } else {
     deleteAllItemsButton.classList.replace("visible", "invisible");
@@ -363,10 +364,9 @@ const initializeItemState = () => {
   saveAsFileButton.classList.replace("none", "inline-block");
   openFileButton.classList.replace("visible", "invisible");
   openDirButton.classList.replace("visible", "invisible");
-  itemsArray =
-    localStorage.getItem("items") && JSON.parse(localStorage.getItem("items"));
-
-  hideDeleteAllItems();
+  itemsArray = localStorage.getItem("items")
+    ? JSON.parse(localStorage.getItem("items"))
+    : [];
 
   nullGotIntoStorage = false;
 
@@ -386,7 +386,15 @@ const initializeItemState = () => {
     localStorage.setItem("items", JSON.stringify(itemsArray));
   }
 
-  lastInputValue = localStorage.getItem("last") && localStorage.getItem("last");
+  trashArray = localStorage.getItem("trash")
+    ? JSON.parse(localStorage.getItem("trash"))
+    : [];
+
+  showOrHideTrash();
+
+  lastInputValue = localStorage.getItem("last")
+    ? localStorage.getItem("last")
+    : "";
 
   if (lastInputValue) {
     xButton.style = "display:block";
@@ -401,13 +409,12 @@ const initializeItemState = () => {
 
 //const itemState = () => {
 //  //hideFileState();
-//  //hideTrash();
+//  //showOrHideTrash();
 //  initializeItemState();
 //};
 
 secondHeaderButton.addEventListener("click", function (e) {
   isItemState = !isItemState;
-  hideTrash();
   showItemSortingArrows(0);
   twoClickToTrash = false;
   ol.innerHTML = "";
