@@ -549,7 +549,7 @@ button {
   transition: all 0.2s ease;
 }
 
-button.first {
+.mr5 {
   margin-right: 5px;
 }
 
@@ -1337,7 +1337,8 @@ code {
 
 @media (min-width: 600px) {
   .flex-small {
-    flex: 1;
+    /*flex: 1;*/
+    flex: auto;
     margin-bottom: 0;
   }
   .header-button {
@@ -1367,7 +1368,7 @@ code {
   .container > .flex-row > .flex-small:last-child {
     padding-left: 10px;
   }
-  .flex-small {
+  #content.flex-small {
     width: 50%;
   }
 }
