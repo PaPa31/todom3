@@ -14,6 +14,7 @@ const restoreItemButton = document.getElementById("restore-deleted-item");
 const clearTrashButton = document.getElementById("clear-trash");
 const saveButton = document.getElementById("save-button");
 const openFileButton = document.getElementById("open-file");
+const saveAsFileButton = document.getElementById("save-as-file");
 
 const deletedCounter = document.getElementById("deleted-counter");
 
@@ -202,6 +203,15 @@ function scrollToTargetAdjusted(targetElement, offset) {
 openFileButton.addEventListener("click", function (e) {
   fileElem.removeAttribute("webkitdirectory");
   fileElem.click();
+});
+
+saveAsFileButton.addEventListener("click", function (e) {
+  if (input.value) {
+    var myFile = new File([input.value], "README.md", {
+      type: "text/plain;charset=utf-8",
+    });
+    saveAs(myFile);
+  }
 });
 
 const fileDownload = (fileName) => {
