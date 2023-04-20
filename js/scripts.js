@@ -324,6 +324,7 @@ deleteAllItemsButton.addEventListener("click", function (e) {
 
 const defaultMarkers = () => {
   itemIndexToEdit = null;
+  fileIndexToEdit = null;
   input.classList.replace("border-edit", "border");
   input.classList.remove("bg");
   xButton.title = "Clear input";

@@ -126,14 +126,16 @@ const deleteOneFile = (element) => {
   window.event.stopPropagation();
   if (twoClickToTrash && element.id === lastClickId) {
     const indexToDelete = indexedFilesArray.indexOf(element.id) * 1;
+    //const fileNameToEdit = filesArray[fileIndexToEdit].name;
+    //const fileNameToDelete = filesArray[indexToDelete].name;
 
     if (fileIndexToEdit != null && fileIndexToEdit >= indexToDelete) {
-      if (fileIndexToEdit == indexToDelete) {
+      if (filesArray[fileIndexToEdit].name == filesArray[indexToDelete].name) {
         defaultMarkers();
         inputLabel.innerHTML = "<div>New</div>";
       } else {
-        fileIndexToEdit = fileIndexToEdit - 1;
-        inputLabel.innerHTML = "";
+        fileIndexToEdit--;
+        //inputLabel.innerHTML = "";
       }
     }
 
@@ -393,6 +395,7 @@ secondHeaderButton.addEventListener("click", function (e) {
   showItemSortingArrows(0);
   twoClickToTrash = false;
   ol.innerHTML = "";
+  clearInputAndPreviewAreas();
   if (isItemState) {
     //firstHeaderButton.innerText = "Items";
     secondHeaderButton.innerText = "Items";
