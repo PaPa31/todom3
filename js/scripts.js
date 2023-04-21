@@ -68,16 +68,19 @@ const editUI = (label) => {
   mdToPreview(input.value);
 };
 
-const editItem = (element) => {
+const editItem = (e, element) => {
   //window.event.stopPropagation();
   //if (isItemState) {
   editedItemElementDOM = element;
   itemIndexToEdit = indexedItemsArray.indexOf(element.id) * 1;
-  input.value = itemsArray[itemIndexToEdit];
+  if (e.ctrlKey) {
+    input.value = input.value + "\n" + itemsArray[itemIndexToEdit];
+  } else {
+    input.value = itemsArray[itemIndexToEdit];
+    editUI("#" + (itemIndexToEdit + 1));
+  }
   //} else {
   //}
-
-  editUI("#" + (itemIndexToEdit + 1));
 };
 
 const deleteOneItem = (e, item) => {

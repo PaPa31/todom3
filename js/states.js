@@ -78,7 +78,7 @@ const editButtonMaker = (spanTag) => {
   if (isItemState) {
     buttonTag.setAttribute(
       "onclick",
-      "editItem(this.parentElement.parentElement)"
+      "editItem(event, this.parentElement.parentElement)"
     );
   } else {
     buttonTag.setAttribute(
@@ -86,7 +86,10 @@ const editButtonMaker = (spanTag) => {
       `editFile(this.parentElement.parentElement)`
     );
   }
-  buttonTag.setAttribute("title", "Edit");
+  buttonTag.setAttribute(
+    "title",
+    "Click to Edit, Ctrl+click merge with input area"
+  );
 
   spanTag.appendChild(buttonTag);
 };
@@ -132,12 +135,9 @@ const editFile = (element) => {
 };
 
 const deleteOneFile = (e, element) => {
-  console.log("Removal begins");
   e.stopPropagation();
   if (twoClickToTrash && element.id === lastClickId) {
     const indexToDelete = indexedFilesArray.indexOf(element.id) * 1;
-    //const fileNameToEdit = filesArray[fileIndexToEdit].name;
-    //const fileNameToDelete = filesArray[indexToDelete].name;
 
     if (fileIndexToEdit != null && fileIndexToEdit >= indexToDelete) {
       if (filesArray[fileIndexToEdit].name == filesArray[indexToDelete].name) {
@@ -145,26 +145,17 @@ const deleteOneFile = (e, element) => {
         inputLabel.innerHTML = "<div>New</div>";
       } else {
         fileIndexToEdit--;
-        //inputLabel.innerHTML = "";
       }
     }
 
     ol.removeChild(element);
     showItemSortingArrows(ol.childElementCount);
 
-    //trashArray.push(itemsArray[indexToDelete]);
-    //deletedCounter.innerText = trashArray.length;
-    //restoreItemButton.classList.replace("invisible", "visible");
-    //clearTrashButton.classList.replace("invisible", "visible");
-    //localStorage.setItem("trash", JSON.stringify(trashArray));
-
     filesArray.splice(indexToDelete, 1);
     indexedFilesArray.splice(indexToDelete, 1);
     counterFiles--;
-    if (counterFiles == 0) fileElem.value = null;
+    if (filesArray.length == 0) fileElem.value = null;
 
-    //localStorage.removeItem("items");
-    //localStorage.setItem("items", JSON.stringify(itemsArray));
     twoClickToTrash = false;
     lastClickId = undefined;
   } else {
@@ -174,8 +165,6 @@ const deleteOneFile = (e, element) => {
     lastItem = element;
     twoClickToTrash = true;
   }
-  //if (twoClickTrashClear) clearTrashButton.classList.remove("border-red");
-  //twoClickTrashClear = false;
 };
 
 firstHeaderButton.addEventListener("click", function (e) {
