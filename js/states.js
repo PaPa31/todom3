@@ -327,6 +327,7 @@ const defaultFileValues = () => {
 };
 
 const initializeFileState = () => {
+  counterFiles = 0;
   //console.log(window.location.protocol);
 
   if (window.location.protocol === "file:") {
