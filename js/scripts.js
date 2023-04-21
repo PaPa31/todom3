@@ -25,26 +25,26 @@ const position = document.getElementById("position");
 const inputLabel = document.getElementById("input-label");
 
 clearTrashButton.classList.add("invisible");
-clearTrashButton.style = null;
+clearTrashButton.removeAttribute("style");
 
 deleteAllItemsButton.classList.add("invisible");
-deleteAllItemsButton.style = null;
+deleteAllItemsButton.removeAttribute("style");
 
 saveAsFileButton.classList.add("inline-block");
 
 openFileButton.classList.add("invisible");
-openFileButton.style = null;
+openFileButton.removeAttribute("style");
 
 openDirButton.classList.add("invisible");
-openDirButton.style = null;
+openDirButton.removeAttribute("style");
 
 restoreItemButton.classList.add("invisible");
-restoreItemButton.style = null;
+restoreItemButton.removeAttribute("style");
 
 inputLabel.classList.add("invisible");
-inputLabel.style = null;
+inputLabel.removeAttribute("style");
 
-input.style = null;
+input.removeAttribute("style");
 input.classList.add("border");
 
 returnInputButton.style = "display:none";
@@ -198,7 +198,7 @@ html.addEventListener("click", function () {
 const intervalFocus = (element, cssRule, interval) => {
   element.style = cssRule;
   window.setTimeout(function () {
-    element.style = null;
+    element.removeAttribute("style");
   }, interval);
 };
 
