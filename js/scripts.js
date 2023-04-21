@@ -131,7 +131,8 @@ const deleteOneItem = (e, item) => {
     lastItem = item;
     twoClickToTrash = true;
   }
-  if (e.ctrlKey) lastItem.lastChild.lastChild.classList.remove("filter-red");
+  if (lastItem && e.ctrlKey)
+    lastItem.lastChild.lastChild.classList.remove("filter-red");
   if (twoClickTrashClear || e.ctrlKey)
     clearTrashButton.classList.remove("border-red");
   twoClickTrashClear = false;
