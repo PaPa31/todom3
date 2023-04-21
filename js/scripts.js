@@ -168,29 +168,6 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-input.addEventListener(
-  "input",
-  debounce(
-    function (e) {
-      lastInputValue = e.target.value;
-      if (lastInputValue) {
-        inputLabel.classList.replace("invisible", "visible");
-        xButton.style = "display:block";
-      } else {
-        inputLabel.classList.replace("visible", "invisible");
-        xButton.style = "display:none";
-      }
-      returnInputButton.style = "display:none";
-
-      localStorage.setItem("last", lastInputValue);
-      mdToPreview(e.target.value);
-    },
-    200,
-    false
-  ),
-  false
-);
-
 html.addEventListener("click", function () {
   if (twoClickTrashClear) clearTrashButton.classList.remove("border-red");
   twoClickTrashClear = false;
@@ -492,9 +469,32 @@ const update = function () {
   });
 };
 
-input.addEventListener("keyup", update);
-input.addEventListener("mouseup", update);
-//position.addEventListener("scroll", debounce(update, 50, false));
+input.addEventListener(
+  "input",
+  debounce(
+    function (e) {
+      lastInputValue = e.target.value;
+      if (lastInputValue) {
+        inputLabel.classList.replace("invisible", "visible");
+        xButton.style = "display:block";
+      } else {
+        inputLabel.classList.replace("visible", "invisible");
+        xButton.style = "display:none";
+      }
+      returnInputButton.style = "display:none";
+
+      localStorage.setItem("last", lastInputValue);
+      mdToPreview(e.target.value);
+    },
+    200,
+    false
+  ),
+  false
+);
+
+//input.addEventListener("keyup", debounce(update, 150, false));
+//input.addEventListener("mouseup", debounce(update, 150, false));
+//position.addEventListener("scroll", debounce(update, 150, false));
 
 initializeItemState();
 showOrHideDeleteAllItems();
