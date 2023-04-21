@@ -116,7 +116,6 @@ const deleteOneItem = (e, item) => {
 
     showOrHideDeleteAllItems();
 
-    localStorage.removeItem("items");
     if (itemsArray.length == 0) {
       localStorage.removeItem("items");
     } else {
