@@ -154,7 +154,7 @@ const deleteOneFile = (e, element) => {
     filesArray.splice(indexToDelete, 1);
     indexedFilesArray.splice(indexToDelete, 1);
     counterFiles--;
-    if (filesArray.length == 0) fileElem.value = null;
+    if (counterFiles == 0) fileElem.value = null;
 
     twoClickToTrash = false;
     lastClickId = undefined;
