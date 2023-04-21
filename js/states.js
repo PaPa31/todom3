@@ -83,7 +83,7 @@ const editButtonMaker = (spanTag) => {
   } else {
     buttonTag.setAttribute(
       "onclick",
-      `editFile(this.parentElement.parentElement)`
+      "editFile(this.parentElement.parentElement)"
     );
   }
   buttonTag.setAttribute(
@@ -100,12 +100,12 @@ const trashButtonMaker = (liTag) => {
   if (isItemState) {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneItem(event, this.parentElement.parentElement)`
+      "deleteOneItem(event, this.parentElement.parentElement)"
     );
   } else {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneFile(event, this.parentElement.parentElement)`
+      "deleteOneFile(event, this.parentElement.parentElement)"
     );
   }
   buttonTag.setAttribute(
