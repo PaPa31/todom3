@@ -399,8 +399,7 @@ returnInputButton.addEventListener("click", function () {
   input.focus();
 });
 
-restoreItemButton.addEventListener("click", function (e) {
-  e.stopPropagation();
+restoreItemButton.addEventListener("click", function () {
   let len = trashArray.length;
   if (len !== 0) {
     const deletedItem = trashArray.pop();
