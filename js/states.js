@@ -91,7 +91,7 @@ const trashButtonMaker = (liTag) => {
   if (isItemState) {
     buttonTag.setAttribute(
       "onclick",
-      "deleteOneItem(this.parentElement.parentElement)"
+      `deleteOneItem(event, this.parentElement.parentElement)`
     );
   } else {
     buttonTag.setAttribute(
@@ -99,7 +99,10 @@ const trashButtonMaker = (liTag) => {
       `deleteOneFile(this.parentElement.parentElement)`
     );
   }
-  buttonTag.setAttribute("title", "Double-click to move to Trash");
+  buttonTag.setAttribute(
+    "title",
+    "Double-click to Trash, Ctrl+click to Delete"
+  );
 
   liTag.appendChild(buttonTag);
 };

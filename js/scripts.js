@@ -80,9 +80,9 @@ const editItem = (element) => {
   editUI("#" + (itemIndexToEdit + 1));
 };
 
-const deleteOneItem = (item) => {
-  window.event.stopPropagation();
-  if (twoClickToTrash && item.id === lastClickId) {
+const deleteOneItem = (e, item) => {
+  e.stopPropagation();
+  if ((twoClickToTrash && item.id === lastClickId) || e.ctrlKey) {
     const indexToDelete = indexedItemsArray.indexOf(item.id) * 1;
 
     if (itemIndexToEdit != null && itemIndexToEdit >= indexToDelete) {
@@ -100,11 +100,13 @@ const deleteOneItem = (item) => {
     ol.removeChild(item);
     showItemSortingArrows(ol.childElementCount);
 
-    trashArray.push(itemsArray[indexToDelete]);
-    deletedCounter.innerText = trashArray.length;
-    restoreItemButton.classList.replace("invisible", "visible");
-    clearTrashButton.classList.replace("invisible", "visible");
-    localStorage.setItem("trash", JSON.stringify(trashArray));
+    if (!e.ctrlKey) {
+      trashArray.push(itemsArray[indexToDelete]);
+      deletedCounter.innerText = trashArray.length;
+      restoreItemButton.classList.replace("invisible", "visible");
+      clearTrashButton.classList.replace("invisible", "visible");
+      localStorage.setItem("trash", JSON.stringify(trashArray));
+    }
 
     itemsArray.splice(indexToDelete, 1);
     indexedItemsArray.splice(indexToDelete, 1);
@@ -126,7 +128,9 @@ const deleteOneItem = (item) => {
     lastItem = item;
     twoClickToTrash = true;
   }
-  if (twoClickTrashClear) clearTrashButton.classList.remove("border-red");
+  if (e.ctrlKey) lastItem.lastChild.lastChild.classList.remove("filter-red");
+  if (twoClickTrashClear || e.ctrlKey)
+    clearTrashButton.classList.remove("border-red");
   twoClickTrashClear = false;
 };
 
