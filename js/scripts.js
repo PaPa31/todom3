@@ -197,7 +197,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 
 openFileButton.addEventListener("click", function (e) {
   fileElem.removeAttribute("webkitdirectory");
-  fileElem.click();
+  initializeFileState();
 });
 
 saveAsFileButton.addEventListener("click", function (e) {
@@ -496,6 +496,7 @@ input.addEventListener(
 //input.addEventListener("mouseup", debounce(update, 150, false));
 //position.addEventListener("scroll", debounce(update, 150, false));
 
+defaultItemValues();
 initializeItemState();
 showOrHideDeleteAllItems();
 showOrHideTrash();

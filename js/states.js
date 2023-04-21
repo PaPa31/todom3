@@ -16,9 +16,13 @@ fileElem.value = null;
 let isItemState = true;
 let isFoldedView = false;
 
-let itemsArray = [];
+let itemsArray = localStorage.getItem("items")
+  ? JSON.parse(localStorage.getItem("items"))
+  : [];
 let filesArray = [];
-let trashArray = [];
+let trashArray = localStorage.getItem("trash")
+  ? JSON.parse(localStorage.getItem("trash"))
+  : [];
 
 let nullGotIntoStorage = false;
 
@@ -34,7 +38,9 @@ let twoClickTrashClear = false;
 
 let lastClickId;
 let lastItem;
-let lastInputValue = "";
+let lastInputValue = localStorage.getItem("last")
+  ? localStorage.getItem("last")
+  : "";
 
 let itemIndexToEdit;
 let editedItemElementDOM;
@@ -96,7 +102,7 @@ const trashButtonMaker = (liTag) => {
   } else {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneFile(this.parentElement.parentElement)`
+      `deleteOneFile(event, this.parentElement.parentElement)`
     );
   }
   buttonTag.setAttribute(
@@ -125,9 +131,9 @@ const editFile = (element) => {
   editUI(fileName);
 };
 
-const deleteOneFile = (element) => {
+const deleteOneFile = (e, element) => {
   console.log("Removal begins");
-  window.event.stopPropagation();
+  e.stopPropagation();
   if (twoClickToTrash && element.id === lastClickId) {
     const indexToDelete = indexedFilesArray.indexOf(element.id) * 1;
     //const fileNameToEdit = filesArray[fileIndexToEdit].name;
@@ -155,6 +161,7 @@ const deleteOneFile = (element) => {
     filesArray.splice(indexToDelete, 1);
     indexedFilesArray.splice(indexToDelete, 1);
     counterFiles--;
+    if (counterFiles == 0) fileElem.value = null;
 
     //localStorage.removeItem("items");
     //localStorage.setItem("items", JSON.stringify(itemsArray));
@@ -323,14 +330,14 @@ fileElem.addEventListener(
   false
 );
 
-const initializeFileState = () => {
-  counterFiles = 0;
-  indexedFilesArray = [];
+const defaultFileValues = () => {
   saveButton.innerText = "Save file";
   saveAsFileButton.classList.replace("inline-block", "none");
   openFileButton.classList.replace("invisible", "visible");
   openDirButton.classList.replace("invisible", "visible");
+};
 
+const initializeFileState = () => {
   //console.log(window.location.protocol);
 
   if (window.location.protocol === "file:") {
@@ -360,16 +367,25 @@ const initializeFileState = () => {
 //  ol.innerHTML = "";
 //};
 
+const defaultItemValues = () => {
+  //counterItems = 0;
+  //indexedItemsArray = [];
+
+  if (lastInputValue) {
+    xButton.style = "display:block";
+    inputLabel.classList.replace("invisible", "visible");
+    input.value = lastInputValue;
+    input.scrollTop = input.scrollHeight;
+  } else {
+    xButton.style = "display:none";
+  }
+};
+
 const initializeItemState = () => {
-  counterItems = 0;
-  indexedItemsArray = [];
   saveButton.innerText = "Save item";
   saveAsFileButton.classList.replace("none", "inline-block");
   openFileButton.classList.replace("visible", "invisible");
   openDirButton.classList.replace("visible", "invisible");
-  itemsArray = localStorage.getItem("items")
-    ? JSON.parse(localStorage.getItem("items"))
-    : [];
 
   nullGotIntoStorage = false;
 
@@ -388,24 +404,6 @@ const initializeItemState = () => {
   if (nullGotIntoStorage) {
     localStorage.setItem("items", JSON.stringify(itemsArray));
   }
-
-  trashArray = localStorage.getItem("trash")
-    ? JSON.parse(localStorage.getItem("trash"))
-    : [];
-
-  lastInputValue = localStorage.getItem("last")
-    ? localStorage.getItem("last")
-    : "";
-
-  if (lastInputValue) {
-    xButton.style = "display:block";
-    inputLabel.classList.replace("invisible", "visible");
-  } else {
-    xButton.style = "display:none";
-  }
-
-  input.value = lastInputValue;
-  input.scrollTop = input.scrollHeight;
 };
 
 //const itemState = () => {
@@ -419,7 +417,7 @@ secondHeaderButton.addEventListener("click", function (e) {
   showItemSortingArrows(0);
   twoClickToTrash = false;
   ol.innerHTML = "";
-  clearInputAndPreviewAreas();
+  //clearInputAndPreviewAreas();
   if (isItemState) {
     //firstHeaderButton.innerText = "Items";
     secondHeaderButton.innerText = "Items";
@@ -429,6 +427,7 @@ secondHeaderButton.addEventListener("click", function (e) {
     //firstHeaderButton.innerText = "Files";
     secondHeaderButton.innerText = "Files";
     fileElem.setAttribute("webkitdirectory", "true");
+    defaultFileValues();
     initializeFileState();
     //fileState();
   }
