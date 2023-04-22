@@ -199,7 +199,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 
 openFileButton.addEventListener("click", function (e) {
   fileElem.removeAttribute("webkitdirectory");
-  initializeFileState();
+  fileElem.click();
 });
 
 saveAsFileButton.addEventListener("click", function (e) {
