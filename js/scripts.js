@@ -327,7 +327,7 @@ document.addEventListener("keydown", function (e) {
   switch (e.key) {
     case "Control":
       if (itemsArray.length != 0)
-        deleteAllItemsButton.innerText = "Save All Items";
+        deleteAllItemsButton.innerText = "Merge All Items";
       break;
   }
 });
@@ -341,11 +341,19 @@ document.addEventListener("keyup", function (e) {
   }
 });
 
-const saveAllItems = () => {};
+const mergeAllItems = () => {
+  itemsArray.forEach((item) => {
+    if (item) {
+      input.value = input.value ? input.value + "\r" + item : item;
+    }
+  });
+  xUI();
+  mdToPreview(input.value);
+};
 
 deleteAllItemsButton.addEventListener("click", function (e) {
   if (e.ctrlKey) {
-    saveAllItems();
+    mergeAllItems();
   } else {
     if (confirm("Are you sure?")) {
       defaultItemStateVars();
