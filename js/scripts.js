@@ -324,12 +324,34 @@ const defaultItemStateVars = () => {
   //}
 };
 
+document.addEventListener("keydown", function (e) {
+  switch (e.key) {
+    case "Control":
+      deleteAllItemsButton.innerText = "Save All Items";
+      break;
+  }
+});
+
+document.addEventListener("keyup", function (e) {
+  switch (e.key) {
+    case "Control":
+      deleteAllItemsButton.innerText = "Delete All Items";
+      break;
+  }
+});
+
+const saveAllItems = () => {};
+
 deleteAllItemsButton.addEventListener("click", function (e) {
-  if (confirm("Are you sure?")) {
-    defaultItemStateVars();
-    localStorage.removeItem("items");
+  if (e.ctrlKey) {
+    saveAllItems();
   } else {
-    e.preventDefault();
+    if (confirm("Are you sure?")) {
+      defaultItemStateVars();
+      localStorage.removeItem("items");
+    } else {
+      e.preventDefault();
+    }
   }
 });
 
