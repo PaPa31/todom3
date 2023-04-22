@@ -58,6 +58,11 @@ if (lastInputValue) {
   xButton.style = "display:none";
 }
 
+const scrollToLast = () => {
+  preview.scrollIntoView(false);
+  input.focus();
+};
+
 const editUI = (label) => {
   input.classList.replace("border", "border-edit");
   input.classList.add("bg");
@@ -66,8 +71,7 @@ const editUI = (label) => {
   inputLabel.innerHTML = `<span>Edit: </span><span>${label}</span>`;
   inputLabel.classList.replace("invisible", "visible");
 
-  preview.scrollIntoView(false);
-  input.focus();
+  scrollToLast();
 
   intervalFocus(form, "background-color: orange;", 300);
 };
@@ -353,11 +357,12 @@ document.addEventListener("keyup", function (e) {
 const mergeAllItems = () => {
   itemsArray.forEach((item) => {
     if (item) {
-      input.value = input.value ? input.value + "\r" + item : item;
+      input.value = input.value ? input.value + "\n\r" + item : item;
     }
   });
   xUI();
   mdToPreview(input.value);
+  scrollToLast();
 };
 
 deleteAllItemsButton.addEventListener("click", function (e) {
