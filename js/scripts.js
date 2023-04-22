@@ -326,7 +326,8 @@ const defaultItemStateVars = () => {
 document.addEventListener("keydown", function (e) {
   switch (e.key) {
     case "Control":
-      deleteAllItemsButton.innerText = "Save All Items";
+      if (itemsArray.length != 0)
+        deleteAllItemsButton.innerText = "Save All Items";
       break;
   }
 });
@@ -334,7 +335,8 @@ document.addEventListener("keydown", function (e) {
 document.addEventListener("keyup", function (e) {
   switch (e.key) {
     case "Control":
-      deleteAllItemsButton.innerText = "Delete All Items";
+      if (itemsArray.length != 0)
+        deleteAllItemsButton.innerText = "Delete All Items";
       break;
   }
 });
