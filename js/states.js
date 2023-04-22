@@ -312,6 +312,9 @@ fileElem.addEventListener(
 );
 
 const defaultFileValues = () => {
+  counterFiles = 0;
+  indexedFilesArray = [];
+
   saveButton.innerText = "Save file";
   saveAsFileButton.classList.replace("inline-block", "none");
   openFileButton.classList.replace("invisible", "visible");
@@ -319,40 +322,20 @@ const defaultFileValues = () => {
 };
 
 const initializeFileState = () => {
-  counterFiles = 0;
-  //console.log(window.location.protocol);
-
   if (window.location.protocol === "file:") {
-    //ol.innerHTML = ``;
-
     if (!fileElem.files.length) {
       fileElem.click();
     } else {
       handleFilesArray();
     }
-    //handleFiles();
-    //window.event.stopPropagation();
-    //e.preventDefault(); // prevent navigation to "#"
   } else {
     logFileText(phrase);
   }
 };
 
-//const fileState = () => {
-//  //hideItemState();
-
-//  initializeFileState();
-//};
-
-//-----Item state-----
-//const hideFileState = () => {
-//  ol.innerHTML = "";
-//};
-
 const defaultItemValues = () => {
-  //counterItems = 0;
-  //indexedItemsArray = [];
-
+  counterItems = 0;
+  indexedItemsArray = [];
   if (lastInputValue) {
     xButton.style = "display:block";
     inputLabel.classList.replace("invisible", "visible");
@@ -403,6 +386,7 @@ secondHeaderButton.addEventListener("click", function (e) {
   if (isItemState) {
     //firstHeaderButton.innerText = "Items";
     secondHeaderButton.innerText = "Items";
+    defaultItemValues();
     initializeItemState();
     //itemState();
   } else {
