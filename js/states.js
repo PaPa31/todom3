@@ -117,21 +117,13 @@ const trashButtonMaker = (liTag) => {
 };
 
 const editFile = (element) => {
-  //window.event.stopPropagation();
   editedFileElementDOM = element;
-  //fileIndexToEdit = element.id;
   fileIndexToEdit = indexedFilesArray.indexOf(element.id) * 1;
   const fileName = filesArray[fileIndexToEdit].name;
-
-  //console.log("editedFileElementDOM:", editedFileElementDOM);
-  //const reader = new FileReader();
-  //reader.readAsText(fileElem.files[element.id]);
-  //reader.onload = (e) => {
-  //  input.value = e.target.result;
-  //};
-  //input.value = reader.result;
   input.value = filesArray[fileIndexToEdit].text;
   editUI(fileName);
+  xUI();
+  mdToPreview(input.value);
 };
 
 const deleteOneFile = (e, element) => {

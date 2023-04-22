@@ -57,30 +57,29 @@ const editUI = (label) => {
   inputLabel.innerHTML = `<span>Edit: </span><span>${label}</span>`;
   inputLabel.classList.replace("invisible", "visible");
 
-  returnInputButton.style = "display:none";
-  xButton.style = "display:block";
-
   preview.scrollIntoView(false);
   input.focus();
 
   intervalFocus(form, "background-color: orange;", 300);
+};
 
-  mdToPreview(input.value);
+const xUI = () => {
+  returnInputButton.style = "display:none";
+  xButton.style = "display:block";
 };
 
 const editItem = (e, element) => {
-  //window.event.stopPropagation();
-  //if (isItemState) {
   editedItemElementDOM = element;
   itemIndexToEdit = indexedItemsArray.indexOf(element.id) * 1;
+  const editing = itemsArray[itemIndexToEdit];
   if (e.ctrlKey) {
-    input.value = input.value + "\n" + itemsArray[itemIndexToEdit];
+    input.value = input.value ? input.value + "\n" + editing : editing;
   } else {
-    input.value = itemsArray[itemIndexToEdit];
+    input.value = editing;
     editUI("#" + (itemIndexToEdit + 1));
   }
-  //} else {
-  //}
+  xUI();
+  mdToPreview(input.value);
 };
 
 const deleteOneItem = (e, item) => {
