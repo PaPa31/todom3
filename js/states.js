@@ -336,14 +336,6 @@ const initializeFileState = () => {
 const defaultItemValues = () => {
   counterItems = 0;
   indexedItemsArray = [];
-  if (lastInputValue) {
-    xButton.style = "display:block";
-    inputLabel.classList.replace("invisible", "visible");
-    input.value = lastInputValue;
-    input.scrollTop = input.scrollHeight;
-  } else {
-    xButton.style = "display:none";
-  }
 };
 
 const initializeItemState = () => {

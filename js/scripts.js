@@ -49,6 +49,15 @@ input.classList.add("border");
 
 returnInputButton.style = "display:none";
 
+if (lastInputValue) {
+  xButton.style = "display:block";
+  inputLabel.classList.replace("invisible", "visible");
+  input.value = lastInputValue;
+  input.scrollTop = input.scrollHeight;
+} else {
+  xButton.style = "display:none";
+}
+
 const editUI = (label) => {
   input.classList.replace("border", "border-edit");
   input.classList.add("bg");
