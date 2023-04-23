@@ -190,11 +190,6 @@ const showOrHideDeleteAllItems = () => {
   }
 };
 
-//-----File state-----
-//const hideItemState = () => {
-//  defaultItemStateVars();
-//};
-
 var phrase = "README.md";
 
 const logFileText = async (file) => {
@@ -311,17 +306,16 @@ fileElem.addEventListener(
   false
 );
 
-const defaultFileValues = () => {
+const initializeFileState = () => {
   counterFiles = 0;
   indexedFilesArray = [];
 
   saveButton.innerText = "Save file";
+  secondHeaderButton.innerText = "Files";
   saveAsFileButton.classList.replace("inline-block", "none");
   openFileButton.classList.replace("invisible", "visible");
   openDirButton.classList.replace("invisible", "visible");
-};
 
-const initializeFileState = () => {
   if (window.location.protocol === "file:") {
     if (!fileElem.files.length) {
       fileElem.click();
@@ -333,13 +327,11 @@ const initializeFileState = () => {
   }
 };
 
-const defaultItemValues = () => {
+const initializeItemState = () => {
   counterItems = 0;
   indexedItemsArray = [];
-};
-
-const initializeItemState = () => {
   saveButton.innerText = "Save item";
+  secondHeaderButton.innerText = "Items";
   saveAsFileButton.classList.replace("none", "inline-block");
   openFileButton.classList.replace("visible", "invisible");
   openDirButton.classList.replace("visible", "invisible");
@@ -363,31 +355,16 @@ const initializeItemState = () => {
   }
 };
 
-//const itemState = () => {
-//  //hideFileState();
-//  //showOrHideTrash();
-//  initializeItemState();
-//};
-
 secondHeaderButton.addEventListener("click", function (e) {
   isItemState = !isItemState;
   showItemSortingArrows(0);
   twoClickToTrash = false;
   ol.innerHTML = "";
-  //clearInputAndPreviewAreas();
   if (isItemState) {
-    //firstHeaderButton.innerText = "Items";
-    secondHeaderButton.innerText = "Items";
-    defaultItemValues();
     initializeItemState();
-    //itemState();
   } else {
-    //firstHeaderButton.innerText = "Files";
-    secondHeaderButton.innerText = "Files";
     fileElem.setAttribute("webkitdirectory", "true");
-    defaultFileValues();
     initializeFileState();
-    //fileState();
   }
   showOrHideDeleteAllItems();
   showOrHideTrash();
