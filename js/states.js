@@ -215,12 +215,22 @@ function handleFiles(files) {
       }
     })()
   ).then((texts) => {
-    texts.map((text) => {
-      filesArray[counterFiles].text = text;
-      liMaker(filesArray[counterFiles].text, counterFiles);
-      indexedFilesArray.push(counterFiles.toString());
-      counterFiles++;
-    });
+    if (isItemState) {
+      const arrItems = texts[0].split("\u200B\n");
+      arrItems.forEach((item) => {
+        itemsArray.push(item);
+        liMaker(item, counterItems);
+        indexedItemsArray.push(counterItems.toString());
+        counterItems++;
+      });
+    } else {
+      texts.map((text) => {
+        filesArray[counterFiles].text = text;
+        liMaker(filesArray[counterFiles].text, counterFiles);
+        indexedFilesArray.push(counterFiles.toString());
+        counterFiles++;
+      });
+    }
   });
 }
 

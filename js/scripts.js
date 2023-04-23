@@ -290,6 +290,7 @@ const saveFile = (offset) => {
 const saveItem = (offset) => {
   if (itemIndexToEdit != null) {
     itemsArray[itemIndexToEdit] = input.value;
+    marked.setOptions({ breaks: true });
     editedItemElementDOM.firstChild.innerHTML = marked.parse(input.value);
     defaultMarkers();
     scrollToTargetAdjusted(editedItemElementDOM, offset);
@@ -355,7 +356,7 @@ document.addEventListener("keyup", function (e) {
 const mergeAllItems = () => {
   itemsArray.forEach((item) => {
     if (item) {
-      input.value = input.value ? input.value + "\r" + item : item;
+      input.value = input.value ? input.value + "\u200B\n" + item : item;
     }
   });
   xUI();
@@ -504,6 +505,7 @@ const update = function () {
       stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
     }
 
+  marked.setOptions({ breaks: true });
   marked.parse(stringToPreview, (err, html) => {
     position.innerHTML = html;
 
