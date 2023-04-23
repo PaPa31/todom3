@@ -160,6 +160,7 @@ const showItemSortingArrows = (count) => {
 };
 
 const mdToPreview = (markdownString) => {
+  marked.setOptions({ breaks: true });
   marked.parse(markdownString, (err, html) => {
     preview.innerHTML = html;
 
@@ -357,7 +358,7 @@ document.addEventListener("keyup", function (e) {
 const mergeAllItems = () => {
   itemsArray.forEach((item) => {
     if (item) {
-      input.value = input.value ? input.value + "\n\r" + item : item;
+      input.value = input.value ? input.value + "\r" + item : item;
     }
   });
   xUI();
