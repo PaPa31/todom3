@@ -32,9 +32,6 @@ deleteAllItemsButton.removeAttribute("style");
 
 saveAsFileButton.classList.add("inline-block");
 
-openFileButton.classList.add("invisible");
-openFileButton.removeAttribute("style");
-
 openDirButton.classList.add("invisible");
 openDirButton.removeAttribute("style");
 
