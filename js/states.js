@@ -327,7 +327,7 @@ const initializeFileState = () => {
   secondHeaderButton.innerText = "Files";
   openFileButton.innerText = "Open file";
   saveAsFileButton.classList.replace("inline-block", "none");
-  openDirButton.classList.replace("invisible", "visible");
+  openDirButton.classList.replace("none", "inline-block");
 
   if (window.location.protocol === "file:") {
     if (!fileElem.files.length) {
@@ -347,7 +347,7 @@ const initializeItemState = () => {
   secondHeaderButton.innerText = "Items";
   openFileButton.innerText = "Open from file";
   saveAsFileButton.classList.replace("none", "inline-block");
-  openDirButton.classList.replace("visible", "invisible");
+  openDirButton.classList.replace("inline-block", "none");
 
   nullGotIntoStorage = false;
 
