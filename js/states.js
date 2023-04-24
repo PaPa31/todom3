@@ -199,6 +199,7 @@ const logFileText = async (file) => {
 };
 
 function handleFiles(files) {
+  console.log(files);
   Promise.all(
     (function* () {
       for (let file of files) {
@@ -216,6 +217,9 @@ function handleFiles(files) {
     })()
   ).then((texts) => {
     if (isItemState) {
+      const inx = fileElem.files.length - 1;
+      console.log("inx: ", inx);
+      console.log("counterFiles:", counterFiles);
       const arrItems = texts[0].split("\u200B\n");
       arrItems.forEach((item) => {
         itemsArray.push(item);
@@ -223,6 +227,10 @@ function handleFiles(files) {
         indexedItemsArray.push(counterItems.toString());
         counterItems++;
       });
+      filesArray.splice(counterFiles, 1);
+      //indexedFilesArray.splice(inx, 1);
+      //counterFiles--;
+      if (counterFiles == 0) fileElem.value = null;
     } else {
       texts.map((text) => {
         filesArray[counterFiles].text = text;
@@ -257,7 +265,7 @@ function addFiles(e) {
     alert("File type not accepted");
     return;
   }
-
+  console.log("1");
   handleFiles(files);
 }
 
@@ -272,6 +280,7 @@ function addDirectory(item) {
     });
   } else {
     item.file(function (file) {
+      console.log("2");
       handleFiles([file], 0);
     });
   }
