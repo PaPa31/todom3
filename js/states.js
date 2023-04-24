@@ -172,7 +172,7 @@ firstHeaderButton.addEventListener("click", function (e) {
 });
 
 const showOrHideTrash = () => {
-  if (isItemState && trashArray.length) {
+  if (trashArray.length) {
     deletedCounter.innerText = trashArray.length;
     restoreItemButton.classList.replace("invisible", "visible");
     clearTrashButton.classList.replace("invisible", "visible");
@@ -330,6 +330,8 @@ const initializeFileState = () => {
   saveAsFileButton.classList.replace("inline-block", "none");
   openDirButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("inline-block", "none");
+  restoreItemButton.classList.replace("inline-block", "none");
+  clearTrashButton.classList.replace("inline-block", "none");
 
   if (window.location.protocol === "file:") {
     if (!fileElem.files.length) {
@@ -351,6 +353,8 @@ const initializeItemState = () => {
   saveAsFileButton.classList.replace("none", "inline-block");
   openDirButton.classList.replace("inline-block", "none");
   deleteAllItemsButton.classList.replace("none", "inline-block");
+  restoreItemButton.classList.replace("none", "inline-block");
+  clearTrashButton.classList.replace("none", "inline-block");
 
   nullGotIntoStorage = false;
 
@@ -379,10 +383,10 @@ secondHeaderButton.addEventListener("click", function (e) {
   if (isItemState) {
     initializeItemState();
     showOrHideDeleteAllItems();
+    showOrHideTrash();
   } else {
     fileElem.setAttribute("webkitdirectory", "true");
     initializeFileState();
   }
-  showOrHideTrash();
   e.stopPropagation();
 });
