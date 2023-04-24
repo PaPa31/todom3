@@ -217,9 +217,6 @@ function handleFiles(files) {
     })()
   ).then((texts) => {
     if (isItemState) {
-      const inx = fileElem.files.length - 1;
-      console.log("inx: ", inx);
-      console.log("counterFiles:", counterFiles);
       const arrItems = texts[0].split("\u200B\n");
       arrItems.forEach((item) => {
         itemsArray.push(item);
@@ -228,8 +225,7 @@ function handleFiles(files) {
         counterItems++;
       });
       filesArray.splice(counterFiles, 1);
-      //indexedFilesArray.splice(inx, 1);
-      //counterFiles--;
+      counterFiles--;
       if (counterFiles == 0) fileElem.value = null;
     } else {
       texts.map((text) => {
