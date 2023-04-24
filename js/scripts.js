@@ -266,6 +266,19 @@ function getCurrentDate() {
   return d + "-" + m + "-" + y;
 }
 
+function getFirstCharsWithTrim() {
+  var s = input.value;
+  s = s.replace(/[\/\\:*?"<>]/g, "");
+  s = s.replace(/-/g, " ");
+  s = s.replace(/[^\w\s]|_/g, "");
+  s = s.replace(/(^\s*)|(\s*$)/gi, "");
+  s = s.replace(/[ ]{2,}/gi, " ");
+  s = s.replace(/\n /, "\n");
+  s = s.toLowerCase();
+  s = s.replace(/\s+/g, "-");
+  return s.slice(0, 21);
+}
+
 const saveFile = (offset) => {
   let fileName;
 
@@ -281,7 +294,7 @@ const saveFile = (offset) => {
       //initialize();
       fileDownload(fileName);
     } else {
-      fileName = getCurrentDate() + ".md";
+      fileName = getFirstCharsWithTrim() + "-" + getCurrentDate() + ".md";
       const myFile = new File([input.value], fileName, {
         type: "text/markdown;charset=utf-8",
       });
