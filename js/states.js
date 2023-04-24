@@ -199,7 +199,6 @@ const logFileText = async (file) => {
 };
 
 function handleFiles(files) {
-  console.log(files);
   Promise.all(
     (function* () {
       for (let file of files) {
@@ -225,7 +224,6 @@ function handleFiles(files) {
         counterItems++;
       });
       filesArray.splice(counterFiles, 1);
-      counterFiles--;
       if (counterFiles == 0) fileElem.value = null;
     } else {
       texts.map((text) => {
