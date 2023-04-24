@@ -223,6 +223,7 @@ function handleFiles(files) {
         indexedItemsArray.push(counterItems.toString());
         counterItems++;
       });
+      localStorage.setItem("items", JSON.stringify(itemsArray));
       filesArray.splice(counterFiles, 1);
       if (counterFiles == 0) fileElem.value = null;
     } else {
