@@ -278,6 +278,7 @@ const saveFile = (offset) => {
       });
       saveAs(myFile);
       liMaker(input.value, counterFiles);
+      clearInputAndPreviewAreas();
       indexedFilesArray.push(counterFiles.toString());
       counterFiles++;
     }
