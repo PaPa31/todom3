@@ -313,10 +313,10 @@ form.addEventListener("submit", function (e) {
   } else {
     saveFile(previewOffset);
   }
-
   localStorage.removeItem("last");
   hideAndNewInputLabel();
   ifReturnAndNoneX();
+  showOrHideDeleteAllItems();
 });
 
 const defaultItemStateVars = () => {
