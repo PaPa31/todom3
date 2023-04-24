@@ -257,6 +257,15 @@ const fileDownload = (fileName) => {
   }
 };
 
+function getCurrentDate() {
+  var today = new Date();
+  var y = today.getFullYear();
+  // JavaScript months are 0-based.
+  var m = ("0" + (today.getMonth() + 1)).slice(-2);
+  var d = ("0" + today.getDate()).slice(-2);
+  return d + "-" + m + "-" + y;
+}
+
 const saveFile = (offset) => {
   let fileName;
 
@@ -272,7 +281,7 @@ const saveFile = (offset) => {
       //initialize();
       fileDownload(fileName);
     } else {
-      fileName = "README.md";
+      fileName = getCurrentDate() + ".md";
       const myFile = new File([input.value], fileName, {
         type: "text/markdown;charset=utf-8",
       });
