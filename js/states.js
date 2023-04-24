@@ -183,7 +183,7 @@ const showOrHideTrash = () => {
 };
 
 const showOrHideDeleteAllItems = () => {
-  if (isItemState && itemsArray && itemsArray.length) {
+  if (itemsArray && itemsArray.length) {
     deleteAllItemsButton.classList.replace("invisible", "visible");
   } else {
     deleteAllItemsButton.classList.replace("visible", "invisible");
@@ -329,6 +329,7 @@ const initializeFileState = () => {
   openFileButton.innerText = "Open file";
   saveAsFileButton.classList.replace("inline-block", "none");
   openDirButton.classList.replace("none", "inline-block");
+  deleteAllItemsButton.classList.replace("inline-block", "none");
 
   if (window.location.protocol === "file:") {
     if (!fileElem.files.length) {
@@ -349,6 +350,7 @@ const initializeItemState = () => {
   openFileButton.innerText = "Open from file";
   saveAsFileButton.classList.replace("none", "inline-block");
   openDirButton.classList.replace("inline-block", "none");
+  deleteAllItemsButton.classList.replace("none", "inline-block");
 
   nullGotIntoStorage = false;
 
@@ -376,11 +378,11 @@ secondHeaderButton.addEventListener("click", function (e) {
   ol.innerHTML = "";
   if (isItemState) {
     initializeItemState();
+    showOrHideDeleteAllItems();
   } else {
     fileElem.setAttribute("webkitdirectory", "true");
     initializeFileState();
   }
-  showOrHideDeleteAllItems();
   showOrHideTrash();
   e.stopPropagation();
 });

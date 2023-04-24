@@ -27,7 +27,7 @@ const inputLabel = document.getElementById("input-label");
 clearTrashButton.classList.add("invisible");
 clearTrashButton.removeAttribute("style");
 
-deleteAllItemsButton.classList.add("invisible");
+deleteAllItemsButton.classList.add("invisible", "none");
 deleteAllItemsButton.removeAttribute("style");
 
 saveAsFileButton.classList.add("inline-block");
