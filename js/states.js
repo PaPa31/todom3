@@ -146,6 +146,7 @@ const deleteOneFile = (e, element) => {
     filesArray.splice(indexToDelete, 1);
     indexedFilesArray.splice(indexToDelete, 1);
     counterFiles--;
+    showOrHideDeleteAllItems();
     if (counterFiles == 0) fileElem.value = null;
 
     twoClickToTrash = false;
@@ -182,11 +183,24 @@ const showOrHideTrash = () => {
   }
 };
 
+const sho = (el) => {
+  el.classList.replace("none", "inline-block");
+  el.classList.replace("invisible", "visible");
+};
+
+const hid = (el) => {
+  el.classList.replace("inline-block", "none");
+  el.classList.replace("visible", "invisible");
+};
+
 const showOrHideDeleteAllItems = () => {
-  if (itemsArray && itemsArray.length) {
-    deleteAllItemsButton.classList.replace("invisible", "visible");
+  if (
+    (isItemState && itemsArray && itemsArray.length) ||
+    (!isItemState && filesArray && filesArray.length)
+  ) {
+    sho(deleteAllItemsButton);
   } else {
-    deleteAllItemsButton.classList.replace("visible", "invisible");
+    hid(deleteAllItemsButton);
   }
 };
 
@@ -234,6 +248,7 @@ function handleFiles(files) {
         counterFiles++;
       });
     }
+    showOrHideDeleteAllItems();
   });
 }
 
@@ -327,6 +342,7 @@ const initializeFileState = () => {
   saveButton.innerText = "Save file";
   secondHeaderButton.innerText = "Files";
   openFileButton.innerText = "Open file";
+  deleteAllItemsButton.innerText = "Close All Files";
   saveAsFileButton.classList.replace("inline-block", "none");
   openDirButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("inline-block", "none");
@@ -350,9 +366,9 @@ const initializeItemState = () => {
   saveButton.innerText = "Save item";
   secondHeaderButton.innerText = "Items";
   openFileButton.innerText = "Open from file";
+  deleteAllItemsButton.innerText = "Delete All Items";
   saveAsFileButton.classList.replace("none", "inline-block");
   openDirButton.classList.replace("inline-block", "none");
-  deleteAllItemsButton.classList.replace("none", "inline-block");
   restoreItemButton.classList.replace("none", "inline-block");
   clearTrashButton.classList.replace("none", "inline-block");
 
@@ -382,11 +398,11 @@ secondHeaderButton.addEventListener("click", function (e) {
   ol.innerHTML = "";
   if (isItemState) {
     initializeItemState();
-    showOrHideDeleteAllItems();
     showOrHideTrash();
   } else {
     fileElem.setAttribute("webkitdirectory", "true");
     initializeFileState();
   }
+  showOrHideDeleteAllItems();
   e.stopPropagation();
 });
