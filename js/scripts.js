@@ -344,20 +344,27 @@ form.addEventListener("submit", function (e) {
   showOrHideDeleteAllItems();
 });
 
-const defaultItemStateVars = () => {
-  //if (itemIndexToEdit != null) {
+const defaultFileStateVars = () => {
   defaultMarkers();
   inputLabel.innerHTML = "<div>New</div>";
-  //}
+  deleteAllItemsButton.classList.replace("visible", "invisible");
+  indexedFilesArray = [];
+  filesArray = [];
+  counterFiles = 0;
+  fileElem.value = null;
+  showItemSortingArrows(0);
+  ol.innerHTML = "";
+};
+
+const defaultItemStateVars = () => {
+  defaultMarkers();
+  inputLabel.innerHTML = "<div>New</div>";
   deleteAllItemsButton.classList.replace("visible", "invisible");
   indexedItemsArray = [];
   itemsArray = [];
   counterItems = 0;
   showItemSortingArrows(0);
   ol.innerHTML = "";
-  //while (ol.firstChild) {
-  //  ol.removeChild(ol.firstChild);
-  //}
 };
 
 document.addEventListener("keydown", function (e) {
@@ -390,12 +397,20 @@ const mergeAllItems = () => {
 };
 
 deleteAllItemsButton.addEventListener("click", function (e) {
-  if (e.ctrlKey) {
-    mergeAllItems();
+  if (isItemState) {
+    if (e.ctrlKey) {
+      mergeAllItems();
+    } else {
+      if (confirm("Are you sure?")) {
+        defaultItemStateVars();
+        localStorage.removeItem("items");
+      } else {
+        e.preventDefault();
+      }
+    }
   } else {
     if (confirm("Are you sure?")) {
-      defaultItemStateVars();
-      localStorage.removeItem("items");
+      defaultFileStateVars();
     } else {
       e.preventDefault();
     }
