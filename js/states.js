@@ -336,7 +336,7 @@ fileElem.addEventListener(
 );
 
 const initializeFileState = () => {
-  counterFiles = 0;
+  //counterFiles = 0;
   indexedFilesArray = [];
   saveButton.innerText = "Save file";
   secondHeaderButton.innerText = "Files";
@@ -349,7 +349,7 @@ const initializeFileState = () => {
   clearTrashButton.classList.replace("inline-block", "none");
 
   if (window.location.protocol === "file:") {
-    if (!fileElem.files.length) {
+    if (!fileElem.files.length && !filesArray.length) {
       fileElem.click();
     } else {
       handleFilesArray();

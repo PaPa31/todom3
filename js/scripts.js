@@ -299,6 +299,8 @@ const saveFile = (offset) => {
         type: "text/markdown;charset=utf-8",
       });
       saveAs(myFile);
+      const obj = { name: fileName, text: input.value };
+      filesArray.push(obj);
       liMaker(input.value, counterFiles);
       clearInputAndPreviewAreas();
       indexedFilesArray.push(counterFiles.toString());
