@@ -336,7 +336,7 @@ fileElem.addEventListener(
 );
 
 const initializeFileState = () => {
-  //counterFiles = 0;
+  counterFiles = 0;
   indexedFilesArray = [];
   saveButton.innerText = "Save file";
   secondHeaderButton.innerText = "Files";
