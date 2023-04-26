@@ -215,7 +215,9 @@ openFileButton.addEventListener("click", function (e) {
 
 saveAsFileButton.addEventListener("click", function (e) {
   if (input.value) {
-    var myFile = new File([input.value], "README.md", {
+    var fileName =
+      getFirstCharsWithTrim(input.value) + "-" + getCurrentDate() + ".md";
+    var myFile = new File([input.value], fileName, {
       type: "text/plain;charset=utf-8",
     });
     saveAs(myFile);
@@ -294,7 +296,8 @@ const saveFile = (offset) => {
       //initialize();
       fileDownload(fileName);
     } else {
-      fileName = getFirstCharsWithTrim() + "-" + getCurrentDate() + ".md";
+      fileName =
+        getFirstCharsWithTrim(input.value) + "-" + getCurrentDate() + ".md";
       const myFile = new File([input.value], fileName, {
         type: "text/markdown;charset=utf-8",
       });
