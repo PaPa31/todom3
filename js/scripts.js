@@ -269,16 +269,14 @@ function getCurrentDate() {
 }
 
 function getFirstCharsWithTrim(s) {
-  //s = s.replace(/[\/\\:*?"<>]/g, "");
   s = s.replace(/[^\p{L}\p{N}]+/gu, " ");
-  //s = s.replace(/-/g, " ");
-  //s = s.replace(/[^\w\s]|_/g, "");
   s = s.replace(/(^\s*)|(\s*$)/gi, "");
   s = s.replace(/[ ]{2,}/gi, " ");
   s = s.replace(/\n /, "\n");
   s = s.toLowerCase();
   s = s.replace(/\s+/g, "-");
-  return s.slice(0, 21);
+  s = s.slice(0, 21);
+  return s.replace(/-$/, "");
 }
 
 const saveFile = (offset) => {
