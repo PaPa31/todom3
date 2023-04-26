@@ -318,7 +318,6 @@ const saveItem = (offset) => {
     itemsArray[itemIndexToEdit] = input.value;
     marked.setOptions({ breaks: true });
     editedItemElementDOM.firstChild.innerHTML = marked.parse(input.value);
-    defaultMarkers();
     scrollToTargetAdjusted(editedItemElementDOM, offset);
   } else {
     itemsArray.push(input.value);
@@ -326,6 +325,7 @@ const saveItem = (offset) => {
     indexedItemsArray.push(counterItems.toString());
     counterItems++;
   }
+  defaultMarkers();
   localStorage.setItem("items", JSON.stringify(itemsArray));
 };
 
