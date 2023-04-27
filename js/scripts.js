@@ -157,12 +157,7 @@ const showItemSortingArrows = (count) => {
 };
 
 const mdToPreview = (markdownString) => {
-  marked.setOptions({ breaks: true });
-  marked.parse(markdownString, (err, html) => {
-    preview.innerHTML = html;
-
-    if (err) console.log(err);
-  });
+  preview.innerHTML = markdown(markdownString);
 };
 
 const debounce = (func, wait, immediate) => {
@@ -313,11 +308,16 @@ const saveFile = (offset) => {
   }
 };
 
+const markdown = (s) => {
+  s = s.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, "");
+  s = s.replace(/\u200B/, "");
+  return marked.parse(s);
+};
+
 const saveItem = (offset) => {
   if (itemIndexToEdit != null) {
     itemsArray[itemIndexToEdit] = input.value;
-    marked.setOptions({ breaks: true });
-    editedItemElementDOM.firstChild.innerHTML = marked.parse(input.value);
+    editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
     scrollToTargetAdjusted(editedItemElementDOM, offset);
   } else {
     itemsArray.push(input.value);
@@ -546,16 +546,11 @@ const update = function () {
       stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
     }
 
-  marked.setOptions({ breaks: true });
-  marked.parse(stringToPreview, (err, html) => {
-    position.innerHTML = html;
+  position.innerHTML = markdown(stringToPreview);
 
-    const scrollTop = position.scrollHeight;
-    position.scrollTop = scrollTop;
-    preview.scrollTop = position.scrollTop;
-
-    if (err) console.log(err);
-  });
+  const scrollTop = position.scrollHeight;
+  position.scrollTop = scrollTop;
+  preview.scrollTop = position.scrollTop;
 };
 
 input.addEventListener(

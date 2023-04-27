@@ -54,7 +54,7 @@ let offsetGlobal;
 const liMaker = (text, count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
-  div.innerHTML = marked.parse(text);
+  div.innerHTML = markdown(text);
   li.id = count;
   li.appendChild(div);
   ol.appendChild(li);
@@ -313,7 +313,7 @@ function initialize() {
 function checkIt() {
   filesArray[fileIndexToEdit].text = inputGlobal;
   clearInputAndPreviewAreas();
-  editedFileElementDOM.firstChild.innerHTML = marked.parse(inputGlobal);
+  editedFileElementDOM.firstChild.innerHTML = markdown(inputGlobal);
   defaultMarkers();
   scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
 
