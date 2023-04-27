@@ -366,7 +366,7 @@ const initializeItemState = () => {
   indexedItemsArray = [];
   saveButton.innerText = "Save item";
   secondHeaderButton.innerText = "Items";
-  openFileButton.innerText = "Open from file";
+  openFileButton.innerText = "Split file";
   deleteAllItemsButton.innerText = "Delete All Items";
   saveAsFileButton.classList.replace("none", "inline-block");
   openDirButton.classList.replace("inline-block", "none");
