@@ -389,7 +389,7 @@ document.addEventListener("keyup", function (e) {
 const mergeAllItems = () => {
   itemsArray.forEach((item) => {
     if (item) {
-      input.value = input.value ? input.value + "\u200B\n" + item : item;
+      input.value = input.value ? input.value + "\n" + item : item;
     }
   });
   xUI();

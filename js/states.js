@@ -230,7 +230,7 @@ function handleFiles(files) {
     })()
   ).then((texts) => {
     if (isItemState) {
-      const arrItems = texts[0].split("\u200B\n");
+      const arrItems = texts[0].split("\n");
       arrItems.forEach((item) => {
         itemsArray.push(item);
         liMaker(item, counterItems);
