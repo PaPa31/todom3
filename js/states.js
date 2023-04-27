@@ -232,10 +232,12 @@ function handleFiles(files) {
     if (isItemState) {
       const arrItems = texts[0].split("\n");
       arrItems.forEach((item) => {
-        itemsArray.push(item);
-        liMaker(item, counterItems);
-        indexedItemsArray.push(counterItems.toString());
-        counterItems++;
+        if (item) {
+          itemsArray.push(item);
+          liMaker(item, counterItems);
+          indexedItemsArray.push(counterItems.toString());
+          counterItems++;
+        }
       });
       localStorage.setItem("items", JSON.stringify(itemsArray));
       filesArray.splice(counterFiles, 1);
