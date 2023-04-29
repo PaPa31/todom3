@@ -332,17 +332,16 @@ const saveItem = (offset) => {
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   const previewOffset = preview.scrollTop;
-  preview.innerHTML = "";
   if (isItemState) {
     saveItem(previewOffset);
     clearInputAndPreviewAreas();
+    localStorage.removeItem("last");
+    hideAndNewInputLabel();
+    ifReturnAndNoneX();
+    showOrHideDeleteAllItems();
   } else {
     saveFile(previewOffset);
   }
-  localStorage.removeItem("last");
-  hideAndNewInputLabel();
-  ifReturnAndNoneX();
-  showOrHideDeleteAllItems();
 });
 
 const defaultFileStateVars = () => {

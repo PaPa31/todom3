@@ -313,11 +313,17 @@ function initialize() {
 }
 
 function checkIt() {
+  //console.log("start checking");
   filesArray[fileIndexToEdit].text = inputGlobal;
   clearInputAndPreviewAreas();
   editedFileElementDOM.firstChild.innerHTML = markdown(inputGlobal);
   defaultMarkers();
   scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
+
+  localStorage.removeItem("last");
+  hideAndNewInputLabel();
+  ifReturnAndNoneX();
+  showOrHideDeleteAllItems();
 
   document.body.onfocus = null;
   //console.log("checked");
