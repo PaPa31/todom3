@@ -281,10 +281,6 @@ blockquote {
   margin-bottom: 0;
 }
 
-.markdown-body > ol > li > div * {
-  max-width: 100%;
-}
-
 ::selection {
   background-color: var(--bg-selection);
 }
