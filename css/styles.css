@@ -297,7 +297,6 @@ blockquote {
   border: none;
   padding: 0.2em 0.4em;
   margin: 0;
-  font-size: 85%;
   white-space: break-spaces;
   background-color: var(--bg-extra-muted);
   border-radius: 6px;
@@ -335,9 +334,8 @@ blockquote {
   background-color: var(--bg-muted-dark);
 }
 
-pre code {
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
-    Liberation Mono, monospace;
+pre {
+  font-family: monospace, monospace;
 }
 
 /*(Firefox) if less than 0.06em, instead of three <hr> shows two */
