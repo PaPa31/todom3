@@ -314,16 +314,23 @@ function initialize() {
 
 function checkIt() {
   //console.log("start checking");
-  filesArray[fileIndexToEdit].text = inputGlobal;
-  clearInputAndPreviewAreas();
-  editedFileElementDOM.firstChild.innerHTML = markdown(inputGlobal);
-  defaultMarkers();
-  scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
 
-  localStorage.removeItem("last");
+  if (fileIndexToEdit != null) {
+    filesArray[fileIndexToEdit].text = inputGlobal;
+    editedFileElementDOM.firstChild.innerHTML = markdown(inputGlobal);
+    scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
+  } else {
+    liMaker(input.value, counterFiles);
+    counterFiles++;
+  }
+
+  clearInputAndPreviewAreas();
+  defaultMarkers();
   hideAndNewInputLabel();
   ifReturnAndNoneX();
   showOrHideDeleteAllItems();
+
+  localStorage.removeItem("last");
 
   document.body.onfocus = null;
   //console.log("checked");

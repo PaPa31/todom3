@@ -291,16 +291,18 @@ const saveFile = (offset) => {
     } else {
       fileName =
         getFirstCharsWithTrim(input.value) + "-" + getCurrentDate() + ".md";
-      const myFile = new File([input.value], fileName, {
-        type: "text/markdown;charset=utf-8",
-      });
-      saveAs(myFile);
+      //const myFile = new File([input.value], fileName, {
+      //  type: "text/markdown;charset=utf-8",
+      //});
+      //saveAs(myFile);
       const obj = { name: fileName, text: input.value };
       filesArray.push(obj);
-      liMaker(input.value, counterFiles);
-      clearInputAndPreviewAreas();
       indexedFilesArray.push(counterFiles.toString());
-      counterFiles++;
+      inputGlobal = input.value;
+      offsetGlobal = offset;
+      fileDownload(fileName);
+
+      //clearInputAndPreviewAreas();
     }
 
     if (fileName) {
