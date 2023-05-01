@@ -229,6 +229,11 @@ function handleFiles(files) {
       }
     })()
   ).then((texts) => {
+    if (texts[0] === undefined) {
+      alert("No File/Directory selected!");
+      fileElem.value = null;
+      return;
+    }
     if (isItemState) {
       const arrItems = texts[0].split("\n");
       arrItems.forEach((item) => {
