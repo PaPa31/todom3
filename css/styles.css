@@ -277,6 +277,10 @@ blockquote {
   margin-bottom: 0;
 }
 
+/*.markdown-body > ol > li > div * {
+  max-width: 100%;
+}*/
+
 ::selection {
   background-color: var(--bg-selection);
 }
@@ -904,7 +908,7 @@ textarea:active {
 }
 
 #position {
-  max-height: 120px;
+  /*max-height: 120px;*/
 }
 
 #preview:empty,
@@ -1010,8 +1014,8 @@ code {
   #position {
     position: relative;
     width: 684px;
-    max-height: 288px;
-    margin-top: -328px;
+    max-height: 289.5px;
+    margin-top: -289.5px;
   }
   .container > .flex-row > .flex-small:first-child {
     padding-right: 10px;
