@@ -192,10 +192,6 @@ button {
   transition: all 0.2s ease;
 }
 
-.mr5 {
-  margin-right: 5px;
-}
-
 .btn:focus-visible {
   outline: 1px solid black;
   outline-offset: 2px;
@@ -407,10 +403,6 @@ table {
   color: var(--button-muted-color-dark);
 }
 
-.header-button {
-  padding: 0 5px;
-}
-
 .between-buttons {
   vertical-align: middle;
 }
@@ -467,8 +459,7 @@ h6,
 .dark h3,
 .dark h4,
 .dark h5,
-.dark h6,
-.dark .header-button {
+.dark h6 {
   color: var(--color-dark);
 }
 
@@ -544,14 +535,27 @@ h6 {
   flex: 0 0 auto;
 }
 
-.flex-small .header-button {
-  display: inline-block;
+/*.flex-small .header-button {
   margin: 0 0 0 5px;
+}*/
+
+.m0 {
+  margin: 0;
 }
 
-.flex-small .header-button,
-#list-order,
-.content .flex-row {
+.f2rem {
+  font-size: 2rem;
+}
+
+.ml5 {
+  margin-left: 5px;
+}
+
+.p0-5 {
+  padding: 0 5px;
+}
+
+.btn {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -990,9 +994,6 @@ code {
     flex: 0 1 auto;
     /*flex: auto;*/
     margin-bottom: 0;
-  }
-  .header-button {
-    font-size: 2rem;
   }
 }
 
