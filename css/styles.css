@@ -801,7 +801,7 @@ textarea {
   width: 100%;
   max-width: 100%;
   overflow: auto;
-  height: auto;
+  height: 186px;
 }
 
 textarea:focus,
