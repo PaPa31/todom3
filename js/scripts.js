@@ -211,7 +211,7 @@ openFileButton.addEventListener("click", function (e) {
 saveAsFileButton.addEventListener("click", function (e) {
   if (input.value) {
     var fileName =
-      getFirstCharsWithTrim(input.value) + "-" + getCurrentDate() + ".md";
+      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
     var myFile = new File([input.value], fileName, {
       type: "text/plain;charset=utf-8",
     });
@@ -256,11 +256,16 @@ const fileDownload = (fileName) => {
 
 function getCurrentDate() {
   var today = new Date();
-  var y = today.getFullYear();
+  //var y = today.getFullYear();
   // JavaScript months are 0-based.
-  var m = ("0" + (today.getMonth() + 1)).slice(-2);
+  //var m = ("0" + (today.getMonth() + 1)).slice(-2);
   var d = ("0" + today.getDate()).slice(-2);
-  return d + "-" + m + "-" + y;
+  var seconds = ("0" + today.getSeconds()).slice(-2);
+  var minutes = ("0" + today.getMinutes()).slice(-2);
+  var hour = ("0" + today.getHours()).slice(-2);
+  var t = hour + minutes + seconds;
+  console.log(t);
+  return d + "-" + t;
 }
 
 function getFirstCharsWithTrim(s) {
@@ -290,7 +295,7 @@ const saveFile = (offset) => {
       fileDownload(fileName);
     } else {
       fileName =
-        getFirstCharsWithTrim(input.value) + "-" + getCurrentDate() + ".md";
+        getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
       //const myFile = new File([input.value], fileName, {
       //  type: "text/markdown;charset=utf-8",
       //});
