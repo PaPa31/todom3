@@ -189,7 +189,7 @@ const sho = (el) => {
 };
 
 const hid = (el) => {
-  el.classList.replace("inline-block", "none");
+  if (isItemState) el.classList.replace("inline-block", "none");
   el.classList.replace("visible", "invisible");
 };
 
