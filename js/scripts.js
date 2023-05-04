@@ -24,10 +24,10 @@ const position = document.getElementById("position");
 
 const inputLabel = document.getElementById("input-label");
 
-clearTrashButton.classList.add("invisible", "none");
+clearTrashButton.classList.add("invisible");
 clearTrashButton.removeAttribute("style");
 
-deleteAllItemsButton.classList.add("invisible", "none");
+deleteAllItemsButton.classList.add("invisible");
 deleteAllItemsButton.removeAttribute("style");
 
 saveAsFileButton.classList.add("inline-block");
@@ -35,7 +35,7 @@ saveAsFileButton.classList.add("inline-block");
 openDirButton.classList.add("none");
 openDirButton.removeAttribute("style");
 
-restoreItemButton.classList.add("invisible", "none");
+restoreItemButton.classList.add("invisible");
 restoreItemButton.removeAttribute("style");
 
 inputLabel.classList.add("invisible");
