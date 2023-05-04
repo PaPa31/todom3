@@ -501,11 +501,13 @@ clearTrashButton.addEventListener("click", function (e) {
   e.stopPropagation();
   if (twoClickTrashClear) {
     trashArray = [];
-    deletedCounter.innerText = "";
     localStorage.removeItem("trash");
     restoreItemButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.remove("border-red");
+    window.setTimeout(function () {
+      deletedCounter.innerText = "";
+    }, 300);
     twoClickTrashClear = false;
   } else {
     clearTrashButton.classList.add("border-red");
