@@ -861,10 +861,6 @@ textarea:active {
   color: var(--color-muted-dark);
 }
 
-#input-label:hover {
-  opacity: 0;
-}
-
 .border {
   border: 1px solid var(--border);
 }
