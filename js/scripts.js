@@ -24,7 +24,7 @@ const position = document.getElementById("position");
 
 const inputLabel = document.getElementById("input-label");
 
-clearTrashButton.classList.add("invisible");
+clearTrashButton.classList.add("invisible", "none");
 clearTrashButton.removeAttribute("style");
 
 deleteAllItemsButton.classList.add("invisible");
@@ -35,7 +35,7 @@ saveAsFileButton.classList.add("inline-block");
 openDirButton.classList.add("none");
 openDirButton.removeAttribute("style");
 
-restoreItemButton.classList.add("invisible");
+restoreItemButton.classList.add("invisible", "none");
 restoreItemButton.removeAttribute("style");
 
 inputLabel.classList.add("invisible");
