@@ -493,6 +493,7 @@ restoreItemButton.addEventListener("click", function () {
     clearTrashButton.classList.replace("visible", "invisible");
     localStorage.removeItem("trash");
   }
+  deleteAllItemsButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("invisible", "visible");
 });
 
