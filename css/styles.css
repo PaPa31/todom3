@@ -686,6 +686,10 @@ ol.preview-outer li {
   min-width: 142px;
 }
 
+#save-button {
+  min-width: 104px;
+}
+
 .dark #item-control {
   background-color: var(--bg-item-translucent-dark);
 }
