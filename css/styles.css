@@ -658,12 +658,14 @@ ol.preview-outer li {
 #list-order {
   border-width: 2px;
   transition: all 0.2s linear;
-  padding-bottom: 6px;
+  padding-bottom: 1px;
   padding-top: 3px;
   padding-left: 4px;
   padding-right: 5px;
-  height: auto;
-  display: inline-flex;
+  /** adds extra padding/margin on startup
+   *
+   * display: inline-flex;
+   */
 }
 
 #x-button:hover,
