@@ -203,6 +203,11 @@ function scrollToTargetAdjusted(targetElement, offset) {
   intervalFocus(targetElement, "background-color: orange;", 300);
 }
 
+openDirButton.addEventListener("click", function (e) {
+  fileElem.setAttribute("webkitdirectory", "true");
+  fileElem.click();
+});
+
 openFileButton.addEventListener("click", function (e) {
   fileElem.removeAttribute("webkitdirectory");
   fileElem.click();
