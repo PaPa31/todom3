@@ -682,6 +682,10 @@ ol.preview-outer li {
   /*margin-top: 4px;*/
 }
 
+#delete-all-items {
+  min-width: 142px;
+}
+
 .dark #item-control {
   background-color: var(--bg-item-translucent-dark);
 }
