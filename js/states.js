@@ -1,5 +1,6 @@
 const firstHeaderButton = document.getElementById("first-header");
 const secondHeaderButton = document.getElementById("second-header");
+const foldedClass = document.querySelector(".markdown-body > ol");
 
 //const fileSelect = document.getElementById("fileSelect");
 let fileElem = document.getElementById("file-elem");
@@ -164,9 +165,11 @@ firstHeaderButton.addEventListener("click", function (e) {
   if (isFoldedView) {
     // Unfolded view
     firstHeaderButton.classList.replace("fold", "unfold");
+    foldedClass.classList.remove("folded");
   } else {
     // Folded view
     firstHeaderButton.classList.replace("unfold", "fold");
+    foldedClass.classList.add("folded");
   }
   isFoldedView = !isFoldedView;
   e.stopPropagation();

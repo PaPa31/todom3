@@ -240,6 +240,11 @@ blockquote {
   word-wrap: break-word;
 }
 
+.list-items.folded > li > div {
+  overflow: auto;
+  height: 40px;
+}
+
 .dark .markdown-body > ol > li > div {
   color: var(--color-dark);
   background-color: var(--bg-item-dark);
