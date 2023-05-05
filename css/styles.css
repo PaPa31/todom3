@@ -682,9 +682,7 @@ ol.preview-outer li {
   margin-left: -85px;
   width: 83px;
   padding: 5px 0;
-  background-color: var(--bg-item-translucent);
-  /*border: 1px solid red;*/
-  /*margin-top: 4px;*/
+  background-color: transparent;
 }
 
 #delete-all-items {
@@ -693,10 +691,6 @@ ol.preview-outer li {
 
 #save-button {
   min-width: 104px;
-}
-
-.dark #item-control {
-  background-color: var(--bg-item-translucent-dark);
 }
 
 button.delete-one-item,
