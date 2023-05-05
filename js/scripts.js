@@ -141,8 +141,10 @@ const deleteOneItem = (e, item) => {
   }
   if (lastItem && e.ctrlKey)
     lastItem.lastChild.lastChild.classList.remove("filter-red");
-  if (twoClickTrashClear || e.ctrlKey)
-    clearTrashButton.classList.remove("border-red");
+  if (twoClickTrashClear || e.ctrlKey) {
+    clearTrashButton.classList.remove("filter-red");
+    //clearTrashButton.classList.remove("border-red");
+  }
   twoClickTrashClear = false;
 };
 
@@ -177,7 +179,7 @@ const debounce = (func, wait, immediate) => {
 };
 
 html.addEventListener("click", function () {
-  if (twoClickTrashClear) clearTrashButton.classList.remove("border-red");
+  if (twoClickTrashClear) clearTrashButton.classList.remove("filter-red");
   twoClickTrashClear = false;
   if (twoClickToTrash)
     lastItem.lastChild.lastChild.classList.remove("filter-red");
@@ -509,13 +511,13 @@ clearTrashButton.addEventListener("click", function (e) {
     localStorage.removeItem("trash");
     restoreItemButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.replace("visible", "invisible");
-    clearTrashButton.classList.remove("border-red");
+    clearTrashButton.classList.remove("filter-red");
     window.setTimeout(function () {
       deletedCounter.innerText = "";
     }, 300);
     twoClickTrashClear = false;
   } else {
-    clearTrashButton.classList.add("border-red");
+    clearTrashButton.classList.add("filter-red");
     twoClickTrashClear = true;
   }
   if (twoClickToTrash)

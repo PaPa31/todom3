@@ -776,13 +776,13 @@ button.edit-item {
   filter: sepia(1) saturate(0);
 }
 
-.border-red {
+/*.border-red {
   border-color: rgba(255, 0, 0, 0.363) !important;
 }
 
 .border-red:hover {
   border-color: rgba(255, 0, 0, 0.582) !important;
-}
+}*/
 
 .dark a.link,
 .dark a {
