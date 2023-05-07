@@ -218,7 +218,16 @@ const logFileText = async (file) => {
 function handleFiles(files) {
   Promise.all(
     (function* () {
-      for (let file of files) {
+      console.log(files);
+      let arrFromFiles = [...files].sort((a, b) =>
+        a.lastModified !== b.lastModified
+          ? a.lastModified < b.lastModified
+            ? -1
+            : 1
+          : 0
+      );
+
+      for (let file of arrFromFiles) {
         if (!file.type.startsWith("text/markdown")) {
           continue;
         }
@@ -251,6 +260,7 @@ function handleFiles(files) {
       filesArray.splice(counterFiles, 1);
       if (counterFiles == 0) fileElem.value = null;
     } else {
+      // Files
       texts.map((text) => {
         filesArray[counterFiles].text = text;
         liMaker(filesArray[counterFiles].text, counterFiles);
