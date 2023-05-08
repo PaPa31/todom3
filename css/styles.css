@@ -257,20 +257,15 @@ blockquote {
 #main-listing > ol {
   counter-reset: item;
 }
-#main-listing > ol > li::before {
-  display: inline-block;
-  content: counter(item) ") ";
-  counter-increment: item;
-  width: 2.5em;
-  position: absolute;
-  left: 0;
-  margin-top: 8px;
-  text-align: right;
-}
 
 .unfold-button {
   position: absolute;
   left: 0;
+}
+
+.unfold-button::before {
+  content: counter(item) ") ";
+  counter-increment: item;
 }
 
 .dark .markdown-body > ol > li > div {
