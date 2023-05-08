@@ -76,7 +76,7 @@ const spanMaker = (liTag) => {
 
 const unfoldOneItemButtonMaker = (liTag) => {
   const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "muted-button no-border unfold-button btn");
+  buttonTag.setAttribute("class", "muted-button unfold-button btn");
   buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
   buttonTag.setAttribute("title", "fold/unfold one");
   liTag.appendChild(buttonTag);
