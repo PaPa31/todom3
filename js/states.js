@@ -57,6 +57,7 @@ const liMaker = (text, count) => {
   const div = document.createElement("div");
   div.innerHTML = markdown(text);
   li.id = count;
+  numberButtonMaker(li, count);
   li.appendChild(div);
   ol.appendChild(li);
   //console.log("URL =", url);
@@ -71,6 +72,21 @@ const spanMaker = (liTag) => {
 
   editButtonMaker(spanTag);
   trashButtonMaker(spanTag);
+};
+
+const unfoldOneItem = () => {
+  console.log("start item unfold");
+};
+
+const numberButtonMaker = (liTag, count) => {
+  const buttonTag = document.createElement("button");
+  buttonTag.setAttribute("class", "muted-button no-border unfold-button btn");
+  buttonTag.setAttribute(
+    "onclick",
+    `unfoldOneItem(event, this.parentElement.parentElement)`
+  );
+  buttonTag.innerText = count + 1;
+  liTag.appendChild(buttonTag);
 };
 
 const editButtonMaker = (spanTag) => {

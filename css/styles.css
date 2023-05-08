@@ -249,6 +249,48 @@ blockquote {
   height: 40px;
 }
 
+.markdown-body > ol > li {
+  /*list-style: none;*/
+  list-style-position: outside;
+}
+
+/*.markdown-body > ol > li::marker {
+  vertical-align: middle;
+}*/
+
+.unfold-button {
+  position: absolute;
+  left: 0;
+}
+
+/*.markdown-body > ol > li {
+  counter-reset: item;
+}
+
+.markdown-body > ol > li {
+  display: block;
+}
+.markdown-body > ol > li::before {
+  content: counter(item) ". ";
+  counter-increment: item;
+  color: black;
+}
+.markdown-body > ol > li:hover::before > div {
+  height: initial;
+}*/
+
+/*ol > li:hover:before {
+  color: red;
+}*/
+
+/*ol > li::marker:hover > div {
+  height: initial;
+}
+
+ol > li::marker:hover {
+  color: red;
+}*/
+
 .dark .markdown-body > ol > li > div {
   color: var(--color-dark);
   background-color: var(--bg-item-dark);
@@ -538,6 +580,7 @@ h6 {
   flex-direction: row;*/
   /*max-width don't work in MX Viewer*/
   width: 100%;
+  position: relative;
 }
 
 /*change list order*/
