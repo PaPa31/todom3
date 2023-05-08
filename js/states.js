@@ -74,17 +74,11 @@ const spanMaker = (liTag) => {
   trashButtonMaker(spanTag);
 };
 
-const unfoldOneItem = () => {
-  console.log("start item unfold");
-};
-
 const unfoldOneItemButtonMaker = (liTag) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "muted-button no-border unfold-button btn");
-  buttonTag.setAttribute(
-    "onclick",
-    `unfoldOneItem(event, this.parentElement.parentElement)`
-  );
+  buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
+  buttonTag.setAttribute("title", "fold/unfold one");
   liTag.appendChild(buttonTag);
 };
 
@@ -130,6 +124,10 @@ const trashButtonMaker = (liTag) => {
   );
 
   liTag.appendChild(buttonTag);
+};
+
+const unfoldOneItem = (element) => {
+  element.firstChild.classList.toggle("unfolded");
 };
 
 const editFile = (element) => {

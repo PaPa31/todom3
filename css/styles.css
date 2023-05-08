@@ -249,6 +249,10 @@ blockquote {
   height: 40px;
 }
 
+.unfolded {
+  height: initial !important;
+}
+
 #main-listing > ol > li {
   list-style: none;
   /*list-style-position: outside;*/
