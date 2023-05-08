@@ -269,15 +269,16 @@ blockquote {
 .unfold-button {
   position: absolute;
   left: 0;
-  height: 39px;
-  width: 39px;
+  height: 34px;
+  width: 37px;
+  padding: 0;
 }
 
 .unfold-button::before {
   content: counter(item) ") ";
   counter-increment: item;
   position: absolute;
-  top: 11px;
+  top: 9px;
   left: 0;
   right: 0;
 }
