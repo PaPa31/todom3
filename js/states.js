@@ -137,7 +137,7 @@ const unfoldOneItem = (element) => {
 const editFile = (element) => {
   editedFileElementDOM = element;
   fileIndexToEdit = indexedFilesArray.indexOf(element.id) * 1;
-  const fileName = filesArray[fileIndexToEdit].name;
+  const fileName = filesArray[fileIndexToEdit].dir;
   input.value = filesArray[fileIndexToEdit].text;
   editUI(fileName);
   xUI();
@@ -150,7 +150,7 @@ const deleteOneFile = (e, element) => {
     const indexToDelete = indexedFilesArray.indexOf(element.id) * 1;
 
     if (fileIndexToEdit != null && fileIndexToEdit >= indexToDelete) {
-      if (filesArray[fileIndexToEdit].name == filesArray[indexToDelete].name) {
+      if (filesArray[fileIndexToEdit].dir == filesArray[indexToDelete].dir) {
         defaultMarkers();
         inputLabel.innerHTML = "<div>New</div>";
       } else {
@@ -235,6 +235,7 @@ const logFileText = async (file) => {
 };
 
 function handleFiles(files) {
+  console.log(files);
   Promise.all(
     (function* () {
       let arrFromFiles = [...files].sort((a, b) =>
@@ -250,7 +251,7 @@ function handleFiles(files) {
           continue;
         }
         yield new Promise((resolve) => {
-          const obj = { name: file.name };
+          const obj = { name: file.name, dir: file.webkitRelativePath };
           filesArray.push(obj);
           let reader = new FileReader();
           reader.onload = (event) => resolve(event.target.result);
