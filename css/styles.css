@@ -276,6 +276,10 @@ blockquote {
 .unfold-button::before {
   content: counter(item) ") ";
   counter-increment: item;
+  position: absolute;
+  top: 11px;
+  left: 0;
+  right: 0;
 }
 
 .dark .markdown-body > ol > li > div {
