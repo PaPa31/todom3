@@ -434,15 +434,22 @@ table {
   color: var(--button-muted-color-hover-dark);
 }
 
-.muted-button:hover {
+.muted-button:hover,
+[disable="true"] {
   background-color: transparent;
   border: 1px solid var(--button-muted-border);
   color: var(--button-muted-color);
 }
 
-.dark .muted-button:hover {
+.dark .muted-button:hover,
+.dark [disable="true"] {
   border: 1px solid var(--button-muted-border-dark);
   color: var(--button-muted-color-dark);
+}
+
+[disable="true"] {
+  pointer-events: none;
+  /*cursor: not-allowed;*/
 }
 
 .between-buttons {

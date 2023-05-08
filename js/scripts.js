@@ -328,10 +328,22 @@ const markdown = (s) => {
   return marked.parse(s);
 };
 
+const disableButton = (el) => {
+  console.log(el.firstChild);
+  if (el.firstChild.scrollHeight < 40) {
+    el.firstChild.nextSibling.setAttribute("disable", true);
+    el.firstChild.nextSibling.setAttribute("title", "fold/unfold one");
+  } else {
+    el.firstChild.nextSibling.removeAttribute("disable");
+    el.firstChild.nextSibling.removeAttribute("title");
+  }
+};
+
 const saveItem = (offset) => {
   if (itemIndexToEdit != null) {
     itemsArray[itemIndexToEdit] = input.value;
     editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
+    disableButton(editedItemElementDOM);
     scrollToTargetAdjusted(editedItemElementDOM, offset);
   } else {
     itemsArray.push(input.value);
