@@ -175,6 +175,8 @@ const deleteOneFile = (e, element) => {
 };
 
 firstHeaderButton.addEventListener("click", function (e) {
+  const allPressed = [...document.querySelectorAll(".unfolded")];
+  if (allPressed.length) allPressed.map((i) => i.classList.remove("unfolded"));
   if (isFoldedView) {
     // Unfolded view
     firstHeaderButton.classList.replace("fold", "unfold");
