@@ -261,6 +261,8 @@ blockquote {
 .unfold-button {
   position: absolute;
   left: 0;
+  height: 39px;
+  width: 39px;
 }
 
 .unfold-button::before {
@@ -719,8 +721,8 @@ ol.preview-outer li {
 
 button.delete-one-item,
 button.edit-item {
-  width: 30px;
-  height: 30px;
+  width: 29px;
+  height: 29px;
   background-size: auto;
   background-repeat: no-repeat;
   opacity: 0.6;
