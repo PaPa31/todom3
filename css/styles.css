@@ -242,15 +242,19 @@ blockquote {
   border-radius: 5px;
   background-color: var(--bg-item);
   word-wrap: break-word;
+  overflow: auto;
 }
 
 #list-items.folded > li > div {
-  overflow: auto;
   height: 40px;
 }
 
-.unfolded {
-  height: initial !important;
+#list-items.folded > li > div.unfolded {
+  height: initial;
+}
+
+#list-items > li > div.unfolded {
+  height: 40px;
 }
 
 #main-listing > ol > li {
