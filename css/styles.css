@@ -249,19 +249,15 @@ blockquote {
   height: 40px;
 }
 
-.markdown-body > ol > li {
+#main-listing > ol > li {
   list-style: none;
   /*list-style-position: outside;*/
 }
 
-/*.markdown-body > ol > li::marker {
-  vertical-align: middle;
-}*/
-
-.markdown-body > ol {
+#main-listing > ol {
   counter-reset: item;
 }
-.markdown-body > ol > li::before {
+#main-listing > ol > li::before {
   display: inline-block;
   content: counter(item) ") ";
   counter-increment: item;
@@ -276,34 +272,6 @@ blockquote {
   position: absolute;
   left: 0;
 }
-
-/*.markdown-body > ol > li {
-  counter-reset: item;
-}
-
-.markdown-body > ol > li {
-  display: block;
-}
-.markdown-body > ol > li::before {
-  content: counter(item) ". ";
-  counter-increment: item;
-  color: black;
-}
-.markdown-body > ol > li:hover::before > div {
-  height: initial;
-}*/
-
-/*ol > li:hover:before {
-  color: red;
-}*/
-
-/*ol > li::marker:hover > div {
-  height: initial;
-}
-
-ol > li::marker:hover {
-  color: red;
-}*/
 
 .dark .markdown-body > ol > li > div {
   color: var(--color-dark);
