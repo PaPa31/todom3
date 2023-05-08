@@ -330,7 +330,7 @@ const markdown = (s) => {
 
 const disableButton = (el) => {
   console.log(el.firstChild);
-  if (el.firstChild.scrollHeight < 41) {
+  if (el.firstChild.scrollHeight < 40) {
     el.firstChild.nextSibling.setAttribute("disable", true);
     el.firstChild.nextSibling.setAttribute("title", "fold/unfold one");
   } else {
