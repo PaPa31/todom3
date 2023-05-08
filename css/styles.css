@@ -739,11 +739,11 @@ ol.preview-outer li {
   opacity: 1;
 }
 
-#item-control {
+.item-control {
   margin-left: -85px;
-  width: 83px;
-  padding: 5px 0;
-  background-color: transparent;
+  width: 83px !important;
+  padding: 5px 0 !important;
+  background-color: transparent !important;
 }
 
 #delete-all-items {
@@ -779,13 +779,13 @@ button.edit-item {
   opacity: 0.6;
 }
 
-/*ol#list-items > li > div:hover + span#item-control > button*/
-/*#item-control:hover > button {
+/*ol#list-items > li > div:hover + span.item-control > button*/
+/*.item-control:hover > button {
   opacity: 0.6;
 }*/
 
 .delete-one-item:hover,
-#item-control > button:hover {
+.item-control > button:hover {
   opacity: 1;
 }
 

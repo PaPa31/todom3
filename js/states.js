@@ -67,7 +67,7 @@ const liMaker = (text, count) => {
 
 const spanMaker = (liTag) => {
   const spanTag = document.createElement("div");
-  spanTag.setAttribute("id", "item-control");
+  spanTag.setAttribute("class", "item-control");
   liTag.appendChild(spanTag);
 
   editButtonMaker(spanTag);
