@@ -244,7 +244,7 @@ blockquote {
   word-wrap: break-word;
 }
 
-.list-items.folded > li > div {
+#list-items.folded > li > div {
   overflow: auto;
   height: 40px;
 }
@@ -586,7 +586,7 @@ h6 {
   color: var(--link-cite-muted-color-dark);
 }
 
-.markdown-body > ol.list-items {
+.markdown-body > ol#list-items {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
@@ -598,10 +598,10 @@ h6 {
 }
 
 /*change list order*/
-.reversed .markdown-body > ol.list-items {
+.reversed .markdown-body > ol#list-items {
   flex-direction: column-reverse;
 }
-.reversed .markdown-body > ol.list-items > li {
+.reversed .markdown-body > ol#list-items > li {
   flex: 0 0 auto;
 }
 
@@ -779,7 +779,7 @@ button.edit-item {
   opacity: 0.6;
 }
 
-/*ol.list-items > li > div:hover + span#item-control > button*/
+/*ol#list-items > li > div:hover + span#item-control > button*/
 /*#item-control:hover > button {
   opacity: 0.6;
 }*/
