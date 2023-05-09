@@ -83,14 +83,12 @@
 }
 
 html {
-  /*transition: background 0.2s linear;*/
   width: 100%;
   overflow-x: hidden;
   /* next rule fix: width regardless of scrollbar
    * when toggle Items(empty)/Files(not empty) in Chromium
   */
   overflow-y: scroll;
-  /*font: normal normal normal 1rem/1.3;*/
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica,
     Arial, sans-serif;
 }
@@ -103,7 +101,6 @@ body {
   color: var(--color);
   background-color: var(--bg);
   margin: 0;
-  /*font-size: 1rem;*/
 }
 .dark body {
   background-color: var(--bg-dark);
@@ -125,16 +122,11 @@ button,
   font-weight: 600;
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica,
     Arial, sans-serif;
-  /*font-size: 1rem;*/
   text-transform: none;
   padding: 0.75rem 1.25rem;
-  /*margin: 0 0 0.5rem 0;
-  margin-right: 0px;*/
-  /*vertical-align: middle;*/
   text-align: center;
   cursor: pointer;
   text-decoration: none;
-  /*line-height: 1;*/
 }
 
 #dark-button {
@@ -234,9 +226,6 @@ blockquote {
   border-color: var(--border-cite-dark);
 }
 
-/*#list-items.folded > li > div*/
-/*.md-file.unfolded .file-text */
-
 #list-items.folded > li > .md-item,
 #list-items.folded > li > .md-file > .file-text {
   height: 39px;
@@ -278,12 +267,9 @@ blockquote {
   right: 0;
 }
 
-/*.markdown-body > ol > li > div*/
-
 .md-item,
 .file-text,
 .item-control {
-  /*width: 93%;*/
   width: 100%;
   float: left;
   padding: 10px;
@@ -293,7 +279,6 @@ blockquote {
   overflow: auto;
 }
 
-/*.dark .markdown-body > ol > li > div */
 .dark .md-item,
 .dark .file-text {
   color: var(--color-dark);
@@ -302,10 +287,8 @@ blockquote {
 
 .markdown-body > ol > li {
   width: 100%;
-  /*padding-bottom: 10px;*/
   padding: 5px;
   transition: background-color 0.3s ease-in-out;
-  /*border-bottom: 3px solid #2b2b2b;*/
   background-color: transparent;
   border-radius: 4px;
 }
@@ -325,33 +308,15 @@ blockquote {
   margin-top: 0;
 }
 
-/*.markdown-body > ol > li > div > :first-child,
-.markdown-body > ol > li > div > span > :first-child {
-  margin-top: 0;
-}*/
-
-/* redundant:
-.md-item > span > :last-child,
-.file-text > span > :last-child */
-
 .md-item > :last-child,
 .file-text > :last-child {
   margin-bottom: 0;
 }
 
-/*.markdown-body > ol > li > div > :last-child,
-.markdown-body > ol > li > div > span > :last-child {
-  margin-bottom: 0;
-}*/
-
 .md-item > :last-child :last-child :last-child,
 .file-name > :last-child :last-child :last-child {
   margin-bottom: 0;
 }
-
-/*.markdown-body > ol > li > div > :last-child :last-child :last-child {
-  margin-bottom: 0;
-}*/
 
 /*.markdown-body > ol > li > div * {
   max-width: 100%;
@@ -394,8 +359,6 @@ blockquote {
 .markdown-body pre {
   padding: 16px;
   overflow: auto;
-  /*font-size: 85%;*/
-  /*line-height: 1.45;*/
   color: var(--color-muted);
   background-color: var(--bg-muted);
   border-radius: 6px;
@@ -487,7 +450,6 @@ table {
 
 [disable="true"] {
   pointer-events: none;
-  /*cursor: not-allowed;*/
 }
 
 .between-buttons {
@@ -531,11 +493,9 @@ h4,
 h5,
 h6,
 .header-button {
-  /*margin: 1.5rem 0;*/
   margin-top: 24px;
   margin-bottom: 16px;
   font-weight: 600;
-  /*line-height: 1.25;*/
   color: var(--color);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
@@ -608,8 +568,6 @@ h6 {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
-  /*flex-wrap: wrap;
-  flex-direction: row;*/
   /*max-width don't work in MX Viewer*/
   width: 100%;
   position: relative;
@@ -622,10 +580,6 @@ h6 {
 .reversed .markdown-body > ol#list-items > li {
   flex: 0 0 auto;
 }
-
-/*.flex-small .header-button {
-  margin: 0 0 0 5px;
-}*/
 
 .m0 {
   margin: 0;
@@ -713,12 +667,10 @@ ol.preview-outer li {
 }
 
 .sort-ascending {
-  /*background-image: url(../img/sorting-1-2.svg);*/
   opacity: 1;
 }
 
 .sort-descending {
-  /*background-image: url(../img/sorting-1-2-revert-5.svg);*/
   opacity: 0;
   display: none;
 }
@@ -849,18 +801,9 @@ button.edit-item {
   width: 22px;
   padding: 0px;
   vertical-align: middle;
-  /*filter: brightness(0.5) sepia(0.5) hue-rotate(-70deg) saturate(5);*/
   opacity: 0.6;
   filter: sepia(1) saturate(0);
 }
-
-/*.border-red {
-  border-color: rgba(255, 0, 0, 0.363) !important;
-}
-
-.border-red:hover {
-  border-color: rgba(255, 0, 0, 0.582) !important;
-}*/
 
 .dark a.link,
 .dark a {
@@ -887,7 +830,6 @@ textarea {
   padding: 0.75rem;
   outline: none;
   background-color: transparent;
-  /*line-height: 1;*/
   font-size: 1rem;
   font-family: inherit;
   width: 100%;
@@ -991,10 +933,6 @@ textarea:active {
   margin-top: 10px;
 }
 
-#position {
-  /*max-height: 120px;*/
-}
-
 #preview:empty,
 #position:empty {
   padding: 0;
@@ -1021,7 +959,6 @@ textarea:active {
 #output {
   border: 1px solid transparent;
   position: relative;
-  /*top: 10px;*/
   width: 100%;
   /*display: inline-block;*/
   padding: 0.75em;
@@ -1032,17 +969,8 @@ textarea:active {
   margin-top: -186px;
 }
 
-#output {
-  /*width: 100%;*/
-  /*position: relative;
-  margin-top: -196px;*/
-}
-
 #position {
   width: 678px;
-  /*width: 100%;
-  position: relative;
-  margin-top: -160px;*/
 }
 
 /*#input,
@@ -1074,7 +1002,6 @@ code {
 
 #second-header {
   width: 200px;
-  /*line-height: inherit;*/
 }
 
 @media (min-width: 600px) {
