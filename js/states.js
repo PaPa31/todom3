@@ -366,7 +366,7 @@ function checkIt() {
   //console.log("start checking");
 
   if (fileIndexToEdit != null) {
-    editedFileElementDOM.firstChild.innerHTML = markdown(
+    editedFileElementDOM.firstChild.lastChild.innerHTML = markdown(
       filesArray[fileIndexToEdit].text
     );
     disableButton(editedFileElementDOM);
