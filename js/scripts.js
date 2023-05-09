@@ -292,7 +292,7 @@ const saveFile = (offset) => {
   if (input.value) {
     if (fileIndexToEdit != null) {
       fileName = filesArray[fileIndexToEdit].name;
-      inputGlobal = input.value;
+      filesArray[fileIndexToEdit].text = input.value;
       offsetGlobal = offset;
       //const myFile = new File([input.value], fileName, {
       //  type: "text/markdown;charset=utf-8",
@@ -310,7 +310,6 @@ const saveFile = (offset) => {
       const obj = { name: fileName, text: input.value };
       filesArray.push(obj);
       indexedFilesArray.push(counterFiles.toString());
-      inputGlobal = input.value;
       offsetGlobal = offset;
       fileDownload(fileName);
 

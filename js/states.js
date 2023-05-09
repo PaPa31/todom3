@@ -49,15 +49,25 @@ let editedItemElementDOM;
 let fileIndexToEdit;
 let editedFileElementDOM;
 
-let inputGlobal;
 let offsetGlobal;
 
 const liMaker = (text, count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
-  div.innerHTML = markdown(text);
+  if (isItemState) {
+    div.innerHTML = markdown(text);
+  } else {
+    const div2 = document.createElement("div");
+    const div3 = document.createElement("div");
+    div2.innerHTML = text.dir;
+    div.appendChild(div2);
+    div3.innerHTML = markdown(text.text);
+    div.appendChild(div3);
+  }
+
   li.id = count;
   li.appendChild(div);
+
   ol.appendChild(li);
   //console.log("URL =", url);
   unfoldOneItemButtonMaker(li);
@@ -235,7 +245,6 @@ const logFileText = async (file) => {
 };
 
 function handleFiles(files) {
-  console.log(files);
   Promise.all(
     (function* () {
       let arrFromFiles = [...files].sort((a, b) =>
@@ -282,7 +291,7 @@ function handleFiles(files) {
       // Files
       texts.map((text) => {
         filesArray[counterFiles].text = text;
-        liMaker(filesArray[counterFiles].text, counterFiles);
+        liMaker(filesArray[counterFiles], counterFiles);
         indexedFilesArray.push(counterFiles.toString());
         counterFiles++;
       });
@@ -337,7 +346,7 @@ function addDirectory(item) {
 
 const handleFilesArray = () => {
   for (let i = 0; i < filesArray.length; i++) {
-    liMaker(filesArray[i].text, i);
+    liMaker(filesArray[i], i);
     indexedFilesArray.push(counterFiles.toString());
     counterFiles++;
   }
@@ -353,12 +362,13 @@ function checkIt() {
   //console.log("start checking");
 
   if (fileIndexToEdit != null) {
-    filesArray[fileIndexToEdit].text = inputGlobal;
-    editedFileElementDOM.firstChild.innerHTML = markdown(inputGlobal);
+    editedFileElementDOM.firstChild.innerHTML = markdown(
+      filesArray[fileIndexToEdit].text
+    );
     disableButton(editedFileElementDOM);
     scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
   } else {
-    liMaker(input.value, counterFiles);
+    liMaker(filesArray[fileIndexToEdit], counterFiles);
     counterFiles++;
   }
 
