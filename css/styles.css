@@ -308,15 +308,15 @@ blockquote {
   margin-top: 0;
 }
 
-.md-item > :last-child,
-.file-text > :last-child {
+.md-item :last-child,
+.file-text :last-child {
   margin-bottom: 0;
 }
 
-.md-item > :last-child :last-child :last-child,
+/*.md-item > :last-child :last-child :last-child,
 .file-name > :last-child :last-child :last-child {
   margin-bottom: 0;
-}
+}*/
 
 /*.markdown-body > ol > li > div * {
   max-width: 100%;
