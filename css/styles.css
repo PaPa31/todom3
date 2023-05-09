@@ -234,15 +234,21 @@ blockquote {
   border-color: var(--border-cite-dark);
 }
 
-#list-items.folded > li > div {
+/*#list-items.folded > li > div*/
+/*.md-file.unfolded .file-text */
+
+#list-items.folded > li > .md-item,
+#list-items.folded > li > .md-file > .file-text {
   height: 39px;
 }
 
-#list-items.folded > li > div.unfolded {
+#list-items.folded > li > .md-item.unfolded,
+#list-items.folded > li > .md-file.unfolded > .file-text {
   height: initial;
 }
 
-#list-items > li > div.unfolded {
+#list-items > li > .md-item.unfolded,
+#list-items > li > .md-file.unfolded > .file-text {
   height: 39px;
 }
 
