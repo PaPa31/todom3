@@ -318,6 +318,14 @@ blockquote {
   margin-bottom: 0;
 }*/
 
+.file-name {
+  color: #db657a;
+}
+
+.dark .file-name {
+  color: #737311;
+}
+
 /*.markdown-body > ol > li > div * {
   max-width: 100%;
 }*/
