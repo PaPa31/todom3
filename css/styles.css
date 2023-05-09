@@ -234,17 +234,6 @@ blockquote {
   border-color: var(--border-cite-dark);
 }
 
-.markdown-body > ol > li > div {
-  /*width: 93%;*/
-  width: 100%;
-  float: left;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: var(--bg-item);
-  word-wrap: break-word;
-  overflow: auto;
-}
-
 #list-items.folded > li > div {
   height: 39px;
 }
@@ -283,7 +272,24 @@ blockquote {
   right: 0;
 }
 
-.dark .markdown-body > ol > li > div {
+/*.markdown-body > ol > li > div*/
+
+.md-item,
+.file-text,
+.item-control {
+  /*width: 93%;*/
+  width: 100%;
+  float: left;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--bg-item);
+  word-wrap: break-word;
+  overflow: auto;
+}
+
+/*.dark .markdown-body > ol > li > div */
+.dark .md-item,
+.dark .file-text {
   color: var(--color-dark);
   background-color: var(--bg-item-dark);
 }
@@ -306,19 +312,40 @@ blockquote {
   background-color: #662a2a;
 }*/
 
-.markdown-body > ol > li > div > :first-child,
-.markdown-body > ol > li > div > span > :first-child {
+.md-item > :first-child,
+.md-item > span > :first-child,
+.file-text > :first-child,
+.file-text > span > :first-child {
   margin-top: 0;
 }
 
-.markdown-body > ol > li > div > :last-child,
-.markdown-body > ol > li > div > span > :last-child {
+/*.markdown-body > ol > li > div > :first-child,
+.markdown-body > ol > li > div > span > :first-child {
+  margin-top: 0;
+}*/
+
+/* redundant:
+.md-item > span > :last-child,
+.file-text > span > :last-child */
+
+.md-item > :last-child,
+.file-text > :last-child {
   margin-bottom: 0;
 }
 
-.markdown-body > ol > li > div > :last-child :last-child :last-child {
+/*.markdown-body > ol > li > div > :last-child,
+.markdown-body > ol > li > div > span > :last-child {
+  margin-bottom: 0;
+}*/
+
+.md-item > :last-child :last-child :last-child,
+.file-name > :last-child :last-child :last-child {
   margin-bottom: 0;
 }
+
+/*.markdown-body > ol > li > div > :last-child :last-child :last-child {
+  margin-bottom: 0;
+}*/
 
 /*.markdown-body > ol > li > div * {
   max-width: 100%;

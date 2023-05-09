@@ -55,12 +55,16 @@ const liMaker = (text, count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
   if (isItemState) {
+    div.setAttribute("class", "md-item");
     div.innerHTML = markdown(text);
   } else {
     const div2 = document.createElement("div");
     const div3 = document.createElement("div");
+    div.setAttribute("class", "md-file");
+    div2.setAttribute("class", "file-name");
     div2.innerHTML = text.dir;
     div.appendChild(div2);
+    div3.setAttribute("class", "file-text");
     div3.innerHTML = markdown(text.text);
     div.appendChild(div3);
   }
