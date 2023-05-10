@@ -152,8 +152,9 @@ const unfoldOneItem = (element) => {
 const editFile = (element) => {
   editedFileElementDOM = element;
   fileIndexToEdit = indexedFilesArray.indexOf(element.id) * 1;
-  const fileName = filesArray[fileIndexToEdit].dir;
-  input.value = filesArray[fileIndexToEdit].text;
+  const fi = filesArray[fileIndexToEdit];
+  const fileName = fi.dir ? fi.dir : fi.name;
+  input.value = fi.text;
   editUI(fileName);
   xUI();
   mdToPreview(input.value);
@@ -165,7 +166,7 @@ const deleteOneFile = (e, element) => {
     const indexToDelete = indexedFilesArray.indexOf(element.id) * 1;
 
     if (fileIndexToEdit != null && fileIndexToEdit >= indexToDelete) {
-      if (filesArray[fileIndexToEdit].dir == filesArray[indexToDelete].dir) {
+      if (filesArray[fileIndexToEdit].name == filesArray[indexToDelete].name) {
         defaultMarkers();
         inputLabel.innerHTML = "<div>New</div>";
       } else {
