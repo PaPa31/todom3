@@ -265,7 +265,13 @@ function handleFiles(files) {
           continue;
         }
         yield new Promise((resolve) => {
-          const obj = { name: file.name, dir: file.webkitRelativePath };
+          const isDir = file.webkitRelativePath
+            ? file.webkitRelativePath
+            : file.name;
+          const obj = {
+            name: file.name,
+            dir: isDir,
+          };
           filesArray.push(obj);
           let reader = new FileReader();
           reader.onload = (event) => resolve(event.target.result);
