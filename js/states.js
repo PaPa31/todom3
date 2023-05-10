@@ -62,7 +62,7 @@ const liMaker = (text, count) => {
     const div3 = document.createElement("div");
     div.setAttribute("class", "md-file");
     div2.setAttribute("class", "file-name");
-    div2.innerHTML = text.dir;
+    div2.innerHTML = text.dir ? text.dir : text.name;
     div.appendChild(div2);
     div3.setAttribute("class", "file-text");
     div3.innerHTML = markdown(text.text);
@@ -265,12 +265,9 @@ function handleFiles(files) {
           continue;
         }
         yield new Promise((resolve) => {
-          const isDir = file.webkitRelativePath
-            ? file.webkitRelativePath
-            : file.name;
           const obj = {
             name: file.name,
-            dir: isDir,
+            dir: file.webkitRelativePath,
           };
           filesArray.push(obj);
           let reader = new FileReader();
@@ -379,7 +376,7 @@ function checkIt() {
     disableButton(editedFileElementDOM);
     scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
   } else {
-    liMaker(filesArray[fileIndexToEdit], counterFiles);
+    liMaker(filesArray[counterFiles], counterFiles);
     counterFiles++;
   }
 

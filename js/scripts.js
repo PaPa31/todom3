@@ -271,7 +271,6 @@ function getCurrentDate() {
   var minutes = ("0" + today.getMinutes()).slice(-2);
   var hour = ("0" + today.getHours()).slice(-2);
   var t = hour + minutes + seconds;
-  console.log(t);
   return d + "-" + t;
 }
 
