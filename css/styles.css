@@ -241,13 +241,17 @@ blockquote {
 
 #list-items.folded > li > .md-file > .file-text,
 .file-size,
-.folded .unfolded .file-size {
+.folded .unfolded .file-size,
+.file-name,
+.folded .unfolded .file-name {
   display: none;
 }
 
 #list-items.folded > li > .md-file.unfolded > .file-text,
 .folded .file-size,
-.unfolded .file-size {
+.unfolded .file-size,
+.folded .file-name,
+.unfolded .file-name {
   display: block;
 }
 
