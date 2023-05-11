@@ -93,7 +93,7 @@ const unfoldOneItemButtonMaker = (liTag) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
   buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
-  if (mdTag.scrollHeight < 40) {
+  if (isItemState && mdTag.scrollHeight < 40) {
     buttonTag.setAttribute("disable", true);
   } else {
     buttonTag.setAttribute("title", "fold/unfold one");
