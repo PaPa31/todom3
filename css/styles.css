@@ -226,19 +226,28 @@ blockquote {
   border-color: var(--border-cite-dark);
 }
 
-#list-items.folded > li > .md-item,
-#list-items.folded > li > .md-file > .file-text {
+#list-items.folded > li > .md-item {
   height: 39px;
 }
 
-#list-items.folded > li > .md-item.unfolded,
-#list-items.folded > li > .md-file.unfolded > .file-text {
+#list-items.folded > li > .md-item.unfolded {
   height: initial;
 }
 
-#list-items > li > .md-item.unfolded,
-#list-items > li > .md-file.unfolded > .file-text {
+#list-items > li > .md-item.unfolded {
   height: 39px;
+}
+
+#list-items.folded > li > .md-file > .file-text {
+  display: none;
+}
+
+#list-items.folded > li > .md-file.unfolded > .file-text {
+  display: block;
+}
+
+#list-items > li > .md-file.unfolded > .file-text {
+  display: none;
 }
 
 #main-listing > ol > li {
@@ -324,6 +333,12 @@ blockquote {
 
 .dark .file-name {
   color: #737311;
+}
+
+.md-item,
+.file-name {
+  float: left;
+  width: 100%;
 }
 
 /*.markdown-body > ol > li > div * {
