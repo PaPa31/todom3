@@ -51,6 +51,21 @@ let editedFileElementDOM;
 
 let offsetGlobal;
 
+const fileSizeTerm = (numberOfBytes) => {
+  // Approximate to the closest prefixed unit
+  const units = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
+  const exponent = Math.min(
+    Math.floor(Math.log(numberOfBytes) / Math.log(1024)),
+    units.length - 1
+  );
+  const approx = numberOfBytes / 1024 ** exponent;
+  const output =
+    exponent === 0
+      ? `${numberOfBytes} bytes`
+      : `${approx.toFixed(3)} ${units[exponent]} (${numberOfBytes} bytes)`;
+  return output;
+};
+
 const liMaker = (text, count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
@@ -69,7 +84,7 @@ const liMaker = (text, count) => {
     div3.innerHTML = markdown(text.text);
     div.appendChild(div3);
     div4.setAttribute("class", "file-size");
-    div4.innerHTML = text.size ? text.size : "";
+    div4.innerHTML = text.size ? fileSizeTerm(text.size) : "";
     div.appendChild(div4);
   }
 
@@ -256,7 +271,6 @@ const logFileText = async (file) => {
 };
 
 function handleFiles(files) {
-  console.log(files);
   Promise.all(
     (function* () {
       let arrFromFiles = [...files].sort((a, b) =>
