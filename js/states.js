@@ -71,25 +71,26 @@ const liMaker = (text, count) => {
 
   li.id = count;
   li.appendChild(div);
-
   ol.appendChild(li);
   //console.log("URL =", url);
-  unfoldOneItemButtonMaker(li);
-  spanMaker(li);
+  unfoldButtonMaker(li);
+  controlDivMaker(li);
   showItemSortingArrows(ol.childElementCount);
 };
 
-const spanMaker = (liTag) => {
-  const spanTag = document.createElement("div");
-  spanTag.setAttribute("class", "item-control");
-  liTag.appendChild(spanTag);
+const controlDivMaker = (parentDiv) => {
+  const divTag = document.createElement("div");
+  divTag.setAttribute("id", "unit-control");
+  parentDiv.appendChild(divTag);
 
-  editButtonMaker(spanTag);
-  trashButtonMaker(spanTag);
+  editButtonMaker(divTag);
+  trashButtonMaker(divTag);
 };
 
-const unfoldOneItemButtonMaker = (liTag) => {
-  const mdTag = isItemState ? liTag.firstChild : liTag.firstChild.lastChild;
+const unfoldButtonMaker = (parentLi) => {
+  const mdTag = isItemState
+    ? parentLi.firstChild
+    : parentLi.firstChild.lastChild;
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
   buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
@@ -98,10 +99,10 @@ const unfoldOneItemButtonMaker = (liTag) => {
   } else {
     buttonTag.setAttribute("title", "fold/unfold one");
   }
-  liTag.appendChild(buttonTag);
+  parentLi.appendChild(buttonTag);
 };
 
-const editButtonMaker = (spanTag) => {
+const editButtonMaker = (parentDiv) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "edit-item btn");
   if (isItemState) {
@@ -120,10 +121,10 @@ const editButtonMaker = (spanTag) => {
     "Click to Edit, Ctrl+click merge with input area"
   );
 
-  spanTag.appendChild(buttonTag);
+  parentDiv.appendChild(buttonTag);
 };
 
-const trashButtonMaker = (liTag) => {
+const trashButtonMaker = (parentDiv) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-one-item btn");
   if (isItemState) {
@@ -142,7 +143,7 @@ const trashButtonMaker = (liTag) => {
     "Double-click to Trash, Ctrl+click to Delete"
   );
 
-  liTag.appendChild(buttonTag);
+  parentDiv.appendChild(buttonTag);
 };
 
 const unfoldOneItem = (element) => {

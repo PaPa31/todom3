@@ -278,7 +278,7 @@ blockquote {
 
 .md-item,
 .file-text,
-.item-control {
+#unit-control {
   width: 100%;
   float: left;
   padding: 10px;
@@ -732,7 +732,7 @@ ol.preview-outer li {
   opacity: 1;
 }
 
-.item-control {
+#unit-control {
   margin-left: -85px;
   width: 83px !important;
   padding: 5px 0 !important;
@@ -772,13 +772,13 @@ button.edit-item {
   opacity: 0.6;
 }
 
-/*ol#list-items > li > div:hover + span.item-control > button*/
-/*.item-control:hover > button {
+/*ol#list-items > li > div:hover + span#unit-control > button*/
+/*#unit-control:hover > button {
   opacity: 0.6;
 }*/
 
 .delete-one-item:hover,
-.item-control > button:hover {
+#unit-control > button:hover {
   opacity: 1;
 }
 
