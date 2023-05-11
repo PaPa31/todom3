@@ -17,12 +17,12 @@ fileElem.value = null;
 let isItemState = true;
 let isFoldedView = false;
 
-let itemsArray = localStorage.getItem("items")
-  ? JSON.parse(localStorage.getItem("items"))
+let itemsArray = localStorage.getItem("todomItemsArray")
+  ? JSON.parse(localStorage.getItem("todomItemsArray"))
   : [];
 let filesArray = [];
-let trashArray = localStorage.getItem("trash")
-  ? JSON.parse(localStorage.getItem("trash"))
+let trashArray = localStorage.getItem("todomTrashArray")
+  ? JSON.parse(localStorage.getItem("todomTrashArray"))
   : [];
 
 let nullGotIntoStorage = false;
@@ -39,8 +39,8 @@ let twoClickTrashClear = false;
 
 let lastClickId;
 let lastItem;
-let lastInputValue = localStorage.getItem("last")
-  ? localStorage.getItem("last")
+let lastInputValue = localStorage.getItem("todomLastInputValue")
+  ? localStorage.getItem("todomLastInputValue")
   : "";
 
 let itemIndexToEdit;
@@ -330,7 +330,7 @@ function handleFiles(files) {
           counterItems++;
         }
       });
-      localStorage.setItem("items", JSON.stringify(itemsArray));
+      localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
       filesArray.splice(counterFiles, 1);
       if (counterFiles == 0) fileElem.value = null;
     } else {
@@ -424,7 +424,7 @@ function checkIt() {
   ifReturnAndNoneX();
   showOrHideDeleteAllItems();
 
-  localStorage.removeItem("last");
+  localStorage.removeItem("todomLastInputValue");
 
   document.body.onfocus = null;
   //console.log("checked");
@@ -495,7 +495,7 @@ const initializeItemState = () => {
   });
 
   if (nullGotIntoStorage) {
-    localStorage.setItem("items", JSON.stringify(itemsArray));
+    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   }
 };
 

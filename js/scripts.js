@@ -117,7 +117,7 @@ const deleteOneItem = (e, item) => {
       deletedCounter.innerText = trashArray.length;
       restoreItemButton.classList.replace("invisible", "visible");
       clearTrashButton.classList.replace("invisible", "visible");
-      localStorage.setItem("trash", JSON.stringify(trashArray));
+      localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
     }
 
     itemsArray.splice(indexToDelete, 1);
@@ -126,9 +126,9 @@ const deleteOneItem = (e, item) => {
     showOrHideDeleteAllItems();
 
     if (itemsArray.length == 0) {
-      localStorage.removeItem("items");
+      localStorage.removeItem("todomItemsArray");
     } else {
-      localStorage.setItem("items", JSON.stringify(itemsArray));
+      localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     }
     twoClickToTrash = false;
     lastClickId = undefined;
@@ -349,7 +349,7 @@ const saveItem = (offset) => {
     counterItems++;
   }
   defaultMarkers();
-  localStorage.setItem("items", JSON.stringify(itemsArray));
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 };
 
 form.addEventListener("submit", function (e) {
@@ -358,7 +358,7 @@ form.addEventListener("submit", function (e) {
   if (isItemState) {
     saveItem(previewOffset);
     clearInputAndPreviewAreas();
-    localStorage.removeItem("last");
+    localStorage.removeItem("todomLastInputValue");
     hideAndNewInputLabel();
     ifReturnAndNoneX();
     showOrHideDeleteAllItems();
@@ -426,7 +426,7 @@ deleteAllItemsButton.addEventListener("click", function (e) {
     } else {
       if (confirm("Are you sure?")) {
         defaultItemStateVars();
-        localStorage.removeItem("items");
+        localStorage.removeItem("todomItemsArray");
       } else {
         e.preventDefault();
       }
@@ -471,7 +471,7 @@ xButton.addEventListener("click", function (e) {
   if (itemIndexToEdit != null || fileIndexToEdit != null) {
     defaultMarkers();
   } else {
-    localStorage.removeItem("last");
+    localStorage.removeItem("todomLastInputValue");
   }
 
   hideAndNewInputLabel();
@@ -483,7 +483,7 @@ xButton.addEventListener("click", function (e) {
 returnInputButton.addEventListener("click", function () {
   input.value = lastInputValue;
   mdToPreview(input.value);
-  localStorage.setItem("last", lastInputValue);
+  localStorage.setItem("todomLastInputValue", lastInputValue);
   inputLabel.classList.replace("invisible", "visible");
   returnInputButton.style = "display:none";
   xButton.style = "display:block";
@@ -495,8 +495,8 @@ restoreItemButton.addEventListener("click", function () {
   if (len !== 0) {
     const deletedItem = trashArray.pop();
     itemsArray.push(deletedItem);
-    localStorage.setItem("items", JSON.stringify(itemsArray));
-    localStorage.setItem("trash", JSON.stringify(trashArray));
+    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 
     liMaker(counterItems);
     indexedItemsArray.push(counterItems.toString());
@@ -507,7 +507,7 @@ restoreItemButton.addEventListener("click", function () {
   if (len === 0) {
     restoreItemButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.replace("visible", "invisible");
-    localStorage.removeItem("trash");
+    localStorage.removeItem("todomTrashArray");
   }
   deleteAllItemsButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("invisible", "visible");
@@ -517,7 +517,7 @@ clearTrashButton.addEventListener("click", function (e) {
   e.stopPropagation();
   if (twoClickTrashClear) {
     trashArray = [];
-    localStorage.removeItem("trash");
+    localStorage.removeItem("todomTrashArray");
     restoreItemButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.remove("filter-red");
@@ -592,7 +592,7 @@ input.addEventListener(
       }
       returnInputButton.style = "display:none";
 
-      localStorage.setItem("last", lastInputValue);
+      localStorage.setItem("todomLastInputValue", lastInputValue);
       mdToPreview(e.target.value);
     },
     200,

@@ -31,7 +31,7 @@ if (isDark()) {
 }
 
 function isDark() {
-  return localStorage.getItem("dark-mode");
+  return localStorage.getItem("todomDarkMode");
 }
 
 function toggleDark() {
@@ -40,8 +40,8 @@ function toggleDark() {
 
 function toggleLocalStorageItem() {
   if (isDark()) {
-    localStorage.removeItem("dark-mode");
+    localStorage.removeItem("todomDarkMode");
   } else {
-    localStorage.setItem("dark-mode", "set");
+    localStorage.setItem("todomDarkMode", "set");
   }
 }

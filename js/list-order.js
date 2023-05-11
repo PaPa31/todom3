@@ -21,7 +21,7 @@ if (isReversed()) {
 }
 
 function isReversed() {
-  return localStorage.getItem("reversed-mode");
+  return localStorage.getItem("todomListReverseOrder");
 }
 
 function toggleReversedMode() {
@@ -30,8 +30,8 @@ function toggleReversedMode() {
 
 function toggleLocalStorageReversedMode() {
   if (isReversed()) {
-    localStorage.removeItem("reversed-mode");
+    localStorage.removeItem("todomListReverseOrder");
   } else {
-    localStorage.setItem("reversed-mode", "set");
+    localStorage.setItem("todomListReverseOrder", "set");
   }
 }
