@@ -81,7 +81,7 @@ const xUI = () => {
 const editItem = (e, element) => {
   editedItemElementDOM = element;
   itemIndexToEdit = indexedItemsArray.indexOf(element.id) * 1;
-  const editing = itemsArray[itemIndexToEdit];
+  const editing = itemsArray[itemIndexToEdit].text;
   if (e.ctrlKey) {
     input.value = input.value ? input.value + "\n" + editing : editing;
   } else {
@@ -113,7 +113,7 @@ const deleteOneItem = (e, item) => {
     showItemSortingArrows(ol.childElementCount);
 
     if (!e.ctrlKey) {
-      trashArray.push(itemsArray[indexToDelete]);
+      trashArray.push(itemsArray[indexToDelete].text);
       deletedCounter.innerText = trashArray.length;
       restoreItemButton.classList.replace("invisible", "visible");
       clearTrashButton.classList.replace("invisible", "visible");
@@ -338,12 +338,15 @@ const disableButton = (el) => {
 
 const saveItem = (offset) => {
   if (itemIndexToEdit != null) {
-    itemsArray[itemIndexToEdit] = input.value;
+    itemsArray[itemIndexToEdit].text = input.value;
     editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
     disableButton(editedItemElementDOM);
     scrollToTargetAdjusted(editedItemElementDOM, offset);
   } else {
-    itemsArray.push(input.value);
+    const obj = {
+      text: input.value,
+    };
+    itemsArray.push(obj);
     liMaker(counterItems);
     indexedItemsArray.push(counterItems.toString());
     counterItems++;
@@ -410,8 +413,8 @@ document.addEventListener("keyup", function (e) {
 
 const mergeAllItems = () => {
   itemsArray.forEach((item) => {
-    if (item) {
-      input.value = input.value ? input.value + "\n" + item : item;
+    if (item.text) {
+      input.value = input.value ? input.value + "\n" + item.text : item.text;
     }
   });
   xUI();
@@ -494,7 +497,10 @@ restoreItemButton.addEventListener("click", function () {
   let len = trashArray.length;
   if (len !== 0) {
     const deletedItem = trashArray.pop();
-    itemsArray.push(deletedItem);
+    const obj = {
+      text: deletedItem,
+    };
+    itemsArray.push(obj);
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 

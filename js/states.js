@@ -70,10 +70,10 @@ const liMaker = (count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
   if (isItemState) {
-    const text = itemsArray[count];
+    const text = itemsArray[count].text;
 
     div.setAttribute("class", "md-item");
-    if (itemsArray[-count]) div.classList.add("unfolded");
+    if (itemsArray[count].fold) div.classList.add("unfolded");
 
     div.innerHTML = markdown(text);
   } else {
@@ -176,8 +176,8 @@ const unfoldOneItem = (element) => {
   element.firstChild.classList.toggle("unfolded");
   if (isItemState) {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
-    itemsArray[-itemIndexToFold] = !itemsArray[-itemIndexToFold];
-    console.log(itemsArray);
+    itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
+    console.log(itemsArray[itemIndexToFold]);
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
@@ -324,7 +324,10 @@ function handleFiles(files) {
       const arrItems = texts[0].split("\n");
       arrItems.forEach((item) => {
         if (item) {
-          itemsArray.push(item);
+          const obj = {
+            text: item,
+          };
+          itemsArray.push(obj);
           liMaker(counterItems);
           indexedItemsArray.push(counterItems.toString());
           counterItems++;
@@ -483,7 +486,7 @@ const initializeItemState = () => {
   nullGotIntoStorage = false;
 
   itemsArray?.forEach((item, key) => {
-    if (item) {
+    if (item.text) {
       liMaker(key);
       indexedItemsArray.push(counterItems.toString());
       counterItems++;
