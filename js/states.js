@@ -66,25 +66,32 @@ const fileSizeTerm = (numberOfBytes) => {
   return output;
 };
 
-const liMaker = (text, count) => {
+const liMaker = (count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
   if (isItemState) {
+    const text = itemsArray[count];
+
     div.setAttribute("class", "md-item");
+    if (itemsArray[-count]) div.classList.add("unfolded");
+
     div.innerHTML = markdown(text);
   } else {
+    const obj = filesArray[count];
+
     const div2 = document.createElement("div");
     const div3 = document.createElement("div");
     const div4 = document.createElement("div");
     div.setAttribute("class", "md-file");
+    if (filesArray[count].fold) div.classList.add("unfolded");
     div2.setAttribute("class", "file-name");
-    div2.innerHTML = text.dir ? text.dir : text.name;
+    div2.innerHTML = obj.dir ? obj.dir : obj.name;
     div.appendChild(div2);
     div3.setAttribute("class", "file-text");
-    div3.innerHTML = markdown(text.text);
+    div3.innerHTML = markdown(obj.text);
     div.appendChild(div3);
     div4.setAttribute("class", "file-size");
-    div4.innerHTML = text.size ? fileSizeTerm(text.size) : "";
+    div4.innerHTML = obj.size ? fileSizeTerm(obj.size) : "";
     div.appendChild(div4);
   }
 
@@ -167,6 +174,15 @@ const trashButtonMaker = (parentDiv) => {
 
 const unfoldOneItem = (element) => {
   element.firstChild.classList.toggle("unfolded");
+  if (isItemState) {
+    const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
+    itemsArray[-itemIndexToFold] = !itemsArray[-itemIndexToFold];
+    console.log(itemsArray);
+  } else {
+    const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
+    filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
+    console.log(filesArray[fileIndexToFold]);
+  }
 };
 
 const editFile = (element) => {
@@ -309,7 +325,7 @@ function handleFiles(files) {
       arrItems.forEach((item) => {
         if (item) {
           itemsArray.push(item);
-          liMaker(item, counterItems);
+          liMaker(counterItems);
           indexedItemsArray.push(counterItems.toString());
           counterItems++;
         }
@@ -321,7 +337,7 @@ function handleFiles(files) {
       // Files
       texts.map((text) => {
         filesArray[counterFiles].text = text;
-        liMaker(filesArray[counterFiles], counterFiles);
+        liMaker(counterFiles);
         indexedFilesArray.push(counterFiles.toString());
         counterFiles++;
       });
@@ -376,7 +392,7 @@ function addDirectory(item) {
 
 const handleFilesArray = () => {
   for (let i = 0; i < filesArray.length; i++) {
-    liMaker(filesArray[i], i);
+    liMaker(i);
     indexedFilesArray.push(counterFiles.toString());
     counterFiles++;
   }
@@ -398,7 +414,7 @@ function checkIt() {
     disableButton(editedFileElementDOM);
     scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
   } else {
-    liMaker(filesArray[counterFiles], counterFiles);
+    liMaker(counterFiles);
     counterFiles++;
   }
 
@@ -468,7 +484,7 @@ const initializeItemState = () => {
 
   itemsArray?.forEach((item, key) => {
     if (item) {
-      liMaker(item, key);
+      liMaker(key);
       indexedItemsArray.push(counterItems.toString());
       counterItems++;
     } else {

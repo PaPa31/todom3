@@ -344,7 +344,7 @@ const saveItem = (offset) => {
     scrollToTargetAdjusted(editedItemElementDOM, offset);
   } else {
     itemsArray.push(input.value);
-    liMaker(input.value, counterItems);
+    liMaker(counterItems);
     indexedItemsArray.push(counterItems.toString());
     counterItems++;
   }
@@ -498,7 +498,7 @@ restoreItemButton.addEventListener("click", function () {
     localStorage.setItem("items", JSON.stringify(itemsArray));
     localStorage.setItem("trash", JSON.stringify(trashArray));
 
-    liMaker(deletedItem, counterItems);
+    liMaker(counterItems);
     indexedItemsArray.push(counterItems.toString());
     counterItems++;
     len = len - 1;
