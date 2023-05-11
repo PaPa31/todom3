@@ -504,7 +504,7 @@ restoreItemButton.addEventListener("click", function () {
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 
-    liMaker(counterItems);
+    liMaker(itemsArray.length - 1);
     indexedItemsArray.push(counterItems.toString());
     counterItems++;
     len = len - 1;
