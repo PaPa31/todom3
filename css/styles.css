@@ -114,6 +114,7 @@ button,
 [type="reset"],
 [type="button"] {
   -webkit-appearance: none;
+  appearance: none;
   display: inline-block;
   border: 1px solid var(--button-default);
   background-color: var(--button-default);
