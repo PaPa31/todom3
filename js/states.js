@@ -60,6 +60,7 @@ const liMaker = (text, count) => {
   } else {
     const div2 = document.createElement("div");
     const div3 = document.createElement("div");
+    const div4 = document.createElement("div");
     div.setAttribute("class", "md-file");
     div2.setAttribute("class", "file-name");
     div2.innerHTML = text.dir ? text.dir : text.name;
@@ -67,6 +68,9 @@ const liMaker = (text, count) => {
     div3.setAttribute("class", "file-text");
     div3.innerHTML = markdown(text.text);
     div.appendChild(div3);
+    div4.setAttribute("class", "file-size");
+    div4.innerHTML = text.size ? text.size : "";
+    div.appendChild(div4);
   }
 
   li.id = count;
@@ -252,6 +256,7 @@ const logFileText = async (file) => {
 };
 
 function handleFiles(files) {
+  console.log(files);
   Promise.all(
     (function* () {
       let arrFromFiles = [...files].sort((a, b) =>
@@ -270,6 +275,7 @@ function handleFiles(files) {
           const obj = {
             name: file.name,
             dir: file.webkitRelativePath,
+            size: file.size,
           };
           filesArray.push(obj);
           let reader = new FileReader();

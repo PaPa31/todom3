@@ -239,15 +239,22 @@ blockquote {
   height: 39px;
 }
 
-#list-items.folded > li > .md-file > .file-text {
+#list-items.folded > li > .md-file > .file-text,
+.folded .unfolded .file-size {
   display: none;
 }
 
-#list-items.folded > li > .md-file.unfolded > .file-text {
+#list-items.folded > li > .md-file.unfolded > .file-text,
+.folded .file-size {
   display: block;
 }
 
-#list-items > li > .md-file.unfolded > .file-text {
+#list-items > li > .md-file.unfolded > .file-text,
+.unfolded .file-size {
+  display: none;
+}
+
+.file-size {
   display: none;
 }
 
@@ -337,7 +344,9 @@ blockquote {
 }
 
 .md-item,
-.file-name {
+.md-file,
+.file-name,
+.file-size {
   float: left;
   width: 100%;
 }
