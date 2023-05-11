@@ -177,11 +177,12 @@ const unfoldOneItem = (element) => {
   if (isItemState) {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
     itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
-    console.log(itemsArray[itemIndexToFold]);
+    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    //console.log(itemsArray[itemIndexToFold]);
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
-    console.log(filesArray[fileIndexToFold]);
+    //console.log(filesArray[fileIndexToFold]);
   }
 };
 
