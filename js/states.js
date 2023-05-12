@@ -178,11 +178,9 @@ const unfoldOneItem = (element) => {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
     itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    //console.log(itemsArray[itemIndexToFold]);
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
-    //console.log(filesArray[fileIndexToFold]);
   }
 };
 
@@ -233,7 +231,14 @@ const deleteOneFile = (e, element) => {
 
 firstHeaderButton.addEventListener("click", function (e) {
   const allPressed = [...document.querySelectorAll(".unfolded")];
-  if (allPressed.length) allPressed.map((i) => i.classList.remove("unfolded"));
+  if (allPressed.length) {
+    allPressed.map((i) => {
+      i.classList.remove("unfolded");
+      const itemIndexToFold = indexedItemsArray.indexOf(i.parentElement.id) * 1;
+      itemsArray[itemIndexToFold].fold = false;
+    });
+    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  }
   if (isFoldedView) {
     // Unfolded view
     firstHeaderButton.classList.replace("fold", "unfold");
