@@ -517,7 +517,7 @@ const initializeItemState = () => {
 
   nullGotIntoStorage = false;
   itemsArray?.forEach((item, key) => {
-    if (item.text) {
+    if (item) {
       liMaker(key);
       indexedItemsArray.push(counterItems.toString());
       counterItems++;
