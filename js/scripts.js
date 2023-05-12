@@ -113,7 +113,7 @@ const deleteOneItem = (e, item) => {
     showItemSortingArrows(ol.childElementCount);
 
     if (!e.ctrlKey) {
-      trashArray.push(itemsArray[indexToDelete].text);
+      trashArray.push(itemsArray[indexToDelete]);
       deletedCounter.innerText = trashArray.length;
       restoreItemButton.classList.replace("invisible", "visible");
       clearTrashButton.classList.replace("invisible", "visible");
@@ -482,11 +482,7 @@ returnInputButton.addEventListener("click", function () {
 restoreItemButton.addEventListener("click", function () {
   let len = trashArray.length;
   if (len !== 0) {
-    const deletedItem = trashArray.pop();
-    const obj = {
-      text: deletedItem,
-    };
-    itemsArray.push(obj);
+    itemsArray.push(trashArray.pop());
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 
