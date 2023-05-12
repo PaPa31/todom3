@@ -510,14 +510,20 @@ table {
   color: var(--button-color-dimmed-dark) !important;
 }
 
-.fold:before,
-.unfold:after {
+#first-header::after {
   content: "<";
 }
 
-.fold:after,
-.unfold:before {
+#first-header.fold::after {
   content: ">";
+}
+
+#first-header::before {
+  content: ">";
+}
+
+#first-header.fold::before {
+  content: "<";
 }
 
 h1,

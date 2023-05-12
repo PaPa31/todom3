@@ -15,7 +15,12 @@ fileElem.value = null;
 
 // starting in Item state & Unfolded view
 let isItemState = true;
-let isFoldedView = false;
+let isFoldedItemsView = localStorage.getItem("todomFoldedItemsView")
+  ? JSON.parse(localStorage.getItem("todomFoldedItemsView"))
+  : false;
+let isFoldedFilesView = localStorage.getItem("todomFoldedFilesView")
+  ? JSON.parse(localStorage.getItem("todomFoldedFilesView"))
+  : false;
 
 let itemsArray = localStorage.getItem("todomItemsArray")
   ? JSON.parse(localStorage.getItem("todomItemsArray"))
@@ -229,6 +234,11 @@ const deleteOneFile = (e, element) => {
   }
 };
 
+const changeStateFold = () => {
+  firstHeaderButton.classList.toggle("fold");
+  foldedClass.classList.toggle("folded");
+};
+
 firstHeaderButton.addEventListener("click", function (e) {
   const allPressed = [...document.querySelectorAll(".unfolded")];
   if (allPressed.length) {
@@ -239,16 +249,14 @@ firstHeaderButton.addEventListener("click", function (e) {
     });
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   }
-  if (isFoldedView) {
-    // Unfolded view
-    firstHeaderButton.classList.replace("fold", "unfold");
-    foldedClass.classList.remove("folded");
+  changeStateFold();
+  if (isItemState) {
+    isFoldedItemsView = !isFoldedItemsView;
+    localStorage.setItem("todomFoldedItemsView", JSON.stringify(isFoldedItemsView));
   } else {
-    // Folded view
-    firstHeaderButton.classList.replace("unfold", "fold");
-    foldedClass.classList.add("folded");
+    isFoldedFilesView = !isFoldedFilesView;
+    localStorage.setItem("todomFoldedFilesView", JSON.stringify(isFoldedFilesView));
   }
-  isFoldedView = !isFoldedView;
   e.stopPropagation();
 });
 
@@ -463,6 +471,7 @@ const initializeFileState = () => {
   deleteAllItemsButton.classList.replace("inline-block", "none");
   restoreItemButton.classList.replace("inline-block", "none");
   clearTrashButton.classList.replace("inline-block", "none");
+  if (isFoldedFilesView) changeStateFold();
 
   if (window.location.protocol === "file:") {
     if (!fileElem.files.length && !filesArray.length) {
@@ -486,9 +495,9 @@ const initializeItemState = () => {
   openDirButton.classList.replace("inline-block", "none");
   restoreItemButton.classList.replace("none", "inline-block");
   clearTrashButton.classList.replace("none", "inline-block");
+  if (isFoldedItemsView) changeStateFold();
 
   nullGotIntoStorage = false;
-
   itemsArray?.forEach((item, key) => {
     if (item.text) {
       liMaker(key);
