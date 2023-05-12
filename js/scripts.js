@@ -293,29 +293,15 @@ const saveFile = (offset) => {
       fileName = filesArray[fileIndexToEdit].name;
       filesArray[fileIndexToEdit].text = input.value;
       offsetGlobal = offset;
-      //const myFile = new File([input.value], fileName, {
-      //  type: "text/markdown;charset=utf-8",
-      //});
-      //saveAs(myFile);
-      //initialize();
       fileDownload(fileName);
     } else {
       fileName =
         getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
-      //const myFile = new File([input.value], fileName, {
-      //  type: "text/markdown;charset=utf-8",
-      //});
-      //saveAs(myFile);
       const obj = { name: fileName, text: input.value };
       filesArray.push(obj);
       indexedFilesArray.push(counterFiles.toString());
       offsetGlobal = offset;
       fileDownload(fileName);
-
-      //clearInputAndPreviewAreas();
-    }
-
-    if (fileName) {
     }
   }
 };

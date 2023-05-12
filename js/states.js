@@ -417,7 +417,7 @@ function checkIt() {
   //console.log("start checking");
 
   if (fileIndexToEdit != null) {
-    editedFileElementDOM.firstChild.lastChild.innerHTML = markdown(
+    editedFileElementDOM.firstChild.firstChild.nextSibling.innerHTML = markdown(
       filesArray[fileIndexToEdit].text
     );
     disableButton(editedFileElementDOM);
@@ -440,11 +440,9 @@ function checkIt() {
 }
 
 fileElem.addEventListener("click", function (e) {
-  //initialize();
   e.stopPropagation();
 });
 
-//fileElem.addEventListener("change", handleFiles, false);
 fileElem.addEventListener(
   "change",
   function (e) {
