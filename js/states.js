@@ -234,6 +234,18 @@ const deleteOneFile = (e, element) => {
   }
 };
 
+const initialCheckFold = (stateVar) => {
+  if (stateVar) {
+    // Folded view
+    firstHeaderButton.classList.add("fold");
+    foldedClass.classList.add("folded");
+  } else {
+    // Unfolded view
+    firstHeaderButton.classList.remove("fold");
+    foldedClass.classList.remove("folded");
+  }
+};
+
 const changeStateFold = () => {
   firstHeaderButton.classList.toggle("fold");
   foldedClass.classList.toggle("folded");
@@ -252,10 +264,16 @@ firstHeaderButton.addEventListener("click", function (e) {
   changeStateFold();
   if (isItemState) {
     isFoldedItemsView = !isFoldedItemsView;
-    localStorage.setItem("todomFoldedItemsView", JSON.stringify(isFoldedItemsView));
+    localStorage.setItem(
+      "todomFoldedItemsView",
+      JSON.stringify(isFoldedItemsView)
+    );
   } else {
     isFoldedFilesView = !isFoldedFilesView;
-    localStorage.setItem("todomFoldedFilesView", JSON.stringify(isFoldedFilesView));
+    localStorage.setItem(
+      "todomFoldedFilesView",
+      JSON.stringify(isFoldedFilesView)
+    );
   }
   e.stopPropagation();
 });
@@ -471,7 +489,7 @@ const initializeFileState = () => {
   deleteAllItemsButton.classList.replace("inline-block", "none");
   restoreItemButton.classList.replace("inline-block", "none");
   clearTrashButton.classList.replace("inline-block", "none");
-  if (isFoldedFilesView) changeStateFold();
+  initialCheckFold(isFoldedFilesView);
 
   if (window.location.protocol === "file:") {
     if (!fileElem.files.length && !filesArray.length) {
@@ -495,7 +513,7 @@ const initializeItemState = () => {
   openDirButton.classList.replace("inline-block", "none");
   restoreItemButton.classList.replace("none", "inline-block");
   clearTrashButton.classList.replace("none", "inline-block");
-  if (isFoldedItemsView) changeStateFold();
+  initialCheckFold(isFoldedItemsView);
 
   nullGotIntoStorage = false;
   itemsArray?.forEach((item, key) => {
