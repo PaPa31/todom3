@@ -287,7 +287,9 @@ blockquote {
 
 .md-item,
 .file-text,
-#unit-control {
+#unit-control,
+#preview,
+#position {
   width: 100%;
   float: left;
   padding: 10px;
@@ -298,7 +300,8 @@ blockquote {
 }
 
 .dark .md-item,
-.dark .file-text {
+.dark .file-text,
+.dark #preview {
   color: var(--color-dark);
   background-color: var(--bg-item-dark);
 }
@@ -326,15 +329,10 @@ blockquote {
   margin-top: 0;
 }
 
-.md-item :last-child,
-.file-text :last-child {
+#list-items :last-of-type,
+.preview-outer :last-of-type {
   margin-bottom: 0;
 }
-
-/*.md-item > :last-child :last-child :last-child,
-.file-name > :last-child :last-child :last-child {
-  margin-bottom: 0;
-}*/
 
 .file-name {
   color: #db657a;
