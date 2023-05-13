@@ -1056,14 +1056,14 @@ code {
   .container > .flex-row {
     flex-direction: row;
   }
-  #preview {
+  #preview,
+  #position {
     max-height: 328px;
   }
   #position {
     position: relative;
     width: 684px;
-    max-height: 289.5px;
-    margin-top: -289.5px;
+    margin-top: -328px;
   }
   .container > .flex-row > .flex-small:first-child {
     padding-right: 10px;
