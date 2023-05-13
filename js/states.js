@@ -252,7 +252,7 @@ const changeStateFold = () => {
 };
 
 firstHeaderButton.addEventListener("click", function (e) {
-  const allPressed = [...document.querySelectorAll(".unfolded")];
+  const allPressed = [...foldedClass.querySelectorAll(".unfolded")];
   if (allPressed.length) {
     allPressed.map((i) => {
       i.removeAttribute("class");
