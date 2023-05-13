@@ -239,7 +239,7 @@ blockquote {
   height: 39px;
 }
 
-#list-items.folded > li > .md-file > .file-text,
+.folded .file-text,
 .file-size,
 .folded .unfolded .file-size,
 .file-name,
@@ -247,7 +247,7 @@ blockquote {
   display: none;
 }
 
-#list-items.folded > li.unfolded > .md-file > .file-text,
+.folded .unfolded .file-text,
 .folded .file-size,
 .unfolded .file-size,
 .folded .file-name,
@@ -255,7 +255,7 @@ blockquote {
   display: block;
 }
 
-#list-items > li.unfolded > .md-file > .file-text {
+.unfolded .file-text {
   display: none;
 }
 
