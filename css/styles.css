@@ -262,6 +262,10 @@ blockquote {
   display: none;
 }
 
+[disable="true"] ~ div {
+  display: block !important;
+}
+
 #main-listing > ol > li {
   list-style: none;
   /*list-style-position: outside;*/
