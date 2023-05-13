@@ -231,11 +231,11 @@ blockquote {
   height: 39px;
 }
 
-#list-items.folded > li > .md-item.unfolded {
+#list-items.folded > li.unfolded > .md-item {
   height: initial;
 }
 
-#list-items > li > .md-item.unfolded {
+#list-items > li.unfolded > .md-item {
   height: 39px;
 }
 
@@ -247,7 +247,7 @@ blockquote {
   display: none;
 }
 
-#list-items.folded > li > .md-file.unfolded > .file-text,
+#list-items.folded > li.unfolded > .md-file > .file-text,
 .folded .file-size,
 .unfolded .file-size,
 .folded .file-name,
@@ -255,7 +255,7 @@ blockquote {
   display: block;
 }
 
-#list-items > li > .md-file.unfolded > .file-text {
+#list-items > li.unfolded > .md-file > .file-text {
   display: none;
 }
 

@@ -78,7 +78,7 @@ const liMaker = (count) => {
     const text = itemsArray[count].text;
 
     div.setAttribute("class", "md-item");
-    if (itemsArray[count].fold) div.classList.add("unfolded");
+    if (itemsArray[count].fold) li.setAttribute("class", "unfolded");
 
     div.innerHTML = markdown(text);
   } else {
@@ -88,7 +88,7 @@ const liMaker = (count) => {
     const div3 = document.createElement("div");
     const div4 = document.createElement("div");
     div.setAttribute("class", "md-file");
-    if (filesArray[count].fold) div.classList.add("unfolded");
+    if (filesArray[count].fold) li.setAttribute("class", "unfolded");
     div2.setAttribute("class", "file-name");
     div2.innerHTML = obj.dir ? obj.dir : obj.name;
     div.appendChild(div2);
@@ -178,7 +178,7 @@ const trashButtonMaker = (parentDiv) => {
 };
 
 const unfoldOneItem = (element) => {
-  element.firstChild.classList.toggle("unfolded");
+  element.classList.toggle("unfolded");
   if (isItemState) {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
     itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
@@ -256,7 +256,7 @@ firstHeaderButton.addEventListener("click", function (e) {
   if (allPressed.length) {
     allPressed.map((i) => {
       i.classList.remove("unfolded");
-      const itemIndexToFold = indexedItemsArray.indexOf(i.parentElement.id) * 1;
+      const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
       itemsArray[itemIndexToFold].fold = false;
     });
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
