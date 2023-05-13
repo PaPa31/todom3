@@ -144,7 +144,7 @@ const editButtonMaker = (parentDiv) => {
   } else {
     buttonTag.setAttribute(
       "onclick",
-      `editFile(this.parentElement.parentElement)`
+      `editFile(event, this.parentElement.parentElement)`
     );
   }
   buttonTag.setAttribute(
@@ -189,13 +189,19 @@ const unfoldOneItem = (element) => {
   }
 };
 
-const editFile = (element) => {
+const editFile = (e, element) => {
   editedFileElementDOM = element;
   fileIndexToEdit = indexedFilesArray.indexOf(element.id) * 1;
   const fi = filesArray[fileIndexToEdit];
   const fileName = fi.dir ? fi.dir : fi.name;
-  input.value = fi.text;
-  editUI(fileName);
+
+  if (e.ctrlKey) {
+    input.value = input.value ? input.value + "\n" + fi.text : fi.text;
+  } else {
+    input.value = fi.text;
+    editUI(fileName);
+  }
+
   xUI();
   mdToPreview(input.value);
 };
