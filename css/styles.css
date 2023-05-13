@@ -240,6 +240,7 @@ blockquote {
 }
 
 .folded .file-text,
+.folded #unit-control,
 .file-size,
 .folded .unfolded .file-size,
 .file-name,
@@ -248,6 +249,7 @@ blockquote {
 }
 
 .folded .unfolded .file-text,
+.folded .unfolded #unit-control,
 .folded .file-size,
 .unfolded .file-size,
 .folded .file-name,
@@ -255,7 +257,8 @@ blockquote {
   display: block;
 }
 
-.unfolded .file-text {
+.unfolded .file-text,
+.unfolded #unit-control {
   display: none;
 }
 
