@@ -1063,14 +1063,17 @@ code {
   .container > .flex-row {
     flex-direction: row;
   }
-  #preview,
-  #position {
+  #preview {
     max-height: 328px;
   }
   #position {
     position: relative;
     width: 684px;
-    margin-top: -328px;
+    /* #preview & #position
+    * not sync due to scroll to view
+    */
+    max-height: 289.5px;
+    margin-top: -289.5px;
   }
   .container > .flex-row > .flex-small:first-child {
     padding-right: 10px;
