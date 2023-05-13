@@ -255,11 +255,17 @@ firstHeaderButton.addEventListener("click", function (e) {
   const allPressed = [...document.querySelectorAll(".unfolded")];
   if (allPressed.length) {
     allPressed.map((i) => {
-      i.classList.remove("unfolded");
-      const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
-      itemsArray[itemIndexToFold].fold = false;
+      i.removeAttribute("class");
+      if (isItemState) {
+        const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
+        itemsArray[itemIndexToFold].fold = false;
+      } else {
+        const fileIndexToFold = indexedFilesArray.indexOf(i.id) * 1;
+        filesArray[fileIndexToFold].fold = false;
+      }
     });
-    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    if (isItemState)
+      localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   }
   changeStateFold();
   if (isItemState) {
