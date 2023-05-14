@@ -79,10 +79,11 @@ const xUI = () => {
 };
 
 const editItem = (e, element) => {
-  editedItemElementDOM = element;
-  itemIndexToEdit = indexedItemsArray.indexOf(element.id) * 1;
+  editedItemElementDOM = element.parentElement.parentElement;
+  itemIndexToEdit = indexedItemsArray.indexOf(editedItemElementDOM.id) * 1;
   const editing = itemsArray[itemIndexToEdit].text;
   if (e.ctrlKey) {
+    intervalFocus(element, "background-color: orange;", 300);
     input.value = input.value ? input.value + "\n" + editing : editing;
   } else {
     input.value = editing;

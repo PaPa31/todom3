@@ -137,15 +137,9 @@ const editButtonMaker = (parentDiv) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "edit-item btn");
   if (isItemState) {
-    buttonTag.setAttribute(
-      "onclick",
-      `editItem(event, this.parentElement.parentElement)`
-    );
+    buttonTag.setAttribute("onclick", `editItem(event, this)`);
   } else {
-    buttonTag.setAttribute(
-      "onclick",
-      `editFile(event, this.parentElement.parentElement)`
-    );
+    buttonTag.setAttribute("onclick", `editFile(event, this)`);
   }
   buttonTag.setAttribute(
     "title",
@@ -190,12 +184,13 @@ const unfoldOneItem = (element) => {
 };
 
 const editFile = (e, element) => {
-  editedFileElementDOM = element;
-  fileIndexToEdit = indexedFilesArray.indexOf(element.id) * 1;
+  editedFileElementDOM = element.parentElement.parentElement;
+  fileIndexToEdit = indexedFilesArray.indexOf(editedFileElementDOM.id) * 1;
   const fi = filesArray[fileIndexToEdit];
   const fileName = fi.dir ? fi.dir : fi.name;
 
   if (e.ctrlKey) {
+    intervalFocus(element, "background-color: orange;", 300);
     input.value = input.value ? input.value + "\n" + fi.text : fi.text;
   } else {
     input.value = fi.text;
