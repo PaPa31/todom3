@@ -925,6 +925,25 @@ textarea:active {
   color: var(--color-muted-dark);
 }
 
+#input-label span {
+  color: var(--color-edit);
+}
+
+.dark #input-label span {
+  color: var(--color-edit-dark);
+}
+
+#input-label span:first-child {
+  border-radius: 0 0 0 3px;
+}
+
+#input-label span:last-child {
+  border-radius: 0 3px 3px 0;
+  width: 93%;
+  overflow-x: clip;
+  white-space: pre;
+}
+
 .border {
   border: 1px solid var(--border);
 }
@@ -947,22 +966,6 @@ textarea:active {
 
 .dark .bg {
   background-color: var(--bg-dark);
-}
-
-#input-label span {
-  color: var(--color-edit);
-}
-
-.dark #input-label span {
-  color: var(--color-edit-dark);
-}
-
-#input-label span:first-child {
-  border-radius: 0 0 0 3px;
-}
-
-#input-label span:last-child {
-  border-radius: 0 3px 3px 0;
 }
 
 #preview {
