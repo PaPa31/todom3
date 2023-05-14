@@ -912,7 +912,11 @@ textarea:active {
 
 #input-label > span {
   padding: 0 4px;
-  display: inline-block;
+  color: var(--color-edit);
+}
+
+.dark #input-label > span {
+  color: var(--color-edit-dark);
 }
 
 #input-label > div {
@@ -925,19 +929,11 @@ textarea:active {
   color: var(--color-muted-dark);
 }
 
-#input-label span {
-  color: var(--color-edit);
-}
-
-.dark #input-label span {
-  color: var(--color-edit-dark);
-}
-
-#input-label span:first-child {
+#input-label > span:first-child {
   border-radius: 0 0 0 3px;
 }
 
-#input-label span:last-child {
+#input-label > span:last-child {
   border-radius: 0 3px 3px 0;
   width: 93%;
   overflow-x: clip;
