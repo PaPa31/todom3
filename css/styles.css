@@ -966,14 +966,18 @@ textarea:active {
 
 #preview {
   scroll-behavior: smooth;
+  max-height: 160px;
 }
 
 #preview,
 #position {
   width: 100%;
-  max-height: 160px;
   overflow-x: auto;
   margin-top: 10px;
+}
+
+#position {
+  max-height: 120px;
 }
 
 #preview:empty,
