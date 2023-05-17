@@ -1,3 +1,4 @@
 # TODOm - simple markdown 'in-browser' editor
 
-Retains data even after browser restart!
+Works with files or with localStorage data.
+Handle files via file:// protocol (without server)!
