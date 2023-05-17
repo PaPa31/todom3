@@ -336,10 +336,10 @@ blockquote {
   margin-top: 0;
 }
 
-#list-items :last-of-type,
+/*#list-items :last-of-type,
 .preview-outer :last-of-type {
   margin-bottom: 0;
-}
+}*/
 
 .file-name {
   color: #db657a;
