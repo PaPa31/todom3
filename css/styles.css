@@ -329,29 +329,12 @@ blockquote {
   background-color: #662a2a;
 }*/
 
-/*.md-item > :first-child,
-.md-item > span > :first-child,
-.file-text > :first-child,
-.file-text > span > :first-child {
-  margin-top: 0;
-}*/
-
 .md-item > :first-child,
 .file-text > :first-child,
 #preview > :first-child,
 #position > :first-child {
   margin-top: 0;
 }
-
-/*#list-items :first-child,
-.preview-outer :first-child {
-  margin-bottom: 0;
-}*/
-
-/*#list-items :last-child,
-.preview-outer :last-child {
-  margin-bottom: 0;
-}*/
 
 .md-item > :last-child,
 .file-text > :last-child {
