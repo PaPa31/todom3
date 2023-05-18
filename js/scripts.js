@@ -385,6 +385,7 @@ document.addEventListener("keydown", function (e) {
     case "Control":
       if (isItemState && itemsArray.length != 0)
         deleteAllItemsButton.innerText = "Merge All Items";
+      foldedClass.classList.add("ctrl");
       break;
   }
 });
@@ -394,6 +395,7 @@ document.addEventListener("keyup", function (e) {
     case "Control":
       if (isItemState && itemsArray.length != 0)
         deleteAllItemsButton.innerText = "Delete All Items";
+      foldedClass.classList.remove("ctrl");
       break;
   }
 });

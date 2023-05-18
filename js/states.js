@@ -1,6 +1,7 @@
 const firstHeaderButton = document.getElementById("first-header");
 const secondHeaderButton = document.getElementById("second-header");
-const foldedClass = document.querySelector(".markdown-body > ol");
+//const foldedClass = document.querySelector(".markdown-body > ol");
+const foldedClass = document.getElementById("list-items");
 
 //const fileSelect = document.getElementById("fileSelect");
 let fileElem = document.getElementById("file-elem");
@@ -141,6 +142,7 @@ const editButtonMaker = (parentDiv) => {
   } else {
     buttonTag.setAttribute("onclick", `editFile(event, this)`);
   }
+  buttonTag.setAttribute("ctrl", "true");
   buttonTag.setAttribute(
     "title",
     "Click to Edit, Ctrl+click merge with input area"
@@ -157,6 +159,7 @@ const trashButtonMaker = (parentDiv) => {
       "onclick",
       `deleteOneItem(event, this.parentElement.parentElement)`
     );
+    buttonTag.setAttribute("ctrl", "true");
   } else {
     buttonTag.setAttribute(
       "onclick",

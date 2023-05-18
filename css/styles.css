@@ -491,6 +491,10 @@ table {
   pointer-events: none;
 }
 
+.ctrl [ctrl="true"] {
+  border: 1px solid orange;
+}
+
 .between-buttons {
   vertical-align: middle;
 }
@@ -777,7 +781,7 @@ button.edit-item {
   background-repeat: no-repeat;
   opacity: 0.6;
   background-color: initial;
-  border: initial;
+  border: 1px solid transparent;
   background-position: center center;
   padding: 0;
   margin: 0 5px;
