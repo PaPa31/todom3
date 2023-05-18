@@ -533,8 +533,10 @@ mdToPreview(input.value);
 
 const lastNewLine = function (str) {
   let caret = str.length - 1;
+  const currentSymbolWidth = caret;
   let sym = str[caret];
-  while (sym != "\n" && caret > 0) {
+
+  while (sym != "\n" && currentSymbolWidth - caret < 80 && caret > 0) {
     caret--;
     sym = str[caret];
   }
