@@ -508,7 +508,7 @@ table {
 }
 
 .ctrl [ctrl="true"] {
-  border: 1px solid orange;
+  border: 1px solid #685a7f;
 }
 
 .between-buttons {

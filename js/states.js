@@ -193,10 +193,11 @@ const editFile = (e, element) => {
   const fileName = fi.dir ? fi.dir : fi.name;
 
   if (e.ctrlKey) {
-    intervalFocus(element, "background-color: orange;", 300);
+    intervalFocus(element, "background-color: #685a7f;", 300);
     input.value = input.value ? input.value + "\n" + fi.text : fi.text;
     scrollToLast();
   } else {
+    intervalFocus(element, "background-color: orange;", 300);
     input.value = fi.text;
     editUI(fileName);
   }

@@ -83,10 +83,11 @@ const editItem = (e, element) => {
   itemIndexToEdit = indexedItemsArray.indexOf(editedItemElementDOM.id) * 1;
   const editing = itemsArray[itemIndexToEdit].text;
   if (e.ctrlKey) {
-    intervalFocus(element, "background-color: orange;", 300);
+    intervalFocus(element, "background-color: #685a7f;", 300);
     input.value = input.value ? input.value + "\n" + editing : editing;
     scrollToLast();
   } else {
+    intervalFocus(element, "background-color: orange;", 300);
     input.value = editing;
     editUI("#" + (itemIndexToEdit + 1));
   }
