@@ -997,7 +997,7 @@ textarea:active {
 }
 
 #position {
-  max-height: 120px;
+  max-height: 100px;
 }
 
 #preview:empty,
@@ -1095,8 +1095,8 @@ code {
     /* #preview & #position
     * not sync due to scroll to view
     */
-    max-height: 289.5px;
-    margin-top: -289.5px;
+    max-height: 269.5px;
+    margin-top: -269.5px;
   }
   .container > .flex-row > .flex-small:first-child {
     padding-right: 10px;
