@@ -337,17 +337,23 @@ blockquote {
 }
 
 .md-item > :last-child,
-.file-text > :last-child {
+.file-text > :last-child,
+#preview > :last-child,
+#position > :last-child {
   margin-bottom: 0;
 }
 
 .md-item > :last-child :last-child,
-.file-text > :last-child :last-child {
+.file-text > :last-child :last-child,
+#preview > :last-child :last-child,
+#position > :last-child :last-child {
   margin-bottom: 0;
 }
 
 .md-item > :last-child :last-child :last-child,
-.file-text > :last-child :last-child :last-child {
+.file-text > :last-child :last-child :last-child,
+#preview > :last-child :last-child :last-child,
+#position > :last-child :last-child :last-child {
   margin-bottom: 0;
 }
 
