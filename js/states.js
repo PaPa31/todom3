@@ -56,6 +56,7 @@ let fileIndexToEdit;
 let editedFileElementDOM;
 
 let offsetGlobal;
+let fileSizeGlobal;
 
 const fileSizeTerm = (numberOfBytes) => {
   // Approximate to the closest prefixed unit
@@ -461,6 +462,7 @@ function checkIt() {
     disableButton(editedFileElementDOM);
     scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
   } else {
+    filesArray[counterFiles].size = fileSizeGlobal;
     liMaker(counterFiles);
     counterFiles++;
   }

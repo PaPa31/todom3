@@ -234,6 +234,8 @@ const fileDownload = (fileName) => {
     type: "text/plain;charset=utf-8",
   });
 
+  fileSizeGlobal = blob.size;
+
   if (typeof window.navigator.msSaveBlob !== "undefined") {
     window.navigator.msSaveBlob(blob, fileName);
   } else {
@@ -293,8 +295,9 @@ const saveFile = (offset) => {
 
   if (input.value) {
     if (fileIndexToEdit != null) {
-      fileName = filesArray[fileIndexToEdit].name;
-      filesArray[fileIndexToEdit].text = input.value;
+      const _fi = filesArray[fileIndexToEdit];
+      fileName = _fi.name;
+      _fi.text = input.value;
       offsetGlobal = offset;
       fileDownload(fileName);
     } else {
