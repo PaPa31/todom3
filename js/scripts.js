@@ -494,10 +494,12 @@ restoreItemButton.addEventListener("click", function () {
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 
-    const le = itemsArray.length - 1;
-    liMaker(le);
-    indexedItemsArray.push(le.toString());
-    //counterItems++;
+    //const le = itemsArray.length - 1;
+    indexedItemsArray.push(counterItems.toString());
+    const newItem = indexedItemsArray.indexOf(counterItems.toString()) * 1;
+    liMaker(newItem);
+
+    counterItems++;
     len = len - 1;
     deletedCounter.innerText = len;
   }
