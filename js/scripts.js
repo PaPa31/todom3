@@ -84,7 +84,7 @@ const editItem = (e, element) => {
   const editing = itemsArray[itemIndexToEdit].text;
   if (e.ctrlKey) {
     intervalFocus(element, "background-color: #685a7f;", 300);
-    input.value = input.value ? input.value + "\n" + editing : editing;
+    input.value = input.value ? input.value + "\\\n" + editing : editing;
     scrollToLast();
   } else {
     intervalFocus(element, "background-color: orange;", 300);
