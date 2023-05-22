@@ -618,6 +618,7 @@ input.addEventListener("keyup", debounce(update, 150, false));
 input.addEventListener("mouseup", debounce(update, 150, false));
 //position.addEventListener("scroll", debounce(update, 150, false));
 
+if (input.value) xUI();
 initializeItemState();
 showOrHideDeleteAllItems();
 showOrHideTrash();
