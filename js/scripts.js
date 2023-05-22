@@ -408,7 +408,7 @@ document.addEventListener("keyup", function (e) {
 const mergeAllItems = () => {
   itemsArray.forEach((item) => {
     if (item.text) {
-      input.value = input.value ? input.value + "\n" + item.text : item.text;
+      input.value = input.value ? input.value + "\\\n" + item.text : item.text;
     }
   });
   xUI();
