@@ -319,6 +319,7 @@ blockquote {
   transition: background-color 0.3s ease-in-out;
   background-color: transparent;
   border-radius: 4px;
+  cursor: text;
 }
 
 /*.markdown-body > ol > li:hover {
