@@ -84,7 +84,11 @@ const editItem = (e, element) => {
   const editing = itemsArray[itemIndexToEdit].text;
   if (e.ctrlKey) {
     intervalFocus(element, "background-color: #685a7f;", 300);
-    input.value = input.value ? input.value + "\\\n" + editing : editing;
+    input.value = input.value
+      ? /^ *- /.test(editing)
+        ? input.value + "\n" + editing
+        : input.value + "\\\n" + editing
+      : editing;
     scrollToLast();
   } else {
     intervalFocus(element, "background-color: orange;", 300);
@@ -406,9 +410,15 @@ document.addEventListener("keyup", function (e) {
 });
 
 const mergeAllItems = () => {
+  //const _inv = input.value;
   itemsArray.forEach((item) => {
-    if (item.text) {
-      input.value = input.value ? input.value + "\\\n" + item.text : item.text;
+    const _itt = item.text;
+    if (_itt) {
+      input.value = input.value
+        ? /^ *- /.test(_itt)
+          ? input.value + "\n" + _itt
+          : input.value + "\\\n" + _itt
+        : _itt;
     }
   });
   xUI();
