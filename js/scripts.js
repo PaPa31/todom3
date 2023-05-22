@@ -343,8 +343,10 @@ const saveItem = (offset) => {
       text: input.value,
     };
     itemsArray.push(obj);
-    liMaker(counterItems);
     indexedItemsArray.push(counterItems.toString());
+    const newItem = indexedItemsArray.indexOf(counterItems.toString()) * 1;
+    liMaker(newItem);
+
     counterItems++;
   }
   defaultMarkers();

@@ -83,6 +83,7 @@ const liMaker = (count) => {
     if (itemsArray[count].fold) li.setAttribute("class", "unfolded");
 
     div.innerHTML = markdown(text);
+    li.id = counterItems;
   } else {
     const obj = filesArray[count];
 
@@ -100,9 +101,10 @@ const liMaker = (count) => {
     div4.setAttribute("class", "file-size");
     div4.innerHTML = obj.size ? fileSizeTerm(obj.size) : "";
     div.appendChild(div4);
+    li.id = counterFiles;
   }
 
-  li.id = count;
+  //li.id = count;
   li.appendChild(div);
   ol.appendChild(li);
   //console.log("URL =", url);
