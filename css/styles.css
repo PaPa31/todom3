@@ -1018,7 +1018,7 @@ textarea:active {
 #position {
   position: absolute;
   /*border-color: red;*/
-  z-index: -1;
+  /*z-index: -1;*/
   resize: none;
   overflow: auto;
   height: auto;
@@ -1046,12 +1046,20 @@ textarea:active {
   opacity: 0.5;
 }*/
 
-/*#position * {
-  color: red;
-}*/
-
-#output,
 #position {
+  color: red;
+  opacity: 0.5;
+  background-color: transparent;
+  color: rebeccapurple;
+  /*border-bottom: solid 1px red;*/
+}
+
+#position > :last-child {
+  border-bottom: solid 1px red;
+  width: fit-content;
+}
+
+#output {
   opacity: 0;
   /*color: red;*/
   visibility: hidden;
@@ -1087,17 +1095,18 @@ code {
   .container > .flex-row {
     flex-direction: row;
   }
-  #preview {
-    max-height: 328px;
+  #preview,
+  #position {
+    max-height: 301px;
   }
   #position {
-    position: relative;
+    /*position: relative;*/
     width: 684px;
     /* #preview & #position
     * not sync due to scroll to view
     */
-    max-height: 269.5px;
-    margin-top: -269.5px;
+    /*max-height: 242.5px;*/
+    /*margin-top: -242.5px;*/
   }
   .container > .flex-row > .flex-small:first-child {
     padding-right: 10px;
