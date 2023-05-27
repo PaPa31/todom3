@@ -474,6 +474,7 @@ const ifReturnAndNoneX = () => {
 const clearInputAndPreviewAreas = () => {
   input.value = "";
   preview.innerHTML = "";
+  position.innerHTML = "";
 };
 
 xButton.addEventListener("click", function (e) {
