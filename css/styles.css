@@ -1046,29 +1046,20 @@ textarea:active {
   opacity: 0.5;
 }*/
 
+#position * {
+  background-color: transparent;
+  color: transparent;
+}
+
 #position {
   opacity: 0.5;
   background-color: transparent;
   color: transparent;
-  /*color: rebeccapurple !important;*/
-  /*border-bottom: solid 1px red;*/
 }
 
-#position > :last-child {
-  /*border-bottom: solid 1px red;*/
-  width: fit-content;
-  color: rebeccapurple;
-  color: transparent;
+#position :last-child {
   overflow: hidden;
-  /*text-decoration: underline solid 1px red;*/
 }
-
-/*#position > :last-child:after {
-  content: attr(data-text);
-  color: red;
-  transform: translateX(-100%);
-  position: absolute;
-}*/
 
 #position > :last-child:after {
   content: "";
