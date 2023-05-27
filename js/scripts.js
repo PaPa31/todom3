@@ -562,7 +562,9 @@ const lastNewLine = function (str) {
 };
 
 const update = function () {
-  const head = input.value.substr(0, input.selectionStart);
+  const head = input.selectionStart
+    ? input.value.substr(0, input.selectionStart)
+    : input.value.substr(0, 1);
 
   output.value = head;
   output.scrollTop = output.scrollHeight;
@@ -570,9 +572,9 @@ const update = function () {
   const headLastNewLine = lastNewLine(head);
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
-  const tailLastNewLine = lastNewLine(tail);
-  console.log("head:", headLastNewLine);
-  console.log("tail:", tailLastNewLine);
+  //const tailLastNewLine = lastNewLine(tail);
+  //console.log("head:", headLastNewLine);
+  //console.log("tail:", tailLastNewLine);
 
   let stringToPreview = "";
   if (head.length) {
@@ -583,7 +585,7 @@ const update = function () {
       stringToPreview = head;
     } else {
       //stringToPreview = head.substr(0, endHead + 1);
-      stringToPreview = head + tail[0];
+      stringToPreview = headLastNewLine == 0 ? head : head + tail[0];
     }
     stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
     //}
