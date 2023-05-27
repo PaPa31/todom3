@@ -1047,16 +1047,35 @@ textarea:active {
 }*/
 
 #position {
-  color: red;
   opacity: 0.5;
   background-color: transparent;
-  color: rebeccapurple;
+  color: transparent;
+  /*color: rebeccapurple !important;*/
   /*border-bottom: solid 1px red;*/
 }
 
 #position > :last-child {
-  border-bottom: solid 1px red;
+  /*border-bottom: solid 1px red;*/
   width: fit-content;
+  color: rebeccapurple;
+  color: transparent;
+  overflow: hidden;
+  /*text-decoration: underline solid 1px red;*/
+}
+
+/*#position > :last-child:after {
+  content: attr(data-text);
+  color: red;
+  transform: translateX(-100%);
+  position: absolute;
+}*/
+
+#position > :last-child:after {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  height: 1px;
+  box-shadow: red -100vw 100vw 0 100vw;
 }
 
 #output {
