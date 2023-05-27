@@ -570,19 +570,23 @@ const update = function () {
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
   const tailLastNewLine = lastNewLine(tail);
+  console.log("head:", headLastNewLine);
+  console.log("tail:", tailLastNewLine);
 
   let stringToPreview = "";
-  if (head.length)
-    if (tailLastNewLine == 0) {
-      stringToPreview = input.value;
+  if (head.length) {
+    //if (tailLastNewLine == 0) {
+    //  stringToPreview = input.value;
+    //} else {
+    if (head.slice(-2) == "\n\n") {
+      stringToPreview = head;
     } else {
-      if (head.slice(-2) == "\n\n") {
-        stringToPreview = head;
-      } else {
-        stringToPreview = head.substr(0, endHead + 1);
-      }
-      stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
+      //stringToPreview = head.substr(0, endHead + 1);
+      stringToPreview = head + tail[0];
     }
+    stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
+    //}
+  }
 
   position.innerHTML = markdown(stringToPreview);
 
