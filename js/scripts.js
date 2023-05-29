@@ -597,7 +597,7 @@ const update = function () {
       if (tailLastNewLine == 0 && tail == "\n") {
         stringToPreview = head + "\n";
         const initialHTML = preview.lastElementChild.innerHTML;
-        console.log("7 last:", initialHTML.slice(-7));
+        //console.log("7 last:", initialHTML.slice(-7));
         if (initialHTML.slice(-7) != ">&nbsp;")
           preview.lastElementChild.innerHTML += "<br/>&nbsp;";
       } else {
