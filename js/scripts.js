@@ -593,6 +593,8 @@ const update = function () {
       if (tailLastNewLine == 0 && tail == "\n") {
         console.log("Chpock");
         stringToPreview = head + "\n";
+        //position.innerHTML = markdown(stringToPreview + "/n");
+        preview.lastElementChild.innerHTML += "<br/>&nbsp;";
       } else {
         console.log("Glock");
         //stringToPreview = head.substr(0, endHead + 1);
