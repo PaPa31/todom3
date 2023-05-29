@@ -574,13 +574,13 @@ const update = function () {
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
   const tailLastNewLine = lastNewLine(tail);
-  console.log("head:", headLastNewLine);
-  console.log("tail:", tailLastNewLine);
+  //console.log("head:", headLastNewLine);
+  //console.log("tail:", tailLastNewLine);
 
-  console.log("first:", tail.charCodeAt());
-  console.log("last:", tail.slice(-1).charCodeAt());
-  console.log("head=", head + ";;;");
-  console.log("tail=", tail + ";;;");
+  //console.log("first:", tail.charCodeAt());
+  //console.log("last:", tail.slice(-1).charCodeAt());
+  //console.log("head=", head + ";;;");
+  //console.log("tail=", tail + ";;;");
 
   let stringToPreview = "";
   if (head.length) {
@@ -591,13 +591,9 @@ const update = function () {
       stringToPreview = head;
     } else {
       if (tailLastNewLine == 0 && tail == "\n") {
-        console.log("Chpock");
         stringToPreview = head + "\n";
-        //position.innerHTML = markdown(stringToPreview + "/n");
         preview.lastElementChild.innerHTML += "<br/>&nbsp;";
       } else {
-        console.log("Glock");
-        //stringToPreview = head.substr(0, endHead + 1);
         stringToPreview = headLastNewLine == 0 ? head : head + tail[0];
       }
     }
