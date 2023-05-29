@@ -562,6 +562,11 @@ const lastNewLine = function (str) {
   return caret;
 };
 
+const lastSeven = () => {
+  const l7 = preview.lastElementChild.innerHTML.slice(-7);
+  if (l7 != ">&nbsp;") preview.lastElementChild.innerHTML += "<br/>&nbsp;";
+};
+
 const update = function () {
   const head = input.selectionStart
     ? input.value.substr(0, input.selectionStart)
@@ -590,16 +595,13 @@ const update = function () {
     if (head.slice(-2) == "\n\n") {
       stringToPreview = head;
       if (tailLastNewLine == 0) {
-        preview.lastElementChild.innerHTML += "<br/>&nbsp;";
+        lastSeven();
       } else {
       }
     } else {
       if (tailLastNewLine == 0 && tail == "\n") {
         stringToPreview = head + "\n";
-        const initialHTML = preview.lastElementChild.innerHTML;
-        //console.log("7 last:", initialHTML.slice(-7));
-        if (initialHTML.slice(-7) != ">&nbsp;")
-          preview.lastElementChild.innerHTML += "<br/>&nbsp;";
+        lastSeven();
       } else {
         stringToPreview = headLastNewLine == 0 ? head : head + tail[0];
       }
