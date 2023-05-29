@@ -1054,6 +1054,7 @@ textarea:active {
 #position {
   background-color: transparent;
   color: transparent;
+  overflow: hidden;
 }
 
 #position :last-child {
