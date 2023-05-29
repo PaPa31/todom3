@@ -589,10 +589,17 @@ const update = function () {
     //} else {
     if (head.slice(-2) == "\n\n") {
       stringToPreview = head;
+      if (tailLastNewLine == 0) {
+        preview.lastElementChild.innerHTML += "<br/>&nbsp;";
+      } else {
+      }
     } else {
       if (tailLastNewLine == 0 && tail == "\n") {
         stringToPreview = head + "\n";
-        preview.lastElementChild.innerHTML += "<br/>&nbsp;";
+        const initialHTML = preview.lastElementChild.innerHTML;
+        console.log("7 last:", initialHTML.slice(-7));
+        if (initialHTML.slice(-7) != ">&nbsp;")
+          preview.lastElementChild.innerHTML += "<br/>&nbsp;";
       } else {
         stringToPreview = headLastNewLine == 0 ? head : head + tail[0];
       }
