@@ -573,9 +573,14 @@ const update = function () {
   const headLastNewLine = lastNewLine(head);
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
-  //const tailLastNewLine = lastNewLine(tail);
-  //console.log("head:", headLastNewLine);
-  //console.log("tail:", tailLastNewLine);
+  const tailLastNewLine = lastNewLine(tail);
+  console.log("head:", headLastNewLine);
+  console.log("tail:", tailLastNewLine);
+
+  console.log("first:", tail.charCodeAt());
+  console.log("last:", tail.slice(-1).charCodeAt());
+  console.log("head=", head + ";;;");
+  console.log("tail=", tail + ";;;");
 
   let stringToPreview = "";
   if (head.length) {
@@ -585,8 +590,14 @@ const update = function () {
     if (head.slice(-2) == "\n\n") {
       stringToPreview = head;
     } else {
-      //stringToPreview = head.substr(0, endHead + 1);
-      stringToPreview = headLastNewLine == 0 ? head : head + tail[0];
+      if (tailLastNewLine == 0 && tail == "\n") {
+        console.log("Chpock");
+        stringToPreview = head + "\n";
+      } else {
+        console.log("Glock");
+        //stringToPreview = head.substr(0, endHead + 1);
+        stringToPreview = headLastNewLine == 0 ? head : head + tail[0];
+      }
     }
     stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
     //}
