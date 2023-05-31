@@ -569,7 +569,7 @@ const lastSeven = () => {
   } else {
     elHTML = preview.lastElementChild;
   }
-  if (elHTML.innerHTML.slice(-7) != ">&nbsp;") {
+  if (elHTML.innerHTML.slice(-7) !== ">&nbsp;") {
     elHTML.innerHTML += "<br/>&nbsp;";
   }
 };
