@@ -609,6 +609,7 @@ const update = function () {
       } else {
         if (tail[1] == "\n") {
           console.log("2");
+          lastSeven();
         } else {
           console.log("2.1");
           stringToPreview = head + tail[1];
@@ -624,6 +625,7 @@ const update = function () {
       } else {
         console.log("4");
         stringToPreview = headLastNewLine == 0 ? head : head + "\n";
+        lastSeven();
       }
     }
     stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
