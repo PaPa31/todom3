@@ -1059,7 +1059,11 @@ textarea:active {
 
 #position :last-child {
   overflow: hidden;
-  white-space: break-spaces;
+  white-space: pre-line;
+}
+
+ol.preview-outer p {
+  word-break: break-all;
 }
 
 #position > :last-child:after {
