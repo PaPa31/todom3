@@ -587,10 +587,10 @@ const update = function () {
   console.log("head:", headLastNewLine);
   console.log("tail:", tailLastNewLine);
 
-  //console.log("first:", tail.charCodeAt());
-  //console.log("last:", tail.slice(-1).charCodeAt());
-  console.log("last head:", head.slice(-1));
-  console.log("first tail:", tail[80]);
+  console.log("last head:", head.slice(-1).charCodeAt());
+  console.log("first tail:", tail.charCodeAt());
+  //console.log("last head:", head.slice(-1));
+  //console.log("first tail:", tail[0]);
 
   console.log("head=", head + ";;;");
   console.log("tail=", tail + ";;;");
@@ -607,10 +607,14 @@ const update = function () {
         console.log("1");
         lastSeven();
       } else {
-        console.log("2");
-        stringToPreview = head + tail[1];
-        position.innerHTML = markdown(stringToPreview);
-        variant = false;
+        if (tail[1] == "\n") {
+          console.log("2");
+        } else {
+          console.log("2.1");
+          stringToPreview = head + tail[1];
+          position.innerHTML = markdown(stringToPreview);
+          variant = false;
+        }
       }
     } else {
       if (tailLastNewLine == 0 && tail[0] == "\n") {
@@ -622,7 +626,7 @@ const update = function () {
         stringToPreview = headLastNewLine == 0 ? head : head + "\n";
       }
     }
-    stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
+    stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
     //}
   }
 
