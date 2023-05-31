@@ -568,8 +568,9 @@ const lastChildRecursive = (child) => {
     lastChildRecursive(child.lastElementChild);
     return;
   } else {
-    console.log(child.nextSibling);
-    if (child.nextSibling) {
+    console.log(child.nextElementSibling);
+    if (child.nextSibling && child.nextSibling.textContent != "\n") {
+      console.log(child.nextSibling.textContent);
       console.log(Array.from(child.parentElement.childNodes));
       console.log();
       //Array.from(document.querySelector("#title").childNodes).find(
