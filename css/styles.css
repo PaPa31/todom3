@@ -1068,18 +1068,21 @@ textarea:active {
 #position :last-child {
   overflow: hidden;
   white-space: pre-line;
+  position: relative;
 }
 
 ol.preview-outer p {
   word-break: break-all;
 }
 
-#position > :last-child:after {
+#position > :last-child::after {
   content: "";
-  display: inline-block;
+  /*display: inline-block;
   vertical-align: bottom;
-  height: 1px;
+  height: 1px;*/
   box-shadow: red -100vw 100vw 0 100vw;
+  position: absolute;
+  bottom: 1px;
 }
 
 #output {

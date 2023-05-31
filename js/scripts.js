@@ -563,8 +563,15 @@ const lastNewLine = function (str) {
 };
 
 const lastSeven = () => {
-  const l7 = preview.lastElementChild.innerHTML.slice(-7);
-  if (l7 != ">&nbsp;") preview.lastElementChild.innerHTML += "<br/>&nbsp;";
+  let elHTML;
+  if (preview.lastElementChild.tagName.toLowerCase() === "pre") {
+    elHTML = preview;
+  } else {
+    elHTML = preview.lastElementChild;
+  }
+  if (elHTML.innerHTML.slice(-7) != ">&nbsp;") {
+    elHTML.innerHTML += "<br/>&nbsp;";
+  }
 };
 
 const lastSevenPosition = () => {
@@ -623,9 +630,14 @@ const update = function () {
         stringToPreview = head + "\n";
         lastSeven();
       } else {
-        console.log("4");
-        stringToPreview = headLastNewLine == 0 ? head : head + "\n";
-        lastSeven();
+        if (tail.slice(-2) == "\n\n") {
+          console.log("4");
+          stringToPreview = head + "\n";
+          lastSeven();
+        } else {
+          console.log("4.1");
+          stringToPreview = headLastNewLine == 0 ? head : head + "\n";
+        }
       }
     }
     stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
