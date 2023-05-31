@@ -1059,6 +1059,7 @@ textarea:active {
 
 #position :last-child {
   overflow: hidden;
+  white-space: break-spaces;
 }
 
 #position > :last-child:after {
