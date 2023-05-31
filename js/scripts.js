@@ -563,6 +563,7 @@ const lastNewLine = function (str) {
 };
 
 const lastChildRecursive = (child) => {
+  child.classList.remove("last-child");
   if (child.lastElementChild) {
     lastChildRecursive(child.lastElementChild);
     return;
