@@ -587,8 +587,11 @@ const update = function () {
   console.log("head:", headLastNewLine);
   console.log("tail:", tailLastNewLine);
 
-  console.log("first:", tail.charCodeAt());
-  console.log("last:", tail.slice(-1).charCodeAt());
+  //console.log("first:", tail.charCodeAt());
+  //console.log("last:", tail.slice(-1).charCodeAt());
+  console.log("last head:", head.slice(-1));
+  console.log("first tail:", tail[80]);
+
   console.log("head=", head + ";;;");
   console.log("tail=", tail + ";;;");
 
