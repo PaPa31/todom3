@@ -89,6 +89,11 @@ html {
    * when toggle Items(empty)/Files(not empty) in Chromium
   */
   overflow-y: scroll;
+  /*
+  * Prevent scroll-bar from adding-up to the Width
+  * of page on Chrome
+  */
+  overflow-y: overlay;
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica,
     Arial, sans-serif;
 }
@@ -902,6 +907,9 @@ textarea {
   max-width: 100%;
   overflow: auto;
   height: 186px;
+  padding-right: 36px !important;
+  /*make 2 textareas the same inner size*/
+  overflow-y: overlay;
 }
 
 textarea:focus,
