@@ -625,7 +625,7 @@ const update = function () {
         }
       }
     } else {
-      if (tailLastNewLine == 0 && tail[0] == "\n") {
+      if (tailLastNewLine == 0 && tail == "\n") {
         console.log("3");
         stringToPreview = head + "\n";
         lastSeven();
