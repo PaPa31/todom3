@@ -563,6 +563,7 @@ const lastNewLine = function (str) {
 };
 
 const lastSeven = () => {
+  console.log("Chponk!");
   const l7 = preview.lastElementChild.innerHTML.slice(-7);
   if (l7 != ">&nbsp;") preview.lastElementChild.innerHTML += "<br/>&nbsp;";
 };
@@ -579,13 +580,13 @@ const update = function () {
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
   const tailLastNewLine = lastNewLine(tail);
-  //console.log("head:", headLastNewLine);
-  //console.log("tail:", tailLastNewLine);
+  console.log("head:", headLastNewLine);
+  console.log("tail:", tailLastNewLine);
 
-  //console.log("first:", tail.charCodeAt());
-  //console.log("last:", tail.slice(-1).charCodeAt());
-  //console.log("head=", head + ";;;");
-  //console.log("tail=", tail + ";;;");
+  console.log("first:", tail.charCodeAt());
+  console.log("last:", tail.slice(-1).charCodeAt());
+  console.log("head=", head + ";;;");
+  console.log("tail=", tail + ";;;");
 
   let stringToPreview = "";
   if (head.length) {
@@ -603,7 +604,7 @@ const update = function () {
         stringToPreview = head + "\n";
         lastSeven();
       } else {
-        stringToPreview = headLastNewLine == 0 ? head : head + tail[0];
+        stringToPreview = headLastNewLine == 0 ? head : head + "\n";
       }
     }
     stringToPreview = stringToPreview.replace(/\n\n$/, "\n\x001\n");
@@ -611,6 +612,7 @@ const update = function () {
   }
 
   position.innerHTML = markdown(stringToPreview);
+  //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
 
   const scrollTop = position.scrollHeight;
   position.scrollTop = scrollTop;
