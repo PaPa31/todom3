@@ -706,6 +706,10 @@ ol.preview-outer li {
   padding-top: 0;
 }
 
+ol.preview-outer p {
+  word-break: break-all;
+}
+
 #x-button,
 #return-last-input {
   position: absolute;
@@ -1065,17 +1069,13 @@ textarea:active {
   overflow: hidden;
 }
 
-#position :last-child {
+.last-child {
   overflow: hidden;
   white-space: pre-line;
   position: relative;
 }
 
-ol.preview-outer p {
-  word-break: break-all;
-}
-
-#position > :last-child::after {
+.last-child::after {
   content: "";
   /*display: inline-block;
   vertical-align: bottom;

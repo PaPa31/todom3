@@ -562,7 +562,31 @@ const lastNewLine = function (str) {
   return caret;
 };
 
-const lastSeven = () => {
+const lastChildRecursive = (child) => {
+  if (child.lastElementChild) {
+    lastChildRecursive(child.lastElementChild);
+    return;
+  } else {
+    console.log(child.nextSibling);
+    if (child.nextSibling) {
+      console.log(Array.from(child.parentElement.childNodes));
+      console.log();
+      //Array.from(document.querySelector("#title").childNodes).find(
+      //  (n) => n.nodeType == Node.TEXT_NODE
+      //).textContent;
+
+      if (child.nextSibling.classList) {
+        child.nextSibling.classList.add("last-child");
+      } else {
+        child.parentElement.classList.add("last-child");
+      }
+    } else {
+      child.classList.add("last-child");
+    }
+  }
+};
+
+const lastSeven = (el) => {
   let elHTML;
   if (preview.lastElementChild.tagName.toLowerCase() === "pre") {
     elHTML = preview;
@@ -591,16 +615,16 @@ const update = function () {
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
   const tailLastNewLine = lastNewLine(tail);
-  console.log("head:", headLastNewLine);
-  console.log("tail:", tailLastNewLine);
+  //console.log("head:", headLastNewLine);
+  //console.log("tail:", tailLastNewLine);
+  //console.log("last head:", head.slice(-1).charCodeAt());
+  //console.log("first tail:", tail.charCodeAt());
 
-  console.log("last head:", head.slice(-1).charCodeAt());
-  console.log("first tail:", tail.charCodeAt());
   //console.log("last head:", head.slice(-1));
   //console.log("first tail:", tail[0]);
 
-  console.log("head=", head + ";;;");
-  console.log("tail=", tail + ";;;");
+  //console.log("head=", head + ";;;");
+  //console.log("tail=", tail + ";;;");
 
   let variant = true;
   let stringToPreview = "";
@@ -612,11 +636,11 @@ const update = function () {
       stringToPreview = head;
       if (tailLastNewLine == 0) {
         console.log("1");
-        lastSeven();
+        lastSeven(preview);
       } else {
         if (tail[1] == "\n") {
           console.log("2");
-          lastSeven();
+          lastSeven(preview);
         } else {
           console.log("2.1");
           stringToPreview = head + tail[1];
@@ -628,15 +652,16 @@ const update = function () {
       if (tailLastNewLine == 0 && tail == "\n") {
         console.log("3");
         stringToPreview = head + "\n";
-        lastSeven();
+        lastSeven(preview);
       } else {
         if (tail.slice(-2) == "\n\n") {
           console.log("4");
           stringToPreview = head + "\n";
-          lastSeven();
+          lastSeven(preview);
         } else {
           console.log("4.1");
           stringToPreview = headLastNewLine == 0 ? head : head + "\n";
+          lastSeven(preview);
         }
       }
     }
@@ -645,6 +670,7 @@ const update = function () {
   }
 
   if (variant) position.innerHTML = markdown(stringToPreview);
+  lastChildRecursive(position);
   //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
 
   const scrollTop = position.scrollHeight;
