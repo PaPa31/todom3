@@ -562,29 +562,44 @@ const lastNewLine = function (str) {
   return caret;
 };
 
+const addLastChildClass = (el) => {
+  el.classList.add("last-child");
+};
+
+const findLastChild = (child) => {
+  console.log("r2 child.nextElementSibling=", child.nextElementSibling);
+  if (child.nextSibling && child.nextSibling.textContent != "\n") {
+    console.log(
+      "r2.1 child.nextSibling.textContent=",
+      child.nextSibling.textContent
+    );
+    console.log(Array.from(child.parentElement.childNodes));
+
+    //Array.from(document.querySelector("#title").childNodes).find(
+    //  (n) => n.nodeType == Node.TEXT_NODE
+    //).textContent;
+
+    if (child.nextSibling.classList) {
+      console.log("r2.1.1");
+      addLastChildClass(child.nextSibling);
+    } else {
+      console.log("r2.1.2");
+      addLastChildClass(child.parentElement);
+    }
+  } else {
+    console.log("r2.2");
+    addLastChildClass(child);
+  }
+};
+
 const lastChildRecursive = (child) => {
   child.classList.remove("last-child");
   if (child.lastElementChild) {
+    console.log("r1");
     lastChildRecursive(child.lastElementChild);
     return;
   } else {
-    console.log(child.nextElementSibling);
-    if (child.nextSibling && child.nextSibling.textContent != "\n") {
-      console.log(child.nextSibling.textContent);
-      console.log(Array.from(child.parentElement.childNodes));
-      console.log();
-      //Array.from(document.querySelector("#title").childNodes).find(
-      //  (n) => n.nodeType == Node.TEXT_NODE
-      //).textContent;
-
-      if (child.nextSibling.classList) {
-        child.nextSibling.classList.add("last-child");
-      } else {
-        child.parentElement.classList.add("last-child");
-      }
-    } else {
-      child.classList.add("last-child");
-    }
+    findLastChild(child);
   }
 };
 
@@ -600,10 +615,10 @@ const lastSeven = (el) => {
   }
 };
 
-const lastSevenPosition = () => {
-  const l7 = position.lastElementChild.innerHTML.slice(-7);
-  if (l7 != ">&nbsp;") position.lastElementChild.innerHTML += "<br/>&nbsp;";
-};
+//const lastSevenPosition = () => {
+//  const l7 = position.lastElementChild.innerHTML.slice(-7);
+//  if (l7 != ">&nbsp;") position.lastElementChild.innerHTML += "<br/>&nbsp;";
+//};
 
 const update = function () {
   const head = input.selectionStart
