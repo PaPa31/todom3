@@ -641,14 +641,16 @@ const update = function () {
   const tailLastNewLine = lastNewLine(tail);
   //console.log("head:", headLastNewLine);
   //console.log("tail:", tailLastNewLine);
-  //console.log("last head:", head.slice(-1).charCodeAt());
-  //console.log("first tail:", tail.charCodeAt());
+  console.log("last head:", head.slice(-1).charCodeAt());
+  console.log("first tail:", tail.charCodeAt());
 
-  //console.log("last head:", head.slice(-1));
-  //console.log("first tail:", tail[0]);
+  console.log("last head:", head.slice(-1));
+  console.log("first tail:", tail[0]);
 
-  //console.log("head=", head + ";;;");
-  //console.log("tail=", tail + ";;;");
+  console.log("head=", head + ";;;");
+  console.log("tail=", tail + ";;;");
+
+  console.log("tailLastNewLine:", tailLastNewLine);
 
   let variant = true;
   let stringToPreview = "";
@@ -657,33 +659,37 @@ const update = function () {
     //  stringToPreview = input.value;
     //} else {
     if (head.slice(-2) == "\n\n") {
+      console.log("s1");
       stringToPreview = head;
       if (tailLastNewLine == 0) {
-        console.log("1");
+        console.log("s1.1");
         lastSeven(preview);
       } else {
+        console.log("s1.2");
         if (tail[1] == "\n") {
-          console.log("2");
+          console.log("s1.2.1");
           lastSeven(preview);
         } else {
-          console.log("2.1");
+          console.log("s1.2.2");
           stringToPreview = head + tail[1];
           position.innerHTML = markdown(stringToPreview);
           variant = false;
         }
       }
     } else {
+      console.log("s2");
       if (tailLastNewLine == 0 && tail == "\n") {
-        console.log("3");
+        console.log("s2.1");
         stringToPreview = head + "\n";
         lastSeven(preview);
       } else {
+        console.log("s2.2");
         if (tail.slice(-2) == "\n\n") {
-          console.log("4");
+          console.log("s2.2.1");
           stringToPreview = head + "\n";
           lastSeven(preview);
         } else {
-          console.log("4.1");
+          console.log("s2.2.2");
           stringToPreview = headLastNewLine == 0 ? head : head + "\n";
           lastSeven(preview);
         }
