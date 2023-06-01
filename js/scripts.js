@@ -564,14 +564,6 @@ const lastNewLine = function (str) {
 
 const addLastChildClass = (el) => {
   el.classList.add("last-child");
-  //if (
-  //  el.tagName.toLowerCase() === "p" &&
-  //  el.parentElement.tagName.toLowerCase() === "li"
-  //) {
-  //  el.parentElement.classList.add("last-child");
-  //} else {
-  //  el.classList.add("last-child");
-  //}
 };
 
 const findLastChild = (child) => {
