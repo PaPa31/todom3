@@ -563,7 +563,25 @@ const lastNewLine = function (str) {
 };
 
 const addLastChildClass = (el) => {
-  el.classList.add("last-child");
+  //el.classList.add("last-child");
+  const tagName = el.tagName.toLowerCase();
+  switch (tagName) {
+    case "code": {
+      el.classList.add("last-child-border");
+      break;
+    }
+    default: {
+      el.classList.add("last-child");
+    }
+  }
+  //if (
+  //  el.tagName.toLowerCase() === "p" &&
+  //  el.parentElement.tagName.toLowerCase() === "li"
+  //) {
+  //  el.parentElement.classList.add("last-child");
+  //} else {
+  //  el.classList.add("last-child");
+  //}
 };
 
 const findLastChild = (child) => {
@@ -611,7 +629,7 @@ const lastSeven = (el) => {
     elHTML = preview.lastElementChild;
   }
   if (elHTML.innerHTML.slice(-7) !== ">&nbsp;") {
-    elHTML.innerHTML += "<br/>&nbsp;";
+    //elHTML.innerHTML += "<br/>&nbsp;";
   }
 };
 
