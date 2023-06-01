@@ -1086,7 +1086,8 @@ textarea:active {
 }
 
 .last-child-border {
-  border-right: 1px solid red;
+  border-right: 1px solid red !important;
+  border-radius: 0 !important;
 }
 
 #output {
