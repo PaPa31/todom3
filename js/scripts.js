@@ -46,6 +46,8 @@ input.classList.add("border");
 
 returnInputButton.style = "display:none";
 
+let variant = true;
+
 if (lastInputValue) {
   xButton.style = "display:block";
   inputLabel.classList.replace("invisible", "visible");
@@ -563,16 +565,24 @@ const lastNewLine = function (str) {
 };
 
 const addLastChildClass = (el) => {
+  el.classList.remove("last-child");
+  el.classList.remove("last-child-rb");
+  el.classList.remove("last-child-lb");
   //el.classList.add("last-child");
   const tagName = el.tagName.toLowerCase();
-  switch (tagName) {
-    case "code": {
-      el.classList.add("last-child-border");
-      break;
+  if (variant) {
+    switch (tagName) {
+      case "code": {
+        el.classList.add("last-child-rb");
+        break;
+      }
+      default: {
+        el.classList.add("last-child");
+      }
     }
-    default: {
-      el.classList.add("last-child");
-    }
+  } else {
+    el.classList.add("last-child-lb");
+    variant = true;
   }
   //if (
   //  el.tagName.toLowerCase() === "p" &&
@@ -611,7 +621,6 @@ const findLastChild = (child) => {
 };
 
 const lastChildRecursive = (child) => {
-  child.classList.remove("last-child");
   if (child.lastElementChild) {
     console.log("r1");
     lastChildRecursive(child.lastElementChild);
@@ -652,8 +661,8 @@ const update = function () {
   const tailLastNewLine = lastNewLine(tail);
   //console.log("head:", headLastNewLine);
   //console.log("tail:", tailLastNewLine);
-  console.log("last head:", head.slice(-1).charCodeAt());
-  console.log("first tail:", tail.charCodeAt());
+  //console.log("last head:", head.slice(-1).charCodeAt());
+  //console.log("first tail:", tail.charCodeAt());
 
   console.log("last head:", head.slice(-1));
   console.log("first tail:", tail[0]);
@@ -661,9 +670,8 @@ const update = function () {
   console.log("head=", head + ";;;");
   console.log("tail=", tail + ";;;");
 
-  console.log("tailLastNewLine:", tailLastNewLine);
+  //console.log("tailLastNewLine:", tailLastNewLine);
 
-  let variant = true;
   let stringToPreview = "";
   if (head.length) {
     //if (tailLastNewLine == 0) {
