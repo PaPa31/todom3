@@ -37,7 +37,8 @@ const findLastChild = (child) => {
   logIn6("1 findLastChild", child);
   if (child.nextSibling && child.nextSibling.textContent != "\n") {
     logg6(
-      "findLastChild child.nextSibling.textContent=",
+      "1.1",
+      "child.nextSibling.textContent=",
       child.nextSibling.textContent
     );
     logg6(Array.from(child.parentElement.childNodes));
@@ -52,6 +53,7 @@ const findLastChild = (child) => {
       addLastChildClass(child.parentElement);
     }
   } else {
+    logg6("1.2");
     addLastChildClass(child);
   }
   logOut6();
@@ -134,7 +136,6 @@ const strToPreview = () => {
       }
     } else {
       if (tail == "\n") {
-        logg("s2.1");
         if (tailLastNewLine == 0) {
           logg("s2.1.1");
           stringToPreview = head + "\n";
@@ -143,7 +144,6 @@ const strToPreview = () => {
           logg("s2.1.2");
         }
       } else {
-        logg("s2.2");
         if (tail[0] == "\n") {
           logg("s2.2.1");
           stringToPreview = head + "\n";
@@ -222,7 +222,7 @@ if (true) {
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
-  var showLogg6 = true; // logg6 -
+  var showLogg6 = false; // logg6 -
 
   // loggs subsystem 0
   // 'sync-preview'
