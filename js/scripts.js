@@ -670,7 +670,8 @@ const update = function () {
   console.log("head=", head + ";;;");
   console.log("tail=", tail + ";;;");
 
-  //console.log("tailLastNewLine:", tailLastNewLine);
+  console.log("headLastNewLine:", headLastNewLine);
+  console.log("tailLastNewLine:", tailLastNewLine);
 
   let stringToPreview = "";
   if (head.length) {
@@ -697,13 +698,18 @@ const update = function () {
       }
     } else {
       console.log("s2");
-      if (tailLastNewLine == 0 && tail == "\n") {
+      if (tail == "\n") {
         console.log("s2.1");
-        stringToPreview = head + "\n";
-        lastSeven(preview);
+        if (tailLastNewLine == 0) {
+          console.log("s2.1.1");
+          stringToPreview = head + "\n";
+          lastSeven(preview);
+        } else {
+          console.log("s2.1.2");
+        }
       } else {
         console.log("s2.2");
-        if (tail.slice(-2) == "\n\n") {
+        if (tail[0] == "\n") {
           console.log("s2.2.1");
           stringToPreview = head + "\n";
           lastSeven(preview);
@@ -712,6 +718,15 @@ const update = function () {
           stringToPreview = headLastNewLine == 0 ? head : head + "\n";
           lastSeven(preview);
         }
+        //if (tail.slice(-2) == "\n\n") {
+        //  console.log("s2.2.1");
+        //  stringToPreview = head + "\n";
+        //  lastSeven(preview);
+        //} else {
+        //  console.log("s2.2.2");
+        //  stringToPreview = headLastNewLine == 0 ? head : head + "\n";
+        //  lastSeven(preview);
+        //}
       }
     }
     stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
