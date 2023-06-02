@@ -997,20 +997,28 @@ textarea:active {
   background-color: var(--bg-dark);
 }
 
-#preview {
-  scroll-behavior: smooth;
-  max-height: 160px;
-}
-
 #preview,
 #position {
   width: 100%;
-  overflow-x: auto;
   margin-top: 10px;
 }
 
-#position {
+#preview {
+  scroll-behavior: smooth;
   max-height: 160px;
+  overflow: hidden;
+}
+
+#position {
+  width: 678px;
+  background-color: transparent;
+  color: transparent;
+  overflow: hidden;
+}
+
+#position * {
+  background-color: transparent;
+  color: transparent;
 }
 
 #preview:empty,
@@ -1032,7 +1040,6 @@ textarea:active {
   /*border-color: red;*/
   /*z-index: -1;*/
   resize: none;
-  overflow: auto;
   height: auto;
 }
 
@@ -1047,27 +1054,13 @@ textarea:active {
   border-radius: 4px;
   margin: 0;
   margin-top: -186px;
-}
-
-#position {
-  width: 678px;
+  overflow: auto;
 }
 
 /*#input,
 #preview {
   opacity: 0.5;
 }*/
-
-#position * {
-  background-color: transparent;
-  color: transparent;
-}
-
-#position {
-  background-color: transparent;
-  color: transparent;
-  overflow: hidden;
-}
 
 .last-child {
   overflow: hidden;
