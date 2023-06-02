@@ -701,7 +701,11 @@ const update = function () {
           lastSeven(preview);
         } else {
           console.log("s1.2.2");
-          stringToPreview = head + tail[1];
+          const splitTail = tail.split("\n");
+          console.log(splitTail);
+          stringToPreview =
+            head + splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+          console.log(stringToPreview);
           position.innerHTML = markdown(stringToPreview);
           variant = false;
         }
