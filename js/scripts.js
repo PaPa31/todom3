@@ -655,12 +655,11 @@ const update = function () {
   //  : input.value.substr(0, 1);
 
   let head = input.value.substr(0, input.selectionStart);
+
+  head = head.replace(/\n* *#+ *$/, "");
+
   console.log("head.length =", head.length);
-
-  console.log("head =", head);
-  head = head.replace(/^\#+ *$/, "");
-
-  console.log("head =", head);
+  console.log("head=", head + ";;;");
 
   output.value = head;
   output.scrollTop = output.scrollHeight;
