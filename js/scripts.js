@@ -656,7 +656,7 @@ const update = function () {
 
   let head = input.value.substr(0, input.selectionStart);
 
-  head = head.replace(/\n* *#+ *$/, "");
+  head = head.replace(/(\n*) *#+ *$/, "$1");
 
   console.log("head.length =", head.length);
   console.log("head=", head + ";;;");
@@ -703,9 +703,7 @@ const update = function () {
           console.log("s1.2.2");
           const splitTail = tail.split("\n");
           const notEmpty = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
-          console.log("notEmpty =", notEmpty);
           stringToPreview = head + notEmpty;
-          console.log("stringToPreview =", stringToPreview);
           position.innerHTML = markdown(stringToPreview);
           variant = false;
         }
