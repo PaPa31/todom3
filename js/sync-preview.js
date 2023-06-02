@@ -126,11 +126,10 @@ const strToPreview = () => {
           lastSeven(preview);
         } else {
           logg("s1.2.2");
-          const splitTail = tail.split("\n");
-          const notEmpty = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
-          stringToPreview = head + notEmpty;
+          stringToPreview = head + tail[1];
           position.innerHTML = markdown(stringToPreview);
           variant = false;
+          lastSeven(preview);
         }
       }
     } else {
@@ -170,7 +169,7 @@ const strToPreview = () => {
     const splitTail = tail.split("\n");
     logg(splitTail);
     stringToPreview = splitTail[0];
-    logg(stringToPreview);
+    logg("stringToPreview=", stringToPreview);
     position.innerHTML = markdown(stringToPreview);
     variant = false;
   }
