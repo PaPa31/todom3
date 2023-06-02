@@ -673,11 +673,11 @@ const update = function () {
   //console.log("last head:", head.slice(-1).charCodeAt());
   //console.log("first tail:", tail.charCodeAt());
 
-  console.log("last head:", head.slice(-1));
-  console.log("first tail:", tail[0]);
+  console.log("last head:", head.slice(-1) + ";;;");
+  console.log("first tail:", tail[0] + ";;;");
 
-  console.log("head=", head + ";;;");
-  console.log("tail=", tail + ";;;");
+  //console.log("tail=", tail + ";;;");
+  console.log("tail[1]=", tail[1] + ";;;");
 
   console.log("headLastNewLine:", headLastNewLine);
   console.log("tailLastNewLine:", tailLastNewLine);
