@@ -83,7 +83,7 @@ const lastSeven = (el) => {
 const strToPreview = () => {
   let head = input.value.substr(0, input.selectionStart);
   head = head.replace(/(\n*) *#+ *$/, "$1");
-  logIn("1 strToPreview", "last 2 head:", head.slice(-2) + ";;;");
+  logIn("1 strToPreview", "last 1 head:", head.slice(-1) + ";;;");
 
   //logg("head.length =", head.length);
   //logg("last 2 head:", head.slice(-2) + ";;;");
@@ -102,7 +102,7 @@ const strToPreview = () => {
   //console.log("first tail:", tail.charCodeAt());
 
   //console.log("last head:", head.slice(-1) + ";;;");
-  logg("first 2 tail:", tail.slice(0, 2) + ";;;");
+  logg("first 1 tail:", tail.slice(0, 1) + ";;;");
 
   //console.log("tail=", tail + ";;;");
   //console.log("tail[1]=", tail[1] + ";;;");
@@ -121,7 +121,6 @@ const strToPreview = () => {
         logg("s1.1");
         lastSeven(preview);
       } else {
-        logg("s1.2");
         if (tail[1] == "\n") {
           logg("s1.2.1");
           lastSeven(preview);
