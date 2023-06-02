@@ -214,8 +214,8 @@ input.addEventListener("mouseup", debounce(syncPreview, 150, false));
 // loggs system
 if (true) {
   // Assistant for debugging errors.
-  // View active elements DOM,
-  // when navigation by TOC menu items.
+  // ~~View active elements DOM,~~
+  // ~~when navigation by TOC menu items.~~
 
   // For production - delete this block and loggs.
   // To delete all loggs use regex:^ *log.*$\n*
@@ -223,7 +223,7 @@ if (true) {
   // managing vars
   // change to show/hide output loggs
   var showLogg = true; // logg - 'sync-preview'
-  var showLogg1 = false; // logg1 - 'red-line'
+  var showLogg1 = false; // logg1 -
   var showLogg2 = false; // logg2 -
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
@@ -231,13 +231,13 @@ if (true) {
   var showLogg6 = false; // logg6 -
 
   // loggs subsystem 0
-  // 'key-navigation functions'
+  // 'sync-preview'
   var logg = (...m) => {
     if (showLogg) console.log(...m);
   };
 
   // remove '...' to show
-  // without 'selected' element
+  // only first element: logIn("funcName", ~~var~~)
   var logIn = (...mes) => {
     if (showLogg) console.group(...mes);
   };
@@ -246,7 +246,7 @@ if (true) {
   };
 
   // loggs subsystem 1
-  // 'restore-last-selected functions'
+  // ''
   var logg1 = (...m) => {
     if (showLogg1) console.log(...m);
   };
@@ -259,7 +259,7 @@ if (true) {
   };
 
   // loggs subsystem 2
-  // 'shared'
+  // ''
   var logg2 = (...m) => {
     if (showLogg2) console.log(...m);
   };
@@ -272,7 +272,7 @@ if (true) {
   };
 
   // loggs subsystem 3
-  // 'scroll'
+  // ''
   var logg3 = (...m) => {
     if (showLogg3) console.log(...m);
   };
@@ -285,7 +285,7 @@ if (true) {
   };
 
   // loggs subsystem 4
-  // 'expand/collapse functions'
+  // ''
   var logg4 = (...m) => {
     if (showLogg4) console.log(...m);
   };
@@ -298,7 +298,7 @@ if (true) {
   };
 
   // loggs subsystem 5
-  // 'change url search param'
+  // ''
   var logg5 = (...m) => {
     if (showLogg5) console.log(...m);
   };
@@ -311,7 +311,7 @@ if (true) {
   };
 
   // loggs subsystem 6
-  // 'breadcrumbs'
+  // ''
   var logg6 = (...m) => {
     if (showLogg6) console.log(...m);
   };
