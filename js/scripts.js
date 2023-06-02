@@ -703,9 +703,9 @@ const update = function () {
           console.log("s1.2.2");
           const splitTail = tail.split("\n");
           const notEmpty = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
-          console.log(notEmpty);
+          console.log("notEmpty =", notEmpty);
           stringToPreview = head + notEmpty;
-          console.log(stringToPreview);
+          console.log("stringToPreview =", stringToPreview);
           position.innerHTML = markdown(stringToPreview);
           variant = false;
         }
