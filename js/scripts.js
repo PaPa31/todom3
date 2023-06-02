@@ -702,9 +702,9 @@ const update = function () {
         } else {
           console.log("s1.2.2");
           const splitTail = tail.split("\n");
-          console.log(splitTail);
-          stringToPreview =
-            head + splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+          const notEmpty = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+          console.log(notEmpty);
+          stringToPreview = head + notEmpty;
           console.log(stringToPreview);
           position.innerHTML = markdown(stringToPreview);
           variant = false;
