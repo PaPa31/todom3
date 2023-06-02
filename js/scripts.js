@@ -571,6 +571,7 @@ const addLastChildClass = (el) => {
   //el.classList.add("last-child");
   const tagName = el.tagName.toLowerCase();
   if (variant) {
+    console.log("c1");
     switch (tagName) {
       case "code": {
         el.classList.add("last-child-rb");
@@ -581,6 +582,7 @@ const addLastChildClass = (el) => {
       }
     }
   } else {
+    console.log("c2");
     el.classList.add("last-child-lb");
     variant = true;
   }
@@ -648,9 +650,17 @@ const lastSeven = (el) => {
 //};
 
 const update = function () {
-  const head = input.selectionStart
-    ? input.value.substr(0, input.selectionStart)
-    : input.value.substr(0, 1);
+  //const head = input.selectionStart
+  //  ? input.value.substr(0, input.selectionStart)
+  //  : input.value.substr(0, 1);
+
+  let head = input.value.substr(0, input.selectionStart);
+  console.log("head.length =", head.length);
+
+  console.log("head =", head);
+  head = head.replace(/^\#+ *$/, "");
+
+  console.log("head =", head);
 
   output.value = head;
   output.scrollTop = output.scrollHeight;
@@ -675,6 +685,7 @@ const update = function () {
 
   let stringToPreview = "";
   if (head.length) {
+    console.log("s");
     //if (tailLastNewLine == 0) {
     //  stringToPreview = input.value;
     //} else {
@@ -731,6 +742,14 @@ const update = function () {
     }
     stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
     //}
+  } else {
+    console.log("s0");
+    const splitTail = tail.split("\n");
+    console.log(splitTail);
+    stringToPreview = splitTail[0];
+    console.log(stringToPreview);
+    position.innerHTML = markdown(stringToPreview);
+    variant = false;
   }
 
   if (variant) position.innerHTML = markdown(stringToPreview);
