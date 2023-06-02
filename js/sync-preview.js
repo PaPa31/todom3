@@ -92,18 +92,7 @@ const lastNewLine = function (str) {
   return caret;
 };
 
-const update = function () {
-  let head = input.value.substr(0, input.selectionStart);
-
-  head = head.replace(/(\n*) *#+ *$/, "$1");
-
-  console.log("head.length =", head.length);
-  console.log("last 2 head:", head.slice(-2) + ";;;");
-  //console.log("head=", head + ";;;");
-
-  output.value = head;
-  output.scrollTop = output.scrollHeight;
-
+const strToPreview = (head) => {
   const headLastNewLine = lastNewLine(head);
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
@@ -114,13 +103,13 @@ const update = function () {
   //console.log("first tail:", tail.charCodeAt());
 
   //console.log("last head:", head.slice(-1) + ";;;");
-  console.log("first 2 tail:", tail.slice(0, 2) + ";;;");
+  logg("first 2 tail:", tail.slice(0, 2) + ";;;");
 
   //console.log("tail=", tail + ";;;");
   //console.log("tail[1]=", tail[1] + ";;;");
 
-  console.log("headLastNewLine:", headLastNewLine);
-  console.log("tailLastNewLine:", tailLastNewLine);
+  logg("headLastNewLine:", headLastNewLine);
+  logg("tailLastNewLine:", tailLastNewLine);
 
   let stringToPreview = "";
   if (head.length) {
@@ -196,14 +185,30 @@ const update = function () {
   if (variant) position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
   //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
+};
+
+const syncPreview = function () {
+  logIn("0 update");
+  let head = input.value.substr(0, input.selectionStart);
+
+  head = head.replace(/(\n*) *#+ *$/, "$1");
+
+  logg("head.length =", head.length);
+  logg("last 2 head:", head.slice(-2) + ";;;");
+  //console.log("head=", head + ";;;");
+
+  output.value = head;
+  output.scrollTop = output.scrollHeight;
+
+  strToPreview(head);
 
   const scrollTop = position.scrollHeight;
   position.scrollTop = scrollTop;
   preview.scrollTop = position.scrollTop;
 };
 
-input.addEventListener("keyup", debounce(update, 150, false));
-input.addEventListener("mouseup", debounce(update, 150, false));
+input.addEventListener("keyup", debounce(syncPreview, 150, false));
+input.addEventListener("mouseup", debounce(syncPreview, 150, false));
 //position.addEventListener("scroll", debounce(update, 150, false));
 
 // loggs system
