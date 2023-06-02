@@ -1,11 +1,12 @@
 const addLastChildClass = (el) => {
+  logIn1("1 addLastChildClass", el);
   el.classList.remove("last-child");
   el.classList.remove("last-child-rb");
   el.classList.remove("last-child-lb");
   //el.classList.add("last-child");
   const tagName = el.tagName.toLowerCase();
   if (variant) {
-    console.log("c1");
+    logg1("rb & under");
     switch (tagName) {
       case "code": {
         el.classList.add("last-child-rb");
@@ -16,7 +17,7 @@ const addLastChildClass = (el) => {
       }
     }
   } else {
-    console.log("c2");
+    logg1("lb");
     el.classList.add("last-child-lb");
     variant = true;
   }
@@ -31,34 +32,31 @@ const addLastChildClass = (el) => {
 };
 
 const findLastChild = (child) => {
-  console.log("r2 child.nextElementSibling=", child.nextElementSibling);
+  logIn6("1 findLastChild", child);
   if (child.nextSibling && child.nextSibling.textContent != "\n") {
-    console.log(
-      "r2.1 child.nextSibling.textContent=",
+    logg6(
+      "findLastChild child.nextSibling.textContent=",
       child.nextSibling.textContent
     );
-    console.log(Array.from(child.parentElement.childNodes));
+    logg6(Array.from(child.parentElement.childNodes));
 
     //Array.from(document.querySelector("#title").childNodes).find(
     //  (n) => n.nodeType == Node.TEXT_NODE
     //).textContent;
 
     if (child.nextSibling.classList) {
-      console.log("r2.1.1");
       addLastChildClass(child.nextSibling);
     } else {
-      console.log("r2.1.2");
       addLastChildClass(child.parentElement);
     }
   } else {
-    console.log("r2.2");
     addLastChildClass(child);
   }
+  logOut6();
 };
 
 const lastChildRecursive = (child) => {
   if (child.lastElementChild) {
-    console.log("r1");
     lastChildRecursive(child.lastElementChild);
     return;
   } else {
@@ -78,21 +76,18 @@ const lastSeven = (el) => {
   }
 };
 
-const lastNewLine = function (str) {
-  logIn("1 lastNewLine", str);
-  let caret = str.length - 1;
-  const currentSymbolWidth = caret;
-  let sym = str[caret];
+const strToPreview = () => {
+  let head = input.value.substr(0, input.selectionStart);
+  head = head.replace(/(\n*) *#+ *$/, "$1");
+  logIn("1 strToPreview", "last 2 head:", head.slice(-2) + ";;;");
 
-  while (sym != "\n" && currentSymbolWidth - caret < 80 && caret > 0) {
-    caret--;
-    sym = str[caret];
-  }
-  logOut("caret=", caret);
-  return caret;
-};
+  //logg("head.length =", head.length);
+  //logg("last 2 head:", head.slice(-2) + ";;;");
+  //console.log("head=", head + ";;;");
 
-const strToPreview = (head) => {
+  output.value = head;
+  output.scrollTop = output.scrollHeight;
+
   const headLastNewLine = lastNewLine(head);
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
@@ -108,28 +103,26 @@ const strToPreview = (head) => {
   //console.log("tail=", tail + ";;;");
   //console.log("tail[1]=", tail[1] + ";;;");
 
-  logg("headLastNewLine:", headLastNewLine);
-  logg("tailLastNewLine:", tailLastNewLine);
+  //logg("headLastNewLine:", headLastNewLine);
+  //logg("tailLastNewLine:", tailLastNewLine);
 
   let stringToPreview = "";
   if (head.length) {
-    console.log("s");
     //if (tailLastNewLine == 0) {
     //  stringToPreview = input.value;
     //} else {
     if (head.slice(-2) == "\n\n") {
-      console.log("s1");
       stringToPreview = head;
       if (tailLastNewLine == 0) {
-        console.log("s1.1");
+        logg("s1.1");
         lastSeven(preview);
       } else {
-        console.log("s1.2");
+        logg("s1.2");
         if (tail[1] == "\n") {
-          console.log("s1.2.1");
+          logg("s1.2.1");
           lastSeven(preview);
         } else {
-          console.log("s1.2.2");
+          logg("s1.2.2");
           const splitTail = tail.split("\n");
           const notEmpty = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
           stringToPreview = head + notEmpty;
@@ -138,33 +131,32 @@ const strToPreview = (head) => {
         }
       }
     } else {
-      console.log("s2");
       if (tail == "\n") {
-        console.log("s2.1");
+        logg("s2.1");
         if (tailLastNewLine == 0) {
-          console.log("s2.1.1");
+          logg("s2.1.1");
           stringToPreview = head + "\n";
           lastSeven(preview);
         } else {
-          console.log("s2.1.2");
+          logg("s2.1.2");
         }
       } else {
-        console.log("s2.2");
+        logg("s2.2");
         if (tail[0] == "\n") {
-          console.log("s2.2.1");
+          logg("s2.2.1");
           stringToPreview = head + "\n";
           lastSeven(preview);
         } else {
-          console.log("s2.2.2");
+          logg("s2.2.2");
           stringToPreview = headLastNewLine == 0 ? head : head + "\n";
           lastSeven(preview);
         }
         //if (tail.slice(-2) == "\n\n") {
-        //  console.log("s2.2.1");
+        //  logg("s2.2.1");
         //  stringToPreview = head + "\n";
         //  lastSeven(preview);
         //} else {
-        //  console.log("s2.2.2");
+        //  logg("s2.2.2");
         //  stringToPreview = headLastNewLine == 0 ? head : head + "\n";
         //  lastSeven(preview);
         //}
@@ -173,11 +165,11 @@ const strToPreview = (head) => {
     stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
     //}
   } else {
-    console.log("s0");
+    logg("s0");
     const splitTail = tail.split("\n");
-    console.log(splitTail);
+    logg(splitTail);
     stringToPreview = splitTail[0];
-    console.log(stringToPreview);
+    logg(stringToPreview);
     position.innerHTML = markdown(stringToPreview);
     variant = false;
   }
@@ -185,23 +177,23 @@ const strToPreview = (head) => {
   if (variant) position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
   //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
+  logOut();
+};
+
+const lastNewLine = function (str) {
+  let caret = str.length - 1;
+  const currentSymbolWidth = caret;
+  let sym = str[caret];
+
+  while (sym != "\n" && currentSymbolWidth - caret < 80 && caret > 0) {
+    caret--;
+    sym = str[caret];
+  }
+  return caret;
 };
 
 const syncPreview = function () {
-  logIn("0 update");
-  let head = input.value.substr(0, input.selectionStart);
-
-  head = head.replace(/(\n*) *#+ *$/, "$1");
-
-  logg("head.length =", head.length);
-  logg("last 2 head:", head.slice(-2) + ";;;");
-  //console.log("head=", head + ";;;");
-
-  output.value = head;
-  output.scrollTop = output.scrollHeight;
-
-  strToPreview(head);
-
+  strToPreview();
   const scrollTop = position.scrollHeight;
   position.scrollTop = scrollTop;
   preview.scrollTop = position.scrollTop;
@@ -223,12 +215,12 @@ if (true) {
   // managing vars
   // change to show/hide output loggs
   var showLogg = true; // logg - 'sync-preview'
-  var showLogg1 = false; // logg1 -
+  var showLogg1 = true; // logg1 -
   var showLogg2 = false; // logg2 -
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
-  var showLogg6 = false; // logg6 -
+  var showLogg6 = true; // logg6 -
 
   // loggs subsystem 0
   // 'sync-preview'
