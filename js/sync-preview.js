@@ -154,11 +154,20 @@ const strToPreview = () => {
             lastSeven(preview);
           } else {
             if (head.slice(-1) === "\n") {
-              logg("s2.2.1.2.a");
-              stringToPreview = head + tail[1];
-              position.innerHTML = markdown(stringToPreview);
-              variant = false;
-              lastSeven(preview);
+              if (head.slice(-2) === "\\\n") {
+                logg("s2.2.1.2.a.1");
+                head = head.replace(/\\\n$/, "");
+                stringToPreview = head + "\\\n`\x001`";
+                position.innerHTML = markdown(stringToPreview);
+                variant = false;
+                lastSeven(preview);
+              } else {
+                logg("s2.2.1.2.a.2");
+                stringToPreview = head + tail[1];
+                position.innerHTML = markdown(stringToPreview);
+                variant = false;
+                lastSeven(preview);
+              }
             } else {
               logg("s2.2.1.2.b");
             }
