@@ -1,5 +1,6 @@
 const addLastChildClass = (el) => {
   logIn1("1 addLastChildClass", el);
+  position.classList.remove("last-child-lb");
   el.classList.remove("last-child");
   el.classList.remove("last-child-rb");
   el.classList.remove("last-child-lb");
@@ -216,11 +217,9 @@ const strToPreview = () => {
     stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
     //}
   } else {
+    // first position
     logg("s0");
-    const splitTail = tail.split("\n");
-    logg(splitTail);
-    stringToPreview = splitTail[0];
-    logg("stringToPreview=", stringToPreview);
+    stringToPreview = tail[0];
     position.innerHTML = markdown(stringToPreview);
     variant = false;
   }
