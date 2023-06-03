@@ -124,10 +124,23 @@ const strToPreview = () => {
           //lastSeven(preview);
         } else {
           logg("s1.2.2");
-          stringToPreview = head + tail[1];
+          //const splitTail = tail.split("\n");
+          //logg(splitTail);
+          //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+          //stringToPreview = head + stringToPreview;
+          //logg("stringToPreview=", stringToPreview);
+          //if (stringToPreview.length > 80) {
+          //logg("s1.2.2.i");
+          //head = head.replace(/\n*$/, "");
+          stringToPreview = head + tail.slice(0, 2) + " \x001";
           position.innerHTML = markdown(stringToPreview);
           variant = false;
           //lastSeven(preview);
+          //} else {
+          //  logg("s1.2.2.ii");
+          //  position.innerHTML = markdown(stringToPreview);
+          //  variant = false;
+          //}
         }
       }
     } else {
