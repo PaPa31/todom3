@@ -161,7 +161,7 @@ const strToPreview = () => {
           lastSeven(preview);
           if (tail.slice(0, 2) === "\n\n" && head.slice(-1) === "\n") {
             logg("s2.2.1.1");
-            head = head.replace(/\n*$/, "");
+            head = head.replace(/\\*\n*$/, "");
             stringToPreview = head + "\\\n`\x001`";
             position.innerHTML = markdown(stringToPreview);
             variant = false;
