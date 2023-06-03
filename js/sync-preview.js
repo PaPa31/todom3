@@ -154,7 +154,7 @@ const strToPreview = () => {
           const splitTail = tail.split("\n");
           logg(splitTail);
           stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
-          stringToPreview = stringToPreview.replace(/^(\#+).*/, "$1");
+          stringToPreview = stringToPreview.replace(/^(\#+)*.*/, "$1");
           logg("stringToPreview=", stringToPreview);
           stringToPreview = head + stringToPreview + " \x001";
           //logg("stringToPreview=", stringToPreview);
