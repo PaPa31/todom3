@@ -1,4 +1,4 @@
-let firstEmptyPosition = false;
+//let firstEmptyPosition = false;
 
 const addLastChildClass = (el) => {
   logIn1("1 addLastChildClass", el);
@@ -93,7 +93,8 @@ const lastSeven = (el) => {
 const strToPreview = () => {
   let head = input.value.substr(0, input.selectionStart);
   //let head2 = head;
-  //head = head.replace(/(\n*) *#+ *$/, "$1");
+  head = head.replace(/(\n*) *#+ *$/, "$1");
+  head = head.replace(/^[\n ]+/, "");
   logIn("1 strToPreview", "last 2 head:", head.slice(-2) + ";;;");
 
   //logg("head.length =", head.length);
@@ -230,7 +231,11 @@ const strToPreview = () => {
   } else {
     // first position
     logg("s0");
-    if (tail[0] === "\n") firstEmptyPosition = true;
+    //if (tail[0] === "\n") {
+    //  firstEmptyPosition = true;
+    //} else {
+    //  firstEmptyPosition = false;
+    //}
     //const splitTail = tail.split("\n");
     //logg(splitTail);
     //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
@@ -243,15 +248,24 @@ const strToPreview = () => {
     position.innerHTML = markdown(stringToPreview);
     variant = false;
     //lastSeven(preview);
-    const el0 = document.createElement("div");
-    el0.classList.add("first-child-lb");
-    el0.innerText = " \n";
-    !preview.firstChild.classList.contains("first-child-lb") &&
-      preview.insertBefore(el0, preview.firstChild);
+    //const el0 = document.createElement("div");
+    //el0.classList.add("first-child-lb");
+    //el0.innerText = " \n";
+    //!preview.firstChild.classList.contains("first-child-lb") &&
+    //  preview.insertBefore(el0, preview.firstChild);
+
+    //if (!firstEmptyPosition) {
+    //headAndTail = head + tail;
+    //logg(headAndTail);
+    //preview.innerHTML = markdown(headAndTail);
+    //preview.innerHTML = markdown(input.value);
+    //}
   }
 
   if (variant) position.innerHTML = markdown(stringToPreview);
-  if (!firstEmptyPosition) lastChildRecursive(position);
+  //if (!firstEmptyPosition)
+
+  lastChildRecursive(position);
   //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
   logOut();
 };
