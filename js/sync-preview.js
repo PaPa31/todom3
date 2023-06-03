@@ -83,7 +83,7 @@ const lastSeven = (el) => {
 const strToPreview = () => {
   let head = input.value.substr(0, input.selectionStart);
   head = head.replace(/(\n*) *#+ *$/, "$1");
-  logIn("1 strToPreview", "last 1 head:", head.slice(-1) + ";;;");
+  logIn("1 strToPreview", "last 2 head:", head.slice(-2) + ";;;");
 
   //logg("head.length =", head.length);
   //logg("last 2 head:", head.slice(-2) + ";;;");
@@ -102,7 +102,7 @@ const strToPreview = () => {
   //console.log("first tail:", tail.charCodeAt());
 
   //console.log("last head:", head.slice(-1) + ";;;");
-  logg("first 1 tail:", tail.slice(0, 1) + ";;;");
+  logg("first 2 tail:", tail.slice(0, 2) + ";;;");
 
   //console.log("tail=", tail + ";;;");
   //console.log("tail[1]=", tail[1] + ";;;");
@@ -143,6 +143,8 @@ const strToPreview = () => {
         }
       } else {
         if (tail[0] == "\n") {
+          stringToPreview = head + "\n";
+          lastSeven(preview);
           if (tail.slice(0, 2) === "\n\n" && head.slice(-1) === "\n") {
             logg("s2.2.1.1");
             head = head.replace(/\n*$/, "");
@@ -151,7 +153,7 @@ const strToPreview = () => {
             variant = false;
             lastSeven(preview);
           } else {
-            if (tail.slice(0, 1) === "\n" && head.slice(-1) === "\n") {
+            if (head.slice(-1) === "\n") {
               logg("s2.2.1.2.a");
               stringToPreview = head + tail[1];
               position.innerHTML = markdown(stringToPreview);
@@ -161,8 +163,6 @@ const strToPreview = () => {
               logg("s2.2.1.2.b");
             }
           }
-          stringToPreview = head + "\n";
-          lastSeven(preview);
         } else {
           logg("s2.2.2");
           stringToPreview = headLastNewLine == 0 ? head : head + "\n";
