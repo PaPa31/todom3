@@ -63,7 +63,7 @@ const findLastChild = (child) => {
       addLastChildClass(child.parentElement);
     }
   } else {
-    logg6("1.2 child =", child);
+    logg6("f1.2 child =", child);
     addLastChildClass(child);
   }
   logOut6();
@@ -95,6 +95,7 @@ const strToPreview = () => {
   //let head2 = head;
   head = head.replace(/(\n*) *#+ *$/, "$1");
   head = head.replace(/^[\n ]+/, "");
+
   logIn("1 strToPreview", "last 2 head:", head.slice(-2) + ";;;");
 
   //logg("head.length =", head.length);
@@ -140,6 +141,13 @@ const strToPreview = () => {
       } else {
         if (tail[1] == "\n") {
           logg("s1.2.1");
+          // two or more \n
+          //head = head.replace(/\\*\n*$/, "");
+          head = head.replace(/\n{2,}/, "\n");
+          logg("headDD =", head + ";;;;;");
+          stringToPreview = head + "\\\n`\x001`";
+          position.innerHTML = markdown(stringToPreview);
+          variant = false;
           //lastSeven(preview);
         } else {
           logg("s1.2.2");
