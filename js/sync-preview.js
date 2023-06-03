@@ -247,10 +247,15 @@ const strToPreview = () => {
     //} else {
     //  firstEmptyPosition = false;
     //}
+
     const splitTail = tail.split("\n");
     logg(splitTail);
-    stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
-    stringToPreview = stringToPreview.replace(/^(\#+)*.*/, "$1");
+    const firstString = splitTail.find((s) => {
+      if (s !== "") return s;
+    });
+    logg("firstString=", firstString);
+    //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+    stringToPreview = firstString.replace(/^(\#+)*.*/, "$1");
     //stringToPreview = head !== "" ? head : "\x001";
     stringToPreview = stringToPreview + " `\x001`";
     logg("stringToPreview=", stringToPreview);
