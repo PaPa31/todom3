@@ -201,6 +201,7 @@ const strToPreview = () => {
             variant = false;
             //lastSeven(preview);
           } else {
+            // without new line in the top
             if (head.slice(-1) === "\n") {
               if (head.slice(-2) === "\\\n") {
                 logg("s2.2.1.2.a.1");
