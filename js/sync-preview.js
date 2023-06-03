@@ -66,6 +66,7 @@ const findLastChild = (child) => {
     }
   } else {
     switch (child.tagName.toLowerCase()) {
+      case "a":
       case "code":
         if (child.parentElement.tagName.toLowerCase() !== "pre") {
           logg6("f1.2.a parent =", child.parentElement);
