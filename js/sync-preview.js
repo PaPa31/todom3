@@ -118,18 +118,16 @@ const strToPreview = () => {
     if (head.slice(-2) == "\n\n") {
       stringToPreview = head;
       if (tailLastNewLine == 0) {
-        logg("s1.1");
-        lastSeven(preview);
       } else {
         if (tail[1] == "\n") {
           logg("s1.2.1");
-          lastSeven(preview);
+          //lastSeven(preview);
         } else {
           logg("s1.2.2");
           stringToPreview = head + tail[1];
           position.innerHTML = markdown(stringToPreview);
           variant = false;
-          lastSeven(preview);
+          //lastSeven(preview);
         }
       }
     } else {
@@ -137,7 +135,7 @@ const strToPreview = () => {
         if (tailLastNewLine == 0) {
           logg("s2.1.1");
           stringToPreview = head + "\n";
-          lastSeven(preview);
+          //lastSeven(preview);
         } else {
           logg("s2.1.2");
         }
@@ -151,7 +149,7 @@ const strToPreview = () => {
             stringToPreview = head + "\\\n`\x001`";
             position.innerHTML = markdown(stringToPreview);
             variant = false;
-            lastSeven(preview);
+            //lastSeven(preview);
           } else {
             if (head.slice(-1) === "\n") {
               if (head.slice(-2) === "\\\n") {
@@ -160,13 +158,13 @@ const strToPreview = () => {
                 stringToPreview = head + "\\\n`\x001`";
                 position.innerHTML = markdown(stringToPreview);
                 variant = false;
-                lastSeven(preview);
+                //lastSeven(preview);
               } else {
                 logg("s2.2.1.2.a.2");
                 stringToPreview = head + tail[1];
                 position.innerHTML = markdown(stringToPreview);
                 variant = false;
-                lastSeven(preview);
+                //lastSeven(preview);
               }
             } else {
               logg("s2.2.1.2.b");
@@ -175,7 +173,7 @@ const strToPreview = () => {
         } else {
           logg("s2.2.2");
           stringToPreview = headLastNewLine == 0 ? head : head + "\n";
-          lastSeven(preview);
+          //lastSeven(preview);
         }
         //if (tail.slice(-2) == "\n\n") {
         //  logg("s2.2.1");
