@@ -236,7 +236,7 @@ const strToPreview = () => {
               } else {
                 // first pos in block after Header
                 logg("s2.2.1.2.a.2");
-                stringToPreview = head + tail[1];
+                stringToPreview = head + tail[0];
                 position.innerHTML = markdown(stringToPreview);
                 variant = false;
                 //lastSeven(preview);
