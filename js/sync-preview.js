@@ -1,36 +1,42 @@
+let firstPosition = false;
+
 const addLastChildClass = (el) => {
   logIn1("1 addLastChildClass", el);
-  position.classList.remove("last-child-lb");
-  el.classList.remove("last-child");
-  el.classList.remove("last-child-rb");
-  el.classList.remove("last-child-lb");
-  //el.classList.add("last-child");
-  const tagName = el.tagName.toLowerCase();
-  if (variant) {
-    switch (tagName) {
-      case "code": {
-        logg1("rb");
-        el.classList.add("last-child-rb");
-        break;
-      }
-      default: {
-        logg1("underline");
-        el.classList.add("last-child");
-      }
-    }
+  if (firstPosition) {
   } else {
-    logg1("lb");
-    el.classList.add("last-child-lb");
-    variant = true;
+    preview.firstChild.classList.remove("first-child-lb");
+    position.classList.remove("last-child-lb");
+    el.classList.remove("last-child");
+    el.classList.remove("last-child-rb");
+    el.classList.remove("last-child-lb");
+    //el.classList.add("last-child");
+    const tagName = el.tagName.toLowerCase();
+    if (variant) {
+      switch (tagName) {
+        case "code": {
+          logg1("rb");
+          el.classList.add("last-child-rb");
+          break;
+        }
+        default: {
+          logg1("underline");
+          el.classList.add("last-child");
+        }
+      }
+    } else {
+      logg1("lb");
+      el.classList.add("last-child-lb");
+      variant = true;
+    }
+    //if (
+    //  el.tagName.toLowerCase() === "p" &&
+    //  el.parentElement.tagName.toLowerCase() === "li"
+    //) {
+    //  el.parentElement.classList.add("last-child");
+    //} else {
+    //  el.classList.add("last-child");
+    //}
   }
-  //if (
-  //  el.tagName.toLowerCase() === "p" &&
-  //  el.parentElement.tagName.toLowerCase() === "li"
-  //) {
-  //  el.parentElement.classList.add("last-child");
-  //} else {
-  //  el.classList.add("last-child");
-  //}
   logOut1();
 };
 
@@ -87,7 +93,8 @@ const lastSeven = (el) => {
 
 const strToPreview = () => {
   let head = input.value.substr(0, input.selectionStart);
-  head = head.replace(/(\n*) *#+ *$/, "$1");
+  //let head2 = head;
+  //head = head.replace(/(\n*) *#+ *$/, "$1");
   logIn("1 strToPreview", "last 2 head:", head.slice(-2) + ";;;");
 
   //logg("head.length =", head.length);
@@ -117,6 +124,7 @@ const strToPreview = () => {
 
   let stringToPreview = "";
   if (head.length) {
+    firstPosition = false;
     //if (tailLastNewLine == 0) {
     //  stringToPreview = input.value;
     //} else {
@@ -223,16 +231,23 @@ const strToPreview = () => {
   } else {
     // first position
     logg("s0");
-    const splitTail = tail.split("\n");
-    logg(splitTail);
-    stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
-    stringToPreview = stringToPreview.replace(/^(\#+).*/, "$1");
-    stringToPreview = "`\x001`\\\n" + stringToPreview;
+    firstPosition = true;
+    //const splitTail = tail.split("\n");
+    //logg(splitTail);
+    //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+    //stringToPreview = stringToPreview.replace(/^(\#+)*.*/, "$1");
+    stringToPreview = head !== "" ? head : "\x001";
+    //stringToPreview = "`\x001`\\\n" + stringToPreview;
     logg("stringToPreview=", stringToPreview);
 
     //stringToPreview = tail[0];
     position.innerHTML = markdown(stringToPreview);
     variant = false;
+    //lastSeven(preview);
+    const el0 = document.createElement("div");
+    el0.classList.add("first-child-lb");
+    el0.innerText = " \n";
+    preview.insertBefore(el0, preview.firstChild);
   }
 
   if (variant) position.innerHTML = markdown(stringToPreview);

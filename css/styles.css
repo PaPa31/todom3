@@ -1088,6 +1088,11 @@ textarea:active {
   border-radius: 0 !important;
 }
 
+.first-child-lb {
+  border-left: 1px solid red !important;
+  border-radius: 0 !important;
+}
+
 #output {
   opacity: 0;
   /*color: red;*/
