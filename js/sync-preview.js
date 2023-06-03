@@ -153,14 +153,28 @@ const strToPreview = () => {
           variant = false;
           //lastSeven(preview);
         } else {
-          logg("s1.2.2");
           //const splitTail = tail.split("\n");
           //logg(splitTail);
           //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
           //stringToPreview = stringToPreview.replace(/^(\#+)*.*/, "$1");
           //logg("stringToPreview=", stringToPreview);
           //stringToPreview = head + stringToPreview + " \x001";
-          stringToPreview = head + " \x001";
+          if (head.slice(-2) === "\n\n") {
+            logg("s1.2.2_1");
+            const splitTail = tail.split("\n");
+            logg(splitTail);
+            const firstString = splitTail.find((s) => {
+              if (s !== "") return s;
+            });
+            logg("firstString=", firstString);
+            stringToPreview = firstString.replace(/^(\#+)*.*/, "$1");
+            logg("stringToPreview=", stringToPreview);
+            stringToPreview = head + stringToPreview + " \x001";
+          } else {
+            logg("s1.2.2_2");
+            stringToPreview = head + " \x001";
+          }
+
           //logg("stringToPreview=", stringToPreview);
           //if (stringToPreview.length > 80) {
           //logg("s1.2.2.i");
