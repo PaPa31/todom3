@@ -65,15 +65,17 @@ const findLastChild = (child) => {
       addLastChildClass(child.parentElement);
     }
   } else {
-    if (
-      child.tagName.toLowerCase() === "code" &&
-      child.parentElement.tagName.toLowerCase() !== "pre"
-    ) {
-      logg6("f1.2.a parent =", child.parentElement);
-      addLastChildClass(child.parentElement);
-    } else {
-      logg6("f1.2.b child =", child);
-      addLastChildClass(child);
+    switch (child.tagName.toLowerCase()) {
+      case "code":
+        if (child.parentElement.tagName.toLowerCase() !== "pre") {
+          logg6("f1.2.a parent =", child.parentElement);
+          addLastChildClass(child.parentElement);
+          break;
+        }
+      default: {
+        logg6("f1.2.b child =", child);
+        addLastChildClass(child);
+      }
     }
   }
   logOut6();
