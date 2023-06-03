@@ -118,6 +118,12 @@ const strToPreview = () => {
     if (head.slice(-2) == "\n\n") {
       stringToPreview = head;
       if (tailLastNewLine == 0) {
+        logg("s1.2.0");
+        // add second and more new line
+        stringToPreview = head + "\\\n`\x001`";
+        position.innerHTML = markdown(stringToPreview);
+        variant = false;
+        lastSeven(preview);
       } else {
         if (tail[1] == "\n") {
           logg("s1.2.1");
