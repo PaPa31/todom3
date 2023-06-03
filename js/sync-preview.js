@@ -134,7 +134,10 @@ const strToPreview = () => {
       if (tailLastNewLine == 0) {
         logg("s1.2.0");
         // add second and more new line
+        head = head.replace(/\n+$/, "");
+        logg("headDD =", head + ";;;;;");
         stringToPreview = head + "\\\n`\x001`";
+
         position.innerHTML = markdown(stringToPreview);
         variant = false;
         lastSeven(preview);
