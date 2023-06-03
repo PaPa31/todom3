@@ -124,15 +124,18 @@ const strToPreview = () => {
           //lastSeven(preview);
         } else {
           logg("s1.2.2");
-          //const splitTail = tail.split("\n");
-          //logg(splitTail);
-          //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
-          //stringToPreview = head + stringToPreview;
+          const splitTail = tail.split("\n");
+          logg(splitTail);
+          stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+          stringToPreview = stringToPreview.replace(/^(\#+).*/, "$1");
+          logg("stringToPreview=", stringToPreview);
+          stringToPreview = head + stringToPreview + " \x001";
           //logg("stringToPreview=", stringToPreview);
           //if (stringToPreview.length > 80) {
           //logg("s1.2.2.i");
           //head = head.replace(/\n*$/, "");
-          stringToPreview = head + tail.slice(0, 2) + " \x001";
+          //stringToPreview = head + tail.slice(0, 2) + " \x001";
+
           position.innerHTML = markdown(stringToPreview);
           variant = false;
           //lastSeven(preview);
