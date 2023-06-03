@@ -76,7 +76,7 @@ const lastSeven = (el) => {
     elHTML = preview.lastElementChild;
   }
   if (elHTML.innerHTML.slice(-7) !== ">&nbsp;") {
-    //elHTML.innerHTML += "<br/>&nbsp;";
+    elHTML.innerHTML += "<br/>&nbsp;";
   }
 };
 
@@ -150,8 +150,11 @@ const strToPreview = () => {
       if (tail == "\n") {
         if (tailLastNewLine == 0) {
           logg("s2.1.1");
-          stringToPreview = head + "\n";
-          //lastSeven(preview);
+          // add new line
+          stringToPreview = head + "\\\n`\x001`";
+          position.innerHTML = markdown(stringToPreview);
+          variant = false;
+          lastSeven(preview);
         } else {
           logg("s2.1.2");
         }
