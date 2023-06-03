@@ -223,9 +223,22 @@ const strToPreview = () => {
           }
         } else {
           // last position after text block
-          logg("s2.2.2");
-          stringToPreview = headLastNewLine == 0 ? head : head + "\n";
-          //lastSeven(preview);
+
+          if (head.slice(-1) === "\n") {
+            // empty line after Header
+            logg("s2.2.2.a");
+            head = head.replace(/\\*\n*$/, "");
+            logg("headDD after =", head + ";;;;;");
+            stringToPreview = head + "\\\n`\x001`";
+            position.innerHTML = markdown(stringToPreview);
+            variant = false;
+            //stringToPreview = headLastNewLine == 0 ? head : head + "\n";
+            //lastSeven(preview);
+          } else {
+            // inside text block
+            logg("s2.2.2.b");
+            stringToPreview = head + "\n";
+          }
         }
         //if (tail.slice(-2) == "\n\n") {
         //  logg("s2.2.1");
