@@ -217,8 +217,6 @@ const strToPreview = () => {
         }
       } else {
         if (tail[0] == "\n") {
-          stringToPreview = head + "\n";
-          //lastSeven(preview);
           if (tail.slice(0, 2) === "\n\n" && head.slice(-1) === "\n") {
             logg("s2.2.1.1");
             head = head.replace(/\\*\n*$/, "");
@@ -249,6 +247,11 @@ const strToPreview = () => {
               // inside text block
               // header names
               logg("s2.2.1.2.b");
+              stringToPreview = head + tail[0];
+              // TODO add check to split lb from uderline
+              //position.innerHTML = markdown(stringToPreview);
+              //variant = false;
+              //lastSeven(preview);
             }
           }
         } else {
