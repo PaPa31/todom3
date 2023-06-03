@@ -1,42 +1,41 @@
-let firstPosition = false;
+let firstEmptyPosition = false;
 
 const addLastChildClass = (el) => {
   logIn1("1 addLastChildClass", el);
-  if (firstPosition) {
-  } else {
-    preview.firstChild.classList.remove("first-child-lb");
-    position.classList.remove("last-child-lb");
-    el.classList.remove("last-child");
-    el.classList.remove("last-child-rb");
-    el.classList.remove("last-child-lb");
-    //el.classList.add("last-child");
-    const tagName = el.tagName.toLowerCase();
-    if (variant) {
-      switch (tagName) {
-        case "code": {
-          logg1("rb");
-          el.classList.add("last-child-rb");
-          break;
-        }
-        default: {
-          logg1("underline");
-          el.classList.add("last-child");
-        }
+  preview.firstChild.classList.contains("first-child-lb") &&
+    preview.removeChild(preview.firstElementChild);
+  //preview.firstChild.classList.remove("first-child-lb");
+  position.classList.remove("last-child-lb");
+  el.classList.remove("last-child");
+  el.classList.remove("last-child-rb");
+  el.classList.remove("last-child-lb");
+  //el.classList.add("last-child");
+  const tagName = el.tagName.toLowerCase();
+  if (variant) {
+    switch (tagName) {
+      case "code": {
+        logg1("rb");
+        el.classList.add("last-child-rb");
+        break;
       }
-    } else {
-      logg1("lb");
-      el.classList.add("last-child-lb");
-      variant = true;
+      default: {
+        logg1("underline");
+        el.classList.add("last-child");
+      }
     }
-    //if (
-    //  el.tagName.toLowerCase() === "p" &&
-    //  el.parentElement.tagName.toLowerCase() === "li"
-    //) {
-    //  el.parentElement.classList.add("last-child");
-    //} else {
-    //  el.classList.add("last-child");
-    //}
+  } else {
+    logg1("lb");
+    el.classList.add("last-child-lb");
+    variant = true;
   }
+  //if (
+  //  el.tagName.toLowerCase() === "p" &&
+  //  el.parentElement.tagName.toLowerCase() === "li"
+  //) {
+  //  el.parentElement.classList.add("last-child");
+  //} else {
+  //  el.classList.add("last-child");
+  //}
   logOut1();
 };
 
@@ -124,7 +123,7 @@ const strToPreview = () => {
 
   let stringToPreview = "";
   if (head.length) {
-    firstPosition = false;
+    firstEmptyPosition = false;
     //if (tailLastNewLine == 0) {
     //  stringToPreview = input.value;
     //} else {
@@ -231,7 +230,7 @@ const strToPreview = () => {
   } else {
     // first position
     logg("s0");
-    firstPosition = true;
+    if (tail[0] === "\n") firstEmptyPosition = true;
     //const splitTail = tail.split("\n");
     //logg(splitTail);
     //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
@@ -247,11 +246,12 @@ const strToPreview = () => {
     const el0 = document.createElement("div");
     el0.classList.add("first-child-lb");
     el0.innerText = " \n";
-    preview.insertBefore(el0, preview.firstChild);
+    !preview.firstChild.classList.contains("first-child-lb") &&
+      preview.insertBefore(el0, preview.firstChild);
   }
 
   if (variant) position.innerHTML = markdown(stringToPreview);
-  lastChildRecursive(position);
+  if (!firstEmptyPosition) lastChildRecursive(position);
   //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
   logOut();
 };
