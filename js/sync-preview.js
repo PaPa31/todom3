@@ -38,7 +38,7 @@ const findLastChild = (child) => {
   logIn6("1 findLastChild", child);
   if (child.nextSibling && child.nextSibling.textContent != "\n") {
     logg6(
-      "1.1",
+      "f1.1",
       "child.nextSibling.textContent=",
       child.nextSibling.textContent
     );
@@ -49,12 +49,16 @@ const findLastChild = (child) => {
     //).textContent;
 
     if (child.nextSibling.classList) {
+      logg6("f1.1.1", "next sibling is block");
+      logg6("nextSibling = ", child.nextSibling);
       addLastChildClass(child.nextSibling);
     } else {
+      logg6("f1.1.2", "next sibling is text");
+      logg6("parent = ", child.parentElement);
       addLastChildClass(child.parentElement);
     }
   } else {
-    logg6("1.2");
+    logg6("1.2 child =", child);
     addLastChildClass(child);
   }
   logOut6();
@@ -219,7 +223,14 @@ const strToPreview = () => {
   } else {
     // first position
     logg("s0");
-    stringToPreview = tail[0];
+    const splitTail = tail.split("\n");
+    logg(splitTail);
+    stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+    stringToPreview = stringToPreview.replace(/^(\#+).*/, "$1");
+    stringToPreview = "`\x001`\\\n" + stringToPreview;
+    logg("stringToPreview=", stringToPreview);
+
+    //stringToPreview = tail[0];
     position.innerHTML = markdown(stringToPreview);
     variant = false;
   }
@@ -265,12 +276,12 @@ if (true) {
   // managing vars
   // change to show/hide output loggs
   var showLogg = true; // logg - 'sync-preview'
-  var showLogg1 = true; // logg1 -
+  var showLogg1 = true; // logg1 - 'lb, rb, or underline'
   var showLogg2 = false; // logg2 -
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
-  var showLogg6 = false; // logg6 -
+  var showLogg6 = true; // logg6 -
 
   // loggs subsystem 0
   // 'sync-preview'
@@ -288,7 +299,7 @@ if (true) {
   };
 
   // loggs subsystem 1
-  // ''
+  // 'lb, rb, or underline'
   var logg1 = (...m) => {
     if (showLogg1) console.log(...m);
   };
