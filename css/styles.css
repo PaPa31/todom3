@@ -1114,10 +1114,10 @@ code {
   width: 200px;
 }
 
-*:is(h1, h2, h3, h4, h5, h6) + p :first-child.last-child-lb {
+/**:is(h1, h2, h3, h4, h5, h6) + p :first-child.last-child-lb {
   margin-top: -1.3rem;
   display: block;
-}
+}*/
 
 @media (min-width: 600px) {
   .flex-small {
