@@ -160,6 +160,7 @@ const strToPreview = () => {
           //logg("stringToPreview=", stringToPreview);
           //stringToPreview = head + stringToPreview + " \x001";
           if (head.slice(-2) === "\n\n") {
+            // headers first # pos
             logg("s1.2.2_1");
             const splitTail = tail.split("\n");
             logg(splitTail);
@@ -235,6 +236,7 @@ const strToPreview = () => {
             } else {
               // last position after code block
               // inside text block
+              // header names
               logg("s2.2.1.2.b");
             }
           }
