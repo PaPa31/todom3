@@ -14,9 +14,11 @@ const addLastChildClass = (el) => {
   if (variant) {
     switch (tagName) {
       case "code": {
-        logg1("rb");
-        el.classList.add("last-child-rb");
-        break;
+        if (el.parentElement.tagName.toLowerCase() === "pre") {
+          logg1("rb");
+          el.classList.add("last-child-rb");
+          break;
+        }
       }
       default: {
         logg1("underline");
@@ -63,8 +65,16 @@ const findLastChild = (child) => {
       addLastChildClass(child.parentElement);
     }
   } else {
-    logg6("f1.2 child =", child);
-    addLastChildClass(child);
+    if (
+      child.tagName.toLowerCase() === "code" &&
+      child.parentElement.tagName.toLowerCase() !== "pre"
+    ) {
+      logg6("f1.2.a parent =", child.parentElement);
+      addLastChildClass(child.parentElement);
+    } else {
+      logg6("f1.2.b child =", child);
+      addLastChildClass(child);
+    }
   }
   logOut6();
 };
