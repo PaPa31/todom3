@@ -143,7 +143,24 @@ const strToPreview = () => {
         }
       } else {
         if (tail[0] == "\n") {
-          logg("s2.2.1");
+          if (tail.slice(0, 2) === "\n\n" && head.slice(-1) === "\n") {
+            logg("s2.2.1.1");
+            head = head.replace(/\n*$/, "");
+            stringToPreview = head + "\\\n`\x001`";
+            position.innerHTML = markdown(stringToPreview);
+            variant = false;
+            lastSeven(preview);
+          } else {
+            if (tail.slice(0, 1) === "\n" && head.slice(-1) === "\n") {
+              logg("s2.2.1.2.a");
+              stringToPreview = head + tail[1];
+              position.innerHTML = markdown(stringToPreview);
+              variant = false;
+              lastSeven(preview);
+            } else {
+              logg("s2.2.1.2.b");
+            }
+          }
           stringToPreview = head + "\n";
           lastSeven(preview);
         } else {
