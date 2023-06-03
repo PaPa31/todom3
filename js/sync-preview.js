@@ -210,6 +210,7 @@ const strToPreview = () => {
                 variant = false;
                 //lastSeven(preview);
               } else {
+                // first pos in block after Header
                 logg("s2.2.1.2.a.2");
                 stringToPreview = head + tail[1];
                 position.innerHTML = markdown(stringToPreview);
@@ -218,6 +219,7 @@ const strToPreview = () => {
               }
             } else {
               // last position after code block
+              // inside text block
               logg("s2.2.1.2.b");
             }
           }
