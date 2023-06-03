@@ -192,10 +192,12 @@ const strToPreview = () => {
                 //lastSeven(preview);
               }
             } else {
+              // last position after code block
               logg("s2.2.1.2.b");
             }
           }
         } else {
+          // last position after text block
           logg("s2.2.2");
           stringToPreview = headLastNewLine == 0 ? head : head + "\n";
           //lastSeven(preview);
