@@ -29,6 +29,8 @@
 
   --bg-item: #eee;
   --bg-item-dark: #333;
+  --bg-item-transparent: #eeeeee00;
+  --bg-item-dark-transparent: #33333300;
 
   --bg-selection: #9ebfea;
   --bg-selection-dark: #783c42;
@@ -300,7 +302,6 @@ blockquote {
 .md-item,
 .file-text,
 #unit-control,
-#preview,
 #position {
   width: 100%;
   float: left;
@@ -312,10 +313,18 @@ blockquote {
 }
 
 .dark .md-item,
-.dark .file-text,
-.dark #preview {
+.dark .file-text {
   color: var(--color-dark);
   background-color: var(--bg-item-dark);
+}
+
+#preview {
+  background-color: var(--bg-item-transparent);
+}
+
+.dark #preview {
+  color: var(--color-dark);
+  background-color: var(--bg-item-dark-transparent);
 }
 
 .markdown-body > ol > li {
@@ -1007,13 +1016,21 @@ textarea:active {
   scroll-behavior: smooth;
   max-height: 160px;
   overflow: hidden;
+  overflow-y: scroll;
+  padding: 10px;
 }
 
 #position {
   width: 678px;
   background-color: transparent;
+  background-color: var(--bg-item);
   color: transparent;
   overflow: hidden;
+  z-index: -1;
+}
+
+.dark #position {
+  background-color: var(--bg-item-dark);
 }
 
 #position * {
@@ -1146,6 +1163,9 @@ code {
     */
     /*max-height: 242.5px;*/
     /*margin-top: -242.5px;*/
+
+    margin-top: -301px;
+    max-height: 301px;
   }
   .container > .flex-row > .flex-small:first-child {
     padding-right: 10px;
