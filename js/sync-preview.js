@@ -138,7 +138,7 @@ const whatString = ({
   //let before = "";
   //let after = "";
 
-  if (endHead === 0) {
+  if (headLastNewLine < 0) {
     logg("<----------------- first line ----------------->");
     if (head === "") {
       logg("<------- 0 position or empty newline(s) ------->");
@@ -150,7 +150,7 @@ const whatString = ({
     }
     //endStr = _string.replace();
   } else {
-    logg("<------- not first line ------->");
+    logg("<----------------- not first line ----------------->");
     if (head.slice(-1) === "\n") {
       logg("<--< 1 pos >-->");
       if (tail[1] === "\n") {
