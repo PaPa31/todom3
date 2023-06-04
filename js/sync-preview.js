@@ -5,7 +5,7 @@ const whatClass = (el) => {
   preview.firstChild.classList.contains("first-child-lb") &&
     preview.removeChild(preview.firstElementChild);
   //preview.firstChild.classList.remove("first-child-lb");
-  position.classList.remove("last-child");
+  position.classList.remove("last-child", "last-child-lb");
   el.classList.remove("last-child");
   el.classList.remove("last-child-rb");
   el.classList.remove("last-child-lb");
@@ -139,24 +139,45 @@ const whatString = ({
 
   if (endHead === 0) {
     if (head === "") {
+      logg("<-- 0 position or empty newline(s) -->");
       stringToPreview = _string;
       variant = false;
     } else {
+      logg("<-- first line -->");
       stringToPreview = head;
     }
     //endStr = _string.replace();
   } else {
-    switch (_string) {
+    logg("<-- not first line -->");
+    if (head.slice(-1) === "\n") {
+      logg("<- 1 pos ->");
+      logg(JSON.stringify(head));
+      head = head.replace(/\n+$/, "");
+      logg(JSON.stringify(head));
+      stringToPreview = head + "\\\n`\x001`";
+      variant = false;
+    } else {
+      logg("<- not 1 pos ->");
+      stringToPreview = head;
+    }
+    switch (tail[1]) {
+      case "\n": {
+        logg("<- newline(s) before next character->");
+        stringToPreview = "";
+        variant = false;
+        break;
+      }
     }
   }
+  logg("stringToPreview:", JSON.stringify(stringToPreview));
   logOut();
   return stringToPreview;
 };
 
 const headAndTail = () => {
   let head = input.value.substr(0, input.selectionStart);
-  head = head.replace(/(\n*) *#+ *$/, "$1");
-  head = head.replace(/^[\n ]+/, "");
+  //head = head.replace(/(\n*) *#+ *$/, "$1");
+  //head = head.replace(/^[\n ]+/, "");
 
   output.value = head;
   output.scrollTop = output.scrollHeight;
