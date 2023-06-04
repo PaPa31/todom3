@@ -233,7 +233,18 @@ const strToPreview = () => {
               } else {
                 // first pos in block after Header
                 logg("s2.2.1.2.a.2");
-                stringToPreview = head + tail[0];
+                //stringToPreview = head + tail[0];
+
+                const splitTail = tail.split("\n");
+                logg(splitTail);
+                const firstString = splitTail.find((s) => {
+                  if (s !== "") return s;
+                });
+                logg("firstString=", firstString);
+                stringToPreview = firstString.replace(/^([\#\d]+)*\.*.*/, "$1");
+                logg("stringToPreview=", stringToPreview);
+                stringToPreview = head + stringToPreview + " \x001";
+
                 position.innerHTML = markdown(stringToPreview);
                 variant = false;
                 //lastSeven(preview);
