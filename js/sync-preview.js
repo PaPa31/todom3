@@ -172,13 +172,14 @@ const whatString = ({
         const initialHead = head;
         head = head.replace(/#+ *$/, "");
         head = head.replace(/\d+\. *$/, "");
+        head = head.replace(/\> *$/, "");
 
         if (initialHead !== head) {
-          logg("< spec-symbols in head of line >");
+          logg("<   spec-symbols   >");
           stringToPreview = head + _string;
           variant = false;
         } else {
-          logg("< not spec-symbols in head of line >");
+          logg("<   not spec-symbols   >");
           stringToPreview = initialHead;
         }
         //const lastHead = head.slice(-1);
