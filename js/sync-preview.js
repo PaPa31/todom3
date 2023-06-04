@@ -139,35 +139,42 @@ const whatString = ({
 
   if (endHead === 0) {
     if (head === "") {
-      logg("<-- 0 position or empty newline(s) -->");
+      logg("<------- 0 position or empty newline(s) ------->");
       stringToPreview = _string;
       variant = false;
     } else {
-      logg("<-- first line -->");
+      logg("<------- first line ------->");
       stringToPreview = head;
     }
     //endStr = _string.replace();
   } else {
-    logg("<-- not first line -->");
+    logg("<------- not first line ------->");
     if (head.slice(-1) === "\n") {
-      logg("<- 1 pos ->");
-      logg(JSON.stringify(head));
-      head = head.replace(/\n+$/, "");
-      logg(JSON.stringify(head));
-      stringToPreview = head + "\\\n`\x001`";
-      variant = false;
+      logg("<--< 1 pos >-->");
+      if (tail[1] === "\n") {
+        logg("<- empty 1 pos ->");
+        logg(JSON.stringify(head));
+        head = head.replace(/\n+$/, "");
+        logg(JSON.stringify(head));
+        stringToPreview = head + "\\\n<span>1</span>";
+        variant = false;
+      } else {
+        logg("<- not empty 1 pos ->");
+        stringToPreview = head + tail[1];
+        variant = false;
+      }
     } else {
-      logg("<- not 1 pos ->");
+      logg("<--< not 1 pos >-->");
       stringToPreview = head;
     }
-    switch (tail[1]) {
-      case "\n": {
-        logg("<- newline(s) before next character->");
-        stringToPreview = "";
-        variant = false;
-        break;
-      }
-    }
+    //switch (tail[1]) {
+    //  case "\n": {
+    //    logg("<- newline(s) before next character->");
+    //    stringToPreview = "";
+    //    variant = false;
+    //    break;
+    //  }
+    //}
   }
   logg("stringToPreview:", JSON.stringify(stringToPreview));
   logOut();
@@ -442,7 +449,7 @@ if (true) {
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
-  var showLogg6 = false; // logg6 - 'whatElement'
+  var showLogg6 = true; // logg6 - 'whatElement'
 
   // loggs subsystem 0
   // 'headAndTail'
