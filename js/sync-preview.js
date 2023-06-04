@@ -118,9 +118,9 @@ const whatString = ({ head, tail }) => {
   const t7 = tail.slice(0, 7);
   const _string = firstStr(tail);
 
-  logg("last head 7:", h7 + ";;;");
-  logg("first tail 7:", t7 + ";;;");
-  logg("firstString =", _string);
+  logg("last head 7:", JSON.stringify(h7));
+  logg("first tail 7:", JSON.stringify(t7));
+  logg("firstString =", '"' + _string + '"');
   let stringToPreview = "";
 
   //switch (_string) {
