@@ -1009,7 +1009,6 @@ textarea:active {
   scroll-behavior: smooth;
   max-height: 160px;
   overflow: hidden;
-  padding: 10px;
 }
 
 #position {
