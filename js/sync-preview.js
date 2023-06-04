@@ -130,20 +130,33 @@ const whatString = ({
   logg("last head 7:", JSON.stringify(h7));
   logg("first tail 7:", JSON.stringify(t7));
   logg("firstString =", '"' + _string + '"');
-  //tail = tail.replace(/^\n(.*)/, "$1");
-  //logg("tail without first \n if any:", tail);
-  let stringToPreview = head;
 
-  //switch (_string) {
-  //}
+  let stringToPreview = "";
+  let endStr = "";
+  //let currentCharacter = head.slice(-1);
+  //let before = "";
+  //let after = "";
+
+  if (endHead === 0) {
+    if (head === "") {
+      stringToPreview = _string;
+      variant = false;
+    } else {
+      stringToPreview = head;
+    }
+    //endStr = _string.replace();
+  } else {
+    switch (_string) {
+    }
+  }
   logOut();
   return stringToPreview;
 };
 
 const headAndTail = () => {
   let head = input.value.substr(0, input.selectionStart);
-  //head = head.replace(/(\n*) *#+ *$/, "$1");
-  //head = head.replace(/^[\n ]+/, "");
+  head = head.replace(/(\n*) *#+ *$/, "$1");
+  head = head.replace(/^[\n ]+/, "");
 
   output.value = head;
   output.scrollTop = output.scrollHeight;
