@@ -138,12 +138,13 @@ const whatString = ({
   //let after = "";
 
   if (endHead === 0) {
+    logg("<----------------- first line ----------------->");
     if (head === "") {
       logg("<------- 0 position or empty newline(s) ------->");
       stringToPreview = _string;
       variant = false;
     } else {
-      logg("<------- first line ------->");
+      logg("<------- 0> pos ------->");
       stringToPreview = head;
     }
     //endStr = _string.replace();
