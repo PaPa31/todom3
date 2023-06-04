@@ -2,7 +2,8 @@
 
 const whatClass = (el) => {
   logIn1("whatClass", el);
-  preview.firstChild.classList.contains("first-child-lb") &&
+  preview.firstChild &&
+    preview.firstChild.classList.contains("first-child-lb") &&
     preview.removeChild(preview.firstElementChild);
   //preview.firstChild.classList.remove("first-child-lb");
   position.classList.remove("last-child", "last-child-lb");
@@ -122,14 +123,14 @@ const whatString = ({
 
   const h7 = head.slice(-7);
   const t7 = tail.slice(0, 7);
-  const _string = firstStr(tail);
+  const _string = tail && firstStr(tail);
 
   logg("endHead =", endHead);
   logg("headLastNewLine:", headLastNewLine);
   logg("tailLastNewLine:", tailLastNewLine);
   logg("last head 7:", JSON.stringify(h7));
   logg("first tail 7:", JSON.stringify(t7));
-  logg("firstString =", '"' + _string + '"');
+  logg("firstString :", '"' + _string + '"');
 
   let stringToPreview = "";
   let endStr = "";
@@ -146,6 +147,7 @@ const whatString = ({
     } else {
       logg("<------- 0> pos ------->");
       stringToPreview = head;
+      variant = false;
     }
     //endStr = _string.replace();
   } else {
@@ -168,18 +170,13 @@ const whatString = ({
       logg("<--< not 1 pos >-->");
       stringToPreview = head;
     }
-    //switch (tail[1]) {
-    //  case "\n": {
-    //    logg("<- newline(s) before next character->");
-    //    stringToPreview = "";
-    //    variant = false;
-    //    break;
-    //  }
-    //}
   }
+
   logg("stringToPreview:", JSON.stringify(stringToPreview));
+  if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
+  lastChildRecursive(position);
+
   logOut();
-  return stringToPreview;
 };
 
 const headAndTail = () => {
@@ -417,12 +414,6 @@ const lastNewLine = function (str) {
 const syncPreview = function () {
   const f = headAndTail();
   const stringToPreview = whatString(f);
-
-  position.innerHTML = markdown(stringToPreview);
-  //if (!firstEmptyPosition)
-
-  lastChildRecursive(position);
-  //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
 
   const scrollTop = position.scrollHeight;
   position.scrollTop = scrollTop;
