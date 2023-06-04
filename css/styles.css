@@ -402,7 +402,7 @@ blockquote {
 
 .markdown-body :not(pre) > code {
   border: none;
-  padding: 0.2em 0.4em;
+  padding: 0.1em 0.4em;
   margin: 0;
   white-space: break-spaces;
   background-color: var(--bg-extra-muted);
