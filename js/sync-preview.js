@@ -147,7 +147,6 @@ const whatString = ({
     } else {
       logg("<------- 0> pos ------->");
       stringToPreview = head;
-      variant = false;
     }
     //endStr = _string.replace();
   } else {
