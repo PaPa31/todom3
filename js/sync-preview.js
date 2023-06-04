@@ -125,18 +125,14 @@ const whatString = ({
   const t7 = tail.slice(0, 7);
   const _string = tail && firstStr(tail);
 
-  logg("endHead =", endHead);
+  //logg("endHead =", endHead);
   logg("headLastNewLine:", headLastNewLine);
-  logg("tailLastNewLine:", tailLastNewLine);
+  //logg("tailLastNewLine:", tailLastNewLine);
   logg("last head 7:", JSON.stringify(h7));
   logg("first tail 7:", JSON.stringify(t7));
   logg("firstString :", '"' + _string + '"');
 
   let stringToPreview = "";
-  let endStr = "";
-  //let currentCharacter = head.slice(-1);
-  //let before = "";
-  //let after = "";
 
   if (headLastNewLine < 0) {
     logg("<----------------- first line ----------------->");
