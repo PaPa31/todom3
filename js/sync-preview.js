@@ -367,16 +367,16 @@ if (true) {
 
   // managing vars
   // change to show/hide output loggs
-  var showLogg = true; // logg - 'sync-preview'
-  var showLogg1 = true; // logg1 - 'lb, rb, or underline'
+  var showLogg = true; // logg - 'strToPreview'
+  var showLogg1 = true; // logg1 - 'whatClass'
   var showLogg2 = false; // logg2 -
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
-  var showLogg6 = true; // logg6 -
+  var showLogg6 = false; // logg6 - 'whatElement'
 
   // loggs subsystem 0
-  // 'sync-preview'
+  // 'strToPreview'
   var logg = (...m) => {
     if (showLogg) console.log(...m);
   };
@@ -391,7 +391,7 @@ if (true) {
   };
 
   // loggs subsystem 1
-  // 'lb, rb, or underline'
+  // 'whatClass'
   var logg1 = (...m) => {
     if (showLogg1) console.log(...m);
   };
@@ -456,7 +456,7 @@ if (true) {
   };
 
   // loggs subsystem 6
-  // ''
+  // 'whatElement'
   var logg6 = (...m) => {
     if (showLogg6) console.log(...m);
   };
