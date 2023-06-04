@@ -172,7 +172,7 @@ const whatString = ({
         const initialHead = head;
         head = head.replace(/#+ *$/, "");
         head = head.replace(/\d+\. *$/, "");
-        head = head.replace(/\> *$/, "");
+        head = head.replace(/\>+ *$/, "");
         head = head.replace(/\- *$/, "");
 
         if (initialHead !== head) {
