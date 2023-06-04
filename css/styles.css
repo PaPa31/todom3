@@ -1066,7 +1066,8 @@ textarea:active {
 
 .last-child {
   overflow: hidden;
-  white-space: pre-line;
+  /*extra newlines in #position only*/
+  /*white-space: pre-line;*/
   position: relative;
 }
 
