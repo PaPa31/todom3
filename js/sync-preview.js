@@ -1,7 +1,7 @@
 //let firstEmptyPosition = false;
 
-const addLastChildClass = (el) => {
-  logIn1("1 addLastChildClass", el);
+const whatClass = (el) => {
+  logIn1("1 whatClass", el);
   preview.firstChild.classList.contains("first-child-lb") &&
     preview.removeChild(preview.firstElementChild);
   //preview.firstChild.classList.remove("first-child-lb");
@@ -41,8 +41,8 @@ const addLastChildClass = (el) => {
   logOut1();
 };
 
-const findLastChild = (child) => {
-  logIn6("1 findLastChild", child);
+const whatElement = (child) => {
+  logIn6("1 whatElement", child);
   if (child.nextSibling && child.nextSibling.textContent != "\n") {
     logg6(
       "f1.1",
@@ -58,11 +58,11 @@ const findLastChild = (child) => {
     if (child.nextSibling.classList) {
       logg6("f1.1.1", "next sibling is block");
       logg6("nextSibling = ", child.nextSibling);
-      addLastChildClass(child.nextSibling);
+      whatClass(child.nextSibling);
     } else {
       logg6("f1.1.2", "next sibling is text");
       logg6("parent = ", child.parentElement);
-      addLastChildClass(child.parentElement);
+      whatClass(child.parentElement);
     }
   } else {
     switch (child.tagName.toLowerCase()) {
@@ -70,12 +70,12 @@ const findLastChild = (child) => {
       case "code":
         if (child.parentElement.tagName.toLowerCase() !== "pre") {
           logg6("f1.2.a parent =", child.parentElement);
-          addLastChildClass(child.parentElement);
+          whatClass(child.parentElement);
           break;
         }
       default: {
         logg6("f1.2.b child =", child);
-        addLastChildClass(child);
+        whatClass(child);
       }
     }
   }
@@ -87,7 +87,7 @@ const lastChildRecursive = (child) => {
     lastChildRecursive(child.lastElementChild);
     return;
   } else {
-    findLastChild(child);
+    whatElement(child);
   }
 };
 
