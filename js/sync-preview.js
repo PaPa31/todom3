@@ -173,6 +173,7 @@ const whatString = ({
         head = head.replace(/#+ *$/, "");
         head = head.replace(/\d+\. *$/, "");
         head = head.replace(/\> *$/, "");
+        head = head.replace(/\- *$/, "");
 
         if (initialHead !== head) {
           logg("<   spec-symbols   >");
