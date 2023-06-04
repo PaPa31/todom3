@@ -1,7 +1,7 @@
 //let firstEmptyPosition = false;
 
 const whatClass = (el) => {
-  logIn1("1 whatClass", el);
+  logIn1("whatClass", el);
   preview.firstChild.classList.contains("first-child-lb") &&
     preview.removeChild(preview.firstElementChild);
   //preview.firstChild.classList.remove("first-child-lb");
@@ -42,7 +42,7 @@ const whatClass = (el) => {
 };
 
 const whatElement = (child) => {
-  logIn6("1 whatElement", child);
+  logIn6("whatElement", child);
   if (child.nextSibling && child.nextSibling.textContent != "\n") {
     logg6(
       "f1.1",
@@ -112,7 +112,7 @@ const firstStr = (tail) => {
 };
 
 const whatString = ({ head, tail }) => {
-  logIn2("whatString");
+  logIn("whatString");
 
   const h7 = head.slice(-7);
   const t7 = tail.slice(0, 7);
@@ -125,6 +125,7 @@ const whatString = ({ head, tail }) => {
 
   //switch (_string) {
   //}
+  logOut();
   return stringToPreview;
 };
 
@@ -369,7 +370,7 @@ const syncPreview = function () {
 
   lastChildRecursive(position);
   //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
-  logOut();
+
   const scrollTop = position.scrollHeight;
   position.scrollTop = scrollTop;
   preview.scrollTop = position.scrollTop;
