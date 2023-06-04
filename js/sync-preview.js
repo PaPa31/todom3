@@ -5,7 +5,7 @@ const whatClass = (el) => {
   preview.firstChild.classList.contains("first-child-lb") &&
     preview.removeChild(preview.firstElementChild);
   //preview.firstChild.classList.remove("first-child-lb");
-  position.classList.remove("last-child-lb");
+  position.classList.remove("last-child");
   el.classList.remove("last-child");
   el.classList.remove("last-child-rb");
   el.classList.remove("last-child-lb");
@@ -111,16 +111,27 @@ const firstStr = (tail) => {
   return firstString;
 };
 
-const whatString = ({ head, tail }) => {
+const whatString = ({
+  head,
+  tail,
+  headLastNewLine,
+  tailLastNewLine,
+  endHead,
+}) => {
   logIn("whatString");
 
   const h7 = head.slice(-7);
   const t7 = tail.slice(0, 7);
   const _string = firstStr(tail);
 
+  logg("endHead =", endHead);
+  logg("headLastNewLine:", headLastNewLine);
+  logg("tailLastNewLine:", tailLastNewLine);
   logg("last head 7:", JSON.stringify(h7));
   logg("first tail 7:", JSON.stringify(t7));
   logg("firstString =", '"' + _string + '"');
+  //tail = tail.replace(/^\n(.*)/, "$1");
+  //logg("tail without first \n if any:", tail);
   let stringToPreview = head;
 
   //switch (_string) {
@@ -131,8 +142,8 @@ const whatString = ({ head, tail }) => {
 
 const headAndTail = () => {
   let head = input.value.substr(0, input.selectionStart);
-  head = head.replace(/(\n*) *#+ *$/, "$1");
-  head = head.replace(/^[\n ]+/, "");
+  //head = head.replace(/(\n*) *#+ *$/, "$1");
+  //head = head.replace(/^[\n ]+/, "");
 
   output.value = head;
   output.scrollTop = output.scrollHeight;
@@ -142,7 +153,7 @@ const headAndTail = () => {
   const tail = input.value.substr(endHead, input.value.length);
   const tailLastNewLine = lastNewLine(tail);
 
-  return { head, tail };
+  return { head, tail, headLastNewLine, tailLastNewLine, endHead };
 
   if (false) {
     if (head.length) {
