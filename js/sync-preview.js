@@ -160,7 +160,7 @@ const whatString = ({
         variant = false;
       } else {
         logg("<- not empty 1 pos ->");
-        stringToPreview = head + tail[1];
+        stringToPreview = head + _string;
         variant = false;
       }
     } else {
