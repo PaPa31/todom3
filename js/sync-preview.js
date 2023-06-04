@@ -103,17 +103,35 @@ const lastSeven = (el) => {
   }
 };
 
-const strToPreview = () => {
+const firstStr = (tail) => {
+  const splitTail = tail.split("\n");
+  const firstString = splitTail.find((s) => {
+    if (s !== "") return s;
+  });
+  return firstString;
+};
+
+const whatString = ({ head, tail }) => {
+  logIn2("whatString");
+
+  const h7 = head.slice(-7);
+  const t7 = tail.slice(0, 7);
+  const _string = firstStr(tail);
+
+  logg("last head 7:", h7 + ";;;");
+  logg("first tail 7:", t7 + ";;;");
+  logg("firstString =", _string);
+  let stringToPreview = "";
+
+  //switch (_string) {
+  //}
+  return stringToPreview;
+};
+
+const headAndTail = () => {
   let head = input.value.substr(0, input.selectionStart);
-  //let head2 = head;
   head = head.replace(/(\n*) *#+ *$/, "$1");
   head = head.replace(/^[\n ]+/, "");
-
-  logIn("1 strToPreview", "last 2 head:", head.slice(-2) + ";;;");
-
-  //logg("head.length =", head.length);
-  //logg("last 2 head:", head.slice(-2) + ";;;");
-  //console.log("head=", head + ";;;");
 
   output.value = head;
   output.scrollTop = output.scrollHeight;
@@ -122,226 +140,212 @@ const strToPreview = () => {
   const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
   const tailLastNewLine = lastNewLine(tail);
-  //console.log("head:", headLastNewLine);
-  //console.log("tail:", tailLastNewLine);
-  //console.log("last head:", head.slice(-1).charCodeAt());
-  //console.log("first tail:", tail.charCodeAt());
 
-  //console.log("last head:", head.slice(-1) + ";;;");
-  logg("first 2 tail:", tail.slice(0, 2) + ";;;");
+  return { head, tail };
 
-  //console.log("tail=", tail + ";;;");
-  //console.log("tail[1]=", tail[1] + ";;;");
-
-  //logg("headLastNewLine:", headLastNewLine);
-  //logg("tailLastNewLine:", tailLastNewLine);
-
-  let stringToPreview = "";
-  if (head.length) {
-    firstEmptyPosition = false;
-    //if (tailLastNewLine == 0) {
-    //  stringToPreview = input.value;
-    //} else {
-    if (head.slice(-2) == "\n\n") {
-      stringToPreview = head;
-      if (tailLastNewLine == 0) {
-        logg("s1.2.0");
-        // add second and more new line
-        head = head.replace(/\n+$/, "");
-        stringToPreview = head + "\\\n`\x001`";
-        position.innerHTML = markdown(stringToPreview);
-        variant = false;
-        lastSeven(preview);
-      } else {
-        if (tail[1] == "\n") {
-          logg("s1.2.1");
-          // two or more \n
-          //head = head.replace(/\\*\n*$/, "");
-          head = head.replace(/\n{2,}/, "\n");
-          logg("headDD =", head + ";;;;;");
-          stringToPreview = head + "\\\n`\x001`";
-          position.innerHTML = markdown(stringToPreview);
-          variant = false;
-          //lastSeven(preview);
-        } else {
-          //const splitTail = tail.split("\n");
-          //logg(splitTail);
-          //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
-          //stringToPreview = stringToPreview.replace(/^(\#+)*.*/, "$1");
-          //logg("stringToPreview=", stringToPreview);
-          //stringToPreview = head + stringToPreview + " \x001";
-
-          // headers first # pos
-          logg("s1.2.2");
-          const splitTail = tail.split("\n");
-          logg(splitTail);
-          const firstString = splitTail.find((s) => {
-            if (s !== "") return s;
-          });
-          logg("firstString=", firstString);
-          stringToPreview = firstString.replace(/^(\#+)*.*/, "$1");
-          logg("stringToPreview=", stringToPreview);
-          stringToPreview = head + stringToPreview + " \x001";
-
-          //logg("stringToPreview=", stringToPreview);
-          //if (stringToPreview.length > 80) {
-          //logg("s1.2.2.i");
-          //head = head.replace(/\n*$/, "");
-          //stringToPreview = head + tail.slice(0, 2) + " \x001";
-
-          position.innerHTML = markdown(stringToPreview);
-          variant = false;
-          //lastSeven(preview);
-          //} else {
-          //  logg("s1.2.2.ii");
-          //  position.innerHTML = markdown(stringToPreview);
-          //  variant = false;
-          //}
-        }
-      }
-    } else {
-      if (tail == "\n") {
+  if (false) {
+    if (head.length) {
+      firstEmptyPosition = false;
+      //if (tailLastNewLine == 0) {
+      //  stringToPreview = input.value;
+      //} else {
+      if (head.slice(-2) == "\n\n") {
+        stringToPreview = head;
         if (tailLastNewLine == 0) {
-          logg("s2.1.1");
-          // add new line
+          logg("s1.2.0");
+          // add second and more new line
+          head = head.replace(/\n+$/, "");
           stringToPreview = head + "\\\n`\x001`";
           position.innerHTML = markdown(stringToPreview);
           variant = false;
           lastSeven(preview);
         } else {
-          logg("s2.1.2");
+          if (tail[1] == "\n") {
+            logg("s1.2.1");
+            // two or more \n
+            //head = head.replace(/\\*\n*$/, "");
+            head = head.replace(/\n{2,}/, "\n");
+            logg("headDD =", head + ";;;;;");
+            stringToPreview = head + "\\\n`\x001`";
+            position.innerHTML = markdown(stringToPreview);
+            variant = false;
+            //lastSeven(preview);
+          } else {
+            //const splitTail = tail.split("\n");
+            //logg(splitTail);
+            //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+            //stringToPreview = stringToPreview.replace(/^(\#+)*.*/, "$1");
+            //logg("stringToPreview=", stringToPreview);
+            //stringToPreview = head + stringToPreview + " \x001";
+
+            // headers first # pos
+            logg("s1.2.2");
+            const splitTail = tail.split("\n");
+            logg(splitTail);
+            const firstString = splitTail.find((s) => {
+              if (s !== "") return s;
+            });
+            logg("firstString=", firstString);
+            stringToPreview = firstString.replace(/^(\#+)*.*/, "$1");
+            logg("stringToPreview=", stringToPreview);
+            stringToPreview = head + stringToPreview + " \x001";
+
+            //logg("stringToPreview=", stringToPreview);
+            //if (stringToPreview.length > 80) {
+            //logg("s1.2.2.i");
+            //head = head.replace(/\n*$/, "");
+            //stringToPreview = head + tail.slice(0, 2) + " \x001";
+
+            position.innerHTML = markdown(stringToPreview);
+            variant = false;
+            //lastSeven(preview);
+            //} else {
+            //  logg("s1.2.2.ii");
+            //  position.innerHTML = markdown(stringToPreview);
+            //  variant = false;
+            //}
+          }
         }
       } else {
-        if (tail[0] == "\n") {
-          if (tail.slice(0, 2) === "\n\n" && head.slice(-1) === "\n") {
-            logg("s2.2.1.1");
-            head = head.replace(/\\*\n*$/, "");
+        if (tail == "\n") {
+          if (tailLastNewLine == 0) {
+            logg("s2.1.1");
+            // add new line
             stringToPreview = head + "\\\n`\x001`";
             position.innerHTML = markdown(stringToPreview);
             variant = false;
-            //lastSeven(preview);
+            lastSeven(preview);
           } else {
-            // without new line in the top
-            if (head.slice(-1) === "\n") {
-              if (head.slice(-2) === "\\\n") {
-                logg("s2.2.1.2.a.1");
-                head = head.replace(/\\\n$/, "");
-                stringToPreview = head + "\\\n`\x001`";
-                position.innerHTML = markdown(stringToPreview);
-                variant = false;
-                //lastSeven(preview);
-              } else {
-                // first pos in block after Header
-                logg("s2.2.1.2.a.2");
-                //stringToPreview = head + tail[0];
-
-                const splitTail = tail.split("\n");
-                logg(splitTail);
-                const firstString = splitTail.find((s) => {
-                  if (s !== "") return s;
-                });
-                logg("firstString=", firstString);
-                stringToPreview = firstString.replace(/^([\#\d]+\.*)*.*/, "$1");
-                logg("stringToPreview=", stringToPreview + ";;;");
-                stringToPreview = head + stringToPreview + " \x001";
-
-                position.innerHTML = markdown(stringToPreview);
-                variant = false;
-                //lastSeven(preview);
-              }
-            } else {
-              // last position after code block
-              // inside text block
-              // header names
-              logg("s2.2.1.2.b");
-              let first7tail = tail.slice(0, 7);
-              logg("first7tail =", first7tail);
-              first7tail = first7tail.replace(/^\n*([\d]+\. )(.*)/, "$1");
-              logg("first7tail after regex =", first7tail + ";;;");
-              stringToPreview = head + first7tail;
-              // TODO add check to split lb from uderline
-              //position.innerHTML = markdown(stringToPreview);
-              //variant = false;
-              //lastSeven(preview);
-            }
+            logg("s2.1.2");
           }
         } else {
-          // last position after text block
+          if (tail[0] == "\n") {
+            if (tail.slice(0, 2) === "\n\n" && head.slice(-1) === "\n") {
+              logg("s2.2.1.1");
+              head = head.replace(/\\*\n*$/, "");
+              stringToPreview = head + "\\\n`\x001`";
+              position.innerHTML = markdown(stringToPreview);
+              variant = false;
+              //lastSeven(preview);
+            } else {
+              // without new line in the top
+              if (head.slice(-1) === "\n") {
+                if (head.slice(-2) === "\\\n") {
+                  logg("s2.2.1.2.a.1");
+                  head = head.replace(/\\\n$/, "");
+                  stringToPreview = head + "\\\n`\x001`";
+                  position.innerHTML = markdown(stringToPreview);
+                  variant = false;
+                  //lastSeven(preview);
+                } else {
+                  // first pos in block after Header
+                  logg("s2.2.1.2.a.2");
+                  //stringToPreview = head + tail[0];
 
-          if (head.slice(-1) === "\n") {
-            // empty line after Header
-            logg("s2.2.2.a");
-            head = head.replace(/\\*\n*$/, "");
-            logg("headDD after =", head + ";;;;;");
-            stringToPreview = head + "\\\n`\x001`";
-            position.innerHTML = markdown(stringToPreview);
-            variant = false;
-            //stringToPreview = headLastNewLine == 0 ? head : head + "\n";
-            //lastSeven(preview);
+                  const splitTail = tail.split("\n");
+                  logg(splitTail);
+                  const firstString = splitTail.find((s) => {
+                    if (s !== "") return s;
+                  });
+                  logg("firstString=", firstString);
+                  stringToPreview = firstString.replace(
+                    /^([\#\d]+\.*)*.*/,
+                    "$1"
+                  );
+                  logg("stringToPreview=", stringToPreview + ";;;");
+                  stringToPreview = head + stringToPreview + " \x001";
+
+                  position.innerHTML = markdown(stringToPreview);
+                  variant = false;
+                  //lastSeven(preview);
+                }
+              } else {
+                // last position after code block
+                // inside text block
+                // header names
+                logg("s2.2.1.2.b");
+                let first7tail = tail.slice(0, 7);
+                logg("first7tail =", first7tail);
+                first7tail = first7tail.replace(/^\n*([\d]+\. )(.*)/, "$1");
+                logg("first7tail after regex =", first7tail + ";;;");
+                stringToPreview = head + first7tail;
+                // TODO add check to split lb from uderline
+                //position.innerHTML = markdown(stringToPreview);
+                //variant = false;
+                //lastSeven(preview);
+              }
+            }
           } else {
-            // inside text block
-            logg("s2.2.2.b");
-            stringToPreview = head + "\n";
+            // last position after text block
+
+            if (head.slice(-1) === "\n") {
+              // empty line after Header
+              logg("s2.2.2.a");
+              head = head.replace(/\\*\n*$/, "");
+              logg("headDD after =", head + ";;;;;");
+              stringToPreview = head + "\\\n`\x001`";
+              position.innerHTML = markdown(stringToPreview);
+              variant = false;
+              //stringToPreview = headLastNewLine == 0 ? head : head + "\n";
+              //lastSeven(preview);
+            } else {
+              // inside text block
+              logg("s2.2.2.b");
+              stringToPreview = head + "\n";
+            }
           }
+          //if (tail.slice(-2) == "\n\n") {
+          //  logg("s2.2.1");
+          //  stringToPreview = head + "\n";
+          //  lastSeven(preview);
+          //} else {
+          //  logg("s2.2.2");
+          //  stringToPreview = headLastNewLine == 0 ? head : head + "\n";
+          //  lastSeven(preview);
+          //}
         }
-        //if (tail.slice(-2) == "\n\n") {
-        //  logg("s2.2.1");
-        //  stringToPreview = head + "\n";
-        //  lastSeven(preview);
-        //} else {
-        //  logg("s2.2.2");
-        //  stringToPreview = headLastNewLine == 0 ? head : head + "\n";
-        //  lastSeven(preview);
-        //}
       }
+      stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
+      //}
+    } else {
+      // first position
+      logg("s0");
+      //if (tail[0] === "\n") {
+      //  firstEmptyPosition = true;
+      //} else {
+      //  firstEmptyPosition = false;
+      //}
+
+      const splitTail = tail.split("\n");
+      logg(splitTail);
+      const firstString = splitTail.find((s) => {
+        if (s !== "") return s;
+      });
+      logg("firstString=", firstString);
+      //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
+      stringToPreview = firstString.replace(/^(\#+)*.*/, "$1");
+      //stringToPreview = head !== "" ? head : "\x001";
+      stringToPreview = stringToPreview + " `\x001`";
+      logg("stringToPreview=", stringToPreview);
+
+      //stringToPreview = tail[0];
+      position.innerHTML = markdown(stringToPreview);
+      variant = false;
+      //lastSeven(preview);
+      //const el0 = document.createElement("div");
+      //el0.classList.add("first-child-lb");
+      //el0.innerText = " \n";
+      //!preview.firstChild.classList.contains("first-child-lb") &&
+      //  preview.insertBefore(el0, preview.firstChild);
+
+      //if (!firstEmptyPosition) {
+      //headAndTail = head + tail;
+      //logg(headAndTail);
+      //preview.innerHTML = markdown(headAndTail);
+      //preview.innerHTML = markdown(input.value);
+      //}
     }
-    stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
-    //}
-  } else {
-    // first position
-    logg("s0");
-    //if (tail[0] === "\n") {
-    //  firstEmptyPosition = true;
-    //} else {
-    //  firstEmptyPosition = false;
-    //}
-
-    const splitTail = tail.split("\n");
-    logg(splitTail);
-    const firstString = splitTail.find((s) => {
-      if (s !== "") return s;
-    });
-    logg("firstString=", firstString);
-    //stringToPreview = splitTail[0] !== "" ? splitTail[0] : splitTail[1];
-    stringToPreview = firstString.replace(/^(\#+)*.*/, "$1");
-    //stringToPreview = head !== "" ? head : "\x001";
-    stringToPreview = stringToPreview + " `\x001`";
-    logg("stringToPreview=", stringToPreview);
-
-    //stringToPreview = tail[0];
-    position.innerHTML = markdown(stringToPreview);
-    variant = false;
-    //lastSeven(preview);
-    //const el0 = document.createElement("div");
-    //el0.classList.add("first-child-lb");
-    //el0.innerText = " \n";
-    //!preview.firstChild.classList.contains("first-child-lb") &&
-    //  preview.insertBefore(el0, preview.firstChild);
-
-    //if (!firstEmptyPosition) {
-    //headAndTail = head + tail;
-    //logg(headAndTail);
-    //preview.innerHTML = markdown(headAndTail);
-    //preview.innerHTML = markdown(input.value);
-    //}
   }
-
-  if (variant) position.innerHTML = markdown(stringToPreview);
-  //if (!firstEmptyPosition)
-
-  lastChildRecursive(position);
-  //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
-  logOut();
 };
 
 const lastNewLine = function (str) {
@@ -357,7 +361,15 @@ const lastNewLine = function (str) {
 };
 
 const syncPreview = function () {
-  strToPreview();
+  const f = headAndTail();
+  const stringToPreview = whatString(f);
+
+  position.innerHTML = markdown(stringToPreview);
+  //if (!firstEmptyPosition)
+
+  lastChildRecursive(position);
+  //if (tailLastNewLine == 0) preview.innerHTML = position.innerHTML;
+  logOut();
   const scrollTop = position.scrollHeight;
   position.scrollTop = scrollTop;
   preview.scrollTop = position.scrollTop;
@@ -378,7 +390,7 @@ if (true) {
 
   // managing vars
   // change to show/hide output loggs
-  var showLogg = true; // logg - 'strToPreview'
+  var showLogg = true; // logg - 'headAndTail'
   var showLogg1 = true; // logg1 - 'whatClass'
   var showLogg2 = false; // logg2 -
   var showLogg3 = false; // logg3 -
@@ -387,7 +399,7 @@ if (true) {
   var showLogg6 = false; // logg6 - 'whatElement'
 
   // loggs subsystem 0
-  // 'strToPreview'
+  // 'headAndTail'
   var logg = (...m) => {
     if (showLogg) console.log(...m);
   };
