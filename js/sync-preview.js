@@ -121,7 +121,7 @@ const whatString = ({ head, tail }) => {
   logg("last head 7:", JSON.stringify(h7));
   logg("first tail 7:", JSON.stringify(t7));
   logg("firstString =", '"' + _string + '"');
-  let stringToPreview = "";
+  let stringToPreview = head;
 
   //switch (_string) {
   //}
