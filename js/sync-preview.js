@@ -137,33 +137,40 @@ const whatString = ({
   if (headLastNewLine < 0) {
     logg("<----------------- first line ----------------->");
     if (head === "") {
-      logg("<------- 0 position or empty newline(s) ------->");
+      logg("<------- 0 pos ------->");
       stringToPreview = _string;
       variant = false;
     } else {
       logg("<------- 0> pos ------->");
       stringToPreview = head;
     }
-    //endStr = _string.replace();
   } else {
     logg("<----------------- not first line ----------------->");
-    if (head.slice(-1) === "\n") {
-      logg("<--< 1 pos >-->");
-      if (tail[1] === "\n") {
-        logg("<- empty 1 pos ->");
-        logg(JSON.stringify(head));
-        head = head.replace(/\n+$/, "");
-        logg(JSON.stringify(head));
-        stringToPreview = head + "\\\n<span>1</span>";
-        variant = false;
-      } else {
-        logg("<- not empty 1 pos ->");
-        stringToPreview = head + _string;
-        variant = false;
-      }
+    const emptyHead = head.replace(/^\n+/, "");
+    if (emptyHead === "") {
+      logg("<- - -|    newline(s) first    |- - ->");
+      stringToPreview = _string;
+      variant = false;
     } else {
-      logg("<--< not 1 pos >-->");
-      stringToPreview = head;
+      logg("<- - -|    character(s)    |- - ->");
+      if (head.slice(-1) === "\n") {
+        logg("<--< 1 pos >-->");
+        if (tail[1] === "\n") {
+          logg("<- empty 1 pos ->");
+          logg(JSON.stringify(head));
+          head = head.replace(/\n+$/, "");
+          logg(JSON.stringify(head));
+          stringToPreview = head + "\\\n<span>1</span>";
+          variant = false;
+        } else {
+          logg("<- not empty 1 pos ->");
+          stringToPreview = head + _string;
+          variant = false;
+        }
+      } else {
+        logg("<--< not 1 pos >-->");
+        stringToPreview = head;
+      }
     }
   }
 
