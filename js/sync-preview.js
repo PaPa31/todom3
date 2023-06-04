@@ -169,7 +169,35 @@ const whatString = ({
         }
       } else {
         logg("<--< not 1 pos >-->");
-        stringToPreview = head;
+        const initialHead = head;
+        head = head.replace(/#+ *$/, "");
+
+        if (initialHead !== head) {
+          logg("< spec-symbols in head of line >");
+          stringToPreview = head + _string;
+          variant = false;
+        } else {
+          logg("< not spec-symbols in head of line >");
+          stringToPreview = initialHead;
+        }
+        //const lastHead = head.slice(-1);
+        //const firstStri = head.replace(/#+$/, "");
+        //const firstStri = _string.replace(/^( *[#\d\>]+)/, "$1");
+        //const firstStri = _string.replace(/^ *([^ ]+)*.*/, "$1");
+        //const firstStri = head.replace(/#+$/,"")
+        //logg("firstStri:", JSON.stringify(firstStri));
+        //if (lastHead === "#") logg("lastHead:", JSON.stringify(lastHead));
+        //switch (lastHead) {
+        //  case " ":
+        //  case "#": {
+        //    head = head.replace(/#+$/, "");
+        //    variant = false;
+        //    break;
+        //  }
+        //  case ">":
+        //  default:
+        //    stringToPreview = head;
+        //}
       }
     }
   }
