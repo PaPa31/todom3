@@ -171,6 +171,7 @@ const whatString = ({
         logg("<--< not 1 pos >-->");
         const initialHead = head;
         head = head.replace(/#+ *$/, "");
+        head = head.replace(/\d+\. *$/, "");
 
         if (initialHead !== head) {
           logg("< spec-symbols in head of line >");
