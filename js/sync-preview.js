@@ -241,8 +241,8 @@ const strToPreview = () => {
                   if (s !== "") return s;
                 });
                 logg("firstString=", firstString);
-                stringToPreview = firstString.replace(/^([\#\d]+)*\.*.*/, "$1");
-                logg("stringToPreview=", stringToPreview);
+                stringToPreview = firstString.replace(/^([\#\d]+\.*)*.*/, "$1");
+                logg("stringToPreview=", stringToPreview + ";;;");
                 stringToPreview = head + stringToPreview + " \x001";
 
                 position.innerHTML = markdown(stringToPreview);
@@ -254,7 +254,11 @@ const strToPreview = () => {
               // inside text block
               // header names
               logg("s2.2.1.2.b");
-              stringToPreview = head + tail[0];
+              let first7tail = tail.slice(0, 7);
+              logg("first7tail =", first7tail);
+              first7tail = first7tail.replace(/^\n*([\d]+\. )(.*)/, "$1");
+              logg("first7tail after regex =", first7tail + ";;;");
+              stringToPreview = head + first7tail;
               // TODO add check to split lb from uderline
               //position.innerHTML = markdown(stringToPreview);
               //variant = false;
