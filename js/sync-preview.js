@@ -123,7 +123,7 @@ const whatString = ({
 
   const h7 = head.slice(-7);
   const t7 = tail.slice(0, 7);
-  const _string = tail && firstStr(tail);
+  let _string = tail && firstStr(tail);
 
   //logg("endHead =", endHead);
   //logg("headLastNewLine:", headLastNewLine);
@@ -196,6 +196,9 @@ const whatString = ({
           //head = head.replace(/.$/, "");
 
           head = head.replace(/(#+ *$)|( +$)/, "");
+
+          // remove first line whitespaces
+          _string = _string.replace(/^ +/, "");
           stringToPreview = head + _string;
 
           //stringToPreview = head + "\x001";
