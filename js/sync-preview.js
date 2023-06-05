@@ -106,9 +106,7 @@ const lastSeven = (el) => {
 
 const firstStr = (tail) => {
   const splitTail = tail.split("\n");
-  const firstString = splitTail.find((s) => {
-    if (s !== "") return s;
-  });
+  const firstString = splitTail.find((s) => s !== "");
   return firstString;
 };
 
@@ -212,10 +210,10 @@ const whatString = ({
           variant = false;
         } else {
           logg("<   not spec-symbols   >");
-          head = head.replace(/.$/, "");
+          //head = head.replace(/.$/, "");
           //head = head.replace(/.$/, "");
           //stringToPreview = head + "\x001";
-          stringToPreview = head + "\x001";
+          stringToPreview = head + "\n" + "\x001";
           //stringToPreview = head;
           //stringToPreview = initialHead;
         }
@@ -241,9 +239,9 @@ const whatString = ({
     }
   }
 
-  logg("head1:", JSON.stringify(head1));
-  logg("head2:", JSON.stringify(head));
-  logg("stTPw:", JSON.stringify(stringToPreview));
+  //logg("head1:", JSON.stringify(head1));
+  //logg("head2:", JSON.stringify(head));
+  //logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
@@ -512,7 +510,7 @@ if (true) {
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
-  var showLogg6 = false; // logg6 - 'whatElement'
+  var showLogg6 = true; // logg6 - 'whatElement'
 
   // loggs subsystem 0
   // 'headAndTail'
