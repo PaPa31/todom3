@@ -196,7 +196,8 @@ const whatString = ({
           //head = head.replace(/$/, " \x001");
           //head = head.replace(/.$/, "");
 
-          head = head.replace(/(#+ *$)|( +$)/, "");
+          //head = head.replace(/(#+ *$)|( +$)/, "");
+          head = head.replace(/(\n).*?$/, "$1");
 
           // remove first line whitespaces
           _string = _string.replace(/^ +/, "");
