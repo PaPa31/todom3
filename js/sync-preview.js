@@ -122,6 +122,7 @@ const whatString = ({
   logIn("whatString");
 
   const h7 = head.slice(-7);
+  const head1 = head;
   const t7 = tail.slice(0, 7);
   let _string = tail && firstStr(tail);
 
@@ -164,7 +165,7 @@ const whatString = ({
           variant = false;
         } else {
           logg("<- not empty 1 pos ->");
-          stringToPreview = head + _string;
+          stringToPreview = head + _string + "\n\n";
           variant = false;
         }
       } else {
@@ -239,7 +240,9 @@ const whatString = ({
     }
   }
 
-  logg("stringToPreview:", JSON.stringify(stringToPreview));
+  logg("head1:", JSON.stringify(head1));
+  logg("head2:", JSON.stringify(head));
+  logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
