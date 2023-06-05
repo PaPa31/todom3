@@ -182,7 +182,7 @@ const whatString = ({
         //const regList1 = /\-\s+$/;
         //const regQuote1 = /\>+\s*$/;
 
-        const regex = /(#{1,6} *$)|(\d+\. *$)|(\- *$)|(\>+ *$)|( +?$)/;
+        const regex = /(#{1,6} *$)|(\d+\.* *$)|(\- *$)|(\>+ *$)|( +?$)/;
 
         //head = head.replace(/\n *?#+ *$/, "");
         //head = head.replace(/\n *?\d+\. *$/, "");
