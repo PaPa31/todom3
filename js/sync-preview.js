@@ -168,7 +168,7 @@ const whatString = ({
         }
       } else {
         logg("<--< not 1 pos >-->");
-        const regex = /(#{1,6} *$)|(\d+\.* *$)|(\- *$)|(\>+ *$)|( +?$)/;
+        const regex = /(#{1,6} *$)|(\d+\.* *$)|(\- *$)|(\>+ *$)|(^ +$)/;
 
         if (regex.test(head)) {
           logg("<   spec-symbols   >");
