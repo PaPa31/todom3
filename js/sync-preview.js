@@ -170,14 +170,15 @@ const whatString = ({
       } else {
         logg("<--< not 1 pos >-->");
         const initialHead = head;
-        head = head.replace(/#+ *$/, "");
-        head = head.replace(/\d+\. *$/, "");
-        head = head.replace(/\>+ *$/, "");
-        head = head.replace(/\- *$/, "");
+        head = head.replace(/\n *?#+ *$/, "");
+        head = head.replace(/\n *?\d+\. *$/, "");
+        head = head.replace(/\n *?\>+ *$/, "");
+        head = head.replace(/\n *?\- *$/, "");
+        head = head.replace(/\n +?$/, "");
 
         if (initialHead !== head) {
           logg("<   spec-symbols   >");
-          stringToPreview = head + _string;
+          stringToPreview = head + "\n" + _string;
           variant = false;
         } else {
           logg("<   not spec-symbols   >");
