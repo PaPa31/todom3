@@ -176,12 +176,12 @@ const whatString = ({
         //const regQuote = /\n\s*?\>+\s*$/;
         //const regSpace = /\n\s+?$/;
 
-        const regHash1 = /#{1,6}\s*$/;
-        const regNumList1 = /\d+\.\s*$/;
-        const regList1 = /\-\s+$/;
-        const regQuote1 = /\>+\s*$/;
+        //const regHash1 = /#{1,6}\s*$/;
+        //const regNumList1 = /\d+\.\s*$/;
+        //const regList1 = /\-\s+$/;
+        //const regQuote1 = /\>+\s*$/;
 
-        const regex = /(#{1,6}\s*$)|(\d+\.\s*$)|(\-\s*$)|(\>+\s*$)/;
+        const regex = /(#{1,6} *$)|(\d+\. *$)|(\- *$)|(\>+ *$)|( +?$)/;
 
         //head = head.replace(/\n *?#+ *$/, "");
         //head = head.replace(/\n *?\d+\. *$/, "");
@@ -195,7 +195,7 @@ const whatString = ({
           //head = head.replace(/$/, " \x001");
           //head = head.replace(/.$/, "");
 
-          head = head.replace(/(#+\s*)$/, "");
+          head = head.replace(/(#+ *$)|( +$)/, "");
           stringToPreview = head + _string;
 
           //stringToPreview = head + "\x001";
