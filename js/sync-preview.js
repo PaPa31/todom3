@@ -248,6 +248,18 @@ const whatString = ({
   logOut();
 };
 
+const lastNewLine = function (str) {
+  let caret = str.length - 1;
+  const currentSymbolWidth = caret;
+  let sym = str[caret];
+
+  while (sym != "\n" && currentSymbolWidth - caret < 80 && caret > 0) {
+    caret--;
+    sym = str[caret];
+  }
+  return caret;
+};
+
 const headAndTail = () => {
   let head = input.value.substr(0, input.selectionStart);
   //head = head.replace(/(\n*) *#+ *$/, "$1");
@@ -466,18 +478,6 @@ const headAndTail = () => {
       //}
     }
   }
-};
-
-const lastNewLine = function (str) {
-  let caret = str.length - 1;
-  const currentSymbolWidth = caret;
-  let sym = str[caret];
-
-  while (sym != "\n" && currentSymbolWidth - caret < 80 && caret > 0) {
-    caret--;
-    sym = str[caret];
-  }
-  return caret;
 };
 
 const syncPreview = function () {
