@@ -181,7 +181,7 @@ const whatString = ({
         const regList1 = /\-\s+$/;
         const regQuote1 = /\>+\s*$/;
 
-        const regex = /^ *(#{1,6}\s*$)|(\d+\.\s*$)|(\-\s*$)|(\>+\s*$)/;
+        const regex = /(#{1,6}\s*$)|(\d+\.\s*$)|(\-\s*$)|(\>+\s*$)/;
 
         //head = head.replace(/\n *?#+ *$/, "");
         //head = head.replace(/\n *?\d+\. *$/, "");
@@ -189,15 +189,29 @@ const whatString = ({
         //head = head.replace(/\n *?\- *$/, "");
         //head = head.replace(/\n +?$/, "");
 
-        if (regex.test(_string)) {
+        if (regex.test(head)) {
           //if (initialHead !== head) {
           logg("<   spec-symbols   >");
-          stringToPreview = head;
-          //variant = false;
+          //head = head.replace(/$/, " \x001");
+          //head = head.replace(/.$/, "");
+
+          head = head.replace(/(#+)$/, "$1");
+          stringToPreview = head + " \x001";
+
+          //stringToPreview = head + "\x001";
+
+          //stringToPreview = _string.replace(/^(\#+)*.*/, "$1");
+          //logg("stringToPreview=", stringToPreview);
+          //stringToPreview = head + stringToPreview + " \x001";
+
+          variant = false;
         } else {
           logg("<   not spec-symbols   >");
           head = head.replace(/.$/, "");
+          //head = head.replace(/.$/, "");
+          //stringToPreview = head + "\x001";
           stringToPreview = head + "\x001";
+          //stringToPreview = head;
           //stringToPreview = initialHead;
         }
         //const lastHead = head.slice(-1);
