@@ -195,8 +195,8 @@ const whatString = ({
           //head = head.replace(/$/, " \x001");
           //head = head.replace(/.$/, "");
 
-          head = head.replace(/(#+)$/, "$1");
-          stringToPreview = head + " \x001";
+          head = head.replace(/(#+\s*)$/, "");
+          stringToPreview = head + _string;
 
           //stringToPreview = head + "\x001";
 
