@@ -181,7 +181,7 @@ const whatString = ({
         const regList1 = /\-\s+$/;
         const regQuote1 = /\>+\s*$/;
 
-        const regex = /(#{1,6}\s*$)|(\d+\.\s*$)|(\-\s*$)|(\>+\s*$)|(\s+?$)/;
+        const regex = /^ *(#{1,6}\s*$)|(\d+\.\s*$)|(\-\s*$)|(\>+\s*$)/;
 
         //head = head.replace(/\n *?#+ *$/, "");
         //head = head.replace(/\n *?\d+\. *$/, "");
@@ -189,14 +189,15 @@ const whatString = ({
         //head = head.replace(/\n *?\- *$/, "");
         //head = head.replace(/\n +?$/, "");
 
-        if (regex.test(head)) {
+        if (regex.test(_string)) {
           //if (initialHead !== head) {
           logg("<   spec-symbols   >");
           stringToPreview = head;
-          variant = false;
+          //variant = false;
         } else {
           logg("<   not spec-symbols   >");
-          stringToPreview = head;
+          head = head.replace(/.$/, "");
+          stringToPreview = head + "\x001";
           //stringToPreview = initialHead;
         }
         //const lastHead = head.slice(-1);
@@ -221,7 +222,7 @@ const whatString = ({
     }
   }
 
-  //logg("stringToPreview:", JSON.stringify(stringToPreview));
+  logg("stringToPreview:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
@@ -462,7 +463,7 @@ const lastNewLine = function (str) {
 
 const syncPreview = function () {
   const f = headAndTail();
-  const stringToPreview = whatString(f);
+  whatString(f);
 
   const scrollTop = position.scrollHeight;
   position.scrollTop = scrollTop;
