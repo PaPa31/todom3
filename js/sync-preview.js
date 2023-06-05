@@ -168,35 +168,11 @@ const whatString = ({
         }
       } else {
         logg("<--< not 1 pos >-->");
-        //const initialHead = head;
-        //const regHash = /\n\s*?#+\s*$/;
-        //const regNumList = /\n\s*?\d+\.\s*$/;
-        //const regList = /\n\s*?\-\s*$/;
-        //const regQuote = /\n\s*?\>+\s*$/;
-        //const regSpace = /\n\s+?$/;
-
-        //const regHash1 = /#{1,6}\s*$/;
-        //const regNumList1 = /\d+\.\s*$/;
-        //const regList1 = /\-\s+$/;
-        //const regQuote1 = /\>+\s*$/;
-
         const regex = /(#{1,6} *$)|(\d+\.* *$)|(\- *$)|(\>+ *$)|( +?$)/;
 
-        //head = head.replace(/\n *?#+ *$/, "");
-        //head = head.replace(/\n *?\d+\. *$/, "");
-        //head = head.replace(/\n *?\>+ *$/, "");
-        //head = head.replace(/\n *?\- *$/, "");
-        //head = head.replace(/\n +?$/, "");
-
         if (regex.test(head)) {
-          //if (initialHead !== head) {
           logg("<   spec-symbols   >");
-          //head = head.replace(/$/, " \x001");
-          //head = head.replace(/.$/, "");
-
-          //head = head.replace(/(#+ *$)|( +$)/, "");
           head = head.replace(/(\n).*?$/, "$1");
-
           // remove first line whitespaces
           _string = _string.replace(/^ +/, "");
           stringToPreview = head + _string;
@@ -210,7 +186,6 @@ const whatString = ({
           variant = false;
         } else {
           logg("<   not spec-symbols   >");
-          //head = head.replace(/.$/, "");
           //head = head.replace(/.$/, "");
           //stringToPreview = head + "\x001";
           stringToPreview = head + "\n" + "\x001";
