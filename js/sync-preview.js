@@ -126,7 +126,7 @@ const whatString = ({
   const _string = tail && firstStr(tail);
 
   //logg("endHead =", endHead);
-  logg("headLastNewLine:", headLastNewLine);
+  //logg("headLastNewLine:", headLastNewLine);
   //logg("tailLastNewLine:", tailLastNewLine);
   logg("last head 7:", JSON.stringify(h7));
   logg("first tail 7:", JSON.stringify(t7));
@@ -157,9 +157,9 @@ const whatString = ({
         logg("<--< 1 pos >-->");
         if (tail[1] === "\n") {
           logg("<- empty 1 pos ->");
-          logg(JSON.stringify(head));
+          //logg(JSON.stringify(head));
           head = head.replace(/\n+$/, "");
-          logg(JSON.stringify(head));
+          //logg(JSON.stringify(head));
           stringToPreview = head + "\\\n<span>1</span>";
           variant = false;
         } else {
@@ -205,7 +205,7 @@ const whatString = ({
     }
   }
 
-  logg("stringToPreview:", JSON.stringify(stringToPreview));
+  //logg("stringToPreview:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
@@ -474,7 +474,7 @@ if (true) {
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
-  var showLogg6 = true; // logg6 - 'whatElement'
+  var showLogg6 = false; // logg6 - 'whatElement'
 
   // loggs subsystem 0
   // 'headAndTail'
