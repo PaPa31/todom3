@@ -1016,6 +1016,7 @@ textarea:active {
   background-color: transparent;
   color: transparent;
   overflow: hidden;
+  max-height: 160px;
 }
 
 #position * {
@@ -1042,7 +1043,6 @@ textarea:active {
   /*border-color: red;*/
   /*z-index: -1;*/
   resize: none;
-  height: auto;
 }
 
 #output {
@@ -1147,8 +1147,8 @@ code {
     /* #preview & #position
     * not sync due to scroll to view
     */
-    /*margin-top: -301px;
-    max-height: 301px;*/
+    /*margin-top: -301px;*/
+    max-height: 301px;
   }
   .container > .flex-row > .flex-small:first-child {
     padding-right: 10px;
