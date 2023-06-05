@@ -160,7 +160,7 @@ const whatString = ({
           //logg(JSON.stringify(head));
           head = head.replace(/\n+$/, "");
           //logg(JSON.stringify(head));
-          stringToPreview = head + "\\\n<span>1</span>";
+          stringToPreview = head + "\n\n<span>1</span>";
           variant = false;
         } else {
           logg("<- not empty 1 pos ->");
