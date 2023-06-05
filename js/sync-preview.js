@@ -48,7 +48,7 @@ const whatElement = (child) => {
     logg6(
       "f1.1",
       "child.nextSibling.textContent=",
-      child.nextSibling.textContent
+      JSON.stringify(child.nextSibling.textContent)
     );
     logg6(Array.from(child.parentElement.childNodes));
 
@@ -216,7 +216,7 @@ const whatString = ({
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head2:", JSON.stringify(head));
-  //logg("stTPw:", JSON.stringify(stringToPreview));
+  logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
