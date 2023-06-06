@@ -78,7 +78,7 @@ const editUI = (label) => {
 const xUI = () => {
   returnInputButton.style = "display:none";
   xButton.style = "display:block";
-  position.innerHTML = "";
+  //position.innerHTML = "";
 };
 
 const editItem = (e, element) => {
@@ -549,9 +549,6 @@ clearTrashButton.addEventListener("click", function (e) {
   twoClickToTrash = false;
 });
 
-mdToPreview(input.value);
-//preview.scrollTop = preview.scrollHeight;
-
 input.addEventListener(
   "input",
   debounce(
@@ -575,7 +572,11 @@ input.addEventListener(
   false
 );
 
-if (input.value) xUI();
+if (input.value) {
+  xUI();
+  mdToPreview(input.value);
+  //preview.scrollTop = preview.scrollHeight;
+}
 initializeItemState();
 showOrHideDeleteAllItems();
 showOrHideTrash();

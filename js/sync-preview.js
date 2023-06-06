@@ -189,8 +189,8 @@ const whatString = ({
           logg("<   not spec-symbols   >");
           //head = head.replace(/.$/, "");
           //stringToPreview = head + "\x001";
-          stringToPreview = head + "\n" + "\x001";
-          //stringToPreview = head;
+          //stringToPreview = head + "\n" + "\x001";
+          stringToPreview = head;
           //stringToPreview = initialHead;
         }
         //const lastHead = head.slice(-1);
