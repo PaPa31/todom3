@@ -171,13 +171,12 @@ const whatString = ({
 
         const re = /\s*```.*/g;
         const match = head.match(re);
-        const isInsideCodeBlock = match?.length % 2 === 0;
-        //console.log(`Количество вхождений '\`\`\`': ${match.length}`);
+        const isOutsideCodeBlock = match ? match.length % 2 === 0 : true;
 
         const regex2 =
           /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
 
-        if (isInsideCodeBlock && regex2.test(head)) {
+        if (isOutsideCodeBlock && regex2.test(head)) {
           logg("<   spec-symbols   >");
           head = head.replace(/(\n).*?$/, "$1");
           // remove first line whitespaces
@@ -221,9 +220,11 @@ const whatString = ({
     }
   }
 
-  //logg("head1:", JSON.stringify(head1));
-  //logg("head2:", JSON.stringify(head));
-  //logg("stTPw:", JSON.stringify(stringToPreview));
+  //stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
+
+  logg("head1:", JSON.stringify(head1));
+  logg("head2:", JSON.stringify(head));
+  logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
