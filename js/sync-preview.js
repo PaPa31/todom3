@@ -124,9 +124,9 @@ const whatString = ({
   const t7 = tail.slice(0, 7);
   let _string = tail && firstStr(tail);
 
-  //logg("endHead =", endHead);
-  //logg("headLastNewLine:", headLastNewLine);
-  //logg("tailLastNewLine:", tailLastNewLine);
+  logg("endHead =", endHead);
+  logg("headLastNewLine:", headLastNewLine);
+  logg("tailLastNewLine:", tailLastNewLine);
   logg("last head 7:", JSON.stringify(h7));
   logg("first tail 7:", JSON.stringify(t7));
   logg("firstString :", '"' + _string + '"');
@@ -162,9 +162,15 @@ const whatString = ({
           stringToPreview = head + "\n\n<span>1</span>";
           variant = false;
         } else {
-          logg("<- not empty 1 pos ->");
+          //if (head.slice(-2) === "\n\n") {
+          //  logg("< extra newline >");
+          //  stringToPreview = head + _string + "\n1.";
+          //  variant = false;
+          //} else {
+          logg("< not empty 1 pos >");
           stringToPreview = head + _string + "\n\n";
           variant = false;
+          //}
         }
       } else {
         logg("<--< not 1 pos >-->");
@@ -182,48 +188,30 @@ const whatString = ({
           // remove first line whitespaces
           _string = _string.replace(/^ +/, "");
           stringToPreview = head + _string;
-
-          //stringToPreview = head + "\x001";
-
-          //stringToPreview = _string.replace(/^(\#+)*.*/, "$1");
-          //logg("stringToPreview=", stringToPreview);
-          //stringToPreview = head + stringToPreview + " \x001";
-
           variant = false;
         } else {
           logg("<   not spec-symbols   >");
-          //head = head.replace(/.$/, "");
-          //stringToPreview = head + "\x001";
-          //stringToPreview = head + "\n" + "\x001";
-          stringToPreview = head;
-          //stringToPreview = initialHead;
+          if (head[headLastNewLine - 1] === "\n") {
+            logg("< extra newline 2 >");
+            head = head.replace(/\n\n(.*)$/, "\n1.\n$1");
+            stringToPreview = head;
+          } else {
+            stringToPreview = head;
+          }
         }
-        //const lastHead = head.slice(-1);
-        //const firstStri = head.replace(/#+$/, "");
-        //const firstStri = _string.replace(/^( *[#\d\>]+)/, "$1");
-        //const firstStri = _string.replace(/^ *([^ ]+)*.*/, "$1");
-        //const firstStri = head.replace(/#+$/,"")
-        //logg("firstStri:", JSON.stringify(firstStri));
-        //if (lastHead === "#") logg("lastHead:", JSON.stringify(lastHead));
-        //switch (lastHead) {
-        //  case " ":
-        //  case "#": {
-        //    head = head.replace(/#+$/, "");
-        //    variant = false;
-        //    break;
-        //  }
-        //  case ">":
-        //  default:
-        //    stringToPreview = head;
-        //}
       }
+    }
+    if (head.slice(-2) === "\n\n") {
+      logg("< extra newline 1 >");
+      stringToPreview = stringToPreview + "\n1.";
+      variant = false;
     }
   }
 
   //stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
 
   logg("head1:", JSON.stringify(head1));
-  logg("head2:", JSON.stringify(head));
+  logg("head_:", JSON.stringify(head));
   logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
