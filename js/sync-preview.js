@@ -171,7 +171,7 @@ const whatString = ({
 
         const re = /\s*```.*/g;
         const match = head.match(re);
-        const isInsideCodeBlock = match.length % 2 === 0;
+        const isInsideCodeBlock = match?.length % 2 === 0;
         //console.log(`Количество вхождений '\`\`\`': ${match.length}`);
 
         const regex2 =
