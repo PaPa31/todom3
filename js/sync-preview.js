@@ -147,11 +147,11 @@ const whatString = ({
     logg("<----------------- not first line ----------------->");
     const emptyHead = head.replace(/^\n+/, "");
     if (emptyHead === "") {
-      logg("<- - -|    newline(s) first    |- - ->");
+      logg("<- - -|    newline at first    |- - ->");
       stringToPreview = _string;
       variant = false;
     } else {
-      logg("<- - -|    character(s)    |- - ->");
+      logg("<- - -|    chars at first   |- - ->");
       if (head.slice(-1) === "\n") {
         logg("<--< 1 pos >-->");
         if (tail[1] === "\n") {
@@ -492,7 +492,7 @@ if (true) {
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
-  var showLogg6 = true; // logg6 - 'whatElement'
+  var showLogg6 = false; // logg6 - 'whatElement'
 
   // loggs subsystem 0
   // 'headAndTail'
