@@ -168,7 +168,8 @@ const whatString = ({
           //  variant = false;
           //} else {
           logg("< not empty 1 pos >");
-          stringToPreview = head + _string + "\n\n";
+          //stringToPreview = head + _string + "\n\n";
+          stringToPreview = head + "\n<div style='margin-top:-1rem'>1</div>\n";
           variant = false;
           //}
         }
@@ -211,9 +212,9 @@ const whatString = ({
 
   //stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
 
-  logg("head1:", JSON.stringify(head1));
-  logg("head_:", JSON.stringify(head));
-  logg("stTPw:", JSON.stringify(stringToPreview));
+  //logg("head1:", JSON.stringify(head1));
+  //logg("head_:", JSON.stringify(head));
+  //logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
