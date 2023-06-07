@@ -177,8 +177,8 @@ const whatString = ({
             //stringToPreview = stringToPreview + "1. \x001\n";
             //stringToPreview = stringToPreview + _string + "1. \x001\n";
             //stringToPreview = head + "\n\n\n";
-            //stringToPreview = head + _string + "\n\n";
-            stringToPreview = head + _string + "\n1.";
+            stringToPreview = head + _string + "\n\n";
+            //stringToPreview = head + _string + "\n1. \x001";
             variant = false;
           } else {
             stringToPreview = head + _string;
@@ -220,8 +220,8 @@ const whatString = ({
 
   //stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
 
-  logg("head1:", JSON.stringify(head1));
-  logg("head_:", JSON.stringify(head));
+  //logg("head1:", JSON.stringify(head1));
+  //logg("head_:", JSON.stringify(head));
   logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
