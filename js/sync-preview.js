@@ -223,10 +223,8 @@ const whatString = ({
             }
 
             const matches = _string.match(regex2);
-            const specString = matches && matches[0];
+            const specString = matches ? matches[0] : "";
             const specChar = specString[0];
-
-            logg(matches[0]);
 
             switch (true) {
               case specChar === "#": {
@@ -242,6 +240,7 @@ const whatString = ({
                 break;
               }
               default: {
+                logg("-> default <-");
                 stringToPreview = head;
                 //stringToPreview = stringToPreview + "\\\n\x001";
               }
@@ -270,10 +269,8 @@ const whatString = ({
       }
 
       const matches = _string.match(regex3);
-      const specString = matches && matches[0];
+      const specString = matches ? matches[0] : "";
       const specChar = specString[0];
-
-      logg(matches[0]);
 
       switch (specChar) {
         case "#": {
@@ -294,7 +291,7 @@ const whatString = ({
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  logg("stTPw:", JSON.stringify(stringToPreview));
+  //logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
