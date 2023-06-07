@@ -193,7 +193,7 @@ const whatString = ({
           logg("<   not spec-symbols   >");
           if (head[headLastNewLine - 1] === "\n") {
             logg("< extra newline 2 >");
-            head = head.replace(/\n\n(.*)$/, "\n1.\n$1");
+            head = head.replace(/\n\n(.*)$/, "\n\n<span>111</span>$1");
             stringToPreview = head;
           } else {
             stringToPreview = head;
@@ -203,7 +203,8 @@ const whatString = ({
     }
     if (head.slice(-2) === "\n\n") {
       logg("< extra newline 1 >");
-      stringToPreview = stringToPreview + "\n1.";
+      //stringToPreview = stringToPreview + "1.";
+      stringToPreview = head + "\n\n<span>1</span>";
       variant = false;
     }
   }
