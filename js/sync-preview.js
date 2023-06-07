@@ -177,7 +177,7 @@ const whatString = ({
             //stringToPreview = stringToPreview + "1. \x001\n";
             //stringToPreview = stringToPreview + _string + "1. \x001\n";
             //stringToPreview = head + "\n\n\n";
-            stringToPreview = head + _string + "\n\n";
+            stringToPreview = head + _string + "\\\n\x001";
             //stringToPreview = head + _string + "\n1. \x001";
             variant = false;
           } else {
