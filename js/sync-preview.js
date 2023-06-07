@@ -225,6 +225,8 @@ const whatString = ({
             const matches = _string.match(regex2);
             const specString = matches ? matches[0] : "";
             const specChar = specString[0];
+            const rege = /\d/;
+            const isNumber = rege.test(specChar);
 
             switch (true) {
               case specChar === "#": {
@@ -233,8 +235,8 @@ const whatString = ({
                 stringToPreview = head;
                 break;
               }
-              case !isNaN(specChar): {
-                logg("-> 0-9 <-");
+              case isNumber: {
+                logg("-> 0-9 <-", JSON.stringify(specChar));
                 head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
                 stringToPreview = head;
                 break;
