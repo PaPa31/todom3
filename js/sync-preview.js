@@ -208,7 +208,7 @@ const whatString = ({
           logg("<   not spec-symbols   >");
           if (head[headLastNewLine - 1] === "\n") {
             logg("< extra newline 2 >");
-            head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
+            head = head.replace(/\n\n(.*)$/, "\n\n\\\x001\x001$1");
             stringToPreview = head;
           } else {
             stringToPreview = head;
