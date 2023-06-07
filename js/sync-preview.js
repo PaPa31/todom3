@@ -200,14 +200,14 @@ const whatString = ({
         const isSpecSymbol = regex1.test(head);
 
         if (isOutsideCodeBlock && isSpecSymbol) {
-          logg("<   spec-symbols at current   >");
+          logg("<   spec-symbol at current   >");
           head = head.replace(/(\n).*?$/, "$1");
           // remove first line whitespaces
           _string = _string.replace(/^ +/, "");
           stringToPreview = head + _string;
           variant = false;
         } else {
-          logg("<   not spec-symbols at current   >");
+          logg("<   not spec-symbol at current   >");
           if (head[headLastNewLine - 1] === "\n") {
             logg("< extra newline 2 >");
 
@@ -223,7 +223,7 @@ const whatString = ({
             }
 
             const matches = _string.match(regex2);
-            const specString = matches[0];
+            const specString = matches && matches[0];
             const specChar = specString[0];
 
             logg(matches[0]);
@@ -265,7 +265,7 @@ const whatString = ({
       }
 
       const matches = _string.match(regex3);
-      const specString = matches[0];
+      const specString = matches && matches[0];
       const specChar = specString[0];
 
       logg(matches[0]);
