@@ -193,9 +193,11 @@ const whatString = ({
         const match = head.match(re);
         const isOutsideCodeBlock = match ? match.length % 2 === 0 : true;
 
-        const regex2 =
+        // look for specSymbols [#,\d.,- ,>, ]
+        // at the end of the head
+        const regex1 =
           /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
-        const isSpecSymbol = regex2.test(head);
+        const isSpecSymbol = regex1.test(head);
 
         if (isOutsideCodeBlock && isSpecSymbol) {
           logg("<   spec-symbols   >");
@@ -218,12 +220,18 @@ const whatString = ({
     }
     if (head.slice(-2) === "\n\n") {
       logg("< extra newline 1 >");
-      //stringToPreview = stringToPreview + "1. \x001\n";
-      //stringToPreview = stringToPreview + _string + "1. \x001\n";
-      //stringToPreview = head + "\n\n\n";
-      //stringToPreview = head + _string + "\n1. \x001";
+
+      //look for specSymbols [#,\d.,-,>, ]
+      //at the begining of the _string
       const regex2 = /^(#{1,6})|(\d+\.*)|(\-)|(\>+)|( +)/;
       const isSpecSymbol = regex2.test(_string);
+
+      if (isSpecSymbol) {
+        logg("-> spec <-");
+      } else {
+        logg("-> not spec <-");
+      }
+
       const matches = _string.match(regex2);
       const specString = matches[0];
       const specChar = specString[0];
@@ -233,7 +241,6 @@ const whatString = ({
       switch (specChar) {
         case "#": {
           logg("-> # <-");
-          //stringToPreview = head + _string + "\\\n\x001";
           stringToPreview = head + _string;
           break;
         }
@@ -242,13 +249,6 @@ const whatString = ({
         }
       }
 
-      if (isSpecSymbol) {
-        logg("-> spec <-");
-      } else {
-        logg("-> not spec <-");
-      }
-      //stringToPreview = head + _string + "\\\n\x001";
-      //stringToPreview = stringToPreview + "\\\n\x001";
       variant = false;
     }
   }
