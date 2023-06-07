@@ -222,7 +222,33 @@ const whatString = ({
       //stringToPreview = stringToPreview + _string + "1. \x001\n";
       //stringToPreview = head + "\n\n\n";
       //stringToPreview = head + _string + "\n1. \x001";
-      stringToPreview = head + _string + "\\\n\x001";
+      const regex2 = /^(#{1,6})|(\d+\.*)|(\-)|(\>+)|( +)/;
+      const isSpecSymbol = regex2.test(_string);
+      const matches = _string.match(regex2);
+      const specString = matches[0];
+      const specChar = specString[0];
+
+      logg(matches[0]);
+
+      switch (specChar) {
+        case "#": {
+          logg("-> # <-");
+          //stringToPreview = head + _string + "\\\n\x001";
+          stringToPreview = head + _string;
+          break;
+        }
+        default: {
+          stringToPreview = stringToPreview + "\\\n\x001";
+        }
+      }
+
+      if (isSpecSymbol) {
+        logg("-> spec <-");
+      } else {
+        logg("-> not spec <-");
+      }
+      //stringToPreview = head + _string + "\\\n\x001";
+      //stringToPreview = stringToPreview + "\\\n\x001";
       variant = false;
     }
   }
