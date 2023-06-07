@@ -170,7 +170,8 @@ const whatString = ({
           logg("< not empty 1 pos >");
           //stringToPreview = head + _string + "\n\n";
           //stringToPreview = head + "\n<div style='margin-top:-1rem'>1</div>\n";
-          stringToPreview = head + "\n\n\n<span>1</span>";
+          //stringToPreview = head + "\n\n\n<span>1</span>";
+          stringToPreview = head + _string;
           variant = false;
           //}
         }
@@ -206,16 +207,18 @@ const whatString = ({
     }
     if (head.slice(-2) === "\n\n") {
       logg("< extra newline 1 >");
-      //stringToPreview = stringToPreview + "1.";
-      stringToPreview = head + "\n\n\n";
+      //stringToPreview = stringToPreview + "1. \x001\n";
+      //stringToPreview = stringToPreview + _string + "1. \x001\n";
+      //stringToPreview = head + "\n\n\n";
+      stringToPreview = head + _string;
       variant = false;
     }
   }
 
   //stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
 
-  //logg("head1:", JSON.stringify(head1));
-  //logg("head_:", JSON.stringify(head));
+  logg("head1:", JSON.stringify(head1));
+  logg("head_:", JSON.stringify(head));
   logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
