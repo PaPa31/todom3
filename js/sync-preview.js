@@ -159,7 +159,8 @@ const whatString = ({
           //logg(JSON.stringify(head));
           head = head.replace(/\n+$/, "");
           //logg(JSON.stringify(head));
-          stringToPreview = head + "\n\n<span>1</span>";
+          //stringToPreview = head + "\n\n<span>1</span>";
+          stringToPreview = head + "\n\n" + _string;
           variant = false;
         } else {
           //if (head.slice(-2) === "\n\n") {
