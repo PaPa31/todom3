@@ -124,9 +124,9 @@ const whatString = ({
   const t7 = tail.slice(0, 7);
   let _string = tail && firstStr(tail);
 
-  logg("endHead =", endHead);
-  logg("headLastNewLine:", headLastNewLine);
-  logg("tailLastNewLine:", tailLastNewLine);
+  //logg("endHead =", endHead);
+  //logg("headLastNewLine:", headLastNewLine);
+  //logg("tailLastNewLine:", tailLastNewLine);
   logg("last head 7:", JSON.stringify(h7));
   logg("first tail 7:", JSON.stringify(t7));
   logg("firstString :", '"' + _string + '"');
@@ -208,51 +208,51 @@ const whatString = ({
           variant = false;
         } else {
           logg("<   not spec-symbol at current   >");
-          if (head[headLastNewLine - 1] === "\n") {
-            logg("< extra newline 2 >");
+          //if (head[headLastNewLine - 1] === "\n") {
+          //  logg("< extra newline 2 >");
 
-            //look for specSymbols [#,\d.,-,>, ]
-            //at the begining of the _string
-            const regex2 = /(^#{1,6})|(^\d+\.*)|(^\-)|(^\>+)|(^ +)/;
-            const isSpecSymbol = regex2.test(_string);
+          //look for specSymbols [#,\d.,-,>, ]
+          //at the begining of the _string
+          const regex2 = /(^#{1,6})|(^\d+\.*)|(^\-)|(^\>+)|(^ +)/;
+          const isSpecSymbol = regex2.test(_string);
 
-            if (isSpecSymbol) {
-              logg("-> spec <-");
-            } else {
-              logg("-> not spec <-");
-            }
-
-            const matches = _string.match(regex2);
-            const specString = matches ? matches[0] : "";
-            const specChar = specString[0];
-            const rege = /\d/;
-            const isNumber = rege.test(specChar);
-
-            switch (true) {
-              case specChar === "#": {
-                logg("-> # <-");
-                head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
-                stringToPreview = head;
-                break;
-              }
-              case isNumber: {
-                logg("-> 0-9 <-", JSON.stringify(specChar));
-                head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-                stringToPreview = head;
-                break;
-              }
-              default: {
-                logg("-> default <-");
-                stringToPreview = head;
-                //stringToPreview = stringToPreview + "\\\n\x001";
-              }
-            }
-
-            //head = head.replace(/\n\n(.*)$/, "\n\n\\\x001\x001$1");
-            //stringToPreview = head;
+          if (isSpecSymbol) {
+            logg("-> spec at the start <-");
           } else {
-            stringToPreview = head;
+            logg("-> not spec at start <-");
           }
+
+          const matches = _string.match(regex2);
+          const specString = matches ? matches[0] : "";
+          const specChar = specString[0];
+          const rege = /\d/;
+          const isNumber = rege.test(specChar);
+
+          switch (true) {
+            case specChar === "#": {
+              logg("-> # <-");
+              head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
+              stringToPreview = head;
+              break;
+            }
+            case isNumber: {
+              logg("-> 0-9 <-", JSON.stringify(specChar));
+              head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+              stringToPreview = head;
+              break;
+            }
+            default: {
+              logg("-> default <-");
+              stringToPreview = head;
+              //stringToPreview = stringToPreview + "\\\n\x001";
+            }
+          }
+
+          //head = head.replace(/\n\n(.*)$/, "\n\n\\\x001\x001$1");
+          //stringToPreview = head;
+          //} else {
+          //  stringToPreview = head;
+          //}
         }
       }
     }
@@ -295,7 +295,7 @@ const whatString = ({
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  //logg("stTPw:", JSON.stringify(stringToPreview));
+  logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
