@@ -228,11 +228,16 @@ const whatString = ({
 
             logg(matches[0]);
 
-            switch (specChar) {
-              case "#": {
+            switch (true) {
+              case specChar === "#": {
                 logg("-> # <-");
-                //stringToPreview = head + _string;
                 head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
+                stringToPreview = head;
+                break;
+              }
+              case !isNaN(specChar): {
+                logg("-> 0-9 <-");
+                head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
                 stringToPreview = head;
                 break;
               }
