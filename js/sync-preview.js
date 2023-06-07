@@ -200,18 +200,50 @@ const whatString = ({
         const isSpecSymbol = regex1.test(head);
 
         if (isOutsideCodeBlock && isSpecSymbol) {
-          logg("<   spec-symbols   >");
+          logg("<   spec-symbols at current   >");
           head = head.replace(/(\n).*?$/, "$1");
           // remove first line whitespaces
           _string = _string.replace(/^ +/, "");
           stringToPreview = head + _string;
           variant = false;
         } else {
-          logg("<   not spec-symbols   >");
+          logg("<   not spec-symbols at current   >");
           if (head[headLastNewLine - 1] === "\n") {
             logg("< extra newline 2 >");
-            head = head.replace(/\n\n(.*)$/, "\n\n\\\x001\x001$1");
-            stringToPreview = head;
+
+            //look for specSymbols [#,\d.,-,>, ]
+            //at the begining of the _string
+            const regex2 = /^(#{1,6})|(\d+\.*)|(\-)|(\>+)|( +)/;
+            const isSpecSymbol = regex2.test(_string);
+
+            if (isSpecSymbol) {
+              logg("-> spec <-");
+            } else {
+              logg("-> not spec <-");
+            }
+
+            const matches = _string.match(regex2);
+            const specString = matches[0];
+            const specChar = specString[0];
+
+            logg(matches[0]);
+
+            switch (specChar) {
+              case "#": {
+                logg("-> # <-");
+                //stringToPreview = head + _string;
+                head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
+                stringToPreview = head;
+                break;
+              }
+              default: {
+                stringToPreview = head;
+                //stringToPreview = stringToPreview + "\\\n\x001";
+              }
+            }
+
+            //head = head.replace(/\n\n(.*)$/, "\n\n\\\x001\x001$1");
+            //stringToPreview = head;
           } else {
             stringToPreview = head;
           }
@@ -223,8 +255,8 @@ const whatString = ({
 
       //look for specSymbols [#,\d.,-,>, ]
       //at the begining of the _string
-      const regex2 = /^(#{1,6})|(\d+\.*)|(\-)|(\>+)|( +)/;
-      const isSpecSymbol = regex2.test(_string);
+      const regex3 = /^(#{1,6})|(\d+\.*)|(\-)|(\>+)|( +)/;
+      const isSpecSymbol = regex3.test(_string);
 
       if (isSpecSymbol) {
         logg("-> spec <-");
@@ -232,7 +264,7 @@ const whatString = ({
         logg("-> not spec <-");
       }
 
-      const matches = _string.match(regex2);
+      const matches = _string.match(regex3);
       const specString = matches[0];
       const specChar = specString[0];
 
