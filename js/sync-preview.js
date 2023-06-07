@@ -147,11 +147,11 @@ const whatString = ({
     logg("<----------------- not first line ----------------->");
     const emptyHead = head.replace(/^\n+/, "");
     if (emptyHead === "") {
-      logg("<- - -|    newline at first    |- - ->");
+      logg("<- - -|    newline at the beginning   |- - ->");
       stringToPreview = _string;
       variant = false;
     } else {
-      logg("<- - -|    chars at first   |- - ->");
+      logg("<- - -|    chars at the beginning  |- - ->");
       if (head.slice(-1) === "\n") {
         logg("<--< 1 pos >-->");
         if (tail[1] === "\n") {
@@ -213,7 +213,7 @@ const whatString = ({
 
             //look for specSymbols [#,\d.,-,>, ]
             //at the begining of the _string
-            const regex2 = /^(#{1,6})|(\d+\.*)|(\-)|(\>+)|( +)/;
+            const regex2 = /(^#{1,6})|(^\d+\.*)|(^\-)|(^\>+)|(^ +)/;
             const isSpecSymbol = regex2.test(_string);
 
             if (isSpecSymbol) {
@@ -261,7 +261,7 @@ const whatString = ({
 
       //look for specSymbols [#,\d.,-,>, ]
       //at the begining of the _string
-      const regex3 = /^(#{1,6})|(\d+\.*)|(\-)|(\>+)|( +)/;
+      const regex3 = /(^#{1,6})|(^\d+\.*)|(^\-)|(^\>+)|(^ +)/;
       const isSpecSymbol = regex3.test(_string);
 
       if (isSpecSymbol) {
@@ -273,6 +273,8 @@ const whatString = ({
       const matches = _string.match(regex3);
       const specString = matches ? matches[0] : "";
       const specChar = specString[0];
+
+      logg("specChar=", JSON.stringify(specChar));
 
       switch (specChar) {
         case "#": {
