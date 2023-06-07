@@ -106,6 +106,7 @@ const lastSeven = (el) => {
 
 const firstStr = (tail) => {
   const splitTail = tail.split("\n");
+  console.log(splitTail);
   const firstString = splitTail.find((s) => s !== "");
   return firstString;
 };
@@ -124,16 +125,16 @@ const whatString = ({
   const t7 = tail.slice(0, 7);
   let _string = tail && firstStr(tail);
 
-  //logg("endHead =", endHead);
-  //logg("headLastNewLine:", headLastNewLine);
-  //logg("tailLastNewLine:", tailLastNewLine);
+  logg("endHead =", endHead);
+  logg("headLastNewLine:", headLastNewLine);
+  logg("tailLastNewLine:", tailLastNewLine);
   logg("last head 7:", JSON.stringify(h7));
   logg("first tail 7:", JSON.stringify(t7));
   logg("firstString :", '"' + _string + '"');
 
   let stringToPreview = "";
 
-  if (headLastNewLine < 0) {
+  if (headLastNewLine.caret < 0) {
     logg("<----------------- first line ----------------->");
     if (head === "") {
       logg("<------- 0 pos ------->");
@@ -213,7 +214,7 @@ const whatString = ({
 
           //look for specSymbols [#,\d.,-,>, ]
           //at the begining of the _string
-          const regex2 = /(^#{1,6})|(^\d+\.*)|(^\-)|(^\>+)|(^ +)/;
+          const regex2 = /(^ *#{1,6})|(^ *\d+\.*)|(^ *\-)|(^ *\>+)|(^ +)/;
           const isSpecSymbol = regex2.test(_string);
 
           if (isSpecSymbol) {
@@ -223,8 +224,11 @@ const whatString = ({
           }
 
           const matches = _string.match(regex2);
+          logg("matches =", matches);
           const specString = matches ? matches[0] : "";
           const specChar = specString[0];
+          logg("specChar =", JSON.stringify(specChar));
+
           const rege = /\d/;
           const isNumber = rege.test(specChar);
 
@@ -242,7 +246,7 @@ const whatString = ({
               break;
             }
             default: {
-              logg("-> default <-");
+              logg("-> default 1 <-");
               stringToPreview = head;
               //stringToPreview = stringToPreview + "\\\n\x001";
             }
@@ -306,12 +310,16 @@ const lastNewLine = function (str) {
   let caret = str.length - 1;
   const currentSymbolWidth = caret;
   let sym = str[caret];
+  let caretWidth = 0;
 
-  while (sym != "\n" && currentSymbolWidth - caret < 80 && caret > 0) {
+  while (sym != "\n" && caret > 0) {
+    if (currentSymbolWidth - caret === 80) {
+      caretWidth = caret;
+    }
     caret--;
     sym = str[caret];
   }
-  return caret;
+  return { caret, caretWidth };
 };
 
 const headAndTail = () => {
@@ -323,11 +331,22 @@ const headAndTail = () => {
   output.scrollTop = output.scrollHeight;
 
   const headLastNewLine = lastNewLine(head);
-  const endHead = headLastNewLine != -1 ? headLastNewLine : head.length;
+  const endHead =
+    headLastNewLine.caret !== -1
+      ? headLastNewLine.caretWidth !== 0
+        ? headLastNewLine.caretWidth
+        : headLastNewLine.caret
+      : head.length;
   const tail = input.value.substr(endHead, input.value.length);
   const tailLastNewLine = lastNewLine(tail);
 
-  return { head, tail, headLastNewLine, tailLastNewLine, endHead };
+  return {
+    head,
+    tail,
+    headLastNewLine,
+    tailLastNewLine,
+    endHead,
+  };
 
   if (false) {
     if (head.length) {
