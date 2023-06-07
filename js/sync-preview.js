@@ -106,7 +106,6 @@ const lastSeven = (el) => {
 
 const firstStr = (tail) => {
   const splitTail = tail.split("\n");
-  console.log(splitTail);
   const firstString = splitTail.find((s) => s !== "");
   return firstString;
 };
@@ -134,7 +133,7 @@ const whatString = ({
 
   let stringToPreview = "";
 
-  if (headLastNewLine.caret < 0) {
+  if (headLastNewLine < 0) {
     logg("<----------------- first line ----------------->");
     if (head === "") {
       logg("<------- 0 pos ------->");
@@ -308,18 +307,13 @@ const whatString = ({
 
 const lastNewLine = function (str) {
   let caret = str.length - 1;
-  const currentSymbolWidth = caret;
   let sym = str[caret];
-  let caretWidth = 0;
 
   while (sym != "\n" && caret > 0) {
-    if (currentSymbolWidth - caret === 80) {
-      caretWidth = caret;
-    }
     caret--;
     sym = str[caret];
   }
-  return { caret, caretWidth };
+  return caret;
 };
 
 const headAndTail = () => {
@@ -331,12 +325,7 @@ const headAndTail = () => {
   output.scrollTop = output.scrollHeight;
 
   const headLastNewLine = lastNewLine(head);
-  const endHead =
-    headLastNewLine.caret !== -1
-      ? headLastNewLine.caretWidth !== 0
-        ? headLastNewLine.caretWidth
-        : headLastNewLine.caret
-      : head.length;
+  const endHead = headLastNewLine !== -1 ? headLastNewLine : head.length;
   const tail = input.value.substr(endHead, input.value.length);
   const tailLastNewLine = lastNewLine(tail);
 
