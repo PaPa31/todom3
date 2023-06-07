@@ -182,8 +182,9 @@ const whatString = ({
 
         const regex2 =
           /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
+        const isSpecSymbol = regex2.test(head);
 
-        if (isOutsideCodeBlock && regex2.test(head)) {
+        if (isOutsideCodeBlock && isSpecSymbol) {
           logg("<   spec-symbols   >");
           head = head.replace(/(\n).*?$/, "$1");
           // remove first line whitespaces
