@@ -164,7 +164,8 @@ const whatString = ({
           variant = false;
         } else {
           logg("< not empty 1 pos >");
-          stringToPreview = head + _string;
+          //stringToPreview = head + _string;
+          stringToPreview = head + "\n" + _string;
           variant = false;
         }
       } else {
