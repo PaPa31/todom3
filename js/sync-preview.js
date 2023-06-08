@@ -163,28 +163,9 @@ const whatString = ({
           stringToPreview = head + "\n\n" + _string;
           variant = false;
         } else {
-          //if (head.slice(-2) === "\n\n") {
-          //  logg("< extra newline >");
-          //  stringToPreview = head + _string + "\n1.";
-          //  variant = false;
-          //} else {
           logg("< not empty 1 pos >");
-          //stringToPreview = head + _string + "\n\n";
-          //stringToPreview = head + "\n<div style='margin-top:-1rem'>1</div>\n";
-          //stringToPreview = head + "\n\n\n<span>1</span>";
-          //if (head.slice(-2) === "\n\n") {
-          //  logg("< extra newline 1 >");
-          //  //stringToPreview = stringToPreview + "1. \x001\n";
-          //  //stringToPreview = stringToPreview + _string + "1. \x001\n";
-          //  //stringToPreview = head + "\n\n\n";
-          //  stringToPreview = head + _string + "\\\n\x001";
-          //  //stringToPreview = head + _string + "\n1. \x001";
-          //  variant = false;
-          //} else {
           stringToPreview = head + _string;
           variant = false;
-          //}
-          //}
         }
       } else {
         logg("<--< not 1 pos >-->");
