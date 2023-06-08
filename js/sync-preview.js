@@ -132,6 +132,8 @@ const whatString = ({
   logg("firstString :", '"' + _string + '"');
 
   let stringToPreview = "";
+  const current = head.slice(-1);
+  const startLine = tail[1];
 
   if (headLastNewLine < 0) {
     logg("<----------------- first line ----------------->");
@@ -152,9 +154,9 @@ const whatString = ({
       variant = false;
     } else {
       logg("<- - -|    chars at the beginning  |- - ->");
-      if (head.slice(-1) === "\n") {
+      if (current === "\n") {
         logg("<--< 1 pos >-->");
-        if (tail[1] === "\n") {
+        if (startLine === "\n") {
           logg("<- empty 1 pos ->");
           //logg(JSON.stringify(head));
           head = head.replace(/\n+$/, "");
