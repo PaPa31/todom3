@@ -289,6 +289,11 @@ const whatString = ({
           stringToPreview = head + _string;
           break;
         }
+        case "-": {
+          logg("2> > <2");
+          stringToPreview = head + _string;
+          break;
+        }
         default: {
           logg("2> default <2");
           stringToPreview = stringToPreview + "\\\n\x001";
@@ -303,7 +308,7 @@ const whatString = ({
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  logg("stTPw:", JSON.stringify(stringToPreview));
+  //logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
