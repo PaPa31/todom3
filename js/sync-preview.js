@@ -222,9 +222,9 @@ const whatString = ({
             logg("-> not spec at start <-");
           }
 
-          const matches = _string.match(regex2);
-          logg("matches =", JSON.stringify(matches));
-          const specString = matches ? matches[0] : "";
+          const matches1 = _string.match(regex2);
+          logg("matches1 =", JSON.stringify(matches1));
+          const specString = matches1 ? matches1[0] : "";
           const specChar = specString[0];
           logg("specChar =", JSON.stringify(specChar));
 
@@ -275,8 +275,9 @@ const whatString = ({
         logg("-> not spec <-");
       }
 
-      const matches = _string.match(regex3);
-      const specString = matches ? matches[0] : "";
+      const matches2 = _string.match(regex3);
+      logg("matches2 =", JSON.stringify(matches2));
+      const specString = matches2 ? matches2[0] : "";
       const specChar = specString[0];
 
       logg("specChar=", JSON.stringify(specChar));
