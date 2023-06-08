@@ -110,6 +110,29 @@ const firstStr = (tail) => {
   return firstString;
 };
 
+const outsideCodeBlock = (head) => {
+  const re = /\s*```.*/g;
+  const match = head.match(re);
+  const isOutsideCodeBlock = match ? match.length % 2 === 0 : true;
+  return isOutsideCodeBlock;
+};
+
+const checkCurrent = (current, head, stringToPreview) => {
+  if (outsideCodeBlock(head)) {
+    logg("<--< outside of code block >-->");
+    stringToPreview = head;
+  } else {
+    logg("<--< inside of code block >-->");
+    head = head.replace(/(.*)$/, "\n$1");
+    stringToPreview = head;
+  }
+  return stringToPreview;
+};
+
+const checkStartLine = (startLine) => {
+  const placeholder = "";
+};
+
 const whatString = ({
   head,
   tail,
@@ -132,8 +155,19 @@ const whatString = ({
   logg("firstString :", '"' + _string + '"');
 
   let stringToPreview = "";
+  const currentIndex = head.length - 1;
+  logg("currentIndex:", currentIndex);
   const current = head.slice(-1);
   const startLine = tail[1];
+
+  if (currentIndex === headLastNewLine) {
+    //check only current
+    stringToPreview = checkCurrent(current, head, stringToPreview);
+  } else {
+    //check current & startLine
+    checkStartLine(startLine, tail, _string);
+    checkCurrent(current, head);
+  }
 
   if (headLastNewLine < 0) {
     logg("<----------------- first line ----------------->");
@@ -241,7 +275,7 @@ const whatString = ({
             }
           } else {
             logg("-> not spec at start <-");
-            const regex3 = /(^ *```+)/;
+            const regex3 = /(^ *```)/;
             const isBigCodeBlockStart = regex3.test(_string);
 
             if (isBigCodeBlockStart) {
