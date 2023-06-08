@@ -171,17 +171,18 @@ const whatString = ({
       } else {
         logg("<--< not 1 pos >-->");
 
-        const re = /\s*```.*/g;
-        const match = head.match(re);
-        const isOutsideCodeBlock = match ? match.length % 2 === 0 : true;
+        // check spec at the current
+        const re1 = /\s*```.*/g;
+        const match1 = head.match(re1);
+        const isOutsideCodeBlock1 = match1 ? match1.length % 2 === 0 : true;
 
         // look for specSymbols [#,\d.,- ,>, ]
         // at the end of the head
         const regex1 =
           /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
-        const isSpecSymbol = regex1.test(head);
+        const isSpecSymbol1 = regex1.test(head);
 
-        if (isOutsideCodeBlock && isSpecSymbol) {
+        if (isOutsideCodeBlock1 && isSpecSymbol1) {
           logg("<   spec-symbol at current   >");
           head = head.replace(/(\n).*?$/, "$1");
           // remove first line whitespaces
@@ -193,46 +194,52 @@ const whatString = ({
           //if (head[headLastNewLine - 1] === "\n") {
           //  logg("< extra newline 2 >");
 
+          // check spec at the begining of the _string
+          const re2 = /\s*```.*/g;
+          const match2 = head.match(re2);
+          const isOutsideCodeBlock2 = match2 ? match2.length % 2 === 0 : true;
+
           //look for specSymbols [#,\d.,-,>, ]
           //at the begining of the _string
           const regex2 = /(^ *#{1,6})|(^ *\d+\.*)|(^ *\-)|(^ *\>+)|(^ +)/;
-          const isSpecSymbol = regex2.test(_string);
+          const isSpecSymbol2 = regex2.test(_string);
 
-          if (isSpecSymbol) {
+          if (isOutsideCodeBlock2 && isSpecSymbol2) {
             logg("-> spec at the start <-");
+
+            const matches1 = _string.match(regex2);
+            logg("matches1 =", JSON.stringify(matches1));
+            const specString = matches1 ? matches1[0] : "";
+            const specChar = specString[0];
+            logg("specChar =", JSON.stringify(specChar));
+
+            const rege = /\d/;
+            const isNumber = rege.test(specChar);
+
+            switch (true) {
+              case specChar === "#": {
+                logg("-> # <-");
+                head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
+                stringToPreview = head;
+                break;
+              }
+              case isNumber: {
+                logg("-> 0-9 <-", JSON.stringify(specChar));
+                // this regex works as if:
+                // work if 2 '\n' and not work if 1 '/n'
+                head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+                stringToPreview = head;
+                break;
+              }
+              default: {
+                logg("-> default 1 <-");
+                stringToPreview = head;
+                //stringToPreview = stringToPreview + "\\\n\x001";
+              }
+            }
           } else {
             logg("-> not spec at start <-");
-          }
-
-          const matches1 = _string.match(regex2);
-          logg("matches1 =", JSON.stringify(matches1));
-          const specString = matches1 ? matches1[0] : "";
-          const specChar = specString[0];
-          logg("specChar =", JSON.stringify(specChar));
-
-          const rege = /\d/;
-          const isNumber = rege.test(specChar);
-
-          switch (true) {
-            case specChar === "#": {
-              logg("-> # <-");
-              head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
-              stringToPreview = head;
-              break;
-            }
-            case isNumber: {
-              logg("-> 0-9 <-", JSON.stringify(specChar));
-              // this regex works as if:
-              // work if 2 '\n' and not work if 1 '/n'
-              head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-              stringToPreview = head;
-              break;
-            }
-            default: {
-              logg("-> default 1 <-");
-              stringToPreview = head;
-              //stringToPreview = stringToPreview + "\\\n\x001";
-            }
+            stringToPreview = head;
           }
 
           //head = head.replace(/\n\n(.*)$/, "\n\n\\\x001\x001$1");
