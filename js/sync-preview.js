@@ -153,7 +153,8 @@ const checkStartLine = (head, pigTail, stringToPreview, _string) => {
 
     stringToPreview = head;
     switch (outsideCodeBlock(head)) {
-      case specString === "#": {
+      //case specString === "#": {
+      case /#+/.test(specString): {
         logg("1> # <1");
         head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
         stringToPreview = head;
@@ -163,7 +164,8 @@ const checkStartLine = (head, pigTail, stringToPreview, _string) => {
         logg("1> 0-9 <1");
         // this regex works as if:
         // work if 2 '\n' and not work if 1 '/n'
-        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+        //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+        head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
         stringToPreview = head;
         break;
       }
@@ -408,7 +410,7 @@ const whatString = ({
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  logg("stTPw:", JSON.stringify(stringToPreview));
+  //logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
