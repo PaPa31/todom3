@@ -239,7 +239,17 @@ const whatString = ({
             }
           } else {
             logg("-> not spec at start <-");
-            stringToPreview = head;
+            const regex3 = /(^ *```+)/;
+            const isBigCodeBlockStart = regex3.test(_string);
+
+            if (isBigCodeBlockStart) {
+              logg(">> Big code block <<");
+              head = head.replace(/(.*)$/, "\n$1");
+              stringToPreview = head;
+            } else {
+              logg(">> simply char <<");
+              stringToPreview = head;
+            }
           }
 
           //head = head.replace(/\n\n(.*)$/, "\n\n\\\x001\x001$1");
