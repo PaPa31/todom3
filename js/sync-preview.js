@@ -117,7 +117,7 @@ const outsideCodeBlock = (head) => {
   return isOutsideCodeBlock;
 };
 
-const checkCurrent = (current, head, stringToPreview) => {
+const checkCurrent = (head, stringToPreview) => {
   if (outsideCodeBlock(head)) {
     logg("<--< outside of code block >-->");
     stringToPreview = head;
@@ -129,7 +129,7 @@ const checkCurrent = (current, head, stringToPreview) => {
   return stringToPreview;
 };
 
-const checkStartLine = (startLine) => {
+const checkStartLine = (tail, stringToPreview, _string) => {
   const placeholder = "";
 };
 
@@ -155,17 +155,22 @@ const whatString = ({
   logg("firstString :", '"' + _string + '"');
 
   let stringToPreview = "";
-  const currentIndex = head.length - 1;
+  const currentIndex = head === "" ? 0 : head.length;
   logg("currentIndex:", currentIndex);
   const current = head.slice(-1);
   const startLine = tail[1];
+  const pigTail = head.substr(
+    headLastNewLine === 0 ? headLastNewLine : headLastNewLine + 1,
+    currentIndex
+  );
+  logg("pigTail:", JSON.stringify(pigTail));
 
-  if (currentIndex === headLastNewLine) {
+  if (currentIndex - 1 === headLastNewLine) {
     //check only current
-    stringToPreview = checkCurrent(current, head, stringToPreview);
+    stringToPreview = checkCurrent(head, stringToPreview);
   } else {
     //check current & startLine
-    checkStartLine(startLine, tail, _string);
+    checkStartLine(tail, stringToPreview, _string);
     checkCurrent(current, head);
   }
 
