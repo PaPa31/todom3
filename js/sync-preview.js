@@ -223,7 +223,7 @@ const whatString = ({
           }
 
           const matches = _string.match(regex2);
-          logg("matches =", matches);
+          logg("matches =", JSON.stringify(matches));
           const specString = matches ? matches[0] : "";
           const specChar = specString[0];
           logg("specChar =", JSON.stringify(specChar));
@@ -240,6 +240,8 @@ const whatString = ({
             }
             case isNumber: {
               logg("-> 0-9 <-", JSON.stringify(specChar));
+              // this regex works as if:
+              // work if 2 '\n' and not work if 1 '/n'
               head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
               stringToPreview = head;
               break;
