@@ -218,13 +218,13 @@ const whatString = ({
 
             switch (true) {
               case specChar === "#": {
-                logg("-> # <-");
+                logg("1> # <1");
                 head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
                 stringToPreview = head;
                 break;
               }
               case isNumber: {
-                logg("-> 0-9 <-", JSON.stringify(specChar));
+                logg("1> 0-9 <1", JSON.stringify(specChar));
                 // this regex works as if:
                 // work if 2 '\n' and not work if 1 '/n'
                 head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
@@ -232,7 +232,7 @@ const whatString = ({
                 break;
               }
               default: {
-                logg("-> default 1 <-");
+                logg("1> default <1");
                 stringToPreview = head;
                 //stringToPreview = stringToPreview + "\\\n\x001";
               }
@@ -273,11 +273,12 @@ const whatString = ({
 
       switch (specChar) {
         case "#": {
-          logg("-> # <-");
+          logg("2> # <2");
           stringToPreview = head + _string;
           break;
         }
         default: {
+          logg("2> default <2");
           stringToPreview = stringToPreview + "\\\n\x001";
         }
       }
