@@ -129,8 +129,65 @@ const checkCurrent = (head, stringToPreview) => {
   return stringToPreview;
 };
 
-const checkStartLine = (tail, stringToPreview, _string) => {
-  const placeholder = "";
+const isNumeric = (value) => {
+  return !isNaN(value - parseFloat(value));
+};
+
+const checkStartLine = (head, pigTail, stringToPreview, _string) => {
+  //look for specSymbols [#,\d.,-,>, ]
+  //at the begining of the _string
+  const regex = /(^ *#{1,6})|(^ *\d+\.*)|(^ *\-)|(^ *\>+)|(^ +)/;
+  const isSpecSymbol = regex.test(pigTail);
+
+  if (isSpecSymbol) {
+    logg("-> spec at start <-");
+
+    const matches1 = _string.match(regex);
+    logg("matches1 =", JSON.stringify(matches1));
+    const specString = matches1 ? matches1[0] : "";
+    //const specChar = specString[0];
+    logg("specChar =", JSON.stringify(specString));
+
+    //const rege = /\d/;
+    //const isNumber = rege.test(specChar);
+
+    stringToPreview = head;
+    switch (outsideCodeBlock(head)) {
+      case specString === "#": {
+        logg("1> # <1");
+        head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
+        stringToPreview = head;
+        break;
+      }
+      case isNumeric(specString): {
+        logg("1> 0-9 <1");
+        // this regex works as if:
+        // work if 2 '\n' and not work if 1 '/n'
+        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+        stringToPreview = head;
+        break;
+      }
+      default: {
+        logg("1> default <1");
+        stringToPreview = head;
+        //stringToPreview = stringToPreview + "\\\n\x001";
+      }
+    }
+  } else {
+    logg("-> not spec at start <-");
+    const regex3 = /(^ *```)/;
+    const isBigCodeBlockStart = regex3.test(_string);
+
+    if (isBigCodeBlockStart) {
+      logg(">> Big code block <<");
+      head = head.replace(/(.*)$/, "\n$1");
+      stringToPreview = head;
+    } else {
+      logg(">> simply char <<");
+      stringToPreview = head;
+    }
+  }
+  return stringToPreview;
 };
 
 const whatString = ({
@@ -165,181 +222,185 @@ const whatString = ({
   );
   logg("pigTail:", JSON.stringify(pigTail));
 
-  if (currentIndex - 1 === headLastNewLine) {
-    //check only current
-    stringToPreview = checkCurrent(head, stringToPreview);
-  } else {
-    //check current & startLine
-    checkStartLine(tail, stringToPreview, _string);
-    checkCurrent(current, head);
-  }
+  //if (currentIndex - 1 === headLastNewLine) {
+  //  //check only current
+  //  stringToPreview = checkCurrent(head, stringToPreview);
+  //} else {
+  //  //check current & startLine
+  //  stringToPreview = checkStartLine(pigTail, stringToPreview, _string);
+  //  checkCurrent(current, head);
+  //}
 
-  if (headLastNewLine < 0) {
-    logg("<----------------- first line ----------------->");
-    if (head === "") {
-      logg("<------- 0 pos ------->");
-      stringToPreview = _string;
-      variant = false;
-    } else {
-      logg("<------- 0> pos ------->");
-      stringToPreview = head;
-    }
-  } else {
-    logg("<----------------- not first line ----------------->");
-    const emptyHead = head.replace(/^\n+/, "");
-    if (emptyHead === "") {
-      logg("<- - -|    newline at the beginning   |- - ->");
-      stringToPreview = _string;
-      variant = false;
-    } else {
-      logg("<- - -|    chars at the beginning  |- - ->");
-      if (current === "\n") {
-        logg("<--< 1 pos >-->");
-        if (startLine === "\n") {
-          logg("<- empty 1 pos ->");
-          //logg(JSON.stringify(head));
-          head = head.replace(/\n+$/, "");
-          //logg(JSON.stringify(head));
-          //stringToPreview = head + "\n\n<span>1</span>";
-          stringToPreview = head + "\n\n" + _string;
-          variant = false;
-        } else {
-          logg("< not empty 1 pos >");
-          //stringToPreview = head + _string;
-          stringToPreview = head + "\n" + _string;
-          variant = false;
-        }
+  stringToPreview = checkStartLine(head, pigTail, stringToPreview, _string);
+
+  if (false && false) {
+    if (headLastNewLine < 0) {
+      logg("<----------------- first line ----------------->");
+      if (head === "") {
+        logg("<------- 0 pos ------->");
+        stringToPreview = _string;
+        variant = false;
       } else {
-        logg("<--< not 1 pos >-->");
-
-        // check spec at the current
-        const re1 = /\s*```.*/g;
-        const match1 = head.match(re1);
-        const isOutsideCodeBlock1 = match1 ? match1.length % 2 === 0 : true;
-
-        // look for specSymbols [#,\d.,- ,>, ]
-        // at the end of the head
-        const regex1 =
-          /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
-        const isSpecSymbol1 = regex1.test(head);
-
-        if (isOutsideCodeBlock1 && isSpecSymbol1) {
-          logg("<   spec-symbol at current   >");
-          head = head.replace(/(\n).*?$/, "$1");
-          // remove first line whitespaces
-          _string = _string.replace(/^ +/, "");
-          stringToPreview = head + _string;
-          variant = false;
-        } else {
-          logg("<   not spec-symbol at current   >");
-          //if (head[headLastNewLine - 1] === "\n") {
-          //  logg("< extra newline 2 >");
-
-          // check spec at the begining of the _string
-          const re2 = /\s*```.*/g;
-          const match2 = head.match(re2);
-          const isOutsideCodeBlock2 = match2 ? match2.length % 2 === 0 : true;
-
-          //look for specSymbols [#,\d.,-,>, ]
-          //at the begining of the _string
-          const regex2 = /(^ *#{1,6})|(^ *\d+\.*)|(^ *\-)|(^ *\>+)|(^ +)/;
-          const isSpecSymbol2 = regex2.test(_string);
-
-          if (isOutsideCodeBlock2 && isSpecSymbol2) {
-            logg("-> spec at the start <-");
-
-            const matches1 = _string.match(regex2);
-            logg("matches1 =", JSON.stringify(matches1));
-            const specString = matches1 ? matches1[0] : "";
-            const specChar = specString[0];
-            logg("specChar =", JSON.stringify(specChar));
-
-            const rege = /\d/;
-            const isNumber = rege.test(specChar);
-
-            switch (true) {
-              case specChar === "#": {
-                logg("1> # <1");
-                head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
-                stringToPreview = head;
-                break;
-              }
-              case isNumber: {
-                logg("1> 0-9 <1", JSON.stringify(specChar));
-                // this regex works as if:
-                // work if 2 '\n' and not work if 1 '/n'
-                head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-                stringToPreview = head;
-                break;
-              }
-              default: {
-                logg("1> default <1");
-                stringToPreview = head;
-                //stringToPreview = stringToPreview + "\\\n\x001";
-              }
-            }
+        logg("<------- 0> pos ------->");
+        stringToPreview = head;
+      }
+    } else {
+      logg("<----------------- not first line ----------------->");
+      const emptyHead = head.replace(/^\n+/, "");
+      if (emptyHead === "") {
+        logg("<- - -|    newline at the beginning   |- - ->");
+        stringToPreview = _string;
+        variant = false;
+      } else {
+        logg("<- - -|    chars at the beginning  |- - ->");
+        if (current === "\n") {
+          logg("<--< 1 pos >-->");
+          if (startLine === "\n") {
+            logg("<- empty 1 pos ->");
+            //logg(JSON.stringify(head));
+            head = head.replace(/\n+$/, "");
+            //logg(JSON.stringify(head));
+            //stringToPreview = head + "\n\n<span>1</span>";
+            stringToPreview = head + "\n\n" + _string;
+            variant = false;
           } else {
-            logg("-> not spec at start <-");
-            const regex3 = /(^ *```)/;
-            const isBigCodeBlockStart = regex3.test(_string);
-
-            if (isBigCodeBlockStart) {
-              logg(">> Big code block <<");
-              head = head.replace(/(.*)$/, "\n$1");
-              stringToPreview = head;
-            } else {
-              logg(">> simply char <<");
-              stringToPreview = head;
-            }
+            logg("< not empty 1 pos >");
+            //stringToPreview = head + _string;
+            stringToPreview = head + "\n" + _string;
+            variant = false;
           }
+        } else {
+          logg("<--< not 1 pos >-->");
 
-          //head = head.replace(/\n\n(.*)$/, "\n\n\\\x001\x001$1");
-          //stringToPreview = head;
-          //} else {
-          //  stringToPreview = head;
-          //}
+          // check spec at the current
+          const re1 = /\s*```.*/g;
+          const match1 = head.match(re1);
+          const isOutsideCodeBlock1 = match1 ? match1.length % 2 === 0 : true;
+
+          // look for specSymbols [#,\d.,- ,>, ]
+          // at the end of the head
+          const regex1 =
+            /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
+          const isSpecSymbol1 = regex1.test(head);
+
+          if (isOutsideCodeBlock1 && isSpecSymbol1) {
+            logg("<   spec-symbol at current   >");
+            head = head.replace(/(\n).*?$/, "$1");
+            // remove first line whitespaces
+            _string = _string.replace(/^ +/, "");
+            stringToPreview = head + _string;
+            variant = false;
+          } else {
+            logg("<   not spec-symbol at current   >");
+            //if (head[headLastNewLine - 1] === "\n") {
+            //  logg("< extra newline 2 >");
+
+            // check spec at the begining of the _string
+            const re2 = /\s*```.*/g;
+            const match2 = head.match(re2);
+            const isOutsideCodeBlock2 = match2 ? match2.length % 2 === 0 : true;
+
+            //look for specSymbols [#,\d.,-,>, ]
+            //at the begining of the _string
+            const regex2 = /(^ *#{1,6})|(^ *\d+\.*)|(^ *\-)|(^ *\>+)|(^ +)/;
+            const isSpecSymbol2 = regex2.test(_string);
+
+            if (isOutsideCodeBlock2 && isSpecSymbol2) {
+              logg("-> spec at the start <-");
+
+              const matches1 = _string.match(regex2);
+              logg("matches1 =", JSON.stringify(matches1));
+              const specString = matches1 ? matches1[0] : "";
+              const specChar = specString[0];
+              logg("specChar =", JSON.stringify(specChar));
+
+              const rege = /\d/;
+              const isNumber = rege.test(specChar);
+
+              switch (true) {
+                case specChar === "#": {
+                  logg("1> # <1");
+                  head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
+                  stringToPreview = head;
+                  break;
+                }
+                case isNumber: {
+                  logg("1> 0-9 <1", JSON.stringify(specChar));
+                  // this regex works as if:
+                  // work if 2 '\n' and not work if 1 '/n'
+                  head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+                  stringToPreview = head;
+                  break;
+                }
+                default: {
+                  logg("1> default <1");
+                  stringToPreview = head;
+                  //stringToPreview = stringToPreview + "\\\n\x001";
+                }
+              }
+            } else {
+              logg("-> not spec at start <-");
+              const regex3 = /(^ *```)/;
+              const isBigCodeBlockStart = regex3.test(_string);
+
+              if (isBigCodeBlockStart) {
+                logg(">> Big code block <<");
+                head = head.replace(/(.*)$/, "\n$1");
+                stringToPreview = head;
+              } else {
+                logg(">> simply char <<");
+                stringToPreview = head;
+              }
+            }
+
+            //head = head.replace(/\n\n(.*)$/, "\n\n\\\x001\x001$1");
+            //stringToPreview = head;
+            //} else {
+            //  stringToPreview = head;
+            //}
+          }
         }
       }
-    }
-    if (head.slice(-2) === "\n\n") {
-      logg("< extra newline 1 >");
+      if (head.slice(-2) === "\n\n") {
+        logg("< extra newline 1 >");
 
-      //look for specSymbols [#,\d.,-,>, ]
-      //at the begining of the _string
-      const regex3 = /(^#{1,6})|(^\d+\.*)|(^\-)|(^\>+)|(^ +)/;
-      const isSpecSymbol = regex3.test(_string);
+        //look for specSymbols [#,\d.,-,>, ]
+        //at the begining of the _string
+        const regex3 = /(^#{1,6})|(^\d+\.*)|(^\-)|(^\>+)|(^ +)/;
+        const isSpecSymbol = regex3.test(_string);
 
-      if (isSpecSymbol) {
-        logg("-> spec <-");
-      } else {
-        logg("-> not spec <-");
+        if (isSpecSymbol) {
+          logg("-> spec <-");
+        } else {
+          logg("-> not spec <-");
+        }
+
+        const matches2 = _string.match(regex3);
+        logg("matches2 =", JSON.stringify(matches2));
+        const specString = matches2 ? matches2[0] : "";
+        const specChar = specString[0];
+
+        logg("specChar=", JSON.stringify(specChar));
+
+        switch (specChar) {
+          case "#": {
+            logg("2> # <2");
+            stringToPreview = head + _string;
+            break;
+          }
+          case "-": {
+            logg("2> > <2");
+            stringToPreview = head + _string;
+            break;
+          }
+          default: {
+            logg("2> default <2");
+            stringToPreview = stringToPreview + "\\\n\x001";
+          }
+        }
+
+        variant = false;
       }
-
-      const matches2 = _string.match(regex3);
-      logg("matches2 =", JSON.stringify(matches2));
-      const specString = matches2 ? matches2[0] : "";
-      const specChar = specString[0];
-
-      logg("specChar=", JSON.stringify(specChar));
-
-      switch (specChar) {
-        case "#": {
-          logg("2> # <2");
-          stringToPreview = head + _string;
-          break;
-        }
-        case "-": {
-          logg("2> > <2");
-          stringToPreview = head + _string;
-          break;
-        }
-        default: {
-          logg("2> default <2");
-          stringToPreview = stringToPreview + "\\\n\x001";
-        }
-      }
-
-      variant = false;
     }
   }
 
@@ -347,7 +408,7 @@ const whatString = ({
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  //logg("stTPw:", JSON.stringify(stringToPreview));
+  logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
