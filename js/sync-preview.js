@@ -165,7 +165,7 @@ const checkStartLine = (
   //  /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
   //const isSpecSymbol = regex.test(head);
 
-  if (isSpecSymbol) {
+  if (outsideCodeBlock(head) && isSpecSymbol) {
     logg("-> spec at start <-");
     const matches1 = stri.match(regex);
     logg("matches1 =", JSON.stringify(matches1));
@@ -177,7 +177,7 @@ const checkStartLine = (
     //const isNumber = rege.test(specChar);
 
     stringToPreview = head;
-    switch (outsideCodeBlock(head)) {
+    switch (true) {
       //case specString === "#": {
       case /#+/.test(specString): {
         logg("1> # <1");
@@ -264,7 +264,7 @@ const whatString = ({
   );
   logg("pigTail:", JSON.stringify(pigTail));
   const pigBody = head.substr(0, endHead);
-  logg("pigBody:", JSON.stringify(pigBody));
+  //logg("pigBody:", JSON.stringify(pigBody));
 
   //if (currentIndex - 1 === headLastNewLine) {
   //  //check only current
@@ -458,8 +458,8 @@ const whatString = ({
   //stringToPreview = stringToPreview.replace(/\n{2,}$/, "\n\x001\n");
 
   //logg("head1:", JSON.stringify(head1));
-  logg("head_:", JSON.stringify(head));
-  logg("stTPw:", JSON.stringify(stringToPreview));
+  //logg("head_:", JSON.stringify(head));
+  //logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
