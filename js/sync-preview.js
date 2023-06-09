@@ -193,6 +193,12 @@ const checkStartLine = (
         stringToPreview = head;
         break;
       }
+      case / *-/.test(specString): {
+        logg("2>'-'<2");
+        //stringToPreview = head + _string;
+        stringToPreview = pigBody + "\n\n" + _string;
+        break;
+      }
       default: {
         logg("1> default <1");
         head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
@@ -264,7 +270,7 @@ const whatString = ({
   );
   logg("pigTail:", JSON.stringify(pigTail));
   const pigBody = head.substr(0, endHead);
-  //logg("pigBody:", JSON.stringify(pigBody));
+  logg("pigBody:", JSON.stringify(pigBody));
 
   //if (currentIndex - 1 === headLastNewLine) {
   //  //check only current
@@ -459,7 +465,7 @@ const whatString = ({
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  //logg("stTPw:", JSON.stringify(stringToPreview));
+  logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
