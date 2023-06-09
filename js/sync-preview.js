@@ -133,11 +133,20 @@ const isNumeric = (value) => {
   return !isNaN(value - parseFloat(value));
 };
 
-const checkStartLine = (head, pigTail, stringToPreview, _string) => {
+const checkStartLine = (head, pigTail, pigBody, stringToPreview, _string) => {
+  //head = head.replace(/(\n).*?$/, "$1");
+  // remove first line whitespaces
+  //pigTail = pigTail.replace(/^ {1,3}/, "");
+
   //look for specSymbols [#,\d.,-,>, ]
   //at the begining of the _string
-  const regex = /(^ *#{1,6})|(^ *\d+\.*)|(^ *\-)|(^ *\>+)|(^ +)/;
+  //const regex = /(^ *#{1,6} *)|(^ *\d+\.* *)|(^ *\- *)|(^ *\>+ *)|(^ +)/;
+  const regex = /(^ *#{1,6} +)|(^ *\d+\. +.)|(^ *\- +)|(^ *\>+ +)|(^ +)/;
   const isSpecSymbol = regex.test(pigTail);
+
+  //const regex =
+  //  /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
+  //const isSpecSymbol = regex.test(head);
 
   if (isSpecSymbol) {
     logg("-> spec at start <-");
@@ -164,13 +173,13 @@ const checkStartLine = (head, pigTail, stringToPreview, _string) => {
         logg("1> 0-9 <1");
         // this regex works as if:
         // work if 2 '\n' and not work if 1 '/n'
-        //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-        head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
+        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
         stringToPreview = head;
         break;
       }
       default: {
         logg("1> default <1");
+        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
         stringToPreview = head;
         //stringToPreview = stringToPreview + "\\\n\x001";
       }
@@ -178,7 +187,7 @@ const checkStartLine = (head, pigTail, stringToPreview, _string) => {
   } else {
     logg("-> not spec at start <-");
     const regex3 = /(^ *```)/;
-    const isBigCodeBlockStart = regex3.test(_string);
+    const isBigCodeBlockStart = regex3.test(pigTail);
 
     if (isBigCodeBlockStart) {
       logg(">> Big code block <<");
@@ -186,7 +195,11 @@ const checkStartLine = (head, pigTail, stringToPreview, _string) => {
       stringToPreview = head;
     } else {
       logg(">> simply char <<");
+      //pigBody = pigBody.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+      //stringToPreview = pigBody + "\n" + _string;
+      head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
       stringToPreview = head;
+      variant = false;
     }
   }
   return stringToPreview;
@@ -223,6 +236,8 @@ const whatString = ({
     currentIndex
   );
   logg("pigTail:", JSON.stringify(pigTail));
+  const pigBody = head.substr(0, endHead);
+  logg("pigBody:", JSON.stringify(pigBody));
 
   //if (currentIndex - 1 === headLastNewLine) {
   //  //check only current
@@ -233,7 +248,13 @@ const whatString = ({
   //  checkCurrent(current, head);
   //}
 
-  stringToPreview = checkStartLine(head, pigTail, stringToPreview, _string);
+  stringToPreview = checkStartLine(
+    head,
+    pigTail,
+    pigBody,
+    stringToPreview,
+    _string
+  );
 
   if (false && false) {
     if (headLastNewLine < 0) {
@@ -410,7 +431,7 @@ const whatString = ({
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  //logg("stTPw:", JSON.stringify(stringToPreview));
+  logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
