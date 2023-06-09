@@ -195,10 +195,13 @@ const checkStartLine = (head, pigTail, pigBody, stringToPreview, _string) => {
       stringToPreview = head;
     } else {
       logg(">> simply char <<");
-      //pigBody = pigBody.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-      //stringToPreview = pigBody + "\n" + _string;
+      head = head.replace(/(\n).*?$/, "$1");
+      // remove first line whitespaces
+      _string = _string.replace(/^ +/, "");
+      //pigBody = pigBody.replace(/\n(.*)$/, "\n\x001\x001\x001$1");
+      //stringToPreview = pigBody + "\n\x001\x001\x001" + pigTail;
       head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-      stringToPreview = head;
+      stringToPreview = head + _string;
       variant = false;
     }
   }
