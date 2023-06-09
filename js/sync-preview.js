@@ -152,7 +152,12 @@ const checkStartLine = (
   //const regex = /(^ *#{1,6} +)|(^ *\d+\. +.)|(^ *\- +)|(^ *\>+ +)|(^ +)/;
 
   let stri = pigTail !== "" ? pigTail : _string[0];
-  if (tail.slice(0, 2) === "\n\n") stri = "";
+  if (tail.slice(0, 2) === "\n\n") {
+    logg("\\n\\n:", "true");
+    stri = "";
+  } else {
+    logg("\\n\\n:", "false");
+  }
   logg("stri:", JSON.stringify(stri));
   const isSpecSymbol = regex.test(stri);
 
@@ -219,7 +224,7 @@ const checkStartLine = (
       //variant = false;
     }
   }
-  if (!stri) {
+  if (stri === "") {
     stringToPreview =
       stringToPreview + "\n<div style='margin-top:-1rem'>\x001</div>";
     variant = false;
