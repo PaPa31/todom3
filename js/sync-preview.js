@@ -133,16 +133,28 @@ const isNumeric = (value) => {
   return !isNaN(value - parseFloat(value));
 };
 
-const checkStartLine = (head, pigTail, pigBody, stringToPreview, _string) => {
+const checkStartLine = (
+  head,
+  tail,
+  pigTail,
+  pigBody,
+  stringToPreview,
+  _string
+) => {
   //head = head.replace(/(\n).*?$/, "$1");
   // remove first line whitespaces
   //pigTail = pigTail.replace(/^ {1,3}/, "");
 
   //look for specSymbols [#,\d.,-,>, ]
   //at the begining of the _string
-  //const regex = /(^ *#{1,6} *)|(^ *\d+\.* *)|(^ *\- *)|(^ *\>+ *)|(^ +)/;
-  const regex = /(^ *#{1,6} +)|(^ *\d+\. +.)|(^ *\- +)|(^ *\>+ +)|(^ +)/;
-  const isSpecSymbol = regex.test(pigTail);
+  const regex =
+    /(^ *#{1,6} *(?!.))|(^ *\d+\.* *(?!.))|(^ *\- *(?!.))|(^ *\>+ *(?!.))|(^ +(?!.))/;
+  //const regex = /(^ *#{1,6} +)|(^ *\d+\. +.)|(^ *\- +)|(^ *\>+ +)|(^ +)/;
+
+  let stri = pigTail !== "" ? pigTail : _string[0];
+  if (tail.slice(0, 2) === "\n\n") stri = "";
+  logg("stri:", JSON.stringify(stri));
+  const isSpecSymbol = regex.test(stri);
 
   //const regex =
   //  /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
@@ -150,12 +162,11 @@ const checkStartLine = (head, pigTail, pigBody, stringToPreview, _string) => {
 
   if (isSpecSymbol) {
     logg("-> spec at start <-");
-
-    const matches1 = _string.match(regex);
+    const matches1 = stri.match(regex);
     logg("matches1 =", JSON.stringify(matches1));
     const specString = matches1 ? matches1[0] : "";
     //const specChar = specString[0];
-    logg("specChar =", JSON.stringify(specString));
+    logg("specString =", JSON.stringify(specString));
 
     //const rege = /\d/;
     //const isNumber = rege.test(specChar);
@@ -184,6 +195,9 @@ const checkStartLine = (head, pigTail, pigBody, stringToPreview, _string) => {
         //stringToPreview = stringToPreview + "\\\n\x001";
       }
     }
+    if (true) {
+      variant = false;
+    }
   } else {
     logg("-> not spec at start <-");
     const regex3 = /(^ *```)/;
@@ -195,15 +209,20 @@ const checkStartLine = (head, pigTail, pigBody, stringToPreview, _string) => {
       stringToPreview = head;
     } else {
       logg(">> simply char <<");
-      head = head.replace(/(\n).*?$/, "$1");
+      //head = head.replace(/(\n).*?$/, "$1");
       // remove first line whitespaces
-      _string = _string.replace(/^ +/, "");
+      //_string = _string.replace(/^ +/, "");
       //pigBody = pigBody.replace(/\n(.*)$/, "\n\x001\x001\x001$1");
       //stringToPreview = pigBody + "\n\x001\x001\x001" + pigTail;
       head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-      stringToPreview = head + _string;
-      variant = false;
+      stringToPreview = head;
+      //variant = false;
     }
+  }
+  if (!stri) {
+    stringToPreview =
+      stringToPreview + "\n<div style='margin-top:-1rem'>\x001</div>";
+    variant = false;
   }
   return stringToPreview;
 };
@@ -253,6 +272,7 @@ const whatString = ({
 
   stringToPreview = checkStartLine(
     head,
+    tail,
     pigTail,
     pigBody,
     stringToPreview,
