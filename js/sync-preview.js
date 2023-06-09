@@ -195,8 +195,10 @@ const checkStartLine = (
       }
       case / *-/.test(specString): {
         logg("2>'-'<2");
-        //stringToPreview = head + _string;
-        stringToPreview = pigBody + "\n\n" + _string;
+        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+        stringToPreview = head + _string;
+
+        //stringToPreview = pigBody + "\n" + _string;
         break;
       }
       default: {
@@ -225,7 +227,7 @@ const checkStartLine = (
       //_string = _string.replace(/^ +/, "");
       //pigBody = pigBody.replace(/\n(.*)$/, "\n\x001\x001\x001$1");
       //stringToPreview = pigBody + "\n\x001\x001\x001" + pigTail;
-      head = head.replace(/\n\n(.*)$/, "\n\n$1");
+      head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
       stringToPreview = head;
       //variant = false;
     }
