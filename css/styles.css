@@ -337,33 +337,33 @@ blockquote {
   background-color: #662a2a;
 }*/
 
-.md-item > :first-child,
+/*.md-item > :first-child,
 .file-text > :first-child,
 #preview > :first-child,
 #position > :first-child {
   margin-top: 0;
-}
+}*/
 
-.md-item > :last-child,
+/*.md-item > :last-child,
 .file-text > :last-child,
 #preview > :last-child,
 #position > :last-child {
   margin-bottom: 0;
-}
+}*/
 
-.md-item > :last-child :last-child,
+/*.md-item > :last-child :last-child,
 .file-text > :last-child :last-child,
 #preview > :last-child :last-child,
 #position > :last-child :last-child {
   margin-bottom: 0;
-}
+}*/
 
-.md-item > :last-child :last-child :last-child,
+/*.md-item > :last-child :last-child :last-child,
 .file-text > :last-child :last-child :last-child,
 #preview > :last-child :last-child :last-child,
 #position > :last-child :last-child :last-child {
   margin-bottom: 0;
-}
+}*/
 
 .file-name {
   color: #db657a;
@@ -1022,6 +1022,7 @@ textarea:active {
 #position * {
   background-color: transparent;
   color: transparent;
+  color: #851919a3;
 }
 
 #preview:empty,
