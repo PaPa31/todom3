@@ -337,12 +337,12 @@ blockquote {
   background-color: #662a2a;
 }*/
 
-/*.md-item > :first-child,
+.md-item > :first-child,
 .file-text > :first-child,
 #preview > :first-child,
 #position > :first-child {
   margin-top: 0;
-}*/
+}
 
 /*.md-item > :last-child,
 .file-text > :last-child,
