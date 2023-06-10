@@ -148,7 +148,7 @@ const checkStartLine = (
   //look for specSymbols [#,\d.,-,>, ]
   //at the begining of the _string
   const regex =
-    /(^ *#{1,6} *(?!.))|(^ *\d+\.* *(?!.))|(^ *\- *(?!.))|(^ *\>+ *(?!.))|(^ +(?!.))/;
+    /(^ *#{1,6} *(?!.))|(^ *\d+\.+ *(?!.))|(^ *\- *(?!.))|(^ *\>+ *(?!.))|(^ +(?!.))/;
   //const regex = /(^ *#{1,6} +)|(^ *\d+\. +.)|(^ *\- +)|(^ *\>+ +)|(^ +)/;
 
   let stri = pigTail !== "" ? pigTail : _string ? _string[0] : "";
@@ -236,12 +236,19 @@ const checkStartLine = (
       stringToPreview = head;
     } else {
       logg(">> simply char <<");
-      if (head.slice(-2) === "\n\n") {
-        logg(">>> start <<<");
+      if (head.slice(-1) === "\n") {
+        logg(">>> \\n <<<");
+        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
         stringToPreview = head + _string;
+        if (head.slice(-2) === "\n\n") {
+          logg(">>>>>> \\n\\n <<<<<<");
+          //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+          stringToPreview = head + _string;
+        }
+
         variant = false;
       } else {
-        logg("<<< not start >>>");
+        logg("<<< not \\n >>>");
         head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
         stringToPreview = head;
       }
