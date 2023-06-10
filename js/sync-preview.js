@@ -182,7 +182,7 @@ const checkStartLine = (
       case /#+/.test(specString): {
         logg("1> # <1");
         head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
-        stringToPreview = head;
+        stringToPreview = head + _string;
         break;
       }
       case isNumeric(specString): {
