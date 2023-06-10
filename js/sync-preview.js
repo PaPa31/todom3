@@ -151,7 +151,7 @@ const checkStartLine = (
     /(^ *#{1,6} *(?!.))|(^ *\d+\.* *(?!.))|(^ *\- *(?!.))|(^ *\>+ *(?!.))|(^ +(?!.))/;
   //const regex = /(^ *#{1,6} +)|(^ *\d+\. +.)|(^ *\- +)|(^ *\>+ +)|(^ +)/;
 
-  let stri = pigTail !== "" ? pigTail : _string[0];
+  let stri = pigTail !== "" ? pigTail : _string ? _string[0] : "";
   if (tail.slice(0, 2) === "\n\n") {
     logg("\\n\\n:", "true");
     stri = "";
