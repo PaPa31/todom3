@@ -201,6 +201,14 @@ const checkStartLine = (
         //stringToPreview = pigBody + "\n" + _string;
         break;
       }
+      case / /.test(specString): {
+        logg("2>' '<2");
+        //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+        stringToPreview = head + _string + "\n- \x001\x001\x001";
+
+        //stringToPreview = pigBody + "\n" + _string;
+        break;
+      }
       default: {
         logg("1> default <1");
         head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
