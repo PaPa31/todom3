@@ -242,6 +242,7 @@ const checkStartLine = (
         variant = false;
       } else {
         logg("<<< not start >>>");
+        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
         stringToPreview = head;
       }
       //head = head.replace(/(\n).*?$/, "$1");
