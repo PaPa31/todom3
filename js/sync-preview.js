@@ -213,14 +213,14 @@ const checkStartLine = (
       }
       case / /.test(specString): {
         logg("2>' '<2");
-        head = head.replace(/\n\n(.*)$/, "\n\n- \x001\x001\x001$1");
+        head = head.replace(/\n\n(.*)$/, "\n\n \x001\x001\x001$1");
 
         //head = head.replace(/\n(.*)$/, "\x001\x001\x001$1");
         //stringToPreview = head + _string + "\n- \x001\x001\x001";
-        head = head.replace(/\n(.*)$/, "$1");
-        stringToPreview = head + "\n- \x001\x001\x001";
+        //head = head.replace(/\n(.*)$/, "$1");
+        //stringToPreview = head + "\n \x001\x001\x001";
 
-        //stringToPreview = pigBody + "\n" + _string;
+        stringToPreview = pigBody + "\n" + _string;
         break;
       }
       default: {
