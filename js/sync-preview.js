@@ -236,13 +236,21 @@ const checkStartLine = (
       stringToPreview = head;
     } else {
       logg(">> simply char <<");
+      if (head.slice(-2) === "\n\n") {
+        logg(">>> start <<<");
+        stringToPreview = head + _string;
+        variant = false;
+      } else {
+        logg("<<< not start >>>");
+        stringToPreview = head;
+      }
       //head = head.replace(/(\n).*?$/, "$1");
       // remove first line whitespaces
       //_string = _string.replace(/^ +/, "");
       //pigBody = pigBody.replace(/\n(.*)$/, "\n\x001\x001\x001$1");
       //stringToPreview = pigBody + "\n\x001\x001\x001" + pigTail;
-      head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-      stringToPreview = head;
+      //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+
       //variant = false;
     }
   }
