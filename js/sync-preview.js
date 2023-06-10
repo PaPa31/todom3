@@ -238,7 +238,7 @@ const checkStartLine = (
       logg(">> simply char <<");
       if (head.slice(-1) === "\n") {
         logg(">>> \\n <<<");
-        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+        //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
         stringToPreview = head + _string;
         if (head.slice(-2) === "\n\n") {
           logg(">>>>>> \\n\\n <<<<<<");
@@ -249,7 +249,8 @@ const checkStartLine = (
         variant = false;
       } else {
         logg("<<< not \\n >>>");
-        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+        //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+        head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
         stringToPreview = head;
       }
       //head = head.replace(/(\n).*?$/, "$1");
@@ -263,8 +264,7 @@ const checkStartLine = (
     }
   }
   if (stri === "") {
-    stringToPreview =
-      stringToPreview + "\n<div style='margin-top:-1rem'>\x001</div>";
+    stringToPreview = head + "\n<div style='margin-top:-1rem'>\x001</div>";
     variant = false;
   }
   return stringToPreview;
