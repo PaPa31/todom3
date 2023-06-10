@@ -161,11 +161,13 @@ const checkStartLine = (
   logg("stri:", JSON.stringify(stri));
   const isSpecSymbol = regex.test(stri);
 
+  const isOutsideCodeBlock = outsideCodeBlock(head);
+
   //const regex =
   //  /((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\.* *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
   //const isSpecSymbol = regex.test(head);
 
-  if (outsideCodeBlock(head) && isSpecSymbol) {
+  if (isOutsideCodeBlock && isSpecSymbol) {
     logg("-> spec at start <-");
     const matches1 = stri.match(regex);
     logg("matches1 =", JSON.stringify(matches1));
@@ -236,7 +238,7 @@ const checkStartLine = (
       stringToPreview = head;
     } else {
       logg(">> simply char <<");
-      if (head.slice(-1) === "\n") {
+      if (head.slice(-1) === "\n" && isOutsideCodeBlock) {
         logg(">>> \\n <<<");
         //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
         stringToPreview = head + _string;
@@ -264,7 +266,7 @@ const checkStartLine = (
       //variant = false;
     }
   }
-  if (stri === "") {
+  if (stri === "" && isOutsideCodeBlock) {
     stringToPreview = head + "\n<div style='margin-top:-1rem'>\x001</div>";
     variant = false;
   }
@@ -303,7 +305,7 @@ const whatString = ({
   );
   logg("pigTail:", JSON.stringify(pigTail));
   const pigBody = head.substr(0, endHead);
-  logg("pigBody:", JSON.stringify(pigBody));
+  //logg("pigBody:", JSON.stringify(pigBody));
 
   //if (currentIndex - 1 === headLastNewLine) {
   //  //check only current
@@ -498,7 +500,7 @@ const whatString = ({
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  logg("stTPw:", JSON.stringify(stringToPreview));
+  //logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
