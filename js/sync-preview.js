@@ -112,7 +112,7 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   //look for specSymbols [#,\d.,-,>, ]
   //at the begining of the stri
   const regex =
-    /(^ *#{1,6} *(?!.))|(^ *\d+\.+ *(?!.))|(^ *\- *(?!.))|(^ *\>+ *(?!.))|(^ +(?!.))/;
+    /(^ *#{1,6} *(?!.))|(^ *\d+\.* *(?!.))|(^ *\- *(?!.))|(^ *\>+ *(?!.))|(^ +(?!.))/;
 
   let stri = pigTail !== "" ? pigTail : _string ? _string[0] : "";
   if (tail.slice(0, 2) === "\n\n") {
@@ -145,8 +145,11 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
         logg("1> 0-9 <1");
         // this regex works as if:
         // work if 2 '\n' and not work if 1 '/n'
-        head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-        stringToPreview = head;
+        //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
+        //stringToPreview = head;
+        //stringToPreview = head + _string;
+        head = head.replace(/\n\n(.*)$/, "\n\n \x001\x001\x001$1");
+        stringToPreview = pigBody + "\n" + _string;
         break;
       }
       case / *-/.test(specString): {
@@ -232,8 +235,8 @@ const whatString = ({ head, tail, headLastNewLine, endHead }) => {
 
   stringToPreview = checkStartLine(head, tail, pigTail, pigBody, _string);
 
-  logg("head1:", JSON.stringify(head1));
-  logg("head_:", JSON.stringify(head));
+  //logg("head1:", JSON.stringify(head1));
+  //logg("head_:", JSON.stringify(head));
   logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
@@ -295,7 +298,7 @@ if (true) {
 
   // managing vars
   // change to show/hide output loggs
-  var showLogg = false; // logg - 'headAndTail'
+  var showLogg = true; // logg - 'headAndTail'
   var showLogg1 = false; // logg1 - 'whatClass'
   var showLogg2 = false; // logg2 -
   var showLogg3 = false; // logg3 -

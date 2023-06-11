@@ -1016,7 +1016,7 @@ textarea:active {
 #position * {
   background-color: transparent;
   color: transparent;
-  /*color: #851919a3;*/
+  color: #851919a3;
 }
 
 #preview:empty,
