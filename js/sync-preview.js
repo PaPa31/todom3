@@ -149,8 +149,12 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
         //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
         //stringToPreview = head;
         //stringToPreview = head + _string;
-        head = head.replace(/\n\n(.*)$/, "\n\n \x001\x001\x001$1");
+        //head = head.replace(/\n\n(.*)$/, "\n\n \x001\x001\x001$1");
         stringToPreview = pigBody + "\n" + _string;
+        stringToPreview = stringToPreview.replace(
+          /\\\n.*$/,
+          "\\\n<span>\x001</span>"
+        );
         break;
       }
       case / *-/.test(specString): {
