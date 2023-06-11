@@ -109,6 +109,7 @@ const isNumeric = (value) => {
 
 const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   let stringToPreview = "";
+  //head = head.replace(/\n +\n/g, "\n\n");
   //look for specSymbols [#,\d.,-,>, ]
   //at the begining of the stri
   const regex =
@@ -166,7 +167,7 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
       }
       case / /.test(specString): {
         logg("2>' '<2");
-        head = head.replace(/\n\n(.*)$/, "\n\n \x001\x001\x001$1");
+        //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
         stringToPreview = pigBody + "\n" + _string;
         break;
       }
@@ -202,7 +203,9 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
       }
     }
   }
-  if (stri === "" && isOutsideCodeBlock) {
+  const rege = /^ +$/;
+  const isTrailingSpace = rege.test(_string);
+  if ((stri === "" || isTrailingSpace) && isOutsideCodeBlock) {
     stringToPreview = head + "\n<div style='margin-top:-1rem'>\x001</div>";
     variant = false;
   }
@@ -232,6 +235,7 @@ const whatString = ({ head, tail, headLastNewLine, endHead }) => {
   );
   logg("pigTail:", JSON.stringify(pigTail));
   const pigBody = head.substr(0, endHead);
+  logg("pigBody:", JSON.stringify(pigBody));
 
   stringToPreview = checkStartLine(head, tail, pigTail, pigBody, _string);
 
