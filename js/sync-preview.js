@@ -162,7 +162,8 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
       case / *\>/.test(specString): {
         logg("1> > <1");
         head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-        stringToPreview = head + "\\\x001\x001\x001";
+        //stringToPreview = head + "\\\x001\x001\x001";
+        stringToPreview = pigBody + "\n" + _string;
         break;
       }
       case / /.test(specString): {
