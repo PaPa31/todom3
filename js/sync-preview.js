@@ -108,10 +108,6 @@ const outsideCodeBlock = (head) => {
   return isOutsideCodeBlock;
 };
 
-const isNumeric = (value) => {
-  return !isNaN(value - parseFloat(value));
-};
-
 const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   let stringToPreview = "";
   //look for specSymbols [#,\d.,-,>, ]
@@ -134,16 +130,20 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   const matches1 = stri.match(regex);
   logg("matches1 =", JSON.stringify(matches1));
 
-  let isSpecSymbol = matches1 ? true : false;
-  logg("isSpecSymbol:", isSpecSymbol);
+  const isDigit = matches1 && matches1[2] ? true : false;
 
-  const regexxx = /\d+\./;
-  const isDot = regexxx.test(_string);
-  console.log(isDot);
-  const isDotAfterDigit =
-    matches1 && matches1[2] && regexxx.test(_string) ? true : false;
+  //let isDotAfterDigit = false;
+  //if (isDigit) {
+  //  logg(">- digit -<");
+  //  const regexxx = /\d+\./;
+  //  const isDot = regexxx.test(_string);
+  //  logg("isDot:", isDot);
+  //  isDotAfterDigit = regexxx.test(_string) && true;
+  //} else {
+  //  logg(">- not digit  -<");
+  //}
 
-  const isNotDigit = matches1 && !matches1[2];
+  const isDotAfterDigit = isDigit && /\d+\./.test(_string) ? true : false;
 
   if (isDotAfterDigit) {
     logg(">- dot after digit -<");
@@ -151,7 +151,7 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
     logg(">- not dot after digit  -<");
   }
 
-  if (isOutsideCodeBlock && (isNotDigit || isDotAfterDigit)) {
+  if (isOutsideCodeBlock && (!isDigit || isDotAfterDigit)) {
     stringToPreview = pigBody + "\n" + _string;
     variant = false;
   } else {
@@ -214,13 +214,13 @@ const whatString = ({ head, tail, headLastNewLine, endHead }) => {
   );
   logg("pigTail:", JSON.stringify(pigTail));
   const pigBody = head.substr(0, endHead);
-  logg("pigBody:", JSON.stringify(pigBody));
+  //logg("pigBody:", JSON.stringify(pigBody));
 
   stringToPreview = checkStartLine(head, tail, pigTail, pigBody, _string);
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  logg("stTPw:", JSON.stringify(stringToPreview));
+  //logg("stTPw:", JSON.stringify(stringToPreview));
   if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
   lastChildRecursive(position);
 
