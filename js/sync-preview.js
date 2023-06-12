@@ -19,6 +19,11 @@ const whatClass = (el) => {
           break;
         }
       }
+      case "cite": {
+        logg1("rb");
+        el.classList.add("last-child-rb");
+        break;
+      }
       default: {
         logg1("underline");
         el.classList.add("last-child");
