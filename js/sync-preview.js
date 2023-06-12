@@ -152,38 +152,6 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   }
 
   if (isOutsideCodeBlock && (isNotDigit || isDotAfterDigit)) {
-    stringToPreview = head;
-
-    switch (matches1[0]) {
-      case matches1[1]: {
-        logg("1> # <1");
-        break;
-      }
-
-      case matches1[2]: {
-        logg("1> 0-9 <1");
-        break;
-      }
-
-      case matches1[3]: {
-        logg("1>'-'<1");
-        break;
-      }
-
-      case matches1[4]: {
-        logg("1> > <1");
-        break;
-      }
-
-      case matches1[5]: {
-        logg("1>' '<1");
-        break;
-      }
-      default: {
-        logg("1> default <1");
-      }
-    }
-
     stringToPreview = pigBody + "\n" + _string;
     variant = false;
   } else {
