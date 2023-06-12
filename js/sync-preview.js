@@ -130,9 +130,10 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   const matches1 = stri.match(regex);
   logg("matches1 =", JSON.stringify(matches1));
 
-  const isDigit = matches1 && matches1[2] ? true : false;
+  const isNotDigit = matches1 && !matches1[2] ? true : false;
   // test will start if digit only
-  const isDotAfterDigit = isDigit && /\d+\./.test(_string) ? true : false;
+  const isDotAfterDigit =
+    matches1 && matches1[2] && /\d+\./.test(_string) ? true : false;
 
   if (isDotAfterDigit) {
     logg(">- dot after digit -<");
@@ -140,7 +141,7 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
     logg(">- not dot after digit  -<");
   }
 
-  if (isOutsideCodeBlock && (!isDigit || isDotAfterDigit)) {
+  if (isOutsideCodeBlock && (isNotDigit || isDotAfterDigit)) {
     stringToPreview = pigBody + "\n" + _string;
     variant = false;
   } else {
