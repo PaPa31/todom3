@@ -274,6 +274,7 @@ blockquote {
 }
 
 #main-listing > ol > li {
+  padding: 5px;
   list-style: none;
   /*list-style-position: outside;*/
 }
@@ -328,7 +329,6 @@ blockquote {
 
 .markdown-body > ol > li {
   width: 100%;
-  padding: 5px;
   transition: background-color 0.3s ease-in-out;
   background-color: transparent;
   border-radius: 4px;
@@ -706,6 +706,7 @@ h6 {
 ol.preview-outer li {
   padding-bottom: 0;
   padding-top: 0;
+  position: relative;
 }
 
 ol.preview-outer p {
@@ -1012,7 +1013,7 @@ textarea:active {
 }
 
 #position {
-  width: 678px;
+  /*width: 678px;*/
   background-color: transparent;
   color: transparent;
   overflow: hidden;
@@ -1144,7 +1145,7 @@ code {
   }
   #position {
     /*position: relative;*/
-    width: 684px;
+    /*width: 684px;*/
     /* #preview & #position
     * not sync due to scroll to view
     */
