@@ -480,7 +480,8 @@ table {
 
 #content .flex-row {
   margin: 0 auto 0.5em;
-  width: 95%;
+  /*due to viewport change*/
+  /*width: 95%;*/
 }
 
 .align-center {
