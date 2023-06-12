@@ -276,21 +276,22 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   } else {
     logg("-> not spec at start <-");
     const regex3 = /(^ *```)/;
-    const isBigCodeBlockStart = regex3.test(pigTail);
+    const isBigCodeBlockStart = regex3.test(_string);
 
     if (isBigCodeBlockStart) {
       logg(">> Big code block <<");
-      head = head.replace(/(.*)$/, "\n$1");
-      stringToPreview = head;
+      //head = head.replace(/(.*)$/, "\n$1");
+      //stringToPreview = head;
+      stringToPreview = pigBody + "\n\n" + _string;
     } else {
       logg(">> simply char <<");
       if (head.slice(-1) === "\n" && isOutsideCodeBlock) {
         logg(">>> \\n <<<");
         stringToPreview = head + _string;
-        //if (head.slice(-2) === "\n\n") {
-        //  logg(">>>>>> \\n\\n <<<<<<");
-        //  stringToPreview = head + _string;
-        //}
+        if (head.slice(-2) === "\n\n") {
+          logg(">>>>>> \\n\\n <<<<<<");
+          stringToPreview = head + _string;
+        }
         stringToPreview = stringToPreview.replace(
           /\\\n.*$/,
           "\\\n<span>\x001</span>"
