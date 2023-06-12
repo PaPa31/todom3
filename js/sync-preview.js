@@ -114,17 +114,10 @@ const isNumeric = (value) => {
 
 const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   let stringToPreview = "";
-  //head = head.replace(/\n +\n/g, "\n\n");
   //look for specSymbols [#,\d.,-,>, ]
   //at the begining of the stri
   const regex =
     /(^ *#{1,6} *(?!.))|(^ *\d+\.* *(?!.))|(^ *\- *(?!.))|(^ *\>+ *(?!.))|(^ +(?!.))/;
-
-  //const regex =
-  ///((?<=\n *)#{1,6} *$)|((?<=\n *)\d+\. *$)|((?<=\n *)\- *$)|((?<=\n *)\>+ *$)|((?<=\n) +$)/;
-
-  //const regex = /(^ *#{1,6})|(^ *\d+\.)|(^ *\-)|(^ *\>+)|(^ +)/;
-  //const regex = /(^ *#{1,6} *)|(^ *\d+\. *)|(^ *\- *)|(^ *\>+ *)|(^ + *)/;
 
   let stri = pigTail !== "" ? pigTail : _string ? _string[0] : "";
   if (tail.slice(0, 2) === "\n\n") {
@@ -134,17 +127,13 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
     logg("\\n\\n:", "false");
   }
   logg("stri:", JSON.stringify(stri));
-  //const isSpecSymbol = regex.test(stri);
 
   const isOutsideCodeBlock = outsideCodeBlock(head);
 
   logg("-> spec at start <-");
   const matches1 = stri.match(regex);
   logg("matches1 =", JSON.stringify(matches1));
-  //const specString = matches1 ? matches1[0] : "";
-  //logg("specString =", JSON.stringify(specString));
 
-  //const isDigit = matches1[2] !== null;
   let isSpecSymbol = matches1 ? true : false;
   logg("isSpecSymbol:", isSpecSymbol);
 
@@ -162,122 +151,41 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
     logg(">- not dot after digit  -<");
   }
 
-  //if (isOutsideCodeBlock && isSpecSymbol && isDotAfterDigit) {
   if (isOutsideCodeBlock && (isNotDigit || isDotAfterDigit)) {
     stringToPreview = head;
 
     switch (matches1[0]) {
       case matches1[1]: {
         logg("1> # <1");
-        //head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
-        //stringToPreview = head + _string;
-        //stringToPreview = pigBody + "\n" + _string;
-        //variant = false;
         break;
       }
 
       case matches1[2]: {
         logg("1> 0-9 <1");
-        //stringToPreview = pigBody + "\n" + _string;
-        //variant = false;
         break;
       }
 
       case matches1[3]: {
         logg("1>'-'<1");
-        //stringToPreview = pigBody + "\n" + _string;
-        //variant = false;
         break;
       }
 
       case matches1[4]: {
         logg("1> > <1");
-        //stringToPreview = pigBody + "\n" + _string;
-        //variant = false;
         break;
       }
 
       case matches1[5]: {
         logg("1>' '<1");
-        //stringToPreview = pigBody + "\n" + _string;
-        //variant = false;
         break;
       }
       default: {
         logg("1> default <1");
-        //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-        //stringToPreview = head;
       }
     }
 
-    //if (isDotAfterDigit) {
-    //  logg(">isDot<");
-    //  stringToPreview = pigBody + "\n" + _string;
-
-    //  variant = false;
-    //} else {
-    //  logg(">not Dot<");
-    //  stringToPreview = head;
-    //  if (pigTail === "") {
-    //    stringToPreview = stringToPreview.replace(
-    //      /\\\n.*$/,
-    //      "\\\n<span>\x001</span>"
-    //    );
-    //    variant = false;
-    //  } else {
-    //  }
-    //}
     stringToPreview = pigBody + "\n" + _string;
     variant = false;
-
-    //switch (false) {
-    //  case /#+/.test(specString): {
-    //    logg("2> # <2");
-    //    head = head.replace(/\n\n(.*)$/, "\n\n\n$1");
-    //    stringToPreview = head + _string;
-    //    break;
-    //  }
-    //  case isNumeric(specString): {
-    //    logg("2> 0-9 <2");
-    //    // this regex works as if:
-    //    // work if 2 '\n' and not work if 1 '/n'
-    //    //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-    //    //stringToPreview = head;
-    //    //stringToPreview = head + _string;
-    //    //head = head.replace(/\n\n(.*)$/, "\n\n \x001\x001\x001$1");
-    //    stringToPreview = pigBody + "\n" + _string;
-    //    stringToPreview = stringToPreview.replace(
-    //      /\\\n.*$/,
-    //      "\\\n<span>\x001</span>"
-    //    );
-    //    break;
-    //  }
-    //  case / *-/.test(specString): {
-    //    logg("2>'-'<2");
-    //    //head = head.replace(/\n\n(.*)$/, "\n\n- \x001\x001\x001$1");
-    //    //stringToPreview = head + _string;
-    //    stringToPreview = pigBody + "\n" + _string;
-    //    break;
-    //  }
-    //  case / *\>/.test(specString): {
-    //    logg("2> > <2");
-    //    //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-    //    //stringToPreview = head + "\\\x001\x001\x001";
-    //    stringToPreview = pigBody + "\n" + _string;
-    //    break;
-    //  }
-    //  case / /.test(specString): {
-    //    logg("2>' '<2");
-    //    //head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-    //    stringToPreview = pigBody + "\n" + _string;
-    //    break;
-    //  }
-    //  default: {
-    //    logg("2> default <2");
-    //    head = head.replace(/\n\n(.*)$/, "\n\n\x001\x001\x001$1");
-    //    stringToPreview = head;
-    //  }
-    //}
   } else {
     logg("-> not spec at start <-");
     const regex3 = /(^ *```)/;
@@ -285,8 +193,6 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
 
     if (isBigCodeBlockStart) {
       logg(">> Big code block <<");
-      //head = head.replace(/(.*)$/, "\n$1");
-      //stringToPreview = head;
       stringToPreview = pigBody + "\n\n" + _string;
     } else {
       logg(">> simply char <<");
