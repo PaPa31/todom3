@@ -131,18 +131,7 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   logg("matches1 =", JSON.stringify(matches1));
 
   const isDigit = matches1 && matches1[2] ? true : false;
-
-  //let isDotAfterDigit = false;
-  //if (isDigit) {
-  //  logg(">- digit -<");
-  //  const regexxx = /\d+\./;
-  //  const isDot = regexxx.test(_string);
-  //  logg("isDot:", isDot);
-  //  isDotAfterDigit = regexxx.test(_string) && true;
-  //} else {
-  //  logg(">- not digit  -<");
-  //}
-
+  // test will start if digit only
   const isDotAfterDigit = isDigit && /\d+\./.test(_string) ? true : false;
 
   if (isDotAfterDigit) {
@@ -281,7 +270,7 @@ if (true) {
 
   // managing vars
   // change to show/hide output loggs
-  var showLogg = true; // logg - 'headAndTail'
+  var showLogg = false; // logg - 'headAndTail'
   var showLogg1 = false; // logg1 - 'whatClass'
   var showLogg2 = false; // logg2 -
   var showLogg3 = false; // logg3 -
