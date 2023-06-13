@@ -131,7 +131,7 @@ const unfoldButtonMaker = (parentLi) => {
   buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
   if (isItemState && mdTag.scrollHeight < 40) {
     buttonTag.setAttribute("disable", true);
-    mdTag.classList.add("single-line")
+    mdTag.classList.add("single-line");
   } else {
     buttonTag.setAttribute("title", "fold/unfold one");
   }

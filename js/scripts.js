@@ -329,9 +329,11 @@ const disableButton = (el) => {
   if (isItemState && el.firstChild.scrollHeight < 40) {
     el.firstChild.nextSibling.setAttribute("disable", true);
     el.firstChild.nextSibling.setAttribute("title", "fold/unfold one");
+    el.firstChild.classList.add("single-line");
   } else {
     el.firstChild.nextSibling.removeAttribute("disable");
     el.firstChild.nextSibling.removeAttribute("title");
+    el.firstChild.classList.remove("single-line");
   }
 };
 
