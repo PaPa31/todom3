@@ -307,11 +307,19 @@ blockquote {
 #position {
   width: 100%;
   float: left;
-  padding: 5px 10px 10px;
   border-radius: 5px;
   background-color: var(--bg-item);
   word-wrap: break-word;
   overflow: auto;
+}
+
+.file-size, .file-name, .file-text {
+  line-height: 1em;
+}
+
+
+.file-text {
+  padding: 5px 0 10px 10px;
 }
 
 #preview,
@@ -792,7 +800,7 @@ ol.preview-outer p {
 #unit-control {
   margin-left: -85px;
   width: 83px !important;
-  padding: 2px 0 7px !important;
+  padding: 1px 0 2px !important;
   background-color: transparent !important;
 }
 
