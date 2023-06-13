@@ -508,7 +508,8 @@ table {
 
 .dark .muted-button:hover,
 .dark [disable="true"] {
-  border: 1px solid var(--button-muted-border-dark);
+  /*border: 1px solid var(--button-muted-border-dark);*/
+  border: 1px solid transparent;
   color: var(--button-muted-color-dark);
 }
 
