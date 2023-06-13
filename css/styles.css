@@ -96,8 +96,7 @@ html {
   * of page on Chrome
   */
   overflow-y: overlay;
-  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica,
-    Arial, sans-serif;
+  font-family: arial;
 }
 
 * {
@@ -274,7 +273,7 @@ blockquote {
 }
 
 #main-listing > ol > li {
-  padding: 5px;
+  padding: 0px 5px 5px 5px;
   list-style: none;
   /*list-style-position: outside;*/
 }
@@ -313,12 +312,16 @@ blockquote {
   overflow: auto;
 }
 
-.md-item, .file-text  {
+.md-item,
+.file-text {
   padding: 5px 0 10px 10px;
+  margin: 0px 0 3px 0;
 }
 
-.file-size, .file-name, .file-text {
-  line-height: 1em;
+.file-size,
+.file-name,
+.file-text {
+  line-height: 18px;
 }
 
 #preview,
