@@ -234,7 +234,7 @@ blockquote {
   border-color: var(--border-cite-dark);
 }
 
-#list-items.folded > li > .md-item {
+#list-items.folded > li > .md-item:not(.single-line) {
   height: 39px;
 }
 
@@ -793,6 +793,10 @@ ol.preview-outer p {
   width: 83px !important;
   padding: 5px 0 !important;
   background-color: transparent !important;
+}
+
+.single-line ~ #unit-control {
+  padding: 2px 0 !important;
 }
 
 #delete-all-items {
