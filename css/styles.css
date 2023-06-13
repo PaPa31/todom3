@@ -792,12 +792,8 @@ ol.preview-outer p {
 #unit-control {
   margin-left: -85px;
   width: 83px !important;
-  padding: 5px 0 !important;
+  padding: 2px 0 7px !important;
   background-color: transparent !important;
-}
-
-.single-line ~ #unit-control {
-  padding: 2px 0 !important;
 }
 
 #delete-all-items {
