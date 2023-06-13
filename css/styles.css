@@ -313,13 +313,12 @@ blockquote {
   overflow: auto;
 }
 
-.file-size, .file-name, .file-text {
-  line-height: 1em;
+.md-item, .file-text  {
+  padding: 5px 0 10px 10px;
 }
 
-
-.file-text {
-  padding: 5px 0 10px 10px;
+.file-size, .file-name, .file-text {
+  line-height: 1em;
 }
 
 #preview,
