@@ -184,9 +184,24 @@ const unfoldOneItem = (element) => {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
     itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    // Facebook solution
+    // set the top dynamically to retain the scroll position
+    // https://stackoverflow.com/a/45230674
+    if (itemsArray[itemIndexToFold].fold) {
+      const scrollPosition = window.scrollY;
+      element.style.top = -scrollPosition + "px";
+    } else {
+      window.scrollTo(0, scrollPosition);
+    }
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
+    if (filesArray[fileIndexToFold].fold) {
+      const scrollPosition = window.scrollY;
+      element.style.top = -scrollPosition + "px";
+    } else {
+      window.scrollTo(0, scrollPosition);
+    }
   }
 };
 
