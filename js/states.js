@@ -184,22 +184,6 @@ const unfoldOneItem = (element) => {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
     itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    // Facebook solution
-    // set the top dynamically to retain the scroll position
-    // https://stackoverflow.com/a/45230674
-    if (itemsArray[itemIndexToFold].fold) {
-      const scrollPosition = window.scrollY;
-      logg2("window.scrollY:", scrollPosition);
-      element.style.position = "sticky";
-      element.style.top = -scrollPosition + "px";
-    } else {
-      const scrollPosition = window.scrollY;
-      logg2("window.scrollTo 0");
-      //element.style.position = "relative";
-      element.removeAttribute("style");
-      window.scrollTo(0, scrollPosition);
-      element.parentElement.style.marginBottom = 100 + "vh";
-    }
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
