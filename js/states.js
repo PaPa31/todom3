@@ -198,7 +198,7 @@ const unfoldOneItem = (element) => {
       //element.style.position = "relative";
       element.removeAttribute("style");
       window.scrollTo(0, scrollPosition);
-      foldedClass.style.height = 100 + "vh";
+      element.parentElement.style.marginBottom = 100 + "vh";
     }
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
