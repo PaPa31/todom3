@@ -189,9 +189,16 @@ const unfoldOneItem = (element) => {
     // https://stackoverflow.com/a/45230674
     if (itemsArray[itemIndexToFold].fold) {
       const scrollPosition = window.scrollY;
+      logg2("window.scrollY:", scrollPosition);
+      element.style.position = "sticky";
       element.style.top = -scrollPosition + "px";
     } else {
+      const scrollPosition = window.scrollY;
+      logg2("window.scrollTo 0");
+      //element.style.position = "relative";
+      element.removeAttribute("style");
       window.scrollTo(0, scrollPosition);
+      foldedClass.style.height = 100 + "vh";
     }
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;

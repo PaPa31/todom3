@@ -291,6 +291,10 @@ blockquote {
   padding: 0;
 }
 
+.unfolded .muted-button {
+  left: -21px;
+}
+
 .unfold-button::before {
   content: counter(item) ") ";
   counter-increment: item;
