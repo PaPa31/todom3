@@ -233,15 +233,22 @@ blockquote {
 }
 
 #list-items.folded .muted-button:not([disable="true"]) {
-  left: 0px;
+  /*left: 4px;*/
+  box-shadow: green 1px 1px 2px 1px;
 }
 
 #list-items .muted-button {
   left: -40px;
+  box-shadow: green 5px 5px 2px 1px;
 }
 
 #list-items.folded .unfolded .muted-button {
   left: -40px;
+  box-shadow: green 5px 5px 2px 1px;
+}
+
+#list-items [disable="true"] {
+  box-shadow: red 1px 1px 2px 1px;
 }
 
 /*#list-items.folded .muted-button {
@@ -249,19 +256,23 @@ blockquote {
 }*/
 
 #list-items .unfolded .muted-button {
-  left: -40px;
+  /*left: 4px;*/
+  box-shadow: green 1px 1px 2px 1px;
 }
 
 #list-items.folded > li > .md-item:not(.single-line) {
   height: 39px;
+  opacity: 0.25;
 }
 
 #list-items.folded > li.unfolded > .md-item {
   height: initial;
+  opacity: 1;
 }
 
 #list-items > li.unfolded > .md-item {
   height: 39px;
+  opacity: 0.25;
 }
 
 .folded .file-text,
