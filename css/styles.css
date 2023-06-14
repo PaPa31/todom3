@@ -276,6 +276,7 @@ blockquote {
   padding: 5px;
   list-style: none;
   /*list-style-position: outside;*/
+  position: sticky;
 }
 
 #main-listing > ol {
@@ -292,6 +293,16 @@ blockquote {
 
 .unfolded .muted-button {
   left: -21px;
+}
+
+#list-items .muted-button {
+  /*left: 35px;*/
+  /*transition: all 0.2s linear;*/
+}
+
+#list-items .unfolded .muted-button {
+  left: -40px;
+  /*transition: all 0.2s ease-in-out;*/
 }
 
 .unfold-button::before {
