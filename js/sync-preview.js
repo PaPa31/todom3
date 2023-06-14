@@ -175,7 +175,10 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   const rege = /^ +$/;
   const isTrailingSpace = rege.test(_string);
   if ((stri === "" || isTrailingSpace) && isOutsideCodeBlock) {
-    stringToPreview = head + "\n<div style='margin-top:-1rem'>\x001</div>";
+    stringToPreview =
+      preview.innerHTML !== ""
+        ? head + "\n<div style='margin-top:-1rem'>\x001</div>"
+        : "";
     variant = false;
   }
   return stringToPreview;
