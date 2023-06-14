@@ -232,6 +232,26 @@ blockquote {
   border-color: var(--border-cite-dark);
 }
 
+#list-items.folded .muted-button:not([disable="true"]) {
+  left: 0px;
+}
+
+#list-items .muted-button {
+  left: -40px;
+}
+
+#list-items.folded .unfolded .muted-button {
+  left: -40px;
+}
+
+/*#list-items.folded .muted-button {
+  left: 0px;
+}*/
+
+#list-items .unfolded .muted-button {
+  left: -40px;
+}
+
 #list-items.folded > li > .md-item:not(.single-line) {
   height: 39px;
 }
@@ -289,20 +309,6 @@ blockquote {
   height: 34px;
   width: 37px;
   padding: 0;
-}
-
-.unfolded .muted-button {
-  left: -21px;
-}
-
-#list-items .muted-button {
-  /*left: 35px;*/
-  /*transition: all 0.2s linear;*/
-}
-
-#list-items .unfolded .muted-button {
-  left: -40px;
-  /*transition: all 0.2s ease-in-out;*/
 }
 
 .unfold-button::before {
