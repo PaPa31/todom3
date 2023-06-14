@@ -263,16 +263,18 @@ blockquote {
 #list-items.folded > li > .md-item:not(.single-line) {
   height: 39px;
   opacity: 0.25;
-}
-
-#list-items.folded > li.unfolded > .md-item {
-  height: initial;
-  opacity: 1;
+  overflow-y: hidden;
 }
 
 #list-items > li.unfolded > .md-item {
   height: 39px;
   opacity: 0.25;
+  overflow-y: hidden;
+}
+
+#list-items.folded > li.unfolded > .md-item {
+  height: initial;
+  opacity: 1;
 }
 
 .folded .file-text,
