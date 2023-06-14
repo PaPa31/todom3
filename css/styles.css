@@ -96,7 +96,7 @@ html {
   * of page on Chrome
   */
   overflow-y: overlay;
-  font-family: arial;
+  font-family: Arial;
 }
 
 * {
@@ -127,8 +127,7 @@ button,
   color: var(--button-default-color);
   border-radius: 4px;
   font-weight: 600;
-  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica,
-    Arial, sans-serif;
+  font-family: Arial;
   text-transform: none;
   padding: 0.75rem 1.25rem;
   text-align: center;
@@ -588,8 +587,7 @@ h6,
   margin-bottom: 16px;
   font-weight: 600;
   color: var(--color);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: Arial;
 }
 
 .dark h1,
