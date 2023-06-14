@@ -555,6 +555,7 @@ input.addEventListener(
   "input",
   debounce(
     function (e) {
+      //console.log("dzhbenk!");
       lastInputValue = e.target.value;
       if (lastInputValue) {
         inputLabel.classList.replace("invisible", "visible");
@@ -567,6 +568,7 @@ input.addEventListener(
 
       localStorage.setItem("todomLastInputValue", lastInputValue);
       mdToPreview(e.target.value);
+      if (preview.innerHTML === "") position.innerHTML = "";
     },
     200,
     false

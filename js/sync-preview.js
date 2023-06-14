@@ -175,10 +175,7 @@ const checkStartLine = (head, tail, pigTail, pigBody, _string) => {
   const rege = /^ +$/;
   const isTrailingSpace = rege.test(_string);
   if ((stri === "" || isTrailingSpace) && isOutsideCodeBlock) {
-    stringToPreview =
-      preview.innerHTML !== ""
-        ? head + "\n<div style='margin-top:-1rem'>\x001</div>"
-        : "";
+    stringToPreview = head + "\n<div style='margin-top:-1rem'>\x001</div>";
     variant = false;
   }
   return stringToPreview;
@@ -209,13 +206,16 @@ const whatString = ({ head, tail, headLastNewLine, endHead }) => {
   const pigBody = head.substr(0, endHead);
   //logg("pigBody:", JSON.stringify(pigBody));
 
-  stringToPreview = checkStartLine(head, tail, pigTail, pigBody, _string);
+  if (preview.innerHTML !== "")
+    stringToPreview = checkStartLine(head, tail, pigTail, pigBody, _string);
 
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
-  //logg("stTPw:", JSON.stringify(stringToPreview));
-  if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
-  lastChildRecursive(position);
+  logg("stTPw:", JSON.stringify(stringToPreview));
+  if (stringToPreview !== "") {
+    position.innerHTML = markdown(stringToPreview);
+    lastChildRecursive(position);
+  }
 
   logOut();
 };
@@ -261,7 +261,7 @@ const syncPreview = function () {
 
 input.addEventListener("keyup", debounce(syncPreview, 150, false));
 input.addEventListener("mouseup", debounce(syncPreview, 150, false));
-//position.addEventListener("scroll", debounce(update, 150, false));
+//position.addEventListener("scroll", debounce(syncPreview, 150, false));
 
 // loggs system
 if (true) {
