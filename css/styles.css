@@ -95,7 +95,7 @@ html {
   * Prevent scroll-bar from adding-up to the Width
   * of page on Chrome
   */
-  overflow-y: overlay;
+  /*overflow-y: overlay;*/
   font-family: Arial;
 }
 
