@@ -82,9 +82,9 @@ const xUI = () => {
 };
 
 const editItem = (e, element) => {
-  editedItemElementDOM = element.parentElement.parentElement;
+  const editedItemElementDOM2 = element.parentElement.parentElement;
   const itemIndexToEdit2 =
-    indexedItemsArray.indexOf(editedItemElementDOM.id) * 1;
+    indexedItemsArray.indexOf(editedItemElementDOM2.id) * 1;
   const editing = itemsArray[itemIndexToEdit2].text;
   if (e.ctrlKey) {
     intervalFocus(element, "background-color: #685a7f;", 300);
@@ -96,6 +96,7 @@ const editItem = (e, element) => {
     scrollToLast();
   } else {
     itemIndexToEdit = itemIndexToEdit2;
+    editedItemElementDOM = editedItemElementDOM2;
     intervalFocus(element, "background-color: orange;", 300);
     input.value = editing;
     editUI("#" + (itemIndexToEdit + 1));
