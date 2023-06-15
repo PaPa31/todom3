@@ -311,9 +311,9 @@ blockquote {
   /*list-style-position: outside;*/
 }
 
-.md-item {
+/*.md-item {
   position: sticky;
-}
+}*/
 
 #main-listing > ol {
   counter-reset: item;

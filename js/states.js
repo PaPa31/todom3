@@ -188,18 +188,18 @@ const unfoldOneItem = (element) => {
     // set the top dynamically to retain the scroll position
     // https://stackoverflow.com/a/45230674
     if (itemsArray[itemIndexToFold].fold) {
-      const scrollPosition = window.scrollY;
+      //const scrollPosition = window.scrollY;
       logg2("window.scrollY:", scrollPosition);
-      document.documentElement.style.position = "absolute";
-      document.documentElement.style.top = -scrollPosition + "px";
+      //document.documentElement.style.position = "absolute";
+      //document.documentElement.style.top = -scrollPosition + "px";
       //foldedClass.style.marginBottom = 100 + "vh";
       //window.scrollTo(0, scrollPosition);
     } else {
-      const scrollPosition = window.scrollY;
+      //const scrollPosition = window.scrollY;
       logg2("window.scrollTo 0");
       //element.style.position = "relative";
       //element.removeAttribute("style");
-      window.scrollTo(0, scrollPosition);
+      //window.scrollTo(0, scrollPosition);
       //foldedClass.style.marginBottom = 100 + "vh";
     }
   } else {
