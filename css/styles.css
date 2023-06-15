@@ -238,12 +238,12 @@ blockquote {
 }
 
 #list-items .muted-button {
-  left: -40px;
+  /*left: -40px;*/
   box-shadow: green 5px 5px 2px 1px;
 }
 
 #list-items.folded .unfolded .muted-button {
-  left: -40px;
+  /*left: -40px;*/
   box-shadow: green 5px 5px 2px 1px;
 }
 
@@ -309,12 +309,15 @@ blockquote {
   padding: 5px;
   list-style: none;
   /*list-style-position: outside;*/
+}
+
+.md-item {
   position: sticky;
 }
 
 #main-listing > ol {
   counter-reset: item;
-  margin-bottom: 100vh;
+  /*margin-bottom: 100vh;*/
 }
 
 .unfold-button {
