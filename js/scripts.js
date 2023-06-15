@@ -333,6 +333,7 @@ const disableButton = (el) => {
     el.firstChild.nextSibling.setAttribute("disable", true);
     el.firstChild.nextSibling.setAttribute("title", "fold/unfold one");
     el.firstChild.classList.add("single-line");
+    el.classList.remove("unfolded");
   } else {
     el.firstChild.nextSibling.removeAttribute("disable");
     el.firstChild.nextSibling.removeAttribute("title");

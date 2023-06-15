@@ -242,7 +242,7 @@ blockquote {
   box-shadow: green 5px 5px 2px 1px;
 }
 
-#list-items.folded .unfolded .muted-button {
+#list-items.folded .unfolded .muted-button:not([disable="true"]) {
   /*left: -40px;*/
   box-shadow: green 5px 5px 2px 1px;
 }
@@ -255,7 +255,7 @@ blockquote {
   left: 0px;
 }*/
 
-#list-items .unfolded .muted-button {
+#list-items .unfolded .muted-button:not([disable="true"]) {
   /*left: 4px;*/
   box-shadow: green 1px 1px 2px 1px;
 }
