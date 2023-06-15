@@ -871,17 +871,11 @@ button.delete-one-item {
 
 button.edit-item {
   background-image: url(../img/edit.svg);
-  opacity: 0.6;
 }
 
-/*ol#list-items > li > div:hover + span#unit-control > button*/
-/*#unit-control:hover > button {
-  opacity: 0.6;
-}*/
-
-.delete-one-item:hover,
-#unit-control > button:hover {
-  opacity: 1;
+button.delete-one-item:hover,
+button.edit-item:hover {
+  opacity: 0.99;
 }
 
 .filter-red {
