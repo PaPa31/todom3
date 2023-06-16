@@ -215,18 +215,21 @@ const unfoldOneItem = (element) => {
 };
 
 const editFile = (e, element) => {
-  editedFileElementDOM = element.parentElement.parentElement;
-  fileIndexToEdit = indexedFilesArray.indexOf(editedFileElementDOM.id) * 1;
-  const fi = filesArray[fileIndexToEdit];
-  const fileName = fi.dir ? fi.dir : fi.name;
+  const editedFileElementDOM2 = element.parentElement.parentElement;
+  const fileIndexToEdit2 =
+    indexedFilesArray.indexOf(editedFileElementDOM2.id) * 1;
+  const fi = filesArray[fileIndexToEdit2];
 
   if (e.ctrlKey) {
     intervalFocus(element, "background-color: #685a7f;", 300);
     input.value = input.value ? input.value + "\n" + fi.text : fi.text;
     scrollToLast();
   } else {
+    fileIndexToEdit = fileIndexToEdit2;
+    editedFileElementDOM = editedFileElementDOM2;
     intervalFocus(element, "background-color: orange;", 300);
     input.value = fi.text;
+    const fileName = fi.dir ? fi.dir : fi.name;
     editUI(fileName);
   }
 
