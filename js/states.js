@@ -178,40 +178,83 @@ const trashButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
+function disableScroll() {
+  // Get the current page scroll position
+  scrollTop = window.screenY || document.documentElement.scrollTop;
+  (scrollLeft = window.screenX || document.documentElement.scrollLeft),
+    // if any scroll is attempted, set this to the previous value
+    (window.onscroll = function () {
+      window.scrollTo(scrollLeft, scrollTop);
+    });
+}
+
+function enableScroll() {
+  window.onscroll = function () {};
+}
+
 const unfoldOneItem = (element) => {
+  //let elH;
+  logIn2("unfoldOneItem");
+  disableScroll();
   element.classList.toggle("unfolded");
   if (isItemState) {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
+    //if (itemsArray[itemIndexToFold].fold) {
+    //  elH = element.firstChild.getBoundingClientRect().height;
+    //}
     itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    // Facebook solution
-    // set the top dynamically to retain the scroll position
-    // https://stackoverflow.com/a/45230674
+    //if (itemsArray[itemIndexToFold].fold) {
+    //  elH = element.firstChild.getBoundingClientRect().height;
+    //}
     if (itemsArray[itemIndexToFold].fold) {
+      intervalFocus(element, "background-color: orange;", 300);
+      //disableScroll();
+      //const eleHeight = element.firstChild.getBoundingClientRect().height;
+      //logg2("eleHeight:", eleHeight);
+      //logg2("itemsArray[itemIndexToFold]:", itemsArray[itemIndexToFold]);
       //const scrollPosition = window.scrollY;
-      logg2("window.scrollY:", scrollPosition);
-      //document.documentElement.style.position = "absolute";
-      //document.documentElement.style.top = -scrollPosition + "px";
-      //foldedClass.style.marginBottom = 100 + "vh";
-      //window.scrollTo(0, scrollPosition);
+      //logg2("window.scrollY:", scrollPosition);
+      //const offset = element.scrollTop;
+      //const heightElement = element.hi;
+      //logg2("heightElement", heightElement);
+      //scrollToTargetAdjusted(element, offset);
+      //scrollToTargetAdjusted(element, eleHeight);
+      //window.scrollBy({
+      //  top: offset - (eleHeight - 20),
+      //});
+      //element.scrollTo(0, element.scrollHeight);
+      //element.scrollTo(0, 25000);
+      //element.scrollIntoView(false);
+      //element.scrollTop = element.scrollHeight;
+
+      //const scrollingElement = document.body;
+      //scrollingElement.scrollTop = scrollingElement.scrollHeight;
     } else {
       //const scrollPosition = window.scrollY;
-      logg2("window.scrollTo 0");
-      //element.style.position = "relative";
-      //element.removeAttribute("style");
-      //window.scrollTo(0, scrollPosition);
-      //foldedClass.style.marginBottom = 100 + "vh";
+      //logg2("window.scrollTo 0", scrollPosition);
+      //const eleHeight2 = element.firstChild.getBoundingClientRect().height;
+      //logg2("eleHeight2:", eleHeight2);
+      //window.scrollBy({
+      //  top: scrollPosition + eleHeight2,
+      //});
+      //enableScroll();
     }
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
-    if (filesArray[fileIndexToFold].fold) {
-      const scrollPosition = window.scrollY;
-      element.style.top = -scrollPosition + "px";
-    } else {
-      window.scrollTo(0, scrollPosition);
-    }
+    //if (filesArray[fileIndexToFold].fold) {
+    //  const scrollPosition = window.scrollY;
+    //  element.style.top = -scrollPosition + "px";
+    //} else {
+    //  window.scrollTo(0, scrollPosition);
+    //}
   }
+  //logg2("elH", elH);
+  window.setTimeout(function () {
+    enableScroll();
+  }, 100);
+  logOut2();
 };
 
 const editFile = (e, element) => {
