@@ -164,17 +164,17 @@ const trashButtonMaker = (parentDiv) => {
       `deleteOneItem(event, this.parentElement.parentElement)`
     );
     buttonTag.setAttribute("ctrl", "true");
+    buttonTag.setAttribute(
+      "title",
+      "Double-click to Trash, Ctrl+click to Delete"
+    );
   } else {
     buttonTag.setAttribute(
       "onclick",
       `deleteOneFile(event, this.parentElement.parentElement)`
     );
+    buttonTag.setAttribute("title", "Double-click to Delete from this list");
   }
-  buttonTag.setAttribute(
-    "title",
-    "Double-click to Trash, Ctrl+click to Delete"
-  );
-
   parentDiv.appendChild(buttonTag);
 };
 
