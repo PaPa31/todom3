@@ -199,6 +199,24 @@ const unfoldOneItem = (element) => {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
     itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    if (
+      (element.parentElement.classList.contains("folded") &&
+        itemsArray[itemIndexToFold].fold) ||
+      (!element.parentElement.classList.contains("folded") &&
+        !itemsArray[itemIndexToFold].fold)
+    ) {
+      intervalFocus(element, "background-color: orange;", 300);
+    } else {
+      const scrollPosition = window.scrollY;
+      logg2("window.scrollTo 0", scrollPosition);
+      const offset = { element };
+      const offset1 = element.offsetTop;
+      logg2("offset:", offset);
+      logg2("offset1:", offset1);
+      logg2("element.clientHeight:", element.clientHeight);
+      element.parentElement.style.marginBottom =
+        offset1 + element.clientHeight + "px";
+    }
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
