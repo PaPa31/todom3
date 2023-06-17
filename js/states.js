@@ -1,7 +1,10 @@
 const firstHeaderButton = document.getElementById("first-header");
 const secondHeaderButton = document.getElementById("second-header");
 //const foldedClass = document.querySelector(".markdown-body > ol");
-const foldedClass = document.getElementById("list-items");
+let foldedClass = document.getElementById("list-items");
+
+const listItems = document.getElementById("list-items");
+const listFiles = document.getElementById("list-files");
 
 //const fileSelect = document.getElementById("fileSelect");
 let fileElem = document.getElementById("file-elem");
@@ -105,11 +108,11 @@ const liMaker = (count) => {
 
   //li.id = count;
   li.appendChild(div);
-  ol.appendChild(li);
+  foldedClass.appendChild(li);
   //console.log("URL =", url);
   unfoldButtonMaker(li);
   controlDivMaker(li);
-  showItemSortingArrows(ol.childElementCount);
+  showItemSortingArrows(foldedClass.childElementCount);
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
@@ -256,8 +259,8 @@ const deleteOneFile = (e, element) => {
       }
     }
 
-    ol.removeChild(element);
-    showItemSortingArrows(ol.childElementCount);
+    foldedClass.removeChild(element);
+    showItemSortingArrows(foldedClass.childElementCount);
 
     filesArray.splice(indexToDelete, 1);
     indexedFilesArray.splice(indexToDelete, 1);
@@ -363,7 +366,7 @@ var phrase = "README.md";
 const logFileText = async (file) => {
   const response = await fetch(file);
   const text = await response.text();
-  ol.innerHTML = text;
+  foldedClass.innerHTML = text;
 };
 
 function handleFiles(files) {
@@ -527,66 +530,77 @@ fileElem.addEventListener(
 );
 
 const initializeFileState = () => {
-  counterFiles = 0;
-  indexedFilesArray = [];
-  saveButton.innerText = "Save file";
-  secondHeaderButton.innerText = "Files";
-  openFileButton.innerText = "Open file";
-  deleteAllItemsButton.innerText = "Close All Files";
-  saveAsFileButton.classList.replace("inline-block", "none");
-  openDirButton.classList.replace("none", "inline-block");
-  deleteAllItemsButton.classList.replace("inline-block", "none");
-  restoreItemButton.classList.replace("inline-block", "none");
-  clearTrashButton.classList.replace("inline-block", "none");
-  initialCheckFold(isFoldedFilesView);
+  if (indexedFilesArray.length === 0) {
+    counterFiles = 0;
+    indexedFilesArray = [];
+    saveButton.innerText = "Save file";
+    secondHeaderButton.innerText = "Files";
+    openFileButton.innerText = "Open file";
+    deleteAllItemsButton.innerText = "Close All Files";
+    saveAsFileButton.classList.replace("inline-block", "none");
+    openDirButton.classList.replace("none", "inline-block");
+    deleteAllItemsButton.classList.replace("inline-block", "none");
+    restoreItemButton.classList.replace("inline-block", "none");
+    clearTrashButton.classList.replace("inline-block", "none");
+    initialCheckFold(isFoldedFilesView);
 
-  if (window.location.protocol === "file:") {
-    if (!fileElem.files.length && !filesArray.length) {
-      fileElem.click();
+    if (window.location.protocol === "file:") {
+      if (!fileElem.files.length && !filesArray.length) {
+        fileElem.click();
+      } else {
+        handleFilesArray();
+      }
     } else {
-      handleFilesArray();
+      logFileText(phrase);
     }
-  } else {
-    logFileText(phrase);
   }
+  listItems.style.display = "none";
+  listFiles.style.display = "flex";
+  foldedClass = document.getElementById("list-files");
 };
 
 const initializeItemState = () => {
-  counterItems = 0;
-  indexedItemsArray = [];
-  saveButton.innerText = "Save item";
-  secondHeaderButton.innerText = "Items";
-  openFileButton.innerText = "Split file";
-  deleteAllItemsButton.innerText = "Delete All Items";
-  saveAsFileButton.classList.replace("none", "inline-block");
-  openDirButton.classList.replace("inline-block", "none");
-  restoreItemButton.classList.replace("none", "inline-block");
-  clearTrashButton.classList.replace("none", "inline-block");
-  initialCheckFold(isFoldedItemsView);
+  console.log(indexedItemsArray);
+  if (indexedItemsArray.length === 0) {
+    counterItems = 0;
+    indexedItemsArray = [];
+    saveButton.innerText = "Save item";
+    secondHeaderButton.innerText = "Items";
+    openFileButton.innerText = "Split file";
+    deleteAllItemsButton.innerText = "Delete All Items";
+    saveAsFileButton.classList.replace("none", "inline-block");
+    openDirButton.classList.replace("inline-block", "none");
+    restoreItemButton.classList.replace("none", "inline-block");
+    clearTrashButton.classList.replace("none", "inline-block");
+    initialCheckFold(isFoldedItemsView);
 
-  nullGotIntoStorage = false;
-  itemsArray?.forEach((item, key) => {
-    if (item) {
-      liMaker(key);
-      indexedItemsArray.push(counterItems.toString());
-      counterItems++;
-    } else {
-      itemsArray.splice(key, 1);
-      nullGotIntoStorage = true;
-      console.log(`items: ${key} item is null and ignored!`);
+    nullGotIntoStorage = false;
+    itemsArray?.forEach((item, key) => {
+      if (item) {
+        liMaker(key);
+        indexedItemsArray.push(counterItems.toString());
+        counterItems++;
+      } else {
+        itemsArray.splice(key, 1);
+        nullGotIntoStorage = true;
+        console.log(`items: ${key} item is null and ignored!`);
+      }
+    });
+
+    if (nullGotIntoStorage) {
+      localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     }
-  });
-
-  if (nullGotIntoStorage) {
-    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   }
+  listFiles.style.display = "none";
+  listItems.style.display = "flex";
+  foldedClass = document.getElementById("list-items");
 };
 
 secondHeaderButton.addEventListener("click", function (e) {
   isItemState = !isItemState;
   showItemSortingArrows(0);
   twoClickToTrash = false;
-  ol.innerHTML = "";
+  //foldedClass.innerHTML = "";
   if (isItemState) {
     initializeItemState();
     showOrHideTrash();

@@ -1,7 +1,6 @@
 "use strict";
 const html = document.documentElement;
 const form = document.querySelector("form");
-const ol = document.querySelector("ol");
 
 const input = document.getElementById("input");
 const preview = document.getElementById("preview");
@@ -122,8 +121,8 @@ const deleteOneItem = (e, item) => {
       }
     }
 
-    ol.removeChild(item);
-    showItemSortingArrows(ol.childElementCount);
+    foldedClass.removeChild(item);
+    showItemSortingArrows(foldedClass.childElementCount);
 
     if (!e.ctrlKey) {
       trashArray.push(itemsArray[indexToDelete]);
@@ -382,7 +381,7 @@ const defaultFileStateVars = () => {
   counterFiles = 0;
   fileElem.value = null;
   showItemSortingArrows(0);
-  ol.innerHTML = "";
+  foldedClass.innerHTML = "";
 };
 
 const defaultItemStateVars = () => {
@@ -393,7 +392,7 @@ const defaultItemStateVars = () => {
   itemsArray = [];
   counterItems = 0;
   showItemSortingArrows(0);
-  ol.innerHTML = "";
+  foldedClass.innerHTML = "";
 };
 
 document.addEventListener("keydown", function (e) {
