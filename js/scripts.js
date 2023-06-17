@@ -343,7 +343,7 @@ const saveItem = () => {
     itemsArray[itemIndexToEdit].text = input.value;
     editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
     disableButton(editedItemElementDOM);
-    scrollToTargetAdjusted(editedItemElementDOM, offset);
+    scrollToTargetAdjusted(editedItemElementDOM, preview.scrollTop);
   } else {
     const obj = {
       text: input.value,
