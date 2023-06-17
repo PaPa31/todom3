@@ -277,9 +277,9 @@ if (true) {
 
   // managing vars
   // change to show/hide output loggs
-  var showLogg = true; // logg - 'headAndTail'
+  var showLogg = false; // logg - 'headAndTail'
   var showLogg1 = false; // logg1 - 'whatClass'
-  var showLogg2 = true; // logg2 -
+  var showLogg2 = false; // logg2 -
   var showLogg3 = false; // logg3 -
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
