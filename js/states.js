@@ -111,6 +111,7 @@ const liMaker = (count) => {
   unfoldButtonMaker(li);
   controlDivMaker(li);
   showItemSortingArrows(ol.childElementCount);
+  return li;
 };
 
 const controlDivMaker = (parentDiv) => {

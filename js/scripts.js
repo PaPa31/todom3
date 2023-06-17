@@ -354,8 +354,8 @@ const saveItem = (offset) => {
     itemsArray.push(obj);
     indexedItemsArray.push(counterItems.toString());
     const newItem = indexedItemsArray.indexOf(counterItems.toString()) * 1;
-    liMaker(newItem);
-
+    const li = liMaker(newItem);
+    scrollToTargetAdjusted(li, offset);
     counterItems++;
   }
   defaultMarkers();
