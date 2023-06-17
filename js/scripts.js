@@ -554,7 +554,6 @@ input.addEventListener(
   "input",
   debounce(
     function (e) {
-      //console.log("dzhbenk!");
       lastInputValue = e.target.value;
       if (lastInputValue) {
         inputLabel.classList.replace("invisible", "visible");

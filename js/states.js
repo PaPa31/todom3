@@ -560,7 +560,6 @@ const initializeFileState = () => {
 };
 
 const initializeItemState = () => {
-  console.log(indexedItemsArray);
   if (indexedItemsArray.length === 0) {
     counterItems = 0;
     indexedItemsArray = [];
@@ -600,7 +599,6 @@ secondHeaderButton.addEventListener("click", function (e) {
   isItemState = !isItemState;
   showItemSortingArrows(0);
   twoClickToTrash = false;
-  //foldedClass.innerHTML = "";
   if (isItemState) {
     initializeItemState();
     showOrHideTrash();
