@@ -300,7 +300,7 @@ function getFirstCharsWithTrim(s) {
   return s.replace(/-$/, "");
 }
 
-const saveFile = (offset) => {
+const saveFile = () => {
   let fileName;
 
   if (input.value) {
@@ -308,7 +308,6 @@ const saveFile = (offset) => {
       const _fi = filesArray[fileIndexToEdit];
       fileName = _fi.name;
       _fi.text = input.value;
-      offsetGlobal = offset;
       fileDownload(fileName);
     } else {
       fileName =
@@ -316,7 +315,6 @@ const saveFile = (offset) => {
       const obj = { name: fileName, text: input.value };
       filesArray.push(obj);
       indexedFilesArray.push(counterFiles.toString());
-      offsetGlobal = offset;
       fileDownload(fileName);
     }
   }
@@ -341,7 +339,7 @@ const disableButton = (el) => {
   }
 };
 
-const saveItem = (offset) => {
+const saveItem = () => {
   if (itemIndexToEdit != null) {
     itemsArray[itemIndexToEdit].text = input.value;
     editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
@@ -354,8 +352,7 @@ const saveItem = (offset) => {
     itemsArray.push(obj);
     indexedItemsArray.push(counterItems.toString());
     const newItem = indexedItemsArray.indexOf(counterItems.toString()) * 1;
-    const li = liMaker(newItem);
-    scrollToTargetAdjusted(li, offset);
+    liMaker(newItem);
     counterItems++;
   }
   defaultMarkers();
@@ -364,16 +361,15 @@ const saveItem = (offset) => {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  const previewOffset = preview.scrollTop;
   if (isItemState) {
-    saveItem(previewOffset);
+    saveItem();
     clearInputAndPreviewAreas();
     localStorage.removeItem("todomLastInputValue");
     hideAndNewInputLabel();
     ifReturnAndNoneX();
     showOrHideDeleteAllItems();
   } else {
-    saveFile(previewOffset);
+    saveFile();
   }
 });
 

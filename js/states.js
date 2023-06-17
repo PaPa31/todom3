@@ -55,7 +55,6 @@ let editedItemElementDOM;
 let fileIndexToEdit;
 let editedFileElementDOM;
 
-let offsetGlobal;
 let fileSizeGlobal;
 
 const fileSizeTerm = (numberOfBytes) => {
@@ -111,7 +110,7 @@ const liMaker = (count) => {
   unfoldButtonMaker(li);
   controlDivMaker(li);
   showItemSortingArrows(ol.childElementCount);
-  return li;
+  scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
 const controlDivMaker = (parentDiv) => {
@@ -206,7 +205,7 @@ const unfoldOneItem = (element) => {
       (!element.parentElement.classList.contains("folded") &&
         !itemsArray[itemIndexToFold].fold)
     ) {
-      intervalFocus(element, "background-color: orange;", 300);
+      intervalFocus(element, "background-color: green;", 300);
     } else {
       element.parentElement.style.marginBottom =
         element.offsetTop + element.clientHeight + "px";
@@ -490,17 +489,16 @@ function initialize() {
 
 function checkIt() {
   //console.log("start checking");
-
+  const previewOffset = preview.scrollTop;
   if (fileIndexToEdit != null) {
     editedFileElementDOM.firstChild.firstChild.nextSibling.innerHTML = markdown(
       filesArray[fileIndexToEdit].text
     );
     disableButton(editedFileElementDOM);
-    scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
+    scrollToTargetAdjusted(editedFileElementDOM, previewOffset);
   } else {
     filesArray[counterFiles].size = fileSizeGlobal;
-    const li = liMaker(counterFiles);
-    scrollToTargetAdjusted(li, offsetGlobal);
+    liMaker(counterFiles);
     counterFiles++;
   }
 
