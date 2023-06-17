@@ -207,15 +207,8 @@ const unfoldOneItem = (element) => {
     ) {
       intervalFocus(element, "background-color: orange;", 300);
     } else {
-      const scrollPosition = window.scrollY;
-      logg2("window.scrollTo 0", scrollPosition);
-      const offset = { element };
-      const offset1 = element.offsetTop;
-      logg2("offset:", offset);
-      logg2("offset1:", offset1);
-      logg2("element.clientHeight:", element.clientHeight);
       element.parentElement.style.marginBottom =
-        offset1 + element.clientHeight + "px";
+        element.offsetTop + element.clientHeight + "px";
     }
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
