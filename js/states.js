@@ -539,11 +539,11 @@ const initializeFileState = () => {
   deleteAllItemsButton.classList.replace("inline-block", "none");
   restoreItemButton.classList.replace("inline-block", "none");
   clearTrashButton.classList.replace("inline-block", "none");
-  initialCheckFold(isFoldedFilesView);
 
   if (indexedFilesArray.length === 0) {
     counterFiles = 0;
     indexedFilesArray = [];
+    initialCheckFold(isFoldedFilesView);
 
     if (window.location.protocol === "file:") {
       if (!fileElem.files.length && !filesArray.length) {
@@ -570,11 +570,11 @@ const initializeItemState = () => {
   openDirButton.classList.replace("inline-block", "none");
   restoreItemButton.classList.replace("none", "inline-block");
   clearTrashButton.classList.replace("none", "inline-block");
-  initialCheckFold(isFoldedItemsView);
 
   if (indexedItemsArray.length === 0) {
     counterItems = 0;
     indexedItemsArray = [];
+    initialCheckFold(isFoldedItemsView);
 
     nullGotIntoStorage = false;
     itemsArray?.forEach((item, key) => {
