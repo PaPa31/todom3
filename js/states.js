@@ -428,6 +428,7 @@ function handleFiles(files) {
       });
     }
     showOrHideDeleteAllItems();
+    showItemSortingArrows(foldedClass.childElementCount);
   });
 }
 
@@ -554,10 +555,10 @@ const initializeFileState = () => {
       logFileText(phrase);
     }
   }
-  showItemSortingArrows(foldedClass.childElementCount);
   listItems.style.display = "none";
   listFiles.style.display = "flex";
   foldedClass = document.getElementById("list-files");
+  showItemSortingArrows(foldedClass.childElementCount);
 };
 
 const initializeItemState = () => {
@@ -592,10 +593,10 @@ const initializeItemState = () => {
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     }
   }
-  showItemSortingArrows(foldedClass.childElementCount);
   listFiles.style.display = "none";
   listItems.style.display = "flex";
   foldedClass = document.getElementById("list-items");
+  showItemSortingArrows(foldedClass.childElementCount);
 };
 
 secondHeaderButton.addEventListener("click", function (e) {
