@@ -499,7 +499,8 @@ function checkIt() {
     scrollToTargetAdjusted(editedFileElementDOM, offsetGlobal);
   } else {
     filesArray[counterFiles].size = fileSizeGlobal;
-    liMaker(counterFiles);
+    const li = liMaker(counterFiles);
+    scrollToTargetAdjusted(li, offsetGlobal);
     counterFiles++;
   }
 
