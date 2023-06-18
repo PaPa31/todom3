@@ -195,6 +195,12 @@ function enableScroll() {
 }
 
 const unfoldOneItem = (element) => {
+  logIn2("unfoldOneItem; window:", window);
+  logg2("{element}:", { element });
+  logg2("element.offsetTop:", element.offsetTop);
+  logg2("element.clientHeight:", element.clientHeight);
+  logg2("window.scrollY:", window.scrollY);
+  const wiScroY = window.scrollY;
   disableScroll();
   element.classList.toggle("unfolded");
   if (isItemState) {
@@ -209,8 +215,10 @@ const unfoldOneItem = (element) => {
     ) {
       intervalFocus(element, "background-color: green;", 300);
     } else {
-      element.parentElement.style.marginBottom =
-        element.offsetTop + element.clientHeight + "px";
+      logg2("element.offsetTop:", element.offsetTop);
+      logg2("element.clientHeight:", element.clientHeight);
+      logg2("window.scrollY:", window.scrollY);
+      element.parentElement.style.marginBottom = wiScroY + "px";
     }
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
@@ -219,6 +227,7 @@ const unfoldOneItem = (element) => {
   window.setTimeout(function () {
     enableScroll();
   }, 100);
+  logOut2();
 };
 
 const editFile = (e, element) => {
@@ -639,7 +648,7 @@ if (true) {
   // change to show/hide output loggs
   var showLogg = false; // logg - 'headAndTail'
   var showLogg1 = false; // logg1 - 'whatClass'
-  var showLogg2 = false; // logg2 -
+  var showLogg2 = true; // logg2 - 'unfoldOneItem'
   var showLogg3 = true; // logg3 - 'ol-2'
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
@@ -674,7 +683,7 @@ if (true) {
   };
 
   // loggs subsystem 2
-  // ''
+  // 'unfoldOneItem'
   var logg2 = (...m) => {
     if (showLogg2) console.log(...m);
   };
