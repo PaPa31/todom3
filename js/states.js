@@ -206,7 +206,8 @@ const stopUnderCursor = (element, wiScroY) => {
     logg2("element.offsetTop:", element.offsetTop);
     logg2("element.clientHeight:", element.clientHeight);
     logg2("window.scrollY:", window.scrollY);
-    element.parentElement.style.marginBottom = wiScroY + "px";
+    element.parentElement.style.marginBottom =
+      wiScroY + element.clientHeight + 10 + "px";
   }
 };
 
