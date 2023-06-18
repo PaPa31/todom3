@@ -545,7 +545,6 @@ const initializeFileState = () => {
     logg3("indexedFilesArray 1:", indexedFilesArray);
     counterFiles = 0;
     indexedFilesArray = [];
-    initialCheckFold(isFoldedFilesView);
 
     if (window.location.protocol === "file:") {
       if (!fileElem.files.length && !filesArray.length) {
@@ -562,6 +561,7 @@ const initializeFileState = () => {
   listItems.style.display = "none";
   listFiles.style.display = "flex";
   foldedClass = document.getElementById("list-files");
+  initialCheckFold(isFoldedFilesView);
   showItemSortingArrows(foldedClass.childElementCount);
   logOut3();
 };
@@ -581,7 +581,6 @@ const initializeItemState = () => {
     logg3("indexedItemsArray 1:", indexedItemsArray);
     counterItems = 0;
     indexedItemsArray = [];
-    initialCheckFold(isFoldedItemsView);
 
     nullGotIntoStorage = false;
     itemsArray?.forEach((item, key) => {
@@ -605,6 +604,7 @@ const initializeItemState = () => {
   listFiles.style.display = "none";
   listItems.style.display = "flex";
   foldedClass = document.getElementById("list-items");
+  initialCheckFold(isFoldedItemsView);
   showItemSortingArrows(foldedClass.childElementCount);
   logOut3();
 };
