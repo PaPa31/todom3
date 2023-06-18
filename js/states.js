@@ -455,7 +455,7 @@ function addFiles(e) {
     alert("File type not accepted");
     return;
   }
-  console.log("1");
+  console.log("1: normal");
   handleFiles(files);
 }
 
@@ -470,7 +470,7 @@ function addDirectory(item) {
     });
   } else {
     item.file(function (file) {
-      console.log("2");
+      console.log("2: what happend?");
       handleFiles([file], 0);
     });
   }
@@ -530,6 +530,7 @@ fileElem.addEventListener(
 );
 
 const initializeFileState = () => {
+  logIn3("Files");
   saveButton.innerText = "Save file";
   secondHeaderButton.innerText = "Files";
   openFileButton.innerText = "Open file";
@@ -541,6 +542,7 @@ const initializeFileState = () => {
   clearTrashButton.classList.replace("inline-block", "none");
 
   if (indexedFilesArray.length === 0) {
+    logg3("indexedFilesArray 1:", indexedFilesArray);
     counterFiles = 0;
     indexedFilesArray = [];
     initialCheckFold(isFoldedFilesView);
@@ -554,14 +556,18 @@ const initializeFileState = () => {
     } else {
       logFileText(phrase);
     }
+  } else {
+    logg3("indexedFilesArray 2:", indexedFilesArray);
   }
   listItems.style.display = "none";
   listFiles.style.display = "flex";
   foldedClass = document.getElementById("list-files");
   showItemSortingArrows(foldedClass.childElementCount);
+  logOut3();
 };
 
 const initializeItemState = () => {
+  logIn3("Items");
   saveButton.innerText = "Save item";
   secondHeaderButton.innerText = "Items";
   openFileButton.innerText = "Split file";
@@ -572,6 +578,7 @@ const initializeItemState = () => {
   clearTrashButton.classList.replace("none", "inline-block");
 
   if (indexedItemsArray.length === 0) {
+    logg3("indexedItemsArray 1:", indexedItemsArray);
     counterItems = 0;
     indexedItemsArray = [];
     initialCheckFold(isFoldedItemsView);
@@ -592,11 +599,14 @@ const initializeItemState = () => {
     if (nullGotIntoStorage) {
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     }
+  } else {
+    logg3("indexedItemsArray 2:", indexedItemsArray);
   }
   listFiles.style.display = "none";
   listItems.style.display = "flex";
   foldedClass = document.getElementById("list-items");
   showItemSortingArrows(foldedClass.childElementCount);
+  logOut3();
 };
 
 secondHeaderButton.addEventListener("click", function (e) {
@@ -613,3 +623,116 @@ secondHeaderButton.addEventListener("click", function (e) {
   showOrHideDeleteAllItems();
   e.stopPropagation();
 });
+
+// loggs system
+if (true) {
+  // Assistant for debugging errors.
+  // ~~View active elements DOM,~~
+  // ~~when navigation by TOC menu items.~~
+
+  // For production - delete this block and loggs.
+  // To delete all loggs use regex:^ *log.*$\n*
+
+  // managing vars
+  // change to show/hide output loggs
+  var showLogg = false; // logg - 'headAndTail'
+  var showLogg1 = false; // logg1 - 'whatClass'
+  var showLogg2 = false; // logg2 -
+  var showLogg3 = true; // logg3 - 'ol-2'
+  var showLogg4 = false; // logg4 -
+  var showLogg5 = false; // logg5 -
+  var showLogg6 = false; // logg6 - 'whatElement'
+
+  // loggs subsystem 0
+  // 'headAndTail'
+  var logg = (...m) => {
+    if (showLogg) console.log(...m);
+  };
+
+  // remove '...' to show
+  // only first element: logIn("funcName", ~~var~~)
+  var logIn = (...mes) => {
+    if (showLogg) console.group(...mes);
+  };
+  var logOut = () => {
+    if (showLogg) console.groupEnd();
+  };
+
+  // loggs subsystem 1
+  // 'whatClass'
+  var logg1 = (...m) => {
+    if (showLogg1) console.log(...m);
+  };
+
+  var logIn1 = (...mes) => {
+    if (showLogg1) console.group(...mes);
+  };
+  var logOut1 = () => {
+    if (showLogg1) console.groupEnd();
+  };
+
+  // loggs subsystem 2
+  // ''
+  var logg2 = (...m) => {
+    if (showLogg2) console.log(...m);
+  };
+
+  var logIn2 = (...mes) => {
+    if (showLogg2) console.group(...mes);
+  };
+  var logOut2 = () => {
+    if (showLogg2) console.groupEnd();
+  };
+
+  // loggs subsystem 3
+  // 'ol-2'
+  var logg3 = (...m) => {
+    if (showLogg3) console.log(...m);
+  };
+
+  var logIn3 = (...mes) => {
+    if (showLogg3) console.group(...mes);
+  };
+  var logOut3 = () => {
+    if (showLogg3) console.groupEnd();
+  };
+
+  // loggs subsystem 4
+  // ''
+  var logg4 = (...m) => {
+    if (showLogg4) console.log(...m);
+  };
+
+  var logIn4 = (...mes) => {
+    if (showLogg4) console.group(...mes);
+  };
+  var logOut4 = () => {
+    if (showLogg4) console.groupEnd();
+  };
+
+  // loggs subsystem 5
+  // ''
+  var logg5 = (...m) => {
+    if (showLogg5) console.log(...m);
+  };
+
+  var logIn5 = (...mes) => {
+    if (showLogg5) console.group(...mes);
+  };
+  var logOut5 = () => {
+    if (showLogg5) console.groupEnd();
+  };
+
+  // loggs subsystem 6
+  // 'whatElement'
+  var logg6 = (...m) => {
+    if (showLogg6) console.log(...m);
+  };
+
+  var logIn6 = (...mes) => {
+    if (showLogg6) console.group(...mes);
+  };
+  var logOut6 = () => {
+    if (showLogg6) console.groupEnd();
+  };
+}
