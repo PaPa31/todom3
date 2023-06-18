@@ -223,6 +223,19 @@ const unfoldOneItem = (element) => {
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
+    if (
+      (element.parentElement.classList.contains("folded") &&
+        filesArray[fileIndexToFold].fold) ||
+      (!element.parentElement.classList.contains("folded") &&
+        !filesArray[fileIndexToFold].fold)
+    ) {
+      intervalFocus(element, "background-color: green;", 300);
+    } else {
+      logg2("element.offsetTop:", element.offsetTop);
+      logg2("element.clientHeight:", element.clientHeight);
+      logg2("window.scrollY:", window.scrollY);
+      element.parentElement.style.marginBottom = wiScroY + "px";
+    }
   }
   window.setTimeout(function () {
     enableScroll();
