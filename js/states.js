@@ -541,6 +541,11 @@ const initializeFileState = () => {
   restoreItemButton.classList.replace("inline-block", "none");
   clearTrashButton.classList.replace("inline-block", "none");
 
+  listItems.style.display = "none";
+  listFiles.style.display = "flex";
+  foldedClass = document.getElementById("list-files");
+  initialCheckFold(isFoldedFilesView);
+
   if (indexedFilesArray.length === 0) {
     logg3("indexedFilesArray 1:", indexedFilesArray);
     counterFiles = 0;
@@ -558,10 +563,6 @@ const initializeFileState = () => {
   } else {
     logg3("indexedFilesArray 2:", indexedFilesArray);
   }
-  listItems.style.display = "none";
-  listFiles.style.display = "flex";
-  foldedClass = document.getElementById("list-files");
-  initialCheckFold(isFoldedFilesView);
   showItemSortingArrows(foldedClass.childElementCount);
   logOut3();
 };
@@ -576,6 +577,11 @@ const initializeItemState = () => {
   openDirButton.classList.replace("inline-block", "none");
   restoreItemButton.classList.replace("none", "inline-block");
   clearTrashButton.classList.replace("none", "inline-block");
+
+  listFiles.style.display = "none";
+  listItems.style.display = "flex";
+  foldedClass = document.getElementById("list-items");
+  initialCheckFold(isFoldedItemsView);
 
   if (indexedItemsArray.length === 0) {
     logg3("indexedItemsArray 1:", indexedItemsArray);
@@ -601,10 +607,6 @@ const initializeItemState = () => {
   } else {
     logg3("indexedItemsArray 2:", indexedItemsArray);
   }
-  listFiles.style.display = "none";
-  listItems.style.display = "flex";
-  foldedClass = document.getElementById("list-items");
-  initialCheckFold(isFoldedItemsView);
   showItemSortingArrows(foldedClass.childElementCount);
   logOut3();
 };
