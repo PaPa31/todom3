@@ -194,6 +194,22 @@ function enableScroll() {
   window.onscroll = function () {};
 }
 
+const stopUnderCursor = (element, wiScroY) => {
+  if (
+    (element.parentElement.classList.contains("folded") &&
+      element.classList.contains("unfolded")) ||
+    (!element.parentElement.classList.contains("folded") &&
+      !element.classList.contains("unfolded"))
+  ) {
+    intervalFocus(element, "background-color: green;", 300);
+  } else {
+    logg2("element.offsetTop:", element.offsetTop);
+    logg2("element.clientHeight:", element.clientHeight);
+    logg2("window.scrollY:", window.scrollY);
+    element.parentElement.style.marginBottom = wiScroY + "px";
+  }
+};
+
 const unfoldOneItem = (element) => {
   logIn2("unfoldOneItem; window:", window);
   logg2("{element}:", { element });
@@ -207,36 +223,11 @@ const unfoldOneItem = (element) => {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
     itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    if (
-      (element.parentElement.classList.contains("folded") &&
-        itemsArray[itemIndexToFold].fold) ||
-      (!element.parentElement.classList.contains("folded") &&
-        !itemsArray[itemIndexToFold].fold)
-    ) {
-      intervalFocus(element, "background-color: green;", 300);
-    } else {
-      logg2("element.offsetTop:", element.offsetTop);
-      logg2("element.clientHeight:", element.clientHeight);
-      logg2("window.scrollY:", window.scrollY);
-      element.parentElement.style.marginBottom = wiScroY + "px";
-    }
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
-    if (
-      (element.parentElement.classList.contains("folded") &&
-        filesArray[fileIndexToFold].fold) ||
-      (!element.parentElement.classList.contains("folded") &&
-        !filesArray[fileIndexToFold].fold)
-    ) {
-      intervalFocus(element, "background-color: green;", 300);
-    } else {
-      logg2("element.offsetTop:", element.offsetTop);
-      logg2("element.clientHeight:", element.clientHeight);
-      logg2("window.scrollY:", window.scrollY);
-      element.parentElement.style.marginBottom = wiScroY + "px";
-    }
   }
+  stopUnderCursor(element, wiScroY);
   window.setTimeout(function () {
     enableScroll();
   }, 100);
