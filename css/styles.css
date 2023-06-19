@@ -285,7 +285,7 @@ blockquote {
 }
 
 #main-listing>ol>li.unfolded>.md-item {
-  height: 39px;
+  height: 38px;
   opacity: 0.25;
   overflow-y: hidden;
 }
