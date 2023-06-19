@@ -528,10 +528,12 @@ const initializeFileState = () => {
     indexedFilesArray = [];
 
     if (window.location.protocol === "file:") {
-      if (!fileElem.files.length && !filesArray.length) {
+      //if (!fileElem.files.length && !filesArray.length) {
+      if (fileElem.files.length === 0) {
         fileElem.click();
       } else {
-        handleFilesArray();
+        //handleFilesArray();
+        handleFiles(fileElem.files);
       }
     } else {
       logFileText(phrase);
