@@ -527,6 +527,7 @@ restoreItemButton.addEventListener("click", function () {
   }
   deleteAllItemsButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("invisible", "visible");
+  showItemSortingArrows(foldedClass.childElementCount);
 });
 
 clearTrashButton.addEventListener("click", function (e) {
