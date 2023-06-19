@@ -936,12 +936,16 @@ button.edit-item:hover {
 }
 
 #restore-deleted-item {
-  padding: 5px;
   border-width: 2px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: bottom;
 }
 
 #restore-deleted-item img {
-  width: 22px;
+  width: 21px;
   padding: 0px;
   vertical-align: middle;
   opacity: 0.6;
