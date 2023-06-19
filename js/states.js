@@ -195,28 +195,13 @@ function enableScroll() {
   window.onscroll = function () {};
 }
 
-const stopUnderCursor = (element, wiScroY) => {
-  logg2("-- element.offsetTop:", element.offsetTop);
-  logg2("-- element.clientHeight:", element.clientHeight);
-  logg2("-- element.scrollHeight:", element.scrollHeight);
-  logg2("-- window.scrollY:", window.scrollY);
-  const all = wiScroY + element.clientHeight + 10;
-  logg2("-- all", all);
-  const diffScroHei =
-    html.scrollHeight - element.scrollHeight - 120 - html.scrollTop;
-  logg2("diffScroHei:", diffScroHei);
-  logg2("1:", document.documentElement.scrollTop);
-  logg2("2:", document.documentElement.clientHeight);
-  const diffHtml =
-    document.documentElement.clientHeight - document.documentElement.scrollTop;
-  logg2("diffHtml", diffHtml);
+const stopUnderCursor = (element) => {
   if (
     (element.parentElement.classList.contains("folded") &&
       element.classList.contains("unfolded")) ||
     (!element.parentElement.classList.contains("folded") &&
       !element.classList.contains("unfolded"))
   ) {
-    //element.parentElement.style.marginBottom = html.scrollTop + "px";
     intervalFocus(element, "background-color: green;", 300);
   } else {
     const vh = Math.max(
@@ -228,16 +213,6 @@ const stopUnderCursor = (element, wiScroY) => {
 };
 
 const unfoldOneItem = (element) => {
-  logIn2("unfoldOneItem; html.scrollTop:", html.scrollTop);
-  logg2("html.scrollHeight", html.scrollHeight);
-  logg2("#content.scrollTop:", content.scrollTop);
-  logg2("#content.scrollHeight:", content.scrollHeight);
-  logg2("{element}:", { element });
-  logg2("element.scrollTop:", element.scrollTop);
-  logg2("element.clientHeight:", element.clientHeight);
-  logg2("element.scrollHeight:", element.scrollHeight);
-  logg2("window.scrollY:", window.scrollY);
-  const wiScroY = html.scrollTop;
   disableScroll();
   element.classList.toggle("unfolded");
   if (isItemState) {
@@ -248,7 +223,7 @@ const unfoldOneItem = (element) => {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
-  stopUnderCursor(element, wiScroY);
+  stopUnderCursor(element);
   window.setTimeout(function () {
     enableScroll();
   }, 200);
