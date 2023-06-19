@@ -194,7 +194,7 @@ const unfoldOneItem = (element) => {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
-  unfoldGreen(element)
+  unfoldGreen(element);
 };
 
 const editFile = (e, element) => {
