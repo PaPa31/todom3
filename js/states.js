@@ -173,6 +173,17 @@ const trashButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
+const unfoldGreen = (element) => {
+  if (
+    (element.parentElement.classList.contains("folded") &&
+      element.classList.contains("unfolded")) ||
+    (!element.parentElement.classList.contains("folded") &&
+      !element.classList.contains("unfolded"))
+  ) {
+    intervalFocus(element, "background-color: green;", 300);
+  }
+};
+
 const unfoldOneItem = (element) => {
   element.classList.toggle("unfolded");
   if (isItemState) {
@@ -183,6 +194,7 @@ const unfoldOneItem = (element) => {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
+  unfoldGreen(element)
 };
 
 const editFile = (e, element) => {
