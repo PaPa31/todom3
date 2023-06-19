@@ -1,11 +1,11 @@
 const firstHeaderButton = document.getElementById("first-header");
 const secondHeaderButton = document.getElementById("second-header");
-const content = document.getElementById("content");
-const vh = Math.max(
-  document.documentElement.clientHeight || 0,
-  window.innerHeight || 0
-);
-content.style.marginBottom = vh + "px";
+//const content = document.getElementById("content");
+//const vh = Math.max(
+//  document.documentElement.clientHeight || 0,
+//  window.innerHeight || 0
+//);
+//content.style.marginBottom = vh + "px";
 //const foldedClass = document.querySelector(".markdown-body > ol");
 let foldedClass = document.getElementById("list-items");
 

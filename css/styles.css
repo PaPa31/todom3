@@ -113,6 +113,10 @@ body {
   color: var(--color-dark);
 }
 
+#content {
+  margin-bottom: 100vh;
+}
+
 .button,
 a.button,
 button,
