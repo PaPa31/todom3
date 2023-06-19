@@ -1,5 +1,6 @@
 const firstHeaderButton = document.getElementById("first-header");
 const secondHeaderButton = document.getElementById("second-header");
+const content = document.getElementById("content");
 //const foldedClass = document.querySelector(".markdown-body > ol");
 let foldedClass = document.getElementById("list-items");
 
@@ -195,6 +196,13 @@ function enableScroll() {
 }
 
 const stopUnderCursor = (element, wiScroY) => {
+  logg2("-- element.offsetTop:", element.offsetTop);
+  logg2("-- element.clientHeight:", element.clientHeight);
+  logg2("-- window.scrollY:", window.scrollY);
+  const all = wiScroY + element.clientHeight + 10;
+  logg2("-- all", all);
+  logg2("1:", document.documentElement.scrollTop);
+  logg2("2:", document.documentElement.scrollLeft);
   if (
     (element.parentElement.classList.contains("folded") &&
       element.classList.contains("unfolded")) ||
@@ -203,18 +211,17 @@ const stopUnderCursor = (element, wiScroY) => {
   ) {
     intervalFocus(element, "background-color: green;", 300);
   } else {
-    logg2("element.offsetTop:", element.offsetTop);
-    logg2("element.clientHeight:", element.clientHeight);
-    logg2("window.scrollY:", window.scrollY);
-    element.parentElement.style.marginBottom =
-      wiScroY + element.clientHeight + 10 + "px";
+    element.parentElement.style.marginBottom = all + "px";
   }
 };
 
 const unfoldOneItem = (element) => {
-  logIn2("unfoldOneItem; window:", window);
+  logIn2("unfoldOneItem; html.scrollTop:", html.scrollTop);
+  logg2("html.scrollHeight", html.scrollHeight);
+  logg2("#content.scrollTop:", content.scrollTop);
+  logg2("#content.scrollHeight:", content.scrollHeight);
   logg2("{element}:", { element });
-  logg2("element.offsetTop:", element.offsetTop);
+  logg2("element.scrollTop:", element.scrollTop);
   logg2("element.clientHeight:", element.clientHeight);
   logg2("window.scrollY:", window.scrollY);
   const wiScroY = window.scrollY;
@@ -231,7 +238,7 @@ const unfoldOneItem = (element) => {
   stopUnderCursor(element, wiScroY);
   window.setTimeout(function () {
     enableScroll();
-  }, 100);
+  }, 200);
   logOut2();
 };
 
@@ -653,8 +660,8 @@ if (true) {
   // change to show/hide output loggs
   var showLogg = false; // logg - 'headAndTail'
   var showLogg1 = false; // logg1 - 'whatClass'
-  var showLogg2 = false; // logg2 - 'unfoldOneItem'
-  var showLogg3 = false; // logg3 - 'ol-2'
+  var showLogg2 = true; // logg2 - 'unfoldOneItem'
+  var showLogg3 = true; // logg3 - 'ol-2'
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
   var showLogg6 = false; // logg6 - 'whatElement'
