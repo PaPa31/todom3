@@ -1,27 +1,14 @@
 const firstHeaderButton = document.getElementById("first-header");
 const secondHeaderButton = document.getElementById("second-header");
-//const content = document.getElementById("content");
-//const vh = Math.max(
-//  document.documentElement.clientHeight || 0,
-//  window.innerHeight || 0
-//);
-//content.style.marginBottom = vh + "px";
-//const foldedClass = document.querySelector(".markdown-body > ol");
+
 let foldedClass = document.getElementById("list-items");
 
 const listItems = document.getElementById("list-items");
 const listFiles = document.getElementById("list-files");
 
-//const fileSelect = document.getElementById("fileSelect");
 let fileElem = document.getElementById("file-elem");
 // emptying the FileList
 fileElem.value = null;
-
-//fileElem.files = FileList[];
-//const fileList = document.getElementById("fileList");
-//const fileSend = document.getElementById("sendFile");
-
-//const file = document.querySelector("input[type=file]");
 
 // starting in Item state & Unfolded view
 let isItemState = true;
