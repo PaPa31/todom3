@@ -198,20 +198,32 @@ function enableScroll() {
 const stopUnderCursor = (element, wiScroY) => {
   logg2("-- element.offsetTop:", element.offsetTop);
   logg2("-- element.clientHeight:", element.clientHeight);
+  logg2("-- element.scrollHeight:", element.scrollHeight);
   logg2("-- window.scrollY:", window.scrollY);
   const all = wiScroY + element.clientHeight + 10;
   logg2("-- all", all);
+  const diffScroHei =
+    html.scrollHeight - element.scrollHeight - 120 - html.scrollTop;
+  logg2("diffScroHei:", diffScroHei);
   logg2("1:", document.documentElement.scrollTop);
-  logg2("2:", document.documentElement.scrollLeft);
+  logg2("2:", document.documentElement.clientHeight);
+  const diffHtml =
+    document.documentElement.clientHeight - document.documentElement.scrollTop;
+  logg2("diffHtml", diffHtml);
   if (
     (element.parentElement.classList.contains("folded") &&
       element.classList.contains("unfolded")) ||
     (!element.parentElement.classList.contains("folded") &&
       !element.classList.contains("unfolded"))
   ) {
+    //element.parentElement.style.marginBottom = html.scrollTop + "px";
     intervalFocus(element, "background-color: green;", 300);
   } else {
-    element.parentElement.style.marginBottom = all + "px";
+    const vh = Math.max(
+      document.documentElement.clientHeight || 0,
+      window.innerHeight || 0
+    );
+    element.parentElement.style.marginBottom = vh + "px";
   }
 };
 
@@ -223,8 +235,9 @@ const unfoldOneItem = (element) => {
   logg2("{element}:", { element });
   logg2("element.scrollTop:", element.scrollTop);
   logg2("element.clientHeight:", element.clientHeight);
+  logg2("element.scrollHeight:", element.scrollHeight);
   logg2("window.scrollY:", window.scrollY);
-  const wiScroY = window.scrollY;
+  const wiScroY = html.scrollTop;
   disableScroll();
   element.classList.toggle("unfolded");
   if (isItemState) {
