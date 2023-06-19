@@ -1,6 +1,11 @@
 const firstHeaderButton = document.getElementById("first-header");
 const secondHeaderButton = document.getElementById("second-header");
 const content = document.getElementById("content");
+const vh = Math.max(
+  document.documentElement.clientHeight || 0,
+  window.innerHeight || 0
+);
+content.style.marginBottom = vh + "px";
 //const foldedClass = document.querySelector(".markdown-body > ol");
 let foldedClass = document.getElementById("list-items");
 
@@ -181,39 +186,7 @@ const trashButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
-function disableScroll() {
-  // Get the current page scroll position
-  scrollTop = window.screenY || document.documentElement.scrollTop;
-  (scrollLeft = window.screenX || document.documentElement.scrollLeft),
-    // if any scroll is attempted, set this to the previous value
-    (window.onscroll = function () {
-      window.scrollTo(scrollLeft, scrollTop);
-    });
-}
-
-function enableScroll() {
-  window.onscroll = function () {};
-}
-
-const stopUnderCursor = (element) => {
-  if (
-    (element.parentElement.classList.contains("folded") &&
-      element.classList.contains("unfolded")) ||
-    (!element.parentElement.classList.contains("folded") &&
-      !element.classList.contains("unfolded"))
-  ) {
-    intervalFocus(element, "background-color: green;", 300);
-  } else {
-    const vh = Math.max(
-      document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
-    );
-    element.parentElement.style.marginBottom = vh + "px";
-  }
-};
-
 const unfoldOneItem = (element) => {
-  disableScroll();
   element.classList.toggle("unfolded");
   if (isItemState) {
     const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
@@ -223,11 +196,6 @@ const unfoldOneItem = (element) => {
     const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
-  stopUnderCursor(element);
-  window.setTimeout(function () {
-    enableScroll();
-  }, 200);
-  logOut2();
 };
 
 const editFile = (e, element) => {
@@ -648,8 +616,8 @@ if (true) {
   // change to show/hide output loggs
   var showLogg = false; // logg - 'headAndTail'
   var showLogg1 = false; // logg1 - 'whatClass'
-  var showLogg2 = true; // logg2 - 'unfoldOneItem'
-  var showLogg3 = true; // logg3 - 'ol-2'
+  var showLogg2 = false; // logg2 - 'unfoldOneItem'
+  var showLogg3 = false; // logg3 - 'ol-2'
   var showLogg4 = false; // logg4 -
   var showLogg5 = false; // logg5 -
   var showLogg6 = false; // logg6 - 'whatElement'
