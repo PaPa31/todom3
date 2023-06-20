@@ -122,6 +122,7 @@ const unfoldButtonMaker = (parentLi) => {
     ? parentLi.firstChild
     : parentLi.firstChild.lastChild;
   const buttonTag = document.createElement("button");
+  const numInside = document.createElement("span");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
   buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
   if (isItemState && mdTag.scrollHeight < 40) {
@@ -130,6 +131,7 @@ const unfoldButtonMaker = (parentLi) => {
   } else {
     buttonTag.setAttribute("title", "fold/unfold one");
   }
+  buttonTag.appendChild(numInside);
   parentLi.appendChild(buttonTag);
 };
 

@@ -346,13 +346,9 @@ blockquote {
   padding: 0;
 }
 
-.unfold-button::before {
+.unfold-button span::before {
   content: counter(item) ") ";
   counter-increment: item;
-  position: absolute;
-  top: 9px;
-  left: 0;
-  right: 0;
 }
 
 .md-item,
