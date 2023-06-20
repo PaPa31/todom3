@@ -556,7 +556,6 @@ table {
   background-color: transparent;
   border: 1px solid var(--button-muted-border-hover);
   color: var(--button-muted-color-hover);
-  padding: 11px 7px;
 }
 
 .dark .muted-button {
