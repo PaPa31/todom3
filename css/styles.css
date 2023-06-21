@@ -375,6 +375,11 @@ blockquote {
   line-height: 19px;
 }
 
+.md-item > :not(p),
+.file-text > :not(p) {
+  line-height: initial;
+}
+
 #preview,
 #position {
   padding: 0.75rem;
