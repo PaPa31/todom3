@@ -364,18 +364,17 @@ blockquote {
   overflow: auto;
 }
 
-.md-item {
+.md-item,
+.file-text {
   padding: 8px 10px 12px 10px;
 }
 
-.file-text {
-  padding: 7px 10px 12px 10px;
+.md-file > * {
+  line-height: 19px;
 }
 
-.file-size,
-.file-name,
-.file-text {
-  line-height: 19px;
+.md-file > * > * {
+  line-height: initial;
 }
 
 #preview,
