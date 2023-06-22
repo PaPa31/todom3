@@ -367,6 +367,7 @@ form.addEventListener("submit", function (e) {
     hideAndNewInputLabel();
     ifReturnAndNoneX();
     showOrHideDeleteAllItems();
+    showItemSortingArrows(foldedClass.childElementCount);
   } else {
     saveFile();
   }
