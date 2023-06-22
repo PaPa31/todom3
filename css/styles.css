@@ -132,6 +132,7 @@ button,
 [type="submit"],
 [type="reset"],
 [type="button"] {
+  line-height: 1rem;
   -webkit-appearance: none;
   appearance: none;
   display: inline-block;
@@ -632,8 +633,7 @@ h2,
 h3,
 h4,
 h5,
-h6,
-.header-button {
+h6 {
   margin-top: 24px;
   margin-bottom: 16px;
   font-weight: 600;
@@ -722,20 +722,12 @@ h6 {
   flex: 0 0 auto;
 }
 
-.m0 {
-  margin: 0;
-}
-
-.f2rem {
+.header-button {
   font-size: 2rem;
 }
 
 .ml5 {
   margin-left: 5px;
-}
-
-.p0-5 {
-  padding: 0 5px;
 }
 
 .btn {
