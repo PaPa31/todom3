@@ -800,7 +800,7 @@ ol.preview-outer p {
 
 .sort-ascending,
 .sort-descending {
-  width: 28px;
+  width: 30px;
   fill: #777;
 }
 
@@ -939,12 +939,12 @@ button.edit-item:hover {
   padding-top: 1px;
   padding-left: 3px;
   padding-right: 3px;
-  vertical-align: middle;
+  vertical-align: bottom;
   position: relative;
 }
 
 #restore-deleted-item img {
-  width: 31px;
+  width: 33px;
   padding: 0px;
   vertical-align: baseline;
   opacity: 0.6;
