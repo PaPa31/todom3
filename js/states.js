@@ -531,11 +531,15 @@ const initializeFileState = () => {
 
     if (window.location.protocol === "file:") {
       //if (!fileElem.files.length && !filesArray.length) {
-      if (fileElem.files.length === 0) {
+      if (fileElem.files.length !== 0 && filesArray.length !== 0) {
         fileElem.click();
       } else {
-        //handleFilesArray();
-        handleFiles(fileElem.files);
+        if (filesArray.length === 0) {
+          fileElem.click();
+          //handleFiles(fileElem.files);
+        } else {
+          handleFilesArray();
+        }
       }
     } else {
       logFileText(phrase);
