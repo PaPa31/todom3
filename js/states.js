@@ -429,7 +429,7 @@ function addFiles(e) {
 
   // Fallback
   var files = e.target.files || e.dataTransfer.files;
-  if (!files.length) {
+  if (files.length === 0) {
     alert("File type not accepted");
     return;
   }
@@ -530,17 +530,7 @@ const initializeFileState = () => {
     indexedFilesArray = [];
 
     if (window.location.protocol === "file:") {
-      //if (!fileElem.files.length && !filesArray.length) {
-      if (fileElem.files.length !== 0 && filesArray.length !== 0) {
-        fileElem.click();
-      } else {
-        if (filesArray.length === 0) {
-          fileElem.click();
-          //handleFiles(fileElem.files);
-        } else {
-          handleFilesArray();
-        }
-      }
+      fileElem.click();
     } else {
       logFileText(phrase);
     }
