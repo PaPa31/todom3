@@ -78,6 +78,7 @@ const liMaker = (count) => {
     if (itemsArray[count].fold) li.setAttribute("class", "unfolded");
 
     div.innerHTML = markdown(text);
+    console.log({ div });
     li.id = counterItems;
   } else {
     const obj = filesArray[count];
@@ -483,6 +484,14 @@ function checkIt() {
     counterFiles++;
   }
 
+  if (!isItemState) {
+    foldedClass = document.getElementById("list-items");
+    isItemState = !isItemState;
+    saveItem();
+    foldedClass = document.getElementById("list-files");
+    isItemState = !isItemState;
+  }
+
   clearInputAndPreviewAreas();
   defaultMarkers();
   hideAndNewInputLabel();
@@ -492,6 +501,7 @@ function checkIt() {
   localStorage.removeItem("todomLastInputValue");
 
   document.body.onfocus = null;
+
   //console.log("checked");
 }
 
