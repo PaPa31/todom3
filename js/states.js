@@ -126,7 +126,7 @@ const unfoldButtonMaker = (parentLi) => {
   const numInside = document.createElement("span");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
   buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
-  if (isItemState && mdTag.scrollHeight < 40) {
+  if (isItemState && mdTag.scrollHeight !== 0 && mdTag.scrollHeight < 40) {
     buttonTag.setAttribute("disable", true);
     mdTag.classList.add("single-line");
   } else {
