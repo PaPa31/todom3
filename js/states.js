@@ -129,6 +129,7 @@ const unfoldButtonMaker = (parentLi) => {
   if (isItemState) {
     if (mdTag.scrollHeight === 0) {
       buttonTag.setAttribute("title", "fold/unfold one");
+      buttonTag.style = "--box-shadow-color: red";
     } else if (mdTag.scrollHeight < 40) {
       buttonTag.setAttribute("disable", true);
       mdTag.classList.add("single-line");

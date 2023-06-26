@@ -253,21 +253,28 @@ blockquote {
 
 #main-listing > ol.folded .muted-button:not([disable="true"]) {
   /*left: 4px;*/
-  box-shadow: green 1px 1px 2px 1px;
+  --box-shadow-color: green;
+  box-shadow: 1px 1px 2px 1px var(--box-shadow-color);
 }
 
 #main-listing > ol .muted-button {
   /*left: -40px;*/
-  box-shadow: green 5px 5px 2px 1px;
+  --box-shadow-color: green;
+  box-shadow: 5px 5px 2px 1px var(--box-shadow-color);
 }
 
 #main-listing > ol.folded .unfolded .muted-button:not([disable="true"]) {
   /*left: -40px;*/
-  box-shadow: green 5px 5px 2px 1px;
+  --box-shadow-color: green;
+  box-shadow: 5px 5px 2px 1px var(--box-shadow-color);
 }
 
 #main-listing > ol [disable="true"] {
-  box-shadow: 1px 1px 2px 1px;
+  box-shadow: 1px 1px 2px 1px var(--button-muted-color);
+}
+
+.dark #main-listing > ol [disable="true"] {
+  box-shadow: 1px 1px 2px 1px var(--button-muted-color-dark);
 }
 
 /*#main-listing > ol.folded .muted-button {
@@ -276,7 +283,8 @@ blockquote {
 
 #main-listing > ol .unfolded .muted-button:not([disable="true"]) {
   /*left: 4px;*/
-  box-shadow: green 1px 1px 2px 1px;
+  --box-shadow-color: green;
+  box-shadow: 1px 1px 2px 1px var(--box-shadow-color);
 }
 
 #main-listing > ol.folded > li > .md-item:not(.single-line) {
