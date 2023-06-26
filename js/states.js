@@ -53,9 +53,6 @@ let editedFileElementDOM;
 
 let fileSizeGlobal;
 
-// initial more than 40
-let heightFromFilesState = 41;
-
 const fileSizeTerm = (numberOfBytes) => {
   // Approximate to the closest prefixed unit
   const units = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
@@ -129,16 +126,17 @@ const unfoldButtonMaker = (parentLi) => {
   const numInside = document.createElement("span");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
   buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
-  if (!isItemState) heightFromFilesState = mdTag.scrollHeight;
-  if (
-    (isItemState && mdTag.scrollHeight !== 0 && mdTag.scrollHeight < 40) ||
-    (isItemState && mdTag.scrollHeight === 0 && heightFromFilesState < 40)
-  ) {
-    buttonTag.setAttribute("disable", true);
-    mdTag.classList.add("single-line");
+  if (isItemState) {
+    if (mdTag.scrollHeight === 0) {
+      buttonTag.setAttribute("title", "fold/unfold one");
+    } else if (mdTag.scrollHeight < 40) {
+      buttonTag.setAttribute("disable", true);
+      mdTag.classList.add("single-line");
+    }
   } else {
     buttonTag.setAttribute("title", "fold/unfold one");
   }
+
   buttonTag.appendChild(numInside);
   parentLi.appendChild(buttonTag);
 };
