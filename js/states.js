@@ -528,7 +528,7 @@ const initializeFileState = () => {
   saveButton.innerText = "Save file";
   secondHeaderButton.innerText = "Files";
   openFileButton.innerText = "Open file";
-  deleteAllItemsButton.innerText = "Close All Files";
+  deleteAllItemsButton.innerText = "Clear the List";
   saveAsFileButton.classList.replace("inline-block", "none");
   openDirButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("inline-block", "none");
