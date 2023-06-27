@@ -235,6 +235,7 @@ saveAsFileButton.addEventListener("click", function (e) {
       type: "text/plain;charset=utf-8",
     });
     saveAs(myFile);
+    saveItem();
   }
 });
 
