@@ -105,8 +105,18 @@ const liMaker = (count) => {
   foldedClass.appendChild(li);
   //console.log("URL =", url);
   unfoldButtonMaker(li);
+  if (isItemState) saveHistoryDivMaker(li);
   controlDivMaker(li);
   scrollToTargetAdjusted(li, preview.scrollTop);
+};
+
+const saveHistoryDivMaker = (parentDiv) => {
+  const divTag = document.createElement("div");
+  divTag.setAttribute("id", "save-history");
+  parentDiv.appendChild(divTag);
+
+  previousSaveButtonMaker(divTag);
+  nextSaveButtonMaker(divTag);
 };
 
 const controlDivMaker = (parentDiv) => {
@@ -142,6 +152,22 @@ const unfoldButtonMaker = (parentLi) => {
 
   buttonTag.appendChild(numInside);
   parentLi.appendChild(buttonTag);
+};
+
+const previousSaveButtonMaker = (parentDiv) => {
+  const buttonTag = document.createElement("button");
+  buttonTag.setAttribute("class", "previous-save btn");
+  buttonTag.setAttribute("onclick", `previousSave(event, this)`);
+  buttonTag.setAttribute("title", "Previous save");
+  parentDiv.appendChild(buttonTag);
+};
+
+const nextSaveButtonMaker = (parentDiv) => {
+  const buttonTag = document.createElement("button");
+  buttonTag.setAttribute("class", "next-save btn");
+  buttonTag.setAttribute("onclick", `nextSave(event, this)`);
+  buttonTag.setAttribute("title", "Next save");
+  parentDiv.appendChild(buttonTag);
 };
 
 const editButtonMaker = (parentDiv) => {

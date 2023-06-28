@@ -312,6 +312,7 @@ blockquote {
 
 .folded .file-text,
 .folded #unit-control,
+.folded .unfolded #save-history,
 .file-size,
 .folded .unfolded .file-size,
 .file-name,
@@ -321,6 +322,8 @@ blockquote {
 
 .folded .unfolded .file-text,
 .folded .unfolded #unit-control,
+.unfolded #save-history,
+.folded #save-history,
 .folded .file-size,
 .unfolded .file-size,
 .folded .file-name,
@@ -369,6 +372,7 @@ blockquote {
 .md-item,
 .file-text,
 #unit-control,
+#save-history,
 #preview,
 #position {
   width: 100%;
@@ -862,7 +866,8 @@ ol.preview-outer p {
   opacity: 1;
 }
 
-#unit-control {
+#unit-control,
+#save-history {
   margin-left: -85px;
   width: 83px !important;
   padding: 3px 0 2px !important;
@@ -878,7 +883,9 @@ ol.preview-outer p {
 }
 
 button.delete-one-item,
-button.edit-item {
+button.edit-item,
+button.previous-save,
+button.next-save {
   width: 29px;
   height: 29px;
   background-size: auto;
@@ -901,8 +908,18 @@ button.edit-item {
   background-image: url(../img/edit.svg);
 }
 
+button.previous-save {
+  background-image: url(../img/chevron-left.svg);
+}
+
+button.next-save {
+  background-image: url(../img/chevron-right.svg);
+}
+
 button.delete-one-item:hover,
-button.edit-item:hover {
+button.edit-item:hover,
+button.previous-save:hover,
+button.next-save:hover {
   opacity: 0.99;
 }
 
