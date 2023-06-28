@@ -477,20 +477,25 @@ function initialize() {
 
 const saveItemFromFile = (_name) => {
   const inx = itemsArray.findIndex((s) => s.name && s.name === _name);
-  console.log("inx:", inx);
-
   if (inx !== -1) {
+    const oldItem = indexedItemsArray.indexOf(inx.toString()) * 1;
+
+    //itemsArray[oldItem].text = input.value;
     itemsArray[inx].text.push(input.value);
+
+    //editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
+    const liDOM = document.getElementById(oldItem);
+    console.log(liDOM);
+    liDOM.firstChild.innerHTML = markdown(input.value);
+    disableButton(liDOM);
+    scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const obj = {
       text: [input.value],
       name: _name,
     };
-
     itemsArray.push(obj);
-
     indexedItemsArray.push(counterItems.toString());
-
     const newItem = indexedItemsArray.indexOf(counterItems.toString()) * 1;
     liMaker(newItem);
     counterItems++;
