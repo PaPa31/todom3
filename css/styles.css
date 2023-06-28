@@ -253,7 +253,7 @@ blockquote {
   border-color: var(--border-cite-dark);
 }
 
-#main-listing > ol.folded .muted-button:not([disable="true"]) {
+#main-listing > ol.folded .muted-button {
   /*left: 4px;*/
   /*--box-shadow-color: green;*/
   --box-shadow-color: var(--button-muted-color);
@@ -267,16 +267,16 @@ blockquote {
   box-shadow: 5px 5px 2px 1px var(--box-shadow-color);
 }
 
-#main-listing > ol.folded .unfolded .muted-button:not([disable="true"]) {
+#main-listing > ol.folded .unfolded .muted-button {
   /*left: -40px;*/
   /*--box-shadow-color: green;*/
   --box-shadow-color: var(--button-muted-color);
   box-shadow: 5px 5px 2px 1px var(--box-shadow-color);
 }
 
-#main-listing > ol [disable="true"] {
+/*#main-listing > ol [disable="true"] {
   box-shadow: 1px 1px 2px 1px var(--transparent);
-}
+}*/
 
 /*.dark #main-listing > ol [disable="true"] {
   box-shadow: 1px 1px 2px 1px var(--button-muted-color-dark);
@@ -286,14 +286,14 @@ blockquote {
   left: 0px;
 }*/
 
-#main-listing > ol .unfolded .muted-button:not([disable="true"]) {
+#main-listing > ol .unfolded .muted-button {
   /*left: 4px;*/
   /*--box-shadow-color: green;*/
   --box-shadow-color: var(--button-muted-color);
   box-shadow: 1px 1px 2px 1px var(--box-shadow-color);
 }
 
-#main-listing > ol.folded > li > .md-item:not(.single-line) {
+#main-listing > ol.folded > li > .md-item {
   height: 38px;
   opacity: 0.25;
   overflow-y: hidden;
@@ -334,10 +334,6 @@ blockquote {
 .unfolded .file-text,
 .unfolded #unit-control {
   display: none;
-}
-
-[disable="true"] ~ div {
-  display: block !important;
 }
 
 #main-listing > ol > li {
@@ -584,22 +580,16 @@ table {
   color: var(--button-muted-color-hover-dark);
 }
 
-.muted-button:hover,
-[disable="true"] {
+.muted-button:hover {
   background-color: transparent;
   border: 1px solid var(--button-muted-border);
   color: var(--button-muted-color);
 }
 
-.dark .muted-button:hover,
-.dark [disable="true"] {
+.dark .muted-button:hover {
   border: 1px solid var(--button-muted-border-dark);
   /*border: 1px solid transparent;*/
   color: var(--button-muted-color-dark);
-}
-
-[disable="true"] {
-  pointer-events: none;
 }
 
 .ctrl [ctrl="true"] {

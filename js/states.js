@@ -136,20 +136,10 @@ const unfoldButtonMaker = (parentLi) => {
   const numInside = document.createElement("span");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
   buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
-  if (isItemState) {
-    if (mdTag.scrollHeight === 0) {
-      buttonTag.setAttribute("title", "fold/unfold one");
-      buttonTag.style = "--box-shadow-color: red";
-    } else if (mdTag.scrollHeight < 40) {
-      buttonTag.setAttribute("disable", true);
-      mdTag.classList.add("single-line");
-    } else {
-      buttonTag.setAttribute("title", "fold/unfold one");
-    }
-  } else {
-    buttonTag.setAttribute("title", "fold/unfold one");
-  }
 
+  if (mdTag.scrollHeight === 0) buttonTag.style = "--box-shadow-color: red";
+
+  buttonTag.setAttribute("title", "fold/unfold one");
   buttonTag.appendChild(numInside);
   parentLi.appendChild(buttonTag);
 };
