@@ -133,6 +133,8 @@ const unfoldButtonMaker = (parentLi) => {
     } else if (mdTag.scrollHeight < 40) {
       buttonTag.setAttribute("disable", true);
       mdTag.classList.add("single-line");
+    } else {
+      buttonTag.setAttribute("title", "fold/unfold one");
     }
   } else {
     buttonTag.setAttribute("title", "fold/unfold one");
