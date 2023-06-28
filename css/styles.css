@@ -332,7 +332,8 @@ blockquote {
 }
 
 .unfolded .file-text,
-.unfolded #unit-control {
+.unfolded #unit-control,
+#save-history {
   display: none;
 }
 
