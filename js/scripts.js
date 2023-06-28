@@ -84,7 +84,8 @@ const editItem = (e, element) => {
   const editedItemElementDOM2 = element.parentElement.parentElement;
   const itemIndexToEdit2 =
     indexedItemsArray.indexOf(editedItemElementDOM2.id) * 1;
-  const editing = itemsArray[itemIndexToEdit2].text;
+  const textArr = itemsArray[itemIndexToEdit2].text;
+  const editing = textArr[textArr.length - 1];
   if (e.ctrlKey) {
     intervalFocus(element, "background-color: #685a7f;", 300);
     input.value = input.value
@@ -341,7 +342,8 @@ const disableButton = (el) => {
 
 const saveItem = () => {
   if (itemIndexToEdit != null) {
-    itemsArray[itemIndexToEdit].text = input.value;
+    //itemsArray[itemIndexToEdit].text = input.value;
+    itemsArray[itemIndexToEdit].text.push(input.value);
     editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
     disableButton(editedItemElementDOM);
     scrollToTargetAdjusted(editedItemElementDOM, preview.scrollTop);
@@ -420,7 +422,8 @@ document.addEventListener("keyup", function (e) {
 const mergeAllItems = () => {
   //const _inv = input.value;
   itemsArray.forEach((item) => {
-    const _itt = item.text;
+    const textArr = item.text;
+    const _itt = textArr[textArr.length - 1];
     if (_itt) {
       input.value = input.value
         ? /^ *- /.test(_itt)
