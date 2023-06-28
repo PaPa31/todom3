@@ -476,16 +476,17 @@ function initialize() {
 }
 
 const saveItemFromFile = (_name) => {
+  logIn4("saveItemFromFile", _name);
   const inx = itemsArray.findIndex((s) => s.name && s.name === _name);
+  logg4("inx:", inx);
   if (inx !== -1) {
-    const oldItem = indexedItemsArray.indexOf(inx.toString()) * 1;
-
-    //itemsArray[oldItem].text = input.value;
+    const itemId = indexedItemsArray[inx];
+    logg4("itemId:", itemId);
+    //itemsArray[itemId].text = input.value;
     itemsArray[inx].text.push(input.value);
 
-    //editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
-    const liDOM = document.getElementById(oldItem);
-    console.log(liDOM);
+    const liDOM = document.getElementById(itemId);
+    logg4(liDOM);
     liDOM.firstChild.innerHTML = markdown(input.value);
     disableButton(liDOM);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
@@ -502,6 +503,7 @@ const saveItemFromFile = (_name) => {
   }
   defaultMarkers();
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  logOut4();
 };
 
 function checkIt() {
@@ -663,7 +665,7 @@ if (true) {
   var showLogg1 = false; // logg1 - 'whatClass'
   var showLogg2 = false; // logg2 - 'unfoldOneItem'
   var showLogg3 = false; // logg3 - 'ol-2'
-  var showLogg4 = false; // logg4 -
+  var showLogg4 = true; // logg4 - 'arr-arr-obj'
   var showLogg5 = false; // logg5 -
   var showLogg6 = false; // logg6 - 'whatElement'
 
@@ -722,7 +724,7 @@ if (true) {
   };
 
   // loggs subsystem 4
-  // ''
+  // 'arr-arr-obj'
   var logg4 = (...m) => {
     if (showLogg4) console.log(...m);
   };
