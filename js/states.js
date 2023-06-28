@@ -137,7 +137,8 @@ const unfoldButtonMaker = (parentLi) => {
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
   buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
 
-  if (mdTag.scrollHeight === 0) buttonTag.style = "--box-shadow-color: red";
+  if (isItemState && mdTag.scrollHeight === 0)
+    buttonTag.style = "--box-shadow-color: red";
 
   buttonTag.setAttribute("title", "fold/unfold one");
   buttonTag.appendChild(numInside);
