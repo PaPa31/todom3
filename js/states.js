@@ -72,13 +72,13 @@ const liMaker = (count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
   if (isItemState) {
-    const text = itemsArray[count].text;
+    const textArr = itemsArray[count].text;
+    const text = textArr[textArr.length - 1];
 
     div.setAttribute("class", "md-item");
     if (itemsArray[count].fold) li.setAttribute("class", "unfolded");
 
     div.innerHTML = markdown(text);
-    console.log({ div });
     li.id = counterItems;
   } else {
     const obj = filesArray[count];
@@ -475,17 +475,44 @@ function initialize() {
   //console.log("initializing");
 }
 
+const saveItemFromFile = (_name) => {
+  const inx = itemsArray.findIndex((s) => s.name && s.name === _name);
+  console.log("inx:", inx);
+
+  if (inx !== -1) {
+    itemsArray[inx].text.push(input.value);
+  } else {
+    const obj = {
+      text: [input.value],
+      name: _name,
+    };
+
+    itemsArray.push(obj);
+
+    indexedItemsArray.push(counterItems.toString());
+
+    const newItem = indexedItemsArray.indexOf(counterItems.toString()) * 1;
+    liMaker(newItem);
+    counterItems++;
+  }
+  defaultMarkers();
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+};
+
 function checkIt() {
   //console.log("start checking");
   const previewOffset = preview.scrollTop;
+  let name;
   if (fileIndexToEdit != null) {
     editedFileElementDOM.firstChild.firstChild.nextSibling.innerHTML = markdown(
       filesArray[fileIndexToEdit].text
     );
+    name = filesArray[fileIndexToEdit].name;
     disableButton(editedFileElementDOM);
     scrollToTargetAdjusted(editedFileElementDOM, previewOffset);
   } else {
     filesArray[counterFiles].size = fileSizeGlobal;
+    name = filesArray[fileIndexToEdit].name;
     liMaker(counterFiles);
     counterFiles++;
   }
@@ -493,7 +520,7 @@ function checkIt() {
   if (!isItemState) {
     foldedClass = document.getElementById("list-items");
     isItemState = !isItemState;
-    saveItem();
+    saveItemFromFile(name);
     foldedClass = document.getElementById("list-files");
     isItemState = !isItemState;
   }
