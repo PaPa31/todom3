@@ -538,7 +538,7 @@ function checkIt() {
     scrollToTargetAdjusted(editedFileElementDOM, previewOffset);
   } else {
     filesArray[counterFiles].size = fileSizeGlobal;
-    name = filesArray[fileIndexToEdit].name;
+    name = filesArray[counterFiles].name;
     liMaker(counterFiles);
     counterFiles++;
   }
