@@ -73,7 +73,9 @@ const liMaker = (count) => {
   const div = document.createElement("div");
   if (isItemState) {
     const textArr = itemsArray[count].text;
-    const text = textArr[textArr.length - 1];
+    const cur = itemsArray[count].cur;
+    let current = cur !== undefined ? cur : textArr.length - 1;
+    const text = textArr[current];
 
     div.setAttribute("class", "md-item");
     if (itemsArray[count].fold) li.setAttribute("class", "unfolded");
@@ -215,6 +217,7 @@ const previousSave = (el) => {
   }
   const prevText = textArr[current];
   itemsArray[itemIndex].cur = current;
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   const md = markdown(prevText);
   const chi = liDOM.firstChild;
   chi.innerHTML = md;
@@ -235,6 +238,7 @@ const nextSave = (el) => {
   }
   const prevText = textArr[current];
   itemsArray[itemIndex].cur = current;
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   const md = markdown(prevText);
   const chi = liDOM.firstChild;
   chi.innerHTML = md;
