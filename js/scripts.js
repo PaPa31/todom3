@@ -422,10 +422,13 @@ document.addEventListener("keyup", function (e) {
 });
 
 const mergeAllItems = () => {
-  //const _inv = input.value;
   itemsArray.forEach((item) => {
     const textArr = item.text;
-    const _itt = textArr[textArr.length - 1];
+    const cur = item.cur;
+    const current = cur !== undefined ? cur : textArr.length - 1;
+    const _itt = textArr[current]
+      ? textArr[current]
+      : textArr[textArr.length - 1];
     if (_itt) {
       input.value = input.value
         ? /^ *- /.test(_itt)
