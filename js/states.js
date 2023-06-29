@@ -208,10 +208,10 @@ const previousSave = (el) => {
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
-  let current = cur !== undefined ? cur : textArr.length - 1;
+  let current = cur !== undefined ? cur : textArr.length;
+  current--;
   if (current > 0) {
     el.nextSibling.removeAttribute("disable");
-    current--;
   } else {
     el.setAttribute("disable", true);
   }
@@ -230,9 +230,9 @@ const nextSave = (el) => {
   const cur = itemsArray[itemIndex].cur;
   const len = textArr.length - 1;
   let current = cur !== undefined ? cur : len;
+  current++;
   if (current < len) {
     el.previousSibling.removeAttribute("disable");
-    current++;
   } else {
     el.setAttribute("disable", true);
   }
