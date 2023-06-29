@@ -84,8 +84,8 @@ const editItem = (e, element) => {
   const editedItemElementDOM2 = element.parentElement.parentElement;
   const itemIndexToEdit2 =
     indexedItemsArray.indexOf(editedItemElementDOM2.id) * 1;
-  const textArr = itemsArray[count].text;
-  const cur = itemsArray[count].cur;
+  const textArr = itemsArray[itemIndexToEdit2].text;
+  const cur = itemsArray[itemIndexToEdit2].cur;
   let current = cur !== undefined ? cur : textArr.length - 1;
   const editing = textArr[current];
   if (e.ctrlKey) {
