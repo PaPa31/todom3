@@ -107,44 +107,43 @@ const editItem = (e, element) => {
   mdToPreview(input.value);
 };
 
+const putItemToTrash = (indexToTrash) => {
+  trashArray.push(itemsArray[indexToTrash]);
+  deletedCounter.innerText = trashArray.length;
+  restoreItemButton.classList.replace("invisible", "visible");
+  clearTrashButton.classList.replace("invisible", "visible");
+  localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
+};
+
+const removeItemFromMemory = (item, indexToDelete) => {
+  isEditing(indexToDelete);
+
+  foldedClass.removeChild(item);
+  showItemSortingArrows(foldedClass.childElementCount);
+
+  itemsArray.splice(indexToDelete, 1);
+  indexedItemsArray.splice(indexToDelete, 1);
+
+  showOrHideDeleteAllItems();
+
+  if (itemsArray.length == 0) {
+    localStorage.removeItem("todomItemsArray");
+  } else {
+    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  }
+};
+
 const deleteOneItem = (e, item) => {
   e.stopPropagation();
   if ((twoClickToTrash && item.id === lastClickId) || e.ctrlKey) {
     const indexToDelete = indexedItemsArray.indexOf(item.id) * 1;
 
-    if (itemIndexToEdit != null && itemIndexToEdit >= indexToDelete) {
-      if (itemIndexToEdit == indexToDelete) {
-        defaultMarkers();
-        inputLabel.innerHTML = "<div>New</div>";
-      } else {
-        itemIndexToEdit = itemIndexToEdit - 1;
-        inputLabel.innerHTML = `<span>Edit: </span><span>#${
-          itemIndexToEdit + 1
-        }</span>`;
-      }
-    }
-
-    foldedClass.removeChild(item);
-    showItemSortingArrows(foldedClass.childElementCount);
+    removeItemFromMemory(item, indexToDelete);
 
     if (!e.ctrlKey) {
-      trashArray.push(itemsArray[indexToDelete]);
-      deletedCounter.innerText = trashArray.length;
-      restoreItemButton.classList.replace("invisible", "visible");
-      clearTrashButton.classList.replace("invisible", "visible");
-      localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
+      putItemToTrash(indexToDelete);
     }
 
-    itemsArray.splice(indexToDelete, 1);
-    indexedItemsArray.splice(indexToDelete, 1);
-
-    showOrHideDeleteAllItems();
-
-    if (itemsArray.length == 0) {
-      localStorage.removeItem("todomItemsArray");
-    } else {
-      localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    }
     twoClickToTrash = false;
     lastClickId = undefined;
   } else {

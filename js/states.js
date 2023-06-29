@@ -216,12 +216,30 @@ const trashButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
+const isEditing = (indexToDelete) => {
+  if (itemIndexToEdit != null && itemIndexToEdit >= indexToDelete) {
+    if (itemIndexToEdit == indexToDelete) {
+      defaultMarkers();
+      inputLabel.innerHTML = "<div>New</div>";
+    } else {
+      itemIndexToEdit = itemIndexToEdit - 1;
+      inputLabel.innerHTML = `<span>Edit: </span><span>#${
+        itemIndexToEdit + 1
+      }</span>`;
+    }
+  }
+};
+
 const deleteCurrentSave = (el) => {
   const liDOM = el.parentElement.parentElement;
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
   const lastBefore = textArr.length - 1;
+  if (lastBefore === 0) {
+    removeItemFromMemory(liDOM, itemIndex);
+    return;
+  }
   let currentToDelete = cur !== undefined ? cur : lastBefore;
   textArr.splice(currentToDelete, 1);
   const lastAfter = textArr.length - 1;
@@ -233,7 +251,7 @@ const deleteCurrentSave = (el) => {
     el.nextSibling.setAttribute("disable", true);
     if (currentToDelete > 0) currentToDelete--;
     if (lastAfter === 0) {
-      el.parentElement.setAttribute("disable", true);
+      el.previousSibling.setAttribute("disable", true);
     }
   }
   const currentText = textArr[currentToDelete]
