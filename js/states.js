@@ -73,9 +73,9 @@ const liMaker = (count) => {
   const div = document.createElement("div");
   const textArr = itemsArray[count].text;
   const len = textArr.length - 1;
+  const cur = itemsArray[count].cur;
+  const current = cur !== undefined ? cur : len;
   if (isItemState) {
-    const cur = itemsArray[count].cur;
-    let current = cur !== undefined ? cur : len;
     const text = textArr[current] ? textArr[current] : textArr[len];
 
     div.setAttribute("class", "md-item");
@@ -108,20 +108,20 @@ const liMaker = (count) => {
   foldedClass.appendChild(li);
   //console.log("URL =", url);
   unfoldButtonMaker(li);
-  if (isItemState) saveHistoryDivMaker(li, len);
+  if (isItemState) saveHistoryDivMaker(li, len, current);
   controlDivMaker(li);
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
-const saveHistoryDivMaker = (parentDiv, lengthSaveHistory) => {
+const saveHistoryDivMaker = (parentDiv, lengthSaveHistory, current) => {
   const divTag = document.createElement("div");
   divTag.setAttribute("id", "save-history");
   if (lengthSaveHistory === 0) divTag.setAttribute("disable", true);
   parentDiv.appendChild(divTag);
 
-  previousSaveButtonMaker(divTag);
+  previousSaveButtonMaker(divTag, current);
   deleteCurrentSaveButtonMaker(divTag);
-  nextSaveButtonMaker(divTag);
+  nextSaveButtonMaker(divTag, current === lengthSaveHistory);
 };
 
 const controlDivMaker = (parentDiv) => {
@@ -150,10 +150,11 @@ const unfoldButtonMaker = (parentLi) => {
   parentLi.appendChild(buttonTag);
 };
 
-const previousSaveButtonMaker = (parentDiv) => {
+const previousSaveButtonMaker = (parentDiv, current) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "previous-save btn");
   buttonTag.setAttribute("onclick", `previousSave(this)`);
+  if (current === 0) buttonTag.setAttribute("disable", true);
   buttonTag.setAttribute("title", "Previous save");
   parentDiv.appendChild(buttonTag);
 };
@@ -166,10 +167,11 @@ const deleteCurrentSaveButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
-const nextSaveButtonMaker = (parentDiv) => {
+const nextSaveButtonMaker = (parentDiv, check) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "next-save btn");
   buttonTag.setAttribute("onclick", `nextSave(this)`);
+  if (check) buttonTag.setAttribute("disable", true);
   buttonTag.setAttribute("title", "Next save");
   parentDiv.appendChild(buttonTag);
 };
