@@ -329,15 +329,27 @@ const markdown = (s) => {
   return marked.parse(s);
 };
 
+const saveHistoryControl = (li, lengthSaveHistory) => {
+  const saveEl = li.firstChild.nextSibling.nextSibling;
+  if (lengthSaveHistory > 1) {
+    saveEl.removeAttribute("disable");
+    saveEl.firstChild.removeAttribute("disable");
+  }
+};
+
 const saveItem = () => {
   if (itemIndexToEdit != null) {
-    //itemsArray[itemIndexToEdit].text = input.value;
-    itemsArray[itemIndexToEdit].text.push(input.value);
+    const textArr = itemsArray[itemIndexToEdit].text;
+    textArr.push(input.value);
+    const len = textArr.length;
+    itemsArray[itemIndexToEdit].cur = len - 1;
+    saveHistoryControl(editedItemElementDOM, len);
     editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
     scrollToTargetAdjusted(editedItemElementDOM, preview.scrollTop);
   } else {
     const obj = {
       text: [input.value],
+      cur: 0,
     };
     itemsArray.push(obj);
     indexedItemsArray.push(counterItems.toString());
