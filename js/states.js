@@ -148,7 +148,7 @@ const unfoldButtonMaker = (parentLi) => {
 const previousSaveButtonMaker = (parentDiv) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "previous-save btn");
-  buttonTag.setAttribute("onclick", `previousSave(event, this)`);
+  buttonTag.setAttribute("onclick", `previousSave(this)`);
   buttonTag.setAttribute("title", "Previous save");
   parentDiv.appendChild(buttonTag);
 };
@@ -201,15 +201,17 @@ const trashButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
-const previousSave = (e, el) => {
+const previousSave = (el) => {
   const liDOM = el.parentElement.parentElement;
-  console.log(liDOM);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
-  let current = itemsArray[itemIndex].cur
-    ? itemsArray[itemIndex].cur
-    : textArr.length - 1;
-  current--;
+  const cur = itemsArray[itemIndex].cur;
+  let current = cur !== undefined ? cur : textArr.length - 1;
+  if (current > 0) {
+    current--;
+  } else {
+    el.setAttribute("disable", true);
+  }
   const prevText = textArr[current];
   itemsArray[itemIndex].cur = current;
   const md = markdown(prevText);
