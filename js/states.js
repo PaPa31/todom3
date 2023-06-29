@@ -224,7 +224,7 @@ const previousSave = (el) => {
   let current = cur !== undefined ? cur : textArr.length;
   current--;
   if (current > 0) {
-    el.nextSibling.removeAttribute("disable");
+    el.nextSibling.nextSibling.removeAttribute("disable");
   } else {
     el.setAttribute("disable", true);
   }
@@ -247,7 +247,7 @@ const nextSave = (el) => {
   let current = cur !== undefined ? cur : len;
   current++;
   if (current < len) {
-    el.previousSibling.removeAttribute("disable");
+    el.previousSibling.previousSibling.removeAttribute("disable");
   } else {
     el.setAttribute("disable", true);
   }
