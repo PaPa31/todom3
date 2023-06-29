@@ -156,7 +156,7 @@ const previousSaveButtonMaker = (parentDiv) => {
 const nextSaveButtonMaker = (parentDiv) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "next-save btn");
-  buttonTag.setAttribute("onclick", `nextSave(event, this)`);
+  buttonTag.setAttribute("onclick", `nextSave(this)`);
   buttonTag.setAttribute("title", "Next save");
   parentDiv.appendChild(buttonTag);
 };
@@ -208,6 +208,7 @@ const previousSave = (el) => {
   const cur = itemsArray[itemIndex].cur;
   let current = cur !== undefined ? cur : textArr.length - 1;
   if (current > 0) {
+    el.nextSibling.removeAttribute("disable");
     current--;
   } else {
     el.setAttribute("disable", true);
@@ -219,7 +220,25 @@ const previousSave = (el) => {
   chi.innerHTML = md;
 };
 
-const nextSave = (e, el) => {};
+const nextSave = (el) => {
+  const liDOM = el.parentElement.parentElement;
+  const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
+  const textArr = itemsArray[itemIndex].text;
+  const cur = itemsArray[itemIndex].cur;
+  const len = textArr.length - 1;
+  let current = cur !== undefined ? cur : len;
+  if (current < len) {
+    el.previousSibling.removeAttribute("disable");
+    current++;
+  } else {
+    el.setAttribute("disable", true);
+  }
+  const prevText = textArr[current];
+  itemsArray[itemIndex].cur = current;
+  const md = markdown(prevText);
+  const chi = liDOM.firstChild;
+  chi.innerHTML = md;
+};
 
 const unfoldGreen = (element) => {
   if (
