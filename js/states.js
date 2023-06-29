@@ -120,7 +120,7 @@ const saveHistoryDivMaker = (parentDiv, lengthSaveHistory) => {
   parentDiv.appendChild(divTag);
 
   previousSaveButtonMaker(divTag);
-  deleteCurrentSave(divTag);
+  deleteCurrentSaveButtonMaker(divTag);
   nextSaveButtonMaker(divTag);
 };
 
@@ -158,7 +158,7 @@ const previousSaveButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
-const deleteCurrentSave = (parentDiv) => {
+const deleteCurrentSaveButtonMaker = (parentDiv) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-current-save btn");
   buttonTag.setAttribute("onclick", `deleteCurrentSave(this)`);
@@ -214,6 +214,8 @@ const trashButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
+const deleteCurrentSave = (el) => {};
+
 const previousSave = (el) => {
   const liDOM = el.parentElement.parentElement;
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
@@ -249,10 +251,10 @@ const nextSave = (el) => {
   } else {
     el.setAttribute("disable", true);
   }
-  const prevText = textArr[current] ? textArr[current] : textArr[len];
+  const nextText = textArr[current] ? textArr[current] : textArr[len];
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  const md = markdown(prevText);
+  const md = markdown(nextText);
   const chi = liDOM.firstChild;
   chi.innerHTML = md;
 };
