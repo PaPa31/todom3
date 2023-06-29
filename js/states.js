@@ -71,13 +71,12 @@ const fileSizeTerm = (numberOfBytes) => {
 const liMaker = (count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
+  const textArr = itemsArray[count].text;
+  const len = textArr.length - 1;
   if (isItemState) {
-    const textArr = itemsArray[count].text;
     const cur = itemsArray[count].cur;
-    let current = cur !== undefined ? cur : textArr.length - 1;
-    const text = textArr[current]
-      ? textArr[current]
-      : textArr[textArr.length - 1];
+    let current = cur !== undefined ? cur : len;
+    const text = textArr[current] ? textArr[current] : textArr[len];
 
     div.setAttribute("class", "md-item");
     if (itemsArray[count].fold) li.setAttribute("class", "unfolded");
@@ -109,14 +108,15 @@ const liMaker = (count) => {
   foldedClass.appendChild(li);
   //console.log("URL =", url);
   unfoldButtonMaker(li);
-  if (isItemState) saveHistoryDivMaker(li);
+  if (isItemState) saveHistoryDivMaker(li, len);
   controlDivMaker(li);
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
-const saveHistoryDivMaker = (parentDiv) => {
+const saveHistoryDivMaker = (parentDiv, lengthSaveHistory) => {
   const divTag = document.createElement("div");
   divTag.setAttribute("id", "save-history");
+  if (lengthSaveHistory === 0) divTag.setAttribute("disable", true);
   parentDiv.appendChild(divTag);
 
   previousSaveButtonMaker(divTag);
