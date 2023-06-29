@@ -75,7 +75,9 @@ const liMaker = (count) => {
     const textArr = itemsArray[count].text;
     const cur = itemsArray[count].cur;
     let current = cur !== undefined ? cur : textArr.length - 1;
-    const text = textArr[current];
+    const text = textArr[current]
+      ? textArr[current]
+      : textArr[textArr.length - 1];
 
     div.setAttribute("class", "md-item");
     if (itemsArray[count].fold) li.setAttribute("class", "unfolded");
@@ -215,7 +217,9 @@ const previousSave = (el) => {
   } else {
     el.setAttribute("disable", true);
   }
-  const prevText = textArr[current];
+  const prevText = textArr[current]
+    ? textArr[current]
+    : textArr[textArr.length - 1];
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   const md = markdown(prevText);
@@ -236,7 +240,7 @@ const nextSave = (el) => {
   } else {
     el.setAttribute("disable", true);
   }
-  const prevText = textArr[current];
+  const prevText = textArr[current] ? textArr[current] : textArr[len];
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   const md = markdown(prevText);
