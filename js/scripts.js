@@ -84,8 +84,10 @@ const editItem = (e, element) => {
   const editedItemElementDOM2 = element.parentElement.parentElement;
   const itemIndexToEdit2 =
     indexedItemsArray.indexOf(editedItemElementDOM2.id) * 1;
-  const textArr = itemsArray[itemIndexToEdit2].text;
-  const editing = textArr[textArr.length - 1];
+  const textArr = itemsArray[count].text;
+  const cur = itemsArray[count].cur;
+  let current = cur !== undefined ? cur : textArr.length - 1;
+  const editing = textArr[current];
   if (e.ctrlKey) {
     intervalFocus(element, "background-color: #685a7f;", 300);
     input.value = input.value
