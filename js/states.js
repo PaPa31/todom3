@@ -272,7 +272,7 @@ const previousSave = (el) => {
   let current = cur !== undefined ? cur : textArr.length;
   current--;
   el.nextSibling.nextSibling.removeAttribute("disable");
-  if (current <= 1) {
+  if (current < 1) {
     el.setAttribute("disable", true);
   }
   const prevText = textArr[current]
