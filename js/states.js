@@ -214,7 +214,35 @@ const trashButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
-const deleteCurrentSave = (el) => {};
+const deleteCurrentSave = (el) => {
+  const liDOM = el.parentElement.parentElement;
+  const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
+  const textArr = itemsArray[itemIndex].text;
+  const cur = itemsArray[itemIndex].cur;
+  const lastBefore = textArr.length - 1;
+  let currentToDelete = cur !== undefined ? cur : lastBefore;
+  textArr.splice(currentToDelete, 1);
+  const lastAfter = textArr.length - 1;
+  if (currentToDelete < lastAfter) {
+    // we do not change 'current' due to splice,
+    // 'current' points to the next position
+    //current++;
+  } else {
+    el.nextSibling.setAttribute("disable", true);
+    currentToDelete--;
+    if (lastAfter === 0) {
+      el.parentElement.setAttribute("disable", true);
+    }
+  }
+  const currentText = textArr[currentToDelete]
+    ? textArr[currentToDelete]
+    : textArr[textArr.length - 1];
+  itemsArray[itemIndex].cur = currentToDelete;
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  const md = markdown(currentText);
+  const chi = liDOM.firstChild;
+  chi.innerHTML = md;
+};
 
 const previousSave = (el) => {
   const liDOM = el.parentElement.parentElement;
