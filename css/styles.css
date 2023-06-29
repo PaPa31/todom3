@@ -862,10 +862,16 @@ ol.preview-outer p {
   opacity: 1;
 }
 
-#unit-control,
-#save-history {
+#unit-control {
   margin-left: -85px;
   width: 83px !important;
+  padding: 3px 0 2px !important;
+  background-color: transparent !important;
+}
+
+#save-history {
+  margin-left: -120px;
+  width: 120px !important;
   padding: 3px 0 2px !important;
   background-color: transparent !important;
 }
@@ -881,7 +887,8 @@ ol.preview-outer p {
 button.delete-one-item,
 button.edit-item,
 button.previous-save,
-button.next-save {
+button.next-save,
+button.delete-current-save {
   width: 29px;
   height: 29px;
   background-size: auto;
@@ -912,10 +919,15 @@ button.next-save {
   background-image: url(../img/chevron-right.svg);
 }
 
+button.delete-current-save {
+  background-image: url(../img/x.svg);
+}
+
 button.delete-one-item:hover,
 button.edit-item:hover,
 button.previous-save:hover,
-button.next-save:hover {
+button.next-save:hover,
+button.delete-current-save:hover {
   opacity: 0.99;
 }
 

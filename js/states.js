@@ -120,6 +120,7 @@ const saveHistoryDivMaker = (parentDiv, lengthSaveHistory) => {
   parentDiv.appendChild(divTag);
 
   previousSaveButtonMaker(divTag);
+  deleteCurrentSave(divTag);
   nextSaveButtonMaker(divTag);
 };
 
@@ -154,6 +155,14 @@ const previousSaveButtonMaker = (parentDiv) => {
   buttonTag.setAttribute("class", "previous-save btn");
   buttonTag.setAttribute("onclick", `previousSave(this)`);
   buttonTag.setAttribute("title", "Previous save");
+  parentDiv.appendChild(buttonTag);
+};
+
+const deleteCurrentSave = (parentDiv) => {
+  const buttonTag = document.createElement("button");
+  buttonTag.setAttribute("class", "delete-current-save btn");
+  buttonTag.setAttribute("onclick", `deleteCurrentSave(this)`);
+  buttonTag.setAttribute("title", "Delete current save");
   parentDiv.appendChild(buttonTag);
 };
 
