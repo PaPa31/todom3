@@ -349,7 +349,7 @@ const saveItem = () => {
     scrollToTargetAdjusted(editedItemElementDOM, preview.scrollTop);
   } else {
     const obj = {
-      text: input.value,
+      text: [input.value],
     };
     itemsArray.push(obj);
     indexedItemsArray.push(counterItems.toString());
