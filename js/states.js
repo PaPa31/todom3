@@ -554,7 +554,6 @@ const saveItemFromFile = (_name) => {
     const liDOM = document.getElementById(itemId);
     logg4(liDOM);
     liDOM.firstChild.innerHTML = markdown(input.value);
-    disableButton(liDOM);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const obj = {
@@ -581,7 +580,6 @@ function checkIt() {
       filesArray[fileIndexToEdit].text
     );
     name = filesArray[fileIndexToEdit].name;
-    disableButton(editedFileElementDOM);
     scrollToTargetAdjusted(editedFileElementDOM, previewOffset);
   } else {
     filesArray[counterFiles].size = fileSizeGlobal;

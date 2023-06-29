@@ -329,25 +329,11 @@ const markdown = (s) => {
   return marked.parse(s);
 };
 
-const disableButton = (el) => {
-  if (isItemState && el.firstChild.scrollHeight < 40) {
-    el.firstChild.nextSibling.setAttribute("disable", true);
-    el.firstChild.nextSibling.setAttribute("title", "fold/unfold one");
-    el.firstChild.classList.add("single-line");
-    el.classList.remove("unfolded");
-  } else {
-    el.firstChild.nextSibling.removeAttribute("disable");
-    el.firstChild.nextSibling.removeAttribute("title");
-    el.firstChild.classList.remove("single-line");
-  }
-};
-
 const saveItem = () => {
   if (itemIndexToEdit != null) {
     //itemsArray[itemIndexToEdit].text = input.value;
     itemsArray[itemIndexToEdit].text.push(input.value);
     editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
-    disableButton(editedItemElementDOM);
     scrollToTargetAdjusted(editedItemElementDOM, preview.scrollTop);
   } else {
     const obj = {
