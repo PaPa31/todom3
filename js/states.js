@@ -201,6 +201,24 @@ const trashButtonMaker = (parentDiv) => {
   parentDiv.appendChild(buttonTag);
 };
 
+const previousSave = (e, el) => {
+  const liDOM = el.parentElement.parentElement;
+  console.log(liDOM);
+  const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
+  const textArr = itemsArray[itemIndex].text;
+  let current = itemsArray[itemIndex].cur
+    ? itemsArray[itemIndex].cur
+    : textArr.length - 1;
+  current--;
+  const prevText = textArr[current];
+  itemsArray[itemIndex].cur = current;
+  const md = markdown(prevText);
+  const chi = liDOM.firstChild;
+  chi.innerHTML = md;
+};
+
+const nextSave = (e, el) => {};
+
 const unfoldGreen = (element) => {
   if (
     (element.parentElement.classList.contains("folded") &&
