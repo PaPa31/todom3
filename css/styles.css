@@ -917,7 +917,7 @@ button.next-save {
 }
 
 button.delete-current-save {
-  background-image: url(../img/x.svg);
+  background-image: url(../img/delete.svg);
 }
 
 button.delete-one-item:hover,
