@@ -428,6 +428,13 @@ blockquote {
   margin-top: 0;
 }
 
+ol#list-items:not(.folded) :not(.unfolded) .md-item > :first-child,
+ol#list-items.folded .unfolded .md-item > :first-child,
+ol#list-files:not(.folded) :not(.unfolded) .file-text > :first-child,
+ol#list-files.folded .unfolded .file-text > :first-child {
+  padding-top: 20px;
+}
+
 .md-item > :last-child,
 .file-text > :last-child {
   margin-bottom: 0;
