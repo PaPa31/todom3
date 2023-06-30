@@ -259,7 +259,7 @@ const deleteCurrentSave = (el) => {
 };
 
 const previousSave = (el) => {
-  const liDOM = el.parentElement.parentElement.parentElement;
+  const liDOM = el.parentElement.parentElement.parentElement.parentElement;
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
@@ -280,7 +280,7 @@ const previousSave = (el) => {
 };
 
 const nextSave = (el) => {
-  const liDOM = el.parentElement.parentElement.parentElement;
+  const liDOM = el.parentElement.parentElement.parentElement.parentElement;
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
@@ -324,7 +324,8 @@ const unfoldOneItem = (element) => {
 };
 
 const editFile = (e, element) => {
-  const editedFileElementDOM2 = element.parentElement.parentElement;
+  const editedFileElementDOM2 =
+    element.parentElement.parentElement.parentElement;
   const fileIndexToEdit2 =
     indexedFilesArray.indexOf(editedFileElementDOM2.id) * 1;
   const fi = filesArray[fileIndexToEdit2];

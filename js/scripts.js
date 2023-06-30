@@ -81,7 +81,8 @@ const xUI = () => {
 };
 
 const editItem = (e, element) => {
-  const editedItemElementDOM2 = element.parentElement.parentElement;
+  const editedItemElementDOM2 =
+    element.parentElement.parentElement.parentElement;
   const itemIndexToEdit2 =
     indexedItemsArray.indexOf(editedItemElementDOM2.id) * 1;
   const textArr = itemsArray[itemIndexToEdit2].text;
