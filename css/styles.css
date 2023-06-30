@@ -311,8 +311,8 @@ blockquote {
 }
 
 .folded .file-text,
-.folded #unit-control,
-.folded .unfolded #save-history,
+.folded .unfolded #unit-control,
+.folded #save-history,
 .file-size,
 .folded .unfolded .file-size,
 .file-name,
@@ -321,9 +321,9 @@ blockquote {
 }
 
 .folded .unfolded .file-text,
-.folded .unfolded #unit-control,
-.unfolded #save-history,
-.folded #save-history,
+.folded .unfolded #save-history,
+.unfolded #unit-control,
+.folded #unit-control,
 .folded .file-size,
 .unfolded .file-size,
 .folded .file-name,
@@ -332,8 +332,8 @@ blockquote {
 }
 
 .unfolded .file-text,
-.unfolded #unit-control,
-#save-history {
+#unit-control,
+.unfolded #save-history {
   display: none;
 }
 
