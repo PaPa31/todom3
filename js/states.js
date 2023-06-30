@@ -71,12 +71,15 @@ const fileSizeTerm = (numberOfBytes) => {
 const liMaker = (count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
-  const textArr = itemsArray[count].text;
-  const len = textArr.length;
-  const last = len - 1;
-  const cur = itemsArray[count].cur;
-  const current = cur !== undefined ? cur : last;
+
+  let len, current;
+
   if (isItemState) {
+    const textArr = itemsArray[count].text;
+    len = textArr.length;
+    const last = len - 1;
+    const cur = itemsArray[count].cur;
+    current = cur !== undefined ? cur : last;
     const text = textArr[current] ? textArr[current] : textArr[last];
 
     div.setAttribute("class", "md-item");
