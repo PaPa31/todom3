@@ -224,20 +224,6 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   parentMainActionsDiv.appendChild(buttonTag);
 };
 
-const isEditing = (indexToDelete) => {
-  if (itemIndexToEdit != null && itemIndexToEdit >= indexToDelete) {
-    if (itemIndexToEdit == indexToDelete) {
-      defaultMarkers();
-      inputLabel.innerHTML = "<div>New</div>";
-    } else {
-      itemIndexToEdit = itemIndexToEdit - 1;
-      inputLabel.innerHTML = `<span>Edit: </span><span>#${
-        itemIndexToEdit + 1
-      }</span>`;
-    }
-  }
-};
-
 const deleteCurrentSave = (el) => {
   const liDOM = el.parentElement.parentElement.parentDiv;
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;

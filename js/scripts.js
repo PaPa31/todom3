@@ -107,6 +107,20 @@ const editItem = (e, element) => {
   mdToPreview(input.value);
 };
 
+const isEditing = (indexToDelete) => {
+  if (itemIndexToEdit != null && itemIndexToEdit >= indexToDelete) {
+    if (itemIndexToEdit == indexToDelete) {
+      defaultMarkers();
+      inputLabel.innerHTML = "<div>New</div>";
+    } else {
+      itemIndexToEdit = itemIndexToEdit - 1;
+      inputLabel.innerHTML = `<span>Edit: </span><span>#${
+        itemIndexToEdit + 1
+      }</span>`;
+    }
+  }
+};
+
 const putItemToTrash = (indexToTrash) => {
   trashArray.push(itemsArray[indexToTrash]);
   deletedCounter.innerText = trashArray.length;
