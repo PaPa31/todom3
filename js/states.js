@@ -129,6 +129,14 @@ const controlDivMaker = (parentDiv, len, current) => {
   parentDiv.appendChild(divTag);
 
   if (isItemState) saveHistoryDivMaker(divTag, len, current);
+  mainControlDivMaker(divTag);
+};
+
+const mainControlDivMaker = (parentDiv) => {
+  const divTag = document.createElement("div");
+  divTag.setAttribute("id", "main-control");
+  parentDiv.appendChild(divTag);
+
   editButtonMaker(divTag);
   trashButtonMaker(divTag);
 };

@@ -364,7 +364,7 @@ blockquote {
 
 .md-item,
 .file-text,
-#unit-control,
+#main-control,
 #save-history,
 #preview,
 #position {
@@ -859,18 +859,15 @@ ol.preview-outer p {
 }
 
 #unit-control {
-  margin-left: -80px;
-  width: 80px !important;
-  padding: 3px 0 2px !important;
-  background-color: transparent !important;
+  position: absolute;
+  right: 10px;
 }
 
+#main-control,
 #save-history {
-  margin-left: -120px;
-  width: 120px !important;
-  padding: 1px 0 2px !important;
+  padding: 3px 0 2px !important;
   background-color: transparent !important;
-  position: absolute;
+  width: auto;
 }
 
 #delete-all-items {
