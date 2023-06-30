@@ -109,8 +109,7 @@ const liMaker = (count) => {
   foldedClass.appendChild(li);
   //console.log("URL =", url);
   unfoldButtonMaker(li);
-  if (isItemState) saveHistoryDivMaker(li, len, current);
-  controlDivMaker(li);
+  controlDivMaker(li, len, current);
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
@@ -124,11 +123,12 @@ const saveHistoryDivMaker = (parentDiv, lengthSaveHistory, current) => {
   nextSaveButtonMaker(divTag, current === lengthSaveHistory - 1);
 };
 
-const controlDivMaker = (parentDiv) => {
+const controlDivMaker = (parentDiv, len, current) => {
   const divTag = document.createElement("div");
   divTag.setAttribute("id", "unit-control");
   parentDiv.appendChild(divTag);
 
+  if (isItemState) saveHistoryDivMaker(divTag, len, current);
   editButtonMaker(divTag);
   trashButtonMaker(divTag);
 };

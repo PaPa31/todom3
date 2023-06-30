@@ -312,7 +312,6 @@ blockquote {
 
 .folded .file-text,
 .folded .unfolded #unit-control,
-.folded #save-history,
 .file-size,
 .folded .unfolded .file-size,
 .file-name,
@@ -321,7 +320,6 @@ blockquote {
 }
 
 .folded .unfolded .file-text,
-.folded .unfolded #save-history,
 .unfolded #unit-control,
 .folded #unit-control,
 .folded .file-size,
@@ -332,8 +330,7 @@ blockquote {
 }
 
 .unfolded .file-text,
-#unit-control,
-.unfolded #save-history {
+#unit-control {
   display: none;
 }
 
@@ -874,6 +871,7 @@ ol.preview-outer p {
   width: 120px !important;
   padding: 3px 0 2px !important;
   background-color: transparent !important;
+  position: absolute;
 }
 
 #delete-all-items {
