@@ -344,7 +344,7 @@ const markdown = (s) => {
 };
 
 const saveHistoryControl = (li, lengthSaveHistory) => {
-  const saveEl = li.firstChild.nextSibling.nextSibling;
+  const saveEl = li.lastChild.firstChild;
   if (lengthSaveHistory > 1) {
     saveEl.removeAttribute("disable");
     saveEl.firstChild.removeAttribute("disable");
