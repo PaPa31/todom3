@@ -113,34 +113,6 @@ const liMaker = (count) => {
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
-const saveHistoryDivMaker = (parentDiv, lengthSaveHistory, current) => {
-  const divTag = document.createElement("div");
-  divTag.setAttribute("id", "save-history");
-  parentDiv.appendChild(divTag);
-
-  previousSaveButtonMaker(divTag, current);
-  deleteCurrentSaveButtonMaker(divTag);
-  nextSaveButtonMaker(divTag, current === lengthSaveHistory - 1);
-};
-
-const controlDivMaker = (parentDiv, len, current) => {
-  const divTag = document.createElement("div");
-  divTag.setAttribute("id", "unit-control");
-  parentDiv.appendChild(divTag);
-
-  if (isItemState) saveHistoryDivMaker(divTag, len, current);
-  mainControlDivMaker(divTag);
-};
-
-const mainControlDivMaker = (parentDiv) => {
-  const divTag = document.createElement("div");
-  divTag.setAttribute("id", "main-control");
-  parentDiv.appendChild(divTag);
-
-  editButtonMaker(divTag);
-  trashButtonMaker(divTag);
-};
-
 const unfoldButtonMaker = (parentLi) => {
   const mdTag = isItemState
     ? parentLi.firstChild
@@ -158,33 +130,61 @@ const unfoldButtonMaker = (parentLi) => {
   parentLi.appendChild(buttonTag);
 };
 
-const previousSaveButtonMaker = (parentDiv, current) => {
+const controlDivMaker = (parentLi, len, current) => {
+  const divTag = document.createElement("div");
+  divTag.setAttribute("id", "unit-control");
+  parentLi.appendChild(divTag);
+
+  if (isItemState) saveHistoryDivMaker(divTag, len, current);
+  mainActionsDivMaker(divTag);
+};
+
+const saveHistoryDivMaker = (parentControlDiv, lengthSaveHistory, current) => {
+  const divTag = document.createElement("div");
+  divTag.setAttribute("id", "save-history");
+  parentControlDiv.appendChild(divTag);
+
+  previousSaveButtonMaker(divTag, current);
+  deleteCurrentSaveButtonMaker(divTag);
+  nextSaveButtonMaker(divTag, current === lengthSaveHistory - 1);
+};
+
+const previousSaveButtonMaker = (parentSaveHistoryDiv, current) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "previous-save btn");
   buttonTag.setAttribute("onclick", `previousSave(this)`);
   if (current === 0) buttonTag.setAttribute("disable", true);
   buttonTag.setAttribute("title", "Show previous save");
-  parentDiv.appendChild(buttonTag);
+  parentSaveHistoryDiv.appendChild(buttonTag);
 };
 
-const deleteCurrentSaveButtonMaker = (parentDiv) => {
+const deleteCurrentSaveButtonMaker = (parentSaveHistoryDiv) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-current-save btn");
   buttonTag.setAttribute("onclick", `deleteCurrentSave(this)`);
   buttonTag.setAttribute("title", "Delete current save");
-  parentDiv.appendChild(buttonTag);
+  parentSaveHistoryDiv.appendChild(buttonTag);
 };
 
-const nextSaveButtonMaker = (parentDiv, check) => {
+const nextSaveButtonMaker = (parentSaveHistoryDiv, check) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "next-save btn");
   buttonTag.setAttribute("onclick", `nextSave(this)`);
   if (check) buttonTag.setAttribute("disable", true);
   buttonTag.setAttribute("title", "Show next save");
-  parentDiv.appendChild(buttonTag);
+  parentSaveHistoryDiv.appendChild(buttonTag);
 };
 
-const editButtonMaker = (parentDiv) => {
+const mainActionsDivMaker = (parentControlDiv) => {
+  const divTag = document.createElement("div");
+  divTag.setAttribute("id", "main-actions");
+  parentControlDiv.appendChild(divTag);
+
+  editButtonMaker(divTag);
+  trashButtonMaker(divTag);
+};
+
+const editButtonMaker = (parentMainActionsDiv) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "edit-item btn");
   if (isItemState) {
@@ -198,10 +198,10 @@ const editButtonMaker = (parentDiv) => {
     "Click -> edit, Ctrl+click - merge with input area"
   );
 
-  parentDiv.appendChild(buttonTag);
+  parentMainActionsDiv.appendChild(buttonTag);
 };
 
-const trashButtonMaker = (parentDiv) => {
+const trashButtonMaker = (parentMainActionsDiv) => {
   const buttonTag = document.createElement("button");
   buttonTag.setAttribute("class", "delete-one-item btn");
   if (isItemState) {
@@ -221,7 +221,7 @@ const trashButtonMaker = (parentDiv) => {
     );
     buttonTag.setAttribute("title", "Double-click - delete from this list");
   }
-  parentDiv.appendChild(buttonTag);
+  parentMainActionsDiv.appendChild(buttonTag);
 };
 
 const isEditing = (indexToDelete) => {

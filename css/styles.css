@@ -364,7 +364,7 @@ blockquote {
 
 .md-item,
 .file-text,
-#main-control,
+#main-actions,
 #save-history,
 #preview,
 #position {
@@ -863,7 +863,7 @@ ol.preview-outer p {
   right: 10px;
 }
 
-#main-control,
+#main-actions,
 #save-history {
   padding: 3px 0 2px !important;
   background-color: transparent !important;
