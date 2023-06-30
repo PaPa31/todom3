@@ -225,7 +225,7 @@ const trashButtonMaker = (parentMainActionsDiv) => {
 };
 
 const deleteCurrentSave = (el) => {
-  const liDOM = el.parentElement.parentElement.parentDiv;
+  const liDOM = el.parentElement.parentElement.parentElement;
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
