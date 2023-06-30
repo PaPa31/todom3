@@ -207,7 +207,7 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   if (isItemState) {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneItem(event, this.parentElement.parentElement)`
+      `deleteOneItem(event, this.parentElement.parentElement.parentElement)`
     );
     buttonTag.setAttribute("ctrl", "true");
     buttonTag.setAttribute(
@@ -217,7 +217,7 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   } else {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneFile(event, this.parentElement.parentElement)`
+      `deleteOneFile(event, this.parentElement.parentElement.parentElement)`
     );
     buttonTag.setAttribute("title", "Double-click - delete from this list");
   }

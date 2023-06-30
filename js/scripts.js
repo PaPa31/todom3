@@ -148,12 +148,12 @@ const removeItemFromMemory = (item, indexToDelete) => {
   }
 };
 
-const deleteOneItem = (e, item) => {
+const deleteOneItem = (e, liDOM) => {
   e.stopPropagation();
-  if ((twoClickToTrash && item.id === lastClickId) || e.ctrlKey) {
-    const indexToDelete = indexedItemsArray.indexOf(item.id) * 1;
+  if ((twoClickToTrash && liDOM.id === lastClickId) || e.ctrlKey) {
+    const indexToDelete = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-    removeItemFromMemory(item, indexToDelete);
+    removeItemFromMemory(liDOM, indexToDelete);
 
     if (!e.ctrlKey) {
       putItemToTrash(indexToDelete);
@@ -162,17 +162,17 @@ const deleteOneItem = (e, item) => {
     twoClickToTrash = false;
     lastClickId = undefined;
   } else {
-    if (lastItem) lastItem.lastChild.lastChild.classList.remove("filter-red");
-    lastClickId = item.id;
-    item.lastChild.lastChild.classList.add("filter-red");
-    lastItem = item;
+    if (lastItem)
+      lastItem.querySelector(".delete-one-item").classList.remove("filter-red");
+    lastClickId = liDOM.id;
+    liDOM.querySelector(".delete-one-item").classList.add("filter-red");
+    lastItem = liDOM;
     twoClickToTrash = true;
   }
   if (lastItem && e.ctrlKey)
-    lastItem.lastChild.lastChild.classList.remove("filter-red");
+    lastItem.querySelector(".delete-one-item").classList.remove("filter-red");
   if (twoClickTrashClear || e.ctrlKey) {
     clearTrashButton.classList.remove("filter-red");
-    //clearTrashButton.classList.remove("border-red");
   }
   twoClickTrashClear = false;
 };
