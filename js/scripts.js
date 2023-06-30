@@ -153,11 +153,11 @@ const deleteOneItem = (e, liDOM) => {
   if ((twoClickToTrash && liDOM.id === lastClickId) || e.ctrlKey) {
     const indexToDelete = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-    removeItemFromMemory(liDOM, indexToDelete);
-
     if (!e.ctrlKey) {
       putItemToTrash(indexToDelete);
     }
+
+    removeItemFromMemory(liDOM, indexToDelete);
 
     twoClickToTrash = false;
     lastClickId = undefined;
