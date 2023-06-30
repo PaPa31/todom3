@@ -155,7 +155,7 @@ const previousSaveButtonMaker = (parentDiv, current) => {
   buttonTag.setAttribute("class", "previous-save btn");
   buttonTag.setAttribute("onclick", `previousSave(this)`);
   if (current === 0) buttonTag.setAttribute("disable", true);
-  buttonTag.setAttribute("title", "Previous save");
+  buttonTag.setAttribute("title", "Show previous save");
   parentDiv.appendChild(buttonTag);
 };
 
@@ -172,7 +172,7 @@ const nextSaveButtonMaker = (parentDiv, check) => {
   buttonTag.setAttribute("class", "next-save btn");
   buttonTag.setAttribute("onclick", `nextSave(this)`);
   if (check) buttonTag.setAttribute("disable", true);
-  buttonTag.setAttribute("title", "Next save");
+  buttonTag.setAttribute("title", "Show next save");
   parentDiv.appendChild(buttonTag);
 };
 
@@ -187,7 +187,7 @@ const editButtonMaker = (parentDiv) => {
   buttonTag.setAttribute("ctrl", "true");
   buttonTag.setAttribute(
     "title",
-    "Click to Edit, Ctrl+click merge with input area"
+    "Click -> edit, Ctrl+click - merge with input area"
   );
 
   parentDiv.appendChild(buttonTag);
@@ -204,14 +204,14 @@ const trashButtonMaker = (parentDiv) => {
     buttonTag.setAttribute("ctrl", "true");
     buttonTag.setAttribute(
       "title",
-      "Double-click to Trash, Ctrl+click to Delete"
+      "Double-click -> Trash, Ctrl+click - instant delete"
     );
   } else {
     buttonTag.setAttribute(
       "onclick",
       `deleteOneFile(event, this.parentElement.parentElement)`
     );
-    buttonTag.setAttribute("title", "Double-click to Delete from this list");
+    buttonTag.setAttribute("title", "Double-click - delete from this list");
   }
   parentDiv.appendChild(buttonTag);
 };
