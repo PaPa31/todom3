@@ -231,7 +231,7 @@ const isEditing = (indexToDelete) => {
 };
 
 const deleteCurrentSave = (el) => {
-  const liDOM = el.parentElement.parentElement;
+  const liDOM = el.parentElement.parentElement.parentDiv;
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
@@ -265,7 +265,7 @@ const deleteCurrentSave = (el) => {
 };
 
 const previousSave = (el) => {
-  const liDOM = el.parentElement.parentElement;
+  const liDOM = el.parentElement.parentElement.parentElement;
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
@@ -286,7 +286,7 @@ const previousSave = (el) => {
 };
 
 const nextSave = (el) => {
-  const liDOM = el.parentElement.parentElement;
+  const liDOM = el.parentElement.parentElement.parentElement;
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
