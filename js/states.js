@@ -610,6 +610,9 @@ const saveItemFromFile = (_name) => {
 
     const liDOM = document.getElementById(itemId);
     logg4(liDOM);
+    const textArr = itemsArray[inx].text;
+    const len = textArr.length;
+    saveHistoryControl(liDOM, len);
     liDOM.firstChild.innerHTML = markdown(input.value);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
