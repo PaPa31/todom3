@@ -116,8 +116,8 @@ const liMaker = (count) => {
 
 const unfoldButtonMaker = (parentLi) => {
   const mdTag = isItemState
-    ? parentLi.firstChild
-    : parentLi.firstChild.firstChild.nextSibling;
+    ? parentLi.querySelector(".md-item")
+    : parentLi.querySelector(".file-text");
   const buttonTag = document.createElement("button");
   const numInside = document.createElement("span");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
