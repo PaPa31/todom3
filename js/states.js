@@ -114,6 +114,15 @@ const liMaker = (count) => {
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
+const findLiRecursive = (el) => {
+  const papa = el.parentElement;
+  if (papa && papa.tagName.toLowerCase() === "li") {
+    return papa;
+  } else {
+    findLiRecursive(papa);
+  }
+};
+
 const unfoldButtonMaker = (parentLi) => {
   const mdTag = isItemState
     ? parentLi.querySelector(".md-item")
@@ -121,7 +130,7 @@ const unfoldButtonMaker = (parentLi) => {
   const buttonTag = document.createElement("button");
   const numInside = document.createElement("span");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
-  buttonTag.setAttribute("onclick", `unfoldOneItem(this.parentElement)`);
+  buttonTag.setAttribute("onclick", `unfoldOneItem(findLiRecursive(this))`);
 
   if (isItemState && mdTag.scrollHeight === 0)
     buttonTag.style = "--box-shadow-color: red";
