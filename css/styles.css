@@ -311,7 +311,7 @@ blockquote {
 }
 
 .folded .file-text,
-.folded #unit-control,
+.folded .unit-control,
 .file-size,
 .folded .unfolded .file-size,
 .file-name,
@@ -320,7 +320,7 @@ blockquote {
 }
 
 .folded .unfolded .file-text,
-.folded .unfolded #unit-control,
+.folded .unfolded .unit-control,
 .folded .file-size,
 .unfolded .file-size,
 .folded .file-name,
@@ -329,7 +329,7 @@ blockquote {
 }
 
 .unfolded .file-text,
-.unfolded #unit-control {
+.unfolded .unit-control {
   display: none;
 }
 
@@ -365,8 +365,8 @@ blockquote {
 
 .md-item,
 .file-text,
-#main-actions,
-#save-history,
+.main-actions,
+.save-history,
 #preview,
 #position {
   width: 100%;
@@ -859,13 +859,13 @@ ol.preview-outer p {
   opacity: 1;
 }
 
-#unit-control {
+.unit-control {
   border-radius: 5px 5px 0 0;
   border-bottom: 1px solid #5e5e5e;
 }
 
-#main-actions,
-#save-history {
+.main-actions,
+.save-history {
   padding: 3px 0 2px !important;
   background-color: transparent !important;
   width: auto;

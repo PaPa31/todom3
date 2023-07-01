@@ -133,7 +133,7 @@ const unfoldButtonMaker = (parentLi) => {
 
 const controlDivMaker = (parentLi, len, current) => {
   const divTag = document.createElement("div");
-  divTag.setAttribute("id", "unit-control");
+  divTag.setAttribute("class", "unit-control");
   parentLi.appendChild(divTag);
 
   if (isItemState) saveHistoryDivMaker(divTag, len, current);
@@ -142,7 +142,7 @@ const controlDivMaker = (parentLi, len, current) => {
 
 const saveHistoryDivMaker = (parentControlDiv, lengthSaveHistory, current) => {
   const divTag = document.createElement("div");
-  divTag.setAttribute("id", "save-history");
+  divTag.setAttribute("class", "save-history");
   parentControlDiv.appendChild(divTag);
 
   previousSaveButtonMaker(divTag, current);
@@ -178,7 +178,7 @@ const nextSaveButtonMaker = (parentSaveHistoryDiv, check) => {
 
 const mainActionsDivMaker = (parentControlDiv) => {
   const divTag = document.createElement("div");
-  divTag.setAttribute("id", "main-actions");
+  divTag.setAttribute("class", "main-actions");
   parentControlDiv.appendChild(divTag);
 
   editButtonMaker(divTag);
