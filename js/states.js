@@ -68,12 +68,15 @@ const fileSizeTerm = (numberOfBytes) => {
   return output;
 };
 
+let papaRecur;
 const findLiRecursive = (el, tag = "li") => {
   const papa = el.parentElement;
   if (papa && papa.tagName.toLowerCase() === tag) {
-    return papa;
+    papaRecur = papa;
+    return papaRecur;
   } else {
-    findLiRecursive(papa);
+    findLiRecursive(papa, tag);
+    return papaRecur;
   }
 };
 
