@@ -337,6 +337,7 @@ blockquote {
   /*padding: 0px 5px 5px 5px;*/
   padding: 5px;
   list-style: none;
+  display: grid;
   /*list-style-position: outside;*/
 }
 
@@ -370,7 +371,7 @@ blockquote {
 #position {
   width: 100%;
   float: left;
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
   background-color: var(--bg-item);
   word-wrap: break-word;
   overflow: auto;
@@ -426,13 +427,6 @@ blockquote {
 #preview > :first-child,
 #position > :first-child {
   margin-top: 0;
-}
-
-ol#list-items:not(.folded) :not(.unfolded) .md-item > :first-child,
-ol#list-items.folded .unfolded .md-item > :first-child,
-ol#list-files:not(.folded) :not(.unfolded) .file-text > :first-child,
-ol#list-files.folded .unfolded .file-text > :first-child {
-  padding-top: 20px;
 }
 
 .md-item > :last-child,
@@ -866,8 +860,8 @@ ol.preview-outer p {
 }
 
 #unit-control {
-  position: absolute;
-  right: 10px;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 1px solid #5e5e5e;
 }
 
 #main-actions,

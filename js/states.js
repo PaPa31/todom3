@@ -107,12 +107,10 @@ const liMaker = (count) => {
     li.id = counterFiles;
   }
 
-  //li.id = count;
+  controlDivMaker(li, len, current);
   li.appendChild(div);
   foldedClass.appendChild(li);
-  //console.log("URL =", url);
   unfoldButtonMaker(li);
-  controlDivMaker(li, len, current);
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
