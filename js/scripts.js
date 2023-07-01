@@ -81,10 +81,8 @@ const xUI = () => {
 };
 
 const editItem = (e, element) => {
-  const editedItemElementDOM2 =
-    element.parentElement.parentElement.parentElement;
-  const itemIndexToEdit2 =
-    indexedItemsArray.indexOf(editedItemElementDOM2.id) * 1;
+  const editedItemLiDOM2 = findLiRecursive(element);
+  const itemIndexToEdit2 = indexedItemsArray.indexOf(editedItemLiDOM2.id) * 1;
   const textArr = itemsArray[itemIndexToEdit2].text;
   const cur = itemsArray[itemIndexToEdit2].cur;
   let current = cur !== undefined ? cur : textArr.length - 1;
@@ -99,7 +97,7 @@ const editItem = (e, element) => {
     scrollToLast();
   } else {
     itemIndexToEdit = itemIndexToEdit2;
-    editedItemElementDOM = editedItemElementDOM2;
+    editedItemLiDOM = editedItemLiDOM2;
     intervalFocus(element, "background-color: orange;", 300);
     input.value = editing;
     editUI("#" + (itemIndexToEdit + 1));
@@ -357,9 +355,9 @@ const saveItem = () => {
     textArr.push(input.value);
     const len = textArr.length;
     itemsArray[itemIndexToEdit].cur = len - 1;
-    saveHistoryControl(editedItemElementDOM, len);
-    editedItemElementDOM.firstChild.innerHTML = markdown(input.value);
-    scrollToTargetAdjusted(editedItemElementDOM, preview.scrollTop);
+    saveHistoryControl(editedItemLiDOM, len);
+    editedItemLiDOM.firstChild.innerHTML = markdown(input.value);
+    scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
   } else {
     const obj = {
       text: [input.value],

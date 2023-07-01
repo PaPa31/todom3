@@ -46,10 +46,10 @@ let lastInputValue = localStorage.getItem("todomLastInputValue")
   : "";
 
 let itemIndexToEdit;
-let editedItemElementDOM;
+let editedItemLiDOM;
 
 let fileIndexToEdit;
-let editedFileElementDOM;
+let editedFileLiDOM;
 
 let fileSizeGlobal;
 
@@ -66,6 +66,15 @@ const fileSizeTerm = (numberOfBytes) => {
       ? `${numberOfBytes} bytes`
       : `${approx.toFixed(3)} ${units[exponent]} (${numberOfBytes} bytes)`;
   return output;
+};
+
+const findLiRecursive = (el, tag = "li") => {
+  const papa = el.parentElement;
+  if (papa && papa.tagName.toLowerCase() === tag) {
+    return papa;
+  } else {
+    findLiRecursive(papa);
+  }
 };
 
 const liMaker = (count) => {
@@ -114,13 +123,13 @@ const liMaker = (count) => {
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
-const findLiRecursive = (el) => {
-  const papa = el.parentElement;
-  if (papa && papa.tagName.toLowerCase() === "li") {
-    return papa;
-  } else {
-    findLiRecursive(papa);
-  }
+const controlDivMaker = (parentLi, len, current) => {
+  const divTag = document.createElement("div");
+  divTag.setAttribute("class", "unit-control");
+  parentLi.appendChild(divTag);
+
+  if (isItemState) saveHistoryDivMaker(divTag, len, current);
+  mainActionsDivMaker(divTag);
 };
 
 const unfoldButtonMaker = (parentLi) => {
@@ -138,15 +147,6 @@ const unfoldButtonMaker = (parentLi) => {
   buttonTag.setAttribute("title", "fold/unfold one");
   buttonTag.appendChild(numInside);
   parentLi.appendChild(buttonTag);
-};
-
-const controlDivMaker = (parentLi, len, current) => {
-  const divTag = document.createElement("div");
-  divTag.setAttribute("class", "unit-control");
-  parentLi.appendChild(divTag);
-
-  if (isItemState) saveHistoryDivMaker(divTag, len, current);
-  mainActionsDivMaker(divTag);
 };
 
 const saveHistoryDivMaker = (parentControlDiv, lengthSaveHistory, current) => {
@@ -217,7 +217,7 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   if (isItemState) {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneItem(event, this.parentElement.parentElement.parentElement)`
+      `deleteOneItem(event, findLiRecursive(this))`
     );
     buttonTag.setAttribute("ctrl", "true");
     buttonTag.setAttribute(
@@ -227,7 +227,7 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   } else {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneFile(event, this.parentElement.parentElement.parentElement)`
+      `deleteOneFile(event, findLiRecursive(this))`
     );
     buttonTag.setAttribute("title", "Double-click - delete from this list");
   }
@@ -235,7 +235,7 @@ const trashButtonMaker = (parentMainActionsDiv) => {
 };
 
 const deleteCurrentSave = (el) => {
-  const liDOM = el.parentElement.parentElement.parentElement;
+  const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
@@ -269,7 +269,7 @@ const deleteCurrentSave = (el) => {
 };
 
 const previousSave = (el) => {
-  const liDOM = el.parentElement.parentElement.parentElement;
+  const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
@@ -290,7 +290,7 @@ const previousSave = (el) => {
 };
 
 const nextSave = (el) => {
-  const liDOM = el.parentElement.parentElement.parentElement;
+  const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
   const textArr = itemsArray[itemIndex].text;
   const cur = itemsArray[itemIndex].cur;
@@ -309,35 +309,34 @@ const nextSave = (el) => {
   chi.innerHTML = md;
 };
 
-const unfoldGreen = (element) => {
+const unfoldGreen = (liDOM) => {
+  const olDOM = findLiRecursive(liDOM, "ol");
   if (
-    (element.parentElement.classList.contains("folded") &&
-      element.classList.contains("unfolded")) ||
-    (!element.parentElement.classList.contains("folded") &&
-      !element.classList.contains("unfolded"))
+    (olDOM.classList.contains("folded") &&
+      liDOM.classList.contains("unfolded")) ||
+    (!olDOM.classList.contains("folded") &&
+      !liDOM.classList.contains("unfolded"))
   ) {
-    intervalFocus(element, "background-color: green;", 300);
+    intervalFocus(liDOM, "background-color: green;", 300);
   }
 };
 
-const unfoldOneItem = (element) => {
-  element.classList.toggle("unfolded");
+const unfoldOneItem = (liDOM) => {
+  liDOM.classList.toggle("unfolded");
   if (isItemState) {
-    const itemIndexToFold = indexedItemsArray.indexOf(element.id) * 1;
+    const itemIndexToFold = indexedItemsArray.indexOf(liDOM.id) * 1;
     itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   } else {
-    const fileIndexToFold = indexedFilesArray.indexOf(element.id) * 1;
+    const fileIndexToFold = indexedFilesArray.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
-  unfoldGreen(element);
+  unfoldGreen(liDOM);
 };
 
 const editFile = (e, element) => {
-  const editedFileElementDOM2 =
-    element.parentElement.parentElement.parentElement;
-  const fileIndexToEdit2 =
-    indexedFilesArray.indexOf(editedFileElementDOM2.id) * 1;
+  const editedFileLiDOM2 = findLiRecursive(element);
+  const fileIndexToEdit2 = indexedFilesArray.indexOf(editedFileLiDOM2.id) * 1;
   const fi = filesArray[fileIndexToEdit2];
 
   if (e.ctrlKey) {
@@ -346,7 +345,7 @@ const editFile = (e, element) => {
     scrollToLast();
   } else {
     fileIndexToEdit = fileIndexToEdit2;
-    editedFileElementDOM = editedFileElementDOM2;
+    editedFileLiDOM = editedFileLiDOM2;
     intervalFocus(element, "background-color: orange;", 300);
     input.value = fi.text;
     const fileName = fi.dir ? fi.dir : fi.name;
@@ -641,11 +640,11 @@ function checkIt() {
   const previewOffset = preview.scrollTop;
   let name;
   if (fileIndexToEdit != null) {
-    editedFileElementDOM.firstChild.firstChild.nextSibling.innerHTML = markdown(
+    editedFileLiDOM.firstChild.firstChild.nextSibling.innerHTML = markdown(
       filesArray[fileIndexToEdit].text
     );
     name = filesArray[fileIndexToEdit].name;
-    scrollToTargetAdjusted(editedFileElementDOM, previewOffset);
+    scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {
     filesArray[counterFiles].size = fileSizeGlobal;
     name = filesArray[counterFiles].name;
