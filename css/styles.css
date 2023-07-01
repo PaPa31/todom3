@@ -861,7 +861,13 @@ ol.preview-outer p {
 
 .unit-control {
   border-radius: 5px 5px 0 0;
-  border-bottom: 1px solid #5e5e5e;
+  border-bottom: 1px solid #979797;
+  background-color: #eeeeee;
+}
+
+.dark .unit-control {
+  border-bottom-color: #5e5e5e;
+  background-color: #333333;
 }
 
 .main-actions,
