@@ -267,7 +267,7 @@ const deleteCurrentSave = (el) => {
   itemsArray[itemIndex].cur = currentToDelete;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   const md = markdown(currentText);
-  const chi = liDOM.firstChild;
+  const chi = liDOM.querySelector(".md-item");
   chi.innerHTML = md;
 };
 
@@ -288,7 +288,7 @@ const previousSave = (el) => {
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   const md = markdown(prevText);
-  const chi = liDOM.firstChild;
+  const chi = liDOM.querySelector(".md-item");
   chi.innerHTML = md;
 };
 
@@ -308,7 +308,7 @@ const nextSave = (el) => {
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   const md = markdown(nextText);
-  const chi = liDOM.firstChild;
+  const chi = liDOM.querySelector(".md-item");
   chi.innerHTML = md;
 };
 
@@ -359,10 +359,10 @@ const editFile = (e, element) => {
   mdToPreview(input.value);
 };
 
-const deleteOneFile = (e, element) => {
+const deleteOneFile = (e, liDOM) => {
   e.stopPropagation();
-  if (twoClickToTrash && element.id === lastClickId) {
-    const indexToDelete = indexedFilesArray.indexOf(element.id) * 1;
+  if (twoClickToTrash && liDOM.id === lastClickId) {
+    const indexToDelete = indexedFilesArray.indexOf(liDOM.id) * 1;
 
     if (fileIndexToEdit != null && fileIndexToEdit >= indexToDelete) {
       if (filesArray[fileIndexToEdit].name == filesArray[indexToDelete].name) {
@@ -373,7 +373,7 @@ const deleteOneFile = (e, element) => {
       }
     }
 
-    foldedClass.removeChild(element);
+    foldedClass.removeChild(liDOM);
     showItemSortingArrows(foldedClass.childElementCount);
 
     filesArray.splice(indexToDelete, 1);
@@ -385,10 +385,11 @@ const deleteOneFile = (e, element) => {
     twoClickToTrash = false;
     lastClickId = undefined;
   } else {
-    if (lastItem) lastItem.lastChild.lastChild.classList.remove("filter-red");
-    lastClickId = element.id;
-    element.lastChild.lastChild.classList.add("filter-red");
-    lastItem = element;
+    if (lastItem)
+      lastItem.querySelector(".delete-one-item").classList.remove("filter-red");
+    lastClickId = liDOM.id;
+    liDOM.querySelector(".delete-one-item").classList.add("filter-red");
+    lastItem = liDOM;
     twoClickToTrash = true;
   }
 };
@@ -620,7 +621,8 @@ const saveItemFromFile = (_name) => {
     const textArr = itemsArray[inx].text;
     const len = textArr.length;
     saveHistoryControl(liDOM, len);
-    liDOM.firstChild.innerHTML = markdown(input.value);
+    const mdTag = liDOM.querySelector(".md-item");
+    mdTag.innerHTML = markdown(input.value);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const obj = {
@@ -643,9 +645,8 @@ function checkIt() {
   const previewOffset = preview.scrollTop;
   let name;
   if (fileIndexToEdit != null) {
-    editedFileLiDOM.firstChild.firstChild.nextSibling.innerHTML = markdown(
-      filesArray[fileIndexToEdit].text
-    );
+    const fileTextTag = editedFileLiDOM.querySelector(".file-text");
+    fileTextTag.innerHTML = markdown(filesArray[fileIndexToEdit].text);
     name = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {

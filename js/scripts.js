@@ -209,7 +209,7 @@ html.addEventListener("click", function () {
   if (twoClickTrashClear) clearTrashButton.classList.remove("filter-red");
   twoClickTrashClear = false;
   if (twoClickToTrash)
-    lastItem.lastChild.lastChild.classList.remove("filter-red");
+    lastItem.querySelector(".delete-one-item").classList.remove("filter-red");
   twoClickToTrash = false;
 });
 
@@ -341,11 +341,11 @@ const markdown = (s) => {
   return marked.parse(s);
 };
 
-const saveHistoryControl = (li, lengthSaveHistory) => {
-  const saveEl = li.lastChild.firstChild;
+const saveHistoryControl = (liDOM, lengthSaveHistory) => {
+  const saveEl = liDOM.querySelector(".save-history");
   if (lengthSaveHistory > 1) {
     saveEl.removeAttribute("disable");
-    saveEl.firstChild.removeAttribute("disable");
+    saveEl.querySelector(".previous-save").removeAttribute("disable");
   }
 };
 
@@ -356,7 +356,7 @@ const saveItem = () => {
     const len = textArr.length;
     itemsArray[itemIndexToEdit].cur = len - 1;
     saveHistoryControl(editedItemLiDOM, len);
-    editedItemLiDOM.firstChild.innerHTML = markdown(input.value);
+    editedItemLiDOM.querySelector(".md-item").innerHTML = markdown(input.value);
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
   } else {
     const obj = {
@@ -567,7 +567,7 @@ clearTrashButton.addEventListener("click", function (e) {
     twoClickTrashClear = true;
   }
   if (twoClickToTrash)
-    lastItem.lastChild.lastChild.classList.remove("filter-red");
+    lastItem.querySelector(".delete-one-item").classList.remove("filter-red");
   twoClickToTrash = false;
 });
 
