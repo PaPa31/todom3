@@ -314,21 +314,29 @@ blockquote {
   opacity: 1;
 }
 
-.folded .file-text,
 .folded .unit-control,
 .file-size,
 .folded .unfolded .file-size,
 .file-name,
 .folded .unfolded .file-name {
+  height: 0;
+  visibility: collapse;
+}
+
+.folded .file-text {
   display: none;
 }
 
-.folded .unfolded .file-text,
 .folded .unfolded .unit-control,
 .folded .file-size,
 .unfolded .file-size,
 .folded .file-name,
 .unfolded .file-name {
+  height: initial;
+  visibility: initial;
+}
+
+.folded .unfolded .file-text {
   display: block;
   height: initial;
   visibility: initial;
