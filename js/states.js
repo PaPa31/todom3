@@ -120,14 +120,19 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   const div2 = document.createElement("div");
   const div3 = document.createElement("div");
   const div4 = document.createElement("div");
+  const fileInfoDiv = document.createElement("div");
   div2.setAttribute("class", "file-name");
   div2.innerHTML = obj.dir ? obj.dir : obj.name;
-  parentDiv.appendChild(div2);
+  fileInfoDiv.appendChild(div2);
+  //parentDiv.appendChild(div2);
   div4.setAttribute("class", "file-size");
   div4.innerHTML = obj.size ? fileSizeTerm(obj.size) : "";
-  parentDiv.appendChild(div4);
+  fileInfoDiv.appendChild(div4);
+  //parentDiv.appendChild(div4);
   div3.setAttribute("class", "file-text");
   div3.innerHTML = markdown(obj.text);
+  fileInfoDiv.setAttribute("class", "file-info");
+  parentDiv.appendChild(fileInfoDiv);
   parentDiv.appendChild(div3);
 };
 
