@@ -126,12 +126,12 @@ const liMaker = (count) => {
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
-const controlDivMaker = (parentLi, len, current) => {
+const controlDivMaker = (parentLi, last, current) => {
   const divTag = document.createElement("div");
   divTag.setAttribute("class", "unit-control");
   parentLi.appendChild(divTag);
 
-  if (isItemState) saveHistoryDivMaker(divTag, len, current);
+  if (isItemState) saveHistoryDivMaker(divTag, last, current);
   mainActionsDivMaker(divTag);
 };
 
@@ -152,14 +152,14 @@ const unfoldButtonMaker = (parentLi) => {
   parentLi.appendChild(buttonTag);
 };
 
-const saveHistoryDivMaker = (parentControlDiv, lengthSaveHistory, current) => {
+const saveHistoryDivMaker = (parentControlDiv, last, current) => {
   const divTag = document.createElement("div");
   divTag.setAttribute("class", "save-history");
   parentControlDiv.appendChild(divTag);
 
   previousSaveButtonMaker(divTag, current);
   deleteCurrentSaveButtonMaker(divTag);
-  nextSaveButtonMaker(divTag, current === lengthSaveHistory - 1);
+  nextSaveButtonMaker(divTag, current === last);
 };
 
 const previousSaveButtonMaker = (parentSaveHistoryDiv, current) => {

@@ -347,6 +347,7 @@ const saveHistoryControl = (liDOM, lengthSaveHistory) => {
     saveEl.removeAttribute("disable");
     saveEl.querySelector(".previous-save").removeAttribute("disable");
   }
+  saveEl.querySelector(".next-save").setAttribute("disable", true);
 };
 
 const saveItem = () => {
