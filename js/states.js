@@ -84,12 +84,12 @@ const liMaker = (count) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
 
-  let len, current;
+  let last, current;
 
   if (isItemState) {
     const textArr = itemsArray[count].text;
-    len = textArr.length;
-    const last = len - 1;
+    const len = textArr.length;
+    last = len - 1;
     const cur = itemsArray[count].cur;
     current = cur !== undefined ? cur : last;
     const text = textArr[current] ? textArr[current] : textArr[last];
@@ -119,7 +119,7 @@ const liMaker = (count) => {
     li.id = counterFiles;
   }
 
-  controlDivMaker(li, len, current);
+  controlDivMaker(li, last, current);
   li.appendChild(div);
   foldedClass.appendChild(li);
   unfoldButtonMaker(li);
