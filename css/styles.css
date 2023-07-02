@@ -314,16 +314,12 @@ blockquote {
   opacity: 1;
 }
 
-.folded .unit-control,
-.file-info,
-.folded .unfolded .file-info {
+.folded .unit-control {
   height: 0;
   visibility: collapse;
 }
 
-.folded .unfolded .unit-control,
-.folded .file-info,
-.unfolded .file-info {
+.folded .unfolded .unit-control {
   height: initial;
   visibility: initial;
 }
@@ -450,6 +446,16 @@ ol#list-items.folded :not(.unfolded) .md-item > :first-child {
   white-space: nowrap;
   overflow: hidden;
   max-width: 550px;
+}
+
+#list-files:not(.folded) :not(.unfolded) .md-file,
+#list-files.folded .unfolded .md-file {
+  margin-top: -34px;
+}
+
+.dark #list-files:not(.folded) .unfolded .unit-control,
+.dark #list-files.folded :not(.unfolded) .unit-control {
+  background-color: #333333;
 }
 
 .md-item > :last-child,
