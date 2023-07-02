@@ -108,7 +108,7 @@ const liMaker = (arrIndex) => {
     li.id = idCounterFiles;
   }
 
-  controlDivMaker(li, last, current);
+  unitControlDivMaker(li, last, current);
   li.appendChild(div);
   foldedClass.appendChild(li);
   unfoldButtonMaker(li);
@@ -124,11 +124,9 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   div2.setAttribute("class", "file-name");
   div2.innerHTML = obj.dir ? obj.dir : obj.name;
   fileInfoDiv.appendChild(div2);
-  //parentDiv.appendChild(div2);
   div4.setAttribute("class", "file-size");
   div4.innerHTML = obj.size ? fileSizeTerm(obj.size) : "";
   fileInfoDiv.appendChild(div4);
-  //parentDiv.appendChild(div4);
   div3.setAttribute("class", "file-text");
   div3.innerHTML = markdown(obj.text);
   fileInfoDiv.setAttribute("class", "file-info");
@@ -136,7 +134,7 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   parentDiv.appendChild(div3);
 };
 
-const controlDivMaker = (parentLi, last, current) => {
+const unitControlDivMaker = (parentLi, last, current) => {
   const divTag = document.createElement("div");
   divTag.setAttribute("class", "unit-control");
   parentLi.appendChild(divTag);
