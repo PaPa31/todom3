@@ -29,8 +29,8 @@ let trashArray = localStorage.getItem("todomTrashArray")
 
 let nullGotIntoStorage = false;
 
-let counterItems = 0;
-let counterFiles = 0;
+let idCounterItems = 0;
+let idCounterFiles = 0;
 
 // lightweight array to avoid redundant logic and waste of resources
 let indexedItemsArray = [];
@@ -80,43 +80,32 @@ const findLiRecursive = (el, tag = "li") => {
   }
 };
 
-const liMaker = (count) => {
+const liMaker = (arrIndex) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
 
   let last, current;
 
   if (isItemState) {
-    const textArr = itemsArray[count].text;
+    const textArr = itemsArray[arrIndex].text;
     const len = textArr.length;
     last = len - 1;
-    const cur = itemsArray[count].cur;
+    const cur = itemsArray[arrIndex].cur;
     current = cur !== undefined ? cur : last;
     const text = textArr[current] ? textArr[current] : textArr[last];
 
     div.setAttribute("class", "md-item");
-    if (itemsArray[count].fold) li.setAttribute("class", "unfolded");
+    if (itemsArray[arrIndex].fold) li.setAttribute("class", "unfolded");
 
     div.innerHTML = markdown(text);
-    li.id = counterItems;
+    li.id = idCounterItems;
   } else {
-    const obj = filesArray[count];
-
-    const div2 = document.createElement("div");
-    const div3 = document.createElement("div");
-    const div4 = document.createElement("div");
     div.setAttribute("class", "md-file");
-    if (filesArray[count].fold) li.setAttribute("class", "unfolded");
-    div2.setAttribute("class", "file-name");
-    div2.innerHTML = obj.dir ? obj.dir : obj.name;
-    div.appendChild(div2);
-    div3.setAttribute("class", "file-text");
-    div3.innerHTML = markdown(obj.text);
-    div.appendChild(div3);
-    div4.setAttribute("class", "file-size");
-    div4.innerHTML = obj.size ? fileSizeTerm(obj.size) : "";
-    div.appendChild(div4);
-    li.id = counterFiles;
+
+    fileInfoDivMaker(div, arrIndex);
+    //if (filesArray[arrIndex].fold) li.setAttribute("class", "unfolded");
+
+    li.id = idCounterFiles;
   }
 
   controlDivMaker(li, last, current);
@@ -124,6 +113,22 @@ const liMaker = (count) => {
   foldedClass.appendChild(li);
   unfoldButtonMaker(li);
   scrollToTargetAdjusted(li, preview.scrollTop);
+};
+
+const fileInfoDivMaker = (parentDiv, arrIndex) => {
+  const obj = filesArray[arrIndex];
+  const div2 = document.createElement("div");
+  const div3 = document.createElement("div");
+  const div4 = document.createElement("div");
+  div2.setAttribute("class", "file-name");
+  div2.innerHTML = obj.dir ? obj.dir : obj.name;
+  parentDiv.appendChild(div2);
+  div4.setAttribute("class", "file-size");
+  div4.innerHTML = obj.size ? fileSizeTerm(obj.size) : "";
+  parentDiv.appendChild(div4);
+  div3.setAttribute("class", "file-text");
+  div3.innerHTML = markdown(obj.text);
+  parentDiv.appendChild(div3);
 };
 
 const controlDivMaker = (parentLi, last, current) => {
@@ -378,9 +383,9 @@ const deleteOneFile = (e, liDOM) => {
 
     filesArray.splice(indexToDelete, 1);
     indexedFilesArray.splice(indexToDelete, 1);
-    counterFiles--;
+    idCounterFiles--;
     showOrHideDeleteAllItems();
-    if (counterFiles == 0) fileElem.value = null;
+    if (idCounterFiles == 0) fileElem.value = null;
 
     twoClickToTrash = false;
     lastClickId = undefined;
@@ -526,21 +531,21 @@ function handleFiles(files) {
             text: item,
           };
           itemsArray.push(obj);
-          liMaker(counterItems);
-          indexedItemsArray.push(counterItems.toString());
-          counterItems++;
+          liMaker(idCounterItems);
+          indexedItemsArray.push(idCounterItems.toString());
+          idCounterItems++;
         }
       });
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-      filesArray.splice(counterFiles, 1);
-      if (counterFiles == 0) fileElem.value = null;
+      filesArray.splice(idCounterFiles, 1);
+      if (idCounterFiles == 0) fileElem.value = null;
     } else {
       // Files
       texts.map((text) => {
-        filesArray[counterFiles].text = text;
-        liMaker(counterFiles);
-        indexedFilesArray.push(counterFiles.toString());
-        counterFiles++;
+        filesArray[idCounterFiles].text = text;
+        liMaker(idCounterFiles);
+        indexedFilesArray.push(idCounterFiles.toString());
+        idCounterFiles++;
       });
     }
     showOrHideDeleteAllItems();
@@ -594,9 +599,10 @@ function addDirectory(item) {
 
 const handleFilesArray = () => {
   for (let i = 0; i < filesArray.length; i++) {
+    // error?? instead 'i' need 'idCounterFiles'
     liMaker(i);
-    indexedFilesArray.push(counterFiles.toString());
-    counterFiles++;
+    indexedFilesArray.push(idCounterFiles.toString());
+    idCounterFiles++;
   }
 };
 
@@ -630,10 +636,10 @@ const saveItemFromFile = (_name) => {
       name: _name,
     };
     itemsArray.push(obj);
-    indexedItemsArray.push(counterItems.toString());
-    const newItem = indexedItemsArray.indexOf(counterItems.toString()) * 1;
+    indexedItemsArray.push(idCounterItems.toString());
+    const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
     liMaker(newItem);
-    counterItems++;
+    idCounterItems++;
   }
   defaultMarkers();
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
@@ -650,10 +656,10 @@ function checkIt() {
     name = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {
-    filesArray[counterFiles].size = fileSizeGlobal;
-    name = filesArray[counterFiles].name;
-    liMaker(counterFiles);
-    counterFiles++;
+    filesArray[idCounterFiles].size = fileSizeGlobal;
+    name = filesArray[idCounterFiles].name;
+    liMaker(idCounterFiles);
+    idCounterFiles++;
   }
 
   if (!isItemState) {
@@ -708,7 +714,7 @@ const initializeFileState = () => {
 
   if (indexedFilesArray.length === 0) {
     logg3("indexedFilesArray 1:", indexedFilesArray);
-    counterFiles = 0;
+    idCounterFiles = 0;
     indexedFilesArray = [];
 
     if (window.location.protocol === "file:") {
@@ -741,15 +747,15 @@ const initializeItemState = () => {
 
   if (indexedItemsArray.length === 0) {
     logg3("indexedItemsArray 1:", indexedItemsArray);
-    counterItems = 0;
+    idCounterItems = 0;
     indexedItemsArray = [];
 
     nullGotIntoStorage = false;
     itemsArray?.forEach((item, key) => {
       if (item) {
         liMaker(key);
-        indexedItemsArray.push(counterItems.toString());
-        counterItems++;
+        indexedItemsArray.push(idCounterItems.toString());
+        idCounterItems++;
       } else {
         itemsArray.splice(key, 1);
         nullGotIntoStorage = true;

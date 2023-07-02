@@ -329,7 +329,7 @@ const saveFile = () => {
         getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
       const obj = { name: fileName, text: input.value };
       filesArray.push(obj);
-      indexedFilesArray.push(counterFiles.toString());
+      indexedFilesArray.push(idCounterFiles.toString());
       fileDownload(fileName);
     }
   }
@@ -365,10 +365,10 @@ const saveItem = () => {
       cur: 0,
     };
     itemsArray.push(obj);
-    indexedItemsArray.push(counterItems.toString());
-    const newItem = indexedItemsArray.indexOf(counterItems.toString()) * 1;
+    indexedItemsArray.push(idCounterItems.toString());
+    const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
     liMaker(newItem);
-    counterItems++;
+    idCounterItems++;
   }
   defaultMarkers();
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
@@ -395,7 +395,7 @@ const defaultFileStateVars = () => {
   deleteAllItemsButton.classList.replace("visible", "invisible");
   indexedFilesArray = [];
   filesArray = [];
-  counterFiles = 0;
+  idCounterFiles = 0;
   fileElem.value = null;
   showItemSortingArrows(0);
   foldedClass.innerHTML = "";
@@ -407,7 +407,7 @@ const defaultItemStateVars = () => {
   deleteAllItemsButton.classList.replace("visible", "invisible");
   indexedItemsArray = [];
   itemsArray = [];
-  counterItems = 0;
+  idCounterItems = 0;
   showItemSortingArrows(0);
   foldedClass.innerHTML = "";
 };
@@ -533,11 +533,11 @@ restoreItemButton.addEventListener("click", function () {
     localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 
     //const le = itemsArray.length - 1;
-    indexedItemsArray.push(counterItems.toString());
-    const newItem = indexedItemsArray.indexOf(counterItems.toString()) * 1;
+    indexedItemsArray.push(idCounterItems.toString());
+    const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
     liMaker(newItem);
 
-    counterItems++;
+    idCounterItems++;
     len = len - 1;
     deletedCounter.innerText = len;
   }
