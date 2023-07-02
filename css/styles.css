@@ -342,7 +342,10 @@ blockquote {
   visibility: initial;
 }
 
-.unfolded .file-text,
+.unfolded .file-text {
+  display: none;
+}
+
 .unfolded .unit-control {
   height: 0;
   visibility: collapse;
