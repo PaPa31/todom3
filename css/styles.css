@@ -210,6 +210,10 @@ button {
   transition: all 0.2s ease;
 }
 
+.save-history button {
+  transition-duration: 0s;
+}
+
 .btn:focus-visible {
   outline: 1px solid black;
   outline-offset: 2px;
