@@ -321,10 +321,6 @@ blockquote {
   visibility: collapse;
 }
 
-.folded .file-text {
-  display: none;
-}
-
 .folded .unfolded .unit-control,
 .folded .file-info,
 .unfolded .file-info {
@@ -338,6 +334,7 @@ blockquote {
   visibility: initial;
 }
 
+.folded .file-text,
 .unfolded .file-text {
   display: none;
 }
