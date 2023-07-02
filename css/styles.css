@@ -885,14 +885,11 @@ ol.preview-outer p {
   opacity: 1;
 }
 
-.unit-control {
-  border-radius: 5px 5px 0 0;
-  border-bottom: 1px solid #979797;
+#list-files .unit-control {
   background-color: #eeeeee;
 }
 
-.dark .unit-control {
-  border-bottom-color: #5e5e5e;
+.dark #list-files .unit-control {
   background-color: #333333;
 }
 
