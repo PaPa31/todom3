@@ -315,10 +315,8 @@ blockquote {
 }
 
 .folded .unit-control,
-.file-size,
-.folded .unfolded .file-size,
-.file-name,
-.folded .unfolded .file-name {
+.file-info,
+.folded .unfolded .file-info {
   height: 0;
   visibility: collapse;
 }
@@ -328,10 +326,8 @@ blockquote {
 }
 
 .folded .unfolded .unit-control,
-.folded .file-size,
-.unfolded .file-size,
-.folded .file-name,
-.unfolded .file-name {
+.folded .file-info,
+.unfolded .file-info {
   height: initial;
   visibility: initial;
 }
@@ -349,6 +345,10 @@ blockquote {
 .unfolded .unit-control {
   height: 0;
   visibility: collapse;
+}
+
+.file-info {
+  overflow: auto;
 }
 
 #main-listing > ol > li {
