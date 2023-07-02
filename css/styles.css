@@ -330,6 +330,8 @@ blockquote {
 .folded .file-name,
 .unfolded .file-name {
   display: block;
+  height: initial;
+  visibility: initial;
 }
 
 .unfolded .file-text,
