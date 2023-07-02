@@ -109,9 +109,10 @@ const liMaker = (arrIndex) => {
   }
 
   unitControlDivMaker(li, last, current);
+  unfoldButtonMaker(li);
   li.appendChild(div);
   foldedClass.appendChild(li);
-  unfoldButtonMaker(li);
+
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
@@ -152,8 +153,8 @@ const unfoldButtonMaker = (parentLi) => {
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
   buttonTag.setAttribute("onclick", `unfoldOneItem(findLiRecursive(this))`);
 
-  if (isItemState && mdTag.scrollHeight === 0)
-    buttonTag.style = "--box-shadow-color: red";
+  //if (isItemState && mdTag.scrollHeight === 0)
+  //  buttonTag.style = "--box-shadow-color: red";
 
   buttonTag.setAttribute("title", "fold/unfold one");
   buttonTag.appendChild(numInside);
