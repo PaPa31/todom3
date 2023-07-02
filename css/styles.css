@@ -348,8 +348,15 @@ blockquote {
   /*padding: 0px 5px 5px 5px;*/
   padding: 5px;
   list-style: none;
-  display: grid;
   /*list-style-position: outside;*/
+}
+
+#main-listing > ol#list-items > li {
+  display: grid;
+}
+
+ol#list-files .unit-control {
+  float: right;
 }
 
 /*.md-item {
@@ -448,11 +455,6 @@ ol#list-items.folded :not(.unfolded) .md-item > :first-child {
   max-width: 550px;
 }
 
-#list-files:not(.folded) :not(.unfolded) .md-file,
-#list-files.folded .unfolded .md-file {
-  margin-top: -34px;
-}
-
 .dark #list-files:not(.folded) .unfolded .unit-control,
 .dark #list-files.folded :not(.unfolded) .unit-control {
   background-color: #333333;
@@ -482,7 +484,6 @@ ol#list-items.folded :not(.unfolded) .md-item > :first-child {
 }
 
 .md-item,
-.md-file,
 .file-name,
 .file-size {
   float: left;
@@ -903,7 +904,7 @@ ol.preview-outer p {
   width: auto;
 }
 
-.main-actions {
+ol#list-items .main-actions {
   float: right;
   visibility: visible;
   z-index: 1;
