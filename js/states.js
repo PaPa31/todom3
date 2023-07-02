@@ -108,8 +108,8 @@ const liMaker = (arrIndex) => {
     li.id = idCounterFiles;
   }
 
-  unitControlDivMaker(li, last, current);
   unfoldButtonMaker(li);
+  unitControlDivMaker(li, last, current);
   li.appendChild(div);
   foldedClass.appendChild(li);
 
