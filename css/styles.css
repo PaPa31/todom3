@@ -330,7 +330,8 @@ blockquote {
 
 .unfolded .file-text,
 .unfolded .unit-control {
-  display: none;
+  height: 0;
+  visibility: collapse;
 }
 
 #main-listing > ol > li {
@@ -875,6 +876,13 @@ ol.preview-outer p {
   padding: 3px 0 2px !important;
   background-color: transparent !important;
   width: auto;
+}
+
+.main-actions {
+  float: right;
+  visibility: visible;
+  z-index: 1;
+  position: relative;
 }
 
 #delete-all-items {
