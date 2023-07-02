@@ -314,6 +314,10 @@ blockquote {
   opacity: 1;
 }
 
+.unit-control {
+  overflow: auto;
+}
+
 .folded .unit-control {
   height: 0;
   visibility: collapse;
@@ -349,10 +353,6 @@ blockquote {
   padding: 5px;
   list-style: none;
   /*list-style-position: outside;*/
-}
-
-#main-listing > ol#list-items > li {
-  display: grid;
 }
 
 ol#list-files .unit-control {
@@ -905,10 +905,10 @@ ol.preview-outer p {
 }
 
 ol#list-items .main-actions {
-  float: right;
   visibility: visible;
   z-index: 1;
-  position: relative;
+  position: absolute;
+  right: 0;
 }
 
 #delete-all-items {
