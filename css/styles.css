@@ -447,6 +447,14 @@ blockquote {
   margin-top: 0;
 }
 
+ol#list-items:not(.folded) .unfolded .md-item > :first-child,
+ol#list-items.folded :not(.unfolded) .md-item > :first-child {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 550px;
+}
+
 .md-item > :last-child,
 .file-text > :last-child {
   margin-bottom: 0;
