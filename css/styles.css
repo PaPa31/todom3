@@ -453,6 +453,12 @@ ol#list-items.folded :not(.unfolded) .md-item > :first-child {
   white-space: nowrap;
   overflow: hidden;
   max-width: 550px;
+  margin-bottom: 0;
+}
+
+ol#list-items:not(.folded) .unfolded .md-item :not(:first-child),
+ol#list-items.folded :not(.unfolded) .md-item :not(:first-child) {
+  display: none;
 }
 
 .dark #list-files:not(.folded) .unfolded .unit-control,
