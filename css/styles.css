@@ -814,7 +814,6 @@ h6 {
   padding: 0;
   max-width: 720px;
   flex-basis: 100%;
-  margin-bottom: 1rem;
 }
 
 .text-right {
@@ -1059,8 +1058,7 @@ button.delete-current-save:hover {
 
 #content #form1 {
   position: relative;
-  width: 95%;
-  margin: 0 auto 5px;
+  margin: 0 14px 5px;
   padding: 0 5px 5px 5px;
   border-radius: 4px;
   flex-direction: column;
@@ -1100,8 +1098,7 @@ textarea:active {
   display: block;
   line-height: 1rem;
   display: block;
-  margin: 0 auto;
-  width: 95%;
+  margin: 0 14px;
   background-color: var(--bg-input-translucent);
 }
 
