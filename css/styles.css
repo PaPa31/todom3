@@ -5,6 +5,8 @@
  */
 
 :root {
+  --todom-editor-background: #14181b;
+
   --color: #404040;
   --color-muted: #24292f;
   --color-extra-muted: #57606a;
