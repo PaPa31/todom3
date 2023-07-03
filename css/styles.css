@@ -812,7 +812,23 @@ h6 {
 .flex-small {
   padding: 0;
   max-width: 720px;
-  flex-basis: 100%;
+}
+
+#open-save-buttons {
+  display: flex;
+  flex: 4;
+}
+
+#tools {
+  display: flex;
+  flex: 1;
+}
+
+#save-button,
+#save-as-file,
+#open-file,
+#open-dir {
+  flex: initial;
 }
 
 .text-right {
@@ -934,10 +950,6 @@ ol#list-items .main-actions {
 
 #delete-all-items {
   min-width: 142px;
-}
-
-#save-button {
-  min-width: 104px;
 }
 
 button.delete-one-item,
