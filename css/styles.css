@@ -5,7 +5,9 @@
  */
 
 :root {
-  --todom-editor-background: #14181b;
+  --todom-editor-background-dark: #14181b;
+  --todom-input-background-dark: #0a0c0e;
+  --todom-item-background-dark: #1b2024;
 
   --color: #404040;
   --color-muted: #24292f;
@@ -88,6 +90,19 @@
   --transparent: transparent;
 }
 
+.monaco-workbench-side-pane {
+  background-color: #0a0c0e;
+  color: #ce7f4b;
+  border-right: 1px solid #200000;
+  outline-color: #53595d80;
+}
+
+.monaco-workbench-terminal {
+  background-color: #1b2024;
+  border-left-color: #200000;
+  border-right-color: #200000;
+}
+
 html {
   width: 100%;
   overflow-x: hidden;
@@ -114,7 +129,7 @@ body {
 }
 
 .dark body {
-  background-color: var(--bg-dark);
+  background-color: var(--todom-editor-background-dark);
   color: var(--color-dark);
 }
 
@@ -423,7 +438,7 @@ ol#list-files .unit-control {
 .dark .file-text,
 .dark #preview {
   color: var(--color-dark);
-  background-color: var(--bg-item-dark);
+  background-color: var(--todom-item-background-dark);
 }
 
 .markdown-body > ol > li {
@@ -902,7 +917,7 @@ ol.preview-outer p {
 }
 
 .dark #list-files .unit-control {
-  background-color: #333333;
+  background-color: var(--todom-item-background-dark);
 }
 
 .main-actions,
@@ -1057,7 +1072,6 @@ textarea {
   border-radius: 4px;
   padding: 0.75rem;
   outline: none;
-  background-color: transparent;
   font-size: 1rem;
   font-family: inherit;
   width: 100%;
@@ -1076,6 +1090,7 @@ textarea:active {
 
 .dark [type="text"],
 .dark textarea {
+  background-color: var(--todom-input-background-dark);
   color: var(--color-dark);
 }
 
@@ -1093,7 +1108,7 @@ textarea:active {
 }
 
 .dark #input-label {
-  background-color: var(--bg-input-translucent-dark);
+  background-color: var(--transparent);
 }
 
 #input-label > span {
@@ -1140,14 +1155,6 @@ textarea:active {
 
 .dark .border-edit {
   border: 1px solid var(--border-edit-dark);
-}
-
-.bg {
-  background-color: var(--bg);
-}
-
-.dark .bg {
-  background-color: var(--bg-dark);
 }
 
 #preview,
