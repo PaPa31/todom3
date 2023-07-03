@@ -505,9 +505,6 @@ function handleFiles(files) {
       );
 
       for (let file of arrFromFiles) {
-        if (!file.type.startsWith("text/markdown")) {
-          continue;
-        }
         yield new Promise((resolve) => {
           const obj = {
             name: file.name,
