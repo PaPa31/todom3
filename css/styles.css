@@ -1060,8 +1060,8 @@ button.delete-current-save:hover {
 #content #form1 {
   position: relative;
   width: 95%;
-  margin: 12px auto 5px;
-  padding: 5px;
+  margin: 0 auto 5px;
+  padding: 0 5px 5px 5px;
   border-radius: 4px;
   flex-direction: column;
   transition: background-color 0.3s ease-in-out;
@@ -1096,7 +1096,12 @@ textarea:active {
 
 #input-label {
   transition: opacity 0.2s ease;
-  margin-top: -16px;
+  padding: 5px 5px 0px 5px;
+  display: block;
+  line-height: 1rem;
+  display: block;
+  margin: 0 auto;
+  width: 95%;
   background-color: var(--bg-input-translucent);
 }
 
@@ -1105,7 +1110,7 @@ textarea:active {
 }
 
 #input-label > span {
-  padding: 0 4px;
+  /*padding: 0 4px;*/
   color: var(--color-edit);
 }
 
@@ -1113,11 +1118,11 @@ textarea:active {
   color: var(--color-edit-dark);
 }
 
-#input-label > div {
+/*#input-label > div {
   border-radius: 3px;
   padding: 0 4px;
   color: var(--color-extra-muted);
-}
+}*/
 
 .dark #input-label > div {
   color: var(--color-muted-dark);
