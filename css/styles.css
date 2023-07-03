@@ -1095,13 +1095,6 @@ textarea:active {
 }
 
 #input-label {
-  position: absolute;
-  z-index: -11;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: fit-content;
   transition: opacity 0.2s ease;
   margin-top: -16px;
   background-color: var(--bg-input-translucent);
@@ -1137,8 +1130,6 @@ textarea:active {
 #input-label > span:last-child {
   border-radius: 0 3px 3px 0;
   width: 93%;
-  overflow-x: clip;
-  white-space: pre;
 }
 
 .border {
