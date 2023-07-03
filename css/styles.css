@@ -503,7 +503,7 @@ ol#list-items.folded :not(.unfolded) .md-item :not(:first-child) {
 }
 
 .dark .file-name {
-  color: #737311;
+  color: #b1b112;
 }
 
 .md-item,
