@@ -867,15 +867,15 @@ ol.preview-outer p {
   width: 29px;
   height: 29px;
   right: 13px;
-  top: 13px;
+  top: 9px;
 }
 
 #return-last-input {
   background-image: url(../img/return-3.svg);
   width: 23px;
   height: 23px;
-  right: 17px;
-  top: 17px;
+  right: 16px;
+  top: 12px;
 }
 
 .sort-ascending,
