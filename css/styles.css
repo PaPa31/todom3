@@ -806,6 +806,10 @@ h6 {
   padding: 0;
 }
 
+#first-button-row .btn-flex {
+  padding: 0 3%;
+}
+
 .small-container {
   float: left;
   padding: 0;
