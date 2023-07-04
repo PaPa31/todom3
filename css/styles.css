@@ -1108,7 +1108,6 @@ textarea:active {
 #input-label {
   transition: opacity 0.2s ease;
   padding: 5px 0 0 0;
-  display: block;
   line-height: 14px;
   text-align: center;
   margin: 0 20px;
