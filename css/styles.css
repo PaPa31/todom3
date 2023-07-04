@@ -279,7 +279,7 @@ blockquote {
   border-color: var(--border-cite-dark);
 }
 
-#main-listing > ol.folded .muted-button {
+/*#main-listing > ol.folded .muted-button {
   --box-shadow-color: var(--button-muted-color);
   box-shadow: 1px 1px 2px 1px var(--box-shadow-color);
 }
@@ -297,23 +297,24 @@ blockquote {
 #main-listing > ol .unfolded .muted-button {
   --box-shadow-color: var(--button-muted-color);
   box-shadow: 1px 1px 2px 1px var(--box-shadow-color);
-}
+}*/
 
-#main-listing > ol.folded > li > .md-item {
-  height: 38px;
-  opacity: 0.25;
-  overflow-y: hidden;
-}
+/*#main-listing > ol*/
 
+#main-listing > ol.folded > li > .md-item,
 #main-listing > ol > li.unfolded > .md-item {
   height: 38px;
   opacity: 0.25;
   overflow-y: hidden;
+  position: absolute;
+  padding-inline-start: 40px;
 }
 
 #main-listing > ol.folded > li.unfolded > .md-item {
   height: initial;
   opacity: 1;
+  position: relative;
+  padding-inline-start: inherit;
 }
 
 .unit-control {
@@ -367,15 +368,17 @@ ol#list-files .unit-control {
 
 #main-listing > ol {
   counter-reset: item;
+  padding-inline-start: 0;
   /*margin-bottom: 100vh;*/
 }
 
 .unfold-button {
-  position: absolute;
-  left: 0;
   height: 34px;
   width: 37px;
   padding: 0;
+  float: left;
+  z-index: 1;
+  position: relative;
 }
 
 .unfold-button span::before {
@@ -817,8 +820,6 @@ h6 {
   display: flex;
   flex: 1;
 }
-
-
 
 #items-files-toggle {
   flex: 0 200px;
