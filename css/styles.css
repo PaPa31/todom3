@@ -803,7 +803,7 @@ h6 {
   flex: initial;
   margin-right: 0.5%;
   height: 39px;
-  padding: 0 3%;
+  padding: 0;
 }
 
 .small-container {
@@ -912,13 +912,13 @@ ol.preview-outer p {
 }
 
 #list-order {
-  border-width: 2px;
+  border-width: 1px;
   transition: all 0.2s linear;
   padding-bottom: 1px;
   padding-top: 3px;
-  padding-left: 4px;
-  padding-right: 5px;
-  vertical-align: bottom;
+  padding-left: 1px;
+  padding-right: 1px;
+  flex: 0 39px;
   /** adds extra padding/margin on startup
    *
    * display: inline-flex;
@@ -1037,12 +1037,11 @@ button.delete-current-save:hover {
 }
 
 #restore-deleted-item {
-  border-width: 2px;
+  border-width: 0px;
   padding-bottom: 0px;
   padding-top: 1px;
-  padding-left: 3px;
-  padding-right: 3px;
-  vertical-align: bottom;
+  padding-left: 0px;
+  padding-right: 0px;
   position: relative;
 }
 
