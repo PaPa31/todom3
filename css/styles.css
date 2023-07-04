@@ -838,9 +838,24 @@ h6 {
   flex: 1;
 }
 
+
+
+#items-files-toggle {
+  flex: 0 200px;
+}
+
+#fold-global-toggle {
+  flex: 0 70px;
+}
+
 #deletion-control-buttons {
   display: flex;
   flex: 1;
+  justify-content: flex-end;
+}
+
+#deletion-control-buttons > button:is(:first-child, :last-child) {
+  flex: 0 120px;
 }
 
 .preview-outer {
