@@ -63,7 +63,6 @@ const scrollToLast = () => {
 
 const editUI = (label) => {
   input.classList.replace("border", "border-edit");
-  input.classList.add("bg");
   xButton.title = "Cancel edit";
 
   inputLabel.innerHTML = `<span>Edit: </span><span>${label}</span>`;
@@ -478,15 +477,12 @@ const defaultMarkers = () => {
   itemIndexToEdit = null;
   fileIndexToEdit = null;
   input.classList.replace("border-edit", "border");
-  input.classList.remove("bg");
   xButton.title = "Clear input";
 };
 
 const hideAndNewInputLabel = () => {
   inputLabel.classList.replace("visible", "invisible");
-  window.setTimeout(function () {
-    inputLabel.innerHTML = "<div>New</div>";
-  }, 300);
+  inputLabel.innerHTML = "<div>New</div>";
 };
 
 const ifReturnAndNoneX = () => {
