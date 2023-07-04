@@ -676,19 +676,19 @@ table {
   color: var(--button-color-dimmed-dark) !important;
 }
 
-#first-header::after {
+#fold-global-toggle::after {
   content: "<";
 }
 
-#first-header.fold::after {
+#fold-global-toggle.fold::after {
   content: ">";
 }
 
-#first-header::before {
+#fold-global-toggle::before {
   content: ">";
 }
 
-#first-header.fold::before {
+#fold-global-toggle.fold::before {
   content: "<";
 }
 

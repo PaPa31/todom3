@@ -1,5 +1,5 @@
-const firstHeaderButton = document.getElementById("first-header");
-const secondHeaderButton = document.getElementById("second-header");
+const foldGlobalToggleButton = document.getElementById("fold-global-toggle");
+const itemsFilesToggleButton = document.getElementById("items-files-toggle");
 
 let foldedClass = document.getElementById("list-items");
 
@@ -406,21 +406,21 @@ const deleteOneFile = (e, liDOM) => {
 const initialCheckFold = (stateVar) => {
   if (stateVar) {
     // Folded view
-    firstHeaderButton.classList.add("fold");
+    foldGlobalToggleButton.classList.add("fold");
     foldedClass.classList.add("folded");
   } else {
     // Unfolded view
-    firstHeaderButton.classList.remove("fold");
+    foldGlobalToggleButton.classList.remove("fold");
     foldedClass.classList.remove("folded");
   }
 };
 
 const changeStateFold = () => {
-  firstHeaderButton.classList.toggle("fold");
+  foldGlobalToggleButton.classList.toggle("fold");
   foldedClass.classList.toggle("folded");
 };
 
-firstHeaderButton.addEventListener("click", function (e) {
+foldGlobalToggleButton.addEventListener("click", function (e) {
   const allPressed = [...foldedClass.querySelectorAll(".unfolded")];
   if (allPressed.length) {
     allPressed.map((i) => {
@@ -699,7 +699,7 @@ fileElem.addEventListener(
 const initializeFileState = () => {
   logIn3("Files");
   saveButton.innerText = "Save file";
-  secondHeaderButton.innerText = "Files";
+  itemsFilesToggleButton.innerText = "Files";
   openFileButton.innerText = "Open file";
   deleteAllItemsButton.innerText = "Clear the List";
   saveAsFileButton.classList.replace("inline-block", "none");
@@ -733,7 +733,7 @@ const initializeFileState = () => {
 const initializeItemState = () => {
   logIn3("Items");
   saveButton.innerText = "Save item";
-  secondHeaderButton.innerText = "Items";
+  itemsFilesToggleButton.innerText = "Items";
   openFileButton.innerText = "Split file";
   deleteAllItemsButton.innerText = "Delete All Items";
   saveAsFileButton.classList.replace("none", "inline-block");
@@ -774,7 +774,7 @@ const initializeItemState = () => {
   logOut3();
 };
 
-secondHeaderButton.addEventListener("click", function (e) {
+itemsFilesToggleButton.addEventListener("click", function (e) {
   isItemState = !isItemState;
   showItemSortingArrows(0);
   twoClickToTrash = false;
