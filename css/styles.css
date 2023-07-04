@@ -829,10 +829,6 @@ h6 {
   justify-content: flex-end;
 }
 
-.text-right {
-  text-align: right;
-}
-
 .preview-outer {
   list-style: none;
   padding: 0;
