@@ -240,8 +240,13 @@ button {
   outline-color: var(--bg);
 }
 
-::-webkit-scrollbar {
+:not(textarea)::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
+}
+
+textarea::-webkit-scrollbar {
+  width: 6px;
   height: 10px;
 }
 
