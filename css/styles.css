@@ -829,6 +829,16 @@ h6 {
   justify-content: flex-end;
 }
 
+#visual-change-buttons {
+  display: flex;
+  flex: 1;
+}
+
+#deletion-control-buttons {
+  display: flex;
+  flex: 1;
+}
+
 .preview-outer {
   list-style: none;
   padding: 0;
@@ -942,10 +952,6 @@ ol#list-items .main-actions {
   right: 0;
 }
 
-#delete-all-items {
-  min-width: 142px;
-}
-
 button.delete-one-item,
 button.edit-item,
 button.previous-save,
@@ -1016,10 +1022,6 @@ button.delete-current-save:hover {
 .invisible {
   visibility: hidden;
   opacity: 0;
-}
-
-.inline-block {
-  display: inline-block;
 }
 
 .none {
@@ -1268,10 +1270,6 @@ textarea:active {
 
 code {
   white-space: break-spaces;
-}
-
-#second-header {
-  width: 200px;
 }
 
 /**:is(h1, h2, h3, h4, h5, h6) + p :first-child.last-child-lb {
