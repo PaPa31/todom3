@@ -789,10 +789,6 @@ h6 {
   font-size: 2rem;
 }
 
-.ml5 {
-  margin-left: 5px;
-}
-
 .btn {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -800,6 +796,11 @@ h6 {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.btn-flex {
+  flex: initial;
+  margin-right: 0.5%;
 }
 
 .small-container {
@@ -822,13 +823,6 @@ h6 {
 #tools {
   display: flex;
   flex: 1;
-}
-
-#save-button,
-#save-as-file,
-#open-file,
-#open-dir {
-  flex: initial;
 }
 
 .text-right {
