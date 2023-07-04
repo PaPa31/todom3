@@ -1128,11 +1128,12 @@ textarea:active {
   color: var(--color-edit-dark);
 }
 
-/*#input-label > div {
+#input-label > div {
   border-radius: 3px;
   padding: 0 4px;
+  text-align: center;
   color: var(--color-extra-muted);
-}*/
+}
 
 .dark #input-label > div {
   color: var(--color-muted-dark);
