@@ -320,23 +320,28 @@ blockquote {
 
 .folded .unit-control,
 .unfolded .unit-control {
-  height: 0;
-  visibility: collapse;
+  /*height: 0;
+  visibility: collapse;*/
+  float: right;
 }
 
 .folded .unfolded .unit-control {
-  height: initial;
-  visibility: initial;
+  /*height: initial;
+  visibility: initial;*/
+  float: left;
 }
 
-.folded .unfolded .file-text {
+.folded .unfolded .file-text,
+.folded .unfolded .save-history {
   display: block;
-  height: initial;
-  visibility: initial;
+  /*height: initial;
+  visibility: initial;*/
 }
 
 .folded .file-text,
-.unfolded .file-text {
+.unfolded .file-text,
+.folded .save-history,
+.unfolded .save-history {
   display: none;
 }
 
@@ -925,9 +930,10 @@ ol.preview-outer p {
 
 ol#list-items .main-actions {
   visibility: visible;
-  z-index: 1;
+  /*z-index: 1;
   position: absolute;
-  right: 0;
+  right: 0;*/
+  float: right;
 }
 
 button.delete-one-item,
