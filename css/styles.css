@@ -306,11 +306,13 @@ blockquote {
   height: 38px;
   opacity: 0.25;
   overflow-y: hidden;
+  width: auto;
 }
 
 #main-listing > ol.folded > li.unfolded > .md-item {
   height: initial;
   opacity: 1;
+  width: 100%;
 }
 
 .file-info {
@@ -377,6 +379,7 @@ ol#list-files .main-actions {
   background-color: var(--bg-item);
   word-wrap: break-word;
   overflow: auto;
+  width: 100%;
 }
 
 .md-item,
