@@ -109,7 +109,8 @@ const liMaker = (arrIndex) => {
   }
 
   unfoldButtonMaker(li);
-  unitControlDivMaker(li, last, current);
+  if (isItemState) saveHistoryDivMaker(li, last, current);
+  mainActionsDivMaker(li);
   li.appendChild(div);
   foldedClass.appendChild(li);
 
@@ -133,15 +134,6 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   fileInfoDiv.setAttribute("class", "file-info");
   parentDiv.appendChild(fileInfoDiv);
   parentDiv.appendChild(div3);
-};
-
-const unitControlDivMaker = (parentLi, last, current) => {
-  const divTag = document.createElement("div");
-  divTag.setAttribute("class", "unit-control");
-  parentLi.appendChild(divTag);
-
-  if (isItemState) saveHistoryDivMaker(divTag, last, current);
-  mainActionsDivMaker(divTag);
 };
 
 const unfoldButtonMaker = (parentLi) => {

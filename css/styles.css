@@ -313,22 +313,8 @@ blockquote {
   opacity: 1;
 }
 
-.unit-control,
 .file-info {
   overflow: auto;
-}
-
-.folded .unit-control,
-.unfolded .unit-control {
-  /*height: 0;
-  visibility: collapse;*/
-  float: right;
-}
-
-.folded .unfolded .unit-control {
-  /*height: initial;
-  visibility: initial;*/
-  float: left;
 }
 
 .folded .unfolded .file-text,
@@ -352,7 +338,7 @@ blockquote {
   /*list-style-position: outside;*/
 }
 
-ol#list-files .unit-control {
+ol#list-files .main-actions {
   float: right;
 }
 
@@ -457,11 +443,6 @@ ol#list-items.folded :not(.unfolded) .md-item > :first-child {
 ol#list-items:not(.folded) .unfolded .md-item :not(:first-child),
 ol#list-items.folded :not(.unfolded) .md-item :not(:first-child) {
   display: none;
-}
-
-.dark #list-files:not(.folded) .unfolded .unit-control,
-.dark #list-files.folded :not(.unfolded) .unit-control {
-  background-color: #333333;
 }
 
 .md-item > :last-child,
@@ -911,14 +892,6 @@ ol.preview-outer p {
 #x-button:hover,
 #return-last-input:hover {
   opacity: 1;
-}
-
-#list-files .unit-control {
-  background-color: #eeeeee;
-}
-
-.dark #list-files .unit-control {
-  background-color: var(--todom-item-background-dark);
 }
 
 .main-actions,
