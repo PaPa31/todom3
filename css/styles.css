@@ -307,12 +307,14 @@ blockquote {
   opacity: 0.25;
   overflow-y: hidden;
   width: auto;
+  background-color: transparent;
 }
 
 #main-listing > ol.folded > li.unfolded > .md-item {
   height: initial;
   opacity: 1;
   width: 100%;
+  background-color: var(--todom-item-background-dark);
 }
 
 .file-info {
