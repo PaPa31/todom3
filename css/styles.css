@@ -441,7 +441,6 @@ ol#list-items.folded :not(.unfolded) .md-item > :first-child {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 550px;
   margin-bottom: 0;
 }
 
