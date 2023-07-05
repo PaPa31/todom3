@@ -794,7 +794,7 @@ h6 {
 }
 
 #fold-global-toggle {
-  flex: 0 70px;
+  flex: none;
 }
 
 #deletion-control-buttons {
