@@ -436,8 +436,8 @@ ol#list-files .main-actions {
   margin-top: 0;
 }
 
-ol#list-items:not(.folded) .unfolded .md-item > :first-child,
-ol#list-items.folded :not(.unfolded) .md-item > :first-child {
+ol#list-items:not(.folded) .unfolded .md-item :first-child,
+ol#list-items.folded :not(.unfolded) .md-item :first-child {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -447,6 +447,12 @@ ol#list-items.folded :not(.unfolded) .md-item > :first-child {
 ol#list-items:not(.folded) .unfolded .md-item :not(:first-child),
 ol#list-items.folded :not(.unfolded) .md-item :not(:first-child) {
   display: none;
+}
+
+ol#list-items:not(.folded) .unfolded .md-item > :is(ul, ol) > :first-child,
+ol#list-items.folded :not(.unfolded) .md-item > :is(ul, ol) > :first-child {
+  list-style-position: inside;
+  margin-inline-start: -15px;
 }
 
 .md-item > :last-child,
