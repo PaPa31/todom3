@@ -306,15 +306,11 @@ blockquote {
   height: 38px;
   opacity: 0.25;
   overflow-y: hidden;
-  position: absolute;
-  padding-inline-start: 40px;
 }
 
 #main-listing > ol.folded > li.unfolded > .md-item {
   height: initial;
   opacity: 1;
-  position: relative;
-  padding-inline-start: inherit;
 }
 
 .unit-control,
@@ -385,7 +381,6 @@ ol#list-files .unit-control {
 .save-history,
 #preview,
 #position {
-  width: 100%;
   float: left;
   border-radius: 0 0 5px 5px;
   background-color: var(--bg-item);
@@ -486,17 +481,6 @@ ol#list-items.folded :not(.unfolded) .md-item :not(:first-child) {
 .dark .file-name {
   color: #b1b112;
 }
-
-.md-item,
-.file-name,
-.file-size {
-  float: left;
-  width: 100%;
-}
-
-/*.markdown-body > ol > li > div * {
-  max-width: 100%;
-}*/
 
 ::selection {
   background-color: var(--bg-selection);
