@@ -317,11 +317,13 @@ blockquote {
   padding-inline-start: inherit;
 }
 
-.unit-control {
+.unit-control,
+.file-info {
   overflow: auto;
 }
 
-.folded .unit-control {
+.folded .unit-control,
+.unfolded .unit-control {
   height: 0;
   visibility: collapse;
 }
@@ -340,15 +342,6 @@ blockquote {
 .folded .file-text,
 .unfolded .file-text {
   display: none;
-}
-
-.unfolded .unit-control {
-  height: 0;
-  visibility: collapse;
-}
-
-.file-info {
-  overflow: auto;
 }
 
 #main-listing > ol > li {
