@@ -306,7 +306,7 @@ blockquote {
   height: 38px;
   opacity: 0.25;
   overflow-y: hidden;
-  width: auto;
+  width: calc(100% - 120px);
   background-color: transparent;
 }
 
