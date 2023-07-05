@@ -449,8 +449,8 @@ ol#list-items.folded :not(.unfolded) .md-item :not(:first-child) {
   display: none;
 }
 
-ol#list-items:not(.folded) .unfolded .md-item > :is(ul, ol) > :first-child,
-ol#list-items.folded :not(.unfolded) .md-item > :is(ul, ol) > :first-child {
+ol#list-items:not(.folded) .unfolded .md-item > * > li:first-child,
+ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
   list-style-position: inside;
   margin-inline-start: -15px;
 }
