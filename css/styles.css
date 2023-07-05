@@ -803,9 +803,12 @@ h6 {
   justify-content: flex-end;
 }
 
-#deletion-control-buttons > button:first-child,
-#deletion-control-buttons > button:last-child {
-  flex: 0 120px;
+#delete-all-items {
+  flex: 0 115px;
+}
+
+#clear-trash {
+  flex: 0 88px;
 }
 
 .preview-outer {
