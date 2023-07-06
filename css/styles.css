@@ -412,6 +412,7 @@ ol#list-files .main-actions {
 #position {
   padding: 0.75rem;
   padding-right: 36px;
+  padding-bottom: 0;
 }
 
 .dark .md-item,
@@ -1156,7 +1157,6 @@ textarea:active {
   color: var(--color-dark);
   background-color: var(--todom-item-background-dark);
   position: relative !important;
-  overflow: scroll;
 }
 
 #position * {
