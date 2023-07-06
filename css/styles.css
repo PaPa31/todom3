@@ -846,7 +846,7 @@ ol.preview-outer p {
   width: 29px;
   height: 29px;
   right: 13px;
-  top: 9px;
+  top: 59px;
 }
 
 #return-last-input {
@@ -854,7 +854,7 @@ ol.preview-outer p {
   width: 23px;
   height: 23px;
   right: 16px;
-  top: 12px;
+  top: 62px;
 }
 
 .sort-ascending,
@@ -1034,8 +1034,8 @@ button.delete-current-save:hover {
 
 #content #form1 {
   position: relative;
-  margin: 0 14px 5px;
-  padding: 0 5px 5px 5px;
+  margin: -80px 14px 5px;
+  padding: 50px 5px 5px 5px;
   border-radius: 4px;
   flex-direction: column;
   transition: background-color 0.3s ease-in-out;
@@ -1051,7 +1051,7 @@ textarea {
   width: 100%;
   max-width: 100%;
   overflow: auto;
-  height: 186px;
+  height: 156px;
   padding-right: 36px !important;
   /*make 2 textareas the same inner size*/
   overflow-y: overlay;
@@ -1136,6 +1136,7 @@ textarea:active {
   scroll-behavior: smooth;
   max-height: 160px;
   overflow: hidden;
+  display: none;
 }
 
 #position {
@@ -1143,12 +1144,16 @@ textarea:active {
   background-color: transparent;
   color: transparent;
   overflow: hidden;
-  max-height: 160px;
+  /*max-height: 76px;*/
+  color: var(--color-dark);
+  background-color: var(--todom-item-background-dark);
+  position: relative !important;
+  overflow: scroll;
 }
 
 #position * {
-  background-color: transparent;
-  color: transparent;
+  /*background-color: transparent;*/
+  /*color: transparent;*/
   /*color: #851919a3;*/
 }
 
