@@ -133,6 +133,14 @@ body {
   color: var(--color-dark);
 }
 
+.preview-outer #position {
+  display: none;
+}
+
+#form1 > #position {
+  display: block;
+}
+
 .container::after {
   content: "2023 TODOm";
   left: 0;
@@ -1034,8 +1042,8 @@ button.delete-current-save:hover {
 
 #content #form1 {
   position: relative;
-  margin: -80px 14px 5px;
-  padding: 50px 5px 5px 5px;
+  margin: 0 14px 5px;
+  padding: 0 5px 5px 5px;
   border-radius: 4px;
   flex-direction: column;
   transition: background-color 0.3s ease-in-out;
@@ -1260,6 +1268,14 @@ code {
 }
 
 @media (min-width: 1320px) {
+  .preview-outer #position {
+    display: block;
+  }
+
+  #form1 > #position {
+    display: none;
+  }
+
   .container {
     max-width: initial;
   }
