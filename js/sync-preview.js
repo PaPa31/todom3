@@ -254,6 +254,14 @@ const headAndTail = () => {
   };
 };
 
+const getLineHeight = (el) => {
+  const fontSize = window.getComputedStyle(el).fontSize;
+  console.log("fontSize:", fontSize);
+  const lineHeight = Math.floor(parseInt(fontSize.replace("px", "")) * 1.5);
+  console.log("lineHeight:", lineHeight);
+  return lineHeight;
+};
+
 const syncPreview = function () {
   const f = headAndTail();
   whatString(f);
@@ -262,10 +270,13 @@ const syncPreview = function () {
   //position.scrollTop = scrollTop;
   //preview.scrollTop = position.scrollTop;
 
+  const lastChildHeight = position.querySelector(
+    ".last-child, .last-child-lb, .last-child-rb"
+  );
+
   const scrollTop2 = position.scrollHeight;
-  console.log("focus; position.scrollHeight", scrollTop2);
   position.scrollTop = scrollTop2;
-  html.scrollTop = scrollTop2;
+  html.scrollTop = scrollTop2 - getLineHeight(lastChildHeight);
 };
 
 input.addEventListener("keyup", debounce(syncPreview, 150, false));
