@@ -841,6 +841,10 @@ ol.preview-outer p {
   word-break: break-all;
 }
 
+#input-group {
+  position: relative;
+}
+
 #x-button,
 #return-last-input {
   position: absolute;
@@ -855,7 +859,7 @@ ol.preview-outer p {
   width: 29px;
   height: 29px;
   right: 13px;
-  top: 59px;
+  top: 13px;
 }
 
 #return-last-input {
@@ -863,7 +867,7 @@ ol.preview-outer p {
   width: 23px;
   height: 23px;
   right: 16px;
-  top: 62px;
+  top: 16px;
 }
 
 .sort-ascending,
