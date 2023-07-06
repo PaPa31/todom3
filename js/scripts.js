@@ -19,7 +19,39 @@ const openDirButton = document.getElementById("open-dir");
 const deletedCounter = document.getElementById("deleted-counter");
 
 const output = document.getElementById("output");
-const position = document.getElementById("position");
+
+// source: https://stackoverflow.com/a/18284182
+function getViewportSize(w) {
+  // Use the specified window or the current window if no argument
+  w = w || window;
+
+  // This works for all browsers except IE8 and before
+  if (w.innerWidth != null) return { w: w.innerWidth, h: w.innerHeight };
+
+  // For IE (or any browser) in Standards mode
+  var d = w.document;
+  if (document.compatMode == "CSS1Compat")
+    return {
+      w: d.documentElement.clientWidth,
+      h: d.documentElement.clientHeight,
+    };
+
+  // For browsers in Quirks mode
+  return { w: d.body.clientWidth, h: d.body.clientHeight };
+}
+
+let position;
+const changePositionBlock = (windowWidth) => {
+  if (windowWidth < 1320) {
+    console.log("< 1320 :", windowWidth);
+    position = document.querySelector("#form1 > #position");
+  } else {
+    console.log("1320 >= :", windowWidth);
+    position = document.querySelector(".preview-outer #position");
+  }
+};
+
+changePositionBlock(getViewportSize().w);
 
 const inputLabel = document.getElementById("input-label");
 
@@ -585,6 +617,20 @@ input.addEventListener(
       localStorage.setItem("todomLastInputValue", lastInputValue);
       mdToPreview(e.target.value);
       if (preview.innerHTML === "") position.innerHTML = "";
+    },
+    200,
+    false
+  ),
+  false
+);
+
+window.addEventListener(
+  "resize",
+  debounce(
+    (e) => {
+      console.log(`width: ${e.target.visualViewport.width}px`);
+      console.log(`height: ${e.target.visualViewport.height}px`);
+      changePositionBlock(getViewportSize().w);
     },
     200,
     false
