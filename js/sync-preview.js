@@ -258,9 +258,14 @@ const syncPreview = function () {
   const f = headAndTail();
   whatString(f);
 
-  const scrollTop = position.scrollHeight;
-  position.scrollTop = scrollTop;
-  preview.scrollTop = position.scrollTop;
+  //const scrollTop = position.scrollHeight;
+  //position.scrollTop = scrollTop;
+  //preview.scrollTop = position.scrollTop;
+
+  const scrollTop2 = position.scrollHeight;
+  console.log("focus; position.scrollHeight", scrollTop2);
+  position.scrollTop = scrollTop2;
+  html.scrollTop = scrollTop2;
 };
 
 input.addEventListener("keyup", debounce(syncPreview, 150, false));
