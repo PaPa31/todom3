@@ -455,22 +455,6 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
   margin-inline-start: -20px;
 }
 
-/*ol#list-items:not(.folded) .unfolded .md-item :first-child,
-ol#list-items.folded :not(.unfolded) .md-item :first-child {
-  color: transparent;
-}*/
-
-/*ol#list-items:not(.folded) .unfolded .md-item :first-child::first-line,
-ol#list-items.folded :not(.unfolded) .md-item :first-child::first-line {
-  color: var(--color-dark);
-}*/
-
-/*ol#list-items:not(.folded) .unfolded .md-item > * > li:first-child:before,
-ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child:before {
-  content: "○";
-  padding-right: 10px;
-}*/
-
 .md-item > :last-child,
 .file-text > :last-child {
   margin-bottom: 0;
