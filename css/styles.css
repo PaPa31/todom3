@@ -1149,7 +1149,7 @@ textarea:active {
 
 #preview {
   scroll-behavior: smooth;
-  /*max-height: 160px;*/
+  max-height: 160px;
   overflow: hidden;
 }
 
@@ -1159,6 +1159,7 @@ textarea:active {
   color: transparent;
   overflow: hidden;
   /*max-height: 76px;*/
+  max-height: 160px;
   /*color: var(--color-dark);
   background-color: var(--todom-item-background-dark);
   position: relative !important;*/

@@ -269,17 +269,17 @@ const syncPreview = function () {
   const f = headAndTail();
   whatString(f);
 
-  //const scrollTop = position.scrollHeight;
-  //position.scrollTop = scrollTop;
-  //preview.scrollTop = position.scrollTop;
+  const scrollTop = position.scrollHeight;
+  position.scrollTop = scrollTop;
+  preview.scrollTop = position.scrollTop;
 
-  const lastChild = position.querySelector(
-    ".last-child, .last-child-lb, .last-child-rb"
-  );
+  //const lastChild = position.querySelector(
+  //  ".last-child, .last-child-lb, .last-child-rb"
+  //);
 
-  const scrollTop2 = position.scrollHeight;
-  position.scrollTop = scrollTop2;
-  html.scrollTop = scrollTop2 - getLineHeight(lastChild);
+  //const scrollTop2 = position.scrollHeight;
+  //position.scrollTop = scrollTop2;
+  //html.scrollTop = scrollTop2 - getLineHeight(lastChild);
 };
 
 input.addEventListener("keyup", debounce(syncPreview, 150, false));
