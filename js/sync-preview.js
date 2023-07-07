@@ -271,15 +271,32 @@ const syncPreview = function () {
 
   const scrollTop = position.scrollHeight;
   position.scrollTop = scrollTop;
-  preview.scrollTop = position.scrollTop;
 
-  //const lastChild = position.querySelector(
-  //  ".last-child, .last-child-lb, .last-child-rb"
-  //);
+  let offsetHeight = 0;
+  const maxHeight = parseInt(
+    window.getComputedStyle(position).maxHeight.replace("px", "")
+  );
 
-  //const scrollTop2 = position.scrollHeight;
-  //position.scrollTop = scrollTop2;
-  //html.scrollTop = scrollTop2 - getLineHeight(lastChild);
+  console.log(maxHeight);
+  const currentHeight = position.clientHeight;
+  console.log(currentHeight);
+  if (currentHeight < maxHeight) {
+    offsetHeight = maxHeight - currentHeight;
+
+    const lastChild = position.querySelector(
+      ".last-child, .last-child-lb, .last-child-rb"
+    );
+
+    const scrollTop2 = position.scrollHeight;
+    position.scrollTop = scrollTop2;
+    html.scrollTop = scrollTop2 - getLineHeight(lastChild);
+  }
+  console.log(offsetHeight);
+  console.log({ position });
+
+  preview.scrollTop = position.scrollTop - offsetHeight;
+
+  preview.style.height = position.clientHeight + "px";
 };
 
 input.addEventListener("keyup", debounce(syncPreview, 150, false));
