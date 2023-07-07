@@ -798,7 +798,7 @@ if (true) {
   var showLogg3 = false; // logg3 - 'ol-2'
   var showLogg4 = false; // logg4 - 'arr-arr-obj'
   var showLogg5 = false; // logg5 -
-  var showLogg6 = true; // logg6 - 'whatElement'
+  var showLogg6 = false; // logg6 - 'whatElement'
 
   // loggs subsystem 0
   // 'headAndTail'
