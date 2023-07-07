@@ -269,9 +269,6 @@ const syncPreview = function () {
   const f = headAndTail();
   whatString(f);
 
-  const scrollTop = position.scrollHeight;
-  position.scrollTop = scrollTop;
-
   let offsetHeight = 0;
   const maxHeight = parseInt(
     window.getComputedStyle(position).maxHeight.replace("px", "")
@@ -281,22 +278,32 @@ const syncPreview = function () {
   const currentHeight = position.clientHeight;
   console.log(currentHeight);
   if (currentHeight < maxHeight) {
-    offsetHeight = maxHeight - currentHeight;
+    if (!window.visualViewport) {
+      return;
+    }
+    const activeWindowHeight = window.visualViewport.height;
+    console.log("window.visualViewport.height:", window.visualViewport.height);
+    console.log("form.clientHeight:", form.clientHeight);
+    if (activeWindowHeight < form.clientHeight) {
+      offsetHeight = maxHeight - currentHeight;
 
-    const lastChild = position.querySelector(
-      ".last-child, .last-child-lb, .last-child-rb"
-    );
+      const lastChild = position.querySelector(
+        ".last-child, .last-child-lb, .last-child-rb"
+      );
 
-    const scrollTop2 = position.scrollHeight;
-    position.scrollTop = scrollTop2;
-    html.scrollTop = scrollTop2 - getLineHeight(lastChild);
+      const scrollTop2 = position.scrollHeight;
+      position.scrollTop = scrollTop2;
+      html.scrollTop = scrollTop2 - getLineHeight(lastChild);
+
+      preview.style.height = position.clientHeight + "px";
+      console.log("offsetHeight:", offsetHeight);
+    }
   }
-  console.log(offsetHeight);
-  console.log({ position });
 
+  //console.log({ position });
+  const scrollTop = position.scrollHeight;
+  position.scrollTop = scrollTop;
   preview.scrollTop = position.scrollTop - offsetHeight;
-
-  preview.style.height = position.clientHeight + "px";
 };
 
 input.addEventListener("keyup", debounce(syncPreview, 150, false));
