@@ -291,18 +291,19 @@ const syncPreview = function () {
     if (activeWindowHeight < form.clientHeight) {
       offsetHeight = maxHeight - currentHeight;
 
-      preview.style.maxHeight = position.clientHeight + "px";
-      position.style.maxHeight = position.clientHeight + "px";
-      console.log("offsetHeight:", offsetHeight);
-
       const lastChild = position.querySelector(
         ".last-child, .last-child-lb, .last-child-rb"
       );
 
       const scrollTop2 = position.scrollHeight;
       position.scrollTop = scrollTop2;
-      html.scrollTop = scrollTop2 - getLineHeight(lastChild) - offsetHeight;
+      html.scrollTop =
+        scrollTop2 - getLineHeight(lastChild) - offsetHeight - 20;
       //html.scrollTop = scrollTop2 - offsetHeight;
+
+      preview.style.maxHeight = position.clientHeight + "px";
+      position.style.maxHeight = position.clientHeight + "px";
+      console.log("offsetHeight:", offsetHeight);
     }
   }
 
