@@ -269,6 +269,10 @@ const syncPreview = function () {
   const f = headAndTail();
   whatString(f);
 
+  const scrollTop = position.scrollHeight;
+  position.scrollTop = scrollTop;
+  preview.scrollTop = position.scrollTop;
+
   let offsetHeight = 0;
   const maxHeight = parseInt(
     window.getComputedStyle(position).maxHeight.replace("px", "")
@@ -293,17 +297,17 @@ const syncPreview = function () {
 
       const scrollTop2 = position.scrollHeight;
       position.scrollTop = scrollTop2;
-      html.scrollTop = scrollTop2 - getLineHeight(lastChild);
+      html.scrollTop = scrollTop2 - getLineHeight(lastChild) - offsetHeight;
+      //html.scrollTop = scrollTop2 - offsetHeight;
 
-      preview.style.height = position.clientHeight + "px";
+      preview.style.maxHeight = position.clientHeight + "px";
+      position.style.maxHeight = position.clientHeight + "px";
       console.log("offsetHeight:", offsetHeight);
     }
   }
 
   //console.log({ position });
-  const scrollTop = position.scrollHeight;
-  position.scrollTop = scrollTop;
-  preview.scrollTop = position.scrollTop - offsetHeight;
+  //preview.scrollTop = position.scrollTop - offsetHeight;
 };
 
 input.addEventListener("keyup", debounce(syncPreview, 150, false));
