@@ -218,8 +218,10 @@ const whatString = ({ head, tail, headLastNewLine, endHead }) => {
   //logg("head1:", JSON.stringify(head1));
   //logg("head_:", JSON.stringify(head));
   logg("stTPw:", JSON.stringify(stringToPreview));
-  if (stringToPreview !== "") position.innerHTML = markdown(stringToPreview);
-  lastChildRecursive(position);
+  if (stringToPreview !== "") {
+    position.innerHTML = markdown(stringToPreview);
+    lastChildRecursive(position);
+  }
 
   logOut();
 };
