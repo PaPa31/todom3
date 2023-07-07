@@ -1050,7 +1050,9 @@ button.delete-current-save:hover {
 #content #form1 {
   position: relative;
   margin: 0 14px 5px;
-  padding: 0 5px 5px 5px;
+  /*causes out of sync between
+  input & output*/
+  /*padding: 0 5px 5px 5px;*/
   border-radius: 4px;
   flex-direction: column;
   transition: background-color 0.3s ease-in-out;
@@ -1155,7 +1157,6 @@ textarea:active {
 }
 
 #position {
-  width: 678px;
   background-color: transparent;
   color: transparent;
   overflow: hidden;
