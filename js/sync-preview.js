@@ -257,6 +257,7 @@ const headAndTail = () => {
 };
 
 const getLineHeight = (el) => {
+  console.log("el:", el);
   const fontSize = window.getComputedStyle(el).fontSize;
   console.log("fontSize:", fontSize);
   const lineHeight = Math.floor(parseInt(fontSize.replace("px", "")) * 1.5);
