@@ -3,7 +3,6 @@ const html = document.documentElement;
 const form = document.querySelector("form");
 
 const input = document.getElementById("input");
-const preview = document.getElementById("preview");
 
 const xButton = document.getElementById("x-button");
 const returnInputButton = document.getElementById("return-last-input");
@@ -40,13 +39,16 @@ function getViewportSize(w) {
   return { w: d.body.clientWidth, h: d.body.clientHeight };
 }
 
+let preview;
 let position;
 const changePositionBlock = (windowWidth) => {
   if (windowWidth < 1320) {
     console.log("< 1320 :", windowWidth);
+    preview = document.querySelector("#form1 > #preview");
     position = document.querySelector("#form1 > #position");
   } else {
     console.log("1320 >= :", windowWidth);
+    preview = document.getElementById(".preview-outer #preview");
     position = document.querySelector(".preview-outer #position");
   }
 };
