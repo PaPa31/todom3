@@ -1149,24 +1149,24 @@ textarea:active {
 
 #preview {
   scroll-behavior: smooth;
-  max-height: 160px;
+  /*max-height: 160px;*/
   overflow: hidden;
 }
 
 #position {
-  /*width: 678px;*/
+  width: 678px;
   background-color: transparent;
   color: transparent;
   overflow: hidden;
   /*max-height: 76px;*/
-  color: var(--color-dark);
+  /*color: var(--color-dark);
   background-color: var(--todom-item-background-dark);
-  position: relative !important;
+  position: relative !important;*/
 }
 
 #position * {
-  /*background-color: transparent;*/
-  /*color: transparent;*/
+  background-color: transparent;
+  color: transparent;
   /*color: #851919a3;*/
 }
 
