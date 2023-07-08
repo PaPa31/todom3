@@ -56,20 +56,19 @@ const changePositionBlock = (windowWidth) => {
   }
   console.log("preview:", preview);
 
-  // != and !== cause different result
+  // != and !== cause different result.
+  // At start: oldPreview = undefined
+  // and preview = null
   if (oldPreviewEl != preview) {
-    console.log("start or change");
-
     if (oldPreviewEl && preview) {
-      console.log("not start");
+      console.log("not start; change");
       oldPreviewEl.style.display = "none";
-      preview.style.display = "block";
-      oldPositionEl.display = "none";
+      preview.style.style.display = "block";
+      oldPositionEl.style.display = "none";
       position.style.display = "block";
     } else {
-      console.log("start");
+      console.log("start; not change");
     }
-
     if (input.value) {
       //oldPreviewEl.innerHTML = "";
       mdToPreview(input.value);
