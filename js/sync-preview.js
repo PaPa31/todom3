@@ -299,7 +299,8 @@ const syncPreview = function () {
 
       const scrollTop2 = position.scrollHeight;
       position.scrollTop = scrollTop2;
-      html.scrollTop = scrollTop2 - getLineHeight(lastChild) - offsetHeight;
+      html.scrollTop =
+        scrollTop2 - getLineHeight(lastChild) - offsetHeight - 20;
       //html.scrollTop = scrollTop2 - offsetHeight;
 
       preview.style.maxHeight = position.clientHeight + "px";
