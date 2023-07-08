@@ -51,7 +51,7 @@ const changePositionBlock = (windowWidth) => {
     position = document.querySelector("#form1 > #position");
   } else {
     console.log("1320 >= :", windowWidth);
-    preview = document.getElementById(".preview-outer #preview");
+    preview = document.querySelector(".preview-outer #preview");
     position = document.querySelector(".preview-outer #position");
   }
   console.log("preview:", preview);
