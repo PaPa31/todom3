@@ -42,6 +42,7 @@ function getViewportSize(w) {
 let preview;
 let position;
 const changePositionBlock = (windowWidth) => {
+  let oldPreviewEl = preview;
   if (windowWidth < 1320) {
     console.log("< 1320 :", windowWidth);
     preview = document.querySelector("#form1 > #preview");
@@ -50,6 +51,15 @@ const changePositionBlock = (windowWidth) => {
     console.log("1320 >= :", windowWidth);
     preview = document.getElementById(".preview-outer #preview");
     position = document.querySelector(".preview-outer #position");
+  }
+  if (oldPreviewEl !== preview) {
+    console.log("change");
+    if (input.value) {
+      oldPreviewEl.innerHTML = "";
+      mdToPreview(input.value);
+    }
+  } else {
+    console.log("same");
   }
 };
 
