@@ -133,7 +133,7 @@ body {
   color: var(--color-dark);
 }
 
-.preview-outer #preview,
+/*.preview-outer #preview,
 .preview-outer #position {
   display: none;
 }
@@ -141,7 +141,7 @@ body {
 #form1 > #preview,
 #form1 > #position {
   display: block;
-}
+}*/
 
 .container::after {
   content: "2023 TODOm or not TODOm";
@@ -1272,7 +1272,7 @@ code {
 }
 
 @media (min-width: 1320px) {
-  .preview-outer #preview,
+  /*.preview-outer #preview,
   .preview-outer #position {
     display: block;
   }
@@ -1280,7 +1280,7 @@ code {
   #form1 > #preview,
   #form1 > #position {
     display: none;
-  }
+  }*/
 
   .container {
     max-width: initial;

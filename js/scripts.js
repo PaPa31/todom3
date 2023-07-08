@@ -43,6 +43,8 @@ let preview;
 let position;
 const changePositionBlock = (windowWidth) => {
   let oldPreviewEl = preview;
+  let oldPositionEl = position;
+
   if (windowWidth < 1320) {
     console.log("< 1320 :", windowWidth);
     preview = document.querySelector("#form1 > #preview");
@@ -52,10 +54,24 @@ const changePositionBlock = (windowWidth) => {
     preview = document.getElementById(".preview-outer #preview");
     position = document.querySelector(".preview-outer #position");
   }
-  if (oldPreviewEl !== preview) {
-    console.log("change");
+  console.log("preview:", preview);
+
+  // != and !== cause different result
+  if (oldPreviewEl != preview) {
+    console.log("start or change");
+
+    if (oldPreviewEl && preview) {
+      console.log("not start");
+      oldPreviewEl.style.display = "none";
+      preview.style.display = "block";
+      oldPositionEl.display = "none";
+      position.style.display = "block";
+    } else {
+      console.log("start");
+    }
+
     if (input.value) {
-      oldPreviewEl.innerHTML = "";
+      //oldPreviewEl.innerHTML = "";
       mdToPreview(input.value);
     }
   } else {
