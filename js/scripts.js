@@ -72,6 +72,7 @@ const changePositionBlock = (windowWidth) => {
     if (input.value) {
       //oldPreviewEl.innerHTML = "";
       mdToPreview(input.value);
+      syncPreview();
     }
   } else {
     console.log("same");
