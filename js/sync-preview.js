@@ -287,8 +287,10 @@ const syncPreview = function () {
     }
     const activeWindowHeight = window.visualViewport.height;
     console.log("window.visualViewport.height:", window.visualViewport.height);
+    const heightVisibleElements =
+      form.clientHeight + preview.clientHeight + inputLabel.clientHeight;
     console.log("form.clientHeight:", form.clientHeight);
-    if (activeWindowHeight < form.clientHeight) {
+    if (activeWindowHeight < heightVisibleElements) {
       offsetHeight = maxHeight - currentHeight;
 
       const lastChild = position.querySelector(
@@ -297,8 +299,7 @@ const syncPreview = function () {
 
       const scrollTop2 = position.scrollHeight;
       position.scrollTop = scrollTop2;
-      html.scrollTop =
-        scrollTop2 - getLineHeight(lastChild) - offsetHeight - 20;
+      html.scrollTop = scrollTop2 - getLineHeight(lastChild) - offsetHeight;
       //html.scrollTop = scrollTop2 - offsetHeight;
 
       preview.style.maxHeight = position.clientHeight + "px";
