@@ -63,7 +63,7 @@ const changePositionBlock = (windowWidth) => {
     if (oldPreviewEl && preview) {
       console.log("not start; change");
       oldPreviewEl.style.display = "none";
-      preview.style.style.display = "block";
+      preview.style.display = "block";
       oldPositionEl.style.display = "none";
       position.style.display = "block";
     } else {
