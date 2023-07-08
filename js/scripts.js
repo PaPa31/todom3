@@ -62,17 +62,17 @@ const changePositionBlock = (windowWidth) => {
   if (oldPreviewEl != preview) {
     if (oldPreviewEl && preview) {
       console.log("not start; change");
-      oldPreviewEl.style.display = "none";
-      preview.style.display = "block";
-      oldPositionEl.style.display = "none";
-      position.style.display = "block";
+      //oldPreviewEl.style.display = "none";
+      //preview.style.display = "block";
+      //oldPositionEl.style.display = "none";
+      //position.style.display = "block";
     } else {
       console.log("start; not change");
     }
     if (input.value) {
       //oldPreviewEl.innerHTML = "";
       mdToPreview(input.value);
-      syncPreview();
+      //syncPreview();
     }
   } else {
     console.log("same");
