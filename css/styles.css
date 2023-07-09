@@ -774,11 +774,6 @@ h6 {
   width: 100%;
 }
 
-.flex-small {
-  padding: 0;
-  max-width: 720px;
-}
-
 #open-save-buttons {
   display: flex;
   flex: 4;
@@ -1081,7 +1076,6 @@ textarea:active {
   padding: 5px 0 0 0;
   line-height: 15px;
   text-align: center;
-  margin: 0 20px;
   background-color: var(--bg-input-translucent);
 }
 
@@ -1278,7 +1272,7 @@ code {
   }
 
   #input-label {
-    width: 50%;
+    width: calc(50% - 10px);
   }
 
   #preview,
