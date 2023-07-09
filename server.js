@@ -33,6 +33,7 @@ let listOrder;
 let marked;
 let scripts;
 let states;
+let syncPreview;
 
 fs.readFile("./css/styles.css", function (err, data) {
   if (err) {
@@ -76,6 +77,13 @@ fs.readFile("./js/scripts.js", function (err, data) {
   scripts = data;
 });
 
+fs.readFile("./js/sync-preview.js", function (err, data) {
+  if (err) {
+    throw err;
+  }
+  syncPreview = data;
+});
+
 fs.readFile("./js/states.js", function (err, data) {
   if (err) {
     throw err;
@@ -112,10 +120,8 @@ http
       ? fs.statSync(`${__dirname}` + `${req.url}`).size
       : null;
 
-    //res.statusCode = 200;
     res.statusCode = statusCode;
     res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
-    // Set the Content-Length header
 
     if (req.url.indexOf("dark-toggle.js") != -1) {
       res.writeHead(200, { "Content-Type": "text/javascript" });
@@ -155,6 +161,13 @@ http
     if (req.url.indexOf("states.js") != -1) {
       res.writeHead(200, { "Content-Type": "text/javascript" });
       res.write(states);
+      res.end();
+      return;
+    }
+
+    if (req.url.indexOf("sync-preview.js") != -1) {
+      res.writeHead(200, { "Content-Type": "text/javascript" });
+      res.write(syncPreview);
       res.end();
       return;
     }
