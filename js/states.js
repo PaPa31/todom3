@@ -480,8 +480,6 @@ const showOrHideDeleteAllItems = () => {
 var phrase = "README.md";
 
 const fileHttpHandler = (name, dir, size, text) => {
-  console.log(size);
-  console.log(text);
   const obj = {
     name: name,
     //dir: res.webkitRelativePath,
@@ -494,31 +492,29 @@ const fileHttpHandler = (name, dir, size, text) => {
   idCounterFiles++;
 };
 
-const getFileHttp2 = (fileName) => {
-  fetch(fileName)
+const getFileHttp = async (fileName) => {
+  // handle errors: mix async with promise
+  // https://stackoverflow.com/a/54164027
+  await fetch(fileName)
     .then((response) => {
-      return response.text().then((text) => {
+      if (response.status >= 400 && response.status < 600) {
+        throw new Error("Bad response from server");
+      }
+      return response;
+    })
+    .then((returnedResponse) => {
+      return returnedResponse.text().then((text) => {
         fileHttpHandler(
           fileName,
           null,
-          response.headers.get("Content-Length"),
+          returnedResponse.headers.get("Content-Length"),
           text
         );
       });
     })
     .catch((error) => {
-      console.error("Error fetching file:", error);
+      console.log(error);
     });
-};
-
-const getFileHttp = async (fileName) => {
-  //const request = new Request(fileName);
-  //const response = await fetch(request);
-  //const content = await response.text();
-
-  const res = await fetch(fileName);
-  const text = await res.text();
-  fileHttpHandler(fileName, null, res.headers.get("Content-Length"), text);
 };
 
 function handleFiles(files) {
