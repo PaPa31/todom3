@@ -1262,13 +1262,23 @@ code {
 }
 
 @media (min-width: 1320px) {
-
   .container {
-    max-width: initial;
+    max-width: 1440px;
+    margin: 0 auto;
   }
 
   .container > .flex-row {
     flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .one-big-flex-item {
+    order: -1;
+    flex: 1 0 100%;
+  }
+
+  #input-label {
+    width: 50%;
   }
 
   #preview,
