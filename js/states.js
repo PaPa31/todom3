@@ -479,25 +479,6 @@ const showOrHideDeleteAllItems = () => {
 
 var phrase = "README.md";
 
-const logFileText6 = (fileName) => {
-  //fetch(myRequest)
-  //  .then((response) => response.blob())
-  //  .then((myBlob) => {
-  //    const objectURL = URL.createObjectURL(myBlob);
-  //    objectURL;
-  //  });
-
-  fetch(fileName)
-    .then((response) => response.text())
-    .then((content) => {
-      console.log(content); // content of the file
-      console.log(response.headers.get("Content-Length")); // file size in bytes
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-};
-
 const fileHttpHandler = (name, dir, size, text) => {
   console.log(size);
   console.log(text);
@@ -508,20 +489,12 @@ const fileHttpHandler = (name, dir, size, text) => {
     text: text,
   };
   filesArray.push(obj);
-  //filesArray[idCounterFiles].text = text;
   liMaker(idCounterFiles);
   indexedFilesArray.push(idCounterFiles.toString());
   idCounterFiles++;
 };
 
 const getFileHttp = (fileName) => {
-  // Fetch the Markdown file and read its contents
-  //const request = new Request(fileName);
-  //const response = await fetch(request);
-  //const content = await response.text();
-  //console.log(response);
-  //console.log(content);
-
   fetch(fileName)
     .then((response) => {
       return response.text().then((text) => {
@@ -538,47 +511,19 @@ const getFileHttp = (fileName) => {
     });
 };
 
-function getFileSize(url) {
-  var fileSize = "";
-  var http = new XMLHttpRequest();
-  http.open("HEAD", url, true); // true = Asynchronous
-  http.onreadystatechange = function () {
-    if (this.readyState == this.DONE) {
-      if (this.status === 200) {
-        fileSize = this.getResponseHeader("content-length");
-        console.log("fileSize = " + fileSize);
+const getFileHttp2 = async (fileName) => {
+  // Fetch the Markdown file and read its contents
+  //const request = new Request(fileName);
+  //const response = await fetch(request);
+  //const content = await response.text();
+  //console.log(response);
+  //console.log(content);
 
-        //
-        // ok here is the only place in the code where we have our request result and file size ...
-        // the problem is that here we are in the middle of anonymous function nested into another function and it does not look pretty
-        // this stupid ASYNC pattern makes me hate Javascript even more than I already hate it :)
-        //
-        //
-      }
-    }
-  };
-  http.send(); // it will submit request and jump to the next line immediately, without even waiting for request result b/c we used ASYNC XHR call
-  //return "At this moment, we do not even have Request Results b/c we used ASYNC call to follow with stupid JavaScript patterns";
-}
-
-const logFileText3 = async (file) => {
-  const res = await fetch(file);
+  const res = await fetch(fileName);
   const text = await res.text();
   //const blob = await res.blob();
-  //foldedClass.innerHTML = text;
-  console.log(res);
-  console.log(blob);
-  const obj = {
-    name: file,
-    //dir: res.webkitRelativePath,
-    //size: res.size,
-    text: text,
-  };
-  filesArray.push(obj);
-  //filesArray[idCounterFiles].text = text;
-  liMaker(idCounterFiles);
-  indexedFilesArray.push(idCounterFiles.toString());
-  idCounterFiles++;
+
+  fileHttpHandler(fileName, null, res.headers.get("Content-Length"), text);
 };
 
 function handleFiles(files) {
