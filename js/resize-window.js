@@ -69,12 +69,38 @@ const getLineHeight = (el) => {
   return lineHeight;
 };
 
-const resizeWindowHandler = (window) => {
-  console.log(window);
+const resizeWindowHandler = (win) => {
+  console.log(win);
+  const activeWindowHeight = window.visualViewport.height;
+  const heightVisibleElements =
+    form.clientHeight + preview.clientHeight + inputLabel.clientHeight;
+  if (activeWindowHeight >= heightVisibleElements) {
+    preview.removeAttribute("style");
+    position.removeAttribute("style");
+  } else {
+    checkHeightDifferent();
+  }
 };
 
-const adjustParameters = () => {
-  let offsetHeight = 0;
+//let offsetHeight = 0;
+const reduceHeight = (offsetHeight) => {
+  const lastChild = position.querySelector(
+    ".last-child, .last-child-lb, .last-child-rb"
+  );
+
+  const offsetScroll = getLineHeight(lastChild) - offsetHeight - 20;
+
+  const scrollTop2 = position.scrollHeight;
+  position.scrollTop = scrollTop2;
+  html.scrollTop = scrollTop2 - offsetScroll;
+
+  preview.style.maxHeight = position.clientHeight + "px";
+  position.style.maxHeight = position.clientHeight + "px";
+  //console.log("offsetHeight:", offsetHeight);
+};
+
+const checkHeightDifferent = () => {
+  //offsetHeight = 0;
   const maxHeight = parseInt(
     window.getComputedStyle(position).maxHeight.replace("px", "")
   );
@@ -93,20 +119,7 @@ const adjustParameters = () => {
     //console.log("form.clientHeight:", form.clientHeight);
     if (activeWindowHeight < heightVisibleElements) {
       offsetHeight = maxHeight - currentHeight;
-
-      const lastChild = position.querySelector(
-        ".last-child, .last-child-lb, .last-child-rb"
-      );
-
-      const scrollTop2 = position.scrollHeight;
-      position.scrollTop = scrollTop2;
-      html.scrollTop =
-        scrollTop2 - getLineHeight(lastChild) - offsetHeight - 20;
-      //html.scrollTop = scrollTop2 - offsetHeight;
-
-      preview.style.maxHeight = position.clientHeight + "px";
-      position.style.maxHeight = position.clientHeight + "px";
-      //console.log("offsetHeight:", offsetHeight);
+      reduceHeight(offsetHeight);
     }
   }
 };
