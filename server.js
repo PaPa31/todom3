@@ -34,13 +34,6 @@ let marked;
 let scripts;
 let states;
 
-fs.readFile("./index.html", function (err, data) {
-  if (err) {
-    throw err;
-  }
-  html = data;
-});
-
 fs.readFile("./css/styles.css", function (err, data) {
   if (err) {
     throw err;
@@ -90,6 +83,13 @@ fs.readFile("./js/states.js", function (err, data) {
   states = data;
 });
 
+fs.readFile("./index.html", function (err, data) {
+  if (err) {
+    throw err;
+  }
+  html = data;
+});
+
 const prepareFile = async (url) => {
   const paths = [STATIC_PATH, url];
   if (url.endsWith("/")) paths.push("index.html");
@@ -108,9 +108,14 @@ http
     const file = await prepareFile(req.url);
     const statusCode = file.found ? 200 : 404;
     const mimeType = MIME_TYPES[file.ext] || MIME_TYPES.default;
+    const fileSize = file.found
+      ? fs.statSync(`${__dirname}` + `${req.url}`).size
+      : null;
 
     //res.statusCode = 200;
     res.statusCode = statusCode;
+    res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+    // Set the Content-Length header
 
     if (req.url.indexOf("dark-toggle.js") != -1) {
       res.writeHead(200, { "Content-Type": "text/javascript" });
@@ -168,7 +173,10 @@ http
       return;
     }
 
-    res.writeHead(statusCode, { "Content-type": mimeType });
+    res.writeHead(statusCode, {
+      "Content-type": mimeType,
+      "Content-Length": fileSize,
+    });
     file.stream.pipe(res);
     console.log(`${req.method} ${req.url} ${statusCode}`);
   })
