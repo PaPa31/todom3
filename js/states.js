@@ -494,7 +494,7 @@ const fileHttpHandler = (name, dir, size, text) => {
   idCounterFiles++;
 };
 
-const getFileHttp = (fileName) => {
+const getFileHttp2 = (fileName) => {
   fetch(fileName)
     .then((response) => {
       return response.text().then((text) => {
@@ -511,18 +511,13 @@ const getFileHttp = (fileName) => {
     });
 };
 
-const getFileHttp2 = async (fileName) => {
-  // Fetch the Markdown file and read its contents
+const getFileHttp = async (fileName) => {
   //const request = new Request(fileName);
   //const response = await fetch(request);
   //const content = await response.text();
-  //console.log(response);
-  //console.log(content);
 
   const res = await fetch(fileName);
   const text = await res.text();
-  //const blob = await res.blob();
-
   fileHttpHandler(fileName, null, res.headers.get("Content-Length"), text);
 };
 
