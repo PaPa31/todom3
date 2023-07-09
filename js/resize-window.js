@@ -60,8 +60,55 @@ function getViewportSize(w) {
 
 //changePositionBlock(getViewportSize().w);
 
+const getLineHeight = (el) => {
+  console.log("el:", el);
+  const fontSize = window.getComputedStyle(el).fontSize;
+  console.log("fontSize:", fontSize);
+  const lineHeight = Math.floor(parseInt(fontSize.replace("px", "")) * 1.5);
+  console.log("lineHeight:", lineHeight);
+  return lineHeight;
+};
+
 const resizeWindowHandler = (window) => {
   console.log(window);
+};
+
+const adjustParameters = () => {
+  let offsetHeight = 0;
+  const maxHeight = parseInt(
+    window.getComputedStyle(position).maxHeight.replace("px", "")
+  );
+
+  //console.log(maxHeight);
+  const currentHeight = position.clientHeight;
+  //console.log(currentHeight);
+  if (currentHeight < maxHeight) {
+    if (!window.visualViewport) {
+      return;
+    }
+    const activeWindowHeight = window.visualViewport.height;
+    //console.log("window.visualViewport.height:", window.visualViewport.height);
+    const heightVisibleElements =
+      form.clientHeight + preview.clientHeight + inputLabel.clientHeight;
+    //console.log("form.clientHeight:", form.clientHeight);
+    if (activeWindowHeight < heightVisibleElements) {
+      offsetHeight = maxHeight - currentHeight;
+
+      const lastChild = position.querySelector(
+        ".last-child, .last-child-lb, .last-child-rb"
+      );
+
+      const scrollTop2 = position.scrollHeight;
+      position.scrollTop = scrollTop2;
+      html.scrollTop =
+        scrollTop2 - getLineHeight(lastChild) - offsetHeight - 20;
+      //html.scrollTop = scrollTop2 - offsetHeight;
+
+      preview.style.maxHeight = position.clientHeight + "px";
+      position.style.maxHeight = position.clientHeight + "px";
+      //console.log("offsetHeight:", offsetHeight);
+    }
+  }
 };
 
 window.addEventListener(
