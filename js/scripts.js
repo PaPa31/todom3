@@ -76,7 +76,7 @@ const editUI = (label) => {
 const xUI = () => {
   returnInputButton.style = "display:none";
   xButton.style = "display:block";
-  //position.innerHTML = "";
+  position.innerHTML = "";
 };
 
 const editItem = (e, element) => {

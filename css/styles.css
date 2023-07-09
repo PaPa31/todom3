@@ -1153,6 +1153,7 @@ textarea:active {
 #position * {
   background-color: transparent;
   color: transparent;
+  border-color: transparent;
   /*color: #851919a3;*/
 }
 
