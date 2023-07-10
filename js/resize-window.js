@@ -28,22 +28,28 @@ const getLineHeight = (el) => {
 };
 
 let offsetScroll = 0;
+let lastHeightValue = 0;
 const resizeWindowHandler = (win) => {
   console.log(win);
   const activeWindowHeight = window.visualViewport.height;
   const heightVisibleElements =
     form.clientHeight + preview.clientHeight + inputLabel.clientHeight;
   if (activeWindowHeight >= heightVisibleElements) {
-    preview.removeAttribute("style");
-    position.removeAttribute("style");
-    //const scrollTop2 = position.scrollHeight;
-    //position.scrollTop = scrollTop2;
-    //html.scrollTop = scrollTop2 + offsetScroll;
-    increaseHeight(heightVisibleElements);
-    //checkHeightDifferent();
+    if (lastHeightValue <= activeWindowHeight) {
+      preview.removeAttribute("style");
+      position.removeAttribute("style");
+      //const scrollTop2 = position.scrollHeight;
+      //position.scrollTop = scrollTop2;
+      //html.scrollTop = scrollTop2 + offsetScroll;
+      increaseHeight(heightVisibleElements);
+      //checkHeightDifferent();
+    }
   } else {
-    checkHeightDifferent();
+    if (lastHeightValue > activeWindowHeight) {
+      checkHeightDifferent();
+    }
   }
+  lastHeightValue = activeWindowHeight;
 };
 
 //let offsetHeight = 0;
@@ -51,8 +57,8 @@ const reduceHeight = (offsetHeight) => {
   const lastChild = position.querySelector(
     ".last-child, .last-child-lb, .last-child-rb"
   );
-
-  const offsetScroll = getLineHeight(lastChild) - offsetHeight - 20;
+  const heightLastChild = lastChild ? getLineHeight(lastChild) : 0;
+  const offsetScroll = heightLastChild + offsetHeight - 40;
 
   const scrollTop2 = position.scrollHeight;
   position.scrollTop = scrollTop2;
