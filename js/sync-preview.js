@@ -313,6 +313,10 @@ const syncPreview = function () {
   //preview.scrollTop = position.scrollTop - offsetHeight;
 };
 
-input.addEventListener("keyup", debounce(syncPreview, 150, false));
-input.addEventListener("mouseup", debounce(syncPreview, 150, false));
+var upHandler = function () {
+  debounce(syncPreview(), 150, false);
+};
+
+input.addEventListener("keyup", upHandler);
+input.addEventListener("mouseup", upHandler);
 //position.addEventListener("scroll", debounce(syncPreview, 150, false));

@@ -568,8 +568,7 @@ clearTrashButton.addEventListener("click", function (e) {
   twoClickToTrash = false;
 });
 
-input.addEventListener(
-  "input",
+var inputHandler = function () {
   debounce(
     function (e) {
       lastInputValue = e.target.value;
@@ -588,9 +587,10 @@ input.addEventListener(
     },
     200,
     false
-  ),
-  false
-);
+  );
+};
+
+input.addEventListener("input", inputHandler);
 
 if (input.value) {
   xUI();
