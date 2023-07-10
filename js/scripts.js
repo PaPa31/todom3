@@ -568,26 +568,24 @@ clearTrashButton.addEventListener("click", function (e) {
   twoClickToTrash = false;
 });
 
-var inputHandler = function () {
-  debounce(
-    function (e) {
-      lastInputValue = e.target.value;
-      if (lastInputValue) {
-        inputLabel.classList.replace("invisible", "visible");
-        xButton.style = "display:block";
-      } else {
-        inputLabel.classList.replace("visible", "invisible");
-        xButton.style = "display:none";
-      }
-      returnInputButton.style = "display:none";
+const inputChange = function (e) {
+  lastInputValue = e.target.value;
+  if (lastInputValue) {
+    inputLabel.classList.replace("invisible", "visible");
+    xButton.style = "display:block";
+  } else {
+    inputLabel.classList.replace("visible", "invisible");
+    xButton.style = "display:none";
+  }
+  returnInputButton.style = "display:none";
 
-      localStorage.setItem("todomLastInputValue", lastInputValue);
-      mdToPreview(e.target.value);
-      if (preview.innerHTML === "") position.innerHTML = "";
-    },
-    200,
-    false
-  );
+  localStorage.setItem("todomLastInputValue", lastInputValue);
+  mdToPreview(e.target.value);
+  if (preview.innerHTML === "") position.innerHTML = "";
+};
+
+var inputHandler = function (e) {
+  debounce(inputChange(e), 200, false);
 };
 
 input.addEventListener("input", inputHandler);
