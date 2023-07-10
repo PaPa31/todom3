@@ -36,13 +36,12 @@ const resizeWindowHandler = (win) => {
     form.clientHeight + preview.clientHeight + inputLabel.clientHeight;
   if (activeWindowHeight >= heightVisibleElements) {
     if (lastHeightValue <= activeWindowHeight) {
-      preview.removeAttribute("style");
-      position.removeAttribute("style");
       //const scrollTop2 = position.scrollHeight;
       //position.scrollTop = scrollTop2;
       //html.scrollTop = scrollTop2 + offsetScroll;
-      increaseHeight(heightVisibleElements);
+      //increaseHeight(heightVisibleElements);
       //checkHeightDifferent();
+      checkHeightDifferent();
     }
   } else {
     if (lastHeightValue > activeWindowHeight) {
@@ -70,6 +69,8 @@ const reduceHeight = (offsetHeight) => {
 };
 
 const increaseHeight = (offsetScroll) => {
+  preview.removeAttribute("style");
+  position.removeAttribute("style");
   const scrollTop2 = position.scrollHeight;
   position.scrollTop = scrollTop2;
   html.scrollTop = scrollTop2 - offsetScroll;
@@ -97,6 +98,7 @@ const checkHeightDifferent = () => {
       reduceHeight(offsetHeight);
     } else {
       console.log(" active >= visible ");
+      increaseHeight(offsetHeight);
     }
   } else {
     console.log(" position === preview ");
