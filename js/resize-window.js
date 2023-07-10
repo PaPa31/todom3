@@ -40,12 +40,12 @@ const resizeWindowHandler = (win) => {
       //position.scrollTop = scrollTop2;
       //html.scrollTop = scrollTop2 + offsetScroll;
       //increaseHeight(heightVisibleElements);
-      //checkHeightDifferent();
-      checkHeightDifferent();
+      //checkHeightDifference();
+      checkHeightDifference();
     }
   } else {
     if (lastHeightValue > activeWindowHeight) {
-      checkHeightDifferent();
+      checkHeightDifference();
     }
   }
   lastHeightValue = activeWindowHeight;
@@ -80,7 +80,7 @@ const maxHeight = parseInt(
   window.getComputedStyle(position).maxHeight.replace("px", "")
 );
 
-const checkHeightDifferent = () => {
+const checkHeightDifference = () => {
   //offsetHeight = 0;
 
   const currentHeight = position.clientHeight;
