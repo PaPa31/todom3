@@ -1,54 +1,33 @@
-let oldLastChild;
-let oldParentLastChild;
 const whatClass = (el) => {
   logIn1("whatClass", el);
   const papa = el.parentElement;
-  if (oldLastChild) {
-    oldLastChild.classList.remove(
-      "last-child",
-      "last-child-lb",
-      "last-child-rb"
-    );
-    oldParentLastChild.classList.remove("parent-last-child");
-  }
-  oldLastChild = el;
-  oldParentLastChild = papa;
-  el.classList.add("last-child");
   papa.classList.add("parent-last-child");
-  //const tagName = el.tagName.toLowerCase();
-  //if (variant) {
-  //  switch (tagName) {
-  //    case "code": {
-  //      if (el.parentElement.tagName.toLowerCase() === "pre") {
-  //        logg1("rb");
-  //        el.classList.add("last-child-rb");
-  //        break;
-  //      }
-  //    }
-  //    case "del":
-  //    case "cite": {
-  //      logg1("rb");
-  //      el.classList.add("last-child-rb");
-  //      break;
-  //    }
-  //    default: {
-  //      logg1("underline");
-  //      el.classList.add("last-child");
-  //    }
-  //  }
-  //} else {
-  //  logg1("lb");
-  //  el.classList.add("last-child-lb");
-  //  variant = true;
-  //}
-  //if (
-  //  el.tagName.toLowerCase() === "p" &&
-  //  el.parentElement.tagName.toLowerCase() === "li"
-  //) {
-  //  el.parentElement.classList.add("last-child");
-  //} else {
-  //  el.classList.add("last-child");
-  //}
+  const tagName = el.tagName.toLowerCase();
+  if (variant) {
+    switch (tagName) {
+      case "code": {
+        if (el.parentElement.tagName.toLowerCase() === "pre") {
+          logg1("rb");
+          el.classList.add("last-child-rb");
+        }
+        break;
+      }
+      case "del":
+      case "cite": {
+        logg1("rb");
+        el.classList.add("last-child-rb");
+        break;
+      }
+      default: {
+        logg1("underline");
+        el.classList.add("last-child");
+      }
+    }
+  } else {
+    logg1("lb");
+    el.classList.add("last-child-lb");
+    variant = true;
+  }
   logOut1();
 };
 
