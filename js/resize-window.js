@@ -61,7 +61,7 @@ const checkPositionHeightDiff = (
     //const subtract = currentHeight - resultHeight;
     reduceHeight(resultHeight);
   }
-  currentMaxHeight = resultHeight;
+  currentMaxHeight = resultHeight < maxHeight ? resultHeight : maxHeight;
   oldPositionHeight = currentHeight;
 };
 
