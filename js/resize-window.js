@@ -84,7 +84,7 @@ const reduceHeight = (offsetHeight) => {
     ".last-child, .last-child-lb, .last-child-rb"
   );
   const heightLastChild = lastChild ? getLineHeight(lastChild) : 0;
-  const offsetScroll = heightLastChild + offsetHeight - 40;
+  const offsetScroll = heightLastChild + offsetHeight;
 
   const scrollTop2 = position.scrollHeight;
   position.scrollTop = scrollTop2;
