@@ -46,9 +46,9 @@ const checkPositionHeightDiff = (diffOldAndNewPositionHeight) => {
   const currentHeight = position.clientHeight;
   let resultHeight;
   if (diffOldAndNewPositionHeight < 0) {
-    resultHeight = currentHeight + diffOldAndNewPositionHeight;
-  } else {
     resultHeight = currentHeight - diffOldAndNewPositionHeight;
+  } else {
+    resultHeight = currentHeight + diffOldAndNewPositionHeight;
   }
 
   if (resultHeight < maxHeight) {
@@ -56,9 +56,10 @@ const checkPositionHeightDiff = (diffOldAndNewPositionHeight) => {
   } else {
     reduceHeight(reduceHeight);
   }
+  oldPositionHeight = currentHeight;
 };
 
-let oldPositionHeight = position.scrollHeight;
+let oldPositionHeight = position.clientHeight;
 const previewHeightHandler = (positionHeight) => {
   const diffPosition = oldPositionHeight - positionHeight;
   checkPositionHeightDiff(diffPosition);
@@ -82,7 +83,7 @@ const reduceHeight = (offsetHeight) => {
 const increaseHeight = (plusHeight) => {
   const scrollTop2 = position.scrollHeight;
   position.scrollTop = scrollTop2;
-  html.scrollTop = scrollTop2 + plusHeight;
+  html.scrollTop = scrollTop2 - plusHeight;
 
   preview.style.maxHeight = plusHeight + "px";
   position.style.maxHeight = plusHeight + "px";
