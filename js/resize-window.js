@@ -99,8 +99,10 @@ const increaseHeight = (plusHeight) => {
   position.scrollTop = scrollTop2;
   html.scrollTop = scrollTop2 - plusHeight;
 
-  preview.style.maxHeight = plusHeight + "px";
-  position.style.maxHeight = plusHeight + "px";
+  const maxH = plusHeight < maxHeight ? plusHeight : maxHeight;
+
+  preview.style.maxHeight = maxH + "px";
+  position.style.maxHeight = maxH + "px";
 };
 
 const checkActiveWindowHeightDiff = (diffOldAndNewAW) => {
