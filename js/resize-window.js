@@ -28,27 +28,50 @@ const getLineHeight = (el) => {
 };
 
 let offsetScroll = 0;
-let lastHeightValue = 0;
-const resizeWindowHandler = (win) => {
-  console.log(win);
-  const activeWindowHeight = window.visualViewport.height;
+let lastActiveWindowHeight = window.visualViewport.height;
+const resizeWindowHandler = (activeWindowHeight) => {
+  //console.log(win);
+
   const heightVisibleElements =
     form.clientHeight + preview.clientHeight + inputLabel.clientHeight;
+  const diffOldAndNewAW = lastActiveWindowHeight - activeWindowHeight;
   if (activeWindowHeight >= heightVisibleElements) {
-    if (lastHeightValue <= activeWindowHeight) {
+    if (lastActiveWindowHeight <= activeWindowHeight) {
       //const scrollTop2 = position.scrollHeight;
       //position.scrollTop = scrollTop2;
       //html.scrollTop = scrollTop2 + offsetScroll;
       //increaseHeight(heightVisibleElements);
-      //checkHeightDifference();
-      checkHeightDifference();
+      //checkActiveWindowHeightDiff();
+      checkActiveWindowHeightDiff(diffOldAndNewAW);
     }
   } else {
-    if (lastHeightValue > activeWindowHeight) {
-      checkHeightDifference();
+    if (lastActiveWindowHeight > activeWindowHeight) {
+      checkActiveWindowHeightDiff(diffOldAndNewAW);
     }
   }
-  lastHeightValue = activeWindowHeight;
+  lastActiveWindowHeight = activeWindowHeight;
+};
+
+const checkPositionHeightDiff = (diffOldAndNewPositionHeight) => {
+  const currentHeight = position.clientHeight;
+  let resultHeight;
+  if (diffOldAndNewPositionHeight < 0) {
+    resultHeight = currentHeight + diffOldAndNewPositionHeight;
+  } else {
+    resultHeight = currentHeight - diffOldAndNewPositionHeight;
+  }
+
+  if (resultHeight < maxHeight) {
+    increaseHeight(resultHeight);
+  } else {
+    reduceHeight(reduceHeight);
+  }
+};
+
+let oldPositionHeight = position.scrollHeight;
+const previewHeightHandler = (positionHeight) => {
+  const diffPosition = oldPositionHeight - positionHeight;
+  checkPositionHeightDiff(diffPosition);
 };
 
 //let offsetHeight = 0;
@@ -68,22 +91,23 @@ const reduceHeight = (offsetHeight) => {
   //console.log("offsetHeight:", offsetHeight);
 };
 
-const increaseHeight = (offsetScroll) => {
-  preview.removeAttribute("style");
-  position.removeAttribute("style");
+const increaseHeight = (plusHeight) => {
   const scrollTop2 = position.scrollHeight;
   position.scrollTop = scrollTop2;
-  html.scrollTop = scrollTop2 - offsetScroll;
+  html.scrollTop = scrollTop2 + plusHeight;
+
+  preview.style.maxHeight = plusHeight + "px";
+  position.style.maxHeight = plusHeight + "px";
 };
 
 const maxHeight = parseInt(
   window.getComputedStyle(position).maxHeight.replace("px", "")
 );
 
-const checkHeightDifference = () => {
+const checkActiveWindowHeightDiff = (diffOldAndNewAW) => {
   //offsetHeight = 0;
 
-  const currentHeight = position.clientHeight;
+  const currentHeight = position.scrollHeight;
   //console.log(currentHeight);
   if (currentHeight < maxHeight) {
     if (!window.visualViewport) {
@@ -94,14 +118,16 @@ const checkHeightDifference = () => {
     const heightVisibleElements =
       form.clientHeight + preview.clientHeight + inputLabel.clientHeight;
     if (activeWindowHeight < heightVisibleElements) {
-      offsetHeight = maxHeight - currentHeight;
+      const offsetHeight = maxHeight - currentHeight;
       reduceHeight(offsetHeight);
     } else {
       console.log(" active >= visible ");
-      increaseHeight(offsetHeight);
+      //offsetHeight = maxHeight - currentHeight;
+      const diffPosition = maxHeight - currentHeight;
+      increaseHeight(diffPosition);
     }
   } else {
-    console.log(" position === preview ");
+    console.log(" position >= preview ");
   }
 };
 
@@ -112,7 +138,9 @@ window.addEventListener(
       console.log(`width: ${e.target.visualViewport.width}px`);
       console.log(`height: ${e.target.visualViewport.height}px`);
       //changePositionBlock(getViewportSize().w);
-      resizeWindowHandler(getViewportSize());
+      //resizeWindowHandler(getViewportSize());
+      const activeWindowHeight = window.visualViewport.height;
+      resizeWindowHandler(activeWindowHeight);
     },
     200,
     false

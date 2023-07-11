@@ -246,10 +246,10 @@ const syncPreview = function () {
   whatString(f);
 
   const scrollTop = position.scrollHeight;
+  previewHeightHandler(scrollTop);
   position.scrollTop = scrollTop;
   preview.scrollTop = position.scrollTop;
 
-  checkHeightDifference();
   //console.log({ position });
   //preview.scrollTop = position.scrollTop - offsetHeight;
 };
