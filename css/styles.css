@@ -808,8 +808,8 @@ h6 {
   flex: 0 115px;
 }
 
-#clear-trash {
-  flex: 0 88px;
+#clear-trash img {
+  width: 33px;
 }
 
 .preview-outer {
@@ -842,11 +842,12 @@ ol.preview-outer p {
 }
 
 #x-button {
-  background-image: url(../img/cross.svg);
-  width: 29px;
-  height: 29px;
-  right: 13px;
-  top: 13px;
+  background-image: url(../img/x.svg);
+  width: 33px;
+  height: 33px;
+  right: 11px;
+  top: 11px;
+  background-size: 33px;
 }
 
 #return-last-input {
@@ -1008,7 +1009,7 @@ button.delete-current-save:hover {
 }
 
 #restore-deleted-item {
-  border-width: 0px;
+  border-width: 1px;
   padding-bottom: 0px;
   padding-top: 1px;
   padding-left: 0px;
