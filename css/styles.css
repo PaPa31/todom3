@@ -1007,17 +1007,23 @@ button.delete-current-save:hover {
   position: relative;
 }
 
+#undo-delete {
+  order: 1;
+}
+
 #restore-deleted-item img,
 #clear-trash img,
 #undo-delete img {
   width: 33px;
   vertical-align: middle;
+  opacity: 0.6;
 }
 
-/*#restore-deleted-item img,
-#clear-trash img {
-  filter: sepia(1) saturate(0);
-}*/
+#restore-deleted-item:hover img,
+#clear-trash:hover img,
+#undo-delete:hover img {
+opacity: 1;
+}
 
 #undo-delete img {
   width: 29px;
