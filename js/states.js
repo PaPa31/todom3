@@ -27,6 +27,8 @@ let trashArray = localStorage.getItem("todomTrashArray")
   ? JSON.parse(localStorage.getItem("todomTrashArray"))
   : [];
 
+let deletedArray = [];
+
 let nullGotIntoStorage = false;
 
 let idCounterItems = 0;
@@ -477,6 +479,14 @@ const showOrHideDeleteAllItems = () => {
   }
 };
 
+const showOrHideUndoDeleteButton = () => {
+  if (deletedArray.length) {
+    undoLastDeleteButton.classList.replace("invisible", "visible");
+  } else {
+    undoLastDeleteButton.classList.replace("visible", "invisible");
+  }
+};
+
 var phrase = "README.md";
 
 const fileHttpHandler = (name, dir, size, text) => {
@@ -731,6 +741,7 @@ const initializeFileState = () => {
   deleteAllItemsButton.classList.replace("inline-block", "none");
   restoreItemButton.classList.replace("inline-block", "none");
   clearTrashButton.classList.replace("inline-block", "none");
+  undoLastDeleteButton.classList.replace("inline-block", "none");
 
   listItems.style.display = "none";
   listFiles.style.display = "flex";
@@ -764,6 +775,7 @@ const initializeItemState = () => {
   openDirButton.classList.replace("inline-block", "none");
   restoreItemButton.classList.replace("none", "inline-block");
   clearTrashButton.classList.replace("none", "inline-block");
+  undoLastDeleteButton.classList.replace("none", "inline-block");
 
   listFiles.style.display = "none";
   listItems.style.display = "flex";
@@ -808,6 +820,7 @@ itemsFilesToggleButton.addEventListener("click", function (e) {
   if (isItemState) {
     initializeItemState();
     showOrHideTrash();
+    showOrHideUndoDeleteButton();
   } else {
     fileElem.setAttribute("webkitdirectory", "true");
     initializeFileState();
