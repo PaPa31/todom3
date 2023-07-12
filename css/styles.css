@@ -812,6 +812,10 @@ h6 {
   width: 33px;
 }
 
+#undo-delete img {
+  width: 33px
+}
+
 .preview-outer {
   list-style: none;
   padding: 0;
