@@ -808,14 +808,6 @@ h6 {
   flex: 0 115px;
 }
 
-#clear-trash img {
-  width: 33px;
-}
-
-#undo-delete img {
-  width: 33px
-}
-
 .preview-outer {
   list-style: none;
   padding: 0;
@@ -1007,26 +999,33 @@ button.delete-current-save:hover {
 #deleted-counter {
   position: absolute;
   left: 0;
-  right: 0px;
-  text-align: center;
-  top: 10px;
+  right: 0;
+  top: 11px;
 }
 
 #restore-deleted-item {
-  border-width: 1px;
-  padding-bottom: 0px;
-  padding-top: 1px;
-  padding-left: 0px;
-  padding-right: 0px;
   position: relative;
 }
 
-#restore-deleted-item img {
+#restore-deleted-item img,
+#clear-trash img,
+#undo-delete img {
   width: 33px;
-  padding: 0px;
-  vertical-align: baseline;
-  opacity: 0.6;
+  vertical-align: middle;
+}
+
+/*#restore-deleted-item img,
+#clear-trash img {
   filter: sepia(1) saturate(0);
+}*/
+
+#undo-delete img {
+  width: 29px;
+}
+
+#clear-trash img {
+  width: 30px;
+  margin-top: -3px;
 }
 
 .dark a.link,
