@@ -850,7 +850,8 @@ ol.preview-outer p {
 }
 
 #return-last-input {
-  background-image: url(../img/return-3.svg);
+  /*background-image: url(../img/return-3.svg);*/
+  background-image: url(../img/rotate-ccw-2.svg);
   width: 23px;
   height: 23px;
   right: 16px;
