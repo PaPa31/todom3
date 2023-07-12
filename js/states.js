@@ -776,19 +776,22 @@ const initializeItemState = () => {
     indexedItemsArray = [];
 
     nullGotIntoStorage = false;
-    itemsArray?.forEach((item, key) => {
-      if (item) {
-        liMaker(key);
+
+    var len = itemsArray.length,
+      i;
+    for (i = 0; i < len; i++) {
+      if (itemsArray[i]) {
+        itemsArray.push(itemsArray[i]);
+        liMaker(i);
         indexedItemsArray.push(idCounterItems.toString());
         idCounterItems++;
-      } else {
-        itemsArray.splice(key, 1);
-        nullGotIntoStorage = true;
-        console.log(`items: ${key} item is null and ignored!`);
       }
-    });
+    }
+    itemsArray.splice(0, len);
+    if (i > itemsArray.length) nullGotIntoStorage = true;
 
     if (nullGotIntoStorage) {
+      console.log("null was found and ignored!");
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     }
   } else {
