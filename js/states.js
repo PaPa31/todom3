@@ -226,14 +226,14 @@ const trashButtonMaker = (parentMainActionsDiv) => {
     buttonTag.setAttribute("ctrl", "true");
     buttonTag.setAttribute(
       "title",
-      "Double-click -> Trash, Ctrl+click - instant delete"
+      "Double-click -> Trash, Ctrl+click -> delete"
     );
   } else {
     buttonTag.setAttribute(
       "onclick",
       `deleteOneFile(event, findLiRecursive(this))`
     );
-    buttonTag.setAttribute("title", "Double-click - delete from this list");
+    buttonTag.setAttribute("title", "Double-click -> delete from this list");
   }
   parentMainActionsDiv.appendChild(buttonTag);
 };
