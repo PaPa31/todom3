@@ -530,14 +530,12 @@ returnInputButton.addEventListener("click", function () {
   input.focus();
 });
 
-const deletionHandler = () => {};
-
-restoreItemButton.addEventListener("click", function () {
-  let len = trashArray.length;
+const deletionHandler = (arr, btns, todomArrVar) => {
+  let len = arr.length;
   if (len !== 0) {
-    itemsArray.push(trashArray.pop());
+    itemsArray.push(arr.pop());
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
+    if (todomArrVar) localStorage.setItem(todomArrVar, JSON.stringify(arr));
 
     indexedItemsArray.push(idCounterItems.toString());
     const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
@@ -545,16 +543,23 @@ restoreItemButton.addEventListener("click", function () {
 
     idCounterItems++;
     len = len - 1;
-    deletedCounter.innerText = len;
+    if (arr === trashArray) deletedCounter.innerText = len;
   }
   if (len === 0) {
-    restoreItemButton.classList.replace("visible", "invisible");
-    clearTrashButton.classList.replace("visible", "invisible");
-    localStorage.removeItem("todomTrashArray");
+    btns.map((i) => i.classList.replace("visible", "invisible"));
+    if (todomArrVar) localStorage.removeItem(todomArrVar);
   }
   deleteAllItemsButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("invisible", "visible");
   showItemSortingArrows(foldedClass.childElementCount);
+};
+
+restoreItemButton.addEventListener("click", function () {
+  deletionHandler(
+    trashArray,
+    [restoreItemButton, clearTrashButton],
+    "todomTrashArray"
+  );
 });
 
 clearTrashButton.addEventListener("click", function (e) {
@@ -579,26 +584,7 @@ clearTrashButton.addEventListener("click", function (e) {
 });
 
 undoLastDeleteButton.addEventListener("click", function (e) {
-  let len = deletedArray.length;
-  if (len !== 0) {
-    const item = deletedArray.pop();
-    itemsArray.push(item);
-    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    //localStorage.setItem("todomTrashArray", JSON.stringify(deletedArray));
-
-    indexedItemsArray.push(idCounterItems.toString());
-    const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
-    liMaker(newItem);
-
-    idCounterItems++;
-    len = len - 1;
-  }
-  if (len === 0) {
-    undoLastDeleteButton.classList.replace("visible", "invisible");
-  }
-  deleteAllItemsButton.classList.replace("none", "inline-block");
-  deleteAllItemsButton.classList.replace("invisible", "visible");
-  showItemSortingArrows(foldedClass.childElementCount);
+  deletionHandler(deletedArray, [undoLastDeleteButton]);
 });
 
 const inputChange = function (e) {
