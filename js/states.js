@@ -29,8 +29,6 @@ let trashArray = localStorage.getItem("todomTrashArray")
 
 let deletedArray = [];
 
-let nullGotIntoStorage = false;
-
 let idCounterItems = 0;
 let idCounterFiles = 0;
 
@@ -788,8 +786,6 @@ const initializeItemState = () => {
     idCounterItems = 0;
     indexedItemsArray = [];
 
-    nullGotIntoStorage = false;
-
     var len = itemsArray.length,
       i;
     for (i = 0; i < len; i++) {
@@ -801,10 +797,8 @@ const initializeItemState = () => {
       }
     }
     itemsArray.splice(0, len);
-    if (i > itemsArray.length) nullGotIntoStorage = true;
-
-    if (nullGotIntoStorage) {
-      console.log("null was found and ignored!");
+    if (i > itemsArray.length) {
+      console.log("null(s) was/were found and ignored!");
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     }
   } else {
