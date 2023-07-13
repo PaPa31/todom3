@@ -134,7 +134,7 @@ const putItemToTrash = (indexToTrash) => {
 
 const putItemToDeletedArray = (indexToDelete) => {
   deletedArray.push(itemsArray[indexToDelete]);
-  deletedCounter.innerText = trashArray.length;
+  deletedCounter.innerText = deletedArray.length;
   undoLastDeleteButton.classList.replace("invisible", "visible");
 };
 
