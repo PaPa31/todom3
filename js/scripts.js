@@ -532,8 +532,10 @@ returnInputButton.addEventListener("click", function () {
   input.focus();
 });
 
-const deletionHandler = () => {
-  let len = deletedArray.length;
+const deletionHandler = () => {};
+
+restoreItemButton.addEventListener("click", function () {
+  let len = trashArray.length;
   if (len !== 0) {
     itemsArray.push(trashArray.pop());
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
@@ -555,10 +557,6 @@ const deletionHandler = () => {
   deleteAllItemsButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("invisible", "visible");
   showItemSortingArrows(foldedClass.childElementCount);
-};
-
-restoreItemButton.addEventListener("click", function () {
-  deletionHandler();
 });
 
 clearTrashButton.addEventListener("click", function (e) {
