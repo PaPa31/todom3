@@ -17,6 +17,7 @@ const saveAsFileButton = document.getElementById("save-as-file");
 const openFileButton = document.getElementById("open-file");
 const openDirButton = document.getElementById("open-dir");
 
+const trashedCounter = document.getElementById("trashed-counter");
 const deletedCounter = document.getElementById("deleted-counter");
 
 const output = document.getElementById("output");
@@ -125,7 +126,7 @@ const isEditing = (indexToDelete) => {
 
 const putItemToTrash = (indexToTrash) => {
   trashArray.push(itemsArray[indexToTrash]);
-  deletedCounter.innerText = trashArray.length;
+  trashedCounter.innerText = trashArray.length;
   restoreItemButton.classList.replace("invisible", "visible");
   clearTrashButton.classList.replace("invisible", "visible");
   localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
@@ -133,6 +134,7 @@ const putItemToTrash = (indexToTrash) => {
 
 const putItemToDeletedArray = (indexToDelete) => {
   deletedArray.push(itemsArray[indexToDelete]);
+  deletedCounter.innerText = trashArray.length;
   undoLastDeleteButton.classList.replace("invisible", "visible");
 };
 
@@ -530,7 +532,7 @@ returnInputButton.addEventListener("click", function () {
   input.focus();
 });
 
-const deletionHandler = (arr, btns, todomArrVar) => {
+const deletionHandler = (arr, btns, counterEl, todomArrVar) => {
   let len = arr.length;
   if (len !== 0) {
     itemsArray.push(arr.pop());
@@ -543,7 +545,7 @@ const deletionHandler = (arr, btns, todomArrVar) => {
 
     idCounterItems++;
     len = len - 1;
-    if (arr === trashArray) deletedCounter.innerText = len;
+    counterEl.innerText = len;
   }
   if (len === 0) {
     btns.map((i) => i.classList.replace("visible", "invisible"));
@@ -558,6 +560,7 @@ restoreItemButton.addEventListener("click", function () {
   deletionHandler(
     trashArray,
     [restoreItemButton, clearTrashButton],
+    trashedCounter,
     "todomTrashArray"
   );
 });
@@ -571,7 +574,7 @@ clearTrashButton.addEventListener("click", function (e) {
     clearTrashButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.remove("filter-red");
     window.setTimeout(function () {
-      deletedCounter.innerText = "";
+      trashedCounter.innerText = "";
     }, 300);
     twoClickTrashClear = false;
   } else {
@@ -584,7 +587,7 @@ clearTrashButton.addEventListener("click", function (e) {
 });
 
 undoLastDeleteButton.addEventListener("click", function (e) {
-  deletionHandler(deletedArray, [undoLastDeleteButton]);
+  deletionHandler(deletedArray, [undoLastDeleteButton], deletedCounter);
 });
 
 const inputChange = function (e) {

@@ -448,7 +448,7 @@ foldGlobalToggleButton.addEventListener("click", function (e) {
 
 const showOrHideTrash = () => {
   if (trashArray.length) {
-    deletedCounter.innerText = trashArray.length;
+    trashedCounter.innerText = trashArray.length;
     restoreItemButton.classList.replace("invisible", "visible");
     clearTrashButton.classList.replace("invisible", "visible");
   } else {
@@ -480,6 +480,7 @@ const showOrHideDeleteAllItems = () => {
 
 const showOrHideUndoDeleteButton = () => {
   if (deletedArray.length) {
+    deletedCounter.innerText = deletedArray.length;
     undoLastDeleteButton.classList.replace("invisible", "visible");
   } else {
     undoLastDeleteButton.classList.replace("visible", "invisible");

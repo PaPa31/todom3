@@ -996,14 +996,16 @@ button.delete-current-save:hover {
   display: none;
 }
 
-#deleted-counter {
+.deletion-counter {
   position: absolute;
   left: 0;
   right: 0;
   top: 11px;
+  z-index: -1;
 }
 
-#restore-deleted-item {
+#restore-deleted-item,
+#undo-delete {
   position: relative;
 }
 
@@ -1022,7 +1024,7 @@ button.delete-current-save:hover {
 #restore-deleted-item:hover img,
 #clear-trash:hover img,
 #undo-delete:hover img {
-opacity: 1;
+  opacity: 1;
 }
 
 #undo-delete img {
