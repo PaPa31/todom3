@@ -797,7 +797,7 @@ const initializeItemState = () => {
         idCounterItems++;
       }
     }
-    itemsArray.splice(0, len);
+    itemsArray = itemsArray.splice(0, len);
     if (i > itemsArray.length) {
       console.log("null(s) was/were found and ignored!");
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
