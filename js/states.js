@@ -91,8 +91,14 @@ const liMaker = (arrIndex) => {
     const len = textArr.length;
     last = len - 1;
     const cur = itemsArray[arrIndex].cur;
-    current = cur !== undefined ? cur : last;
-    const text = textArr[current] ? textArr[current] : textArr[last];
+    if (cur != undefined && textArr[cur] != undefined) {
+      current = cur;
+    } else {
+      current = last;
+      itemsArray[arrIndex].cur = last;
+      localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    }
+    const text = textArr[current];
 
     div.setAttribute("class", "md-item");
     if (itemsArray[arrIndex].fold) li.setAttribute("class", "unfolded");
