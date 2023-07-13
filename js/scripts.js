@@ -170,8 +170,6 @@ const deleteOneItem = (e, liDOM) => {
 
     if (!e.ctrlKey) {
       putItemToTrash(indexToDelete);
-    } else {
-      putItemToDeletedArray(indexToDelete);
     }
 
     removeItemFromMemory(liDOM, indexToDelete);
