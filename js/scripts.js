@@ -132,8 +132,15 @@ const putItemToTrash = (indexToTrash) => {
   localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 };
 
-const putItemToDeletedArray = (indexToDelete) => {
-  deletedArray.push(itemsArray[indexToDelete]);
+const putItemToDeletedArray = (indexToDelete, deletedText) => {
+  if (deletedText) {
+    const item = itemsArray[indexToDelete];
+    item.text = [deletedText];
+    item.cur = 0;
+    deletedArray.push(item);
+  } else {
+    deletedArray.push(itemsArray[indexToDelete]);
+  }
   deletedCounter.innerText = deletedArray.length;
   undoLastDeleteButton.classList.replace("invisible", "visible");
 };
