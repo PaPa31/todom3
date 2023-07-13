@@ -425,8 +425,7 @@ const defaultItemStateVars = () => {
 document.addEventListener("keydown", function (e) {
   switch (e.key) {
     case "Control":
-      if (isItemState && itemsArray.length != 0)
-        deleteAllItemsButton.innerText = "Merge All Items";
+      deleteAllItemsButton.innerText = "Merge All Items";
       foldedClass.classList.add("ctrl");
       break;
   }
@@ -435,8 +434,7 @@ document.addEventListener("keydown", function (e) {
 document.addEventListener("keyup", function (e) {
   switch (e.key) {
     case "Control":
-      if (isItemState && itemsArray.length != 0)
-        deleteAllItemsButton.innerText = "Delete All Items";
+      deleteAllItemsButton.innerText = "Delete All Items";
       foldedClass.classList.remove("ctrl");
       break;
   }
