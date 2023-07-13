@@ -142,8 +142,6 @@ const removeItemFromMemory = (item, indexToDelete) => {
   foldedClass.removeChild(item);
   showItemSortingArrows(foldedClass.childElementCount);
 
-  putItemToDeletedArray(indexToDelete);
-
   itemsArray.splice(indexToDelete, 1);
   indexedItemsArray.splice(indexToDelete, 1);
 
@@ -163,6 +161,8 @@ const deleteOneItem = (e, liDOM) => {
 
     if (!e.ctrlKey) {
       putItemToTrash(indexToDelete);
+    } else {
+      putItemToDeletedArray(indexToDelete);
     }
 
     removeItemFromMemory(liDOM, indexToDelete);
