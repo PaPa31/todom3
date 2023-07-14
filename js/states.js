@@ -781,10 +781,10 @@ const idleIterationPayload = (i) => {
 
 const arrCheckForNull = (arr) => {
   var len = arr.length,
+    len1 = len,
     i;
   for (i = 0; i < len; i++) {
     if (i in arr && arr[i] != undefined) {
-      //arr.push(arr[i]);
       //idleIterationPayload(i);
     } else {
       arr.splice(i, 1);
@@ -794,7 +794,7 @@ const arrCheckForNull = (arr) => {
   }
   console.log(arr);
 
-  if (i > itemsArray.length) {
+  if (len1 > len) {
     console.log("null(s) was/were found and ignored!");
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   }
