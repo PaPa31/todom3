@@ -87,21 +87,22 @@ const liMaker = (arrIndex) => {
   let last, current;
 
   if (isItemState) {
-    const textArr = itemsArray[arrIndex].text;
+    const item = itemsArray[arrIndex];
+    const textArr = item.text;
     const len = textArr.length;
     last = len - 1;
-    const cur = itemsArray[arrIndex].cur;
+    const cur = item.cur;
     if (cur != undefined && textArr[cur] != undefined) {
       current = cur;
     } else {
       current = last;
-      itemsArray[arrIndex].cur = last;
+      item.cur = last;
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     }
     const text = textArr[current];
 
     div.setAttribute("class", "md-item");
-    if (itemsArray[arrIndex].fold) li.setAttribute("class", "unfolded");
+    if (item.fold) li.setAttribute("class", "unfolded");
 
     div.innerHTML = markdown(text);
     li.id = idCounterItems;
