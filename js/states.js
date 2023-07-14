@@ -777,6 +777,38 @@ var array = [1, null, , 3, null];
 //  //return typeof arr[0] !== "undefined"; // this is exactly undefined, but not null
 //}
 
+const idleIterationPayload = (i) => {
+  liMaker(i);
+  indexedItemsArray.push(idCounterItems.toString());
+  idCounterItems++;
+};
+
+const arrCheckForNull = (arr) => {
+  var len = arr.length,
+    i;
+  for (i = 0; i < len; i++) {
+    if (i in arr) {
+      //arr.push(arr[i]);
+      //idleIterationPayload(i);
+      if (arr[i] == undefined) {
+        arr.splice(i, 1);
+        i--;
+        len--;
+      }
+    } else {
+      arr.splice(i, 1);
+      i--;
+      len--;
+    }
+  }
+  console.log(arr);
+
+  if (i > itemsArray.length) {
+    console.log("null(s) was/were found and ignored!");
+    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  }
+};
+
 const initializeItemState = () => {
   logIn3("Items");
   saveButton.innerText = "Save item";
@@ -799,29 +831,7 @@ const initializeItemState = () => {
     idCounterItems = 0;
     indexedItemsArray = [];
 
-    //const itemsArrayNullFree = array.filter(checkForNull);
-    array = array.filter(function (n) {
-      return n != undefined;
-    });
-
-    //console.log(itemsArrayNullFree);
-    console.log(array);
-
-    var len = itemsArray.length,
-      i;
-    for (i = 0; i < len; i++) {
-      if (itemsArray[i]) {
-        itemsArray.push(itemsArray[i]);
-        liMaker(i);
-        indexedItemsArray.push(idCounterItems.toString());
-        idCounterItems++;
-      }
-    }
-    itemsArray.splice(0, len);
-    if (i > itemsArray.length) {
-      console.log("null(s) was/were found and ignored!");
-      localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    }
+    arrCheckForNull(array);
   } else {
     logg3("indexedItemsArray 2:", indexedItemsArray);
   }
