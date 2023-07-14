@@ -94,7 +94,7 @@ const getCurrentSave = (index) => {
     item.cur = last;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   }
-  return { text: textArr[current], last, current };
+  return { last, current, textArr };
 };
 
 const liMaker = (arrIndex) => {
@@ -111,7 +111,7 @@ const liMaker = (arrIndex) => {
     div.setAttribute("class", "md-item");
     if (itemsArray[arrIndex].fold) li.setAttribute("class", "unfolded");
 
-    div.innerHTML = markdown(currentSave.text);
+    div.innerHTML = markdown(currentSave.textArr[current]);
     li.id = idCounterItems;
   } else {
     div.setAttribute("class", "md-file");
@@ -255,38 +255,46 @@ const trashButtonMaker = (parentMainActionsDiv) => {
 const deleteCurrentSave = (el) => {
   const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
-  const textArr = itemsArray[itemIndex].text;
-  const cur = itemsArray[itemIndex].cur;
-  const lastBefore = textArr.length - 1;
-  let currentToDelete = cur !== undefined ? cur : lastBefore;
+
+  const currentSave = getCurrentSave(itemIndex);
+  const lastBefore = currentSave.last;
+  let current = currentSave.current;
+  const textArr = currentSave.textArr;
+
+  //const textArr = itemsArray[itemIndex].text;
+  //const cur = itemsArray[itemIndex].cur;
+  //const lastBefore = textArr.length - 1;
+  //let current = cur !== undefined ? cur : lastBefore;
+
   if (lastBefore === 0) {
     putItemToDeletedArray(itemIndex);
     removeItemFromMemory(liDOM, itemIndex);
     return;
   } else {
-    putItemToDeletedArray(itemIndex, textArr[currentToDelete]);
+    putItemToDeletedArray(itemIndex, textArr[current]);
   }
-  textArr.splice(currentToDelete, 1);
+  textArr.splice(current, 1);
   const lastAfter = textArr.length - 1;
-  if (currentToDelete < lastAfter) {
+  if (current < lastAfter) {
     // we do not change 'current' due to splice,
     // 'current' points to the next position
     //current++;
   } else {
     el.nextSibling.setAttribute("disable", true);
-    if (currentToDelete > 0) currentToDelete--;
+    if (current > 0) current--;
     if (lastAfter === 0) {
       el.previousSibling.setAttribute("disable", true);
     }
   }
-  const currentText = textArr[currentToDelete]
-    ? textArr[currentToDelete]
-    : textArr[textArr.length - 1];
-  itemsArray[itemIndex].cur = currentToDelete;
+  const currentText = textArr[current];
+  //  ? textArr[current]
+  //  : textArr[textArr.length - 1];
+  itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  const md = markdown(currentText);
-  const chi = liDOM.querySelector(".md-item");
-  chi.innerHTML = md;
+  //const md = markdown(currentText);
+  //const chi = liDOM.querySelector(".md-item");
+  //chi.innerHTML = md;
+  liDOM.querySelector(".md-item").innerHTML = markdown(currentText);
 };
 
 const previousSave = (el) => {
