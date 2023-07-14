@@ -261,11 +261,6 @@ const deleteCurrentSave = (el) => {
   let current = currentSave.current;
   const textArr = currentSave.textArr;
 
-  //const textArr = itemsArray[itemIndex].text;
-  //const cur = itemsArray[itemIndex].cur;
-  //const lastBefore = textArr.length - 1;
-  //let current = cur !== undefined ? cur : lastBefore;
-
   if (lastBefore === 0) {
     putItemToDeletedArray(itemIndex);
     removeItemFromMemory(liDOM, itemIndex);
@@ -286,15 +281,9 @@ const deleteCurrentSave = (el) => {
       el.previousSibling.setAttribute("disable", true);
     }
   }
-  const currentText = textArr[current];
-  //  ? textArr[current]
-  //  : textArr[textArr.length - 1];
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  //const md = markdown(currentText);
-  //const chi = liDOM.querySelector(".md-item");
-  //chi.innerHTML = md;
-  liDOM.querySelector(".md-item").innerHTML = markdown(currentText);
+  liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
 };
 
 const previousSave = (el) => {
