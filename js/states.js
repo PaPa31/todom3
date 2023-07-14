@@ -771,8 +771,6 @@ const initializeFileState = () => {
   logOut3();
 };
 
-var array = [1, null, , 3, null];
-
 const idleIterationPayload = (i) => {
   liMaker(i);
   indexedItemsArray.push(idCounterItems.toString());
@@ -780,19 +778,18 @@ const idleIterationPayload = (i) => {
 };
 
 const arrCheckForNull = (arr) => {
-  var len = arr.length,
-    len1 = len,
+  let len = arr.length,
     i;
+  const len1 = len;
   for (i = 0; i < len; i++) {
     if (i in arr && arr[i] != undefined) {
-      //idleIterationPayload(i);
+      idleIterationPayload(i);
     } else {
       arr.splice(i, 1);
       i--;
       len--;
     }
   }
-  console.log(arr);
 
   if (len1 > len) {
     console.log("null(s) was/were found and ignored!");
@@ -822,7 +819,7 @@ const initializeItemState = () => {
     idCounterItems = 0;
     indexedItemsArray = [];
 
-    arrCheckForNull(array);
+    arrCheckForNull(itemsArray);
   } else {
     logg3("indexedItemsArray 2:", indexedItemsArray);
   }
