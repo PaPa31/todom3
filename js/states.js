@@ -772,10 +772,6 @@ const initializeFileState = () => {
 };
 
 var array = [1, null, , 3, null];
-//function checkForNull(arr) {
-//  return arr[0] != undefined;
-//  //return typeof arr[0] !== "undefined"; // this is exactly undefined, but not null
-//}
 
 const idleIterationPayload = (i) => {
   liMaker(i);
@@ -787,14 +783,9 @@ const arrCheckForNull = (arr) => {
   var len = arr.length,
     i;
   for (i = 0; i < len; i++) {
-    if (i in arr) {
+    if (i in arr && arr[i] != undefined) {
       //arr.push(arr[i]);
       //idleIterationPayload(i);
-      if (arr[i] == undefined) {
-        arr.splice(i, 1);
-        i--;
-        len--;
-      }
     } else {
       arr.splice(i, 1);
       i--;
