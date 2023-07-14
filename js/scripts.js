@@ -134,10 +134,10 @@ const putItemToTrash = (indexToTrash) => {
 
 const putItemToDeletedArray = (indexToDelete, deletedText) => {
   if (deletedText) {
-    const item = itemsArray[indexToDelete];
-    item.text = [deletedText];
-    item.cur = 0;
-    deletedArray.push(item);
+    const itemDeepCopy = JSON.parse(JSON.stringify(itemsArray[indexToDelete]));
+    itemDeepCopy.text = [deletedText];
+    itemDeepCopy.cur = 0;
+    deletedArray.push(itemDeepCopy);
   } else {
     deletedArray.push(itemsArray[indexToDelete]);
   }
