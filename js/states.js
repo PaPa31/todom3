@@ -312,21 +312,28 @@ const previousSave = (el) => {
 const nextSave = (el) => {
   const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
-  const textArr = itemsArray[itemIndex].text;
-  const cur = itemsArray[itemIndex].cur;
-  const len = textArr.length - 1;
-  let current = cur !== undefined ? cur : len;
+
+  const currentSave = getCurrentSave(itemIndex);
+  let current = currentSave.current;
+  const textArr = currentSave.textArr;
+  //const len = textArr.length - 1;
+
+  //const textArr = itemsArray[itemIndex].text;
+  //const cur = itemsArray[itemIndex].cur;
+
+  //let current = cur !== undefined ? cur : len;
   current++;
   el.previousSibling.previousSibling.removeAttribute("disable");
-  if (current >= len) {
+  if (current >= textArr.length - 1) {
     el.setAttribute("disable", true);
   }
-  const nextText = textArr[current] ? textArr[current] : textArr[len];
+  //const nextText = textArr[current] ? textArr[current] : textArr[len];
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  const md = markdown(nextText);
-  const chi = liDOM.querySelector(".md-item");
-  chi.innerHTML = md;
+  //const md = markdown(nextText);
+  //const chi = liDOM.querySelector(".md-item");
+  //chi.innerHTML = md;
+  liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
 };
 
 const unfoldGreen = (liDOM) => {
