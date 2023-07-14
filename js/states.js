@@ -80,6 +80,23 @@ const findLiRecursive = (el, tag = "li") => {
   }
 };
 
+const getCurrentSave = (index) => {
+  const item = itemsArray[index];
+  const textArr = item.text;
+  const len = textArr.length;
+  const last = len - 1;
+  let cur = item.cur;
+  let current;
+  if (cur != undefined && textArr[cur] != undefined) {
+    current = cur;
+  } else {
+    current = last;
+    item.cur = last;
+    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  }
+  return { text: textArr[current], last, current };
+};
+
 const liMaker = (arrIndex) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
@@ -87,24 +104,14 @@ const liMaker = (arrIndex) => {
   let last, current;
 
   if (isItemState) {
-    const item = itemsArray[arrIndex];
-    const textArr = item.text;
-    const len = textArr.length;
-    last = len - 1;
-    const cur = item.cur;
-    if (cur != undefined && textArr[cur] != undefined) {
-      current = cur;
-    } else {
-      current = last;
-      item.cur = last;
-      localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    }
-    const text = textArr[current];
+    const currentSave = getCurrentSave(arrIndex);
+    last = currentSave.last;
+    current = currentSave.current;
 
     div.setAttribute("class", "md-item");
-    if (item.fold) li.setAttribute("class", "unfolded");
+    if (itemsArray[arrIndex].fold) li.setAttribute("class", "unfolded");
 
-    div.innerHTML = markdown(text);
+    div.innerHTML = markdown(currentSave.text);
     li.id = idCounterItems;
   } else {
     div.setAttribute("class", "md-file");
