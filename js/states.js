@@ -83,18 +83,16 @@ const findLiRecursive = (el, tag = "li") => {
 const getCurrentSave = (index) => {
   const item = itemsArray[index];
   const textArr = item.text;
-  const len = textArr.length;
-  const last = len - 1;
-  let cur = item.cur;
+  const cur = item.cur;
   let current;
   if (cur != undefined && textArr[cur] != undefined) {
     current = cur;
   } else {
-    current = last;
-    item.cur = last;
+    current = textArr.length;
+    item.cur = current;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   }
-  return { last, current, textArr };
+  return { current, textArr };
 };
 
 const liMaker = (arrIndex) => {
@@ -105,7 +103,7 @@ const liMaker = (arrIndex) => {
 
   if (isItemState) {
     const currentSave = getCurrentSave(arrIndex);
-    last = currentSave.last;
+    last = currentSave.textArr.length - 1;
     current = currentSave.current;
 
     div.setAttribute("class", "md-item");
@@ -255,12 +253,10 @@ const trashButtonMaker = (parentMainActionsDiv) => {
 const deleteCurrentSave = (el) => {
   const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
-
   const currentSave = getCurrentSave(itemIndex);
-  const lastBefore = currentSave.last;
   let current = currentSave.current;
   const textArr = currentSave.textArr;
-
+  const lastBefore = textArr.length - 1;
   if (lastBefore === 0) {
     putItemToDeletedArray(itemIndex);
     removeItemFromMemory(liDOM, itemIndex);
