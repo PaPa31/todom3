@@ -771,6 +771,12 @@ const initializeFileState = () => {
   logOut3();
 };
 
+var array = [1, null, , 3, null];
+//function checkForNull(arr) {
+//  return arr[0] != undefined;
+//  //return typeof arr[0] !== "undefined"; // this is exactly undefined, but not null
+//}
+
 const initializeItemState = () => {
   logIn3("Items");
   saveButton.innerText = "Save item";
@@ -793,6 +799,14 @@ const initializeItemState = () => {
     idCounterItems = 0;
     indexedItemsArray = [];
 
+    //const itemsArrayNullFree = array.filter(checkForNull);
+    array = array.filter(function (n) {
+      return n != undefined;
+    });
+
+    //console.log(itemsArrayNullFree);
+    console.log(array);
+
     var len = itemsArray.length,
       i;
     for (i = 0; i < len; i++) {
@@ -803,7 +817,7 @@ const initializeItemState = () => {
         idCounterItems++;
       }
     }
-    itemsArray = itemsArray.splice(0, len);
+    itemsArray.splice(0, len);
     if (i > itemsArray.length) {
       console.log("null(s) was/were found and ignored!");
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
