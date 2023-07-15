@@ -659,16 +659,21 @@ const saveItemFromFile = (fileName) => {
     itemsArray[itemIndex].text.push(input.value);
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
+    itemsSpecArray[itemIndex].cur = textArr.length - 1;
     saveHistoryControl(liDOM, textArr.length);
     const mdTag = liDOM.querySelector(".md-item");
     mdTag.innerHTML = markdown(input.value);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
-    const obj = {
+    const itemObj = {
       text: [input.value],
       name: fileName,
     };
-    itemsArray.push(obj);
+    itemsArray.push(itemObj);
+    const specObj = {
+      cur: 0,
+    };
+    itemsSpecArray.push(specObj);
     indexedItemsArray.push(idCounterItems.toString());
     const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
     liMaker(newItem);
@@ -676,6 +681,7 @@ const saveItemFromFile = (fileName) => {
   }
   defaultMarkers();
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
 function checkIt() {
