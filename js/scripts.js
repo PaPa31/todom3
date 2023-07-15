@@ -373,16 +373,19 @@ const saveItem = () => {
     const textArr = itemsArray[itemIndexToEdit].text;
     textArr.push(input.value);
     const len = textArr.length;
-    itemsArray[itemIndexToEdit].cur = len - 1;
+    itemsSpecArray[itemIndexToEdit].cur = len - 1;
     saveHistoryControl(editedItemLiDOM, len);
     editedItemLiDOM.querySelector(".md-item").innerHTML = markdown(input.value);
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
   } else {
-    const obj = {
+    const itemObj = {
       text: [input.value],
+    };
+    itemsArray.push(itemObj);
+    const specObj = {
       cur: 0,
     };
-    itemsArray.push(obj);
+    itemsSpecArray.push(specObj);
     indexedItemsArray.push(idCounterItems.toString());
     const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
     liMaker(newItem);
@@ -390,6 +393,7 @@ const saveItem = () => {
   }
   defaultMarkers();
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
 form.addEventListener("submit", function (e) {
