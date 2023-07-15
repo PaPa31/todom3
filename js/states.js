@@ -90,8 +90,7 @@ const getCurrentSave = (itemIndex) => {
     current = cur;
   } else {
     current = textArr.length - 1;
-    itemsSpecArray[itemIndex].cur = current;
-    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+    setCurrentSave(current, itemIndex);
   }
   return current;
 };
