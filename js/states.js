@@ -22,12 +22,15 @@ let isFoldedFilesView = localStorage.getItem("todomFoldedFilesView")
 let itemsArray = localStorage.getItem("todomItemsArray")
   ? JSON.parse(localStorage.getItem("todomItemsArray"))
   : [];
-let filesArray = [];
+let itemsSpecArray = localStorage.getItem("todomItemsSpecArray")
+  ? JSON.parse(localStorage.getItem("todomItemsSpecArray"))
+  : [];
 let trashArray = localStorage.getItem("todomTrashArray")
   ? JSON.parse(localStorage.getItem("todomTrashArray"))
   : [];
-
 let deletedArray = [];
+
+let filesArray = [];
 
 let idCounterItems = 0;
 let idCounterFiles = 0;
@@ -81,14 +84,14 @@ const findLiRecursive = (el, tag = "li") => {
 };
 
 const getCurrentSave = (itemIndex) => {
-  const cur = itemsArray[itemIndex].cur;
+  const cur = itemsSpecArray[itemIndex].cur;
   let current;
   if (cur != undefined && itemsArray[itemIndex].text[cur] != undefined) {
     current = cur;
   } else {
     current = textArr.length - 1;
-    itemsArray[itemIndex].cur = current;
-    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    itemsSpecArray[itemIndex].cur = current;
+    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   }
   return current;
 };
@@ -249,8 +252,8 @@ const trashButtonMaker = (parentMainActionsDiv) => {
 };
 
 const setCurrentSave = (current, itemIndex) => {
-  itemsArray[itemIndex].cur = current;
-  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  itemsSpecArray[itemIndex].cur = current;
+  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
 const deleteCurrentSave = (el) => {
