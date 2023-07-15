@@ -248,7 +248,7 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   parentMainActionsDiv.appendChild(buttonTag);
 };
 
-const updateCur = (current, itemIndex) => {
+const setCurrentSave = (current, itemIndex) => {
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 };
@@ -282,7 +282,7 @@ const deleteCurrentSave = (el) => {
     }
   }
   liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
-  updateCur(current, itemIndex);
+  setCurrentSave(current, itemIndex);
 };
 
 const previousSave = (el) => {
@@ -298,7 +298,7 @@ const previousSave = (el) => {
     el.setAttribute("disable", true);
   }
   liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
-  updateCur(current, itemIndex);
+  setCurrentSave(current, itemIndex);
 };
 
 const nextSave = (el) => {
@@ -314,7 +314,7 @@ const nextSave = (el) => {
     el.setAttribute("disable", true);
   }
   liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
-  updateCur(current, itemIndex);
+  setCurrentSave(current, itemIndex);
 };
 
 const unfoldGreen = (liDOM) => {
