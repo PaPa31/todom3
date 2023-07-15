@@ -88,7 +88,7 @@ const getCurrentSave = (index) => {
   if (cur != undefined && textArr[cur] != undefined) {
     current = cur;
   } else {
-    current = textArr.length;
+    current = textArr.length - 1;
     item.cur = current;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   }
