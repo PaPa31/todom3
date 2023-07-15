@@ -650,15 +650,15 @@ function initialize() {
   //console.log("initializing");
 }
 
-const saveItemFromFile = (_name) => {
-  const inx = itemsArray.findIndex((s) => s.name && s.name === _name);
-  if (inx !== -1) {
-    const itemId = indexedItemsArray[inx];
+const saveItemFromFile = (fileName) => {
+  const itemIndex = itemsArray.findIndex((s) => s.name && s.name === fileName);
+  if (itemIndex !== -1) {
+    const itemId = indexedItemsArray[itemIndex];
     //itemsArray[itemId].text = input.value;
-    itemsArray[inx].text.push(input.value);
+    itemsArray[itemIndex].text.push(input.value);
 
     const liDOM = document.getElementById(itemId);
-    const textArr = itemsArray[inx].text;
+    const textArr = itemsArray[itemIndex].text;
     const len = textArr.length;
     saveHistoryControl(liDOM, len);
     const mdTag = liDOM.querySelector(".md-item");
