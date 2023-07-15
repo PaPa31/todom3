@@ -81,18 +81,16 @@ const findLiRecursive = (el, tag = "li") => {
 };
 
 const getCurrentSave = (index) => {
-  const item = itemsArray[index];
-  const textArr = item.text;
-  const cur = item.cur;
+  const cur = itemsArray[index].cur;
   let current;
-  if (cur != undefined && textArr[cur] != undefined) {
+  if (cur != undefined && itemsArray[index].text[cur] != undefined) {
     current = cur;
   } else {
     current = textArr.length - 1;
-    item.cur = current;
+    itemsArray[index].cur = current;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   }
-  return { current, textArr };
+  return current;
 };
 
 const liMaker = (arrIndex) => {
@@ -102,14 +100,14 @@ const liMaker = (arrIndex) => {
   let last, current;
 
   if (isItemState) {
-    const currentSave = getCurrentSave(arrIndex);
-    last = currentSave.textArr.length - 1;
-    current = currentSave.current;
+    const textArr = itemsArray[arrIndex].text;
+    last = textArr.length - 1;
+    current = getCurrentSave(arrIndex);
 
     div.setAttribute("class", "md-item");
     if (itemsArray[arrIndex].fold) li.setAttribute("class", "unfolded");
 
-    div.innerHTML = markdown(currentSave.textArr[current]);
+    div.innerHTML = markdown(textArr[current]);
     li.id = idCounterItems;
   } else {
     div.setAttribute("class", "md-file");
@@ -253,9 +251,10 @@ const trashButtonMaker = (parentMainActionsDiv) => {
 const deleteCurrentSave = (el) => {
   const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
-  const currentSave = getCurrentSave(itemIndex);
-  let current = currentSave.current;
-  const textArr = currentSave.textArr;
+
+  let current = getCurrentSave(itemIndex);
+  const textArr = itemsArray[itemIndex].text;
+
   const lastBefore = textArr.length - 1;
   if (lastBefore === 0) {
     putItemToDeletedArray(itemIndex);
@@ -286,9 +285,8 @@ const previousSave = (el) => {
   const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-  const currentSave = getCurrentSave(itemIndex);
-  let current = currentSave.current;
-  const textArr = currentSave.textArr;
+  let current = getCurrentSave(itemIndex);
+  const textArr = itemsArray[itemIndex].text;
 
   current--;
   el.nextSibling.nextSibling.removeAttribute("disable");
@@ -304,9 +302,8 @@ const nextSave = (el) => {
   const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-  const currentSave = getCurrentSave(itemIndex);
-  let current = currentSave.current;
-  const textArr = currentSave.textArr;
+  let current = getCurrentSave(itemIndex);
+  const textArr = itemsArray[itemIndex].text;
 
   current++;
   el.previousSibling.previousSibling.removeAttribute("disable");
