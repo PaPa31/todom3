@@ -290,22 +290,13 @@ const previousSave = (el) => {
   let current = currentSave.current;
   const textArr = currentSave.textArr;
 
-  //const textArr = itemsArray[itemIndex].text;
-  //const cur = itemsArray[itemIndex].cur;
-  //let current = cur !== undefined ? cur : textArr.length;
   current--;
   el.nextSibling.nextSibling.removeAttribute("disable");
   if (current < 1) {
     el.setAttribute("disable", true);
   }
-  //const prevText = textArr[current];
-  //  ? textArr[current]
-  //  : textArr[textArr.length - 1];
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  //const md = markdown(prevText);
-  //const chi = liDOM.querySelector(".md-item");
-  //chi.innerHTML = md;
   liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
 };
 
@@ -316,23 +307,14 @@ const nextSave = (el) => {
   const currentSave = getCurrentSave(itemIndex);
   let current = currentSave.current;
   const textArr = currentSave.textArr;
-  //const len = textArr.length - 1;
 
-  //const textArr = itemsArray[itemIndex].text;
-  //const cur = itemsArray[itemIndex].cur;
-
-  //let current = cur !== undefined ? cur : len;
   current++;
   el.previousSibling.previousSibling.removeAttribute("disable");
   if (current >= textArr.length - 1) {
     el.setAttribute("disable", true);
   }
-  //const nextText = textArr[current] ? textArr[current] : textArr[len];
   itemsArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  //const md = markdown(nextText);
-  //const chi = liDOM.querySelector(".md-item");
-  //chi.innerHTML = md;
   liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
 };
 
