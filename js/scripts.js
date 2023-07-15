@@ -87,9 +87,10 @@ const xUI = () => {
 const editItem = (e, element) => {
   const editedItemLiDOM2 = findLiRecursive(element);
   const itemIndexToEdit2 = indexedItemsArray.indexOf(editedItemLiDOM2.id) * 1;
+
+  let current = getCurrentSave(itemIndex);
   const textArr = itemsArray[itemIndexToEdit2].text;
-  const cur = itemsArray[itemIndexToEdit2].cur;
-  let current = cur !== undefined ? cur : textArr.length - 1;
+
   const editing = textArr[current];
   if (e.ctrlKey) {
     intervalFocus(element, "background-color: #685a7f;", 300);
@@ -448,19 +449,16 @@ document.addEventListener("keyup", function (e) {
 });
 
 const mergeAllItems = () => {
-  itemsArray.forEach((item) => {
+  itemsArray.forEach((item, index) => {
     const textArr = item.text;
-    const cur = item.cur;
-    const current = cur !== undefined ? cur : textArr.length - 1;
-    const _itt = textArr[current]
-      ? textArr[current]
-      : textArr[textArr.length - 1];
-    if (_itt) {
+    const current = getCurrentSave(index);
+    const text = textArr[current];
+    if (text) {
       input.value = input.value
-        ? /^ *- /.test(_itt)
-          ? input.value + "\n" + _itt
-          : input.value + "\\\n" + _itt
-        : _itt;
+        ? /^ *- /.test(text)
+          ? input.value + "\n" + text
+          : input.value + "\\\n" + text
+        : text;
     }
   });
   xUI();
