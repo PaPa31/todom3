@@ -654,13 +654,10 @@ const saveItemFromFile = (fileName) => {
   const itemIndex = itemsArray.findIndex((s) => s.name && s.name === fileName);
   if (itemIndex !== -1) {
     const itemId = indexedItemsArray[itemIndex];
-    //itemsArray[itemId].text = input.value;
     itemsArray[itemIndex].text.push(input.value);
-
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
-    const len = textArr.length;
-    saveHistoryControl(liDOM, len);
+    saveHistoryControl(liDOM, textArr.length);
     const mdTag = liDOM.querySelector(".md-item");
     mdTag.innerHTML = markdown(input.value);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
