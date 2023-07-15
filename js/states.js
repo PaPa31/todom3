@@ -667,7 +667,7 @@ const saveItemFromFile = (_name) => {
   } else {
     const obj = {
       text: [input.value],
-      name: _name,
+      name: fileName,
     };
     itemsArray.push(obj);
     indexedItemsArray.push(idCounterItems.toString());
@@ -682,15 +682,15 @@ const saveItemFromFile = (_name) => {
 function checkIt() {
   //console.log("start checking");
   const previewOffset = preview.scrollTop;
-  let name;
+  let fileName;
   if (fileIndexToEdit != null) {
     const fileTextTag = editedFileLiDOM.querySelector(".file-text");
     fileTextTag.innerHTML = markdown(filesArray[fileIndexToEdit].text);
-    name = filesArray[fileIndexToEdit].name;
+    fileName = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {
     filesArray[idCounterFiles].size = fileSizeGlobal;
-    name = filesArray[idCounterFiles].name;
+    fileName = filesArray[idCounterFiles].name;
     liMaker(idCounterFiles);
     idCounterFiles++;
   }
@@ -698,7 +698,7 @@ function checkIt() {
   if (!isItemState) {
     foldedClass = document.getElementById("list-items");
     isItemState = !isItemState;
-    saveItemFromFile(name);
+    saveItemFromFile(fileName);
     foldedClass = document.getElementById("list-files");
     isItemState = !isItemState;
   }
