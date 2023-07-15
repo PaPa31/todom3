@@ -248,6 +248,11 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   parentMainActionsDiv.appendChild(buttonTag);
 };
 
+const updateCur = (current, itemIndex) => {
+  itemsArray[itemIndex].cur = current;
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+};
+
 const deleteCurrentSave = (el) => {
   const liDOM = findLiRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
@@ -276,9 +281,8 @@ const deleteCurrentSave = (el) => {
       el.previousSibling.setAttribute("disable", true);
     }
   }
-  itemsArray[itemIndex].cur = current;
-  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
+  updateCur(current, itemIndex);
 };
 
 const previousSave = (el) => {
@@ -293,9 +297,8 @@ const previousSave = (el) => {
   if (current < 1) {
     el.setAttribute("disable", true);
   }
-  itemsArray[itemIndex].cur = current;
-  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
+  updateCur(current, itemIndex);
 };
 
 const nextSave = (el) => {
@@ -310,9 +313,8 @@ const nextSave = (el) => {
   if (current >= textArr.length - 1) {
     el.setAttribute("disable", true);
   }
-  itemsArray[itemIndex].cur = current;
-  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
+  updateCur(current, itemIndex);
 };
 
 const unfoldGreen = (liDOM) => {
