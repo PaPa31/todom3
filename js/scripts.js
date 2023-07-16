@@ -457,7 +457,7 @@ const mergeAllItems = () => {
   itemsArray.forEach((item, index) => {
     const textArr = item.text;
     const current = getCurrentSave(index);
-    const text = textArr[current];
+    const text = textArr[current].replace(/\\$/, "");
     if (text) {
       input.value = input.value
         ? /^ *- /.test(text)
