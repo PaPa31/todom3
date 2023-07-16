@@ -136,19 +136,19 @@ const liMaker = (arrIndex) => {
 };
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
-  const obj = filesArray[arrIndex];
+  const file = filesArray[arrIndex];
   const div2 = document.createElement("div");
   const div3 = document.createElement("div");
   const div4 = document.createElement("div");
   const fileInfoDiv = document.createElement("div");
   div2.setAttribute("class", "file-name");
-  div2.innerHTML = obj.dir ? obj.dir : obj.name;
+  div2.innerHTML = file.dir ? file.dir : file.name;
   fileInfoDiv.appendChild(div2);
   div4.setAttribute("class", "file-size");
-  div4.innerHTML = obj.size ? fileSizeTerm(obj.size) : "";
+  div4.innerHTML = file.size ? fileSizeTerm(file.size) : "";
   fileInfoDiv.appendChild(div4);
   div3.setAttribute("class", "file-text");
-  div3.innerHTML = markdown(obj.text);
+  div3.innerHTML = markdown(file.text);
   fileInfoDiv.setAttribute("class", "file-info");
   parentDiv.appendChild(fileInfoDiv);
   parentDiv.appendChild(div3);
@@ -499,13 +499,13 @@ const showOrHideUndoDeleteButton = () => {
 var phrase = "README.md";
 
 const fileHttpHandler = (name, dir, size, text) => {
-  const obj = {
+  const fileObj = {
     name: name,
     //dir: res.webkitRelativePath,
     size: size,
     text: text,
   };
-  filesArray.push(obj);
+  filesArray.push(fileObj);
   liMaker(idCounterFiles);
   indexedFilesArray.push(idCounterFiles.toString());
   idCounterFiles++;
@@ -549,12 +549,12 @@ function handleFiles(files) {
 
       for (let file of arrFromFiles) {
         yield new Promise((resolve) => {
-          const obj = {
+          const fileObj = {
             name: file.name,
             dir: file.webkitRelativePath,
             size: file.size,
           };
-          filesArray.push(obj);
+          filesArray.push(fileObj);
           let reader = new FileReader();
           reader.onload = (event) => resolve(event.target.result);
           reader.readAsText(file);
@@ -571,10 +571,10 @@ function handleFiles(files) {
       const arrItems = texts[0].split("\n");
       arrItems.forEach((item) => {
         if (item) {
-          const obj = {
-            text: item,
+          const itemObj = {
+            text: [item],
           };
-          itemsArray.push(obj);
+          itemsArray.push(itemObj);
           liMaker(idCounterItems);
           indexedItemsArray.push(idCounterItems.toString());
           idCounterItems++;

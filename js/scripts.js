@@ -345,8 +345,8 @@ const saveFile = () => {
     } else {
       fileName =
         getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
-      const obj = { name: fileName, text: input.value };
-      filesArray.push(obj);
+      const file = { name: fileName, text: input.value };
+      filesArray.push(file);
       indexedFilesArray.push(idCounterFiles.toString());
       fileDownload(fileName);
     }
