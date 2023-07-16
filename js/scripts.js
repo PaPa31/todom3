@@ -429,6 +429,7 @@ const defaultItemStateVars = () => {
   deleteAllItemsButton.classList.replace("visible", "invisible");
   indexedItemsArray = [];
   itemsArray = [];
+  itemsSpecArray = [];
   idCounterItems = 0;
   showItemSortingArrows(0);
   foldedClass.innerHTML = "";
