@@ -151,6 +151,7 @@ const removeItemFromMemory = (item, indexToDelete) => {
 
   itemsArray.splice(indexToDelete, 1);
   indexedItemsArray.splice(indexToDelete, 1);
+  itemsSpecArray.splice(indexToDelete, 1);
 
   showOrHideDeleteAllItems();
 
