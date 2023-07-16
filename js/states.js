@@ -783,14 +783,22 @@ const arrCheckForNull = (arr) => {
       idleIterationPayload(i);
     } else {
       arr.splice(i, 1);
+      itemsSpecArray.splice(i, 1); // sync
       i--;
       len--;
     }
   }
 
+  // cut off extra if any
+  if (itemsSpecArray.length > len) {
+    itemsSpecArray.length = len;
+    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+  }
+
   if (len1 > len) {
     console.log("null(s) was/were found and ignored!");
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   }
 };
 
