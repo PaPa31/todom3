@@ -133,15 +133,12 @@ const putItemToTrash = (indexToTrash) => {
   localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 };
 
-const putItemToDeletedArray = (indexToDelete, deletedText) => {
-  if (deletedText) {
-    const itemDeepCopy = JSON.parse(JSON.stringify(itemsArray[indexToDelete]));
-    itemDeepCopy.text = [deletedText];
-    itemDeepCopy.cur = 0;
-    deletedArray.push(itemDeepCopy);
-  } else {
-    deletedArray.push(itemsArray[indexToDelete]);
-  }
+const putItemToDeletedArray = (deletedText) => {
+  const deletedObj = {
+    text: [deletedText],
+    cur: 0,
+  };
+  deletedArray.push(deletedObj);
   deletedCounter.innerText = deletedArray.length;
   undoLastDeleteButton.classList.replace("invisible", "visible");
 };
