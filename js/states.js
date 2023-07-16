@@ -108,7 +108,8 @@ const liMaker = (arrIndex) => {
   let last, current;
 
   if (isItemState) {
-    const textArr = itemsArray[arrIndex].text;
+    const itemId = indexedItemsArray[arrIndex];
+    const textArr = itemsArray[itemId].text;
     last = textArr.length - 1;
     current = getCurrentSave(arrIndex);
 
@@ -506,8 +507,8 @@ const fileHttpHandler = (name, dir, size, text) => {
     text: text,
   };
   filesArray.push(fileObj);
-  liMaker(idCounterFiles);
   indexedFilesArray.push(idCounterFiles.toString());
+  liMaker(idCounterFiles);
   idCounterFiles++;
 };
 
@@ -575,8 +576,8 @@ function handleFiles(files) {
             text: [item],
           };
           itemsArray.push(itemObj);
-          liMaker(idCounterItems);
           indexedItemsArray.push(idCounterItems.toString());
+          liMaker(idCounterItems);
           idCounterItems++;
         }
       });
@@ -587,8 +588,8 @@ function handleFiles(files) {
       // Files
       texts.map((text) => {
         filesArray[idCounterFiles].text = text;
-        liMaker(idCounterFiles);
         indexedFilesArray.push(idCounterFiles.toString());
+        liMaker(idCounterFiles);
         idCounterFiles++;
       });
     }
@@ -644,8 +645,8 @@ function addDirectory(item) {
 const handleFilesArray = () => {
   for (let i = 0; i < filesArray.length; i++) {
     // error?? instead 'i' need 'idCounterFiles'
-    liMaker(i);
     indexedFilesArray.push(idCounterFiles.toString());
+    liMaker(i);
     idCounterFiles++;
   }
 };
@@ -769,8 +770,8 @@ const initializeFileState = () => {
 };
 
 const idleIterationPayload = (i) => {
-  liMaker(i);
   indexedItemsArray.push(idCounterItems.toString());
+  liMaker(i);
   idCounterItems++;
 };
 
