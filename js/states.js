@@ -83,7 +83,7 @@ const findLiRecursive = (el, tag = "li") => {
   }
 };
 
-const setInitialSave = (current, itemIndex) => {
+const setDefaultSave = (current, itemIndex) => {
   itemsSpecArray[itemIndex] = { cur: current };
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
@@ -96,7 +96,7 @@ const getCurrentSave = (itemIndex) => {
     current = cur;
   } else {
     current = textArr.length - 1;
-    setInitialSave(current, itemIndex);
+    setDefaultSave(current, itemIndex);
   }
   return current;
 };
