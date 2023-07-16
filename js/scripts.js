@@ -478,6 +478,7 @@ deleteAllItemsButton.addEventListener("click", function (e) {
       if (confirm("Are you sure?")) {
         defaultItemStateVars();
         localStorage.removeItem("todomItemsArray");
+        localStorage.removeItem("todomItemsSpecArray");
       } else {
         e.preventDefault();
       }
