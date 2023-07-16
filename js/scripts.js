@@ -88,7 +88,7 @@ const editItem = (e, element) => {
   const editedItemLiDOM2 = findLiRecursive(element);
   const itemIndexToEdit2 = indexedItemsArray.indexOf(editedItemLiDOM2.id) * 1;
 
-  let current = getCurrentSave(itemIndex);
+  let current = getCurrentSave(itemIndexToEdit2);
   const textArr = itemsArray[itemIndexToEdit2].text;
 
   const editing = textArr[current];
