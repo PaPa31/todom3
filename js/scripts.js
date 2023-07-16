@@ -542,8 +542,11 @@ returnInputButton.addEventListener("click", function () {
 const deletionHandler = (arr, btns, counterEl, todomArrVar) => {
   let len = arr.length;
   if (len !== 0) {
-    itemsArray.push(arr.pop());
+    const returningObj = arr.pop();
+    itemsArray.push(returningObj.text);
+    itemsSpecArray.push(returningObj.cur);
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
     if (todomArrVar) localStorage.setItem(todomArrVar, JSON.stringify(arr));
 
     indexedItemsArray.push(idCounterItems.toString());
