@@ -822,8 +822,14 @@ const initializeItemState = () => {
     idCounterItems = 0;
     indexedItemsArray = [];
 
-    arrCheckForNull(itemsArray);
-  } else {
+    if (itemsArray.length !== 0) {
+      arrCheckForNull(itemsArray);
+    } else {
+      // sync by reset
+      itemsSpecArray.length = 0;
+      localStorage.removeItem("todomItemsArray");
+      localStorage.removeItem("todomItemsSpecArray");
+    }
   }
   showItemSortingArrows(foldedClass.childElementCount);
 };
