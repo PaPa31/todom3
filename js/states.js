@@ -83,14 +83,20 @@ const findLiRecursive = (el, tag = "li") => {
   }
 };
 
+const setInitialSave = (current, itemIndex) => {
+  itemsSpecArray[itemIndex] = { cur: current };
+  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+};
+
 const getCurrentSave = (itemIndex) => {
-  const cur = itemsSpecArray[itemIndex].cur;
+  const textArr = itemsArray[itemIndex].text;
+  const cur = itemsSpecArray[itemIndex] && itemsSpecArray[itemIndex].cur;
   let current;
-  if (cur != undefined && itemsArray[itemIndex].text[cur] != undefined) {
+  if (cur != undefined && textArr[cur] != undefined) {
     current = cur;
   } else {
     current = textArr.length - 1;
-    setCurrentSave(current, itemIndex);
+    setInitialSave(current, itemIndex);
   }
   return current;
 };
