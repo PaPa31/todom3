@@ -157,8 +157,10 @@ const removeItemFromMemory = (item, indexToDelete) => {
 
   if (itemsArray.length == 0) {
     localStorage.removeItem("todomItemsArray");
+    localStorage.removeItem("todomItemsSpecArray");
   } else {
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   }
 };
 
