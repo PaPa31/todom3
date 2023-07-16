@@ -282,6 +282,7 @@ const deleteCurrentSave = (el) => {
     //current++;
   } else {
     el.nextSibling.setAttribute("disable", true);
+    if (current === lastBefore) current--;
     if (lastAfter === 0) {
       el.previousSibling.setAttribute("disable", true);
     }
