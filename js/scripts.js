@@ -540,8 +540,8 @@ const deletionHandler = (arr, btns, counterEl, todomArrVar) => {
   let len = arr.length;
   if (len !== 0) {
     const returningObj = arr.pop();
-    itemsArray.push(returningObj.text);
-    itemsSpecArray.push(returningObj.cur);
+    itemsArray.push({ text: returningObj.text });
+    itemsSpecArray.push({ cur: returningObj.cur });
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
     if (todomArrVar) localStorage.setItem(todomArrVar, JSON.stringify(arr));
