@@ -156,6 +156,7 @@ const removeItemFromMemory = (item, indexToDelete) => {
   showOrHideDeleteAllItems();
 
   if (itemsArray.length == 0) {
+    defaultItemStateVars();
     localStorage.removeItem("todomItemsArray");
     localStorage.removeItem("todomItemsSpecArray");
   } else {
