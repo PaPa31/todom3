@@ -560,6 +560,7 @@ function handleFiles(files) {
             size: file.size,
           };
           filesArray.push(fileObj);
+          indexedFilesArray.push(idCounterFiles.toString());
           let reader = new FileReader();
           reader.onload = (event) => resolve(event.target.result);
           reader.readAsText(file);
@@ -590,9 +591,10 @@ function handleFiles(files) {
       if (filesArray.length === 0) fileElem.value = null;
     } else {
       // Files
-      texts.map((text) => {
-        filesArray[idCounterFiles].text = text;
-        indexedFilesArray.push(idCounterFiles.toString());
+      texts.forEach((text) => {
+        const correctedFilesIndex =
+          indexedFilesArray.indexOf(idCounterFiles.toString()) * 1;
+        filesArray[correctedFilesIndex].text = text;
         liMaker(idCounterFiles);
         idCounterFiles++;
       });
