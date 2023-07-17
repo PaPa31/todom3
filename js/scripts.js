@@ -604,10 +604,10 @@ undoLastDeleteButton.addEventListener("click", function (e) {
 const inputChange = function (e) {
   lastInputValue = e.target.value;
   if (lastInputValue) {
-    inputLabel.classList.replace("invisible", "visible");
+    //inputLabel.classList.replace("invisible", "visible");
     xButton.style = "display:block";
   } else {
-    inputLabel.classList.replace("visible", "invisible");
+    //inputLabel.classList.replace("visible", "invisible");
     xButton.style = "display:none";
   }
   returnInputButton.style = "display:none";
