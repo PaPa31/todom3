@@ -394,9 +394,9 @@ const deleteOneFile = (e, liDOM) => {
 
     filesArray.splice(indexToDelete, 1);
     indexedFilesArray.splice(indexToDelete, 1);
-    idCounterFiles--;
+
     showOrHideDeleteAllItems();
-    if (idCounterFiles == 0) fileElem.value = null;
+    if (filesArray.length === 0) fileElem.value = null;
 
     twoClickToTrash = false;
     lastClickId = undefined;
@@ -587,7 +587,7 @@ function handleFiles(files) {
       });
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
       filesArray.splice(idCounterFiles, 1);
-      if (idCounterFiles == 0) fileElem.value = null;
+      if (filesArray.length === 0) fileElem.value = null;
     } else {
       // Files
       texts.map((text) => {
