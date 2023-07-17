@@ -111,7 +111,7 @@ const editItem = (e, element) => {
   mdToPreview(input.value);
 };
 
-const isEditing = (indexToDelete) => {
+const inputLabelNewOrEdit = (indexToDelete) => {
   if (itemIndexToEdit != null && itemIndexToEdit >= indexToDelete) {
     if (itemIndexToEdit == indexToDelete) {
       defaultMarkers();
@@ -144,7 +144,7 @@ const putItemToDeletedArray = (deletedText) => {
 };
 
 const removeItemFromMemory = (item, indexToDelete) => {
-  isEditing(indexToDelete);
+  inputLabelNewOrEdit(indexToDelete);
 
   foldedClass.removeChild(item);
   showItemSortingArrows(foldedClass.childElementCount);
