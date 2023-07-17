@@ -541,7 +541,7 @@ returnInputButton.addEventListener("click", function () {
   input.focus();
 });
 
-const deletionHandler = (arr, btns, counterEl, todomArrVar) => {
+const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
   let len = arr.length;
   if (len !== 0) {
     const returningObj = arr.pop();
@@ -568,7 +568,7 @@ const deletionHandler = (arr, btns, counterEl, todomArrVar) => {
 };
 
 restoreItemButton.addEventListener("click", function () {
-  deletionHandler(
+  restoreHandler(
     trashArray,
     [restoreItemButton, clearTrashButton],
     trashedCounter,
@@ -598,7 +598,7 @@ clearTrashButton.addEventListener("click", function (e) {
 });
 
 undoLastDeleteButton.addEventListener("click", function (e) {
-  deletionHandler(deletedArray, [undoLastDeleteButton], deletedCounter);
+  restoreHandler(deletedArray, [undoLastDeleteButton], deletedCounter);
 });
 
 const inputChange = function (e) {
