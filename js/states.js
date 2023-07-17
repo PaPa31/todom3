@@ -108,20 +108,24 @@ const liMaker = (arrIndex) => {
   let last, current;
 
   if (isItemState) {
-    const correctedIndex = indexedItemsArray.indexOf(arrIndex.toString()) * 1;
-    const textArr = itemsArray[correctedIndex].text;
+    const correctedItemsIndex =
+      indexedItemsArray.indexOf(arrIndex.toString()) * 1;
+    const textArr = itemsArray[correctedItemsIndex].text;
     last = textArr.length - 1;
-    current = getCurrentSave(correctedIndex);
+    current = getCurrentSave(correctedItemsIndex);
 
     div.setAttribute("class", "md-item");
-    if (itemsArray[correctedIndex].fold) li.setAttribute("class", "unfolded");
+    if (itemsArray[correctedItemsIndex].fold)
+      li.setAttribute("class", "unfolded");
 
     div.innerHTML = markdown(textArr[current]);
     li.id = idCounterItems;
   } else {
+    const correctedFilesIndex =
+      indexedFilesArray.indexOf(arrIndex.toString()) * 1;
     div.setAttribute("class", "md-file");
 
-    fileInfoDivMaker(div, correctedIndex);
+    fileInfoDivMaker(div, correctedFilesIndex);
     //if (filesArray[arrIndex].fold) li.setAttribute("class", "unfolded");
 
     li.id = idCounterFiles;
