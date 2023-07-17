@@ -560,7 +560,6 @@ function handleFiles(files) {
             size: file.size,
           };
           filesArray.push(fileObj);
-          indexedFilesArray.push(idCounterFiles.toString());
           let reader = new FileReader();
           reader.onload = (event) => resolve(event.target.result);
           reader.readAsText(file);
@@ -592,6 +591,7 @@ function handleFiles(files) {
     } else {
       // Files
       texts.forEach((text) => {
+        indexedFilesArray.push(idCounterFiles.toString());
         const correctedFilesIndex =
           indexedFilesArray.indexOf(idCounterFiles.toString()) * 1;
         filesArray[correctedFilesIndex].text = text;
