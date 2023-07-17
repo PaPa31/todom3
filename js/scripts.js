@@ -387,8 +387,7 @@ const saveItem = () => {
     };
     itemsSpecArray.push(specObj);
     indexedItemsArray.push(idCounterItems.toString());
-    const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
-    liMaker(newItem);
+    liMaker(idCounterItems);
     idCounterItems++;
   }
   defaultMarkers();
@@ -552,10 +551,9 @@ const deletionHandler = (arr, btns, counterEl, todomArrVar) => {
     if (todomArrVar) localStorage.setItem(todomArrVar, JSON.stringify(arr));
 
     indexedItemsArray.push(idCounterItems.toString());
-    const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
-    liMaker(newItem);
-
+    liMaker(idCounterItems);
     idCounterItems++;
+
     len = len - 1;
     counterEl.innerText = len;
   }

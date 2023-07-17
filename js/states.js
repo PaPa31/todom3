@@ -680,8 +680,7 @@ const saveItemFromFile = (fileName) => {
     };
     itemsSpecArray.push(specObj);
     indexedItemsArray.push(idCounterItems.toString());
-    const newItem = indexedItemsArray.indexOf(idCounterItems.toString()) * 1;
-    liMaker(newItem);
+    liMaker(idCounterItems);
     idCounterItems++;
   }
   defaultMarkers();
