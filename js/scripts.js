@@ -72,6 +72,7 @@ const editUI = (label) => {
 
   inputLabel.innerHTML = `<span>Edit: </span><span>${label}</span>`;
   inputLabel.classList.replace("invisible", "visible");
+  input.setAttribute("placeholder", "Edit");
 
   scrollToLast();
 
@@ -497,6 +498,7 @@ const defaultMarkers = () => {
   itemIndexToEdit = null;
   fileIndexToEdit = null;
   input.classList.replace("border-edit", "border");
+  input.setAttribute("placeholder", "New");
   xButton.title = "Clear input";
 };
 
