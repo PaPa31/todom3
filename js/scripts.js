@@ -459,8 +459,7 @@ const mergeAllItems = () => {
     const textArr = item.text;
     const current = getCurrentSave(index);
     const text = textArr[current].replace(/\\$/, "");
-    const regex =
-      /(^ *#{1,6} *(?!.))|(^ *\d+\.* *(?!.))|(^ *\- *(?!.))|(^ *\>+ *(?!.))|(^ +(?!.))/;
+    const regex = /(^ *#{1,6} *)|(^ *\d+\.* *)|(^ *\- *)|(^ *\>+ *)|(^ +)/;
     if (text) {
       input.value = input.value
         ? regex.test(text)
