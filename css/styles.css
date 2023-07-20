@@ -393,10 +393,10 @@ ol#list-files .main-actions {
   overflow: scroll;
 }
 
-.md-item *,
-.file-text *,
-#preview *,
-#position * {
+.md-item > :first-child,
+.file-text > :first-child,
+#preview > :first-child,
+#position > :first-child {
   width: 100% !important;
   height: 100% !important;
 }
