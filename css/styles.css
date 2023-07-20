@@ -380,7 +380,8 @@ ol#list-files .main-actions {
   border-radius: 0 0 5px 5px;
   background-color: var(--bg-item);
   word-wrap: break-word;
-  overflow: auto;
+  /*due to resizability for Youtube */
+  /*overflow: auto;*/
   width: 100%;
 }
 
@@ -388,6 +389,16 @@ ol#list-files .main-actions {
 .file-text {
   padding: 7px 10px 12px 10px;
   line-height: 19px;
+  resize: both;
+  overflow: scroll;
+}
+
+.md-item *,
+.file-text *,
+#preview *,
+#position * {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .file-name,
