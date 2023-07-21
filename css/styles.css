@@ -317,6 +317,18 @@ blockquote {
   background-color: var(--todom-item-background-dark);
 }
 
+.md-item,
+.file-text {
+  resize: both;
+  overflow: scroll;
+}
+
+ol#list-items:not(.folded) .unfolded .md-item,
+ol#list-items.folded :not(.unfolded) .md-item {
+  resize: initial;
+  overflow: initial;
+}
+
 .file-info {
   overflow: auto;
 }
@@ -389,17 +401,17 @@ ol#list-files .main-actions {
 .file-text {
   padding: 7px 10px 12px 10px;
   line-height: 19px;
-  resize: both;
-  overflow: scroll;
 }
 
-.md-item > :first-child,
+/*duplicate*/
+
+/*.md-item > :first-child,
 .file-text > :first-child,
 #preview > :first-child,
 #position > :first-child {
   width: 100% !important;
   height: 100% !important;
-}
+}*/
 
 .file-name,
 .file-size {
@@ -446,6 +458,8 @@ ol#list-files .main-actions {
 #preview > :first-child,
 #position > :first-child {
   margin-top: 0;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 ol#list-items:not(.folded) .unfolded .md-item :first-child,
