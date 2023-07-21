@@ -482,6 +482,7 @@ ol#list-items.folded :not(.unfolded) .md-item :first-child {
   white-space: nowrap;
   overflow: hidden;
   margin-bottom: 0;
+  pointer-events: none;
 }
 
 ol#list-items:not(.folded) .unfolded .md-item :not(:first-child),
