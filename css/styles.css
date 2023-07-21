@@ -312,6 +312,7 @@ blockquote {
 
 .folded .unfolded .md-item {
   height: initial;
+  line-height: initial;
   opacity: 1;
   width: 100%;
   background-color: var(--todom-item-background-dark);
@@ -327,6 +328,10 @@ ol#list-items:not(.folded) .unfolded .md-item,
 ol#list-items.folded :not(.unfolded) .md-item {
   resize: initial;
   overflow: initial;
+  /*line-height: 19px;*/
+  height: 38px !important;
+  width: calc(100% - 120px) !important;
+  padding: 0px 10px;
 }
 
 .file-info {
@@ -400,7 +405,6 @@ ol#list-files .main-actions {
 .md-item,
 .file-text {
   padding: 7px 10px 12px 10px;
-  line-height: 19px;
 }
 
 /*duplicate*/
@@ -418,10 +422,9 @@ ol#list-files .main-actions {
   line-height: 19px;
 }
 
-.md-item > :not(p),
-.file-text > :not(p) {
+/*.resizable-div > :not(p) {
   line-height: initial;
-}
+}*/
 
 #preview,
 #position {
