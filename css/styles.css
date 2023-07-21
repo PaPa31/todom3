@@ -394,7 +394,7 @@ ol#list-files .main-actions {
   word-wrap: break-word;
   /*due to resizability for Youtube */
   /*overflow: auto;*/
-  width: 100%;
+  /*width: 100%;*/
 }
 
 .md-item,
@@ -453,13 +453,24 @@ ol#list-files .main-actions {
   background-color: #662a2a;
 }*/
 
-.md-item > :first-child,
-.file-text > :first-child,
+.resizable-div {
+  width: 100% !important;
+  height: 100% !important;
+  /*width: inherit;
+  height: inherit;*/
+  display: flex;
+  align-content: stretch;
+  flex-direction: column;
+}
+
+.resizable-div > :first-child,
+/*.file-text > :first-child,*/
 #preview > :first-child,
 #position > :first-child {
   margin-top: 0;
-  width: 100% !important;
-  height: 100% !important;
+  flex: 1;
+  /*width: inherit;
+  height: inherit;*/
 }
 
 ol#list-items:not(.folded) .unfolded .md-item :first-child,

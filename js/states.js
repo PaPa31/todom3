@@ -104,6 +104,8 @@ const getCurrentSave = (itemIndex) => {
 const liMaker = (arrIndex) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
+  const resizableDiv = document.createElement("div");
+  resizableDiv.setAttribute("class", "resizable-div");
 
   let last, current;
 
@@ -118,18 +120,20 @@ const liMaker = (arrIndex) => {
     if (itemsArray[correctedItemsIndex].fold)
       li.setAttribute("class", "unfolded");
 
-    div.innerHTML = markdown(textArr[current]);
+    resizableDiv.innerHTML = markdown(textArr[current]);
     li.id = idCounterItems;
   } else {
     const correctedFilesIndex =
       indexedFilesArray.indexOf(arrIndex.toString()) * 1;
     div.setAttribute("class", "md-file");
 
-    fileInfoDivMaker(div, correctedFilesIndex);
+    fileInfoDivMaker(resizableDiv, correctedFilesIndex);
     //if (filesArray[arrIndex].fold) li.setAttribute("class", "unfolded");
 
     li.id = idCounterFiles;
   }
+
+  div.appendChild(resizableDiv);
 
   unfoldButtonMaker(li);
   if (isItemState) saveHistoryDivMaker(li, last, current);
