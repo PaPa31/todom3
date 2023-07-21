@@ -301,8 +301,8 @@ blockquote {
 
 /*#main-listing > ol*/
 
-#main-listing > ol.folded > li > .md-item,
-#main-listing > ol > li.unfolded > .md-item {
+.folded .md-item,
+.unfolded .md-item {
   height: 38px;
   opacity: 0.25;
   overflow-y: hidden;
@@ -310,7 +310,7 @@ blockquote {
   background-color: transparent;
 }
 
-#main-listing > ol.folded > li.unfolded > .md-item {
+.folded .unfolded .md-item {
   height: initial;
   opacity: 1;
   width: 100%;
@@ -394,7 +394,7 @@ ol#list-files .main-actions {
   word-wrap: break-word;
   /*due to resizability for Youtube */
   /*overflow: auto;*/
-  /*width: 100%;*/
+  width: 100%;
 }
 
 .md-item,
