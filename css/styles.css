@@ -464,6 +464,12 @@ ol#list-files .main-actions {
   display: flex;
   align-content: stretch;
   flex-direction: column;
+  justify-content: center;
+}
+
+ol#list-items:not(.folded) .unfolded .resizable-div,
+ol#list-items.folded :not(.unfolded) .resizable-div {
+  justify-content: end;
 }
 
 .resizable-div > :first-child,
@@ -483,6 +489,8 @@ ol#list-items.folded :not(.unfolded) .md-item :first-child {
   overflow: hidden;
   margin-bottom: 0;
   pointer-events: none;
+  flex: initial;
+  justify-content: center;
 }
 
 ol#list-items:not(.folded) .unfolded .md-item :not(:first-child),
