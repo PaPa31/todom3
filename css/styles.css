@@ -471,17 +471,17 @@ ol#list-files .main-actions {
   display: flex;
   align-content: stretch;
   flex-direction: column;
-  justify-content: end;
+  /*justify-content: end;*/
 }
 
 .folded .resizable-div,
 .unfolded .resizable-div {
-  justify-content: end;
+  justify-content: start;
 }
 
-.folded .unfolded .resizable-div {
+/*.folded .unfolded .resizable-div {
   justify-content: end;
-}
+}*/
 
 /*ol#list-items:not(.folded) .unfolded .resizable-div,
 ol#list-items.folded :not(.unfolded) .resizable-div {
