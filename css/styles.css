@@ -466,18 +466,27 @@ ol#list-files .main-actions {
 .resizable-div {
   /*width: 100% !important;
   height: 100% !important;*/
-  /*width: inherit;
-  height: inherit;*/
+  /*width: inherit;*/
+  height: inherit;
   display: flex;
   align-content: stretch;
   flex-direction: column;
-  justify-content: center;
-}
-
-ol#list-items:not(.folded) .unfolded .resizable-div,
-ol#list-items.folded :not(.unfolded) .resizable-div {
   justify-content: end;
 }
+
+.folded .resizable-div,
+.unfolded .resizable-div {
+  justify-content: end;
+}
+
+.folded .unfolded .resizable-div {
+  justify-content: end;
+}
+
+/*ol#list-items:not(.folded) .unfolded .resizable-div,
+ol#list-items.folded :not(.unfolded) .resizable-div {
+  justify-content: end;
+}*/
 
 .resizable-div > :first-child,
 /*.file-text > :first-child,*/
