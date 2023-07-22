@@ -409,7 +409,10 @@ ol#list-files .main-actions {
   width: 100%;
 }
 
-.md-item,
+.md-item {
+  padding: 10px;
+}
+
 .file-text {
   padding: 7px 10px 12px 10px;
 }
