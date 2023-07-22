@@ -164,9 +164,9 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
 };
 
 const unfoldButtonMaker = (parentLi) => {
-  const mdTag = isItemState
-    ? parentLi.querySelector(".md-item")
-    : parentLi.querySelector(".file-text");
+  //const mdTag = isItemState
+  //  ? parentLi.querySelector(".md-item")
+  //  : parentLi.querySelector(".file-text");
   const buttonTag = document.createElement("button");
   const numInside = document.createElement("span");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
@@ -296,7 +296,9 @@ const deleteCurrentSave = (el) => {
       el.previousSibling.setAttribute("disable", true);
     }
   }
-  liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
+  liDOM.querySelector(".md-item > .resizable-div").innerHTML = markdown(
+    textArr[current]
+  );
   setCurrentSave(current, itemIndex);
 };
 
@@ -312,7 +314,9 @@ const previousSave = (el) => {
   if (current < 1) {
     el.setAttribute("disable", true);
   }
-  liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
+  liDOM.querySelector(".md-item > .resizable-div").innerHTML = markdown(
+    textArr[current]
+  );
   setCurrentSave(current, itemIndex);
 };
 
@@ -328,7 +332,9 @@ const nextSave = (el) => {
   if (current >= textArr.length - 1) {
     el.setAttribute("disable", true);
   }
-  liDOM.querySelector(".md-item").innerHTML = markdown(textArr[current]);
+  liDOM.querySelector(".md-item > .resizable-div").innerHTML = markdown(
+    textArr[current]
+  );
   setCurrentSave(current, itemIndex);
 };
 
@@ -676,7 +682,7 @@ const saveItemFromFile = (fileName) => {
     const textArr = itemsArray[itemIndex].text;
     itemsSpecArray[itemIndex].cur = textArr.length - 1;
     saveHistoryControl(liDOM, textArr.length);
-    const mdTag = liDOM.querySelector(".md-item");
+    const mdTag = liDOM.querySelector(".md-item > .resizable-div");
     mdTag.innerHTML = markdown(input.value);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {

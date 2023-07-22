@@ -377,7 +377,8 @@ const saveItem = () => {
     const len = textArr.length;
     itemsSpecArray[itemIndexToEdit].cur = len - 1;
     saveHistoryControl(editedItemLiDOM, len);
-    editedItemLiDOM.querySelector(".md-item").innerHTML = markdown(input.value);
+    editedItemLiDOM.querySelector(".md-item > .resizable-div").innerHTML =
+      markdown(input.value);
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
   } else {
     const itemObj = {
