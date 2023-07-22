@@ -316,6 +316,11 @@ blockquote {
   opacity: 1;
   width: 100%;
   background-color: var(--todom-item-background-dark);
+  clear: left;
+}
+
+.md-item {
+  clear: left;
 }
 
 .md-item,
@@ -332,6 +337,7 @@ ol#list-items.folded :not(.unfolded) .md-item {
   height: 38px !important;
   width: calc(100% - 120px) !important;
   padding: 0px 10px;
+  clear: none;
 }
 
 .file-info {
