@@ -605,6 +605,44 @@ undoLastDeleteButton.addEventListener("click", function (e) {
   restoreHandler(deletedArray, [undoLastDeleteButton], deletedCounter);
 });
 
+//const resizeHandle = document.getElementById("resize-handle");
+
+//resizeHandle.addEventListener("mousedown", handleMouseDown);
+//resizeHandle.addEventListener("mouseup", handleMouseUp);
+
+//function handleMouseDown(event) {
+//  event.target.style.cursor = "col-resize";
+//}
+
+//function handleMouseUp(event) {
+//  console.log(event.which);
+//  console.log(event.buttons);
+//  if (event.which === 2) {
+//    // Do something if it was a double click
+//    event.target.style = "";
+//  } else {
+//    event.target.style.cursor = "";
+//  }
+//}
+
+function handleDblClick(event) {
+  // Get the target of the event
+  var target = event.target;
+
+  event.target.style = "";
+  console.log(target);
+  // Check if the target is the window itself
+  //if (target === window) {
+  //  // Resize the window by setting its width and height to the values of the clicked corner
+  //  var width = event.clientX;
+  //  var height = event.clientY;
+  //  window.resizeTo(width, height);
+  //  return;
+  //}
+
+  // If the target isn't the window, ignore the event
+}
+
 const inputChange = function (e) {
   lastInputValue = e.target.value;
   if (lastInputValue) {

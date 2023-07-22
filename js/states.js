@@ -135,6 +135,11 @@ const liMaker = (arrIndex) => {
 
   div.appendChild(resizableDiv);
 
+  //div.addEventListener("mousedown", handleMouseDown);
+  //div.addEventListener("mouseup", handleMouseUp);
+
+  div.addEventListener("dblclick", handleDblClick);
+
   unfoldButtonMaker(li);
   if (isItemState) saveHistoryDivMaker(li, last, current);
   mainActionsDivMaker(li);
