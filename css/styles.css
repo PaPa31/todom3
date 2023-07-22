@@ -305,7 +305,7 @@ blockquote {
 .unfolded .md-item {
   height: 38px;
   opacity: 0.25;
-  overflow-y: hidden;
+  overflow-y: scroll;
   width: calc(100% - 120px);
   background-color: transparent;
 }
@@ -338,6 +338,7 @@ ol#list-items.folded :not(.unfolded) .md-item {
   width: calc(100% - 120px) !important;
   padding: 0px 10px;
   clear: none;
+  overflow: hidden;
 }
 
 .file-info {
@@ -463,8 +464,8 @@ ol#list-files .main-actions {
 }*/
 
 .resizable-div {
-  width: 100% !important;
-  height: 100% !important;
+  /*width: 100% !important;
+  height: 100% !important;*/
   /*width: inherit;
   height: inherit;*/
   display: flex;
