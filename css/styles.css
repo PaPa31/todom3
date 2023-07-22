@@ -410,7 +410,10 @@ ol#list-files .main-actions {
 }
 
 .md-item {
-  padding: 10px;
+  /*resize handle takes 10px from the right
+  and 10px from the bottom
+  */
+  padding: 10px 0 0 10px;
 }
 
 .file-text {
@@ -470,11 +473,12 @@ ol#list-files .main-actions {
   /*width: 100% !important;
   height: 100% !important;*/
   /*width: inherit;*/
-  height: inherit;
+  /*height: inherit;*/
   display: flex;
   align-content: stretch;
   flex-direction: column;
   /*justify-content: end;*/
+  height: 100%;
 }
 
 .folded .resizable-div,
