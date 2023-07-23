@@ -489,6 +489,10 @@ ol#list-files .main-actions {
   justify-content: start;
 }
 
+.resizable-div iframe {
+  height: 64px;
+}
+
 /*.folded .unfolded .resizable-div {
   justify-content: end;
 }*/
