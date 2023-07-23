@@ -680,7 +680,7 @@ table {
 }
 
 [disable="true"] {
-  visibility: collapse;
+  visibility: hidden;
   opacity: 0;
 }
 
