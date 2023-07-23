@@ -481,6 +481,10 @@ ol#list-files .main-actions {
   height: 100%;
 }
 
+.md-file .resizable-div {
+  display: block;
+}
+
 .folded .resizable-div,
 .unfolded .resizable-div {
   justify-content: start;
