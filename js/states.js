@@ -303,10 +303,16 @@ const deleteCurrentSave = (el) => {
     // 'current' points to the next position
     //current++;
   } else {
-    el.nextSibling.setAttribute("disable", true);
-    if (current === lastBefore) current--;
+    el.previousSibling.setAttribute("disable", true);
+    if (current === lastBefore) {
+      current--;
+      el.previousSibling.previousSibling.innerText = current;
+    }
     if (lastAfter === 0) {
-      el.previousSibling.setAttribute("disable", true);
+      el.previousSibling.previousSibling.previousSibling.setAttribute(
+        "disable",
+        true
+      );
     }
   }
   liDOM.querySelector(".md-item > .resizable-div").innerHTML = markdown(
@@ -324,6 +330,7 @@ const previousSave = (el) => {
 
   current--;
   el.nextSibling.nextSibling.removeAttribute("disable");
+  el.nextSibling.innerText = current;
   if (current < 1) {
     el.setAttribute("disable", true);
   }
@@ -341,6 +348,7 @@ const nextSave = (el) => {
   const textArr = itemsArray[itemIndex].text;
 
   current++;
+  el.previousSibling.innerText = current;
   el.previousSibling.previousSibling.removeAttribute("disable");
   if (current >= textArr.length - 1) {
     el.setAttribute("disable", true);
