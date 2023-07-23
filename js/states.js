@@ -199,7 +199,7 @@ const saveHistoryDivMaker = (parentControlDiv, last, current) => {
 const counterSaveSpanMaker = (parentSaveHistoryDiv, current) => {
   const spanTag = document.createElement("span");
   spanTag.setAttribute("class", "counter-save");
-  spanTag.innerText = current;
+  spanTag.innerText = current + 1;
   parentSaveHistoryDiv.appendChild(spanTag);
 };
 
@@ -306,7 +306,7 @@ const deleteCurrentSave = (el) => {
     el.previousSibling.setAttribute("disable", true);
     if (current === lastBefore) {
       current--;
-      el.previousSibling.previousSibling.innerText = current;
+      el.previousSibling.previousSibling.innerText = current + 1;
     }
     if (lastAfter === 0) {
       el.previousSibling.previousSibling.previousSibling.setAttribute(
@@ -330,7 +330,7 @@ const previousSave = (el) => {
 
   current--;
   el.nextSibling.nextSibling.removeAttribute("disable");
-  el.nextSibling.innerText = current;
+  el.nextSibling.innerText = current + 1;
   if (current < 1) {
     el.setAttribute("disable", true);
   }
@@ -348,7 +348,7 @@ const nextSave = (el) => {
   const textArr = itemsArray[itemIndex].text;
 
   current++;
-  el.previousSibling.innerText = current;
+  el.previousSibling.innerText = current + 1;
   el.previousSibling.previousSibling.removeAttribute("disable");
   if (current >= textArr.length - 1) {
     el.setAttribute("disable", true);
