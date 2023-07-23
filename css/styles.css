@@ -305,7 +305,7 @@ blockquote {
 .unfolded .md-item {
   height: 38px;
   opacity: 0.25;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: calc(100% - 120px);
   background-color: transparent;
 }
@@ -321,12 +321,6 @@ blockquote {
 
 .md-item {
   clear: left;
-}
-
-.md-item,
-.file-text {
-  resize: both;
-  overflow: scroll;
 }
 
 ol#list-items:not(.folded) .unfolded .md-item,
@@ -419,7 +413,10 @@ ol#list-files .main-actions {
   /*resize handle takes 10px from the right
   and 10px from the bottom
   */
+  resize: both;
+  overflow: auto;
   padding: 10px 0 0 10px;
+  padding: 10px;
 }
 
 /*duplicate*/
