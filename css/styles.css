@@ -414,15 +414,12 @@ ol#list-files .main-actions {
   width: 100%;
 }
 
-.md-item {
+.md-item,
+.file-text {
   /*resize handle takes 10px from the right
   and 10px from the bottom
   */
   padding: 10px 0 0 10px;
-}
-
-.file-text {
-  padding: 7px 10px 12px 10px;
 }
 
 /*duplicate*/
