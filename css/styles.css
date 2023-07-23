@@ -999,6 +999,12 @@ ol#list-items .main-actions {
   float: right;
 }
 
+span.counter-save {
+  width: 20px;
+  text-align: center;
+  margin: auto;
+}
+
 button.delete-one-item,
 button.edit-item,
 button.previous-save,
