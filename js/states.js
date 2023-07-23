@@ -191,8 +191,16 @@ const saveHistoryDivMaker = (parentControlDiv, last, current) => {
   parentControlDiv.appendChild(divTag);
 
   previousSaveButtonMaker(divTag, current);
-  deleteCurrentSaveButtonMaker(divTag);
+  counterSaveSpanMaker(divTag, current);
   nextSaveButtonMaker(divTag, current === last);
+  deleteCurrentSaveButtonMaker(divTag);
+};
+
+const counterSaveSpanMaker = (parentSaveHistoryDiv, current) => {
+  const spanTag = document.createElement("span");
+  spanTag.setAttribute("class", "counter-save");
+  spanTag.innerText = current;
+  parentSaveHistoryDiv.appendChild(spanTag);
 };
 
 const previousSaveButtonMaker = (parentSaveHistoryDiv, current) => {
