@@ -345,9 +345,14 @@ ol#list-items.folded :not(.unfolded) .md-item {
   overflow: auto;
 }
 
+.file-text {
+  display: flex;
+  flex-direction: column;
+}
+
 .folded .unfolded .file-text,
 .folded .unfolded .save-history {
-  display: block;
+  display: flex;
   /*height: initial;
   visibility: initial;*/
 }
@@ -500,7 +505,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 }*/
 
 .resizable-div > :first-child,
-/*.file-text > :first-child,*/
+.file-text > :first-child,
 #preview > :first-child,
 #position > :first-child {
   margin-top: 0;
