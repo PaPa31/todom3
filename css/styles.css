@@ -1021,6 +1021,10 @@ ol.preview-outer p {
   opacity: 1;
 }
 
+.save-history {
+  display: flex;
+}
+
 .main-actions,
 .save-history {
   padding: 3px 0 2px !important;
@@ -1043,6 +1047,7 @@ span.counter-save {
   color: orange;
   font-weight: bold;
   font-size: large;
+  line-height: 1;
 }
 
 button.delete-one-item,
