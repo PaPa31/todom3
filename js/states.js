@@ -101,6 +101,55 @@ const getCurrentSave = (itemIndex) => {
   return current;
 };
 
+const getYoutubeThumbnail = (url, quality) => {
+  if (url) {
+    var video_id, thumbnail, result;
+    if ((result = url.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/))) {
+      video_id = result.pop();
+    } else if ((result = url.match(/youtu.be\/(.{11})/))) {
+      video_id = result.pop();
+    }
+
+    if (video_id) {
+      if (typeof quality == "undefined") {
+        quality = "high";
+      }
+
+      var quality_key = "maxresdefault"; // Max quality
+      if (quality == "low") {
+        quality_key = "sddefault";
+      } else if (quality == "medium") {
+        quality_key = "mqdefault";
+      } else if (quality == "high") {
+        quality_key = "hqdefault";
+      }
+
+      var thumbnail =
+        "http://img.youtube.com/vi/" + video_id + "/" + quality_key + ".jpg";
+      return thumbnail;
+    }
+  }
+  return false;
+};
+
+const waitForIframe = (resizableDiv) => {
+  resizableDiv.getElementsByTagName("iframe");
+
+  window.setTimeout(function () {
+    var iframeInitial = resizableDiv.getElementsByTagName("iframe");
+
+    if (iframeInitial.length > 0) {
+      console.log("found iframes:", iframeInitial.length);
+      const iframe = iframeInitial[iframeInitial.length - 1];
+      iframe.origin = "file:///home/papa31/static/localStorage/index.html";
+      console.log({ iframe });
+      var youtubeTag =
+        iframe.contentWindow.document.body.querySelector(".ytp-title-text");
+      console.log(youtubeTag);
+    }
+  }, 5000);
+};
+
 const liMaker = (arrIndex) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
@@ -147,6 +196,7 @@ const liMaker = (arrIndex) => {
   foldedClass.appendChild(li);
 
   scrollToTargetAdjusted(li, preview.scrollTop);
+  //waitForIframe(resizableDiv);
 };
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
