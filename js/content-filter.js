@@ -41,7 +41,12 @@ const waitForIframe = (resizableDiv) => {
       const divTag = document.createElement("div");
       const imgTag = document.createElement("img");
       const playButtonTag = document.createElement("button");
+      const titleDivTag = document.createElement("div");
       const papa = iframe.parentElement;
+
+      titleDivTag.setAttribute("class", "youtube-title");
+      titleDivTag.innerText = iframe.title;
+      divTag.appendChild(titleDivTag);
 
       imgTag.setAttribute("class", "youtube-thumbnail-image");
       imgTag.setAttribute("src", getYoutubeThumbnail(iframe.src, "low"));
