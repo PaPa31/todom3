@@ -411,18 +411,19 @@ ol#list-files .main-actions {
 .youtube-thumbnail {
   position: relative;
   display: flex;
-  justify-content: center !important;
+  justify-content: center;
+  overflow: clip;
+  align-items: center;
 }
 
 .youtube-thumbnail-image {
-  /*width: 100%;*/
-  height: 100%;
 }
 
 .youtube-title {
-  width: 100%;
-  height: 100%;
   position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 111;
 }
 
 .youtube-play-button {
