@@ -355,6 +355,11 @@ const saveFile = () => {
   }
 };
 
+const markdownAndContentFilter = (el, string) => {
+  el.innerHTML = markdown(string);
+  waitForIframe(el);
+};
+
 const markdown = (s) => {
   s = s.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, "");
   s = s.replace(/\u200B/, "");
@@ -377,8 +382,10 @@ const saveItem = () => {
     const len = textArr.length;
     itemsSpecArray[itemIndexToEdit].cur = len - 1;
     saveHistoryControl(editedItemLiDOM, len);
-    editedItemLiDOM.querySelector(".md-item > .resizable-div").innerHTML =
-      markdown(input.value);
+    const resizableDiv = editedItemLiDOM.querySelector(
+      ".md-item > .resizable-div"
+    );
+    markdownAndContentFilter(resizableDiv, input.value);
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
   } else {
     const itemObj = {

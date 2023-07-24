@@ -120,7 +120,7 @@ const liMaker = (arrIndex) => {
     if (itemsArray[correctedItemsIndex].fold)
       li.setAttribute("class", "unfolded");
 
-    resizableDiv.innerHTML = markdown(textArr[current]);
+    markdownAndContentFilter(resizableDiv, textArr[current]);
     li.id = idCounterItems;
   } else {
     const correctedFilesIndex =
@@ -132,7 +132,6 @@ const liMaker = (arrIndex) => {
 
     li.id = idCounterFiles;
   }
-  waitForIframe(resizableDiv);
   div.appendChild(resizableDiv);
 
   //div.addEventListener("mousedown", handleMouseDown);
@@ -162,7 +161,7 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   div4.innerHTML = file.size ? fileSizeTerm(file.size) : "";
   fileInfoDiv.appendChild(div4);
   div3.setAttribute("class", "file-text");
-  div3.innerHTML = markdown(file.text);
+  markdownAndContentFilter(div3, file.text);
   fileInfoDiv.setAttribute("class", "file-info");
   parentDiv.appendChild(fileInfoDiv);
   parentDiv.appendChild(div3);
@@ -315,9 +314,8 @@ const deleteCurrentSave = (el) => {
       );
     }
   }
-  liDOM.querySelector(".md-item > .resizable-div").innerHTML = markdown(
-    textArr[current]
-  );
+  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+  markdownAndContentFilter(resizableDiv, textArr[current]);
   setCurrentSave(current, itemIndex);
 };
 
@@ -334,9 +332,8 @@ const previousSave = (el) => {
   if (current < 1) {
     el.setAttribute("disable", true);
   }
-  liDOM.querySelector(".md-item > .resizable-div").innerHTML = markdown(
-    textArr[current]
-  );
+  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+  markdownAndContentFilter(resizableDiv, textArr[current]);
   setCurrentSave(current, itemIndex);
 };
 
@@ -353,9 +350,8 @@ const nextSave = (el) => {
   if (current >= textArr.length - 1) {
     el.setAttribute("disable", true);
   }
-  liDOM.querySelector(".md-item > .resizable-div").innerHTML = markdown(
-    textArr[current]
-  );
+  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+  markdownAndContentFilter(resizableDiv, textArr[current]);
   setCurrentSave(current, itemIndex);
 };
 
@@ -703,8 +699,8 @@ const saveItemFromFile = (fileName) => {
     const textArr = itemsArray[itemIndex].text;
     itemsSpecArray[itemIndex].cur = textArr.length - 1;
     saveHistoryControl(liDOM, textArr.length);
-    const mdTag = liDOM.querySelector(".md-item > .resizable-div");
-    mdTag.innerHTML = markdown(input.value);
+    const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+    markdownAndContentFilter(resizableDiv, input.value);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const itemObj = {
@@ -731,7 +727,7 @@ function checkIt() {
   let fileName;
   if (fileIndexToEdit != null) {
     const fileTextTag = editedFileLiDOM.querySelector(".file-text");
-    fileTextTag.innerHTML = markdown(filesArray[fileIndexToEdit].text);
+    markdownAndContentFilter(fileTextTag, filesArray[fileIndexToEdit].text);
     fileName = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {
