@@ -69,13 +69,13 @@ const waitForIframe = (resizableDiv) => {
 const replaceImageWithIframe = function (e) {
   const iframe = document.createElement("iframe");
   const papa = this.parentNode;
-  iframe.setAttribute("src", papa.dataset.url + "?autoplay=1");
+  iframe.setAttribute("src", papa.dataset.url + "?autoplay=1&rel=0");
   iframe.setAttribute("frameborder", "0");
   iframe.setAttribute("allowfullscreen", "1");
   iframe.setAttribute("class", "youtube-iframe");
   iframe.setAttribute(
     "allow",
-    "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   );
   iframe.allowTranparency = true;
 
