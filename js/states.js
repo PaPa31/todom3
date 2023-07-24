@@ -120,7 +120,7 @@ const liMaker = (arrIndex) => {
     if (itemsArray[correctedItemsIndex].fold)
       li.setAttribute("class", "unfolded");
 
-    markdownAndContentFilter(resizableDiv, textArr[current]);
+    mdToLi(resizableDiv, textArr[current]);
     li.id = idCounterItems;
   } else {
     const correctedFilesIndex =
@@ -161,7 +161,7 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   div4.innerHTML = file.size ? fileSizeTerm(file.size) : "";
   fileInfoDiv.appendChild(div4);
   div3.setAttribute("class", "file-text");
-  markdownAndContentFilter(div3, file.text);
+  mdToLi(div3, file.text);
   fileInfoDiv.setAttribute("class", "file-info");
   parentDiv.appendChild(fileInfoDiv);
   parentDiv.appendChild(div3);
@@ -315,7 +315,7 @@ const deleteCurrentSave = (el) => {
     }
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  markdownAndContentFilter(resizableDiv, textArr[current]);
+  mdToLi(resizableDiv, textArr[current]);
   setCurrentSave(current, itemIndex);
 };
 
@@ -333,7 +333,7 @@ const previousSave = (el) => {
     el.setAttribute("disable", true);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  markdownAndContentFilter(resizableDiv, textArr[current]);
+  mdToLi(resizableDiv, textArr[current]);
   setCurrentSave(current, itemIndex);
 };
 
@@ -351,7 +351,7 @@ const nextSave = (el) => {
     el.setAttribute("disable", true);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  markdownAndContentFilter(resizableDiv, textArr[current]);
+  mdToLi(resizableDiv, textArr[current]);
   setCurrentSave(current, itemIndex);
 };
 
@@ -700,7 +700,7 @@ const saveItemFromFile = (fileName) => {
     itemsSpecArray[itemIndex].cur = textArr.length - 1;
     saveHistoryControl(liDOM, textArr.length);
     const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-    markdownAndContentFilter(resizableDiv, input.value);
+    mdToLi(resizableDiv, input.value);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const itemObj = {
@@ -727,7 +727,7 @@ function checkIt() {
   let fileName;
   if (fileIndexToEdit != null) {
     const fileTextTag = editedFileLiDOM.querySelector(".file-text");
-    markdownAndContentFilter(fileTextTag, filesArray[fileIndexToEdit].text);
+    mdToLi(fileTextTag, filesArray[fileIndexToEdit].text);
     fileName = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {

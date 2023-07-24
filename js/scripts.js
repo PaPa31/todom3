@@ -355,8 +355,8 @@ const saveFile = () => {
   }
 };
 
-const markdownAndContentFilter = (el, string) => {
-  el.innerHTML = markdown(string);
+const mdToLi = (el, text) => {
+  el.innerHTML = markdown(text);
   waitForIframe(el);
 };
 
@@ -385,7 +385,7 @@ const saveItem = () => {
     const resizableDiv = editedItemLiDOM.querySelector(
       ".md-item > .resizable-div"
     );
-    markdownAndContentFilter(resizableDiv, input.value);
+    mdToLi(resizableDiv, input.value);
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
   } else {
     const itemObj = {
