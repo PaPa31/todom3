@@ -73,15 +73,11 @@ const replaceImageWithIframe = function (e) {
   iframe.setAttribute("frameborder", "0");
   iframe.setAttribute("allowfullscreen", "1");
   iframe.setAttribute("class", "youtube-iframe");
-  iframe.width = "100%";
+  iframe.setAttribute(
+    "allow",
+    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  );
   iframe.allowTranparency = true;
-  iframe.tabIndex = 0;
-  iframe.scrolling = "no";
-  iframe.frameBorder = 0;
-  iframe.style.border = "none";
-  iframe.style.overflow = "hidden";
-  iframe.style.userSelect = "none";
-  iframe.style.height = "250px"; // set initial height
-  iframe.enablejsapi = 1;
+
   papa.parentNode.replaceChild(iframe, papa);
 };
