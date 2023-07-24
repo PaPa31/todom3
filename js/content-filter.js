@@ -75,7 +75,7 @@ const replaceImageWithIframe = function (e) {
   iframe.setAttribute("class", "youtube-iframe");
   iframe.setAttribute(
     "allow",
-    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   );
   iframe.allowTranparency = true;
 
