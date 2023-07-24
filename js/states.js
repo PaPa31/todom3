@@ -133,21 +133,55 @@ const getYoutubeThumbnail = (url, quality) => {
 };
 
 const waitForIframe = (resizableDiv) => {
-  resizableDiv.getElementsByTagName("iframe");
+  const iframeInitial = resizableDiv.getElementsByTagName("iframe");
 
-  window.setTimeout(function () {
-    var iframeInitial = resizableDiv.getElementsByTagName("iframe");
-
-    if (iframeInitial.length > 0) {
-      console.log("found iframes:", iframeInitial.length);
-      const iframe = iframeInitial[iframeInitial.length - 1];
-      iframe.origin = "file:///home/papa31/static/localStorage/index.html";
+  if (iframeInitial.length > 0) {
+    console.log("found iframes:", iframeInitial.length);
+    console.log({ iframeInitial });
+    [...iframeInitial].forEach((iframe) => {
       console.log({ iframe });
-      var youtubeTag =
-        iframe.contentWindow.document.body.querySelector(".ytp-title-text");
-      console.log(youtubeTag);
-    }
-  }, 5000);
+
+      const divTag = document.createElement("div");
+      const imgTag = document.createElement("img");
+      const playButtonTag = document.createElement("button");
+      const papa = iframe.parentElement;
+
+      imgTag.setAttribute("class", "youtube-thumbnail-image");
+      imgTag.setAttribute("src", getYoutubeThumbnail(iframe.src, "low"));
+      divTag.appendChild(imgTag);
+
+      playButtonTag.setAttribute("class", "youtube-play-button");
+      playButtonTag.addEventListener("click", replaceImageWithIframe);
+      divTag.appendChild(playButtonTag);
+
+      divTag.setAttribute("data-url", iframe.src);
+      divTag.setAttribute("class", "youtube-thumbnail");
+
+      // Insert as next sibling of <iframe>
+      papa.insertBefore(divTag, iframe.nextSibling);
+      papa.removeChild(iframe);
+    });
+  }
+};
+
+const replaceImageWithIframe = function (e) {
+  const iframe = document.createElement("iframe");
+  const papa = this.parentNode;
+  iframe.setAttribute("src", papa.dataset.url + "?autoplay=1");
+  iframe.setAttribute("frameborder", "0");
+  iframe.setAttribute("allowfullscreen", "1");
+  iframe.setAttribute("class", "youtube-iframe");
+  iframe.width = "100%";
+  iframe.allowTranparency = true;
+  iframe.tabIndex = 0;
+  iframe.scrolling = "no";
+  iframe.frameBorder = 0;
+  iframe.style.border = "none";
+  iframe.style.overflow = "hidden";
+  iframe.style.userSelect = "none";
+  iframe.style.height = "250px"; // set initial height
+  iframe.enablejsapi = 1;
+  papa.parentNode.replaceChild(iframe, papa);
 };
 
 const liMaker = (arrIndex) => {
@@ -181,7 +215,7 @@ const liMaker = (arrIndex) => {
 
     li.id = idCounterFiles;
   }
-
+  waitForIframe(resizableDiv);
   div.appendChild(resizableDiv);
 
   //div.addEventListener("mousedown", handleMouseDown);
@@ -196,7 +230,6 @@ const liMaker = (arrIndex) => {
   foldedClass.appendChild(li);
 
   scrollToTargetAdjusted(li, preview.scrollTop);
-  //waitForIframe(resizableDiv);
 };
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
