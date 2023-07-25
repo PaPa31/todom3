@@ -107,9 +107,6 @@ const getCurrentSave = (itemIndex) => {
 const liMaker = (arrIndex) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
-  const resizableDiv = document.createElement("div");
-  resizableDiv.setAttribute("class", "resizable-div");
-
   let last, current;
 
   if (isItemState) {
@@ -123,19 +120,21 @@ const liMaker = (arrIndex) => {
     if (itemsArray[correctedItemsIndex].fold)
       li.setAttribute("class", "unfolded");
 
+    const resizableDiv = document.createElement("div");
+    resizableDiv.setAttribute("class", "resizable-div");
     mdToLi(resizableDiv, textArr[current]);
+    div.appendChild(resizableDiv);
     li.id = idCounterItems;
   } else {
     const correctedFilesIndex =
       indexedFilesArray.indexOf(arrIndex.toString()) * 1;
     div.setAttribute("class", "md-file");
 
-    fileInfoDivMaker(resizableDiv, correctedFilesIndex);
+    fileInfoDivMaker(div, correctedFilesIndex);
     //if (filesArray[arrIndex].fold) li.setAttribute("class", "unfolded");
 
     li.id = idCounterFiles;
   }
-  div.appendChild(resizableDiv);
 
   //div.addEventListener("mousedown", handleMouseDown);
   //div.addEventListener("mouseup", handleMouseUp);
@@ -163,8 +162,14 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   div4.setAttribute("class", "file-size");
   div4.innerHTML = file.size ? fileSizeTerm(file.size) : "";
   fileInfoDiv.appendChild(div4);
+
   div3.setAttribute("class", "file-text");
-  mdToLi(div3, file.text);
+
+  const resizableDiv = document.createElement("div");
+  resizableDiv.setAttribute("class", "resizable-div");
+  mdToLi(resizableDiv, file.text);
+  div3.appendChild(resizableDiv);
+
   fileInfoDiv.setAttribute("class", "file-info");
   parentDiv.appendChild(fileInfoDiv);
   parentDiv.appendChild(div3);
@@ -732,8 +737,10 @@ function checkIt() {
   const previewOffset = preview.scrollTop;
   let fileName;
   if (fileIndexToEdit != null) {
-    const fileTextTag = editedFileLiDOM.querySelector(".file-text");
-    mdToLi(fileTextTag, filesArray[fileIndexToEdit].text);
+    const resizableDiv = editedFileLiDOM.querySelector(
+      ".file-text > .resizable-div"
+    );
+    mdToLi(resizableDiv, filesArray[fileIndexToEdit].text);
     fileName = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {
