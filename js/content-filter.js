@@ -22,7 +22,11 @@ const getYoutubeThumbnail = (url, quality) => {
       }
 
       var thumbnail =
-        "http://img.youtube.com/vi/" + video_id + "/" + quality_key + ".jpg";
+        "http://img.youtube.com/vi_webp/" +
+        video_id +
+        "/" +
+        quality_key +
+        ".webp";
       return thumbnail;
     }
   }
