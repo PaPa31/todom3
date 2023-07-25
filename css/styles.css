@@ -414,7 +414,7 @@ ol#list-files .main-actions {
   justify-content: center;
   overflow: clip;
   align-items: center;
-  min-height: 100px;
+  min-height: 65px;
 }
 
 .youtube-thumbnail-image {
@@ -438,6 +438,15 @@ image is undefined */
   top: 9px;
   left: 10px;
   z-index: 1;
+}
+
+.folded .youtube-title,
+.unfolded .youtube-title {
+  top: 22px;
+}
+
+.folded .unfolded .youtube-title {
+  top: 9px;
 }
 
 .youtube-play-button {
