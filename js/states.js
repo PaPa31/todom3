@@ -163,12 +163,12 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   div4.innerHTML = file.size ? fileSizeTerm(file.size) : "";
   fileInfoDiv.appendChild(div4);
 
-  div3.setAttribute("class", "file-text");
+  div3.setAttribute("class", "file-text resizable-div");
 
-  const resizableDiv = document.createElement("div");
-  resizableDiv.setAttribute("class", "resizable-div");
-  mdToLi(resizableDiv, file.text);
-  div3.appendChild(resizableDiv);
+  //const resizableDiv = document.createElement("div");
+  //resizableDiv.setAttribute("class", "resizable-div");
+  mdToLi(div3, file.text);
+  //div3.appendChild(resizableDiv);
 
   fileInfoDiv.setAttribute("class", "file-info");
   parentDiv.appendChild(fileInfoDiv);
@@ -738,7 +738,7 @@ function checkIt() {
   let fileName;
   if (fileIndexToEdit != null) {
     const resizableDiv = editedFileLiDOM.querySelector(
-      ".file-text > .resizable-div"
+      ".file-text.resizable-div"
     );
     mdToLi(resizableDiv, filesArray[fileIndexToEdit].text);
     fileName = filesArray[fileIndexToEdit].name;

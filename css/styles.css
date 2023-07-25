@@ -567,7 +567,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 }*/
 
 .resizable-div > :first-child,
-.file-text > :first-child,
+/*.file-text > :first-child,*/
 #preview > :first-child,
 #position > :first-child {
   margin-top: 0;
