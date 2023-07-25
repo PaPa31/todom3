@@ -553,9 +553,18 @@ image is undefined */
   justify-content: center;
 }
 
-/*.resizable-div iframe {
+.resizable-div iframe {
+  height: initial;
+}
+
+.folded .resizable-div iframe,
+.unfolded .resizable-div iframe {
   height: 64px;
-}*/
+}
+
+.folded .unfolded .resizable-div iframe {
+  height: initial;
+}
 
 /*.folded .unfolded .resizable-div {
   justify-content: end;
