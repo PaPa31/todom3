@@ -544,18 +544,18 @@ image is undefined */
   height: 100%;
 }
 
-.md-file .resizable-div {
+/*.md-file .resizable-div {
   display: block;
-}
+}*/
 
 .folded .resizable-div,
 .unfolded .resizable-div {
   justify-content: center;
 }
 
-.resizable-div iframe {
+/*.resizable-div iframe {
   height: 64px;
-}
+}*/
 
 /*.folded .unfolded .resizable-div {
   justify-content: end;
