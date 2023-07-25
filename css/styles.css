@@ -414,11 +414,23 @@ ol#list-files .main-actions {
   justify-content: center;
   overflow: clip;
   align-items: center;
+  min-height: 100px;
 }
 
 .youtube-thumbnail-image {
   display: flex !important;
   cursor: pointer;
+}
+
+/*if youtube thumbnail cover
+image is undefined */
+[src="false"] {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 1px solid;
 }
 
 .youtube-title {
