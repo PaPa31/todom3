@@ -37,11 +37,7 @@ const waitForIframe = (resizableDiv) => {
   const iframeInitial = resizableDiv.getElementsByTagName("iframe");
 
   if (iframeInitial.length > 0) {
-    console.log("found iframes:", iframeInitial.length);
-    console.log({ iframeInitial });
     [...iframeInitial].forEach((iframe) => {
-      console.log({ iframe });
-
       const divTag = document.createElement("div");
       const imgTag = document.createElement("img");
       const playButtonTag = document.createElement("button");
