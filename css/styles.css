@@ -448,6 +448,7 @@ ol#list-files .main-actions {
 
 .folded .unfolded .youtube-play-button {
   right: initial;
+  background-size: 68px;
 }
 
 .md-item,
