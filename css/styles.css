@@ -432,13 +432,11 @@ ol#list-files .main-actions {
   background: url(./../img/youtube-2.svg) no-repeat;
   background-position: center;
   cursor: pointer;
-  background-size: 70px;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  background-size: 55px;
   border: 0;
   display: flex !important;
+  width: 70px;
+  height: 50px;
 }
 
 .md-item,
