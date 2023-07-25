@@ -72,13 +72,16 @@ const fileSizeTerm = (numberOfBytes) => {
 };
 
 let papaRecur;
-const findLiRecursive = (el, tag = "li") => {
+const findParentTagOrClassRecursive = (el, tag = "li", classOfEl) => {
   const papa = el.parentElement;
-  if (papa && papa.tagName.toLowerCase() === tag) {
+  const isClass = classOfEl
+    ? papa.classList.contains(classOfEl)
+    : papa.tagName.toLowerCase() === tag;
+  if (papa && isClass) {
     papaRecur = papa;
     return papaRecur;
   } else {
-    findLiRecursive(papa, tag);
+    findParentTagOrClassRecursive(papa, tag, classOfEl);
     return papaRecur;
   }
 };
@@ -174,7 +177,10 @@ const unfoldButtonMaker = (parentLi) => {
   const buttonTag = document.createElement("button");
   const numInside = document.createElement("span");
   buttonTag.setAttribute("class", "muted-button unfold-button btn");
-  buttonTag.setAttribute("onclick", `unfoldOneItem(findLiRecursive(this))`);
+  buttonTag.setAttribute(
+    "onclick",
+    `unfoldOneItem(findParentTagOrClassRecursive(this))`
+  );
 
   //if (isItemState && mdTag.scrollHeight === 0)
   //  buttonTag.style = "--box-shadow-color: red";
@@ -260,7 +266,7 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   if (isItemState) {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneItem(event, findLiRecursive(this))`
+      `deleteOneItem(event, findParentTagOrClassRecursive(this))`
     );
     buttonTag.setAttribute("ctrl", "true");
     buttonTag.setAttribute(
@@ -270,7 +276,7 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   } else {
     buttonTag.setAttribute(
       "onclick",
-      `deleteOneFile(event, findLiRecursive(this))`
+      `deleteOneFile(event, findParentTagOrClassRecursive(this))`
     );
     buttonTag.setAttribute("title", "Double-click -> delete from this list");
   }
@@ -283,7 +289,7 @@ const setCurrentSave = (current, itemIndex) => {
 };
 
 const deleteCurrentSave = (el) => {
-  const liDOM = findLiRecursive(el);
+  const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
   let current = getCurrentSave(itemIndex);
@@ -320,7 +326,7 @@ const deleteCurrentSave = (el) => {
 };
 
 const previousSave = (el) => {
-  const liDOM = findLiRecursive(el);
+  const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
   let current = getCurrentSave(itemIndex);
@@ -338,7 +344,7 @@ const previousSave = (el) => {
 };
 
 const nextSave = (el) => {
-  const liDOM = findLiRecursive(el);
+  const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
   let current = getCurrentSave(itemIndex);
@@ -356,7 +362,7 @@ const nextSave = (el) => {
 };
 
 const unfoldGreen = (liDOM) => {
-  const olDOM = findLiRecursive(liDOM, "ol");
+  const olDOM = findParentTagOrClassRecursive(liDOM, "ol");
   if (
     (olDOM.classList.contains("folded") &&
       liDOM.classList.contains("unfolded")) ||
@@ -381,7 +387,7 @@ const unfoldOneItem = (liDOM) => {
 };
 
 const editFile = (e, element) => {
-  const editedFileLiDOM2 = findLiRecursive(element);
+  const editedFileLiDOM2 = findParentTagOrClassRecursive(element);
   const fileIndexToEdit2 = indexedFilesArray.indexOf(editedFileLiDOM2.id) * 1;
   const fi = filesArray[fileIndexToEdit2];
 

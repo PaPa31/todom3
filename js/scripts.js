@@ -86,7 +86,7 @@ const xUI = () => {
 };
 
 const editItem = (e, element) => {
-  const editedItemLiDOM2 = findLiRecursive(element);
+  const editedItemLiDOM2 = findParentTagOrClassRecursive(element);
   const itemIndexToEdit2 = indexedItemsArray.indexOf(editedItemLiDOM2.id) * 1;
 
   let current = getCurrentSave(itemIndexToEdit2);
