@@ -432,11 +432,21 @@ ol#list-files .main-actions {
   background: url(./../img/youtube-2.svg) no-repeat;
   background-position: center;
   cursor: pointer;
-  background-size: 55px;
+  background-size: 68px;
   border: 0;
   display: flex !important;
   width: 70px;
   height: 50px;
+}
+
+.folded .youtube-play-button,
+.unfolded .youtube-play-button {
+  right: 0;
+  background-size: 55px;
+}
+
+.folded .unfolded .youtube-play-button {
+  right: initial;
 }
 
 .md-item,
