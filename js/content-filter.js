@@ -54,6 +54,7 @@ const waitForIframe = (resizableDiv) => {
 
       imgTag.setAttribute("class", "youtube-thumbnail-image");
       imgTag.setAttribute("src", getYoutubeThumbnail(iframe.src, "low"));
+      imgTag.addEventListener("click", replaceImageWithIframe);
       divTag.appendChild(imgTag);
 
       playButtonTag.setAttribute("class", "youtube-play-button");

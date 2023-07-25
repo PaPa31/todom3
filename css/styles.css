@@ -418,6 +418,7 @@ ol#list-files .main-actions {
 
 .youtube-thumbnail-image {
   display: flex !important;
+  cursor: pointer;
 }
 
 .youtube-title {
