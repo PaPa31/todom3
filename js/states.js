@@ -128,7 +128,7 @@ const liMaker = (arrIndex) => {
   } else {
     const correctedFilesIndex =
       indexedFilesArray.indexOf(arrIndex.toString()) * 1;
-    div.setAttribute("class", "md-file");
+    div.setAttribute("class", "md-file md-item");
 
     fileInfoDivMaker(div, correctedFilesIndex);
     //if (filesArray[arrIndex].fold) li.setAttribute("class", "unfolded");
