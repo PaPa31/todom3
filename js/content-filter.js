@@ -74,6 +74,11 @@ const waitForIframe = (resizableDiv) => {
 const replaceImageWithIframe = function (e) {
   const iframe = document.createElement("iframe");
   const papa = this.parentNode;
+  const grandPa = isItemState
+    ? findParentTagOrClassRecursive(papa, undefined, "md-item")
+    : findParentTagOrClassRecursive(papa, undefined, "file-text");
+  grandPa.style.width = grandPa.offsetWidth + "px";
+  grandPa.style.height = grandPa.offsetHeight + "px";
   iframe.setAttribute("src", papa.dataset.url + "?autoplay=1&rel=0");
   iframe.setAttribute("frameborder", "0");
   iframe.setAttribute("allowfullscreen", "1");
