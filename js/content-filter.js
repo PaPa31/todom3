@@ -77,12 +77,11 @@ const replaceImageWithIframe = function (e) {
   iframe.setAttribute("src", papa.dataset.url + "?autoplay=1&rel=0");
   iframe.setAttribute("frameborder", "0");
   iframe.setAttribute("allowfullscreen", "1");
-  iframe.setAttribute("class", "youtube-iframe");
+  iframe.setAttribute("allowTranparency", "true");
   iframe.setAttribute(
     "allow",
     "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   );
-  iframe.allowTranparency = true;
-
+  iframe.setAttribute("class", "youtube-iframe");
   papa.parentNode.replaceChild(iframe, papa);
 };
