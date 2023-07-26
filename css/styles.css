@@ -5,10 +5,15 @@
  */
 
 :root {
+  --todom-editor-background: #ffffff;
+  --todom-input-background: #ffffff;
+  --todom-item-background: #f6f8fa;
+
   --todom-editor-background-dark: #14181b;
   --todom-input-background-dark: #0a0c0e;
   --todom-item-background-dark: #1b2024;
 
+  /*--vscode-foreground: #24292f;*/
   --color: #404040;
   --color-muted: #24292f;
   --color-extra-muted: #57606a;
@@ -91,6 +96,9 @@
 }
 
 .dark {
+  --todom-editor-background: var(--todom-editor-background-dark);
+  --todom-input-background: var(--todom-input-background-dark);
+  --todom-item-background: var(--todom-item-background-dark);
   --color: var(--color-dark);
   --color-muted: var(--color-muted-dark);
   --color-extra-muted: var(--color-extra-muted-dark);
