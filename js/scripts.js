@@ -371,7 +371,7 @@ const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
   if (lengthSaveHistory > 1) {
     saveEl.querySelector(".counter-save").innerText = lengthSaveHistory;
     const elForBefore = liDOM.querySelector(".resizable-div");
-    changeCurrentInBefore(elForBefore, lengthSaveHistory);
+    changeCurrentInBefore(elForBefore, lengthSaveHistory - 1);
     saveEl.removeAttribute("disable");
     saveEl.querySelector(".previous-save").removeAttribute("disable");
   }
