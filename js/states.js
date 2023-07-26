@@ -106,16 +106,8 @@ const getCurrentSave = (itemIndex) => {
 
 const setCounterLi = (parentEl, current) => {
   console.log(parentEl);
-  const counterEl = parentEl.querySelector(
-    ".md-item .resizable-div > :first-child"
-  );
-  //counterEl.style.setProperty("--current", `${current + 1}`);
+  const counterEl = parentEl.querySelector(".resizable-div > :first-child");
   counterEl.style = "--current: '" + ++current + "';";
-
-  //counterEl.content = current + " - ";
-  //let pseudoElm = getComputedStyle(counterEl, ":before");
-  //pseudoElm.content = current + " - ";
-  //counterEl.insertAdjacentText("beforebegin", `${current} - `);
 };
 
 const liMaker = (arrIndex) => {
@@ -138,6 +130,7 @@ const liMaker = (arrIndex) => {
     resizableDiv.setAttribute("class", "resizable-div");
     mdToLi(resizableDiv, textArr[current]);
     div.appendChild(resizableDiv);
+    setCounterLi(div, current);
     li.id = idCounterItems;
   } else {
     const correctedFilesIndex =
@@ -160,8 +153,6 @@ const liMaker = (arrIndex) => {
   mainActionsDivMaker(li);
   li.appendChild(div);
   foldedClass.appendChild(li);
-
-  setCounterLi(li, current);
 
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
