@@ -576,7 +576,8 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 }
 
 .dark .md-item .resizable-div::before {
-  background-color: var(--todom-before-background-dark, #0a0c0e82);
+  /*background-color: var(--todom-before-background-dark, #0a0c0e82);*/
+  background-color: var(--todom-before-background-dark, #ff00008c);
 }
 
 .resizable-div > :first-child,
