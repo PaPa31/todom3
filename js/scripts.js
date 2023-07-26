@@ -370,7 +370,7 @@ const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
   const saveEl = liDOM.querySelector(".save-history");
   if (lengthSaveHistory > 1) {
     saveEl.querySelector(".counter-save").innerText = lengthSaveHistory;
-    changeCurrentInFirstChildBefore(liDOM, lengthSaveHistory);
+    changeCurrentInBefore(liDOM, lengthSaveHistory);
     saveEl.removeAttribute("disable");
     saveEl.querySelector(".previous-save").removeAttribute("disable");
   }

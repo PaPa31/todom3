@@ -104,7 +104,7 @@ const getCurrentSave = (itemIndex) => {
   return current;
 };
 
-const initialInFirstChildBefore = (ancestorEl) => {
+const initialInBefore = (ancestorEl) => {
   //const firstChildEl = ancestorEl.querySelector(":first-child");
 
   //ancestorEl.style.setProperty("--before-current-save", "");
@@ -115,7 +115,7 @@ const initialInFirstChildBefore = (ancestorEl) => {
   ancestorEl.style.setProperty("--before-display", "none");
 };
 
-const changeCurrentInFirstChildBefore = (ancestorEl, current) => {
+const changeCurrentInBefore = (ancestorEl, current) => {
   //const firstChildEl = ancestorEl.querySelector(":first-child");
   ancestorEl.style = "--before-current-save: '" + ++current + "';";
 };
@@ -140,9 +140,9 @@ const liMaker = (arrIndex) => {
     resizableDiv.setAttribute("class", "resizable-div");
     mdToLi(resizableDiv, textArr[current]);
     if (last > 0) {
-      changeCurrentInFirstChildBefore(resizableDiv, current);
+      changeCurrentInBefore(resizableDiv, current);
     } else {
-      initialInFirstChildBefore(resizableDiv);
+      initialInBefore(resizableDiv);
     }
     div.appendChild(resizableDiv);
     li.id = idCounterItems;
@@ -339,9 +339,9 @@ const deleteCurrentSave = (el) => {
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToLi(resizableDiv, textArr[current]);
   if (lastAfter > 0) {
-    changeCurrentInFirstChildBefore(resizableDiv, current);
+    changeCurrentInBefore(resizableDiv, current);
   } else {
-    initialInFirstChildBefore(resizableDiv);
+    initialInBefore(resizableDiv);
   }
   setCurrentSave(current, itemIndex);
 };
@@ -361,7 +361,7 @@ const previousSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToLi(resizableDiv, textArr[current]);
-  changeCurrentInFirstChildBefore(resizableDiv, current);
+  changeCurrentInBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
 };
 
@@ -380,7 +380,7 @@ const nextSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToLi(resizableDiv, textArr[current]);
-  changeCurrentInFirstChildBefore(resizableDiv, current);
+  changeCurrentInBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
 };
 
