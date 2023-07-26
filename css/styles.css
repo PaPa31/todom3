@@ -578,7 +578,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
   justify-content: end;
 }*/
 
-.md-item .resizable-div > :first-child::before {
+.md-item .resizable-div::before {
   content: var(--before-current-save, "");
   color: orange;
   /*margin-right: 10px;*/
@@ -592,10 +592,22 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
   display: inline-block;
   /*display: var(--before-display, inline-block);*/
   text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
-.dark .md-item .resizable-div > :first-child::before {
-  background-color: var(--todom-input-background-dark);
+/*.md-item
+  .resizable-div
+  > :first-child:is(img, iframe, .youtube-thumbnail)::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+}*/
+
+.dark .md-item .resizable-div::before {
+  background-color: var(--todom-before-background-dark, #0a0c0e82);
 }
 
 /*.md-item .resizable-div::before {
