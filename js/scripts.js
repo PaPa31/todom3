@@ -368,8 +368,9 @@ const markdown = (s) => {
 
 const saveHistoryControl = (liDOM, lengthSaveHistory) => {
   const saveEl = liDOM.querySelector(".save-history");
-  saveEl.querySelector(".counter-save").innerText = lengthSaveHistory;
   if (lengthSaveHistory > 1) {
+    saveEl.querySelector(".counter-save").innerText = lengthSaveHistory;
+    changeCurrentInFirstChildBefore(liDOM, current);
     saveEl.removeAttribute("disable");
     saveEl.querySelector(".previous-save").removeAttribute("disable");
   }

@@ -323,6 +323,7 @@ const deleteCurrentSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToLi(resizableDiv, textArr[current]);
+  if (lastAfter > 0) changeCurrentInFirstChildBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
 };
 
@@ -341,7 +342,7 @@ const previousSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToLi(resizableDiv, textArr[current]);
-
+  changeCurrentInFirstChildBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
 };
 
@@ -360,6 +361,7 @@ const nextSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToLi(resizableDiv, textArr[current]);
+  changeCurrentInFirstChildBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
 };
 
