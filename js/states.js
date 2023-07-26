@@ -104,13 +104,16 @@ const getCurrentSave = (itemIndex) => {
   return current;
 };
 
-//const initialInFirstChildBefore = (ancestorEl) => {
-//  //const firstChildEl = ancestorEl.querySelector(":first-child");
-//  ancestorEl.style.setProperty("--before-current-save", "");
-//  ancestorEl.style.setProperty("--before-margin-right", "0");
-//  ancestorEl.style.setProperty("--before-padding", "0");
-//  ancestorEl.style.setProperty("--before-width", "0");
-//};
+const initialInFirstChildBefore = (ancestorEl) => {
+  //const firstChildEl = ancestorEl.querySelector(":first-child");
+
+  //ancestorEl.style.setProperty("--before-current-save", "");
+  //ancestorEl.style.setProperty("--before-margin-right", "0");
+  //ancestorEl.style.setProperty("--before-padding", "0");
+  //ancestorEl.style.setProperty("--before-width", "0");
+
+  ancestorEl.style.setProperty("--before-display", "none");
+};
 
 const changeCurrentInFirstChildBefore = (ancestorEl, current) => {
   //const firstChildEl = ancestorEl.querySelector(":first-child");
@@ -138,10 +141,9 @@ const liMaker = (arrIndex) => {
     mdToLi(resizableDiv, textArr[current]);
     if (last > 0) {
       changeCurrentInFirstChildBefore(resizableDiv, current);
+    } else {
+      initialInFirstChildBefore(resizableDiv);
     }
-    //else {
-    //  initialInFirstChildBefore(resizableDiv);
-    //}
     div.appendChild(resizableDiv);
     li.id = idCounterItems;
   } else {
@@ -338,10 +340,9 @@ const deleteCurrentSave = (el) => {
   mdToLi(resizableDiv, textArr[current]);
   if (lastAfter > 0) {
     changeCurrentInFirstChildBefore(resizableDiv, current);
+  } else {
+    initialInFirstChildBefore(resizableDiv);
   }
-  //else {
-  //  initialInFirstChildBefore(resizableDiv);
-  //}
   setCurrentSave(current, itemIndex);
 };
 

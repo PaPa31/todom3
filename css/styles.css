@@ -578,19 +578,31 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
   justify-content: end;
 }*/
 
-.md-item .resizable-div::before {
+/*.md-item .resizable-div > :first-child::before {
   content: var(--before-current-save, "");
   color: orange;
-  /*margin-right: 10px;*/
   margin-right: var(--before-margin-right, 10px);
   background-color: white;
-  /*padding: 2px 4px;*/
   padding: var(--before-padding, 2px 4px);
   border-radius: 5px;
   width: 30px;
   width: var(--before-width, 30px);
-  display: inline-block;
-  /*display: var(--before-display, inline-block);*/
+  display: var(--before-display, initial);
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}*/
+
+.md-item .resizable-div::before {
+  content: var(--before-current-save, "");
+  color: orange;
+  background-color: white;
+  padding: 2px 4px;
+  border-radius: 5px;
+  width: 30px;
+  display: var(--before-display, initial);
   text-align: center;
   position: absolute;
   top: 0;
