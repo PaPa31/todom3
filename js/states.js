@@ -708,7 +708,7 @@ const saveItemFromFile = (fileName) => {
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
     itemsSpecArray[itemIndex].cur = textArr.length - 1;
-    saveHistoryControl(liDOM, textArr.length);
+    saveHistoryTracker(liDOM, textArr.length);
     const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
     mdToLi(resizableDiv, input.value);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);

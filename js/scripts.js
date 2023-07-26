@@ -366,7 +366,7 @@ const markdown = (s) => {
   return marked.parse(s);
 };
 
-const saveHistoryControl = (liDOM, lengthSaveHistory) => {
+const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
   const saveEl = liDOM.querySelector(".save-history");
   if (lengthSaveHistory > 1) {
     saveEl.querySelector(".counter-save").innerText = lengthSaveHistory;
@@ -383,7 +383,7 @@ const saveItem = () => {
     textArr.push(input.value);
     const len = textArr.length;
     itemsSpecArray[itemIndexToEdit].cur = len - 1;
-    saveHistoryControl(editedItemLiDOM, len);
+    saveHistoryTracker(editedItemLiDOM, len);
     const resizableDiv = editedItemLiDOM.querySelector(
       ".md-item > .resizable-div"
     );
