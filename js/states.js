@@ -110,7 +110,7 @@ const setCounterLi = (parentEl, current) => {
     ".md-item .resizable-div > :first-child"
   );
   //counterEl.style.setProperty("--current", `${current + 1}`);
-  counterEl.style = "--current: '" + current + "';";
+  counterEl.style = "--current: '" + ++current + "';";
 
   //counterEl.content = current + " - ";
   //let pseudoElm = getComputedStyle(counterEl, ":before");
