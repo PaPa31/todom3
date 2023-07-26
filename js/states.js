@@ -104,10 +104,8 @@ const getCurrentSave = (itemIndex) => {
   return current;
 };
 
-const changeCurrentFirstChildBefore = (ancestorEl, current) => {
-  const firstChildEl = ancestorEl.querySelector(
-    ".resizable-div > :first-child"
-  );
+const changeCurrentInFirstChildBefore = (ancestorEl, current) => {
+  const firstChildEl = ancestorEl.querySelector(":first-child");
   firstChildEl.style = "--current: '" + ++current + "';";
 };
 
@@ -130,8 +128,8 @@ const liMaker = (arrIndex) => {
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
     mdToLi(resizableDiv, textArr[current]);
+    if (last > 0) changeCurrentInFirstChildBefore(resizableDiv, current);
     div.appendChild(resizableDiv);
-    changeCurrentFirstChildBefore(div, current);
     li.id = idCounterItems;
   } else {
     const correctedFilesIndex =
@@ -343,6 +341,7 @@ const previousSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToLi(resizableDiv, textArr[current]);
+
   setCurrentSave(current, itemIndex);
 };
 
