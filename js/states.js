@@ -104,6 +104,20 @@ const getCurrentSave = (itemIndex) => {
   return current;
 };
 
+const setCounterLi = (parentEl, current) => {
+  console.log(parentEl);
+  const counterEl = parentEl.querySelector(
+    ".md-item .resizable-div > :first-child"
+  );
+  //counterEl.style.setProperty("--current", `${current + 1}`);
+  counterEl.style = "--current: '" + current + "';";
+
+  //counterEl.content = current + " - ";
+  //let pseudoElm = getComputedStyle(counterEl, ":before");
+  //pseudoElm.content = current + " - ";
+  //counterEl.insertAdjacentText("beforebegin", `${current} - `);
+};
+
 const liMaker = (arrIndex) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
@@ -146,6 +160,8 @@ const liMaker = (arrIndex) => {
   mainActionsDivMaker(li);
   li.appendChild(div);
   foldedClass.appendChild(li);
+
+  setCounterLi(li, current);
 
   scrollToTargetAdjusted(li, preview.scrollTop);
 };

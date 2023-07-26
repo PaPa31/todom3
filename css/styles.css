@@ -88,6 +88,7 @@
   --link-cite-muted-color-dark: #6ca872;
 
   --transparent: transparent;
+  --current: "1";
 }
 
 .monaco-workbench-side-pane {
@@ -542,6 +543,7 @@ image is undefined */
   flex-direction: column;
   justify-content: start;
   height: 100%;
+  position: relative;
 }
 
 /*.md-file .resizable-div {
@@ -573,6 +575,19 @@ image is undefined */
 /*ol#list-items:not(.folded) .unfolded .resizable-div,
 ol#list-items.folded :not(.unfolded) .resizable-div {
   justify-content: end;
+}*/
+
+.md-item .resizable-div > :first-child::before {
+  content: var(--current);
+  color: orange;
+  padding-right: 10px;
+}
+
+/*.md-item .resizable-div::before {
+  content: "1";
+  position: absolute;
+  top: 0;
+  z-index: 1;
 }*/
 
 .resizable-div > :first-child,
