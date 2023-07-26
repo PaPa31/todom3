@@ -90,6 +90,36 @@
   --transparent: transparent;
 }
 
+.dark {
+  --color: var(--color-dark);
+  --color-muted: var(--color-muted-dark);
+  --color-extra-muted: var(--color-extra-muted-dark);
+  --color-edit: var(--color-edit-dark);
+  --color-new: var(--color-new-dark);
+  --bg: var(--bg-dark);
+  --bg-muted: var(--bg-muted-dark);
+  --bg-extra-muted: var(--bg-extra-muted-dark);
+  --bg-item: var(--bg-item-dark);
+  --bg-item-transparent: var(--bg-item-transparent-dark);
+  --bg-selection: var(--bg-selection-dark);
+  --bg-input-translucent: var(--bg-input-translucent-dark);
+  --bg-item-translucent: var(--bg-item-translucent-dark);
+  --border: var(--border-dark);
+  --border-extra: var(--border-extra-dark);
+  --border-cite: var(--border-cite-dark);
+  --border-edit: var(--border-edit-dark);
+  --button-default: var(--button-default-dark);
+  --button-default-color: var(--button-default-color-dark);
+  --button-hover: var(--button-hover-dark);
+  --button-muted-color: var(--button-muted-color-dark);
+  --button-muted-color-hover: var(--button-muted-color-hover-dark);
+  --button-color-dimmed: var(--button-color-dimmed-dark);
+  --button-muted-border: var(--button-muted-border-dark);
+  --button-muted-border-hover: var(--button-muted-border-hover-dark);
+  --scrollbar-hover: var(--scrollbar-hover-dark);
+  --link-cite-muted-color: var(--link-cite-muted-color-dark);
+}
+
 .monaco-workbench-side-pane {
   background-color: #0a0c0e;
   color: #ce7f4b;
