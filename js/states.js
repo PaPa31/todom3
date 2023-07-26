@@ -104,9 +104,17 @@ const getCurrentSave = (itemIndex) => {
   return current;
 };
 
+const initialInFirstChildBefore = (ancestorEl) => {
+  const firstChildEl = ancestorEl.querySelector(":first-child");
+  firstChildEl.style.setProperty("--before-current-save", "");
+  firstChildEl.style.setProperty("--before-margin-right", "0");
+  firstChildEl.style.setProperty("--before-padding", "0");
+  firstChildEl.style.setProperty("--before-width", "0");
+};
+
 const changeCurrentInFirstChildBefore = (ancestorEl, current) => {
   const firstChildEl = ancestorEl.querySelector(":first-child");
-  firstChildEl.style = "--current: '" + ++current + "';";
+  firstChildEl.style = "--before-current-save: '" + ++current + "';";
 };
 
 const liMaker = (arrIndex) => {
@@ -128,7 +136,11 @@ const liMaker = (arrIndex) => {
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
     mdToLi(resizableDiv, textArr[current]);
-    if (last > 0) changeCurrentInFirstChildBefore(resizableDiv, current);
+    if (last > 0) {
+      changeCurrentInFirstChildBefore(resizableDiv, current);
+    } else {
+      initialInFirstChildBefore(resizableDiv);
+    }
     div.appendChild(resizableDiv);
     li.id = idCounterItems;
   } else {
@@ -323,7 +335,11 @@ const deleteCurrentSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToLi(resizableDiv, textArr[current]);
-  if (lastAfter > 0) changeCurrentInFirstChildBefore(resizableDiv, current);
+  if (lastAfter > 0) {
+    changeCurrentInFirstChildBefore(resizableDiv, current);
+  } else {
+    initialInFirstChildBefore(resizableDiv);
+  }
   setCurrentSave(current, itemIndex);
 };
 

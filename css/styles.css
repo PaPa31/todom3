@@ -577,9 +577,23 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 }*/
 
 .md-item .resizable-div > :first-child::before {
-  content: var(--current, "");
+  content: var(--before-current-save, "");
   color: orange;
-  padding-right: 10px;
+  /*margin-right: 10px;*/
+  margin-right: var(--before-margin-right, 10px);
+  background-color: white;
+  /*padding: 2px 4px;*/
+  padding: var(--before-padding, 2px 4px);
+  border-radius: 5px;
+  width: 30px;
+  width: var(--before-width, 30px);
+  display: inline-block;
+  /*display: var(--before-display, inline-block);*/
+  text-align: center;
+}
+
+.dark .md-item .resizable-div > :first-child::before {
+  background-color: var(--todom-input-background-dark);
 }
 
 /*.md-item .resizable-div::before {
