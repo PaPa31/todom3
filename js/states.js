@@ -138,13 +138,9 @@ const liMaker = (arrIndex) => {
     div.setAttribute("class", "md-file");
 
     fileInfoDivMaker(div, correctedFilesIndex);
-    //if (filesArray[arrIndex].fold) li.setAttribute("class", "unfolded");
 
     li.id = idCounterFiles;
   }
-
-  //div.addEventListener("mousedown", handleMouseDown);
-  //div.addEventListener("mouseup", handleMouseUp);
 
   div.addEventListener("dblclick", handleDblClick);
 
@@ -169,14 +165,8 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   div4.setAttribute("class", "file-size");
   div4.innerHTML = file.size ? fileSizeTerm(file.size) : "";
   fileInfoDiv.appendChild(div4);
-
   div3.setAttribute("class", "file-text resizable-div");
-
-  //const resizableDiv = document.createElement("div");
-  //resizableDiv.setAttribute("class", "resizable-div");
   mdToLi(div3, file.text);
-  //div3.appendChild(resizableDiv);
-
   fileInfoDiv.setAttribute("class", "file-info");
   parentDiv.appendChild(fileInfoDiv);
   parentDiv.appendChild(div3);
