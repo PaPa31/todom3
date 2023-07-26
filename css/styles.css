@@ -88,7 +88,6 @@
   --link-cite-muted-color-dark: #6ca872;
 
   --transparent: transparent;
-  --current: "1";
 }
 
 .monaco-workbench-side-pane {
@@ -578,7 +577,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 }*/
 
 .md-item .resizable-div > :first-child::before {
-  content: var(--current);
+  content: var(--current, "");
   color: orange;
   padding-right: 10px;
 }
