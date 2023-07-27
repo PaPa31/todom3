@@ -407,16 +407,18 @@ const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
 };
 
 saveAsOldButton.addEventListener("click", function (e) {
-  //const textArr = itemsArray[itemIndexToEdit].text;
+  const cur = itemsSpecArray[itemIndexToEdit].cur;
+  const textArr = itemsArray[itemIndexToEdit].text;
+  textArr[cur] = input.value;
   //textArr.push(input.value);
   //const len = textArr.length;
   //itemsSpecArray[itemIndexToEdit].cur = len - 1;
   //saveHistoryTracker(editedItemLiDOM, len);
-  //const resizableDiv = editedItemLiDOM.querySelector(
-  //  ".md-item > .resizable-div"
-  //);
-  //mdToLi(resizableDiv, input.value);
-  //scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
+  const resizableDiv = editedItemLiDOM.querySelector(
+    ".md-item > .resizable-div"
+  );
+  mdToLi(resizableDiv, input.value);
+  scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
 });
 
 const saveItem = () => {
