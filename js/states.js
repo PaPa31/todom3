@@ -806,7 +806,7 @@ fileElem.addEventListener(
 );
 
 const initializeFileState = () => {
-  saveButton.innerText = "Save file";
+  saveAsNewButton.innerText = "Save file";
   itemsFilesToggleButton.innerText = "Files";
   openFileButton.innerText = "Open file";
   deleteAllItemsButton.innerText = "Clear the List";
@@ -871,7 +871,7 @@ const arrCheckForNull = (arr) => {
 };
 
 const initializeItemState = () => {
-  saveButton.innerText = "Save item";
+  saveAsNewButton.innerText = "Save item";
   itemsFilesToggleButton.innerText = "Items";
   openFileButton.innerText = "Split file";
   deleteAllItemsButton.innerText = "Delete All Items";

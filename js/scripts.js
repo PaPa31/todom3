@@ -12,7 +12,8 @@ const deleteAllItemsButton = document.getElementById("delete-all-items");
 const restoreItemButton = document.getElementById("restore-deleted-item");
 const clearTrashButton = document.getElementById("clear-trash");
 const undoLastDeleteButton = document.getElementById("undo-delete");
-const saveButton = document.getElementById("save-button");
+const saveAsOldButton = document.getElementById("save-as-old");
+const saveAsNewButton = document.getElementById("save-as-new");
 const saveAsFileButton = document.getElementById("save-as-file");
 const openFileButton = document.getElementById("open-file");
 const openDirButton = document.getElementById("open-dir");
@@ -32,6 +33,9 @@ deleteAllItemsButton.classList.add("invisible");
 deleteAllItemsButton.removeAttribute("style");
 
 saveAsFileButton.classList.add("inline-block");
+
+saveAsOldButton.classList.add("none");
+saveAsOldButton.removeAttribute("style");
 
 openDirButton.classList.add("none");
 openDirButton.removeAttribute("style");
@@ -85,6 +89,21 @@ const xUI = () => {
   position.innerHTML = "";
 };
 
+const splitSaveItemButton = () => {
+  saveAsOldButton.classList.replace("none", "inline-block");
+  //saveAsNewButton.style.color = "var(--todom-edit-color)";
+  //saveAsNewButton.style.borderColor = "var(--todom-border-edit)";
+  saveAsNewButton.classList.add("button-edit");
+  saveAsNewButton.innerText = "Save as new";
+};
+
+const joinSaveItemButton = () => {
+  saveAsOldButton.classList.replace("inline-block", "none");
+  //saveAsNewButton.removeAttribute("style");
+  saveAsNewButton.classList.remove("button-edit");
+  saveAsNewButton.innerText = "Save item";
+};
+
 const editItem = (e, element) => {
   const editedItemLiDOM2 = findParentTagOrClassRecursive(element);
   const itemIndexToEdit2 = indexedItemsArray.indexOf(editedItemLiDOM2.id) * 1;
@@ -110,6 +129,7 @@ const editItem = (e, element) => {
     editedItemLiDOM = editedItemLiDOM2;
     intervalFocus(element, "background-color: var(--todom-edit-color);", 300);
     input.value = editing;
+    splitSaveItemButton();
     editUI("#" + (itemIndexToEdit + 1));
   }
   xUI();
@@ -386,6 +406,19 @@ const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
   saveEl.querySelector(".next-save").setAttribute("disable", true);
 };
 
+saveAsOldButton.addEventListener("click", function (e) {
+  //const textArr = itemsArray[itemIndexToEdit].text;
+  //textArr.push(input.value);
+  //const len = textArr.length;
+  //itemsSpecArray[itemIndexToEdit].cur = len - 1;
+  //saveHistoryTracker(editedItemLiDOM, len);
+  //const resizableDiv = editedItemLiDOM.querySelector(
+  //  ".md-item > .resizable-div"
+  //);
+  //mdToLi(resizableDiv, input.value);
+  //scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
+});
+
 const saveItem = () => {
   if (itemIndexToEdit != null) {
     const textArr = itemsArray[itemIndexToEdit].text;
@@ -398,6 +431,7 @@ const saveItem = () => {
     );
     mdToLi(resizableDiv, input.value);
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
+    joinSaveItemButton();
   } else {
     const itemObj = {
       text: [input.value],
