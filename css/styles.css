@@ -854,8 +854,7 @@ table {
   color: var(--button-muted-color-dark);
 }*/
 
-.muted-button:active,
-.button-edit:active {
+.muted-button:active {
   color: var(--todom-button-active);
   background-color: var(--todom-button-active);
   border-color: var(--todom-button-active);
@@ -1427,6 +1426,12 @@ textarea:active {
   color: var(--todom-edit-hover-foreground);
   background-color: var(--todom-edit-hover-background);
   border-color: var(--todom-edit-hover-background);
+}
+
+.button-edit:active {
+  color: var(--todom-button-active);
+  background-color: var(--todom-button-active);
+  border-color: var(--todom-button-active);
 }
 
 #preview,
