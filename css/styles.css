@@ -18,6 +18,12 @@
 
   --todom-before-background: #ff00008c;
 
+  --todom-link: #0000ee;
+  --todom-link-dark: #abffb4;
+  --todom-link-active: #ff0000;
+  --todom-link-visited: #551a8b;
+  --todom-link-visited-dark: #b1b112;
+
   /*--vscode-foreground: #24292f;*/
   --color: #404040;
   --color-muted: #24292f;
@@ -104,7 +110,9 @@
   --todom-editor-background: var(--todom-editor-background-dark);
   --todom-input-background: var(--todom-input-background-dark);
   --todom-item-background: var(--todom-item-background-dark);
-  --todom-filename-color: var(--todom-filename-color-dark);
+
+  --todom-link: var(--todom-link-dark);
+  --todom-link-visited: var(--todom-link-visited-dark);
 
   --color: var(--color-dark);
   --color-muted: var(--color-muted-dark);
@@ -188,6 +196,21 @@ body {
 
 #content {
   margin-bottom: 100vh;
+}
+
+a.link,
+a {
+  color: var(--todom-link);
+}
+
+a.link:visited,
+a:visited {
+  color: var(--todom-link-visited);
+}
+
+a.link:active,
+a:active {
+  color: var(--todom-link-active);
 }
 
 .button,
@@ -1262,11 +1285,6 @@ button.delete-current-save:hover {
 #clear-trash img {
   width: 30px;
   margin-top: -3px;
-}
-
-.dark a.link,
-.dark a {
-  color: var(--todom-link-dark, #abffb4);
 }
 
 .container > .flex-row {
