@@ -29,16 +29,16 @@
   --todom-edit-color: #a41111;
   --todom-edit-color-dark: #e8a41c;
 
-  --todom-edit-hover-foreground: #ffffff;
-  --todom-edit-hover-foreground-dark: #000000;
+  --todom-edit-hover-foreground: var(--todom-editor-background);
+  --todom-edit-hover-foreground-dark: var(--todom-editor-background-dark);
 
   --todom-border-edit: #a41111;
   --todom-border-edit-dark: #866728;
   --todom-edit-hover-background: #a41111;
   --todom-edit-hover-background-dark: #a16c0a;
 
-  --todom-button-active: #ffffff;
-  --todom-button-active-dark: #000000;
+  --todom-button-active: var(--todom-editor-background);
+  --todom-button-active-dark: var(--todom-editor-background-dark);
 
   /*--vscode-foreground: #24292f;*/
   --color: #404040;
