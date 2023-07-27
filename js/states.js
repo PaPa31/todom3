@@ -415,13 +415,17 @@ const editFile = (e, element) => {
   const fi = filesArray[fileIndexToEdit2];
 
   if (e.ctrlKey) {
-    intervalFocus(element, "background-color: #685a7f;", 300);
+    intervalFocus(
+      element,
+      "background-color: var(--todom-main-action-icon-color);",
+      300
+    );
     input.value = input.value ? input.value + "\n" + fi.text : fi.text;
     scrollToLast();
   } else {
     fileIndexToEdit = fileIndexToEdit2;
     editedFileLiDOM = editedFileLiDOM2;
-    intervalFocus(element, "background-color: orange;", 300);
+    intervalFocus(element, "background-color: var(--todom-edit-color);", 300);
     input.value = fi.text;
     const fileName = fi.dir ? fi.dir : fi.name;
     editUI(fileName);

@@ -76,7 +76,7 @@ const editUI = (label) => {
 
   scrollToLast();
 
-  intervalFocus(form, "background-color: orange;", 300);
+  intervalFocus(form, "background-color: var(--todom-edit-color);", 300);
 };
 
 const xUI = () => {
@@ -94,7 +94,11 @@ const editItem = (e, element) => {
 
   const editing = textArr[current];
   if (e.ctrlKey) {
-    intervalFocus(element, "background-color: #685a7f;", 300);
+    intervalFocus(
+      element,
+      "background-color: var(--todom-main-action-icon-color);",
+      300
+    );
     input.value = input.value
       ? /^ *- /.test(editing)
         ? input.value + "\n" + editing
@@ -104,7 +108,7 @@ const editItem = (e, element) => {
   } else {
     itemIndexToEdit = itemIndexToEdit2;
     editedItemLiDOM = editedItemLiDOM2;
-    intervalFocus(element, "background-color: orange;", 300);
+    intervalFocus(element, "background-color: var(--todom-edit-color);", 300);
     input.value = editing;
     editUI("#" + (itemIndexToEdit + 1));
   }
@@ -249,7 +253,11 @@ function scrollToTargetAdjusted(targetElement, offset) {
       top: offsetPosition,
     });
 
-  intervalFocus(targetElement, "background-color: orange;", 300);
+  intervalFocus(
+    targetElement,
+    "background-color: var(--todom-edit-color);",
+    300
+  );
 }
 
 openDirButton.addEventListener("click", function (e) {

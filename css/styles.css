@@ -24,6 +24,10 @@
   --todom-link-visited: #551a8b;
   --todom-link-visited-dark: #b1b112;
 
+  --todom-edit-color: orange;
+
+  --todom-main-action-icon-color: #685a7f;
+
   /*--vscode-foreground: #24292f;*/
   --color: #404040;
   --color-muted: #24292f;
@@ -638,7 +642,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 
 .md-item .resizable-div::before {
   content: var(--before-current-save, "");
-  color: orange;
+  color: var(--todom-edit-color);
   background-color: var(--todom-before-background);
   padding: 2px 4px;
   border-radius: 5px;
@@ -843,7 +847,7 @@ table {
 }
 
 .ctrl [ctrl="true"] {
-  border: 1px solid #685a7f;
+  border: 1px solid var(--todom-main-action-icon-color);
 }
 
 .between-buttons {
@@ -1165,7 +1169,7 @@ span.counter-save {
   width: 25px;
   text-align: center;
   margin: auto;
-  color: orange;
+  color: var(--todom-edit-color);
   font-weight: bold;
   font-size: large;
   line-height: 1;
