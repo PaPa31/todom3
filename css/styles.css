@@ -16,6 +16,8 @@
   --todom-filename-color: #db657a;
   --todom-filename-color-dark: #b1b112;
 
+  --todom-before-background: #ff00008c;
+
   /*--vscode-foreground: #24292f;*/
   --color: #404040;
   --color-muted: #24292f;
@@ -614,7 +616,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 .md-item .resizable-div::before {
   content: var(--before-current-save, "");
   color: orange;
-  background-color: white;
+  background-color: var(--todom-before-background);
   padding: 2px 4px;
   border-radius: 5px;
   width: 30px;
