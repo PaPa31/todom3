@@ -121,6 +121,8 @@
   --todom-input-background: var(--todom-input-background-dark);
   --todom-item-background: var(--todom-item-background-dark);
 
+  --todom-filename-color: var(--todom-filename-color-dark);
+
   --todom-link: var(--todom-link-dark);
   --todom-link-visited: var(--todom-link-visited-dark);
 
