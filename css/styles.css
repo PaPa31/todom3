@@ -378,7 +378,6 @@ blockquote {
   opacity: 0.25;
   overflow: auto;
   width: calc(100% - 120px);
-  background-color: transparent;
 }
 
 .folded .unfolded .md-item {
@@ -386,8 +385,6 @@ blockquote {
   line-height: initial;
   opacity: 1;
   width: 100%;
-  background-color: var(--todom-item-background);
-  /*---dark*/
   clear: left;
 }
 
