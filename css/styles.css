@@ -5,6 +5,9 @@
  */
 
 :root {
+  --todom-max: #ffffff;
+  --todom-max-dark: #000000;
+
   --todom-editor-background: #ffffff;
   --todom-input-background: #ffffff;
   --todom-item-background: #f6f8fa;
@@ -117,6 +120,8 @@
 }
 
 .dark {
+  --todom-max: var(--todom-max-dark);
+
   --todom-editor-background: var(--todom-editor-background-dark);
   --todom-input-background: var(--todom-input-background-dark);
   --todom-item-background: var(--todom-item-background-dark);
@@ -1425,7 +1430,7 @@ textarea:active {
 }
 
 .button-edit:hover {
-  color: var(--todom-edit-hover-foreground);
+  color: var(--todom-max);
   background-color: var(--todom-edit-hover-background);
   border-color: var(--todom-edit-hover-background);
 }
