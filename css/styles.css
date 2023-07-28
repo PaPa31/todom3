@@ -205,11 +205,6 @@ body {
   margin: 0;
 }
 
-/*.dark body {
-  background-color: var(--todom-editor-background-dark);
-  color: var(--color-dark);
-}*/
-
 .container::after {
   content: "2023 TODOm or not TODOm";
   left: 0;
@@ -328,10 +323,6 @@ button {
   outline-offset: 2px;
 }
 
-/*.dark .btn:focus-visible {
-  outline-color: var(--bg);
-}*/
-
 :not(textarea)::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -347,10 +338,6 @@ textarea::-webkit-scrollbar {
   border-radius: 5px;
 }
 
-/*.dark ::-webkit-scrollbar-thumb {
-  background-color: var(--border-dark);
-}*/
-
 ::-webkit-scrollbar-corner {
   background-color: transparent;
 }
@@ -359,17 +346,9 @@ textarea::-webkit-scrollbar {
   background-color: var(--scrollbar-hover);
 }
 
-/*.dark ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-hover-dark);
-}*/
-
 blockquote {
   border-color: var(--border-cite);
 }
-
-/*.dark blockquote {
-  border-color: var(--border-cite-dark);
-}*/
 
 /*#main-listing > ol.folded .muted-button {
   --box-shadow-color: var(--button-muted-color);
@@ -597,13 +576,6 @@ image is undefined */
   background-color: var(--todom-item-background);
 }
 
-/*.dark .md-item,
-.dark .file-text,
-.dark #preview {
-  color: var(--color-dark);
-  background-color: var(--todom-item-background-dark);
-}*/
-
 .markdown-body > ol > li {
   width: 100%;
   transition: background-color 0.3s ease-in-out;
@@ -675,11 +647,6 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
   z-index: 1;
 }
 
-/*.dark .md-item .resizable-div::before {
-  background-color: var(--todom-before-background-dark, #0a0c0e82);
-  background-color: var(--todom-before-background-dark, #ff00008c);
-}*/
-
 .resizable-div > :first-child,
 /*.file-text > :first-child,*/
 #preview > :first-child,
@@ -736,17 +703,9 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
   color: var(--todom-filename-color);
 }
 
-/*.dark .file-name {
-  color: var(--todom-filename-color-dark, #b1b112);
-}*/
-
 ::selection {
   background-color: var(--bg-selection);
 }
-
-/*.dark ::selection {
-  background-color: var(--bg-selection-dark);
-}*/
 
 .markdown-body :not(pre) > code {
   border: none;
@@ -758,22 +717,12 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
   border-radius: 6px;
 }
 
-/*.dark .markdown-body :not(pre) > code {
-  color: var(--color-dark);
-  background-color: var(--bg-extra-muted-dark);
-}*/
-
 .markdown-body blockquote {
   font-size: 1em;
   padding: 0 1em;
   color: var(--color-extra-muted);
   border-left: 0.25em solid var(--border-extra);
 }
-
-/*.dark .markdown-body blockquote {
-  color: var(--color-extra-muted-dark);
-  border-left: 0.25em solid var(--border-extra-dark);
-}*/
 
 .markdown-body pre {
   padding: 16px;
@@ -782,11 +731,6 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
   background-color: var(--bg-muted);
   border-radius: 6px;
 }
-
-/*.dark .markdown-body pre {
-  color: var(--color-muted-dark);
-  background-color: var(--bg-muted-dark);
-}*/
 
 pre {
   font-family: monospace, monospace;
@@ -800,10 +744,6 @@ pre {
   background-color: var(--border-extra);
   border: 0;
 }
-
-/*.dark .markdown-body hr {
-  background-color: var(--border-extra-dark);
-}*/
 
 /* to overset the 'ol li ol' rule in _scaffolding.scss */
 ol li ol {
@@ -845,21 +785,11 @@ table {
   color: var(--button-muted-color-hover);
 }
 
-/*.dark .muted-button {
-  border: 1px solid var(--button-muted-border-hover-dark);
-  color: var(--button-muted-color-hover-dark);
-}*/
-
 .muted-button:hover {
   background-color: transparent;
   border: 1px solid var(--button-muted-border);
   color: var(--button-muted-color);
 }
-
-/*.dark .muted-button:hover {
-  border: 1px solid var(--button-muted-border-dark);
-  color: var(--button-muted-color-dark);
-}*/
 
 .muted-button:active {
   color: var(--todom-button-active);
@@ -888,17 +818,9 @@ table {
   color: var(--button-muted-color) !important;
 }
 
-/*.dark .dimmed {
-  color: var(--button-muted-color-dark) !important;
-}*/
-
 .dimmed:hover {
   color: var(--button-color-dimmed) !important;
 }
-
-/*.dark .dimmed:hover {
-  color: var(--button-color-dimmed-dark) !important;
-}*/
 
 #fold-global-toggle::after {
   content: "<";
@@ -928,15 +850,6 @@ h6 {
   color: var(--color);
   font-family: Arial;
 }
-
-/*.dark h1,
-.dark h2,
-.dark h3,
-.dark h4,
-.dark h5,
-.dark h6 {
-  color: var(--color-dark);
-}*/
 
 h1:not(:first-child),
 h2:not(:first-child),
@@ -980,17 +893,9 @@ h6 {
   color: var(--color-extra-muted);
 }
 
-/*.dark .markdown-body h6 {
-  color: var(--color-extra-muted-dark);
-}*/
-
 .markdown-body blockquote a {
   color: var(--link-cite-muted-color);
 }
-
-/*.dark .markdown-body blockquote a {
-  color: var(--link-cite-muted-color-dark);
-}*/
 
 #main-listing > ol {
   display: flex;
@@ -1360,12 +1265,6 @@ textarea:active {
   box-shadow: none;
 }
 
-/*.dark [type="text"],
-.dark textarea {
-  background-color: var(--todom-input-background-dark);
-  color: var(--color-dark);
-}*/
-
 #input-label {
   transition: opacity 0.2s ease;
   padding: 5px 0 0 0;
@@ -1383,10 +1282,6 @@ textarea:active {
   color: var(--todom-edit-color);
 }
 
-/*.dark #input-label > span {
-  color: var(--color-edit-dark);
-}*/
-
 #input-label > div {
   border-radius: 3px;
   padding: 0 4px;
@@ -1394,10 +1289,6 @@ textarea:active {
   color: var(--color-extra-muted);
   /*---dark*/
 }
-
-/*.dark #input-label > div {
-  color: var(--color-muted-dark);
-}*/
 
 #input-label > span:first-child {
   border-radius: 0 0 0 3px;
@@ -1412,17 +1303,9 @@ textarea:active {
   border: 1px solid var(--border);
 }
 
-/*.dark .border {
-  border: 1px solid var(--border-dark);
-}*/
-
 .border-edit {
   border: 1px solid var(--todom-border-edit);
 }
-
-/*.dark .border-edit {
-  border: 1px solid var(--border-edit-dark);
-}*/
 
 .button-edit {
   color: var(--todom-edit-color);
