@@ -43,8 +43,8 @@
   --todom-button-active: var(--todom-editor-background);
   --todom-button-active-dark: var(--todom-editor-background-dark);
 
-  --todom-button-muted-foreground-hover: #ccc;
-  --todom-button-muted-background-hover: #111;
+  --todom-button-muted-foreground-hover: #fff;
+  --todom-button-muted-background-hover: #333;
   --todom-button-muted-foreground-hover-dark: #111;
   --todom-button-muted-background-hover-dark: #ccc;
 
