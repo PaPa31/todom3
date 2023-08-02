@@ -586,6 +586,7 @@ xButton.addEventListener("click", function (e) {
   hideAndNewInputLabel();
   ifReturnAndNoneX();
   clearInputAndPreviewAreas();
+  joinSaveItemButton();
   input.focus();
 });
 
