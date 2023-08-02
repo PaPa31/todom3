@@ -1284,6 +1284,7 @@ textarea:active {
   padding: 0 4px;
   text-align: center;
   color: var(--color-extra-muted);
+  color: var(--color-new);
   /*---dark*/
 }
 
