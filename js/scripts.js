@@ -419,10 +419,20 @@ saveAsOldButton.addEventListener("click", function (e) {
   );
   mdToLi(resizableDiv, input.value);
   scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
+  joinSaveItemButton();
+  defaultMarkers();
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+
+  clearInputAndPreviewAreas();
+  localStorage.removeItem("todomLastInputValue");
+  hideAndNewInputLabel();
+  ifReturnAndNoneX();
 });
 
 const saveItem = () => {
   if (itemIndexToEdit != null) {
+    //save as new
     const textArr = itemsArray[itemIndexToEdit].text;
     textArr.push(input.value);
     const len = textArr.length;
