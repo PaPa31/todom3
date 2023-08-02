@@ -43,6 +43,11 @@
   --todom-button-active: var(--todom-editor-background);
   --todom-button-active-dark: var(--todom-editor-background-dark);
 
+  --todom-button-muted-foreground-hover: #ccc;
+  --todom-button-muted-background-hover: #111;
+  --todom-button-muted-foreground-hover-dark: #111;
+  --todom-button-muted-background-hover-dark: #ccc;
+
   /*--vscode-foreground: #24292f;*/
   --color: #404040;
   --color-muted: #24292f;
@@ -138,6 +143,13 @@
 
   --todom-edit-hover-foreground: var(--todom-edit-hover-foreground-dark);
   --todom-edit-hover-background: var(--todom-edit-hover-background-dark);
+
+  --todom-button-muted-foreground-hover: var(
+    --todom-button-muted-foreground-hover-dark
+  );
+  --todom-button-muted-background-hover: var(
+    --todom-button-muted-background-hover-dark
+  );
 
   --color: var(--color-dark);
   --color-muted: var(--color-muted-dark);
@@ -783,9 +795,9 @@ table {
 }
 
 .muted-button:hover {
-  background-color: transparent;
-  border: 1px solid var(--button-muted-border);
-  color: var(--button-muted-color);
+  background-color: var(--todom-button-muted-background-hover);
+  border-color: var(--todom-button-muted-background-hover);
+  color: var(--todom-button-muted-foreground-hover);
 }
 
 .muted-button:active {
