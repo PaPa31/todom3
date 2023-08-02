@@ -299,6 +299,13 @@ saveAsFileButton.addEventListener("click", function (e) {
     });
     saveAs(myFile);
     saveItem();
+
+    clearInputAndPreviewAreas();
+    defaultMarkers();
+    hideAndNewInputLabel();
+    ifReturnAndNoneX();
+    showOrHideDeleteAllItems();
+    localStorage.removeItem("todomLastInputValue");
   }
 });
 
