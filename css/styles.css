@@ -11,7 +11,7 @@
   --todom-input-background: #ffffff;
   --todom-item-background: #f6f8fa;
 
-  --todom-editor-foreground: #404040;
+  --todom-foreground: #404040;
 
   --todom-filename-foreground: #db657a;
 
@@ -101,7 +101,7 @@
   --todom-input-background: #0a0c0e;
   --todom-item-background: #1b2024;
 
-  --todom-editor-foreground: #ddd;
+  --todom-foreground: #ddd;
 
   --todom-filename-foreground: #b1b112;
 
@@ -175,7 +175,7 @@ html {
 }
 
 body {
-  color: var(--todom-editor-foreground);
+  color: var(--todom-foreground);
   background-color: var(--todom-editor-background);
   margin: 0;
 }
@@ -522,7 +522,7 @@ image is undefined */
 .md-item,
 .file-text,
 #preview {
-  color: var(--todom-editor-foreground);
+  color: var(--todom-foreground);
   background-color: var(--todom-item-background);
 }
 
@@ -662,7 +662,7 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
   padding: 0.1em 0.4em;
   margin: 0;
   white-space: break-spaces;
-  color: var(--todom-editor-foreground);
+  color: var(--todom-foreground);
   background-color: var(--bg-extra-muted);
   border-radius: 6px;
 }
@@ -789,7 +789,7 @@ h6 {
   margin-top: 24px;
   margin-bottom: 16px;
   font-weight: 600;
-  color: var(--todom-editor-foreground);
+  color: var(--todom-foreground);
   font-family: Arial;
 }
 
@@ -1206,7 +1206,7 @@ textarea {
 [type="text"],
 textarea {
   background-color: var(--todom-input-background);
-  color: var(--todom-editor-foreground);
+  color: var(--todom-foreground);
 }
 
 textarea:focus,
