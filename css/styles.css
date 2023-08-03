@@ -11,7 +11,7 @@
   --todom-input-background: #ffffff;
   --todom-item-background: #f6f8fa;
 
-  --todom-filename-color: #db657a;
+  --todom-filename-foreground: #db657a;
 
   --todom-before-background: #ff00008c;
 
@@ -19,12 +19,11 @@
   --todom-link-visited: #551a8b;
   --todom-link-active: #ff0000;
 
-  --todom-main-action-icon-color: #685a7f;
+  --todom-main-action-icon-foreground: #685a7f;
 
-  --todom-edit-color: #a41111;
+  --todom-edit-foreground: #a41111;
   --todom-border-edit: #a41111;
-  --todom-edit-hover-foreground: #ffffff;
-  --todom-edit-hover-background: #a41111;
+  --todom-button-edit-background-hover: #a41111;
 
   --todom-button-active: #ffffff;
 
@@ -102,15 +101,14 @@
   --todom-input-background: #0a0c0e;
   --todom-item-background: #1b2024;
 
-  --todom-filename-color: #b1b112;
+  --todom-filename-foreground: #b1b112;
 
   --todom-link: #abffb4;
   --todom-link-visited: #b1b112;
 
-  --todom-edit-color: #e8a41c;
-  --todom-border-edit: #866728;
-  --todom-edit-hover-foreground: #14181b;
-  --todom-edit-hover-background:  #a16c0a;
+  --todom-edit-foreground: #e8a41c;
+  --todom-edit-border: #866728;
+  --todom-button-edit-background-hover:  #a16c0a;
 
   --todom-button-active: #14181b;
 
@@ -585,7 +583,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 
 .md-item .resizable-div::before {
   content: var(--before-current-save, "");
-  color: var(--todom-edit-color);
+  color: var(--todom-edit-foreground);
   background-color: var(--todom-before-background);
   padding: 2px 4px;
   border-radius: 5px;
@@ -651,7 +649,7 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
 }
 
 .file-name {
-  color: var(--todom-filename-color);
+  color: var(--todom-filename-foreground);
 }
 
 ::selection {
@@ -754,7 +752,7 @@ table {
 }
 
 .ctrl [ctrl="true"] {
-  border: 1px solid var(--todom-main-action-icon-color);
+  border: 1px solid var(--todom-main-action-icon-foreground);
 }
 
 .between-buttons {
@@ -1050,7 +1048,7 @@ span.counter-save {
   width: 25px;
   text-align: center;
   margin: auto;
-  color: var(--todom-edit-color);
+  color: var(--todom-edit-foreground);
   font-weight: bold;
   font-size: large;
   line-height: 1;
@@ -1229,7 +1227,7 @@ textarea:active {
 
 #input-label > span {
   /*padding: 0 4px;*/
-  color: var(--todom-edit-color);
+  color: var(--todom-edit-foreground);
 }
 
 #input-label > div {
@@ -1255,18 +1253,18 @@ textarea:active {
 }
 
 .border-edit {
-  border: 1px solid var(--todom-border-edit);
+  border: 1px solid var(--todom-edit-border);
 }
 
 .button-edit {
-  color: var(--todom-edit-color);
-  border-color: var(--todom-border-edit);
+  color: var(--todom-edit-foreground);
+  border-color: var(--todom-edit-border);
 }
 
 .button-edit:hover {
   color: var(--todom-max);
-  background-color: var(--todom-edit-hover-background);
-  border-color: var(--todom-edit-hover-background);
+  background-color: var(--todom-button-edit-background-hover);
+  border-color: var(--todom-button-edit-background-hover);
 }
 
 .button-edit:active {
