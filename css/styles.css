@@ -108,12 +108,6 @@
   --button-hover: #0250bc;
   --button-hover-dark: #5a4500;
 
-  --button-muted-color: #aaa;
-  --button-muted-color-dark: #9f9f9f;
-
-  --button-color-dimmed: #dcdfe3;
-  --button-color-dimmed-dark: #54575b;
-
   --scrollbar-hover: #777;
   --scrollbar-hover-dark: #999;
 
@@ -172,8 +166,6 @@
   --button-default: var(--button-default-dark);
   --button-default-color: var(--button-default-color-dark);
   --button-hover: var(--button-hover-dark);
-  --button-muted-color: var(--button-muted-color-dark);
-  --button-color-dimmed: var(--button-color-dimmed-dark);
   --scrollbar-hover: var(--scrollbar-hover-dark);
   --link-cite-muted-color: var(--link-cite-muted-color-dark);
 }
@@ -360,28 +352,6 @@ textarea::-webkit-scrollbar {
 blockquote {
   border-color: var(--border-cite);
 }
-
-/*#main-listing > ol.folded .muted-button {
-  --box-shadow-color: var(--button-muted-color);
-  box-shadow: 1px 1px 2px 1px var(--box-shadow-color);
-}
-
-#main-listing > ol .muted-button {
-  --box-shadow-color: var(--button-muted-color);
-  box-shadow: 5px 5px 2px 1px var(--box-shadow-color);
-}
-
-#main-listing > ol.folded .unfolded .muted-button {
-  --box-shadow-color: var(--button-muted-color);
-  box-shadow: 5px 5px 2px 1px var(--box-shadow-color);
-}
-
-#main-listing > ol .unfolded .muted-button {
-  --box-shadow-color: var(--button-muted-color);
-  box-shadow: 1px 1px 2px 1px var(--box-shadow-color);
-}*/
-
-/*#main-listing > ol*/
 
 .folded .md-item,
 .unfolded .md-item {
@@ -820,14 +790,6 @@ table {
 
 .transparent-border {
   border: 1px solid transparent !important;
-}
-
-.dimmed {
-  color: var(--button-muted-color) !important;
-}
-
-.dimmed:hover {
-  color: var(--button-color-dimmed) !important;
 }
 
 #fold-global-toggle::after {
