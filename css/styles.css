@@ -6,55 +6,33 @@
 
 :root {
   --todom-max: #ffffff;
-  --todom-max-dark: #000000;
 
   --todom-editor-background: #ffffff;
   --todom-input-background: #ffffff;
   --todom-item-background: #f6f8fa;
 
-  --todom-editor-background-dark: #14181b;
-  --todom-input-background-dark: #0a0c0e;
-  --todom-item-background-dark: #1b2024;
-
   --todom-filename-color: #db657a;
-  --todom-filename-color-dark: #b1b112;
 
   --todom-before-background: #ff00008c;
 
   --todom-link: #0000ee;
-  --todom-link-dark: #abffb4;
-  --todom-link-active: #ff0000;
   --todom-link-visited: #551a8b;
-  --todom-link-visited-dark: #b1b112;
+  --todom-link-active: #ff0000;
 
   --todom-main-action-icon-color: #685a7f;
 
   --todom-edit-color: #a41111;
-  --todom-edit-color-dark: #e8a41c;
-
-  --todom-edit-hover-foreground: var(--todom-editor-background);
-  --todom-edit-hover-foreground-dark: var(--todom-editor-background-dark);
-
   --todom-border-edit: #a41111;
-  --todom-border-edit-dark: #866728;
+  --todom-edit-hover-foreground: #ffffff;
   --todom-edit-hover-background: #a41111;
-  --todom-edit-hover-background-dark: #a16c0a;
 
-  --todom-button-active: var(--todom-editor-background);
-  --todom-button-active-dark: var(--todom-editor-background-dark);
+  --todom-button-active: #ffffff;
 
   --todom-button-muted-foreground: #404040;
-  --todom-button-muted-foreground-dark: #ddd;
   --todom-button-muted-foreground-hover: #fff;
-  --todom-button-muted-foreground-hover-dark: #111;
-
   --todom-button-muted-background: #ccc;
-  --todom-button-muted-background-dark: #555;
   --todom-button-muted-background-hover: #333;
-  --todom-button-muted-background-hover-dark: #ccc;
-
   --todom-button-muted-border: #888;
-  --todom-button-muted-border-dark: #777;
 
   /*--vscode-foreground: #24292f;*/
   --color: #404040;
@@ -118,30 +96,29 @@
 }
 
 .dark {
-  --todom-max: var(--todom-max-dark);
+  --todom-max: #000000;
 
-  --todom-editor-background: var(--todom-editor-background-dark);
-  --todom-input-background: var(--todom-input-background-dark);
-  --todom-item-background: var(--todom-item-background-dark);
+  --todom-editor-background: #14181b;
+  --todom-input-background: #0a0c0e;
+  --todom-item-background: #1b2024;
 
-  --todom-filename-color: var(--todom-filename-color-dark);
+  --todom-filename-color: #b1b112;
 
-  --todom-link: var(--todom-link-dark);
-  --todom-link-visited: var(--todom-link-visited-dark);
+  --todom-link: #abffb4;
+  --todom-link-visited: #b1b112;
 
-  --todom-button-active: var(--todom-button-active-dark);
+  --todom-edit-color: #e8a41c;
+  --todom-border-edit: #866728;
+  --todom-edit-hover-foreground: #14181b;
+  --todom-edit-hover-background:  #a16c0a;
 
-  --todom-edit-color: var(--todom-edit-color-dark);
-  --todom-border-edit: var(--todom-border-edit-dark);
+  --todom-button-active: #14181b;
 
-  --todom-edit-hover-foreground: var(--todom-edit-hover-foreground-dark);
-  --todom-edit-hover-background: var(--todom-edit-hover-background-dark);
-
-  --todom-button-muted-foreground: var(--todom-button-muted-foreground-dark);
-  --todom-button-muted-foreground-hover: var(--todom-button-muted-foreground-hover-dark);
-  --todom-button-muted-background: var(--todom-button-muted-background-dark);
-  --todom-button-muted-background-hover: var(--todom-button-muted-background-hover-dark);
-  --todom-button-muted-border: var(--todom-button-muted-border-dark);
+  --todom-button-muted-foreground: #ddd;
+  --todom-button-muted-foreground-hover: #111;
+  --todom-button-muted-background: #555;
+  --todom-button-muted-background-hover: #ccc;
+  --todom-button-muted-border: #777;
 
   --color: var(--color-dark);
   --color-muted: var(--color-muted-dark);
