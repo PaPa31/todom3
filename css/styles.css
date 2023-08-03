@@ -108,7 +108,7 @@
 
   --todom-edit-foreground: #e8a41c;
   --todom-edit-border: #866728;
-  --todom-button-edit-background-hover:  #a16c0a;
+  --todom-button-edit-background-hover: #a16c0a;
 
   --todom-button-active: #14181b;
 
@@ -973,7 +973,7 @@ ol.preview-outer p {
 }
 
 #list-order:hover {
-fill: var(--todom-button-muted-foreground-hover);
+  fill: var(--todom-button-muted-foreground-hover);
 }
 
 .sort-ascending,
