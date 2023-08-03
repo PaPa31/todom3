@@ -43,10 +43,18 @@
   --todom-button-active: var(--todom-editor-background);
   --todom-button-active-dark: var(--todom-editor-background-dark);
 
+  --todom-button-muted-foreground: #404040;
+  --todom-button-muted-foreground-dark: #ddd;
   --todom-button-muted-foreground-hover: #fff;
-  --todom-button-muted-background-hover: #333;
   --todom-button-muted-foreground-hover-dark: #111;
+
+  --todom-button-muted-background: #ccc;
+  --todom-button-muted-background-dark: #555;
+  --todom-button-muted-background-hover: #333;
   --todom-button-muted-background-hover-dark: #ccc;
+
+  --todom-button-muted-border: #888;
+  --todom-button-muted-border-dark: #777;
 
   /*--vscode-foreground: #24292f;*/
   --color: #404040;
@@ -103,17 +111,8 @@
   --button-muted-color: #aaa;
   --button-muted-color-dark: #9f9f9f;
 
-  --button-muted-color-hover: #404040;
-  --button-muted-color-hover-dark: #ddd;
-
   --button-color-dimmed: #dcdfe3;
   --button-color-dimmed-dark: #54575b;
-
-  --button-muted-border: #ccc;
-  --button-muted-border-dark: #444;
-
-  --button-muted-border-hover: #555;
-  --button-muted-border-hover-dark: #888;
 
   --scrollbar-hover: #777;
   --scrollbar-hover-dark: #999;
@@ -144,12 +143,15 @@
   --todom-edit-hover-foreground: var(--todom-edit-hover-foreground-dark);
   --todom-edit-hover-background: var(--todom-edit-hover-background-dark);
 
+  --todom-button-muted-foreground: var(--todom-button-muted-foreground-dark);
   --todom-button-muted-foreground-hover: var(
     --todom-button-muted-foreground-hover-dark
   );
+  --todom-button-muted-background: var(--todom-button-muted-background-dark);
   --todom-button-muted-background-hover: var(
     --todom-button-muted-background-hover-dark
   );
+  --todom-button-muted-border: var(--todom-button-muted-border-dark);
 
   --color: var(--color-dark);
   --color-muted: var(--color-muted-dark);
@@ -171,10 +173,7 @@
   --button-default-color: var(--button-default-color-dark);
   --button-hover: var(--button-hover-dark);
   --button-muted-color: var(--button-muted-color-dark);
-  --button-muted-color-hover: var(--button-muted-color-hover-dark);
   --button-color-dimmed: var(--button-color-dimmed-dark);
-  --button-muted-border: var(--button-muted-border-dark);
-  --button-muted-border-hover: var(--button-muted-border-hover-dark);
   --scrollbar-hover: var(--scrollbar-hover-dark);
   --link-cite-muted-color: var(--link-cite-muted-color-dark);
 }
@@ -790,8 +789,8 @@ table {
 
 .muted-button {
   background-color: transparent;
-  border: 1px solid var(--button-muted-border-hover);
-  color: var(--button-muted-color-hover);
+  border: 1px solid var(--todom-button-muted-border);
+  color: var(--todom-button-muted-foreground);
 }
 
 .muted-button:hover {
