@@ -138,13 +138,9 @@
   --todom-edit-hover-background: var(--todom-edit-hover-background-dark);
 
   --todom-button-muted-foreground: var(--todom-button-muted-foreground-dark);
-  --todom-button-muted-foreground-hover: var(
-    --todom-button-muted-foreground-hover-dark
-  );
+  --todom-button-muted-foreground-hover: var(--todom-button-muted-foreground-hover-dark);
   --todom-button-muted-background: var(--todom-button-muted-background-dark);
-  --todom-button-muted-background-hover: var(
-    --todom-button-muted-background-hover-dark
-  );
+  --todom-button-muted-background-hover: var(--todom-button-muted-background-hover-dark);
   --todom-button-muted-border: var(--todom-button-muted-border-dark);
 
   --color: var(--color-dark);
@@ -997,10 +993,17 @@ ol.preview-outer p {
   top: 16px;
 }
 
+#list-order {
+  fill: var(--todom-button-muted-foreground);
+}
+
+#list-order:hover {
+fill: var(--todom-button-muted-foreground-hover);
+}
+
 .sort-ascending,
 .sort-descending {
   width: 30px;
-  fill: #777;
 }
 
 .sort-ascending {
