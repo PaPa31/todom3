@@ -36,12 +36,9 @@
   --todom-button-muted-background-hover: #333;
   --todom-button-muted-border: #888;
 
-  --todom-itemCodeBlock-background: #dce5ee;
-
-  /*--vscode-foreground: #24292f;*/
-  --color-extra-muted: #57606a;
-
-  --color-extra-muted-dark: #768390;
+  --todom-textCodeBlock-background: #dce5ee;
+  --todom-textBlockQuote-foreground: #57606a;
+  --todom-textBlockQuote-border: #d0d7de;
 
   --color-new: #0079ff;
   --color-new-dark: #76b3f0;
@@ -68,9 +65,6 @@
 
   --border: #aaa;
   --border-dark: #777;
-
-  --border-extra: #d0d7de;
-  --border-extra-dark: #444c56;
 
   --border-cite: #f0f0f0;
   --border-cite-dark: #353535;
@@ -120,9 +114,10 @@
   --todom-button-muted-background-hover: #ccc;
   --todom-button-muted-border: #777;
 
-  --todom-itemCodeBlock-background: #313842;
+  --todom-textCodeBlock-background: #313842;
+  --todom-textBlockQuote-foreground: #768390;
+  --todom-textBlockQuote-border: #444c56;
 
-  --color-extra-muted: var(--color-extra-muted-dark);
   --color-new: var(--color-new-dark);
   --bg: var(--bg-dark);
   --bg-extra-muted: var(--bg-extra-muted-dark);
@@ -132,7 +127,7 @@
   --bg-input-translucent: var(--bg-input-translucent-dark);
   --bg-item-translucent: var(--bg-item-translucent-dark);
   --border: var(--border-dark);
-  --border-extra: var(--border-extra-dark);
+
   --border-cite: var(--border-cite-dark);
   --border-edit: var(--border-edit-dark);
   --button-default: var(--button-default-dark);
@@ -140,19 +135,6 @@
   --button-hover: var(--button-hover-dark);
   --scrollbar-hover: var(--scrollbar-hover-dark);
   --link-cite-muted-color: var(--link-cite-muted-color-dark);
-}
-
-.monaco-workbench-side-pane {
-  background-color: #0a0c0e;
-  color: #ce7f4b;
-  border-right: 1px solid #200000;
-  outline-color: #53595d80;
-}
-
-.monaco-workbench-terminal {
-  background-color: #1b2024;
-  border-left-color: #200000;
-  border-right-color: #200000;
 }
 
 html {
@@ -683,23 +665,17 @@ pre {
 .markdown-body blockquote {
   margin-top: 0;
   padding: 0 16px 0 10px;
-  border-left-width: 5px;
+  border-left-width: 0.25em;
   border-left-style: solid;
-
-  /*font-size: 1em;*/
-  /*padding: 0 1em;*/
-
-  color: var(--color-extra-muted);
-  border-left: 0.25em solid var(--border-extra);
-  /*background: var(--vscode-textBlockQuote-background);*/
-  /*border-color: var(--vscode-textBlockQuote-border);*/
+  color: var(--todom-textBlockQuote-foreground);
+  border-color: var(--todom-textBlockQuote-border);
 }
 
 .markdown-body pre {
   padding: 16px;
   overflow: auto;
   color: var(--todom-item-foreground);
-  background-color: var(--todom-itemCodeBlock-background);
+  background-color: var(--todom-textCodeBlock-background);
   border-radius: 6px;
 }
 
@@ -712,7 +688,7 @@ pre {
   height: 0.06em;
   padding: 0;
   margin: 24px 0;
-  background-color: var(--border-extra);
+  background-color: var(--todom-textBlockQuote-border);
   border: 0;
 }
 
@@ -853,7 +829,7 @@ h5 {
 
 h6 {
   font-size: 0.85em;
-  color: var(--color-extra-muted);
+  color: var(--todom-textBlockQuote-foreground);
 }
 
 .markdown-body blockquote a {
@@ -1256,7 +1232,7 @@ textarea:active {
   border-radius: 3px;
   padding: 0 4px;
   text-align: center;
-  color: var(--color-extra-muted);
+  color: var(--todom-textBlockQuote-foreground);
   color: var(--color-new);
   /*---dark*/
 }
