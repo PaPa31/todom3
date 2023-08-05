@@ -657,6 +657,19 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
   background-color: var(--bg-selection);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul,
+pre {
+  margin-top: 0;
+}
+
 .markdown-body :not(pre) > code {
   border: none;
   padding: 0.1em 0.4em;
@@ -668,10 +681,18 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
 }
 
 .markdown-body blockquote {
-  font-size: 1em;
-  padding: 0 1em;
+  margin-top: 0;
+  padding: 0 16px 0 10px;
+  border-left-width: 5px;
+  border-left-style: solid;
+
+  /*font-size: 1em;*/
+  /*padding: 0 1em;*/
+
   color: var(--color-extra-muted);
   border-left: 0.25em solid var(--border-extra);
+  /*background: var(--vscode-textBlockQuote-background);*/
+  /*border-color: var(--vscode-textBlockQuote-border);*/
 }
 
 .markdown-body pre {
