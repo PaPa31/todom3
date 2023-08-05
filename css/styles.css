@@ -36,6 +36,8 @@
   --todom-button-muted-background-hover: #333;
   --todom-button-muted-border: #888;
 
+  --todom-itemCodeBlock-background: #dce5ee;
+
   /*--vscode-foreground: #24292f;*/
   --color-extra-muted: #57606a;
 
@@ -45,11 +47,9 @@
   --color-new-dark: #76b3f0;
 
   --bg: #fff;
-  --bg-muted: #dce5ee;
   --bg-extra-muted: #dfdfdf;
 
   --bg-dark: #2b2b2b;
-  --bg-muted-dark: #313842;
   --bg-extra-muted-dark: #464646;
 
   --bg-item: #eee;
@@ -120,10 +120,11 @@
   --todom-button-muted-background-hover: #ccc;
   --todom-button-muted-border: #777;
 
+  --todom-itemCodeBlock-background: #313842;
+
   --color-extra-muted: var(--color-extra-muted-dark);
   --color-new: var(--color-new-dark);
   --bg: var(--bg-dark);
-  --bg-muted: var(--bg-muted-dark);
   --bg-extra-muted: var(--bg-extra-muted-dark);
   --bg-item: var(--bg-item-dark);
   --bg-item-transparent: var(--bg-item-transparent-dark);
@@ -677,7 +678,7 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
   padding: 16px;
   overflow: auto;
   color: var(--todom-item-foreground);
-  background-color: var(--bg-muted);
+  background-color: var(--todom-itemCodeBlock-background);
   border-radius: 6px;
 }
 
