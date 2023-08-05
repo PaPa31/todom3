@@ -12,6 +12,7 @@
   --todom-item-background: #f6f8fa;
 
   --todom-foreground: #404040;
+  --todom-item-foreground: #24292f;
 
   --todom-filename-foreground: #db657a;
 
@@ -36,10 +37,8 @@
   --todom-button-muted-border: #888;
 
   /*--vscode-foreground: #24292f;*/
-  --color-muted: #24292f;
   --color-extra-muted: #57606a;
 
-  --color-muted-dark: #adbac7;
   --color-extra-muted-dark: #768390;
 
   --color-new: #0079ff;
@@ -102,6 +101,7 @@
   --todom-item-background: #1b2024;
 
   --todom-foreground: #ddd;
+  --todom-item-foreground: #adbac7;
 
   --todom-filename-foreground: #b1b112;
 
@@ -120,7 +120,6 @@
   --todom-button-muted-background-hover: #ccc;
   --todom-button-muted-border: #777;
 
-  --color-muted: var(--color-muted-dark);
   --color-extra-muted: var(--color-extra-muted-dark);
   --color-new: var(--color-new-dark);
   --bg: var(--bg-dark);
@@ -677,7 +676,7 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
 .markdown-body pre {
   padding: 16px;
   overflow: auto;
-  color: var(--color-muted);
+  color: var(--todom-item-foreground);
   background-color: var(--bg-muted);
   border-radius: 6px;
 }
