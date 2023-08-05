@@ -40,13 +40,11 @@
   --todom-textBlockQuote-foreground: #57606a;
   --todom-textBlockQuote-border: #d0d7de;
 
-  --color-new: #0079ff;
-  --color-new-dark: #76b3f0;
+  --todom-new-foreground: #0079ff;
 
-  --bg: #fff;
+  --todom-focusOutline: #fff;
+
   --bg-extra-muted: #dfdfdf;
-
-  --bg-dark: #2b2b2b;
   --bg-extra-muted-dark: #464646;
 
   --bg-item: #eee;
@@ -118,8 +116,10 @@
   --todom-textBlockQuote-foreground: #768390;
   --todom-textBlockQuote-border: #444c56;
 
-  --color-new: var(--color-new-dark);
-  --bg: var(--bg-dark);
+  --todom-new-foreground: #76b3f0;
+
+  --todom-focusOutline: #2b2b2b;
+
   --bg-extra-muted: var(--bg-extra-muted-dark);
   --bg-item: var(--bg-item-dark);
   --bg-item-transparent: var(--bg-item-transparent-dark);
@@ -276,7 +276,7 @@ button {
 }
 
 .btn:focus-visible {
-  outline: 1px solid var(--bg);
+  outline: 1px solid var(--todom-focusOutline);
   outline-offset: 2px;
 }
 
@@ -1233,7 +1233,7 @@ textarea:active {
   padding: 0 4px;
   text-align: center;
   color: var(--todom-textBlockQuote-foreground);
-  color: var(--color-new);
+  color: var(--todom-new-foreground);
   /*---dark*/
 }
 
