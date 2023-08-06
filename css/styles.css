@@ -32,11 +32,11 @@
 
   --todom-button-active: #ffffff;
 
-  --todom-button-muted-foreground: #404040;
-  --todom-button-muted-hoverForeground: #fff;
-  --todom-button-muted-background: #ccc;
-  --todom-button-muted-hoverBackground: #333;
-  --todom-button-muted-border: #888;
+  --todom-button-foreground: #404040;
+  --todom-button-hoverForeground: #fff;
+  --todom-button-background: #ccc;
+  --todom-button-hoverBackground: #333;
+  --todom-button-border: #888;
 
   --todom-textCodeBlock-background: #dce5ee;
   --todom-textBlockQuote-foreground: #57606a;
@@ -80,11 +80,11 @@
 
   --todom-button-active: #14181b;
 
-  --todom-button-muted-foreground: #ddd;
-  --todom-button-muted-hoverForeground: #111;
-  --todom-button-muted-background: #555;
-  --todom-button-muted-hoverBackground: #ccc;
-  --todom-button-muted-border: #777;
+  --todom-button-foreground: #ddd;
+  --todom-button-hoverForeground: #111;
+  --todom-button-background: #555;
+  --todom-button-hoverBackground: #ccc;
+  --todom-button-border: #777;
 
   --todom-textCodeBlock-background: #313842;
   --todom-textBlockQuote-foreground: #768390;
@@ -165,8 +165,8 @@ button,
   appearance: none;
   display: inline-block;
   border: 1px solid var(--todom-border);
-  background-color: var(--todom-button-muted-background);
-  color: var(--todom-button-muted-foreground);
+  background-color: var(--todom-button-background);
+  color: var(--todom-button-foreground);
   border-radius: 4px;
   font-weight: 600;
   font-family: Arial;
@@ -686,19 +686,19 @@ table {
   /*width: 95%;*/
 }
 
-.muted-button {
+.button-default {
   background-color: transparent;
-  border: 1px solid var(--todom-button-muted-border);
-  color: var(--todom-button-muted-foreground);
+  border: 1px solid var(--todom-button-border);
+  color: var(--todom-button-foreground);
 }
 
-.muted-button:hover {
-  background-color: var(--todom-button-muted-hoverBackground);
-  border-color: var(--todom-button-muted-hoverBackground);
-  color: var(--todom-button-muted-hoverForeground);
+.button-default:hover {
+  background-color: var(--todom-button-hoverBackground);
+  border-color: var(--todom-button-hoverBackground);
+  color: var(--todom-button-hoverForeground);
 }
 
-.muted-button:active {
+.button-default:active {
   color: var(--todom-button-active);
   background-color: var(--todom-button-active);
   border-color: var(--todom-button-active);
@@ -927,11 +927,11 @@ ol.preview-outer p {
 }
 
 #list-order {
-  fill: var(--todom-button-muted-foreground);
+  fill: var(--todom-button-foreground);
 }
 
 #list-order:hover {
-  fill: var(--todom-button-muted-hoverForeground);
+  fill: var(--todom-button-hoverForeground);
 }
 
 .sort-ascending,

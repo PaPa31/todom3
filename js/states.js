@@ -192,7 +192,7 @@ const unfoldButtonMaker = (parentLi) => {
   //  : parentLi.querySelector(".file-text");
   const buttonTag = document.createElement("button");
   const numInside = document.createElement("span");
-  buttonTag.setAttribute("class", "muted-button unfold-button btn");
+  buttonTag.setAttribute("class", "button-default unfold-button btn");
   buttonTag.setAttribute(
     "onclick",
     `unfoldOneItem(findParentTagOrClassRecursive(this))`
