@@ -11,8 +11,8 @@
   --todom-background: #ffffff;
 
   --todom-input-background: #ffffff;
-  --todom-inputNew-foreground: #0079ff;
-  --todom-inputEdit-foreground: #a41111;
+  --todom-inputLabelNew-foreground: #0079ff;
+  --todom-inputLabelEdit-foreground: #a41111;
   --todom-inputEdit-border: #a41111;
   --todom-button-edit-hoverBackground: #a41111;
 
@@ -45,11 +45,7 @@
 
   --todom-textPreformat-background: #dfdfdf;
 
-  --bg-item-transparent: #eeeeee00;
-  --bg-item-dark-transparent: #33333300;
-
-  --bg-selection: #9ebfea;
-  --bg-selection-dark: #783c42;
+  --todom-selectionHighlightBackground: #9ebfea;
 
   --bg-input-translucent: #ffffffd6;
   --bg-input-translucent-dark: #2b2b2bb2;
@@ -88,8 +84,8 @@
   --todom-background: #14181b;
 
   --todom-input-background: #0a0c0e;
-  --todom-inputNew-foreground: #76b3f0;
-  --todom-inputEdit-foreground: #e8a41c;
+  --todom-inputLabelNew-foreground: #76b3f0;
+  --todom-inputLabelEdit-foreground: #e8a41c;
   --todom-inputEdit-border: #866728;
   --todom-button-edit-hoverBackground: #a16c0a;
 
@@ -117,8 +113,8 @@
 
   --todom-textPreformat-background: #464646;
 
-  --bg-item-transparent: var(--bg-item-transparent-dark);
-  --bg-selection: var(--bg-selection-dark);
+  --todom-selectionHighlightBackground: #783c42;
+
   --bg-input-translucent: var(--bg-input-translucent-dark);
   --bg-item-translucent: var(--bg-item-translucent-dark);
   --border: var(--border-dark);
@@ -398,7 +394,6 @@ ol#list-files .main-actions {
 #position {
   float: left;
   border-radius: 0 0 5px 5px;
-  /*background-color: var(--bg-item);*/
   word-wrap: break-word;
   /*due to resizability for Youtube */
   /*overflow: auto;*/
@@ -561,7 +556,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 
 .md-item .resizable-div::before {
   content: var(--before-current-save, "");
-  color: var(--todom-inputEdit-foreground);
+  color: var(--todom-inputLabelEdit-foreground);
   background-color: var(--todom-before-background);
   padding: 2px 4px;
   border-radius: 5px;
@@ -631,7 +626,7 @@ ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
 }
 
 ::selection {
-  background-color: var(--bg-selection);
+  background-color: var(--todom-selectionHighlightBackground);
 }
 
 h1,
@@ -1041,7 +1036,7 @@ span.counter-save {
   width: 25px;
   text-align: center;
   margin: auto;
-  color: var(--todom-inputEdit-foreground);
+  color: var(--todom-inputLabelEdit-foreground);
   font-weight: bold;
   font-size: large;
   line-height: 1;
@@ -1220,16 +1215,14 @@ textarea:active {
 
 #input-label > span {
   /*padding: 0 4px;*/
-  color: var(--todom-inputEdit-foreground);
+  color: var(--todom-inputLabelEdit-foreground);
 }
 
 #input-label > div {
   border-radius: 3px;
   padding: 0 4px;
   text-align: center;
-  color: var(--todom-textBlockQuote-foreground);
-  color: var(--todom-inputNew-foreground);
-  /*---dark*/
+  color: var(--todom-inputLabelNew-foreground);
 }
 
 #input-label > span:first-child {
@@ -1250,7 +1243,7 @@ textarea:active {
 }
 
 .button-edit {
-  color: var(--todom-inputEdit-foreground);
+  color: var(--todom-inputLabelEdit-foreground);
   border-color: var(--todom-inputEdit-border);
 }
 
