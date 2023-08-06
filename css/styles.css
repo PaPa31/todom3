@@ -9,6 +9,7 @@
 
   --todom-foreground: #404040;
   --todom-background: #ffffff;
+  --todom-border: #555;
 
   --todom-input-background: #ffffff;
   --todom-inputLabelNew-foreground: #0079ff;
@@ -47,9 +48,6 @@
 
   --todom-selectionHighlightBackground: #9ebfea;
 
-  --border: #aaa;
-  --border-dark: #777;
-
   --border-cite: #f0f0f0;
   --border-cite-dark: #353535;
 
@@ -76,6 +74,7 @@
 
   --todom-foreground: #ddd;
   --todom-background: #14181b;
+  --todom-border: #aaa;
 
   --todom-input-background: #0a0c0e;
   --todom-inputLabelNew-foreground: #76b3f0;
@@ -108,8 +107,6 @@
   --todom-textPreformat-background: #464646;
 
   --todom-selectionHighlightBackground: #783c42;
-
-  --border: var(--border-dark);
 
   --border-cite: var(--border-cite-dark);
   --border-edit: var(--border-edit-dark);
@@ -274,7 +271,7 @@ textarea::-webkit-scrollbar {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--border);
+  background-color: var(--todom-border);
   border-radius: 5px;
 }
 
@@ -1222,7 +1219,7 @@ textarea:active {
 }
 
 .border {
-  border: 1px solid var(--border);
+  border: 1px solid var(--todom-border);
 }
 
 .border-edit {
