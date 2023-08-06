@@ -49,7 +49,7 @@
 
   --todom-selectionHighlightBackground: #9ebfea;
 
-  --todom-scrollbarHover:#777;
+  --todom-scrollbarHover: #777;
 }
 
 .dark {
@@ -92,7 +92,7 @@
 
   --todom-selectionHighlightBackground: #783c42;
 
-  --todom-scrollbarHover:#999;
+  --todom-scrollbarHover: #999;
 }
 
 html {
@@ -610,6 +610,8 @@ pre {
 }
 
 .markdown-body pre {
+  font-family: monospace, monospace;
+  margin-top: 0;
   padding: 16px;
   overflow: auto;
   color: var(--todom-text-foreground);
@@ -617,8 +619,8 @@ pre {
   border-radius: 6px;
 }
 
-pre {
-  font-family: monospace, monospace;
+.markdown-body blockquote p {
+  margin: 0;
 }
 
 /*(Firefox) if less than 0.06em, instead of three <hr> shows two */
