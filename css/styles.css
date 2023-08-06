@@ -7,12 +7,17 @@
 :root {
   --todom-max: #ffffff;
 
-  --todom-editor-background: #ffffff;
-  --todom-input-background: #ffffff;
-  --todom-item-background: #f6f8fa;
-
   --todom-foreground: #404040;
-  --todom-item-foreground: #24292f;
+  --todom-background: #ffffff;
+
+  --todom-input-background: #ffffff;
+  --todom-inputNew-foreground: #0079ff;
+  --todom-inputEdit-foreground: #a41111;
+  --todom-inputEdit-border: #a41111;
+  --todom-button-edit-hoverBackground: #a41111;
+
+  --todom-text-background: #f6f8fa;
+  --todom-text-foreground: #24292f;
 
   --todom-filename-foreground: #db657a;
 
@@ -24,23 +29,17 @@
 
   --todom-main-action-icon-foreground: #685a7f;
 
-  --todom-edit-foreground: #a41111;
-  --todom-edit-border: #a41111;
-  --todom-button-edit-background-hover: #a41111;
-
   --todom-button-active: #ffffff;
 
   --todom-button-muted-foreground: #404040;
-  --todom-button-muted-foreground-hover: #fff;
+  --todom-button-muted-hoverForeground: #fff;
   --todom-button-muted-background: #ccc;
-  --todom-button-muted-background-hover: #333;
+  --todom-button-muted-hoverBackground: #333;
   --todom-button-muted-border: #888;
 
   --todom-textCodeBlock-background: #dce5ee;
   --todom-textBlockQuote-foreground: #57606a;
   --todom-textBlockQuote-border: #d0d7de;
-
-  --todom-new-foreground: #0079ff;
 
   --todom-focusOutline: #fff;
 
@@ -88,35 +87,34 @@
 .dark {
   --todom-max: #000000;
 
-  --todom-editor-background: #14181b;
-  --todom-input-background: #0a0c0e;
-  --todom-item-background: #1b2024;
-
   --todom-foreground: #ddd;
-  --todom-item-foreground: #adbac7;
+  --todom-background: #14181b;
+
+  --todom-input-background: #0a0c0e;
+  --todom-inputNew-foreground: #76b3f0;
+  --todom-inputEdit-foreground: #e8a41c;
+  --todom-inputEdit-border: #866728;
+  --todom-button-edit-hoverBackground: #a16c0a;
+
+  --todom-text-background: #1b2024;
+  --todom-text-foreground: #adbac7;
 
   --todom-filename-foreground: #b1b112;
 
   --todom-link: #abffb4;
   --todom-link-visited: #b1b112;
 
-  --todom-edit-foreground: #e8a41c;
-  --todom-edit-border: #866728;
-  --todom-button-edit-background-hover: #a16c0a;
-
   --todom-button-active: #14181b;
 
   --todom-button-muted-foreground: #ddd;
-  --todom-button-muted-foreground-hover: #111;
+  --todom-button-muted-hoverForeground: #111;
   --todom-button-muted-background: #555;
-  --todom-button-muted-background-hover: #ccc;
+  --todom-button-muted-hoverBackground: #ccc;
   --todom-button-muted-border: #777;
 
   --todom-textCodeBlock-background: #313842;
   --todom-textBlockQuote-foreground: #768390;
   --todom-textBlockQuote-border: #444c56;
-
-  --todom-new-foreground: #76b3f0;
 
   --todom-focusOutline: #2b2b2b;
 
@@ -158,7 +156,7 @@ html {
 
 body {
   color: var(--todom-foreground);
-  background-color: var(--todom-editor-background);
+  background-color: var(--todom-background);
   margin: 0;
 }
 
@@ -505,7 +503,7 @@ image is undefined */
 .file-text,
 #preview {
   color: var(--todom-foreground);
-  background-color: var(--todom-item-background);
+  background-color: var(--todom-text-background);
 }
 
 .markdown-body > ol > li {
@@ -566,7 +564,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
 
 .md-item .resizable-div::before {
   content: var(--before-current-save, "");
-  color: var(--todom-edit-foreground);
+  color: var(--todom-inputEdit-foreground);
   background-color: var(--todom-before-background);
   padding: 2px 4px;
   border-radius: 5px;
@@ -674,7 +672,7 @@ pre {
 .markdown-body pre {
   padding: 16px;
   overflow: auto;
-  color: var(--todom-item-foreground);
+  color: var(--todom-text-foreground);
   background-color: var(--todom-textCodeBlock-background);
   border-radius: 6px;
 }
@@ -733,9 +731,9 @@ table {
 }
 
 .muted-button:hover {
-  background-color: var(--todom-button-muted-background-hover);
-  border-color: var(--todom-button-muted-background-hover);
-  color: var(--todom-button-muted-foreground-hover);
+  background-color: var(--todom-button-muted-hoverBackground);
+  border-color: var(--todom-button-muted-hoverBackground);
+  color: var(--todom-button-muted-hoverForeground);
 }
 
 .muted-button:active {
@@ -971,7 +969,7 @@ ol.preview-outer p {
 }
 
 #list-order:hover {
-  fill: var(--todom-button-muted-foreground-hover);
+  fill: var(--todom-button-muted-hoverForeground);
 }
 
 .sort-ascending,
@@ -1046,7 +1044,7 @@ span.counter-save {
   width: 25px;
   text-align: center;
   margin: auto;
-  color: var(--todom-edit-foreground);
+  color: var(--todom-inputEdit-foreground);
   font-weight: bold;
   font-size: large;
   line-height: 1;
@@ -1225,7 +1223,7 @@ textarea:active {
 
 #input-label > span {
   /*padding: 0 4px;*/
-  color: var(--todom-edit-foreground);
+  color: var(--todom-inputEdit-foreground);
 }
 
 #input-label > div {
@@ -1233,7 +1231,7 @@ textarea:active {
   padding: 0 4px;
   text-align: center;
   color: var(--todom-textBlockQuote-foreground);
-  color: var(--todom-new-foreground);
+  color: var(--todom-inputNew-foreground);
   /*---dark*/
 }
 
@@ -1251,18 +1249,18 @@ textarea:active {
 }
 
 .border-edit {
-  border: 1px solid var(--todom-edit-border);
+  border: 1px solid var(--todom-inputEdit-border);
 }
 
 .button-edit {
-  color: var(--todom-edit-foreground);
-  border-color: var(--todom-edit-border);
+  color: var(--todom-inputEdit-foreground);
+  border-color: var(--todom-inputEdit-border);
 }
 
 .button-edit:hover {
   color: var(--todom-max);
-  background-color: var(--todom-button-edit-background-hover);
-  border-color: var(--todom-button-edit-background-hover);
+  background-color: var(--todom-button-edit-hoverBackground);
+  border-color: var(--todom-button-edit-hoverBackground);
 }
 
 .button-edit:active {
