@@ -47,12 +47,6 @@
 
   --todom-selectionHighlightBackground: #9ebfea;
 
-  /*--bg-input-translucent: #ffffffd6;
-  --bg-input-translucent-dark: #2b2b2bb2;*/
-
-  --bg-item-translucent: #eeeeee91;
-  --bg-item-translucent-dark: #33333385;
-
   --border: #aaa;
   --border-dark: #777;
 
@@ -115,8 +109,6 @@
 
   --todom-selectionHighlightBackground: #783c42;
 
-  /*--bg-input-translucent: var(--bg-input-translucent-dark);*/
-  --bg-item-translucent: var(--bg-item-translucent-dark);
   --border: var(--border-dark);
 
   --border-cite: var(--border-cite-dark);
@@ -1206,12 +1198,7 @@ textarea:active {
   padding: 5px 0 0 0;
   line-height: 15px;
   text-align: center;
-  /*background-color: var(--bg-input-translucent);*/
 }
-
-/*.dark #input-label {
-  background-color: var(--transparent);
-}*/
 
 #input-label > span {
   /*padding: 0 4px;*/
