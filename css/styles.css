@@ -43,11 +43,8 @@
 
   --todom-focusOutline: #fff;
 
-  --bg-extra-muted: #dfdfdf;
-  --bg-extra-muted-dark: #464646;
+  --todom-textPreformat-background: #dfdfdf;
 
-  --bg-item: #eee;
-  --bg-item-dark: #333;
   --bg-item-transparent: #eeeeee00;
   --bg-item-dark-transparent: #33333300;
 
@@ -118,8 +115,8 @@
 
   --todom-focusOutline: #2b2b2b;
 
-  --bg-extra-muted: var(--bg-extra-muted-dark);
-  --bg-item: var(--bg-item-dark);
+  --todom-textPreformat-background: #464646;
+
   --bg-item-transparent: var(--bg-item-transparent-dark);
   --bg-selection: var(--bg-selection-dark);
   --bg-input-translucent: var(--bg-input-translucent-dark);
@@ -401,7 +398,7 @@ ol#list-files .main-actions {
 #position {
   float: left;
   border-radius: 0 0 5px 5px;
-  background-color: var(--bg-item);
+  /*background-color: var(--bg-item);*/
   word-wrap: break-word;
   /*due to resizability for Youtube */
   /*overflow: auto;*/
@@ -656,7 +653,7 @@ pre {
   margin: 0;
   white-space: break-spaces;
   color: var(--todom-foreground);
-  background-color: var(--bg-extra-muted);
+  background-color: var(--todom-textPreformat-background);
   border-radius: 6px;
 }
 
