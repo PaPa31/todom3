@@ -48,15 +48,6 @@
 
   --todom-selectionHighlightBackground: #9ebfea;
 
-  --button-default: #0366ee;
-  --button-default-dark: #6c5100;
-
-  --button-default-color: #fff;
-  --button-default-color-dark: #dfdfdf;
-
-  --button-hover: #0250bc;
-  --button-hover-dark: #5a4500;
-
   --scrollbar-hover: #777;
   --scrollbar-hover-dark: #999;
 
@@ -106,9 +97,7 @@
   --todom-selectionHighlightBackground: #783c42;
 
   --border-edit: var(--border-edit-dark);
-  --button-default: var(--button-default-dark);
-  --button-default-color: var(--button-default-color-dark);
-  --button-hover: var(--button-hover-dark);
+
   --scrollbar-hover: var(--scrollbar-hover-dark);
   --link-cite-muted-color: var(--link-cite-muted-color-dark);
 }
@@ -175,9 +164,9 @@ button,
   -webkit-appearance: none;
   appearance: none;
   display: inline-block;
-  border: 1px solid var(--button-default);
-  background-color: var(--button-default);
-  color: var(--button-default-color);
+  border: 1px solid var(--todom-border);
+  background-color: var(--todom-button-muted-background);
+  color: var(--todom-button-muted-foreground);
   border-radius: 4px;
   font-weight: 600;
   font-family: Arial;
