@@ -369,7 +369,7 @@ ol#list-files .main-actions {
   position: relative;
   display: flex;
   justify-content: center;
-  overflow: clip;
+  overflow: auto;
   align-items: center;
   min-height: 65px;
 }
