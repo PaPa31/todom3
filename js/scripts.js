@@ -161,7 +161,7 @@ const putItemToTrash = (indexToTrash) => {
 const putItemToDeletedArray = (deletedText) => {
   const deletedObj = {
     text: [deletedText],
-    cur: 0,
+    save: 0,
   };
   deletedArray.push(deletedObj);
   deletedCounter.innerText = deletedArray.length;
@@ -414,12 +414,12 @@ const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
 };
 
 saveAsOldButton.addEventListener("click", function (e) {
-  const cur = itemsSpecArray[itemIndexToEdit].cur;
+  const save = itemsSpecArray[itemIndexToEdit].save;
   const textArr = itemsArray[itemIndexToEdit].text;
-  textArr[cur] = input.value;
+  textArr[save] = input.value;
   //textArr.push(input.value);
   //const len = textArr.length;
-  //itemsSpecArray[itemIndexToEdit].cur = len - 1;
+  //itemsSpecArray[itemIndexToEdit].save = len - 1;
   //saveHistoryTracker(editedItemLiDOM, len);
   const resizableDiv = editedItemLiDOM.querySelector(
     ".md-item > .resizable-div"
@@ -443,7 +443,7 @@ const saveItem = () => {
     const textArr = itemsArray[itemIndexToEdit].text;
     textArr.push(input.value);
     const len = textArr.length;
-    itemsSpecArray[itemIndexToEdit].cur = len - 1;
+    itemsSpecArray[itemIndexToEdit].save = len - 1;
     saveHistoryTracker(editedItemLiDOM, len);
     const resizableDiv = editedItemLiDOM.querySelector(
       ".md-item > .resizable-div"
@@ -457,7 +457,7 @@ const saveItem = () => {
     };
     itemsArray.push(itemObj);
     const specObj = {
-      cur: 0,
+      save: 0,
     };
     itemsSpecArray.push(specObj);
     indexedItemsArray.push(idCounterItems.toString());
@@ -622,7 +622,7 @@ const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
   if (len !== 0) {
     const returningObj = arr.pop();
     itemsArray.push({ text: returningObj.text });
-    itemsSpecArray.push({ cur: returningObj.cur });
+    itemsSpecArray.push({ save: returningObj.save });
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
     if (todomArrVar) localStorage.setItem(todomArrVar, JSON.stringify(arr));

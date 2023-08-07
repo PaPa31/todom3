@@ -105,7 +105,7 @@ const getCurrentSpec = (spec, itemIndex) => {
       }
       break;
     }
-    case "cur": {
+    case "save": {
       const textArr = itemsArray[itemIndex].text;
       if (_cur != undefined && textArr[_cur] != undefined) {
         current = _cur;
@@ -119,27 +119,6 @@ const getCurrentSpec = (spec, itemIndex) => {
     }
   }
   return current;
-
-  //const textArr = itemsArray[itemIndex].text;
-  //const cur = itemsSpecArray[itemIndex] && itemsSpecArray[itemIndex].cur;
-  //let currentSave;
-  //if (cur != undefined && textArr[cur] != undefined) {
-  //  currentSave = cur;
-  //} else {
-  //  currentSave = textArr.length - 1;
-  //  setDefaultSpec("cur", currentSave, itemIndex);
-  //}
-
-  //const fold = itemsSpecArray[itemIndex] && itemsSpecArray[itemIndex].fold;
-  //let currentFold;
-  //if (fold != undefined) {
-  //  currentFold = fold;
-  //} else {
-  //  currentFold = true;
-  //  setDefaultSpec("fold", currentFold, itemIndex);
-  //}
-
-  //return currentSave;
 };
 
 const initialInBefore = (ancestorEl) => {
@@ -168,7 +147,7 @@ const liMaker = (arrIndex) => {
       indexedItemsArray.indexOf(arrIndex.toString()) * 1;
     const textArr = itemsArray[correctedItemsIndex].text;
     last = textArr.length - 1;
-    currentSave = getCurrentSpec("cur", correctedItemsIndex);
+    currentSave = getCurrentSpec("save", correctedItemsIndex);
     currentFold = getCurrentSpec("fold", correctedItemsIndex);
 
     div.setAttribute("class", "md-item");
@@ -343,7 +322,7 @@ const setCurrentFold = (current, itemIndex) => {
 };
 
 const setCurrentSave = (current, itemIndex) => {
-  itemsSpecArray[itemIndex].cur = current;
+  itemsSpecArray[itemIndex].save = current;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
@@ -351,7 +330,7 @@ const deleteCurrentSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-  let current = getCurrentSpec("cur", itemIndex);
+  let current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
 
   const lastBefore = textArr.length - 1;
@@ -393,7 +372,7 @@ const previousSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-  let current = getCurrentSpec("cur", itemIndex);
+  let current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
 
   current--;
@@ -412,7 +391,7 @@ const nextSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-  let current = getCurrentSpec("cur", itemIndex);
+  let current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
 
   current++;
@@ -777,7 +756,7 @@ const saveItemFromFile = (fileName) => {
     itemsArray[itemIndex].text.push(input.value);
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
-    itemsSpecArray[itemIndex].cur = textArr.length - 1;
+    itemsSpecArray[itemIndex].save = textArr.length - 1;
     saveHistoryTracker(liDOM, textArr.length);
     const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
     mdToLi(resizableDiv, input.value);
@@ -789,7 +768,7 @@ const saveItemFromFile = (fileName) => {
     };
     itemsArray.push(itemObj);
     const specObj = {
-      cur: 0,
+      save: 0,
     };
     itemsSpecArray.push(specObj);
     indexedItemsArray.push(idCounterItems.toString());
