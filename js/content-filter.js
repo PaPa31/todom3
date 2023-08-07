@@ -19,9 +19,6 @@ const getYoutubeTitle = (url, titleDivTag, descDivTag) => {
 
   var VIDEO_ID = filterVideoIdFromUrl(url);
   var version = "v3";
-
-  // Create the API request URL
-
   var url =
     "https://www.googleapis.com/youtube/" +
     version +

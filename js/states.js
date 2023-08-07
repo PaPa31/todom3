@@ -490,7 +490,7 @@ const changeStateFold = () => {
 foldGlobalToggleButton.addEventListener("click", function (e) {
   const allPressed = [...foldedClass.querySelectorAll(".unfolded")];
   if (allPressed.length) {
-    allPressed.map((i) => {
+    allPressed.forEach((i) => {
       i.removeAttribute("class");
       if (isItemState) {
         const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
