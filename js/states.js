@@ -124,18 +124,10 @@ const getCurrentSpec = (spec, itemIndex) => {
 };
 
 const initialInBefore = (ancestorEl) => {
-  //const firstChildEl = ancestorEl.querySelector(":first-child");
-
-  //ancestorEl.style.setProperty("--before-current-save", "");
-  //ancestorEl.style.setProperty("--before-margin-right", "0");
-  //ancestorEl.style.setProperty("--before-padding", "0");
-  //ancestorEl.style.setProperty("--before-width", "0");
-
   ancestorEl.style.setProperty("--before-display", "none");
 };
 
 const changeCurrentInBefore = (ancestorEl, current) => {
-  //const firstChildEl = ancestorEl.querySelector(":first-child");
   ancestorEl.style = "--before-current-save: '" + ++current + "';";
 };
 
