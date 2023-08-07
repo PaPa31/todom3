@@ -392,7 +392,9 @@ image is undefined */
   position: absolute;
   top: 9px;
   left: 10px;
-  z-index: 1;
+  background: var(--todom-background);
+  padding: 0 4px;
+  border-radius: 4px;
 }
 
 .folded .youtube-title,
