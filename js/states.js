@@ -310,11 +310,6 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   parentMainActionsDiv.appendChild(buttonTag);
 };
 
-const setCurrentFold = (current, itemIndex) => {
-  itemsSpecArray[itemIndex].fold = current;
-  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-};
-
 const setCurrentSave = (current, itemIndex) => {
   itemsSpecArray[itemIndex].save = current;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
@@ -416,8 +411,6 @@ const unfoldOneItem = (liDOM) => {
   liDOM.classList.toggle("unfolded");
   if (isItemState) {
     const itemIndexToFold = indexedItemsArray.indexOf(liDOM.id) * 1;
-    //itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
-    //localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     itemsSpecArray[itemIndexToFold].fold =
       !itemsSpecArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
@@ -513,7 +506,6 @@ foldGlobalToggleButton.addEventListener("click", function (e) {
       i.removeAttribute("class");
       if (isItemState) {
         const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
-        //itemsArray[itemIndexToFold].fold = false;
         itemsSpecArray[itemIndexToFold].fold = false;
       } else {
         const fileIndexToFold = indexedFilesArray.indexOf(i.id) * 1;
