@@ -87,7 +87,7 @@ const findParentTagOrClassRecursive = (el, tag = "li", classOfEl) => {
 };
 
 const setDefaultSpec = (spec, current, itemIndex) => {
-  itemsSpecArray[itemIndex] = { [spec]: current };
+  itemsSpecArray[itemIndex][spec] = current;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
@@ -100,7 +100,7 @@ const getCurrentSpec = (spec, itemIndex) => {
       if (_cur != undefined) {
         current = _cur;
       } else {
-        current = true;
+        current = false;
         setDefaultSpec(spec, current, itemIndex);
       }
       break;
