@@ -8,7 +8,7 @@ const filterVideoIdFromUrl = (url) => {
   return video_id;
 };
 
-const getYoutubeTitle = (url, titleDivTag) => {
+const getYoutubeTitle = (url, titleDivTag, descDivTag) => {
   // I created env file manually
   // 'js/ignore/env.js'
   // and added js/ignore folder to .gitignore
@@ -30,30 +30,6 @@ const getYoutubeTitle = (url, titleDivTag) => {
     "&key=" +
     key;
 
-  //console.log(url);
-
-  //var url = "https://www.googleapis.com/youtube/v3/videos";
-  //url +=
-  //  "?" +
-  //  JSON.stringify({
-  //    key: key,
-  //    part: "snippet",
-  //    id: VIDEO_ID,
-  //  });
-
-  //// Make the API call
-  //var request = new XMLHttpRequest();
-  //request.open("GET", url);
-  //request.send();
-
-  //fetch(URL)
-  //  .then((response) => response.json())
-  //  .then((data) => {
-  //    console.log(data.items[0].snippet.title);
-  //  });
-
-  //const URL = "https://www.googleapis.com/youtube/v3/videos";
-
   let xhr = new XMLHttpRequest();
 
   xhr.open("GET", url, true);
@@ -67,11 +43,8 @@ const getYoutubeTitle = (url, titleDivTag) => {
       let description = jsonData.items[0].snippet.description;
       console.log("Title: " + title);
       console.log("Description: " + description);
-
-      //const titleDivTag = document.createElement("div");
-      //titleDivTag.setAttribute("class", "youtube-title");
       titleDivTag.innerText = title;
-      //divTag.appendChild(titleDivTag);
+      descDivTag.innerText = description;
     } else {
       alert("Failed to load video data (getYoutubeTitle).");
     }
@@ -120,21 +93,27 @@ const waitForIframe = (resizableDiv) => {
   if (iframeInitial.length > 0) {
     [...iframeInitial].forEach((iframe) => {
       const divTag = document.createElement("div");
-      const imgTag = document.createElement("img");
-      const playButtonTag = document.createElement("button");
       const papa = iframe.parentElement;
 
       const titleDivTag = document.createElement("div");
       titleDivTag.setAttribute("class", "youtube-title");
-      getYoutubeTitle(iframe.src, titleDivTag);
       titleDivTag.innerText = iframe.title;
       divTag.appendChild(titleDivTag);
 
+      const descDivTag = document.createElement("div");
+      descDivTag.setAttribute("class", "youtube-description");
+      descDivTag.innerHTML = "Description";
+      divTag.appendChild(descDivTag);
+
+      getYoutubeTitle(iframe.src, titleDivTag, descDivTag);
+
+      const imgTag = document.createElement("img");
       imgTag.setAttribute("class", "youtube-thumbnail-image");
       imgTag.setAttribute("src", getYoutubeThumbnail(iframe.src, "low"));
       imgTag.addEventListener("click", replaceImageWithIframe);
       divTag.appendChild(imgTag);
 
+      const playButtonTag = document.createElement("button");
       playButtonTag.setAttribute("class", "youtube-play-button");
       playButtonTag.addEventListener("click", replaceImageWithIframe);
       divTag.appendChild(playButtonTag);

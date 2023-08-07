@@ -9,6 +9,7 @@
 
   --todom-foreground: #404040;
   --todom-background: #ffffff;
+  --todom-background-translucent: #ffffffbd;
   --todom-border: #555;
 
   --todom-input-background: #ffffff;
@@ -57,6 +58,7 @@
 
   --todom-foreground: #ddd;
   --todom-background: #14181b;
+  --todom-background-translucent: #14181bbd;
   --todom-border: #aaa;
 
   --todom-input-background: #0a0c0e;
@@ -388,13 +390,18 @@ image is undefined */
   border: 1px solid;
 }
 
-.youtube-title {
+.youtube-title,
+.youtube-description {
   position: absolute;
-  top: 9px;
-  left: 10px;
-  background: var(--todom-background);
   padding: 0 4px;
   border-radius: 4px;
+}
+
+.youtube-title {
+  top: 9px;
+  left: 10px;
+  background-color: var(--todom-background);
+  font-weight: bold;
 }
 
 .folded .youtube-title,
@@ -404,6 +411,11 @@ image is undefined */
 
 .folded .unfolded .youtube-title {
   top: 9px;
+}
+
+.youtube-description {
+  top: 30px;
+  background-color: var(--todom-background-translucent);
 }
 
 .youtube-play-button {
