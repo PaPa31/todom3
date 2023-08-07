@@ -35,11 +35,8 @@ const getYoutubeTitle = (url, titleDivTag, descDivTag) => {
     if (this.status == 200) {
       let data = this.responseText;
       let jsonData = JSON.parse(data);
-      //console.log(jsonData);
       let title = jsonData.items[0].snippet.title;
       let description = jsonData.items[0].snippet.description;
-      //console.log("Title: " + title);
-      //console.log("Description: " + description);
       titleDivTag.innerText = title;
       descDivTag.innerText = description;
       descDivTag.innerHTML = markdown(descDivTag.innerHTML);
