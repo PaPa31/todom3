@@ -108,7 +108,7 @@ const editItem = (e, element) => {
   const editedItemLiDOM2 = findParentTagOrClassRecursive(element);
   const itemIndexToEdit2 = indexedItemsArray.indexOf(editedItemLiDOM2.id) * 1;
 
-  let current = getCurrentSave(itemIndexToEdit2);
+  let current = getCurrentSpec(itemIndexToEdit2);
   const textArr = itemsArray[itemIndexToEdit2].text;
 
   const editing = textArr[current];
@@ -529,7 +529,7 @@ document.addEventListener("keyup", function (e) {
 const mergeAllItems = () => {
   itemsArray.forEach((item, index) => {
     const textArr = item.text;
-    const current = getCurrentSave(index);
+    const current = getCurrentSpec(index);
     const text = textArr[current].replace(/\\$/, "");
     const regex = /(^ *#{1,6} *)|(^ *\d+\.* *)|(^ *\- *)|(^ *\>+ *)|(^ +)/;
     if (text) {

@@ -86,22 +86,60 @@ const findParentTagOrClassRecursive = (el, tag = "li", classOfEl) => {
   }
 };
 
-const setDefaultSave = (current, itemIndex) => {
-  itemsSpecArray[itemIndex] = { cur: current };
+const setDefaultSpec = (spec, current, itemIndex) => {
+  itemsSpecArray[itemIndex] = { [spec]: current };
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
-const getCurrentSave = (itemIndex) => {
-  const textArr = itemsArray[itemIndex].text;
-  const cur = itemsSpecArray[itemIndex] && itemsSpecArray[itemIndex].cur;
+const getCurrentSpec = (spec, itemIndex) => {
+  const _cur = itemsSpecArray[itemIndex] && itemsSpecArray[itemIndex][spec];
   let current;
-  if (cur != undefined && textArr[cur] != undefined) {
-    current = cur;
-  } else {
-    current = textArr.length - 1;
-    setDefaultSave(current, itemIndex);
+
+  switch (spec) {
+    case "fold": {
+      if (_cur != undefined) {
+        current = _cur;
+      } else {
+        current = true;
+        setDefaultSpec(spec, current, itemIndex);
+      }
+      break;
+    }
+    case "cur": {
+      const textArr = itemsArray[itemIndex].text;
+      if (_cur != undefined && textArr[_cur] != undefined) {
+        current = _cur;
+      } else {
+        current = textArr.length - 1;
+        setDefaultSpec(spec, current, itemIndex);
+      }
+      break;
+    }
+    default: {
+    }
   }
   return current;
+
+  //const textArr = itemsArray[itemIndex].text;
+  //const cur = itemsSpecArray[itemIndex] && itemsSpecArray[itemIndex].cur;
+  //let currentSave;
+  //if (cur != undefined && textArr[cur] != undefined) {
+  //  currentSave = cur;
+  //} else {
+  //  currentSave = textArr.length - 1;
+  //  setDefaultSpec("cur", currentSave, itemIndex);
+  //}
+
+  //const fold = itemsSpecArray[itemIndex] && itemsSpecArray[itemIndex].fold;
+  //let currentFold;
+  //if (fold != undefined) {
+  //  currentFold = fold;
+  //} else {
+  //  currentFold = true;
+  //  setDefaultSpec("fold", currentFold, itemIndex);
+  //}
+
+  //return currentSave;
 };
 
 const initialInBefore = (ancestorEl) => {
@@ -123,24 +161,24 @@ const changeCurrentInBefore = (ancestorEl, current) => {
 const liMaker = (arrIndex) => {
   const li = document.createElement("li");
   const div = document.createElement("div");
-  let last, current;
+  let last, currentSave, currentFold;
 
   if (isItemState) {
     const correctedItemsIndex =
       indexedItemsArray.indexOf(arrIndex.toString()) * 1;
     const textArr = itemsArray[correctedItemsIndex].text;
     last = textArr.length - 1;
-    current = getCurrentSave(correctedItemsIndex);
+    currentSave = getCurrentSpec("cur", correctedItemsIndex);
+    currentFold = getCurrentSpec("fold", correctedItemsIndex);
 
     div.setAttribute("class", "md-item");
-    if (itemsArray[correctedItemsIndex].fold)
-      li.setAttribute("class", "unfolded");
+    if (currentFold) li.setAttribute("class", "unfolded");
 
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
-    mdToLi(resizableDiv, textArr[current]);
+    mdToLi(resizableDiv, textArr[currentSave]);
     if (last > 0) {
-      changeCurrentInBefore(resizableDiv, current);
+      changeCurrentInBefore(resizableDiv, currentSave);
     } else {
       initialInBefore(resizableDiv);
     }
@@ -159,7 +197,7 @@ const liMaker = (arrIndex) => {
   div.addEventListener("dblclick", handleDblClick);
 
   unfoldButtonMaker(li);
-  if (isItemState) saveHistoryDivMaker(li, last, current);
+  if (isItemState) saveHistoryDivMaker(li, last, currentSave);
   mainActionsDivMaker(li);
   li.appendChild(div);
   foldedClass.appendChild(li);
@@ -299,6 +337,11 @@ const trashButtonMaker = (parentMainActionsDiv) => {
   parentMainActionsDiv.appendChild(buttonTag);
 };
 
+const setCurrentFold = (current, itemIndex) => {
+  itemsSpecArray[itemIndex].fold = current;
+  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+};
+
 const setCurrentSave = (current, itemIndex) => {
   itemsSpecArray[itemIndex].cur = current;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
@@ -308,7 +351,7 @@ const deleteCurrentSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-  let current = getCurrentSave(itemIndex);
+  let current = getCurrentSpec("cur", itemIndex);
   const textArr = itemsArray[itemIndex].text;
 
   const lastBefore = textArr.length - 1;
@@ -350,7 +393,7 @@ const previousSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-  let current = getCurrentSave(itemIndex);
+  let current = getCurrentSpec("cur", itemIndex);
   const textArr = itemsArray[itemIndex].text;
 
   current--;
@@ -369,7 +412,7 @@ const nextSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
 
-  let current = getCurrentSave(itemIndex);
+  let current = getCurrentSpec("cur", itemIndex);
   const textArr = itemsArray[itemIndex].text;
 
   current++;
@@ -400,8 +443,11 @@ const unfoldOneItem = (liDOM) => {
   liDOM.classList.toggle("unfolded");
   if (isItemState) {
     const itemIndexToFold = indexedItemsArray.indexOf(liDOM.id) * 1;
-    itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
-    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    //itemsArray[itemIndexToFold].fold = !itemsArray[itemIndexToFold].fold;
+    //localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+    itemsSpecArray[itemIndexToFold].fold =
+      !itemsSpecArray[itemIndexToFold].fold;
+    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   } else {
     const fileIndexToFold = indexedFilesArray.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
@@ -494,7 +540,8 @@ foldGlobalToggleButton.addEventListener("click", function (e) {
       i.removeAttribute("class");
       if (isItemState) {
         const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
-        itemsArray[itemIndexToFold].fold = false;
+        //itemsArray[itemIndexToFold].fold = false;
+        itemsSpecArray[itemIndexToFold].fold = false;
       } else {
         const fileIndexToFold = indexedFilesArray.indexOf(i.id) * 1;
         filesArray[fileIndexToFold].fold = false;
