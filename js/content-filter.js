@@ -1,11 +1,92 @@
+const filterVideoIdFromUrl = (url) => {
+  var video_id, result;
+  if ((result = url.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/))) {
+    video_id = result.pop();
+  } else if ((result = url.match(/youtu.be\/(.{11})/))) {
+    video_id = result.pop();
+  }
+  return video_id;
+};
+
+const getYoutubeTitle = (url, titleDivTag) => {
+  // I created env file manually
+  // 'js/ignore/env.js'
+  // and added js/ignore folder to .gitignore
+  //
+  // Configure google API key via
+  // https://console.cloud.google.com/apis/credentials?hl=ru&project=api-project-552503231252
+  var key = showPhrase();
+
+  var VIDEO_ID = filterVideoIdFromUrl(url);
+  var version = "v3";
+
+  // Create the API request URL
+
+  var url =
+    "https://www.googleapis.com/youtube/" +
+    version +
+    "/videos?part=snippet&id=" +
+    VIDEO_ID +
+    "&key=" +
+    key;
+
+  //console.log(url);
+
+  //var url = "https://www.googleapis.com/youtube/v3/videos";
+  //url +=
+  //  "?" +
+  //  JSON.stringify({
+  //    key: key,
+  //    part: "snippet",
+  //    id: VIDEO_ID,
+  //  });
+
+  //// Make the API call
+  //var request = new XMLHttpRequest();
+  //request.open("GET", url);
+  //request.send();
+
+  //fetch(URL)
+  //  .then((response) => response.json())
+  //  .then((data) => {
+  //    console.log(data.items[0].snippet.title);
+  //  });
+
+  //const URL = "https://www.googleapis.com/youtube/v3/videos";
+
+  let xhr = new XMLHttpRequest();
+
+  xhr.open("GET", url, true);
+
+  xhr.onload = function () {
+    if (this.status == 200) {
+      let data = this.responseText;
+      let jsonData = JSON.parse(data);
+      console.log(jsonData);
+      let title = jsonData.items[0].snippet.title;
+      let description = jsonData.items[0].snippet.description;
+      console.log("Title: " + title);
+      console.log("Description: " + description);
+
+      //const titleDivTag = document.createElement("div");
+      //titleDivTag.setAttribute("class", "youtube-title");
+      titleDivTag.innerText = title;
+      //divTag.appendChild(titleDivTag);
+    } else {
+      alert("Failed to load video data (getYoutubeTitle).");
+    }
+  };
+
+  xhr.onerror = function () {
+    alert("Network Error (getYoutubeTitle)");
+  };
+
+  xhr.send();
+};
+
 const getYoutubeThumbnail = (url, quality) => {
   if (url) {
-    var video_id, thumbnail, result;
-    if ((result = url.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/))) {
-      video_id = result.pop();
-    } else if ((result = url.match(/youtu.be\/(.{11})/))) {
-      video_id = result.pop();
-    }
+    var video_id = filterVideoIdFromUrl(url);
 
     if (video_id) {
       if (typeof quality == "undefined") {
@@ -41,10 +122,11 @@ const waitForIframe = (resizableDiv) => {
       const divTag = document.createElement("div");
       const imgTag = document.createElement("img");
       const playButtonTag = document.createElement("button");
-      const titleDivTag = document.createElement("div");
       const papa = iframe.parentElement;
 
+      const titleDivTag = document.createElement("div");
       titleDivTag.setAttribute("class", "youtube-title");
+      getYoutubeTitle(iframe.src, titleDivTag);
       titleDivTag.innerText = iframe.title;
       divTag.appendChild(titleDivTag);
 
