@@ -206,7 +206,7 @@ const unfoldButtonMaker = (parentLi) => {
   buttonTag.setAttribute("class", "button-default unfold-button btn");
   buttonTag.setAttribute(
     "onclick",
-    `foldHandler(findParentTagOrClassRecursive(this))`
+    `unfoldOneItem(findParentTagOrClassRecursive(this))`
   );
 
   //if (isItemState && mdTag.scrollHeight === 0)
@@ -469,6 +469,7 @@ const unfoldGreen = (liDOM) => {
 };
 
 const unfoldOneItem = (liDOM) => {
+  liDOM.classList.toggle("unfolded");
   if (isItemState) {
     const itemIndexToFold = indexedItemsArray.indexOf(liDOM.id) * 1;
     itemsSpecArray[itemIndexToFold].fold =
@@ -478,11 +479,6 @@ const unfoldOneItem = (liDOM) => {
     const fileIndexToFold = indexedFilesArray.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
-};
-
-const foldHandler = (liDOM) => {
-  liDOM.classList.toggle("unfolded");
-  unfoldOneItem(liDOM);
   unfoldGreen(liDOM);
 };
 
