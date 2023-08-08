@@ -206,7 +206,7 @@ const unfoldButtonMaker = (parentLi) => {
   buttonTag.setAttribute("class", "button-default unfold-button btn");
   buttonTag.setAttribute(
     "onclick",
-    `unfoldOneItem(findParentTagOrClassRecursive(this))`
+    `foldHandler(findParentTagOrClassRecursive(this))`
   );
 
   //if (isItemState && mdTag.scrollHeight === 0)
@@ -396,21 +396,14 @@ const nextSave = (el) => {
 };
 
 const unfoldGreen = (liDOM) => {
-  const olDOM = findParentTagOrClassRecursive(liDOM, "ol");
-  if (
-    (olDOM.classList.contains("folded") &&
-      liDOM.classList.contains("unfolded")) ||
-    (!olDOM.classList.contains("folded") &&
-      !liDOM.classList.contains("unfolded"))
-  ) {
-    intervalFocus(liDOM, "background-color: green;", 300);
-  } else {
+  if (liDOM.classList.contains("unfolded")) {
     intervalFocus(liDOM, "background-color: red;", 300);
+  } else {
+    intervalFocus(liDOM, "background-color: green;", 300);
   }
 };
 
 const unfoldOneItem = (liDOM) => {
-  liDOM.classList.toggle("unfolded");
   if (isItemState) {
     const itemIndexToFold = indexedItemsArray.indexOf(liDOM.id) * 1;
     itemsSpecArray[itemIndexToFold].fold =
@@ -420,6 +413,13 @@ const unfoldOneItem = (liDOM) => {
     const fileIndexToFold = indexedFilesArray.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
+};
+
+const foldHandler = (liDOM) => {
+  liDOM.classList.toggle("unfolded");
+  unfoldOneItem(liDOM);
+  //if (isItemState)
+  //  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   unfoldGreen(liDOM);
 };
 
@@ -492,35 +492,51 @@ const initialCheckFold = (stateVar) => {
   if (stateVar) {
     // Folded view
     foldGlobalToggleButton.classList.add("fold");
-    foldedClass.classList.add("folded");
   } else {
     // Unfolded view
     foldGlobalToggleButton.classList.remove("fold");
-    foldedClass.classList.remove("folded");
   }
 };
 
 const changeStateFold = () => {
   foldGlobalToggleButton.classList.toggle("fold");
-  foldedClass.classList.toggle("folded");
 };
 
 foldGlobalToggleButton.addEventListener("click", function (e) {
-  const allPressed = [...foldedClass.querySelectorAll(".unfolded")];
-  if (allPressed.length) {
-    allPressed.forEach((i) => {
-      i.removeAttribute("class");
-      if (isItemState) {
-        const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
-        itemsSpecArray[itemIndexToFold].fold = false;
+  //const allPressed = [...foldedClass.querySelectorAll(".unfolded")];
+  //if (allPressed.length) {
+  //allPressed.forEach((i) => {
+  //let foldValue;
+  //if (isFoldedItemsView) { foldValue = isFoldedItemsView;
+  //}
+  [...foldedClass.children].forEach((i) => {
+    //i.removeAttribute("class");
+    //unfoldGreen(i);
+    if (isItemState) {
+      if (isFoldedItemsView) {
+        i.removeAttribute("class");
       } else {
-        const fileIndexToFold = indexedFilesArray.indexOf(i.id) * 1;
-        filesArray[fileIndexToFold].fold = false;
+        i.setAttribute("class", "unfolded");
       }
-    });
-    if (isItemState)
-      localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  }
+
+      const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
+      itemsSpecArray[itemIndexToFold].fold = !isFoldedItemsView;
+    } else {
+      if (isFoldedFilesView) {
+        i.removeAttribute("class");
+      } else {
+        i.setAttribute("class", ".unfolded");
+      }
+
+      const fileIndexToFold = indexedFilesArray.indexOf(i.id) * 1;
+      filesArray[fileIndexToFold].fold = !isFoldedFilesView;
+    }
+  });
+  //if (isItemState)
+  //  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  if (isItemState)
+    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+  //}
   changeStateFold();
   if (isItemState) {
     isFoldedItemsView = !isFoldedItemsView;
