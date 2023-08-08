@@ -115,7 +115,7 @@ const editItem = (e, element) => {
   if (e.ctrlKey) {
     intervalFocus(
       element,
-      "background-color: var(--todom-main-action-icon-color);",
+      "background-color: var(--todom-main-action-icon-foreground);",
       300
     );
     input.value = input.value

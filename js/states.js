@@ -404,6 +404,8 @@ const unfoldGreen = (liDOM) => {
       !liDOM.classList.contains("unfolded"))
   ) {
     intervalFocus(liDOM, "background-color: green;", 300);
+  } else {
+    intervalFocus(liDOM, "background-color: red;", 300);
   }
 };
 
@@ -429,7 +431,7 @@ const editFile = (e, element) => {
   if (e.ctrlKey) {
     intervalFocus(
       element,
-      "background-color: var(--todom-main-action-icon-color);",
+      "background-color: var(--todom-main-action-icon-foreground);",
       300
     );
     input.value = input.value ? input.value + "\n" + fi.text : fi.text;
