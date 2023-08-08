@@ -124,11 +124,11 @@ const getCurrentSpec = (spec, itemIndex) => {
 };
 
 const initialInBefore = (ancestorEl) => {
-  ancestorEl.style.setProperty("--before-display", "none");
+  ancestorEl.style.setProperty("--todom-before-display", "none");
 };
 
 const changeCurrentInBefore = (ancestorEl, current) => {
-  ancestorEl.style = "--before-current-save: '" + ++current + "';";
+  ancestorEl.style = "--todom-before-current-save: '" + ++current + "';";
 };
 
 const liMaker = (arrIndex) => {
@@ -439,7 +439,11 @@ const editFile = (e, element) => {
   } else {
     fileIndexToEdit = fileIndexToEdit2;
     editedFileLiDOM = editedFileLiDOM2;
-    intervalFocus(element, "background-color: var(--todom-edit-color);", 300);
+    intervalFocus(
+      element,
+      "background-color: var(--todom-textEdit-background);",
+      300
+    );
     input.value = fi.text;
     const fileName = fi.dir ? fi.dir : fi.name;
     editUI(fileName);

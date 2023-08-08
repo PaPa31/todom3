@@ -80,7 +80,11 @@ const editUI = (label) => {
 
   scrollToLast();
 
-  intervalFocus(form, "background-color: var(--todom-edit-color);", 300);
+  intervalFocus(
+    form,
+    "background-color: var(--todom-textEdit-background);",
+    300
+  );
 };
 
 const xUI = () => {
@@ -91,8 +95,6 @@ const xUI = () => {
 
 const splitSaveItemButton = () => {
   saveAsOldButton.classList.replace("none", "inline-block");
-  //saveAsNewButton.style.color = "var(--todom-edit-color)";
-  //saveAsNewButton.style.borderColor = "var(--todom-border-edit)";
   saveAsNewButton.classList.add("button-edit");
   saveAsNewButton.innerText = "Save as new";
 };
@@ -127,7 +129,11 @@ const editItem = (e, element) => {
   } else {
     itemIndexToEdit = itemIndexToEdit2;
     editedItemLiDOM = editedItemLiDOM2;
-    intervalFocus(element, "background-color: var(--todom-edit-color);", 300);
+    intervalFocus(
+      element,
+      "background-color: var(--todom-textEdit-background);",
+      300
+    );
     input.value = editing;
     splitSaveItemButton();
     editUI("#" + (itemIndexToEdit + 1));
@@ -275,7 +281,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 
   intervalFocus(
     targetElement,
-    "background-color: var(--todom-edit-color);",
+    "background-color: var(--todom-textEdit-background);",
     300
   );
 }
