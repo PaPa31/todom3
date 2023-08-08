@@ -496,10 +496,6 @@ const initialCheckFold = (stateVar) => {
   }
 };
 
-//const changeStateFold = () => {
-//  foldGlobalToggleButton.classList.toggle("fold");
-//};
-
 const allLiFold = (view, todomString) => {
   [...foldedClass.children].forEach((i) => {
     if (view) {
@@ -513,54 +509,16 @@ const allLiFold = (view, todomString) => {
   });
 };
 
-//const cycleAll = () => {
-//  [...foldedClass.children].forEach((i) => {});
-//};
-
 foldGlobalToggleButton.addEventListener("click", function (e) {
-  //[...foldedClass.children].forEach((i) => {
   if (isItemState) {
-    //const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
     allLiFold(isFoldedItemsView, "todomFoldedItemsView");
     isFoldedItemsView = !isFoldedItemsView;
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-    //if (isFoldedItemsView) {
-    //  i.removeAttribute("class");
-    //} else {
-    //  i.setAttribute("class", "unfolded");
-    //}
-    //const itemIndexToFold = indexedItemsArray.indexOf(i.id) * 1;
-    //itemsSpecArray[itemIndexToFold].fold = !isFoldedItemsView;
-    //isFoldedItemsView = !isFoldedItemsView;
-    //localStorage.setItem(
-    //  "todomFoldedItemsView",
-    //  JSON.stringify(isFoldedItemsView)
-    //);
   } else {
-    //const fileIndexToFold = indexedFilesArray.indexOf(i.id) * 1;
-    //if (isFoldedFilesView) {
-    //  i.removeAttribute("class");
-    //} else {
-    //  i.setAttribute("class", ".unfolded");
-    //}
-
-    //const fileIndexToFold = indexedFilesArray.indexOf(i.id) * 1;
-    //filesArray[fileIndexToFold].fold = !isFoldedFilesView;
-    //isFoldedFilesView = !isFoldedFilesView;
-    //localStorage.setItem(
-    //  "todomFoldedFilesView",
-    //  JSON.stringify(isFoldedFilesView)
-    //);
     allLiFold(isFoldedFilesView, "todomFoldedFilesView");
     isFoldedFilesView = !isFoldedFilesView;
   }
-  //});
-
-  //if (isItemState)
-  //  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-
   foldGlobalToggleButton.classList.toggle("fold");
-
   e.stopPropagation();
 });
 
