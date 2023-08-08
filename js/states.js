@@ -418,8 +418,6 @@ const unfoldOneItem = (liDOM) => {
 const foldHandler = (liDOM) => {
   liDOM.classList.toggle("unfolded");
   unfoldOneItem(liDOM);
-  //if (isItemState)
-  //  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   unfoldGreen(liDOM);
 };
 
@@ -503,15 +501,7 @@ const changeStateFold = () => {
 };
 
 foldGlobalToggleButton.addEventListener("click", function (e) {
-  //const allPressed = [...foldedClass.querySelectorAll(".unfolded")];
-  //if (allPressed.length) {
-  //allPressed.forEach((i) => {
-  //let foldValue;
-  //if (isFoldedItemsView) { foldValue = isFoldedItemsView;
-  //}
   [...foldedClass.children].forEach((i) => {
-    //i.removeAttribute("class");
-    //unfoldGreen(i);
     if (isItemState) {
       if (isFoldedItemsView) {
         i.removeAttribute("class");
@@ -532,11 +522,10 @@ foldGlobalToggleButton.addEventListener("click", function (e) {
       filesArray[fileIndexToFold].fold = !isFoldedFilesView;
     }
   });
-  //if (isItemState)
-  //  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+
   if (isItemState)
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-  //}
+
   changeStateFold();
   if (isItemState) {
     isFoldedItemsView = !isFoldedItemsView;
