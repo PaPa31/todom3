@@ -265,7 +265,7 @@ textarea::-webkit-scrollbar {
   background-color: var(--todom-scrollbarHover);
 }
 
-.folded .md-item,
+/*.folded .md-item,*/
 .unfolded .md-item {
   height: 38px;
   opacity: 0.25;
@@ -273,20 +273,19 @@ textarea::-webkit-scrollbar {
   width: calc(100% - 120px);
 }
 
-.folded .unfolded .md-item {
+/*.unfolded .md-item {
   height: initial;
   line-height: initial;
   opacity: 1;
   width: 100%;
   clear: left;
-}
+}*/
 
 .md-item {
   clear: left;
 }
 
-ol#list-items:not(.folded) .unfolded .md-item,
-ol#list-items.folded :not(.unfolded) .md-item {
+ol#list-items .unfolded .md-item {
   resize: initial;
   overflow: initial;
   /*line-height: 19px;*/
@@ -308,16 +307,12 @@ ol#list-items.folded :not(.unfolded) .md-item {
   flex-direction: column;
 }
 
-.folded .unfolded .file-text,
-.folded .unfolded .save-history {
+/*.unfolded .file-text,
+.unfolded .save-history {
   display: flex;
-  /*height: initial;
-  visibility: initial;*/
-}
+}*/
 
-.folded .file-text,
 .unfolded .file-text,
-.folded .save-history,
 .unfolded .save-history {
   display: none;
 }
@@ -406,14 +401,14 @@ image is undefined */
   font-weight: bold;
 }
 
-.folded .youtube-title,
+/*.folded .youtube-title,*/
 .unfolded .youtube-title {
   top: 22px;
 }
 
-.folded .unfolded .youtube-title {
+/*.unfolded .youtube-title {
   top: 9px;
-}
+}*/
 
 .youtube-description {
   top: 30px;
@@ -432,16 +427,16 @@ image is undefined */
   height: 50px;
 }
 
-.folded .youtube-play-button,
+/*.folded .youtube-play-button,*/
 .unfolded .youtube-play-button {
   right: 0;
   background-size: 55px;
 }
 
-.folded .unfolded .youtube-play-button {
+/*.unfolded .youtube-play-button {
   right: initial;
   background-size: 68px;
-}
+}*/
 
 .md-item,
 .file-text {
@@ -506,21 +501,21 @@ image is undefined */
   display: block;
 }*/
 
-.folded .resizable-div,
+/*.folded .resizable-div,*/
 .unfolded .resizable-div {
   justify-content: center;
 }
 
-.resizable-div iframe {
+/*.resizable-div iframe {
   height: initial;
-}
+}*/
 
-.folded .resizable-div iframe,
-.unfolded .resizable-div iframe {
+/*.folded .resizable-div iframe,*/
+.resizable-div iframe {
   height: 64px;
 }
 
-.folded .unfolded .resizable-div iframe {
+.unfolded .resizable-div iframe {
   height: initial;
 }
 
@@ -558,8 +553,7 @@ ol#list-items.folded :not(.unfolded) .resizable-div {
   height: inherit;*/
 }
 
-ol#list-items:not(.folded) .unfolded .md-item :first-child,
-ol#list-items.folded :not(.unfolded) .md-item :first-child {
+ol#list-items .unfolded .md-item :first-child {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -569,8 +563,7 @@ ol#list-items.folded :not(.unfolded) .md-item :first-child {
   justify-content: center;
 }
 
-ol#list-items:not(.folded) .unfolded .md-item :not(:first-child),
-ol#list-items.folded :not(.unfolded) .md-item :not(:first-child) {
+ol#list-items .unfolded .md-item :not(:first-child) {
   display: none;
 }
 
@@ -579,8 +572,7 @@ ol#list-items.folded :not(.unfolded) .md-item :not(:first-child) {
   flex: auto;
 }
 
-ol#list-items:not(.folded) .unfolded .md-item > * > li:first-child,
-ol#list-items.folded :not(.unfolded) .md-item > * > li:first-child {
+ol#list-items .unfolded .md-item > * > li:first-child {
   list-style-position: inside;
   margin-inline-start: -20px;
 }
