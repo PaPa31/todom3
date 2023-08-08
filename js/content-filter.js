@@ -38,6 +38,8 @@ const getYoutubeTitle = (url, titleDivTag, descDivTag) => {
       let title = jsonData.items[0].snippet.title;
       let description = jsonData.items[0].snippet.description;
       titleDivTag.innerText = title;
+      //tripple convertation (save initial markup & linkify):
+      // text > innerText > innerHTML > markdown > innerHTML
       descDivTag.innerText = description;
       descDivTag.innerHTML = markdown(descDivTag.innerHTML);
     } else {
