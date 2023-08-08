@@ -1,4 +1,4 @@
-const foldToggleButton = document.getElementById("fold-global-toggle");
+const foldAllToggleButton = document.getElementById("fold-global-toggle");
 const itemsFilesToggleButton = document.getElementById("items-files-toggle");
 
 let foldedClass = document.getElementById("list-items");
@@ -485,10 +485,10 @@ const unfoldOneItem = (liDOM) => {
 const initialCheckFold = (stateVar) => {
   if (stateVar) {
     // Folded view
-    foldToggleButton.classList.add("fold");
+    foldAllToggleButton.classList.add("fold");
   } else {
     // Unfolded view
-    foldToggleButton.classList.remove("fold");
+    foldAllToggleButton.classList.remove("fold");
   }
 };
 
@@ -505,7 +505,7 @@ const allLiFold = (view, todomString) => {
   });
 };
 
-foldToggleButton.addEventListener("click", function (e) {
+foldAllToggleButton.addEventListener("click", function (e) {
   if (isItemState) {
     allLiFold(isFoldedItemsView, "todomFoldedItemsView");
     isFoldedItemsView = !isFoldedItemsView;
@@ -514,7 +514,7 @@ foldToggleButton.addEventListener("click", function (e) {
     allLiFold(isFoldedFilesView, "todomFoldedFilesView");
     isFoldedFilesView = !isFoldedFilesView;
   }
-  foldToggleButton.classList.toggle("fold");
+  foldAllToggleButton.classList.toggle("fold");
   e.stopPropagation();
 });
 
