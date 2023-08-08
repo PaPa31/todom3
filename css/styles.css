@@ -497,7 +497,7 @@ image is undefined */
 ol#list-items .unfolded .md-item :first-child {
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: clip;
   margin-bottom: 0;
   pointer-events: none;
   flex: initial;
