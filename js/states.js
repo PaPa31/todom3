@@ -501,7 +501,7 @@ const allLiFold = (view, todomString) => {
     }
     const indexToFold = indexedItemsArray.indexOf(i.id) * 1;
     itemsSpecArray[indexToFold].fold = !view;
-    localStorage.setItem(todomString, JSON.stringify(view));
+    localStorage.setItem(todomString, JSON.stringify(!view));
   });
 };
 
