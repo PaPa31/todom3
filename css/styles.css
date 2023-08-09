@@ -357,6 +357,10 @@ ol#list-files .main-actions {
   min-height: 65px;
 }
 
+.youtube-thumbnail::-webkit-scrollbar {
+  display: none;
+}
+
 .youtube-thumbnail-image {
   display: flex !important;
   cursor: pointer;
