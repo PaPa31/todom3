@@ -8,7 +8,68 @@ const filterVideoIdFromUrl = (url) => {
   return video_id;
 };
 
-const getYoutubeTitle = (url, titleDivTag, descDivTag) => {
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1; // JavaScript months are zero-indexed
+  const day = date.getDate();
+
+  switch (month) {
+    case 1:
+      month = "January";
+      break;
+    case 2:
+      month = "February";
+      break;
+    case 3:
+      month = "March";
+      break;
+    case 4:
+      month = "April";
+      break;
+    case 5:
+      month = "May";
+      break;
+    case 6:
+      month = "June";
+      break;
+    case 7:
+      month = "July";
+      break;
+    case 8:
+      month = "August";
+      break;
+    case 9:
+      month = "September";
+      break;
+    case 10:
+      month = "October";
+      break;
+    case 11:
+      month = "November";
+      break;
+    case 12:
+      month = "December";
+      break;
+    default:
+      // Invalid month
+      return null;
+  }
+
+  dateString = `${day} ${month} ${year}`;
+  return dateString;
+}
+
+const convertDateString = (dateString) => {
+  const options = { day: "numeric", month: "short", year: "numeric" };
+  const formatter = new Intl.DateTimeFormat("en-GB", options);
+  const result = formatter.format(new Date(dateString));
+  return result;
+};
+
+console.log(formatDate("2022-01-19T18:00:25Z"));
+
+const getYoutubeSnippet = (url, titleDivTag, publishedAtDivTag, descDivTag) => {
   // I created env file manually
   // 'js/ignore/env.js'
   // and added js/ignore folder to .gitignore
@@ -33,28 +94,39 @@ const getYoutubeTitle = (url, titleDivTag, descDivTag) => {
 
   xhr.onload = function () {
     if (this.status == 200) {
-      let data = this.responseText;
-      let jsonData = JSON.parse(data);
-      let title = jsonData.items[0].snippet.title;
-      let description = jsonData.items[0].snippet.description;
+      const data = this.responseText;
+      const jsonData = JSON.parse(data);
+      console.log(jsonData);
+      const title = jsonData.items[0].snippet.title;
+      const publishedAt = jsonData.items[0].snippet.publishedAt;
+      const description = jsonData.items[0].snippet.description;
+
+      const str = publishedAt;
+      const [year, month, day, hours, minutes] = str.split(/\D/); // split by non-digit characters
+      const formattedStr = `${day}-${month} ${year} ${hours}:${minutes}`; // join and format the parts
+      console.log("formattedStr", `${formattedStr}`);
+
       titleDivTag.innerText = title;
+      //publishedAtDivTag.innerText = formattedStr;
+      publishedAtDivTag.innerText = convertDateString(publishedAt);
       //tripple convertation (save initial markup & linkify):
       // text > innerText > innerHTML > markdown > innerHTML
       descDivTag.innerText = description;
       descDivTag.innerHTML = markdown(descDivTag.innerHTML);
     } else {
-      alert("Failed to load video data (getYoutubeTitle).");
+      alert("Failed to load video data (getYoutubeSnippet).");
     }
   };
 
   xhr.onerror = function () {
-    alert("Network Error (getYoutubeTitle)");
+    alert("Network Error (getYoutubeSnippet)");
   };
 
   xhr.send();
 };
 
 const getYoutubeThumbnail = (url, quality) => {
+  console.log("url:", url);
   if (url) {
     var video_id = filterVideoIdFromUrl(url);
 
@@ -89,37 +161,52 @@ const waitForIframe = (resizableDiv) => {
 
   if (iframeInitial.length > 0) {
     [...iframeInitial].forEach((iframe) => {
-      const divTag = document.createElement("div");
+      const coverDivTag = document.createElement("div");
+      const snippetDivTag = document.createElement("div");
+      snippetDivTag.setAttribute("class", "youtube-snippet");
       const papa = iframe.parentElement;
 
       const titleDivTag = document.createElement("div");
       titleDivTag.setAttribute("class", "youtube-title");
       titleDivTag.innerText = iframe.title;
-      divTag.appendChild(titleDivTag);
+      snippetDivTag.appendChild(titleDivTag);
+
+      const publishedAtDivTag = document.createElement("div");
+      publishedAtDivTag.setAttribute("class", "youtube-published-at");
+      publishedAtDivTag.innerHTML = "Description";
+      snippetDivTag.appendChild(publishedAtDivTag);
 
       const descDivTag = document.createElement("div");
       descDivTag.setAttribute("class", "youtube-description");
       descDivTag.innerHTML = "Description";
-      divTag.appendChild(descDivTag);
-
-      getYoutubeTitle(iframe.src, titleDivTag, descDivTag);
+      snippetDivTag.appendChild(descDivTag);
+      coverDivTag.appendChild(snippetDivTag);
 
       const imgTag = document.createElement("img");
       imgTag.setAttribute("class", "youtube-thumbnail-image");
-      imgTag.setAttribute("src", getYoutubeThumbnail(iframe.src, "low"));
+      const src = getYoutubeThumbnail(iframe.src, "low");
+      imgTag.src = src || "data:,";
       imgTag.addEventListener("click", replaceImageWithIframe);
-      divTag.appendChild(imgTag);
+      coverDivTag.appendChild(imgTag);
+
+      if (src)
+        getYoutubeSnippet(
+          iframe.src,
+          titleDivTag,
+          publishedAtDivTag,
+          descDivTag
+        );
 
       const playButtonTag = document.createElement("button");
       playButtonTag.setAttribute("class", "youtube-play-button");
       playButtonTag.addEventListener("click", replaceImageWithIframe);
-      divTag.appendChild(playButtonTag);
+      coverDivTag.appendChild(playButtonTag);
 
-      divTag.setAttribute("data-url", iframe.src);
-      divTag.setAttribute("class", "youtube-thumbnail");
+      coverDivTag.setAttribute("data-url", iframe.src);
+      coverDivTag.setAttribute("class", "youtube-thumbnail");
 
       // Insert as next sibling of <iframe>
-      papa.insertBefore(divTag, iframe.nextSibling);
+      papa.insertBefore(coverDivTag, iframe.nextSibling);
       papa.removeChild(iframe);
     });
   }

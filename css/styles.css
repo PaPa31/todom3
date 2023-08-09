@@ -378,27 +378,59 @@ image is undefined */
   border: 1px solid;
 }
 
-.youtube-title,
-.youtube-description {
+.youtube-snippet {
   position: absolute;
   padding: 0 4px;
   border-radius: 4px;
+  top: 3px;
+  background-color: var(--todom-background-translucent);
 }
 
-.youtube-title {
-  top: 9px;
-  left: 10px;
-  background-color: var(--todom-background);
+.youtube-snippet > * {
+  padding-bottom: 10px;
+}
+
+.unfolded .youtube-snippet > * {
+  padding-bottom: 0;
+}
+
+.unfolded .youtube-snippet {
+  top: 30px;
+  left: 0;
+  background-color: initial;
+}
+
+.youtube-title::before,
+.youtube-published-at::before,
+.youtube-description::before {
   font-weight: bold;
 }
 
-.unfolded .youtube-title {
-  top: 22px;
+.youtube-title {
+  margin-left: 39px;
 }
 
-.youtube-description {
-  top: 30px;
-  background-color: var(--todom-background-translucent);
+.unfolded .youtube-title {
+  background-color: red;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.youtube-title::before {
+  content: "Title: ";
+}
+
+.unfolded .youtube-title::before {
+  content: "";
+}
+
+.youtube-published-at::before {
+  content: "Published At: ";
+}
+
+.youtube-description::before {
+  content: "Description: ";
+  float: left;
 }
 
 .youtube-play-button {
