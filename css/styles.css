@@ -352,7 +352,7 @@ ol#list-files .main-actions {
   position: relative;
   display: flex;
   justify-content: center;
-  overflow: auto;
+  overflow-y: auto;
   align-items: center;
   min-height: 65px;
 }
@@ -364,6 +364,7 @@ ol#list-files .main-actions {
 .youtube-thumbnail-image {
   display: flex !important;
   cursor: pointer;
+  width: 100%;
 }
 
 /*if youtube thumbnail cover
