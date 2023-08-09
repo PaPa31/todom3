@@ -559,7 +559,7 @@ const showOrHideUndoDeleteButton = () => {
   }
 };
 
-var phrase = "README.md";
+var phrase = "static/demo.md";
 
 const fileHttpHandler = (name, dir, size, text) => {
   const fileObj = {
