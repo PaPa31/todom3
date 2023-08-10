@@ -33,7 +33,77 @@ function formatDate(dateString) {
   return dateString;
 }
 
-const getYoutubeSnippet = (url, titleDivTag, publishedAtDivTag, descDivTag) => {
+const getYouTubeSnippetAsync = async (
+  videoId,
+  version,
+  titleTag,
+  publishedAtTag,
+  descriptionTag
+) => {
+  var key = showPhrase();
+  var url =
+    "https://www.googleapis.com/youtube" +
+    version +
+    "/videos?" +
+    "part=snippet" +
+    "&id=" +
+    videoId +
+    "&key=";
+
+  try {
+    var response = await fetch(url);
+    if (!response.ok) throw Error(response.statusText);
+
+    var data = await response.json();
+    console.log("Data:", data);
+
+    for (var i = 0; i < data.items.length; i++) {
+      var item = data.items[i];
+      item.snippet = {
+        title: item.snippet.title,
+        description: item.snippet.description,
+        publishedAt: item.snippet.publishedAt,
+      };
+      console.log("Title: ", item.snippet.title);
+      console.log("Description: ", item.snippet.description);
+      console.log(
+        "PublishedAt: ",
+        new Date(item.snippet.publishedAt * 1000).toLocaleString()
+      );
+    }
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const transformUrl = (jsonStr) => {
+  const urlRegex = /https?:\/\/([^\s\/]+)([^\n]*)/g;
+
+  //const urlRegex =
+  ///(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g;
+
+  //const urlRegex =
+  //  /\b(?:(?:https?|ftp|file):\/\/|(www|ftp)\.)[-a-z0-9]+(\.[-a-z0-9]+)*\.([a-z\.]{2,6})\b(\/[-a-z0-9_:\@&?=+,.!/#~*'%\$]*(?<![.,?!]))?\b/g;
+
+  const urlReplacer = function (url) {
+    return `<a href="${url}">${url}</a>`;
+  };
+  const transformedUrl = (url) =>
+    urlRegex.test(url) ? url.replaceAll(urlRegex, urlReplacer) : url;
+
+  let lines = jsonStr.split("\n");
+  let transformedLines = lines.map((line) => transformedUrl(line)).join("<br>");
+  return transformedLines;
+};
+
+const getYoutubeSnippet = async (
+  url,
+  titleDivTag,
+  publishedAtDivTag,
+  descDivTag
+) => {
   // I created env file manually
   // 'js/ignore/env.js'
   // and added js/ignore folder to .gitignore
@@ -52,21 +122,27 @@ const getYoutubeSnippet = (url, titleDivTag, publishedAtDivTag, descDivTag) => {
     "&key=" +
     key;
 
+  //XHR object listening for a response
   let xhr = new XMLHttpRequest();
 
   xhr.open("GET", url, true);
 
   xhr.onload = function () {
     if (this.status == 200) {
-      const data = this.responseText;
-      const jsonData = JSON.parse(data);
+      const data = this.responseText; // server’s response data.
+
+      const jsonData = JSON.parse(data); // parsing server response as JSON object
+
       const snippet = jsonData.items[0].snippet;
+
       titleDivTag.innerText = snippet.title;
-      publishedAtDivTag.innerText = formatDate(snippet.publishedAt);
+      publishedAtDivTag.innerText = new Date(snippet.publishedAt).toUTCString();
+
       //tripple convertation (save initial markup & linkify):
       // text > innerText > innerHTML > markdown > innerHTML
-      descDivTag.innerText = snippet.description;
-      descDivTag.innerHTML = markdown(descDivTag.innerHTML);
+      //descDivTag.innerText = snippet.description;
+      //descDivTag.innerHTML = markdown(descDivTag.innerHTML);
+      descDivTag.innerHTML = transformUrl(snippet.description);
     } else {
       alert("Failed to load video data (getYoutubeSnippet).");
     }
@@ -107,6 +183,24 @@ const getYoutubeThumbnail = (url, quality) => {
     }
   }
   return false;
+};
+
+const waitForIframe2 = async (resizableDiv) => {
+  const iframeInitial = [...resizableDiv].getElementsByTagName("iframe")[0];
+
+  if (iframeInitial) {
+    const snippetDiv = await new Promise((resolve) =>
+      iframeInitial.addEventListener("load", resolve)
+    );
+    snippetDiv.innerHTML = `
+      <div class="youtube-snippet">
+        <div class="youtube-title"></div>
+        <div class="youtube-published-at"></div>
+      </div>`;
+    const title = iframeInitial.title;
+    snippetDiv.querySelector(".youtube-title").innerText = title;
+    iframeInitial.load();
+  }
 };
 
 const waitForIframe = (resizableDiv) => {
