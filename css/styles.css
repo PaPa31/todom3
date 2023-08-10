@@ -430,7 +430,6 @@ image is undefined */
 
 .youtube-description::before {
   content: "Description: ";
-  float: left;
 }
 
 .youtube-play-button {

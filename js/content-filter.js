@@ -11,63 +11,27 @@ const filterVideoIdFromUrl = (url) => {
 function formatDate(dateString) {
   const date = new Date(dateString);
   const year = date.getFullYear();
-  let month = date.getMonth() + 1; // JavaScript months are zero-indexed
+  const month = date.getMonth();
   const day = date.getDate();
 
-  switch (month) {
-    case 1:
-      month = "January";
-      break;
-    case 2:
-      month = "February";
-      break;
-    case 3:
-      month = "March";
-      break;
-    case 4:
-      month = "April";
-      break;
-    case 5:
-      month = "May";
-      break;
-    case 6:
-      month = "June";
-      break;
-    case 7:
-      month = "July";
-      break;
-    case 8:
-      month = "August";
-      break;
-    case 9:
-      month = "September";
-      break;
-    case 10:
-      month = "October";
-      break;
-    case 11:
-      month = "November";
-      break;
-    case 12:
-      month = "December";
-      break;
-    default:
-      // Invalid month
-      return null;
-  }
+  const m = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
-  dateString = `${day} ${month} ${year}`;
+  dateString = `${day} ${m[month]} ${year}`;
   return dateString;
 }
-
-const convertDateString = (dateString) => {
-  const options = { day: "numeric", month: "short", year: "numeric" };
-  const formatter = new Intl.DateTimeFormat("en-GB", options);
-  const result = formatter.format(new Date(dateString));
-  return result;
-};
-
-console.log(formatDate("2022-01-19T18:00:25Z"));
 
 const getYoutubeSnippet = (url, titleDivTag, publishedAtDivTag, descDivTag) => {
   // I created env file manually
@@ -96,22 +60,12 @@ const getYoutubeSnippet = (url, titleDivTag, publishedAtDivTag, descDivTag) => {
     if (this.status == 200) {
       const data = this.responseText;
       const jsonData = JSON.parse(data);
-      console.log(jsonData);
-      const title = jsonData.items[0].snippet.title;
-      const publishedAt = jsonData.items[0].snippet.publishedAt;
-      const description = jsonData.items[0].snippet.description;
-
-      const str = publishedAt;
-      const [year, month, day, hours, minutes] = str.split(/\D/); // split by non-digit characters
-      const formattedStr = `${day}-${month} ${year} ${hours}:${minutes}`; // join and format the parts
-      console.log("formattedStr", `${formattedStr}`);
-
-      titleDivTag.innerText = title;
-      //publishedAtDivTag.innerText = formattedStr;
-      publishedAtDivTag.innerText = convertDateString(publishedAt);
+      const snippet = jsonData.items[0].snippet;
+      titleDivTag.innerText = snippet.title;
+      publishedAtDivTag.innerText = formatDate(snippet.publishedAt);
       //tripple convertation (save initial markup & linkify):
       // text > innerText > innerHTML > markdown > innerHTML
-      descDivTag.innerText = description;
+      descDivTag.innerText = snippet.description;
       descDivTag.innerHTML = markdown(descDivTag.innerHTML);
     } else {
       alert("Failed to load video data (getYoutubeSnippet).");
@@ -126,7 +80,6 @@ const getYoutubeSnippet = (url, titleDivTag, publishedAtDivTag, descDivTag) => {
 };
 
 const getYoutubeThumbnail = (url, quality) => {
-  console.log("url:", url);
   if (url) {
     var video_id = filterVideoIdFromUrl(url);
 
