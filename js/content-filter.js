@@ -22,14 +22,11 @@ const transformUrl = (jsonStr) => {
   return transformedLines;
 };
 
-const getYoutubeSnippet = async (url, snippetDiv) => {
+const getYoutubeSnippet = async (url, sDiv) => {
   var key = showPhrase();
   var VIDEO_ID = filterVideoIdFromUrl(url);
-  var version = "v3";
   var url =
-    "https://www.googleapis.com/youtube/" +
-    version +
-    "/videos?part=snippet&id=" +
+    "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" +
     VIDEO_ID +
     "&key=" +
     key;
@@ -41,13 +38,13 @@ const getYoutubeSnippet = async (url, snippetDiv) => {
     if (this.status == 200) {
       const data = this.responseText; // server’s response data.
       const jsonData = JSON.parse(data); // parsing server response as JSON object
-      const snippet = jsonData.items[0].snippet;
-      snippetDiv.querySelector(".youtube-title").innerText = snippet.title;
-      snippetDiv.querySelector(".youtube-published-at").innerText = new Date(
-        snippet.publishedAt
+      const snip = jsonData.items[0].snippet;
+      sDiv.querySelector(".ytb-title").innerText = snip.title;
+      sDiv.querySelector(".ytb-date").innerText = new Date(
+        snip.publishedAt
       ).toUTCString();
-      snippetDiv.querySelector(".youtube-description").innerHTML = transformUrl(
-        snippet.description
+      sDiv.querySelector(".ytb-desc").innerHTML = transformUrl(
+        snip.description
       );
     } else {
       alert("Failed to load video data (getYoutubeSnippet).");
@@ -64,12 +61,10 @@ const getYoutubeSnippet = async (url, snippetDiv) => {
 const getYoutubeThumbnail = (url, quality) => {
   if (url) {
     var video_id = filterVideoIdFromUrl(url);
-
     if (video_id) {
       if (typeof quality == "undefined") {
         quality = "high";
       }
-
       var quality_key = "maxresdefault"; // Max quality
       if (quality == "low") {
         quality_key = "sddefault";
@@ -78,7 +73,6 @@ const getYoutubeThumbnail = (url, quality) => {
       } else if (quality == "high") {
         quality_key = "hqdefault";
       }
-
       var thumbnail =
         "http://img.youtube.com/vi_webp/" +
         video_id +
@@ -100,35 +94,35 @@ const createEl = (tag, pa, attr) => {
 
 const coverDivMaker = (iframe) => {
   const coverDiv = document.createElement("div");
-  const snippetDiv = document.createElement("div");
-  snippetDiv.setAttribute("class", "youtube-snippet");
+  const sDiv = document.createElement("div");
+  sDiv.setAttribute("class", "ytb-snippet");
 
-  createEl("div", snippetDiv, {
-    class: "youtube-title",
+  createEl("div", sDiv, {
+    class: "ytb-title",
   });
 
-  createEl("div", snippetDiv, {
-    class: "youtube-published-at",
+  createEl("div", sDiv, {
+    class: "ytb-date",
   });
 
-  createEl("div", snippetDiv, {
-    class: "youtube-description",
+  createEl("div", sDiv, {
+    class: "ytb-desc",
   });
-  coverDiv.appendChild(snippetDiv);
+  coverDiv.appendChild(sDiv);
 
   const src = getYoutubeThumbnail(iframe.src, "low");
   createEl("img", coverDiv, {
-    class: "youtube-thumbnail-image",
+    class: "ytb-thumbnail-image",
     src: src || "data:,",
   });
-  if (src) getYoutubeSnippet(iframe.src, snippetDiv);
+  if (src) getYoutubeSnippet(iframe.src, sDiv);
 
   createEl("button", coverDiv, {
-    class: "youtube-play-button",
+    class: "ytb-play-button",
   }).addEventListener("click", replaceImageWithIframe);
 
   coverDiv.setAttribute("data-url", iframe.src);
-  coverDiv.setAttribute("class", "youtube-thumbnail");
+  coverDiv.setAttribute("class", "ytb-thumbnail");
 
   return coverDiv;
 };
@@ -149,7 +143,7 @@ const replaceImageWithIframe = function (e) {
     "allow",
     "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   );
-  iframe.setAttribute("class", "youtube-iframe");
+  iframe.setAttribute("class", "ytb-iframe");
   papa.parentNode.replaceChild(iframe, papa);
 };
 

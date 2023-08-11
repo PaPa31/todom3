@@ -348,7 +348,7 @@ ol#list-files .main-actions {
   width: 100%;
 }
 
-.youtube-thumbnail {
+.ytb-thumbnail {
   position: relative;
   display: flex;
   justify-content: center;
@@ -357,11 +357,11 @@ ol#list-files .main-actions {
   min-height: 65px;
 }
 
-.youtube-thumbnail::-webkit-scrollbar {
+.ytb-thumbnail::-webkit-scrollbar {
   display: none;
 }
 
-.youtube-thumbnail-image {
+.ytb-thumbnail-image {
   display: flex !important;
   cursor: pointer;
   width: 100%;
@@ -378,7 +378,7 @@ image is undefined */
   border: 1px solid;
 }
 
-.youtube-snippet {
+.ytb-snippet {
   position: absolute;
   padding: 0 4px;
   border-radius: 4px;
@@ -386,53 +386,53 @@ image is undefined */
   background-color: var(--todom-background-translucent);
 }
 
-.youtube-snippet > * {
+.ytb-snippet > * {
   padding-bottom: 10px;
 }
 
-.unfolded .youtube-snippet > * {
+.unfolded .ytb-snippet > * {
   padding-bottom: 0;
 }
 
-.unfolded .youtube-snippet {
+.unfolded .ytb-snippet {
   top: 19px;
   left: 0;
   background-color: initial;
 }
 
-.youtube-title::before,
-.youtube-published-at::before,
-.youtube-description::before {
+.ytb-title::before,
+.ytb-date::before,
+.ytb-desc::before {
   font-weight: bold;
 }
 
-.youtube-title {
+.ytb-title {
   margin-left: 39px;
 }
 
-.unfolded .youtube-title {
+.unfolded .ytb-title {
   background-color: var(--todom-background-translucent);
   padding: 4px;
   border-radius: 4px;
 }
 
-.youtube-title::before {
+.ytb-title::before {
   content: "Title: ";
 }
 
-.unfolded .youtube-title::before {
+.unfolded .ytb-title::before {
   content: "";
 }
 
-.youtube-published-at::before {
+.ytb-date::before {
   content: "Published At: ";
 }
 
-.youtube-description::before {
+.ytb-desc::before {
   content: "Description: ";
 }
 
-.youtube-play-button {
+.ytb-play-button {
   position: absolute;
   background: url(./../img/youtube-2.svg) no-repeat;
   background-position: center;
@@ -444,7 +444,7 @@ image is undefined */
   height: 50px;
 }
 
-.unfolded .youtube-play-button {
+.unfolded .ytb-play-button {
   right: 0;
   background-size: 55px;
 }
