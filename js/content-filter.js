@@ -93,66 +93,36 @@ const getYoutubeThumbnail = (url, quality) => {
 
 const createEl = (tag, pa, attr) => {
   const el = document.createElement(tag);
-  for (let key in attr) el.setAttribute(key, attr[key]);
+  for (const key in attr) el.setAttribute(key, attr[key]);
   pa.appendChild(el);
   return el;
 };
-
-//const createEl = (tag, p, a) => {
-//  const e = document.createElement(tag);
-//  for (const key in a) e.setAttribute(key, a[key]);
-//  p.appendChild(e);
-//  return e;
-//};
 
 const coverDivMaker = (iframe) => {
   const coverDiv = document.createElement("div");
   const snippetDiv = document.createElement("div");
   snippetDiv.setAttribute("class", "youtube-snippet");
 
-  //const titleDiv = document.createElement("div");
-  //titleDiv.setAttribute("class", "youtube-title");
-  //titleDiv.innerHTML = iframe.title;
-  //snippetDiv.appendChild(titleDiv);
   createEl("div", snippetDiv, {
     class: "youtube-title",
   });
 
-  //const publishedAtDiv = document.createElement("div");
-  //publishedAtDiv.setAttribute("class", "youtube-published-at");
-  //publishedAtDiv.innerHTML = "Description";
-  //snippetDiv.appendChild(publishedAtDiv);
   createEl("div", snippetDiv, {
     class: "youtube-published-at",
   });
 
-  //const descDiv = document.createElement("div");
-  //descDiv.setAttribute("class", "youtube-description");
-  //descDiv.innerHTML = "Description";
-  //snippetDiv.appendChild(descDiv);
   createEl("div", snippetDiv, {
     class: "youtube-description",
   });
   coverDiv.appendChild(snippetDiv);
 
-  //const img = document.createElement("img");
-  //img.setAttribute("class", "youtube-thumbnail-image");
   const src = getYoutubeThumbnail(iframe.src, "low");
-  //img.src = src || "data:,";
-  //img.addEventListener("click", replaceImageWithIframe);
   createEl("img", coverDiv, {
     class: "youtube-thumbnail-image",
     src: src || "data:,",
   });
-  //coverDiv.appendChild(img);
-
-  //if (src) getYoutubeSnippet(iframe.src, titleDiv, publishedAtDiv, descDiv);
   if (src) getYoutubeSnippet(iframe.src, snippetDiv);
 
-  //const playButton = document.createElement("button");
-  //playButton.setAttribute("class", "youtube-play-button");
-  //playButton.addEventListener("click", replaceImageWithIframe);
-  //coverDiv.appendChild(playButton);
   createEl("button", coverDiv, {
     class: "youtube-play-button",
   }).addEventListener("click", replaceImageWithIframe);
