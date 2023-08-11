@@ -8,37 +8,12 @@ const filterVideoIdFromUrl = (url) => {
   return video_id;
 };
 
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
-
-  const m = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  dateString = `${day} ${m[month]} ${year}`;
-  return dateString;
-}
-
 const getYouTubeSnippetAsync = async (
   videoId,
   version,
-  titleTag,
-  publishedAtTag,
-  descriptionTag
+  titleDiv,
+  publishedAtDiv,
+  descriptionDiv
 ) => {
   var key = showPhrase();
   var url =
@@ -81,12 +56,6 @@ const getYouTubeSnippetAsync = async (
 const transformUrl = (jsonStr) => {
   const urlRegex = /https?:\/\/([^\s\/]+)([^\n]*)/g;
 
-  //const urlRegex =
-  ///(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g;
-
-  //const urlRegex =
-  //  /\b(?:(?:https?|ftp|file):\/\/|(www|ftp)\.)[-a-z0-9]+(\.[-a-z0-9]+)*\.([a-z\.]{2,6})\b(\/[-a-z0-9_:\@&?=+,.!/#~*'%\$]*(?<![.,?!]))?\b/g;
-
   const urlReplacer = function (url) {
     return `<a href="${url}">${url}</a>`;
   };
@@ -100,9 +69,9 @@ const transformUrl = (jsonStr) => {
 
 const getYoutubeSnippet = async (
   url,
-  titleDivTag,
-  publishedAtDivTag,
-  descDivTag
+  titleDiv,
+  publishedAtDiv,
+  descDiv
 ) => {
   // I created env file manually
   // 'js/ignore/env.js'
@@ -135,14 +104,14 @@ const getYoutubeSnippet = async (
 
       const snippet = jsonData.items[0].snippet;
 
-      titleDivTag.innerText = snippet.title;
-      publishedAtDivTag.innerText = new Date(snippet.publishedAt).toUTCString();
+      titleDiv.innerText = snippet.title;
+      publishedAtDiv.innerText = new Date(snippet.publishedAt).toUTCString();
 
       //tripple convertation (save initial markup & linkify):
       // text > innerText > innerHTML > markdown > innerHTML
-      //descDivTag.innerText = snippet.description;
-      //descDivTag.innerHTML = markdown(descDivTag.innerHTML);
-      descDivTag.innerHTML = transformUrl(snippet.description);
+      //descDiv.innerText = snippet.description;
+      //descDiv.innerHTML = markdown(descDiv.innerHTML);
+      descDiv.innerHTML = transformUrl(snippet.description);
     } else {
       alert("Failed to load video data (getYoutubeSnippet).");
     }
@@ -185,77 +154,107 @@ const getYoutubeThumbnail = (url, quality) => {
   return false;
 };
 
-const waitForIframe2 = async (resizableDiv) => {
-  const iframeInitial = [...resizableDiv].getElementsByTagName("iframe")[0];
-
-  if (iframeInitial) {
-    const snippetDiv = await new Promise((resolve) =>
-      iframeInitial.addEventListener("load", resolve)
-    );
-    snippetDiv.innerHTML = `
-      <div class="youtube-snippet">
-        <div class="youtube-title"></div>
-        <div class="youtube-published-at"></div>
-      </div>`;
-    const title = iframeInitial.title;
-    snippetDiv.querySelector(".youtube-title").innerText = title;
-    iframeInitial.load();
+const waitForIframe3 = (resizableDiv) => {
+  const iframeInitial = resizableDiv.getElementsByTagName("iframe");
+  if (iframeInitial.length > 0) {
+    [...iframeInitial].forEach((iframe) => {});
   }
+};
+
+const fn = () =>
+  new Promise((resolve) => setTimeout(() => resolve(v * 2), 100));
+
+const waitForIframe2 = async (resizableDiv) => {
+  const iframeInitial = resizableDiv.getElementsByTagName("iframe");
+
+  if (iframeInitial.length > 0) {
+    [...iframeInitial].forEach((iframe) => {
+      const snippetDiv = new Promise((resolve) =>
+        iframeInitial.addEventListener("load", resolve)
+      );
+      snippetDiv.innerHTML = `
+      <div class="youtube-thumbnail">
+        <div class="youtube-snippet">
+          <div class="youtube-title"></div>
+          <div class="youtube-published-at"></div>
+          <div class="youtube-description"></div>
+          <img class="youtube-thumbnail-image"></img>
+        </div>
+        <button class="yotube-play-button"></button>
+      </div>`;
+      const title = iframeInitial.title;
+      snippetDiv.querySelector(".youtube-title").innerText = title;
+      iframeInitial.load();
+    });
+  }
+};
+
+const htmlStructure = (iframe) => {
+  const papa = iframe.parentNode;
+
+  const coverDiv = document.createElement("div");
+  const snippetDiv = document.createElement("div");
+  snippetDiv.setAttribute("class", "youtube-snippet");
+
+  const titleDiv = document.createElement("div");
+  titleDiv.setAttribute("class", "youtube-title");
+  titleDiv.innerText = iframe.title;
+  snippetDiv.appendChild(titleDiv);
+
+  const publishedAtDiv = document.createElement("div");
+  publishedAtDiv.setAttribute("class", "youtube-published-at");
+  publishedAtDiv.innerHTML = "Description";
+  snippetDiv.appendChild(publishedAtDiv);
+
+  const descDiv = document.createElement("div");
+  descDiv.setAttribute("class", "youtube-description");
+  descDiv.innerHTML = "Description";
+  snippetDiv.appendChild(descDiv);
+  coverDiv.appendChild(snippetDiv);
+
+  const imgTag = document.createElement("img");
+  imgTag.setAttribute("class", "youtube-thumbnail-image");
+  const src = getYoutubeThumbnail(iframe.src, "low");
+  imgTag.src = src || "data:,";
+  imgTag.addEventListener("click", replaceImageWithIframe);
+  coverDiv.appendChild(imgTag);
+
+  if (src)
+    getYoutubeSnippet(iframe.src, titleDiv, publishedAtDiv, descDiv);
+
+  const playButton = document.createElement("button");
+  playButton.setAttribute("class", "youtube-play-button");
+  playButton.addEventListener("click", replaceImageWithIframe);
+  coverDiv.appendChild(playButton);
+
+  coverDiv.setAttribute("data-url", iframe.src);
+  coverDiv.setAttribute("class", "youtube-thumbnail");
+
+  // Insert as next sibling of <iframe>
+  papa.insertBefore(coverDiv, iframe.nextSibling);
+  papa.removeChild(iframe);
+  return 
+};
+
+const htmlStructure2 = function(iframe) {
+const papa = iframe.parentNode;
+
+const coverDiv = document.createElement(‘div’);
+coverDiv.classList.add(‘cover-div’);
+
+const snippetDiv = document.createElement(‘div’);
+snippetDiv.classList.add(‘snippet-div’, ‘youtube-snippet’);
+snippetDiv.innerHTML = <div class="youtube-title">${iframe.title}</div> <div class="published-at">Description</div>;
+papa.insertBefore(snippetDiv, iframe.nextSibling);
+
+return coverDiv;
 };
 
 const waitForIframe = (resizableDiv) => {
   const iframeInitial = resizableDiv.getElementsByTagName("iframe");
 
   if (iframeInitial.length > 0) {
-    [...iframeInitial].forEach((iframe) => {
-      const coverDivTag = document.createElement("div");
-      const snippetDivTag = document.createElement("div");
-      snippetDivTag.setAttribute("class", "youtube-snippet");
-      const papa = iframe.parentElement;
-
-      const titleDivTag = document.createElement("div");
-      titleDivTag.setAttribute("class", "youtube-title");
-      titleDivTag.innerText = iframe.title;
-      snippetDivTag.appendChild(titleDivTag);
-
-      const publishedAtDivTag = document.createElement("div");
-      publishedAtDivTag.setAttribute("class", "youtube-published-at");
-      publishedAtDivTag.innerHTML = "Description";
-      snippetDivTag.appendChild(publishedAtDivTag);
-
-      const descDivTag = document.createElement("div");
-      descDivTag.setAttribute("class", "youtube-description");
-      descDivTag.innerHTML = "Description";
-      snippetDivTag.appendChild(descDivTag);
-      coverDivTag.appendChild(snippetDivTag);
-
-      const imgTag = document.createElement("img");
-      imgTag.setAttribute("class", "youtube-thumbnail-image");
-      const src = getYoutubeThumbnail(iframe.src, "low");
-      imgTag.src = src || "data:,";
-      imgTag.addEventListener("click", replaceImageWithIframe);
-      coverDivTag.appendChild(imgTag);
-
-      if (src)
-        getYoutubeSnippet(
-          iframe.src,
-          titleDivTag,
-          publishedAtDivTag,
-          descDivTag
-        );
-
-      const playButtonTag = document.createElement("button");
-      playButtonTag.setAttribute("class", "youtube-play-button");
-      playButtonTag.addEventListener("click", replaceImageWithIframe);
-      coverDivTag.appendChild(playButtonTag);
-
-      coverDivTag.setAttribute("data-url", iframe.src);
-      coverDivTag.setAttribute("class", "youtube-thumbnail");
-
-      // Insert as next sibling of <iframe>
-      papa.insertBefore(coverDivTag, iframe.nextSibling);
-      papa.removeChild(iframe);
-    });
+    [...iframeInitial].forEach((iframe) => {});
   }
 };
 
