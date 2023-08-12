@@ -58,32 +58,86 @@ const getYoutubeSnippet = async (url, sDiv) => {
   xhr.send();
 };
 
-const getYoutubeThumbnail = (url, quality) => {
-  if (url) {
+const getYoutubeThumbnail = (url, size = "high") => {
+  try {
     var video_id = filterVideoIdFromUrl(url);
     if (video_id) {
-      if (typeof quality == "undefined") {
-        quality = "high";
+      var size_key = "maxresdefault"; // Max size
+      if (size == "low") {
+        size_key = "sddefault";
+      } else if (size == "medium") {
+        size_key = "mqdefault";
+      } else if (size == "high") {
+        size_key = "hqdefault";
       }
-      var quality_key = "maxresdefault"; // Max quality
-      if (quality == "low") {
-        quality_key = "sddefault";
-      } else if (quality == "medium") {
-        quality_key = "mqdefault";
-      } else if (quality == "high") {
-        quality_key = "hqdefault";
-      }
-      var thumbnail =
-        "http://img.youtube.com/vi_webp/" +
-        video_id +
-        "/" +
-        quality_key +
-        ".webp";
-      return thumbnail;
+      return (
+        "https://img.youtube.com/vi_webp/" + video_id + "/" + size_key + ".webp"
+      );
     }
+  } catch (err) {
+    console.error(err);
+    return null;
   }
-  return false;
 };
+
+function createCoverDiv2(iframe) {
+  const coverDiv = document.createElement("div");
+  const sDiv = document.createElement("div");
+
+  const thumbnail = document.createElement("img");
+  thumbnail.src = getYoutubeThumbnail(iframe.src, "low");
+  thumbnail.classList.add("ytb-thumbnail-image");
+  if (thumbnail.src) thumbnail.classList.add("loaded");
+  else thumbnail.onload = () => thumbnail.classList.add("loaded");
+
+  sDiv.classList.add("ytb-snippet");
+  sDiv.innerHTML = `<div class="ytb-title">${getYoutubeTitle(
+    iframe.title
+  )}</div>
+  <div class="ytb-date">${getDate(iframe.publishedAt)}</div>`;
+  coverDiv.append(thumbnail, sDiv);
+  return coverDiv;
+}
+
+function getYoutubeTitle2(title) {
+  let titleText = title;
+  if (!titleText) return "";
+  titleText = titleText.split(" ");
+  if (titleText.length > 2) titleText[2] = "...";
+  return titleText.join(" ");
+}
+
+function dateStringToDate2(dateStr) {
+  let dateString = getDate(dateStr);
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  if (dateString.length === 8) {
+    dateString = `${dayNames[dateString[0] - 1]} ${dateString[1]}-${
+      dateString[2]
+    }-${monthNames[dateString[3] - 1]}`;
+  } else if (dateString.length === 6) {
+    dateString =
+      dayNames[dateString[4] - 1] +
+      "-" +
+      dateString[5] +
+      "-" +
+      monthNames[dateString[6] - 1];
+  }
+  return dateString;
+}
 
 const createEl = (tag, pa, attr) => {
   const el = document.createElement(tag);
@@ -94,8 +148,12 @@ const createEl = (tag, pa, attr) => {
 
 const coverDivMaker = (iframe) => {
   const coverDiv = document.createElement("div");
-  const sDiv = document.createElement("div");
-  sDiv.setAttribute("class", "ytb-snippet");
+  coverDiv.setAttribute("data-url", iframe.src);
+  coverDiv.setAttribute("class", "ytb-thumbnail");
+
+  const sDiv = createEl("div", coverDiv, {
+    class: "ytb-snippet",
+  });
 
   createEl("div", sDiv, {
     class: "ytb-title",
@@ -108,7 +166,6 @@ const coverDivMaker = (iframe) => {
   createEl("div", sDiv, {
     class: "ytb-desc",
   });
-  coverDiv.appendChild(sDiv);
 
   const src = getYoutubeThumbnail(iframe.src, "low");
   createEl("img", coverDiv, {
@@ -120,9 +177,6 @@ const coverDivMaker = (iframe) => {
   createEl("button", coverDiv, {
     class: "ytb-play-button",
   }).addEventListener("click", replaceImageWithIframe);
-
-  coverDiv.setAttribute("data-url", iframe.src);
-  coverDiv.setAttribute("class", "ytb-thumbnail");
 
   return coverDiv;
 };
