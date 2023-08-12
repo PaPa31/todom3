@@ -10,13 +10,11 @@ const filterVideoIdFromUrl = (url) => {
 
 const transformUrl = (jsonStr) => {
   const urlRegex = /https?:\/\/([^\s\/]+)([^\n]*)/g;
-
   const urlReplacer = function (url) {
     return `<a href="${url}">${url}</a>`;
   };
   const transformedUrl = (url) =>
     urlRegex.test(url) ? url.replaceAll(urlRegex, urlReplacer) : url;
-
   let lines = jsonStr.split("\n");
   let transformedLines = lines.map((line) => transformedUrl(line)).join("<br>");
   return transformedLines;
@@ -40,9 +38,6 @@ const getYoutubeSnippet = async (url, snipDiv) => {
       const jsonData = JSON.parse(data); // parsing server response as JSON object
       const snip = jsonData.items[0].snippet;
       snipDiv.querySelector(".ytb-title").innerText = snip.title;
-      //snipDiv.querySelector(".ytb-date").innerText = new Date(
-      //  snip.publishedAt
-      //).toUTCString();
       console.log(snip.publishedAt);
       snipDiv.querySelector(".ytb-date").innerText = dateStringToDate(
         snip.publishedAt
@@ -55,11 +50,9 @@ const getYoutubeSnippet = async (url, snipDiv) => {
       alert("Failed to load video data (getYoutubeSnippet).");
     }
   };
-
   xhr.onerror = function () {
     alert("Network Error (getYoutubeSnippet)");
   };
-
   xhr.send();
 };
 
