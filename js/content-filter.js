@@ -40,9 +40,13 @@ const getYoutubeSnippet = async (url, snipDiv) => {
       const jsonData = JSON.parse(data); // parsing server response as JSON object
       const snip = jsonData.items[0].snippet;
       snipDiv.querySelector(".ytb-title").innerText = snip.title;
-      snipDiv.querySelector(".ytb-date").innerText = new Date(
+      //snipDiv.querySelector(".ytb-date").innerText = new Date(
+      //  snip.publishedAt
+      //).toUTCString();
+      console.log(snip.publishedAt);
+      snipDiv.querySelector(".ytb-date").innerText = dateStringToDate(
         snip.publishedAt
-      ).toUTCString();
+      );
       snipDiv.querySelector(".ytb-desc").innerHTML = transformUrl(
         snip.description
       );
@@ -81,63 +85,13 @@ const getYoutubeThumbnail = (url, size = "high") => {
   }
 };
 
-function createCoverDiv2(iframe) {
-  const coverDiv = document.createElement("div");
-  const snipDiv = document.createElement("div");
-
-  const thumbnail = document.createElement("img");
-  thumbnail.src = getYoutubeThumbnail(iframe.src, "low");
-  thumbnail.classList.add("ytb-img");
-  if (thumbnail.src) thumbnail.classList.add("loaded");
-  else thumbnail.onload = () => thumbnail.classList.add("loaded");
-
-  snipDiv.classList.add("ytb-snip");
-  snipDiv.innerHTML = `<div class="ytb-title">${getYoutubeTitle2(
-    iframe.title
-  )}</div>
-  <div class="ytb-date">${getDate(iframe.publishedAt)}</div>`;
-  coverDiv.append(thumbnail, snipDiv);
-  return coverDiv;
-}
-
-function getYoutubeTitle2(title) {
-  let titleText = title;
-  if (!titleText) return "";
-  titleText = titleText.split(" ");
-  if (titleText.length > 2) titleText[2] = "...";
-  return titleText.join(" ");
-}
-
-function dateStringToDate2(dateStr) {
-  let dateString = getDate(dateStr);
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+function dateStringToDate(dateStr) {
+  let dateString = new Date(dateStr).toString().split(" ");
   if (dateString.length === 8) {
-    dateString = `${dayNames[dateString[0] - 1]} ${dateString[1]}-${
-      dateString[2]
-    }-${monthNames[dateString[3] - 1]}`;
+    return `${dateString[2]} ${dateString[1]} ${dateString[3]}`;
   } else if (dateString.length === 6) {
-    dateString =
-      dayNames[dateString[4] - 1] +
-      "-" +
-      dateString[5] +
-      "-" +
-      monthNames[dateString[6] - 1];
+    return dateString[5] + " " + dateString[4] + " " + dateString[6];
   }
-  return dateString;
 }
 
 const createEl = (tag, pa, attr) => {
