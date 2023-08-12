@@ -175,7 +175,7 @@ const coverDivMaker = (iframe) => {
   if (src) getYoutubeSnippet(iframe.src, snipDiv);
 
   createEl("button", coverDiv, {
-    class: "ytb-play-button",
+    class: "ytb-play",
   }).addEventListener("click", replaceImageWithIframe);
 
   return coverDiv;

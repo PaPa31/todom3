@@ -432,7 +432,7 @@ image is undefined */
   content: "Description: ";
 }
 
-.ytb-play-button {
+.ytb-play {
   position: absolute;
   background: url(./../img/youtube-2.svg) no-repeat;
   background-position: center;
@@ -444,7 +444,7 @@ image is undefined */
   height: 50px;
 }
 
-.unfolded .ytb-play-button {
+.unfolded .ytb-play {
   right: 0;
   background-size: 55px;
 }
