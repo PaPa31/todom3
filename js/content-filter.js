@@ -86,12 +86,12 @@ function createCoverDiv2(iframe) {
 
   const thumbnail = document.createElement("img");
   thumbnail.src = getYoutubeThumbnail(iframe.src, "low");
-  thumbnail.classList.add("ytb-thumbnail-image");
+  thumbnail.classList.add("ytb-thumb-img");
   if (thumbnail.src) thumbnail.classList.add("loaded");
   else thumbnail.onload = () => thumbnail.classList.add("loaded");
 
   sDiv.classList.add("ytb-snippet");
-  sDiv.innerHTML = `<div class="ytb-title">${getYoutubeTitle(
+  sDiv.innerHTML = `<div class="ytb-title">${getYoutubeTitle2(
     iframe.title
   )}</div>
   <div class="ytb-date">${getDate(iframe.publishedAt)}</div>`;
@@ -149,7 +149,7 @@ const createEl = (tag, pa, attr) => {
 const coverDivMaker = (iframe) => {
   const coverDiv = document.createElement("div");
   coverDiv.setAttribute("data-url", iframe.src);
-  coverDiv.setAttribute("class", "ytb-thumbnail");
+  coverDiv.setAttribute("class", "ytb-thumb");
 
   const sDiv = createEl("div", coverDiv, {
     class: "ytb-snippet",
@@ -169,7 +169,7 @@ const coverDivMaker = (iframe) => {
 
   const src = getYoutubeThumbnail(iframe.src, "low");
   createEl("img", coverDiv, {
-    class: "ytb-thumbnail-image",
+    class: "ytb-thumb-img",
     src: src || "data:,",
   });
   if (src) getYoutubeSnippet(iframe.src, sDiv);

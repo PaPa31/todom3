@@ -348,7 +348,7 @@ ol#list-files .main-actions {
   width: 100%;
 }
 
-.ytb-thumbnail {
+.ytb-thumb {
   position: relative;
   display: flex;
   justify-content: center;
@@ -357,11 +357,11 @@ ol#list-files .main-actions {
   min-height: 65px;
 }
 
-.ytb-thumbnail::-webkit-scrollbar {
+.ytb-thumb::-webkit-scrollbar {
   display: none;
 }
 
-.ytb-thumbnail-image {
+.ytb-thumb-img {
   display: flex !important;
   cursor: pointer;
   width: 100%;
