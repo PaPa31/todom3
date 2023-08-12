@@ -361,7 +361,7 @@ ol#list-files .main-actions {
   display: none;
 }
 
-.ytb-thumb-img {
+.ytb-img {
   display: flex !important;
   cursor: pointer;
   width: 100%;
@@ -378,23 +378,24 @@ image is undefined */
   border: 1px solid;
 }
 
-.ytb-snippet {
+.ytb-snip {
   position: absolute;
   padding: 0 4px;
   border-radius: 4px;
   top: 3px;
   background-color: var(--todom-background-translucent);
+  display: none;
 }
 
-.ytb-snippet > * {
+.ytb-snip > * {
   padding-bottom: 10px;
 }
 
-.unfolded .ytb-snippet > * {
+.unfolded .ytb-snip > * {
   padding-bottom: 0;
 }
 
-.unfolded .ytb-snippet {
+.unfolded .ytb-snip {
   top: 19px;
   left: 0;
   background-color: initial;
@@ -447,6 +448,10 @@ image is undefined */
 .unfolded .ytb-play {
   right: 0;
   background-size: 55px;
+}
+
+.ytb-loaded {
+  display: initial;
 }
 
 .md-item,

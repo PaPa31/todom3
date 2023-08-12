@@ -46,6 +46,7 @@ const getYoutubeSnippet = async (url, snipDiv) => {
       snipDiv.querySelector(".ytb-desc").innerHTML = transformUrl(
         snip.description
       );
+      snipDiv.classList.add("ytb-loaded");
     } else {
       alert("Failed to load video data (getYoutubeSnippet).");
     }
@@ -86,11 +87,11 @@ function createCoverDiv2(iframe) {
 
   const thumbnail = document.createElement("img");
   thumbnail.src = getYoutubeThumbnail(iframe.src, "low");
-  thumbnail.classList.add("ytb-thumb-img");
+  thumbnail.classList.add("ytb-img");
   if (thumbnail.src) thumbnail.classList.add("loaded");
   else thumbnail.onload = () => thumbnail.classList.add("loaded");
 
-  snipDiv.classList.add("ytb-snippet");
+  snipDiv.classList.add("ytb-snip");
   snipDiv.innerHTML = `<div class="ytb-title">${getYoutubeTitle2(
     iframe.title
   )}</div>
@@ -152,7 +153,7 @@ const coverDivMaker = (iframe) => {
   coverDiv.setAttribute("class", "ytb-thumb");
 
   const snipDiv = createEl("div", coverDiv, {
-    class: "ytb-snippet",
+    class: "ytb-snip",
   });
 
   createEl("div", snipDiv, {
@@ -169,7 +170,7 @@ const coverDivMaker = (iframe) => {
 
   const src = getYoutubeThumbnail(iframe.src, "low");
   createEl("img", coverDiv, {
-    class: "ytb-thumb-img",
+    class: "ytb-img",
     src: src || "data:,",
   });
   if (src) getYoutubeSnippet(iframe.src, snipDiv);
