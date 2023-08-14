@@ -198,9 +198,6 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
 };
 
 const unfoldButtonMaker = (parentLi) => {
-  //const mdTag = isItemState
-  //  ? parentLi.querySelector(".md-item")
-  //  : parentLi.querySelector(".file-text");
   const buttonTag = document.createElement("button");
   const numInside = document.createElement("span");
   buttonTag.setAttribute("class", "button-default unfold-button btn");
@@ -208,10 +205,6 @@ const unfoldButtonMaker = (parentLi) => {
     "onclick",
     `unfoldOneItem(findParentTagOrClassRecursive(this))`
   );
-
-  //if (isItemState && mdTag.scrollHeight === 0)
-  //  buttonTag.style = "--box-shadow-color: red";
-
   buttonTag.setAttribute("title", "fold/unfold one");
   buttonTag.appendChild(numInside);
   parentLi.appendChild(buttonTag);

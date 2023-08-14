@@ -382,7 +382,7 @@ image is undefined */
   position: absolute;
   padding: 0 4px;
   border-radius: 4px;
-  top: 3px;
+  top: 0;
   background-color: var(--todom-background-translucent);
   display: none;
 }
@@ -405,6 +405,10 @@ image is undefined */
 .ytb-date::before,
 .ytb-desc::before {
   font-weight: bold;
+}
+
+.ytb-title {
+  margin-top: 3px;
 }
 
 .unfolded .ytb-title {
