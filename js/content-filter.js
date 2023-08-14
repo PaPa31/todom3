@@ -29,21 +29,17 @@ const getYoutubeSnippet = async (url, snipDiv) => {
     "&key=" +
     key;
 
-  //XHR object listening for a response
   let xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
   xhr.onload = function () {
     if (this.status == 200) {
-      const data = this.responseText; // server’s response data.
-      const jsonData = JSON.parse(data); // parsing server response as JSON object
-      const snip = jsonData.items[0].snippet;
-      snipDiv.querySelector(".ytb-title").innerText = snip.title;
-      snipDiv.querySelector(".ytb-date").innerText = dateStringToDate(
-        snip.publishedAt
-      );
-      snipDiv.querySelector(".ytb-desc").innerHTML = parseStrToHTML(
-        snip.description
-      );
+      const data = this.responseText,
+        jsonData = JSON.parse(data),
+        snip = jsonData.items[0].snippet,
+        $ = (selector) => snipDiv.querySelector(selector);
+      $(".ytb-title").innerText = snip.title;
+      $(".ytb-date").innerText = dateStringToDate(snip.publishedAt);
+      $(".ytb-desc").innerHTML = parseStrToHTML(snip.description);
       snipDiv.classList.add("ytb-loaded");
     } else {
       alert("Failed to load video data (getYoutubeSnippet).");
@@ -123,7 +119,6 @@ const replaceImageWithIframe = function (e) {
 
 const waitForIframe = (resizableDiv) => {
   const iframeInitial = resizableDiv.getElementsByTagName("iframe");
-
   if (iframeInitial.length > 0) {
     [...iframeInitial].forEach((iframe) => {
       const papa = iframe.parentNode;
