@@ -35,11 +35,11 @@ const getYoutubeSnippet = async (url, snipDiv) => {
     if (this.status == 200) {
       const data = this.responseText,
         jsonData = JSON.parse(data),
-        snip = jsonData.items[0].snippet,
-        $ = (selector) => snipDiv.querySelector(selector);
-      $(".ytb-title").innerText = snip.title;
-      $(".ytb-date").innerText = dateStringToDate(snip.publishedAt);
-      $(".ytb-desc").innerHTML = parseStrToHTML(snip.description);
+        snip = jsonData.items[0].snippet;
+      //$ = (selector) => snipDiv.querySelector(selector);
+      $(".ytb-title", snipDiv).innerText = snip.title;
+      $(".ytb-date", snipDiv).innerText = dateStringToDate(snip.publishedAt);
+      $(".ytb-desc", snipDiv).innerHTML = parseStrToHTML(snip.description);
       snipDiv.classList.add("ytb-loaded");
     } else {
       alert("Failed to load video data (getYoutubeSnippet).");
