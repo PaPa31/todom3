@@ -106,19 +106,19 @@ const replaceImageWithIframe = function (e) {
   const papa = e.target.parentNode,
     grandPa = isItemState
       ? findParentTagOrClassRecursive(papa, undefined, "md-item")
-      : findParentTagOrClassRecursive(papa, undefined, "file-text"),
-    iframe = createEl("iframe", {
-      class: "ytb-iframe",
-      src: papa.dataset.url + "?autoplay=1&rel=0",
-      frameborder: "0",
-      allowfullscreen: "1",
-      allowTranparency: "true",
-      allow:
-        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
-    });
-  papa.parentNode.replaceChild(iframe, papa);
+      : findParentTagOrClassRecursive(papa, undefined, "file-text");
   grandPa.style.width = grandPa.offsetWidth + "px";
   grandPa.style.height = grandPa.offsetHeight + "px";
+  const iframe = createEl("iframe", {
+    class: "ytb-iframe",
+    src: papa.dataset.url + "?autoplay=1&rel=0",
+    frameborder: "0",
+    allowfullscreen: "1",
+    allowTranparency: "true",
+    allow:
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+  });
+  papa.parentNode.replaceChild(iframe, papa);
 };
 
 const waitForIframe = (resizableDiv) => {
