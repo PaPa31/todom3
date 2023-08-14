@@ -1,8 +1,13 @@
-const $ = (selector, scope) => {
-  if (!scope.querySelector) {
-    throw new Error("Cannot find element with this scope!");
+const $ = (selector = "", scope = document) => {
+  const el =
+    scope && scope.querySelector && selector
+      ? scope.querySelector(selector)
+      : null;
+  if (el) {
+    return el;
+  } else {
+    throw new Error(`Cannot find element matching selector: ${selector}`);
   }
-  return scope.querySelector(selector);
 };
 
 const createEl = (tag, attr, pa) => {
