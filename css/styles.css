@@ -407,10 +407,6 @@ image is undefined */
   font-weight: bold;
 }
 
-.ytb-title {
-  margin-left: 39px;
-}
-
 .unfolded .ytb-title {
   background-color: var(--todom-background-translucent);
   padding: 4px;
