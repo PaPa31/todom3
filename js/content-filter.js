@@ -8,7 +8,7 @@ const filterVideoIdFromUrl = (url) => {
   return video_id;
 };
 
-const transformUrl = (jsonStr) => {
+const parseStrToHTML = (jsonStr) => {
   const urlRegex = /https?:\/\/([^\s\/]+)([^\n]*)/g;
   const urlReplacer = function (url) {
     return `<a href="${url}">${url}</a>`;
@@ -41,7 +41,7 @@ const getYoutubeSnippet = async (url, snipDiv) => {
       snipDiv.querySelector(".ytb-date").innerText = dateStringToDate(
         snip.publishedAt
       );
-      snipDiv.querySelector(".ytb-desc").innerHTML = transformUrl(
+      snipDiv.querySelector(".ytb-desc").innerHTML = parseStrToHTML(
         snip.description
       );
       snipDiv.classList.add("ytb-loaded");
@@ -55,21 +55,11 @@ const getYoutubeSnippet = async (url, snipDiv) => {
   xhr.send();
 };
 
-const getYoutubeThumbnail = (url, size = "high") => {
+const getYoutubeThumbnail = (url) => {
   try {
-    var video_id = filterVideoIdFromUrl(url);
+    const video_id = filterVideoIdFromUrl(url);
     if (video_id) {
-      var size_key = "maxresdefault"; // Max size
-      if (size == "low") {
-        size_key = "sddefault";
-      } else if (size == "medium") {
-        size_key = "mqdefault";
-      } else if (size == "high") {
-        size_key = "hqdefault";
-      }
-      return (
-        "https://img.youtube.com/vi_webp/" + video_id + "/" + size_key + ".webp"
-      );
+      return "https://img.youtube.com/vi_webp/" + video_id + "/sddefault.webp";
     }
   } catch (err) {
     console.error(err);
@@ -99,7 +89,7 @@ const coverDivMaker = (iframe) => {
       class: "ytb-thumb",
     }),
     snipDiv = createEl("div", { class: "ytb-snip" }, coverDiv),
-    src = getYoutubeThumbnail(iframe.src, "low");
+    src = getYoutubeThumbnail(iframe.src);
   createEl("div", { class: "ytb-title" }, snipDiv);
   createEl("div", { class: "ytb-date" }, snipDiv);
   createEl("div", { class: "ytb-desc" }, snipDiv);
