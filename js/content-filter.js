@@ -38,7 +38,6 @@ const getYoutubeSnippet = async (url, snipDiv) => {
       const jsonData = JSON.parse(data); // parsing server response as JSON object
       const snip = jsonData.items[0].snippet;
       snipDiv.querySelector(".ytb-title").innerText = snip.title;
-      console.log(snip.publishedAt);
       snipDiv.querySelector(".ytb-date").innerText = dateStringToDate(
         snip.publishedAt
       );
@@ -83,70 +82,53 @@ function dateStringToDate(dateStr) {
   if (dateString.length === 8) {
     return `${dateString[2]} ${dateString[1]} ${dateString[3]}`;
   } else if (dateString.length === 6) {
-    return dateString[5] + " " + dateString[4] + " " + dateString[6];
+    return `${dateString[5]} ${dateString[4]} ${dateString[6]}`;
   }
 }
 
-const createEl = (tag, pa, attr) => {
+const createEl = (tag, attr, pa) => {
   const el = document.createElement(tag);
   for (const key in attr) el.setAttribute(key, attr[key]);
-  pa.appendChild(el);
+  if (pa) pa.appendChild(el);
   return el;
 };
 
 const coverDivMaker = (iframe) => {
-  const coverDiv = document.createElement("div");
-  coverDiv.setAttribute("data-url", iframe.src);
-  coverDiv.setAttribute("class", "ytb-thumb");
-
-  const snipDiv = createEl("div", coverDiv, {
-    class: "ytb-snip",
-  });
-
-  createEl("div", snipDiv, {
-    class: "ytb-title",
-  });
-
-  createEl("div", snipDiv, {
-    class: "ytb-date",
-  });
-
-  createEl("div", snipDiv, {
-    class: "ytb-desc",
-  });
-
-  const src = getYoutubeThumbnail(iframe.src, "low");
-  createEl("img", coverDiv, {
-    class: "ytb-img",
-    src: src || "data:,",
-  });
+  const coverDiv = createEl("div", {
+      "data-url": iframe.src,
+      class: "ytb-thumb",
+    }),
+    snipDiv = createEl("div", { class: "ytb-snip" }, coverDiv),
+    src = getYoutubeThumbnail(iframe.src, "low");
+  createEl("div", { class: "ytb-title" }, snipDiv);
+  createEl("div", { class: "ytb-date" }, snipDiv);
+  createEl("div", { class: "ytb-desc" }, snipDiv);
+  createEl("img", { class: "ytb-img", src: src || "data:," }, coverDiv);
   if (src) getYoutubeSnippet(iframe.src, snipDiv);
-
-  createEl("button", coverDiv, {
-    class: "ytb-play",
-  }).addEventListener("click", replaceImageWithIframe);
-
+  createEl("button", { class: "ytb-play" }, coverDiv).addEventListener(
+    "click",
+    replaceImageWithIframe
+  );
   return coverDiv;
 };
 
 const replaceImageWithIframe = function (e) {
-  const iframe = document.createElement("iframe");
-  const papa = this.parentNode;
-  const grandPa = isItemState
-    ? findParentTagOrClassRecursive(papa, undefined, "md-item")
-    : findParentTagOrClassRecursive(papa, undefined, "file-text");
+  const papa = e.target.parentNode,
+    grandPa = isItemState
+      ? findParentTagOrClassRecursive(papa, undefined, "md-item")
+      : findParentTagOrClassRecursive(papa, undefined, "file-text"),
+    iframe = createEl("iframe", {
+      class: "ytb-iframe",
+      src: papa.dataset.url + "?autoplay=1&rel=0",
+      frameborder: "0",
+      allowfullscreen: "1",
+      allowTranparency: "true",
+      allow:
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+    });
+  papa.parentNode.replaceChild(iframe, papa);
   grandPa.style.width = grandPa.offsetWidth + "px";
   grandPa.style.height = grandPa.offsetHeight + "px";
-  iframe.setAttribute("src", papa.dataset.url + "?autoplay=1&rel=0");
-  iframe.setAttribute("frameborder", "0");
-  iframe.setAttribute("allowfullscreen", "1");
-  iframe.setAttribute("allowTranparency", "true");
-  iframe.setAttribute(
-    "allow",
-    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  );
-  iframe.setAttribute("class", "ytb-iframe");
-  papa.parentNode.replaceChild(iframe, papa);
 };
 
 const waitForIframe = (resizableDiv) => {
