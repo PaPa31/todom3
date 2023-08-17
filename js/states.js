@@ -638,6 +638,8 @@ function handleFiles(files) {
         idCounterFiles++;
       });
     }
+    initialCheckFold(isFoldFiles);
+    allLiFold(!isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
     showOrHideDeleteAllItems();
     showItemSortingArrows(foldedClass.childElementCount);
   });
@@ -799,7 +801,6 @@ const initializeFileState = () => {
   listItems.style.display = "none";
   listFiles.style.display = "flex";
   foldedClass = document.getElementById("list-files");
-  initialCheckFold(isFoldFiles);
 
   if (indexedFiles.length === 0) {
     idCounterFiles = 0;
