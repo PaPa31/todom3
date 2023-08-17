@@ -206,37 +206,38 @@ const saveHistoryDivMaker = (paDiv, last, current) => {
   deleteCurrentSaveButtonMaker(saveHistoryDiv);
 };
 
-const counterSaveSpanMaker = (parentSaveHistoryDiv, current) => {
-  const spanTag = document.createElement("span");
-  spanTag.setAttribute("class", "counter-save");
-  spanTag.innerText = current + 1;
-  parentSaveHistoryDiv.appendChild(spanTag);
+const counterSaveSpanMaker = (paDiv, current) => {
+  const counterSaveSpan = createEl("span", { class: "counter-save" }, paDiv);
+  counterSaveSpan.innerText = current + 1;
 };
 
-const previousSaveButtonMaker = (parentSaveHistoryDiv, current) => {
-  const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "previous-save btn");
-  buttonTag.setAttribute("onclick", `previousSave(this)`);
-  if (current === 0) buttonTag.setAttribute("disable", true);
-  buttonTag.setAttribute("title", "Show previous save");
-  parentSaveHistoryDiv.appendChild(buttonTag);
+const previousSaveButtonMaker = (paDiv, current) => {
+  const attr = {
+    class: "previous-save btn",
+    title: "Show previous save",
+    disable: current === 0 ? true : false,
+    onclick: `previousSave(this)`,
+  };
+  createEl("button", attr, paDiv);
 };
 
-const deleteCurrentSaveButtonMaker = (parentSaveHistoryDiv) => {
-  const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "delete-current-save btn");
-  buttonTag.setAttribute("onclick", `deleteCurrentSave(this)`);
-  buttonTag.setAttribute("title", "Delete current save");
-  parentSaveHistoryDiv.appendChild(buttonTag);
+const deleteCurrentSaveButtonMaker = (paDiv) => {
+  const attr = {
+    class: "delete-current-save btn",
+    title: "Delete current save",
+    onclick: `deleteCurrentSave(this)`,
+  };
+  createEl("button", attr, paDiv);
 };
 
-const nextSaveButtonMaker = (parentSaveHistoryDiv, check) => {
-  const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "next-save btn");
-  buttonTag.setAttribute("onclick", `nextSave(this)`);
-  if (check) buttonTag.setAttribute("disable", true);
-  buttonTag.setAttribute("title", "Show next save");
-  parentSaveHistoryDiv.appendChild(buttonTag);
+const nextSaveButtonMaker = (paDiv, check) => {
+  const attr = {
+    class: "next-save btn",
+    title: "Show previous save",
+    disable: check ? true : false,
+    onclick: `nextSave(this)`,
+  };
+  createEl("button", attr, paDiv);
 };
 
 const mainActDivMaker = (paDiv) => {
