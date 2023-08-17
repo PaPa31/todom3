@@ -475,26 +475,36 @@ const initialCheckFold = (stateVar) => {
   }
 };
 
-const allLiFold = (view, todomString) => {
+const allLiFold = (view, todomStr, indexedArr, mainArr) => {
   [...foldedClass.children].forEach((i) => {
     if (view) {
       i.removeAttribute("class");
     } else {
       i.setAttribute("class", "unfolded");
     }
-    const indexToFold = indexedItemsArray.indexOf(i.id) * 1;
-    itemsSpecArray[indexToFold].fold = !view;
-    localStorage.setItem(todomString, JSON.stringify(!view));
+    const indexToFold = indexedArr.indexOf(i.id) * 1;
+    mainArr[indexToFold].fold = !view;
+    localStorage.setItem(todomStr, JSON.stringify(!view));
   });
 };
 
 foldAllToggleButton.addEventListener("click", function (e) {
   if (isItemState) {
-    allLiFold(isFoldedItemsView, "todomFoldedItemsView");
+    allLiFold(
+      isFoldedItemsView,
+      "todomFoldedItemsView",
+      indexedItemsArray,
+      itemsSpecArray
+    );
     isFoldedItemsView = !isFoldedItemsView;
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   } else {
-    allLiFold(isFoldedFilesView, "todomFoldedFilesView");
+    allLiFold(
+      isFoldedFilesView,
+      "todomFoldedFilesView",
+      indexedFilesArray,
+      filesArray
+    );
     isFoldedFilesView = !isFoldedFilesView;
   }
   foldAllToggleButton.classList.toggle("fold");
