@@ -310,7 +310,7 @@ ol#list-items .folded .md-item {
   /*list-style-position: outside;*/
 }
 
-ol#list-files .main-actions {
+ol#list-files .main-act {
   float: right;
 }
 
@@ -336,7 +336,7 @@ ol#list-files .main-actions {
 
 .md-item,
 .file-text,
-.main-actions,
+.main-act,
 .save-history,
 #preview,
 #position {
@@ -956,14 +956,14 @@ ol.preview-outer p {
   display: flex;
 }
 
-.main-actions,
+.main-act,
 .save-history {
   padding: 3px 0 2px !important;
   background-color: transparent !important;
   width: auto;
 }
 
-ol#list-items .main-actions {
+ol#list-items .main-act {
   visibility: visible;
   /*z-index: 1;
   position: absolute;

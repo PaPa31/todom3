@@ -169,7 +169,7 @@ const liMaker = (arrIndex) => {
 
   foldButtonMaker(li);
   if (isItemState) saveHistoryDivMaker(li, last, currentSave);
-  mainActionsDivMaker(li);
+  mainActDivMaker(li);
   li.appendChild(div);
   foldedClass.appendChild(li);
 
@@ -198,15 +198,12 @@ const foldButtonMaker = (parentLi) => {
   createEl("span", null, buttonTag);
 };
 
-const saveHistoryDivMaker = (parentControlDiv, last, current) => {
-  const divTag = document.createElement("div");
-  divTag.setAttribute("class", "save-history");
-  parentControlDiv.appendChild(divTag);
-
-  previousSaveButtonMaker(divTag, current);
-  counterSaveSpanMaker(divTag, current);
-  nextSaveButtonMaker(divTag, current === last);
-  deleteCurrentSaveButtonMaker(divTag);
+const saveHistoryDivMaker = (paDiv, last, current) => {
+  const saveHistoryDiv = createEl("div", { class: "save-history" }, paDiv);
+  previousSaveButtonMaker(saveHistoryDiv, current);
+  counterSaveSpanMaker(saveHistoryDiv, current);
+  nextSaveButtonMaker(saveHistoryDiv, current === last);
+  deleteCurrentSaveButtonMaker(saveHistoryDiv);
 };
 
 const counterSaveSpanMaker = (parentSaveHistoryDiv, current) => {
@@ -242,13 +239,10 @@ const nextSaveButtonMaker = (parentSaveHistoryDiv, check) => {
   parentSaveHistoryDiv.appendChild(buttonTag);
 };
 
-const mainActionsDivMaker = (parentControlDiv) => {
-  const divTag = document.createElement("div");
-  divTag.setAttribute("class", "main-actions");
-  parentControlDiv.appendChild(divTag);
-
-  editButtonMaker(divTag);
-  trashButtonMaker(divTag);
+const mainActDivMaker = (paDiv) => {
+  const mainActDiv = createEl("div", { class: "main-act" }, paDiv);
+  editButtonMaker(mainActDiv);
+  trashButtonMaker(mainActDiv);
 };
 
 const editButtonMaker = (parentMainActionsDiv) => {
