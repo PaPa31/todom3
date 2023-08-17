@@ -180,21 +180,14 @@ const liMaker = (arrIndex) => {
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
   const file = filesArray[arrIndex];
-  const div2 = document.createElement("div");
-  const div3 = document.createElement("div");
-  const div4 = document.createElement("div");
-  const fileInfoDiv = document.createElement("div");
-  div2.setAttribute("class", "file-name");
-  div2.innerHTML = file.dir ? file.dir : file.name;
-  fileInfoDiv.appendChild(div2);
-  div4.setAttribute("class", "file-size");
-  div4.innerHTML = file.size ? fileSizeTerm(file.size) : "";
-  fileInfoDiv.appendChild(div4);
-  div3.setAttribute("class", "file-text resizable-div");
-  mdToLi(div3, file.text);
-  fileInfoDiv.setAttribute("class", "file-info");
-  parentDiv.appendChild(fileInfoDiv);
-  parentDiv.appendChild(div3);
+  const fileInfoDiv = createEl("div", { class: "file-info" }, parentDiv);
+  const fileNameDiv = createEl("div", { class: "file-name" }, fileInfoDiv);
+  fileNameDiv.innerHTML = file.dir ? file.dir : file.name;
+  const fileSizeDiv = createEl("div", { class: "file-size" }, fileInfoDiv);
+  fileSizeDiv.innerHTML = file.size ? fileSizeTerm(file.size) : "";
+  const attr = { class: "file-text resizable-div" };
+  const fileTextDiv = createEl("div", attr, parentDiv);
+  mdToLi(fileTextDiv, file.text);
 };
 
 const unfoldButtonMaker = (parentLi) => {
