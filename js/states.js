@@ -198,16 +198,13 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
 };
 
 const unfoldButtonMaker = (parentLi) => {
-  const buttonTag = document.createElement("button");
-  const numInside = document.createElement("span");
-  buttonTag.setAttribute("class", "button-default unfold-button btn");
-  buttonTag.setAttribute(
-    "onclick",
-    `unfoldOneItem(findParentTagOrClassRecursive(this))`
-  );
-  buttonTag.setAttribute("title", "fold/unfold one");
-  buttonTag.appendChild(numInside);
-  parentLi.appendChild(buttonTag);
+  const attr = {
+    class: "button-default unfold-button btn",
+    title: "fold/unfold one",
+    onclick: `unfoldOneItem(findParentTagOrClassRecursive(this))`,
+  };
+  const buttonTag = createEl("button", attr, parentLi);
+  createEl("span", null, buttonTag);
 };
 
 const saveHistoryDivMaker = (parentControlDiv, last, current) => {

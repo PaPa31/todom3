@@ -83,10 +83,8 @@ const coverDivMaker = (iframe) => {
   createEl("div", { class: "ytb-desc" }, snipDiv);
   createEl("img", { class: "ytb-img", src: src || "data:," }, coverDiv);
   if (src) getYoutubeSnippet(iframe.src, snipDiv);
-  createEl("button", { class: "ytb-play" }, coverDiv).addEventListener(
-    "click",
-    replaceImageWithIframe
-  );
+  const but = createEl("button", { class: "ytb-play" }, coverDiv);
+  but.addEventListener("click", replaceImageWithIframe);
   return coverDiv;
 };
 
