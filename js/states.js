@@ -246,44 +246,28 @@ const mainActDivMaker = (paDiv) => {
   trashButtonMaker(mainActDiv);
 };
 
-const editButtonMaker = (parentMainActionsDiv) => {
-  const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "edit-item btn");
-  if (isItemState) {
-    buttonTag.setAttribute("onclick", `editItem(event, this)`);
-  } else {
-    buttonTag.setAttribute("onclick", `editFile(event, this)`);
-  }
-  buttonTag.setAttribute("ctrl", "true");
-  buttonTag.setAttribute(
-    "title",
-    "Click -> edit, Ctrl+click - merge with input area"
-  );
-
-  parentMainActionsDiv.appendChild(buttonTag);
+const editButtonMaker = (paMainActDiv) => {
+  const attr = {
+    class: "edit-item btn",
+    ctrl: true,
+    title: "Click -> edit, Ctrl+click - merge with input area",
+    onclick: isItemState ? `editItem(event, this)` : `editFile(event, this)`,
+  };
+  createEl("button", attr, paMainActDiv);
 };
 
-const trashButtonMaker = (parentMainActionsDiv) => {
-  const buttonTag = document.createElement("button");
-  buttonTag.setAttribute("class", "delete-one-item btn");
-  if (isItemState) {
-    buttonTag.setAttribute(
-      "onclick",
-      `deleteOneItem(event, findParentTagOrClassRecursive(this))`
-    );
-    buttonTag.setAttribute("ctrl", "true");
-    buttonTag.setAttribute(
-      "title",
-      "Double-click -> Trash, Ctrl+click -> delete"
-    );
-  } else {
-    buttonTag.setAttribute(
-      "onclick",
-      `deleteOneFile(event, findParentTagOrClassRecursive(this))`
-    );
-    buttonTag.setAttribute("title", "Double-click -> delete from this list");
-  }
-  parentMainActionsDiv.appendChild(buttonTag);
+const trashButtonMaker = (paMainActDiv) => {
+  const attr = {
+    class: "delete-one-item btn",
+    ctrl: true,
+    title: isItemState
+      ? "Double-click -> Trash, Ctrl+click -> delete"
+      : "Double-click -> delete from this list",
+    onclick: isItemState
+      ? `deleteOneItem(event, findParentTagOrClassRecursive(this))`
+      : `deleteOneFile(event, findParentTagOrClassRecursive(this))`,
+  };
+  createEl("button", attr, paMainActDiv);
 };
 
 const setCurrentSave = (current, itemIndex) => {
