@@ -167,7 +167,7 @@ const liMaker = (arrIndex) => {
 
   div.addEventListener("dblclick", handleDblClick);
 
-  unfoldButtonMaker(li);
+  foldButtonMaker(li);
   if (isItemState) saveHistoryDivMaker(li, last, currentSave);
   mainActionsDivMaker(li);
   li.appendChild(div);
@@ -188,11 +188,11 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   mdToLi(fileTextDiv, file.text);
 };
 
-const unfoldButtonMaker = (parentLi) => {
+const foldButtonMaker = (parentLi) => {
   const attr = {
-    class: "button-default unfold-button btn",
+    class: "button-default fold-button btn",
     title: "fold/unfold one",
-    onclick: `unfoldOneItem(findParentTagOrClassRecursive(this))`,
+    onclick: `foldOneItem(findParentTagOrClassRecursive(this))`,
   };
   const buttonTag = createEl("button", attr, parentLi);
   createEl("span", null, buttonTag);
@@ -441,7 +441,7 @@ const deleteOneFile = (e, liDOM) => {
   }
 };
 
-const unfoldGreen = (liDOM) => {
+const foldGreen = (liDOM) => {
   if (liDOM.classList.contains("folded")) {
     intervalFocus(liDOM, "background-color: red;", 300);
   } else {
@@ -449,7 +449,7 @@ const unfoldGreen = (liDOM) => {
   }
 };
 
-const unfoldOneItem = (liDOM) => {
+const foldOneItem = (liDOM) => {
   liDOM.classList.toggle("folded");
   if (isItemState) {
     const itemIndexToFold = indexedItems.indexOf(liDOM.id) * 1;
@@ -460,7 +460,7 @@ const unfoldOneItem = (liDOM) => {
     const fileIndexToFold = indexedFiles.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
-  unfoldGreen(liDOM);
+  foldGreen(liDOM);
 };
 
 const initialCheckFold = (stateVar) => {

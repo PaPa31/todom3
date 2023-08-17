@@ -320,7 +320,7 @@ ol#list-files .main-actions {
   /*margin-bottom: 100vh;*/
 }
 
-.unfold-button {
+.fold-button {
   height: 34px;
   width: 37px;
   padding: 0;
@@ -329,7 +329,7 @@ ol#list-files .main-actions {
   position: relative;
 }
 
-.unfold-button span::before {
+.fold-button span::before {
   content: counter(item) ") ";
   counter-increment: item;
 }
