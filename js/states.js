@@ -482,8 +482,8 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
     }
     const indexToFold = indexedArr.indexOf(i.id) * 1;
     mainArr[indexToFold].fold = !view;
-    localStorage.setItem(todomStr, JSON.stringify(!view));
   });
+  localStorage.setItem(todomStr, JSON.stringify(!view));
 };
 
 foldAllToggleButton.addEventListener("click", function (e) {
