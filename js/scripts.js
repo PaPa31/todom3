@@ -108,7 +108,7 @@ const joinSaveItemButton = () => {
 
 const editItem = (e, element) => {
   const editedItemLiDOM2 = findParentTagOrClassRecursive(element);
-  const itemIndexToEdit2 = indexedItemsArray.indexOf(editedItemLiDOM2.id) * 1;
+  const itemIndexToEdit2 = indexedItems.indexOf(editedItemLiDOM2.id) * 1;
 
   let current = getCurrentSpec("save", itemIndexToEdit2);
   const textArr = itemsArray[itemIndexToEdit2].text;
@@ -181,7 +181,7 @@ const removeItemFromMemory = (item, indexToDelete) => {
   showItemSortingArrows(foldedClass.childElementCount);
 
   itemsArray.splice(indexToDelete, 1);
-  indexedItemsArray.splice(indexToDelete, 1);
+  indexedItems.splice(indexToDelete, 1);
   itemsSpecArray.splice(indexToDelete, 1);
 
   showOrHideDeleteAllItems();
@@ -199,7 +199,7 @@ const removeItemFromMemory = (item, indexToDelete) => {
 const deleteOneItem = (e, liDOM) => {
   e.stopPropagation();
   if ((twoClickToTrash && liDOM.id === lastClickId) || e.ctrlKey) {
-    const indexToDelete = indexedItemsArray.indexOf(liDOM.id) * 1;
+    const indexToDelete = indexedItems.indexOf(liDOM.id) * 1;
 
     if (!e.ctrlKey) {
       putItemToTrash(indexToDelete);
@@ -390,7 +390,7 @@ const saveFile = () => {
         getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
       const file = { name: fileName, text: input.value };
       filesArray.push(file);
-      indexedFilesArray.push(idCounterFiles.toString());
+      indexedFiles.push(idCounterFiles.toString());
       fileDownload(fileName);
     }
   }
@@ -466,7 +466,7 @@ const saveItem = () => {
       save: 0,
     };
     itemsSpecArray.push(specObj);
-    indexedItemsArray.push(idCounterItems.toString());
+    indexedItems.push(idCounterItems.toString());
     liMaker(idCounterItems);
     idCounterItems++;
   }
@@ -494,7 +494,7 @@ const defaultFileStateVars = () => {
   defaultMarkers();
   inputLabel.innerHTML = "<div>New</div>";
   deleteAllItemsButton.classList.replace("visible", "invisible");
-  indexedFilesArray = [];
+  indexedFiles = [];
   filesArray = [];
   idCounterFiles = 0;
   fileElem.value = null;
@@ -506,7 +506,7 @@ const defaultItemStateVars = () => {
   defaultMarkers();
   inputLabel.innerHTML = "<div>New</div>";
   deleteAllItemsButton.classList.replace("visible", "invisible");
-  indexedItemsArray = [];
+  indexedItems = [];
   itemsArray = [];
   itemsSpecArray = [];
   idCounterItems = 0;
@@ -633,7 +633,7 @@ const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
     if (todomArrVar) localStorage.setItem(todomArrVar, JSON.stringify(arr));
 
-    indexedItemsArray.push(idCounterItems.toString());
+    indexedItems.push(idCounterItems.toString());
     liMaker(idCounterItems);
     idCounterItems++;
 

@@ -12,11 +12,11 @@ fileElem.value = null;
 
 // starting in Item state & Unfolded view
 let isItemState = true;
-let isFoldedItemsView = localStorage.getItem("todomFoldedItemsView")
-  ? JSON.parse(localStorage.getItem("todomFoldedItemsView"))
+let isFoldItems = localStorage.getItem("todomFoldItems")
+  ? JSON.parse(localStorage.getItem("todomFoldItems"))
   : false;
-let isFoldedFilesView = localStorage.getItem("todomFoldedFilesView")
-  ? JSON.parse(localStorage.getItem("todomFoldedFilesView"))
+let isFoldFiles = localStorage.getItem("todomFoldFiles")
+  ? JSON.parse(localStorage.getItem("todomFoldFiles"))
   : false;
 
 let itemsArray = localStorage.getItem("todomItemsArray")
@@ -36,8 +36,8 @@ let idCounterItems = 0;
 let idCounterFiles = 0;
 
 // lightweight array to avoid redundant logic and waste of resources
-let indexedItemsArray = [];
-let indexedFilesArray = [];
+let indexedItems = [];
+let indexedFiles = [];
 
 let twoClickToTrash = false;
 let twoClickTrashClear = false;
@@ -137,8 +137,7 @@ const liMaker = (arrIndex) => {
   let last, currentSave, currentFold;
 
   if (isItemState) {
-    const correctedItemsIndex =
-      indexedItemsArray.indexOf(arrIndex.toString()) * 1;
+    const correctedItemsIndex = indexedItems.indexOf(arrIndex.toString()) * 1;
     const textArr = itemsArray[correctedItemsIndex].text;
     last = textArr.length - 1;
     currentSave = getCurrentSpec("save", correctedItemsIndex);
@@ -158,8 +157,7 @@ const liMaker = (arrIndex) => {
     div.appendChild(resizableDiv);
     li.id = idCounterItems;
   } else {
-    const correctedFilesIndex =
-      indexedFilesArray.indexOf(arrIndex.toString()) * 1;
+    const correctedFilesIndex = indexedFiles.indexOf(arrIndex.toString()) * 1;
     div.setAttribute("class", "md-file");
 
     fileInfoDivMaker(div, correctedFilesIndex);
@@ -300,7 +298,7 @@ const setCurrentSave = (current, itemIndex) => {
 
 const deleteCurrentSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
-  const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
+  const itemIndex = indexedItems.indexOf(liDOM.id) * 1;
 
   let current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
@@ -342,7 +340,7 @@ const deleteCurrentSave = (el) => {
 
 const previousSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
-  const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
+  const itemIndex = indexedItems.indexOf(liDOM.id) * 1;
 
   let current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
@@ -361,7 +359,7 @@ const previousSave = (el) => {
 
 const nextSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
-  const itemIndex = indexedItemsArray.indexOf(liDOM.id) * 1;
+  const itemIndex = indexedItems.indexOf(liDOM.id) * 1;
 
   let current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
@@ -380,7 +378,7 @@ const nextSave = (el) => {
 
 const editFile = (e, element) => {
   const editedFileLiDOM2 = findParentTagOrClassRecursive(element);
-  const fileIndexToEdit2 = indexedFilesArray.indexOf(editedFileLiDOM2.id) * 1;
+  const fileIndexToEdit2 = indexedFiles.indexOf(editedFileLiDOM2.id) * 1;
   const fi = filesArray[fileIndexToEdit2];
 
   if (e.ctrlKey) {
@@ -411,7 +409,7 @@ const editFile = (e, element) => {
 const deleteOneFile = (e, liDOM) => {
   e.stopPropagation();
   if (twoClickToTrash && liDOM.id === lastClickId) {
-    const indexToDelete = indexedFilesArray.indexOf(liDOM.id) * 1;
+    const indexToDelete = indexedFiles.indexOf(liDOM.id) * 1;
 
     if (fileIndexToEdit != null && fileIndexToEdit >= indexToDelete) {
       if (filesArray[fileIndexToEdit].name == filesArray[indexToDelete].name) {
@@ -426,7 +424,7 @@ const deleteOneFile = (e, liDOM) => {
     showItemSortingArrows(foldedClass.childElementCount);
 
     filesArray.splice(indexToDelete, 1);
-    indexedFilesArray.splice(indexToDelete, 1);
+    indexedFiles.splice(indexToDelete, 1);
 
     showOrHideDeleteAllItems();
     if (filesArray.length === 0) fileElem.value = null;
@@ -454,12 +452,12 @@ const unfoldGreen = (liDOM) => {
 const unfoldOneItem = (liDOM) => {
   liDOM.classList.toggle("unfolded");
   if (isItemState) {
-    const itemIndexToFold = indexedItemsArray.indexOf(liDOM.id) * 1;
+    const itemIndexToFold = indexedItems.indexOf(liDOM.id) * 1;
     itemsSpecArray[itemIndexToFold].fold =
       !itemsSpecArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   } else {
-    const fileIndexToFold = indexedFilesArray.indexOf(liDOM.id) * 1;
+    const fileIndexToFold = indexedFiles.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
   unfoldGreen(liDOM);
@@ -490,22 +488,12 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
 
 foldAllToggleButton.addEventListener("click", function (e) {
   if (isItemState) {
-    allLiFold(
-      isFoldedItemsView,
-      "todomFoldedItemsView",
-      indexedItemsArray,
-      itemsSpecArray
-    );
-    isFoldedItemsView = !isFoldedItemsView;
+    allLiFold(isFoldItems, "todomFoldItems", indexedItems, itemsSpecArray);
+    isFoldItems = !isFoldItems;
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   } else {
-    allLiFold(
-      isFoldedFilesView,
-      "todomFoldedFilesView",
-      indexedFilesArray,
-      filesArray
-    );
-    isFoldedFilesView = !isFoldedFilesView;
+    allLiFold(isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
+    isFoldFiles = !isFoldFiles;
   }
   foldAllToggleButton.classList.toggle("fold");
   e.stopPropagation();
@@ -562,7 +550,7 @@ const fileHttpHandler = (name, dir, size, text) => {
     text: text,
   };
   filesArray.push(fileObj);
-  indexedFilesArray.push(idCounterFiles.toString());
+  indexedFiles.push(idCounterFiles.toString());
   liMaker(idCounterFiles);
   idCounterFiles++;
 };
@@ -631,7 +619,7 @@ function handleFiles(files) {
             text: [item],
           };
           itemsArray.push(itemObj);
-          indexedItemsArray.push(idCounterItems.toString());
+          indexedItems.push(idCounterItems.toString());
           liMaker(idCounterItems);
           idCounterItems++;
         }
@@ -642,9 +630,9 @@ function handleFiles(files) {
     } else {
       // Files
       texts.forEach((text) => {
-        indexedFilesArray.push(idCounterFiles.toString());
+        indexedFiles.push(idCounterFiles.toString());
         const correctedFilesIndex =
-          indexedFilesArray.indexOf(idCounterFiles.toString()) * 1;
+          indexedFiles.indexOf(idCounterFiles.toString()) * 1;
         filesArray[correctedFilesIndex].text = text;
         liMaker(idCounterFiles);
         idCounterFiles++;
@@ -702,7 +690,7 @@ function addDirectory(item) {
 const handleFilesArray = () => {
   for (let i = 0; i < filesArray.length; i++) {
     // error?? instead 'i' need 'idCounterFiles'
-    indexedFilesArray.push(idCounterFiles.toString());
+    indexedFiles.push(idCounterFiles.toString());
     liMaker(i);
     idCounterFiles++;
   }
@@ -717,7 +705,7 @@ function initialize() {
 const saveItemFromFile = (fileName) => {
   const itemIndex = itemsArray.findIndex((s) => s.name && s.name === fileName);
   if (itemIndex !== -1) {
-    const itemId = indexedItemsArray[itemIndex];
+    const itemId = indexedItems[itemIndex];
     itemsArray[itemIndex].text.push(input.value);
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
@@ -736,7 +724,7 @@ const saveItemFromFile = (fileName) => {
       save: 0,
     };
     itemsSpecArray.push(specObj);
-    indexedItemsArray.push(idCounterItems.toString());
+    indexedItems.push(idCounterItems.toString());
     liMaker(idCounterItems);
     idCounterItems++;
   }
@@ -811,11 +799,11 @@ const initializeFileState = () => {
   listItems.style.display = "none";
   listFiles.style.display = "flex";
   foldedClass = document.getElementById("list-files");
-  initialCheckFold(isFoldedFilesView);
+  initialCheckFold(isFoldFiles);
 
-  if (indexedFilesArray.length === 0) {
+  if (indexedFiles.length === 0) {
     idCounterFiles = 0;
-    indexedFilesArray = [];
+    indexedFiles = [];
 
     if (window.location.protocol === "file:") {
       fileElem.click();
@@ -828,7 +816,7 @@ const initializeFileState = () => {
 };
 
 const idleIterationPayload = (i) => {
-  indexedItemsArray.push(idCounterItems.toString());
+  indexedItems.push(idCounterItems.toString());
   liMaker(i);
   idCounterItems++;
 };
@@ -875,11 +863,11 @@ const initializeItemState = () => {
   listFiles.style.display = "none";
   listItems.style.display = "flex";
   foldedClass = document.getElementById("list-items");
-  initialCheckFold(isFoldedItemsView);
+  initialCheckFold(isFoldItems);
 
-  if (indexedItemsArray.length === 0) {
+  if (indexedItems.length === 0) {
     idCounterItems = 0;
-    indexedItemsArray = [];
+    indexedItems = [];
 
     if (itemsArray.length !== 0) {
       arrCheckForNull(itemsArray);
