@@ -265,7 +265,7 @@ textarea::-webkit-scrollbar {
   background-color: var(--todom-scrollbarHover);
 }
 
-.unfolded .md-item {
+.folded .md-item {
   height: 38px;
   opacity: 0.25;
   overflow: auto;
@@ -276,7 +276,7 @@ textarea::-webkit-scrollbar {
   clear: left;
 }
 
-ol#list-items .unfolded .md-item {
+ol#list-items .folded .md-item {
   resize: initial;
   overflow: initial;
   /*line-height: 19px;*/
@@ -298,8 +298,8 @@ ol#list-items .unfolded .md-item {
   flex-direction: column;
 }
 
-.unfolded .file-text,
-.unfolded .save-history {
+.folded .file-text,
+.folded .save-history {
   display: none;
 }
 
@@ -391,11 +391,11 @@ image is undefined */
   padding-bottom: 10px;
 }
 
-.unfolded .ytb-snip > * {
+.folded .ytb-snip > * {
   padding-bottom: 0;
 }
 
-.unfolded .ytb-snip {
+.folded .ytb-snip {
   top: 19px;
   left: 0;
   background-color: initial;
@@ -411,7 +411,7 @@ image is undefined */
   margin-top: 3px;
 }
 
-.unfolded .ytb-title {
+.folded .ytb-title {
   background-color: var(--todom-background-translucent);
   padding: 4px;
   border-radius: 4px;
@@ -421,7 +421,7 @@ image is undefined */
   content: "Title: ";
 }
 
-.unfolded .ytb-title::before {
+.folded .ytb-title::before {
   content: "";
 }
 
@@ -445,7 +445,7 @@ image is undefined */
   height: 50px;
 }
 
-.unfolded .ytb-play {
+.folded .ytb-play {
   right: 0;
   background-size: 55px;
 }
@@ -501,7 +501,7 @@ image is undefined */
   position: relative;
 }
 
-.unfolded .resizable-div {
+.folded .resizable-div {
   justify-content: center;
 }
 
@@ -509,7 +509,7 @@ image is undefined */
   height: 64px;
 }
 
-.unfolded .resizable-div iframe {
+.folded .resizable-div iframe {
   height: initial;
 }
 
@@ -535,7 +535,7 @@ image is undefined */
   flex: 1;
 }
 
-ol#list-items .unfolded .md-item :first-child {
+ol#list-items .folded .md-item :first-child {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: clip;
@@ -545,7 +545,7 @@ ol#list-items .unfolded .md-item :first-child {
   justify-content: center;
 }
 
-ol#list-items .unfolded .md-item :not(:first-child) {
+ol#list-items .folded .md-item :not(:first-child) {
   display: none;
 }
 
@@ -554,7 +554,7 @@ ol#list-items .unfolded .md-item :not(:first-child) {
   flex: auto;
 }
 
-ol#list-items .unfolded .md-item > * > li:first-child {
+ol#list-items .folded .md-item > * > li:first-child {
   list-style-position: inside;
   margin-inline-start: -20px;
 }

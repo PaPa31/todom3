@@ -144,7 +144,7 @@ const liMaker = (arrIndex) => {
     currentFold = getCurrentSpec("fold", correctedItemsIndex);
 
     div.setAttribute("class", "md-item");
-    if (currentFold) li.setAttribute("class", "unfolded");
+    if (currentFold) li.setAttribute("class", "folded");
 
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
@@ -442,7 +442,7 @@ const deleteOneFile = (e, liDOM) => {
 };
 
 const unfoldGreen = (liDOM) => {
-  if (liDOM.classList.contains("unfolded")) {
+  if (liDOM.classList.contains("folded")) {
     intervalFocus(liDOM, "background-color: red;", 300);
   } else {
     intervalFocus(liDOM, "background-color: green;", 300);
@@ -450,7 +450,7 @@ const unfoldGreen = (liDOM) => {
 };
 
 const unfoldOneItem = (liDOM) => {
-  liDOM.classList.toggle("unfolded");
+  liDOM.classList.toggle("folded");
   if (isItemState) {
     const itemIndexToFold = indexedItems.indexOf(liDOM.id) * 1;
     itemsSpecArray[itemIndexToFold].fold =
@@ -478,7 +478,7 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
     if (view) {
       i.removeAttribute("class");
     } else {
-      i.setAttribute("class", "unfolded");
+      i.setAttribute("class", "folded");
     }
     const indexToFold = indexedArr.indexOf(i.id) * 1;
     mainArr[indexToFold].fold = !view;
