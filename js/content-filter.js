@@ -73,7 +73,7 @@ const getYoutubeThumbnail = (url) => {
   try {
     const video_id = filterVideoIdFromUrl(url);
     if (video_id) {
-      return "https://img.youtube.com/vi_webp/" + video_id + "/sddefault.webp";
+      return "https://img.youtube.com/vi_webp/" + video_id + "/mqdefault.webp";
     }
   } catch (err) {
     console.error(err);
