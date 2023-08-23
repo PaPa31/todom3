@@ -4,12 +4,14 @@ const whatClass = (el) => {
   const tagName = el.tagName.toLowerCase();
   if (variant) {
     switch (tagName) {
+      // list of ignored inline tags
       case "code": {
         if (el.parentElement.tagName.toLowerCase() === "pre") {
           el.classList.add("last-child-rb");
         }
         break;
       }
+      case "em":
       case "del":
       case "cite": {
         el.classList.add("last-child-rb");
