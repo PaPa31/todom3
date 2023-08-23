@@ -430,12 +430,8 @@ const foldGreen = (liDOM) => {
 
 const foldAndOffsetHeight = (liDOM) => {
   const initialScrollTop = window.scrollY;
-  const initialScrollHeight = liDOM.scrollHeight;
   liDOM.classList.toggle("folded");
-  const newScrollHeight = liDOM.scrollHeight;
-  const layoutHeightIncrease = newScrollHeight - initialScrollHeight;
   window.scrollTo(0, initialScrollTop);
-  console.log(`Layout height increased by ${layoutHeightIncrease}px`);
 };
 
 const foldOneItem = (liDOM) => {
