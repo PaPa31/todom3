@@ -554,6 +554,10 @@ ol#list-items .folded .md-item :not(:first-child) {
   flex: auto;
 }
 
+.resizable-div > :last-child {
+  margin-bottom: 0;
+}
+
 ol#list-items .folded .md-item > * > li:first-child {
   list-style-position: inside;
   margin-inline-start: -20px;
