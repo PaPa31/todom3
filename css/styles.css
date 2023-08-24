@@ -46,12 +46,10 @@
   --todom-textEdit-background: #a41111;
 
   --todom-focusOutline: #fff;
-
   --todom-textPreformat-background: #dfdfdf;
-
   --todom-selectionHighlightBackground: #9ebfea;
-
   --todom-scrollbarHover: #777;
+  --todom-md-table: #dfdfdf;
 }
 
 .dark {
@@ -91,12 +89,10 @@
   --todom-textEdit-background: #a16c0a;
 
   --todom-focusOutline: #2b2b2b;
-
   --todom-textPreformat-background: #464646;
-
   --todom-selectionHighlightBackground: #783c42;
-
   --todom-scrollbarHover: #999;
+  --todom-md-table: #3e3e3e;
 }
 
 html {
@@ -556,6 +552,15 @@ ol#list-items .folded .md-item :not(:first-child) {
 
 .resizable-div > :last-child {
   margin-bottom: 0;
+}
+
+.resizable-div table {
+  border-collapse: collapse;
+}
+
+.resizable-div td {
+  border: 1px solid var(--todom-md-table);
+  padding: 5px;
 }
 
 ol#list-items .folded .md-item > * > li:first-child {
