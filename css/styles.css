@@ -558,7 +558,8 @@ ol#list-items .folded .md-item :not(:first-child) {
   border-collapse: collapse;
 }
 
-.resizable-div td {
+.resizable-div td,
+.resizable-div th {
   border: 1px solid var(--todom-md-table);
   padding: 5px;
 }
