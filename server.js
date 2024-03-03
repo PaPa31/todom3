@@ -17,9 +17,9 @@ const MIME_TYPES = {
   gif: "image/gif",
   ico: "image/x-icon",
   svg: "image/svg+xml",
+  json: "application/json",
 };
 
-//const STATIC_PATH = path.join(process.cwd(), "./static");
 const STATIC_PATH = path.join(process.cwd(), "");
 
 const toBool = [() => true, () => false];
@@ -29,10 +29,27 @@ const prepareFile = async (url) => {
   if (url.endsWith("/")) paths.push("index.html");
   const filePath = path.join(...paths);
   const pathTraversal = !filePath.startsWith(STATIC_PATH);
-  const exists = await fs.promises.access(filePath).then(...toBool);
-  const found = !pathTraversal && exists;
-  const streamPath = found ? filePath : STATIC_PATH + "/404.html";
-  const ext = path.extname(streamPath).substring(1).toLowerCase();
+  const isDirectory = (
+    await fs.promises.stat(filePath).catch(() => {})
+  )?.isDirectory();
+  const found =
+    !pathTraversal && (await fs.promises.access(filePath).then(...toBool));
+
+  let streamPath = found ? filePath : STATIC_PATH + "/404.html";
+  let ext = path.extname(streamPath).substring(1).toLowerCase();
+
+  if (isDirectory && !url.endsWith("/")) {
+    // Exclude index.html only if it's not a directory request
+    const files = await fs.promises.readdir(filePath);
+    // Exclude index.html from the list
+    const filteredFiles = files.filter((file) => file !== "index.html");
+    const jsonFiles = JSON.stringify(filteredFiles);
+    streamPath = path.join(filePath, "index.html");
+    fs.writeFileSync(streamPath, jsonFiles, "utf-8");
+    ext = "html";
+    mimeType = MIME_TYPES["json"]; // Set Content-Type to "application/json"
+  }
+
   const stream = fs.createReadStream(streamPath);
   return { found, ext, stream };
 };
@@ -49,11 +66,24 @@ http
     res.statusCode = statusCode;
     res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
 
+    //// Conditionally set Content-Length only for file responses
+    //if (file.found) {
+    //  res.setHeader("Content-Length", fileSize);
+    //}
+
     res.writeHead(statusCode, {
       "Content-type": mimeType,
-      "Content-Length": fileSize,
+      //"Content-Length": fileSize,
     });
-    file.stream.pipe(res);
+
+    if (file.ext === "json") {
+      // If the response is a JSON file, convert the buffer to a string and then write it
+      res.write(file.stream.toString());
+    } else {
+      // For other file types, pipe the stream
+      file.stream.pipe(res);
+    }
+
     console.log(`${req.method} ${req.url} ${statusCode}`);
   })
   .listen(PORT);

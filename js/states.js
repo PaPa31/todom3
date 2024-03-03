@@ -525,7 +525,9 @@ const showOrHideUndoDeleteButton = () => {
   }
 };
 
-var phrase = "static/demo.md";
+//var phrase = "static/demo.md";
+var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
+const dir = "md/chron/2023-12/";
 
 const fileHttpHandler = (name, dir, size, text) => {
   const fileObj = {
@@ -541,28 +543,41 @@ const fileHttpHandler = (name, dir, size, text) => {
 };
 
 const getFileHttp = async (fileName) => {
-  // handle errors: mix async with promise
-  // https://stackoverflow.com/a/54164027
-  await fetch(fileName)
-    .then((response) => {
-      if (response.status >= 400 && response.status < 600) {
-        throw new Error("Bad response from server");
+  try {
+    const response = await fetch(fileName, { method: "GET", mode: "cors" });
+
+    if (!response.ok) {
+      throw new Error("Bad response from server");
+    }
+
+    let isJSON = false;
+    let directoryListing;
+
+    try {
+      // Clone the response to avoid reading the body more than once
+      const clonedResponse = response.clone();
+      // Attempt to parse the response as JSON
+      directoryListing = await clonedResponse.json();
+      isJSON = true;
+    } catch (jsonError) {
+      // Parsing as JSON failed; treat it as a regular file
+      isJSON = false;
+    }
+
+    if (isJSON) {
+      // It's a directory; iterate over the files in the directory and fetch each file
+      for (const file of directoryListing) {
+        const filePath = fileName + file;
+        await getFileHttp(filePath);
       }
-      return response;
-    })
-    .then((returnedResponse) => {
-      return returnedResponse.text().then((text) => {
-        fileHttpHandler(
-          fileName,
-          null,
-          returnedResponse.headers.get("Content-Length"),
-          text
-        );
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    } else {
+      // Handle the file content here
+      const text = await response.text();
+      fileHttpHandler(fileName, null, text.length, text);
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 function handleFiles(files) {
@@ -794,7 +809,8 @@ const initializeFileState = () => {
     if (window.location.protocol === "file:") {
       fileElem.click();
     } else {
-      getFileHttp(phrase);
+      //getFileHttp(phrase);
+      getFileHttp(dir);
     }
   } else {
   }
