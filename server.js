@@ -2,9 +2,6 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-//import { createServer } from "http";
-//import { readFile } from "fs";
-
 const PORT = 8000;
 
 const MIME_TYPES = {
@@ -39,15 +36,12 @@ const prepareFile = async (url) => {
   let ext = path.extname(streamPath).substring(1).toLowerCase();
 
   if (isDirectory && !url.endsWith("/")) {
-    // Exclude index.html only if it's not a directory request
     const files = await fs.promises.readdir(filePath);
-    // Exclude index.html from the list
     const filteredFiles = files.filter((file) => file !== "index.html");
     const jsonFiles = JSON.stringify(filteredFiles);
     streamPath = path.join(filePath, "index.html");
     fs.writeFileSync(streamPath, jsonFiles, "utf-8");
     ext = "html";
-    mimeType = MIME_TYPES["json"]; // Set Content-Type to "application/json"
   }
 
   const stream = fs.createReadStream(streamPath);
@@ -56,6 +50,22 @@ const prepareFile = async (url) => {
 
 http
   .createServer(async (req, res) => {
+    if (req.url.startsWith("/open-directory")) {
+      const directoryPath = req.url.replace("/open-directory", "");
+      const files = await fs.promises.readdir(
+        path.join(STATIC_PATH, directoryPath)
+      );
+      res.writeHead(200, {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*", // Allow requests from any origin
+        "Access-Control-Allow-Methods": "OPTIONS, POST, GET, PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type",
+      });
+      res.end(JSON.stringify(files));
+      console.log(`OPEN DIRECTORY: ${directoryPath}`);
+      return;
+    }
+
     const file = await prepareFile(req.url);
     const statusCode = file.found ? 200 : 404;
     const mimeType = MIME_TYPES[file.ext] || MIME_TYPES.default;
@@ -66,21 +76,13 @@ http
     res.statusCode = statusCode;
     res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
 
-    //// Conditionally set Content-Length only for file responses
-    //if (file.found) {
-    //  res.setHeader("Content-Length", fileSize);
-    //}
-
     res.writeHead(statusCode, {
       "Content-type": mimeType,
-      //"Content-Length": fileSize,
     });
 
     if (file.ext === "json") {
-      // If the response is a JSON file, convert the buffer to a string and then write it
       res.write(file.stream.toString());
     } else {
-      // For other file types, pipe the stream
       file.stream.pipe(res);
     }
 
