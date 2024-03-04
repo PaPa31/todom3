@@ -1,3 +1,4 @@
 /js/env.js
 /js/ignore/*
-/md/*
+/md
+/node_modules

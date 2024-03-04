@@ -3,56 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Open Directory Example</title>
+    <title>File Explorer</title>
   </head>
   <body>
-    <label for="directoryInput">Enter Directory Path:</label>
-    <input
-      type="text"
-      id="directoryInput"
-      placeholder="e.g., md/chron/2023-12/"
-    />
-    <button id="openDirectoryButton">Open Directory</button>
+    <label for="fileInput">Choose File or Directory:</label>
+    <input type="file" id="fileInput" webkitdirectory directory multiple />
+    <button onclick="processFiles()">Process Files</button>
     <ul id="fileList"></ul>
 
     <script>
-      document
-        .getElementById("openDirectoryButton")
-        .addEventListener("click", async () => {
-          const directoryPath = document
-            .getElementById("directoryInput")
-            .value.trim();
+      async function processFiles() {
+        const input = document.getElementById("fileInput");
+        const files = input.files;
 
-          if (!directoryPath) {
-            alert("Please enter a directory path.");
-            return;
-          }
-
-          try {
-            const response = await fetch(
-              `http://localhost:8000/open-directory${directoryPath}`
-            );
-
-            if (response.ok) {
-              const files = await response.json();
-              updateFileList(files);
-            } else {
-              console.error("Failed to open directory:", response.status);
-            }
-          } catch (error) {
-            console.error("Network error:", error);
-          }
-        });
-
-      function updateFileList(files) {
         const fileListElement = document.getElementById("fileList");
-        fileListElement.innerHTML = ""; // Clear previous files
+        fileListElement.innerHTML = "";
 
-        files.forEach((file) => {
+        for (const file of files) {
           const listItem = document.createElement("li");
-          listItem.textContent = file;
+          listItem.textContent = file.webkitRelativePath || file.name;
           fileListElement.appendChild(listItem);
-        });
+        }
       }
     </script>
   </body>
