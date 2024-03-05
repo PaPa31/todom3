@@ -6,49 +6,24 @@
     <title>File Explorer</title>
   </head>
   <body>
-    <button onclick="openDirectory()">Open Directory</button>
+    <label for="fileInput">Choose File or Directory:</label>
+    <input type="file" id="fileInput" webkitdirectory directory multiple />
+    <button onclick="processFiles()">Process Files</button>
     <ul id="fileList"></ul>
 
     <script>
-      async function openDirectory(path) {
-        try {
-          const response = await fetch(
-            `http://192.168.0.14:8000/open-directory?path=${encodeURIComponent(
-              path
-            )}`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                directoryPath: path,
-              }),
-            }
-          );
+      async function processFiles() {
+        const input = document.getElementById("fileInput");
+        const files = input.files;
 
-          const files = await response.json();
-          displayFileList(files);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-
-      function displayFileList(files) {
         const fileListElement = document.getElementById("fileList");
         fileListElement.innerHTML = "";
 
-        files.forEach((file) => {
+        for (const file of files) {
           const listItem = document.createElement("li");
-
-          // Correct the link construction here
-          const link = document.createElement("a");
-          link.href = `/open-directory?path=${encodeURIComponent(file)}`; // Ensure proper encoding
-          link.textContent = file;
-
-          listItem.appendChild(link);
+          listItem.textContent = file.webkitRelativePath || file.name;
           fileListElement.appendChild(listItem);
-        });
+        }
       }
     </script>
   </body>
