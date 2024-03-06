@@ -256,6 +256,9 @@ const debounce = (func, wait, immediate) => {
 };
 
 html.addEventListener("click", function () {
+  //if (event.target === modalContainer) {
+  //  modalContainer.style.display = "none";
+  //}
   if (twoClickTrashClear) clearTrashButton.classList.remove("filter-red");
   twoClickTrashClear = false;
   if (twoClickToTrash)

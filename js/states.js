@@ -570,8 +570,22 @@ var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
 // Constants
 const rootDirectory = "md/";
 
+// Directory stack to keep track of the visited directories
+const directoryStack = [];
+
 // Function to create and show the directory modal
-function createDirectoryModal(directories, onDirectorySelected) {
+// Function to create and show the directory modal
+function createDirectoryModal(
+  directories,
+  onDirectorySelected,
+  onBackButtonClick
+) {
+  // Check if the modal already exists
+  const existingModal = document.getElementById("directoryModal");
+  if (existingModal) {
+    existingModal.remove(); // Remove the existing modal
+  }
+
   // Create modal container
   const modalContainer = document.createElement("div");
   modalContainer.id = "directoryModal";
@@ -588,10 +602,31 @@ function createDirectoryModal(directories, onDirectorySelected) {
   closeButton.innerHTML = "&times;"; // Times symbol for close
   closeButton.onclick = function () {
     modalContainer.style.display = "none"; // Hide the modal on close
+    // Remove the style to allow scrolling
+    document.documentElement.style.overflow = "";
   };
 
   // Append close button to content
   modalContent.appendChild(closeButton);
+
+  // Create back button
+  const backButton = document.createElement("button");
+  backButton.textContent = "Back";
+  backButton.onclick = function () {
+    // Check if onBackButtonClick is defined before calling it
+    if (typeof onBackButtonClick === "function") {
+      // Pop the last directory from the stack
+      const poppedDirectory = directoryStack.pop();
+      // Callback for handling back button click
+      onBackButtonClick(poppedDirectory);
+    }
+  };
+
+  // Check if the directory stack is empty to decide whether to show the back button
+  if (directoryStack.length > 0) {
+    // Append back button to content
+    modalContent.appendChild(backButton);
+  }
 
   // Create directory list
   const directoryList = document.createElement("ul");
@@ -599,13 +634,17 @@ function createDirectoryModal(directories, onDirectorySelected) {
   // Populate directory list
   directories.forEach((directory) => {
     const listItem = document.createElement("li");
-    const directoryButton = document.createElement("button");
-    directoryButton.textContent = directory;
-    directoryButton.onclick = function () {
-      onDirectorySelected(directory); // Callback when directory is selected
+    const directoryLink = document.createElement("a");
+    directoryLink.href = "javascript:void(0)";
+    directoryLink.textContent = directory;
+    directoryLink.onclick = function () {
+      // Push the current directory onto the stack
+      directoryStack.push(directory);
+      // Callback when directory is selected
+      onDirectorySelected(directory);
     };
 
-    listItem.appendChild(directoryButton);
+    listItem.appendChild(directoryLink);
     directoryList.appendChild(listItem);
   });
 
@@ -617,11 +656,29 @@ function createDirectoryModal(directories, onDirectorySelected) {
 
   // Append modal container to the document body
   document.body.appendChild(modalContainer);
+
+  // Add the style to hide scrollbar thumb
+  document.documentElement.style.overflow = "hidden";
+
+  // Close modal when clicking outside of it
+  window.addEventListener("click", function (event) {
+    if (event.target === modalContainer) {
+      modalContainer.style.display = "none";
+      // Remove the style to allow scrolling
+      document.documentElement.style.overflow = "";
+    }
+  });
 }
 
 // Function to open a directory
 async function openDirectory(directoryPath) {
   try {
+    // Remove trailing slashes
+    directoryPath = directoryPath.replace(/\/+$/, "");
+
+    // Update the current directory when navigating into a new directory
+    currentDirectory = directoryPath;
+
     const response = await fetch(
       `http://192.168.0.14:8000/open-directory?path=${directoryPath}`,
       {
@@ -638,6 +695,12 @@ async function openDirectory(directoryPath) {
         fileTree.tree.map((file) => file.name),
         (selectedDirectory) => {
           openDirectory(`${directoryPath}/${selectedDirectory}`);
+        },
+        (poppedDirectory) => {
+          // Callback for handling back button click
+          // Update the current directory when navigating back
+          currentDirectory = poppedDirectory;
+          openDirectory(currentDirectory);
         }
       );
     } else {

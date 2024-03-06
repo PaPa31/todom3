@@ -18,32 +18,6 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-//app.get("/", async (req, res) => {
-//  try {
-//    const rootPath = path.join(__dirname); // Change this to the actual root path
-//    const files = await fs.readdir(rootPath);
-
-//    const htmlContent = `
-//      <h1>Server Root Folder</h1>
-//      <ul>
-//        ${files
-//          .map(
-//            (file) =>
-//              `<li><a href="/open-directory?path=${encodeURIComponent(
-//                file
-//              )}">${file}</a></li>`
-//          )
-//          .join("")}
-//      </ul>
-//    `;
-
-//    res.send(htmlContent);
-//  } catch (error) {
-//    console.error(error);
-//    res.status(500).send("Internal Server Error");
-//  }
-//});
-
 app.get("/open-directory", async (req, res) => {
   try {
     const directoryPath = req.query.path || "";
