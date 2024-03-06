@@ -525,8 +525,131 @@ const showOrHideUndoDeleteButton = () => {
   }
 };
 
+//document
+//  .getElementById("openDirectoryButton")
+//  .addEventListener("click", async () => {
+//    const directoryPath = document
+//      .getElementById("directoryInput")
+//      .value.trim();
+
+//    if (!directoryPath) {
+//      alert("Please enter a directory path.");
+//      return;
+//    }
+
+//    try {
+//      const response = await fetch(
+//        `http://localhost:8000/open-directory${directoryPath}`
+//      );
+
+//      if (response.ok) {
+//        const files = await response.json();
+//        updateFileList(files);
+//      } else {
+//        console.error("Failed to open directory:", response.status);
+//      }
+//    } catch (error) {
+//      console.error("Network error:", error);
+//    }
+//  });
+
+//function updateFileList(files) {
+//  const fileListElement = document.getElementById("fileList");
+//  fileListElement.innerHTML = ""; // Clear previous files
+
+//  files.forEach((file) => {
+//    const listItem = document.createElement("li");
+//    listItem.textContent = file;
+//    fileListElement.appendChild(listItem);
+//  });
+//}
+
 //var phrase = "static/demo.md";
 var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
+
+// Constants
+const rootDirectory = "md/";
+
+// Function to create and show the directory modal
+function createDirectoryModal(directories, onDirectorySelected) {
+  // Create modal container
+  const modalContainer = document.createElement("div");
+  modalContainer.id = "directoryModal";
+  modalContainer.style.display = "block"; // Make it visible
+
+  // Create modal content
+  const modalContent = document.createElement("div");
+  modalContent.classList.add("modal-content");
+
+  // Create close button
+  const closeButton = document.createElement("span");
+  closeButton.classList.add("close");
+  closeButton.innerHTML = "&times;"; // Times symbol for close
+  closeButton.onclick = function () {
+    modalContainer.style.display = "none"; // Hide the modal on close
+  };
+
+  // Append close button to content
+  modalContent.appendChild(closeButton);
+
+  // Create directory list
+  const directoryList = document.createElement("ul");
+
+  // Populate directory list
+  directories.forEach((directory) => {
+    const listItem = document.createElement("li");
+    const directoryButton = document.createElement("button");
+    directoryButton.textContent = directory;
+    directoryButton.onclick = function () {
+      onDirectorySelected(directory); // Callback when directory is selected
+    };
+
+    listItem.appendChild(directoryButton);
+    directoryList.appendChild(listItem);
+  });
+
+  // Append directory list to content
+  modalContent.appendChild(directoryList);
+
+  // Append content to modal container
+  modalContainer.appendChild(modalContent);
+
+  // Append modal container to the document body
+  document.body.appendChild(modalContainer);
+}
+
+// Function to open a directory
+async function openDirectory(path) {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/open-directory?path=${encodeURIComponent(path)}`,
+      {
+        method: "GET",
+        mode: "cors",
+      }
+    );
+
+    if (response.ok) {
+      const result = await response.json();
+
+      if (result.success) {
+        displayFileList(result.tree);
+      } else {
+        console.error(result.error);
+      }
+    } else {
+      console.error("Failed to open directory:", response.status);
+    }
+  } catch (error) {
+    console.error("Network error:", error);
+  }
+}
+
+// Example: Attach this function to your "Open Directory" button
+function handleOpenDirectoryClick() {
+  openDirectory(rootDirectory);
+}
+
 const dir = "md/chron/2023-12/";
 
 const fileHttpHandler = (name, dir, size, text) => {
@@ -579,6 +702,114 @@ const getFileHttp = async (fileName) => {
     console.error(error);
   }
 };
+
+//async function openDirectory(path) {
+//  try {
+//    const response = await fetch(
+//      `http://192.168.0.14:8000/open-directory?path=${encodeURIComponent(
+//        path
+//      )}`,
+//      {
+//        method: "POST",
+//        headers: {
+//          "Content-Type": "application/json",
+//        },
+//        body: JSON.stringify({
+//          directoryPath: path,
+//        }),
+//      }
+//    );
+
+//    const files = await response.json();
+//    displayFileList(files);
+//  } catch (error) {
+//    console.error(error);
+//  }
+//}
+
+//function displayFileList(files) {
+//  const fileListElement = document.getElementById("fileList");
+//  fileListElement.innerHTML = "";
+
+//  files.forEach((file) => {
+//    const listItem = document.createElement("li");
+
+//    // Correct the link construction here
+//    const link = document.createElement("a");
+//    link.href = `/open-directory?path=${encodeURIComponent(file)}`; // Ensure proper encoding
+//    link.textContent = file;
+
+//    listItem.appendChild(link);
+//    fileListElement.appendChild(listItem);
+//  });
+//}
+
+//async function getFileTree() {
+//  try {
+//    const response = await fetch("http://localhost:8000/file-tree", {
+//      method: "GET",
+//      mode: "cors",
+//    });
+//    const fileTree = await response.json();
+
+//    if (fileTree.success) {
+//      const fileTreeElement = document.getElementById("fileTree");
+//      fileTreeElement.innerHTML = `
+//              <h2>Root Directory</h2>
+//              <ul>
+//                ${fileTree.tree
+//                  .map((file) => {
+//                    if (file.isDirectory) {
+//                      return `<li><button onclick="openDirectory('${file.name}')">${file.name}</button></li>`;
+//                    } else {
+//                      return `<li>${file.name}</li>`;
+//                    }
+//                  })
+//                  .join("")}
+//              </ul>
+//            `;
+//    } else {
+//      console.error(fileTree.error);
+//    }
+//  } catch (error) {
+//    console.error(error);
+//  }
+//}
+
+//async function openDirectory(directoryName) {
+//  try {
+//    const response = await fetch(
+//      `http://localhost:8000/open-directory?path=${directoryName}`,
+//      {
+//        method: "GET",
+//        mode: "cors",
+//      }
+//    );
+//    const fileTree = await response.json();
+
+//    if (fileTree.success) {
+//      const fileTreeElement = document.getElementById("fileTree");
+//      fileTreeElement.innerHTML = `
+//              <h2>${directoryName}</h2>
+//              <ul>
+//                ${fileTree.tree
+//                  .map((file) => {
+//                    if (file.isDirectory) {
+//                      return `<li><button onclick="openDirectory('${directoryName}/${file.name}')">${file.name}</button></li>`;
+//                    } else {
+//                      return `<li>${file.name}</li>`;
+//                    }
+//                  })
+//                  .join("")}
+//              </ul>
+//            `;
+//    } else {
+//      console.error(fileTree.error);
+//    }
+//  } catch (error) {
+//    console.error(error);
+//  }
+//}
 
 function handleFiles(files) {
   Promise.all(
@@ -810,7 +1041,9 @@ const initializeFileState = () => {
       fileElem.click();
     } else {
       //getFileHttp(phrase);
-      getFileHttp(dir);
+      //getFileHttp(dir);
+      //openDirectory("");
+      handleOpenDirectoryClick();
     }
   } else {
   }

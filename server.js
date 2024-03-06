@@ -8,31 +8,38 @@ const PORT = 8000;
 
 app.use(cors()); // Enable CORS for all routes
 
-app.get("/", async (req, res) => {
-  try {
-    const rootPath = path.join(__dirname); // Change this to the actual root path
-    const files = await fs.readdir(rootPath);
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, "")));
 
-    const htmlContent = `
-      <h1>Server Root Folder</h1>
-      <ul>
-        ${files
-          .map(
-            (file) =>
-              `<li><a href="/open-directory?path=${encodeURIComponent(
-                file
-              )}">${file}</a></li>`
-          )
-          .join("")}
-      </ul>
-    `;
-
-    res.send(htmlContent);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
+
+//app.get("/", async (req, res) => {
+//  try {
+//    const rootPath = path.join(__dirname); // Change this to the actual root path
+//    const files = await fs.readdir(rootPath);
+
+//    const htmlContent = `
+//      <h1>Server Root Folder</h1>
+//      <ul>
+//        ${files
+//          .map(
+//            (file) =>
+//              `<li><a href="/open-directory?path=${encodeURIComponent(
+//                file
+//              )}">${file}</a></li>`
+//          )
+//          .join("")}
+//      </ul>
+//    `;
+
+//    res.send(htmlContent);
+//  } catch (error) {
+//    console.error(error);
+//    res.status(500).send("Internal Server Error");
+//  }
+//});
 
 app.get("/open-directory", async (req, res) => {
   try {
@@ -43,23 +50,15 @@ app.get("/open-directory", async (req, res) => {
     if (stats.isDirectory()) {
       const files = await fs.readdir(fullPath);
 
-      const htmlContent = `
-        <h1>${directoryPath}</h1>
-        <button onclick="window.history.back()">Go Back</button>
-        <ul>
-          ${files
-            .map(
-              (file) =>
-                `<li><a href="/open-directory?path=${path.join(
-                  directoryPath,
-                  file
-                )}">${file}</a></li>`
-            )
-            .join("")}
-        </ul>
-      `;
+      const response = {
+        success: true,
+        tree: files.map((file) => ({
+          name: file,
+          isDirectory: fs.statSync(path.join(fullPath, file)).isDirectory(),
+        })),
+      };
 
-      res.send(htmlContent);
+      res.json(response);
     } else {
       // If it's a file, directly open it
       const fileContent = await fs.readFile(fullPath, "utf-8");
@@ -74,8 +73,12 @@ app.get("/open-directory", async (req, res) => {
       res.end(fileContent);
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
+    console.error(error); // Log the error details
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error",
+      details: error.message, // Add the error message to the response
+    });
   }
 });
 
