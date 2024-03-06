@@ -575,6 +575,7 @@ function createDirectoryModal(directories, onDirectorySelected) {
   // Create modal container
   const modalContainer = document.createElement("div");
   modalContainer.id = "directoryModal";
+  modalContainer.classList.add("modal-container");
   modalContainer.style.display = "block"; // Make it visible
 
   // Create modal content
@@ -619,36 +620,32 @@ function createDirectoryModal(directories, onDirectorySelected) {
 }
 
 // Function to open a directory
-async function openDirectory(path) {
+async function openDirectory(directoryPath) {
   try {
     const response = await fetch(
-      `http://localhost:8000/open-directory?path=${encodeURIComponent(path)}`,
+      `http://192.168.0.14:8000/open-directory?path=${directoryPath}`,
       {
         method: "GET",
         mode: "cors",
       }
     );
 
-    if (response.ok) {
-      const result = await response.json();
+    const fileTree = await response.json();
 
-      if (result.success) {
-        displayDirectoryTree(result.tree);
-      } else {
-        console.error(result.error);
-      }
+    if (fileTree.success) {
+      // Show the directory modal with nested structure
+      createDirectoryModal(
+        fileTree.tree.map((file) => file.name),
+        (selectedDirectory) => {
+          openDirectory(`${directoryPath}/${selectedDirectory}`);
+        }
+      );
     } else {
-      console.error("Failed to open directory:", response.status);
+      console.error(fileTree.error);
     }
   } catch (error) {
-    console.error("Network error:", error);
+    console.error(error);
   }
-}
-
-function displayDirectoryTree(tree) {
-  // Assuming you have a function to render the directory tree on the client-side
-  // Modify this function according to your UI structure
-  console.log(tree);
 }
 
 // Example: Attach this function to your "Open Directory" button
