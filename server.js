@@ -1,6 +1,9 @@
 const express = require("express");
 const path = require("path");
-const fs = require("fs").promises;
+const fs = require("fs");
+if (!fs.promises) {
+  fs.promises = require("fs").promises;
+}
 const cors = require("cors");
 
 const app = express();
@@ -45,23 +48,29 @@ app.get("/open-directory", async (req, res) => {
   try {
     const directoryPath = req.query.path || "";
     const fullPath = path.join(__dirname, directoryPath);
-    const stats = await fs.stat(fullPath);
+
+    // Use asynchronous file system operations
+    const stats = await fs.promises.stat(fullPath);
 
     if (stats.isDirectory()) {
-      const files = await fs.readdir(fullPath);
+      const files = await fs.promises.readdir(fullPath);
 
       const response = {
         success: true,
-        tree: files.map((file) => ({
-          name: file,
-          isDirectory: fs.statSync(path.join(fullPath, file)).isDirectory(),
-        })),
+        tree: await Promise.all(
+          files.map(async (file) => ({
+            name: file,
+            isDirectory: (
+              await fs.promises.stat(path.join(fullPath, file))
+            ).isDirectory(),
+          }))
+        ),
       };
 
       res.json(response);
     } else {
       // If it's a file, directly open it
-      const fileContent = await fs.readFile(fullPath, "utf-8");
+      const fileContent = await fs.promises.readFile(fullPath, "utf-8");
 
       const ext = path.extname(fullPath).substring(1).toLowerCase();
       const mimeType = getMimeType(ext);

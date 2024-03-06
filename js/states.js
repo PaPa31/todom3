@@ -633,7 +633,7 @@ async function openDirectory(path) {
       const result = await response.json();
 
       if (result.success) {
-        displayFileList(result.tree);
+        displayDirectoryTree(result.tree);
       } else {
         console.error(result.error);
       }
@@ -643,6 +643,12 @@ async function openDirectory(path) {
   } catch (error) {
     console.error("Network error:", error);
   }
+}
+
+function displayDirectoryTree(tree) {
+  // Assuming you have a function to render the directory tree on the client-side
+  // Modify this function according to your UI structure
+  console.log(tree);
 }
 
 // Example: Attach this function to your "Open Directory" button
