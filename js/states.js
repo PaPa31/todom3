@@ -525,54 +525,24 @@ const showOrHideUndoDeleteButton = () => {
   }
 };
 
-//document
-//  .getElementById("openDirectoryButton")
-//  .addEventListener("click", async () => {
-//    const directoryPath = document
-//      .getElementById("directoryInput")
-//      .value.trim();
-
-//    if (!directoryPath) {
-//      alert("Please enter a directory path.");
-//      return;
-//    }
-
-//    try {
-//      const response = await fetch(
-//        `http://localhost:8000/open-directory${directoryPath}`
-//      );
-
-//      if (response.ok) {
-//        const files = await response.json();
-//        updateFileList(files);
-//      } else {
-//        console.error("Failed to open directory:", response.status);
-//      }
-//    } catch (error) {
-//      console.error("Network error:", error);
-//    }
-//  });
-
-//function updateFileList(files) {
-//  const fileListElement = document.getElementById("fileList");
-//  fileListElement.innerHTML = ""; // Clear previous files
-
-//  files.forEach((file) => {
-//    const listItem = document.createElement("li");
-//    listItem.textContent = file;
-//    fileListElement.appendChild(listItem);
-//  });
-//}
-
 //var phrase = "static/demo.md";
 var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
 
-const rootDirectory = "md/";
+const rootDirectory = "md/chron/2023-10";
 
 // Directory stack to keep track of the visited directories
 const directoryStack = [];
 
-function onOpenButtonClick() {}
+async function onOpenButtonClick() {
+  console.log("Start loading!!");
+  await getFileHttp(currentDirectory);
+
+  console.log("А теперь - дискотека!!!");
+  initialCheckFold(isFoldFiles);
+  allLiFold(!isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
+  showOrHideDeleteAllItems();
+  showItemSortingArrows(foldedClass.childElementCount);
+}
 
 // Function to handle directory selection
 //function onDirectorySelected(selectedDirectory) {
@@ -719,7 +689,7 @@ function createDirectoryModal(
   const openButton = document.createElement("button");
   openButton.textContent = "Open";
   openButton.onclick = function () {
-    getFileHttp(currentDirectory);
+    onOpenButtonClick();
     modalContainer.style.display = "none";
     document.documentElement.style.overflow = "";
   };
@@ -790,11 +760,18 @@ const fileHttpHandler = (name, dir, size, text) => {
     text: text,
   };
   filesArray.push(fileObj);
+  //indexedFiles.push(idCounterFiles.toString());
+  //liMaker(idCounterFiles);
+  //idCounterFiles++;
   indexedFiles.push(idCounterFiles.toString());
+  const correctedFilesIndex =
+    indexedFiles.indexOf(idCounterFiles.toString()) * 1;
+  filesArray[correctedFilesIndex].text = text;
   liMaker(idCounterFiles);
   idCounterFiles++;
 };
 
+// Recursive function for downloading files
 const getFileHttp = async (fileName) => {
   try {
     const response = await fetch(
@@ -824,11 +801,14 @@ const getFileHttp = async (fileName) => {
     }
 
     if (isJSON && directoryListing && Array.isArray(directoryListing.tree)) {
-      // It's a directory; iterate over the files in the directory and fetch each file
-      for (const file of directoryListing.tree) {
+      // It's a directory; create an array of promises for each file
+      const filePromises = directoryListing.tree.map(async (file) => {
         const filePath = fileName + "/" + file.name;
         await getFileHttp(filePath);
-      }
+      });
+
+      // Wait for all promises to resolve
+      await Promise.all(filePromises);
     } else {
       // Handle the file content here
       const text = await response.text();
@@ -838,114 +818,6 @@ const getFileHttp = async (fileName) => {
     console.error(error);
   }
 };
-
-//async function openDirectory(path) {
-//  try {
-//    const response = await fetch(
-//      `http://192.168.0.14:8000/open-directory?path=${encodeURIComponent(
-//        path
-//      )}`,
-//      {
-//        method: "POST",
-//        headers: {
-//          "Content-Type": "application/json",
-//        },
-//        body: JSON.stringify({
-//          directoryPath: path,
-//        }),
-//      }
-//    );
-
-//    const files = await response.json();
-//    displayFileList(files);
-//  } catch (error) {
-//    console.error(error);
-//  }
-//}
-
-//function displayFileList(files) {
-//  const fileListElement = document.getElementById("fileList");
-//  fileListElement.innerHTML = "";
-
-//  files.forEach((file) => {
-//    const listItem = document.createElement("li");
-
-//    // Correct the link construction here
-//    const link = document.createElement("a");
-//    link.href = `/open-directory?path=${encodeURIComponent(file)}`; // Ensure proper encoding
-//    link.textContent = file;
-
-//    listItem.appendChild(link);
-//    fileListElement.appendChild(listItem);
-//  });
-//}
-
-//async function getFileTree() {
-//  try {
-//    const response = await fetch("http://localhost:8000/file-tree", {
-//      method: "GET",
-//      mode: "cors",
-//    });
-//    const fileTree = await response.json();
-
-//    if (fileTree.success) {
-//      const fileTreeElement = document.getElementById("fileTree");
-//      fileTreeElement.innerHTML = `
-//              <h2>Root Directory</h2>
-//              <ul>
-//                ${fileTree.tree
-//                  .map((file) => {
-//                    if (file.isDirectory) {
-//                      return `<li><button onclick="openDirectory('${file.name}')">${file.name}</button></li>`;
-//                    } else {
-//                      return `<li>${file.name}</li>`;
-//                    }
-//                  })
-//                  .join("")}
-//              </ul>
-//            `;
-//    } else {
-//      console.error(fileTree.error);
-//    }
-//  } catch (error) {
-//    console.error(error);
-//  }
-//}
-
-//async function openDirectory(directoryName) {
-//  try {
-//    const response = await fetch(
-//      `http://localhost:8000/open-directory?path=${directoryName}`,
-//      {
-//        method: "GET",
-//        mode: "cors",
-//      }
-//    );
-//    const fileTree = await response.json();
-
-//    if (fileTree.success) {
-//      const fileTreeElement = document.getElementById("fileTree");
-//      fileTreeElement.innerHTML = `
-//              <h2>${directoryName}</h2>
-//              <ul>
-//                ${fileTree.tree
-//                  .map((file) => {
-//                    if (file.isDirectory) {
-//                      return `<li><button onclick="openDirectory('${directoryName}/${file.name}')">${file.name}</button></li>`;
-//                    } else {
-//                      return `<li>${file.name}</li>`;
-//                    }
-//                  })
-//                  .join("")}
-//              </ul>
-//            `;
-//    } else {
-//      console.error(fileTree.error);
-//    }
-//  } catch (error) {
-//    console.error(error);
-//  }
-//}
 
 function handleFiles(files) {
   Promise.all(
