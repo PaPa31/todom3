@@ -567,13 +567,11 @@ const showOrHideUndoDeleteButton = () => {
 //var phrase = "static/demo.md";
 var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
 
-// Constants
 const rootDirectory = "md/";
 
 // Directory stack to keep track of the visited directories
 const directoryStack = [];
 
-// Function to create and show the directory modal
 // Function to create and show the directory modal
 function createDirectoryModal(
   directories,
@@ -596,8 +594,14 @@ function createDirectoryModal(
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal-content");
 
+  const topSection = document.createElement("div");
+  topSection.classList.add("top-section");
+
+  const contentSection = document.createElement("div");
+  contentSection.classList.add("content-section");
+
   // Create close button
-  const closeButton = document.createElement("span");
+  const closeButton = document.createElement("div");
   closeButton.classList.add("close");
   closeButton.innerHTML = "&times;"; // Times symbol for close
   closeButton.onclick = function () {
@@ -607,25 +611,26 @@ function createDirectoryModal(
   };
 
   // Append close button to content
-  modalContent.appendChild(closeButton);
+  topSection.appendChild(closeButton);
 
   // Create back button
   const backButton = document.createElement("button");
   backButton.textContent = "Back";
+  backButton.style.visibility = "hidden";
   backButton.onclick = function () {
     // Check if onBackButtonClick is defined before calling it
     if (typeof onBackButtonClick === "function") {
-      // Pop the last directory from the stack
-      const poppedDirectory = directoryStack.pop();
       // Callback for handling back button click
-      onBackButtonClick(poppedDirectory);
+      onBackButtonClick();
     }
   };
+
+  topSection.appendChild(backButton);
 
   // Check if the directory stack is empty to decide whether to show the back button
   if (directoryStack.length > 0) {
     // Append back button to content
-    modalContent.appendChild(backButton);
+    backButton.style.visibility = "visible";
   }
 
   // Create directory list
@@ -638,8 +643,6 @@ function createDirectoryModal(
     directoryLink.href = "javascript:void(0)";
     directoryLink.textContent = directory;
     directoryLink.onclick = function () {
-      // Push the current directory onto the stack
-      directoryStack.push(directory);
       // Callback when directory is selected
       onDirectorySelected(directory);
     };
@@ -649,7 +652,10 @@ function createDirectoryModal(
   });
 
   // Append directory list to content
-  modalContent.appendChild(directoryList);
+  contentSection.appendChild(directoryList);
+
+  modalContent.appendChild(topSection);
+  modalContent.appendChild(contentSection);
 
   // Append content to modal container
   modalContainer.appendChild(modalContent);
@@ -668,6 +674,52 @@ function createDirectoryModal(
       document.documentElement.style.overflow = "";
     }
   });
+}
+
+// Function to handle directory selection
+function onDirectorySelected(selectedDirectory) {
+  // Push the current directory onto the stack
+  directoryStack.push(currentDirectory);
+  // Concatenate the current directory and the selected one
+  const newPath = `${currentDirectory}/${selectedDirectory}`;
+
+  // Fetch and update data for the selected directory
+  openDirectory(newPath);
+}
+
+// Function to handle the Back button click
+async function onBackButtonClick() {
+  try {
+    // Pop the last directory from the stack
+    const previousPath = directoryStack.pop();
+
+    // Update the current directory to the previous one
+    currentDirectory = previousPath;
+
+    // Fetch data for the previous directory
+    const response = await fetch(
+      `http://192.168.0.14:8000/open-directory?path=${previousPath}`,
+      {
+        method: "GET",
+        mode: "cors",
+      }
+    );
+
+    const fileTree = await response.json();
+
+    if (fileTree.success) {
+      // Update the UI with data for the previous directory
+      createDirectoryModal(
+        fileTree.tree.map((file) => file.name),
+        onDirectorySelected,
+        onBackButtonClick
+      );
+    } else {
+      console.error(fileTree.error);
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // Function to open a directory
@@ -694,14 +746,11 @@ async function openDirectory(directoryPath) {
       createDirectoryModal(
         fileTree.tree.map((file) => file.name),
         (selectedDirectory) => {
+          // Push the current directory onto the stack
+          directoryStack.push(currentDirectory);
           openDirectory(`${directoryPath}/${selectedDirectory}`);
         },
-        (poppedDirectory) => {
-          // Callback for handling back button click
-          // Update the current directory when navigating back
-          currentDirectory = poppedDirectory;
-          openDirectory(currentDirectory);
-        }
+        onBackButtonClick
       );
     } else {
       console.error(fileTree.error);
