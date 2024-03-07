@@ -719,9 +719,9 @@ function createDirectoryModal(
   const openButton = document.createElement("button");
   openButton.textContent = "Open";
   openButton.onclick = function () {
+    getFileHttp(currentDirectory);
     modalContainer.style.display = "none";
     document.documentElement.style.overflow = "";
-    getFileHttp(currentDirectory);
   };
 
   topSection.appendChild(openButton);
@@ -797,7 +797,13 @@ const fileHttpHandler = (name, dir, size, text) => {
 
 const getFileHttp = async (fileName) => {
   try {
-    const response = await fetch(fileName, { method: "GET", mode: "cors" });
+    const response = await fetch(
+      `http://192.168.0.14:8000/open-directory?path=${fileName}`,
+      {
+        method: "GET",
+        mode: "cors",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Bad response from server");
@@ -817,10 +823,10 @@ const getFileHttp = async (fileName) => {
       isJSON = false;
     }
 
-    if (isJSON) {
+    if (isJSON && directoryListing && Array.isArray(directoryListing.tree)) {
       // It's a directory; iterate over the files in the directory and fetch each file
-      for (const file of directoryListing) {
-        const filePath = fileName + file;
+      for (const file of directoryListing.tree) {
+        const filePath = fileName + "/" + file.name;
         await getFileHttp(filePath);
       }
     } else {
