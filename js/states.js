@@ -572,6 +572,97 @@ const rootDirectory = "md/";
 // Directory stack to keep track of the visited directories
 const directoryStack = [];
 
+function onOpenButtonClick() {}
+
+// Function to handle directory selection
+//function onDirectorySelected(selectedDirectory) {
+//  // Push the current directory onto the stack
+//  directoryStack.push(currentDirectory);
+//  // Concatenate the current directory and the selected one
+//  const newPath = `${currentDirectory}/${selectedDirectory}`;
+
+//  // Fetch and update data for the selected directory
+//  openDirectory(newPath);
+//}
+
+// Function to handle the Back button click
+//async function onBackButtonClick() {
+//  try {
+//    // Pop the last directory from the stack
+//    const previousPath = directoryStack.pop();
+
+//    // Update the current directory to the previous one
+//    currentDirectory = previousPath;
+
+//    // Fetch data for the previous directory
+//    const response = await fetch(
+//      `http://192.168.0.14:8000/open-directory?path=${previousPath}`,
+//      {
+//        method: "GET",
+//        mode: "cors",
+//      }
+//    );
+
+//    const fileTree = await response.json();
+
+//    if (fileTree.success) {
+//      // Update the UI with data for the previous directory
+//      createDirectoryModal(
+//        fileTree.tree.map((file) => file.name),
+//        onDirectorySelected,
+//        onBackButtonClick
+//      );
+//    } else {
+//      console.error(fileTree.error);
+//    }
+//  } catch (error) {
+//    console.error(error);
+//  }
+//}
+
+// Function to open a directory
+async function openDirectory(directoryPath) {
+  try {
+    // Remove trailing slashes
+    directoryPath = directoryPath.replace(/\/+$/, "");
+
+    // Update the current directory when navigating into a new directory
+    currentDirectory = directoryPath;
+
+    const response = await fetch(
+      `http://192.168.0.14:8000/open-directory?path=${directoryPath}`,
+      {
+        method: "GET",
+        mode: "cors",
+      }
+    );
+
+    const fileTree = await response.json();
+
+    if (fileTree.success) {
+      // Show the directory modal with nested structure
+      createDirectoryModal(
+        fileTree.tree.map((file) => file.name),
+        //onDirectorySelected(currentDirectory),
+        (selectedDirectory) => {
+          // Push the current directory onto the stack
+          directoryStack.push(currentDirectory);
+          openDirectory(`${directoryPath}/${selectedDirectory}`);
+        },
+        () => {
+          currentDirectory = directoryStack.pop();
+          openDirectory(currentDirectory);
+        }
+        //onBackButtonClick
+      );
+    } else {
+      console.error(fileTree.error);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // Function to create and show the directory modal
 function createDirectoryModal(
   directories,
@@ -618,14 +709,22 @@ function createDirectoryModal(
   backButton.textContent = "Back";
   backButton.style.visibility = "hidden";
   backButton.onclick = function () {
-    // Check if onBackButtonClick is defined before calling it
-    if (typeof onBackButtonClick === "function") {
-      // Callback for handling back button click
-      onBackButtonClick();
-    }
+    currentDirectory = directoryStack.pop();
+    openDirectory(currentDirectory);
   };
 
   topSection.appendChild(backButton);
+
+  // Create open button
+  const openButton = document.createElement("button");
+  openButton.textContent = "Open";
+  openButton.onclick = function () {
+    modalContainer.style.display = "none";
+    document.documentElement.style.overflow = "";
+    getFileHttp(currentDirectory);
+  };
+
+  topSection.appendChild(openButton);
 
   // Check if the directory stack is empty to decide whether to show the back button
   if (directoryStack.length > 0) {
@@ -643,8 +742,8 @@ function createDirectoryModal(
     directoryLink.href = "javascript:void(0)";
     directoryLink.textContent = directory;
     directoryLink.onclick = function () {
-      // Callback when directory is selected
-      onDirectorySelected(directory);
+      directoryStack.push(currentDirectory);
+      openDirectory(`${currentDirectory}/${directory}`);
     };
 
     listItem.appendChild(directoryLink);
@@ -674,90 +773,6 @@ function createDirectoryModal(
       document.documentElement.style.overflow = "";
     }
   });
-}
-
-// Function to handle directory selection
-function onDirectorySelected(selectedDirectory) {
-  // Push the current directory onto the stack
-  directoryStack.push(currentDirectory);
-  // Concatenate the current directory and the selected one
-  const newPath = `${currentDirectory}/${selectedDirectory}`;
-
-  // Fetch and update data for the selected directory
-  openDirectory(newPath);
-}
-
-// Function to handle the Back button click
-async function onBackButtonClick() {
-  try {
-    // Pop the last directory from the stack
-    const previousPath = directoryStack.pop();
-
-    // Update the current directory to the previous one
-    currentDirectory = previousPath;
-
-    // Fetch data for the previous directory
-    const response = await fetch(
-      `http://192.168.0.14:8000/open-directory?path=${previousPath}`,
-      {
-        method: "GET",
-        mode: "cors",
-      }
-    );
-
-    const fileTree = await response.json();
-
-    if (fileTree.success) {
-      // Update the UI with data for the previous directory
-      createDirectoryModal(
-        fileTree.tree.map((file) => file.name),
-        onDirectorySelected,
-        onBackButtonClick
-      );
-    } else {
-      console.error(fileTree.error);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Function to open a directory
-async function openDirectory(directoryPath) {
-  try {
-    // Remove trailing slashes
-    directoryPath = directoryPath.replace(/\/+$/, "");
-
-    // Update the current directory when navigating into a new directory
-    currentDirectory = directoryPath;
-
-    const response = await fetch(
-      `http://192.168.0.14:8000/open-directory?path=${directoryPath}`,
-      {
-        method: "GET",
-        mode: "cors",
-      }
-    );
-
-    const fileTree = await response.json();
-
-    if (fileTree.success) {
-      // Show the directory modal with nested structure
-      createDirectoryModal(
-        fileTree.tree.map((file) => file.name),
-        (selectedDirectory) => {
-          // Push the current directory onto the stack
-          directoryStack.push(currentDirectory);
-          openDirectory(`${directoryPath}/${selectedDirectory}`);
-        },
-        onBackButtonClick
-      );
-    } else {
-      console.error(fileTree.error);
-    }
-  } catch (error) {
-    console.error(error);
-  }
 }
 
 // Example: Attach this function to your "Open Directory" button
