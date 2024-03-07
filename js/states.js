@@ -592,13 +592,13 @@ function createDirectoryModal(
 
   // Create modal content
   const modalContent = document.createElement("div");
-  modalContent.classList.add("modal-content");
+  modalContent.classList.add("modal-content", "flex-row");
 
   const topSection = document.createElement("div");
-  topSection.classList.add("top-section");
+  topSection.classList.add("top-section", "flex-small");
 
   const contentSection = document.createElement("div");
-  contentSection.classList.add("content-section");
+  contentSection.classList.add("content-section", "flex-small");
 
   // Create close button
   const closeButton = document.createElement("div");

@@ -1334,50 +1334,43 @@ code {
   display: block;
 }*/
 
-/* Style for the modal container */
+.modal-container > .flex-row {
+  flex-direction: column-reverse;
+}
+
 .modal-container {
-  display: none; /* Initially hide the modal */
+  background-color: var(--todom-modal-container-bg);
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--todom-modal-container-bg);
   overflow-y: auto;
   padding-top: 20px;
 }
 
-/* Style for the modal content */
 .modal-content {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translate(-50%, 0);
   background-color: var(--todom-background);
-  /*padding: 0 20px;*/
-  border-radius: 8px;
-  width: 75%;
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translate(-50%, 50%);
   max-width: 300px;
   max-height: calc(100% - 40px);
-  overflow-y: hidden;
-  bottom: 20px;
+  width: 75%;
+  border-radius: 8px;
 }
 
 .top-section {
-  position: sticky;
-  top: 0;
-  background-color: var(--todom-background);
+  background-color: var(--todom-input-background);
   padding: 20px;
-  z-index: 1;
-  background: var(--todom-input-background);
-  border-radius: 8px 8px 0 0;
+  border-radius: 0 0 8px 8px;
 }
 
 .content-section {
   padding: 20px;
   overflow-y: auto;
-  max-height: calc(100% - 40px);
-  position: sticky;
 }
 .modal-content .close {
   color: var(--todom-button-background);
