@@ -1,2 +1,8 @@
+/md/*
+/md/**/*
 /node_modules
 /md
+
+# not remove
+/js/env.js
+/js/ignore/*
