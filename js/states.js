@@ -702,6 +702,38 @@ function createDirectoryModal(
     backButton.style.visibility = "visible";
   }
 
+  // Create entry list
+  const entryList = document.createElement("ul");
+
+  // Populate entry list
+  entries.forEach((entry) => {
+    const listItem = document.createElement("li");
+    const entryLink = document.createElement("a");
+
+    // Set initial style for the entry link
+    entryLink.style.color = entry.isDirectory ? "black" : "green";
+
+    entryLink.href = "javascript:void(0)";
+    entryLink.textContent = entry.name;
+    entryLink.onclick = function () {
+      // Push the current entry onto the stack
+      entryStack.push({ name: entry.name, isDirectory: entry.isDirectory });
+      // Callback when entry is selected
+      onEntrySelected(entry);
+
+      // Change the color of the clicked file
+      if (!entry.isDirectory) {
+        entryLink.style.color = "blue";
+      }
+    };
+
+    listItem.appendChild(entryLink);
+    entryList.appendChild(listItem);
+  });
+
+  // Append entry list to content
+  modalContent.appendChild(entryList);
+
   // Create directory list
   const directoryList = document.createElement("ul");
 
@@ -709,6 +741,10 @@ function createDirectoryModal(
   directories.forEach((directory) => {
     const listItem = document.createElement("li");
     const directoryLink = document.createElement("a");
+
+    // Set initial style for the directory link
+    directoryLink.style.color = "black";
+
     directoryLink.href = "javascript:void(0)";
     directoryLink.textContent = directory;
     directoryLink.onclick = function () {
