@@ -11,15 +11,18 @@ app.use(cors());
 // Serve static files from the current directory
 app.use(express.static(path.join(__dirname, "")));
 
-// Middleware function to log requested files
-app.use((req, res, next) => {
-  const originalSend = res.send;
-  res.send = function (data) {
-    console.log(`${req.method} ${req.url} ${res.statusCode}`);
-    originalSend.apply(res, arguments);
-  };
-  next();
-});
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, "../public")));
+
+//// Middleware function to log requested files
+//app.use((req, res, next) => {
+//  const originalSend = res.send;
+//  res.send = function (data) {
+//    console.log(`${req.method} ${req.url} ${res.statusCode}`);
+//    originalSend.apply(res, arguments);
+//  };
+//  next();
+//});
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
