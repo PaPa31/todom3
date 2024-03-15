@@ -528,7 +528,7 @@ const showOrHideUndoDeleteButton = () => {
 //var phrase = "static/demo.md";
 var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
 
-const rootDirectory = "md/chron/2023-10";
+const rootDirectory = "../";
 
 // Directory stack to keep track of the visited directories
 const directoryStack = [];
@@ -599,13 +599,10 @@ async function openDirectory(directoryPath) {
     // Update the current directory when navigating into a new directory
     currentDirectory = directoryPath;
 
-    const response = await fetch(
-      `http://192.168.0.14:8000/open-directory?path=${directoryPath}`,
-      {
-        method: "GET",
-        mode: "cors",
-      }
-    );
+    const response = await fetch(`open-directory?path=${directoryPath}`, {
+      method: "GET",
+      mode: "cors",
+    });
 
     const fileTree = await response.json();
 
@@ -702,38 +699,6 @@ function createDirectoryModal(
     backButton.style.visibility = "visible";
   }
 
-  // Create entry list
-  const entryList = document.createElement("ul");
-
-  // Populate entry list
-  entries.forEach((entry) => {
-    const listItem = document.createElement("li");
-    const entryLink = document.createElement("a");
-
-    // Set initial style for the entry link
-    entryLink.style.color = entry.isDirectory ? "black" : "green";
-
-    entryLink.href = "javascript:void(0)";
-    entryLink.textContent = entry.name;
-    entryLink.onclick = function () {
-      // Push the current entry onto the stack
-      entryStack.push({ name: entry.name, isDirectory: entry.isDirectory });
-      // Callback when entry is selected
-      onEntrySelected(entry);
-
-      // Change the color of the clicked file
-      if (!entry.isDirectory) {
-        entryLink.style.color = "blue";
-      }
-    };
-
-    listItem.appendChild(entryLink);
-    entryList.appendChild(listItem);
-  });
-
-  // Append entry list to content
-  modalContent.appendChild(entryList);
-
   // Create directory list
   const directoryList = document.createElement("ul");
 
@@ -741,10 +706,6 @@ function createDirectoryModal(
   directories.forEach((directory) => {
     const listItem = document.createElement("li");
     const directoryLink = document.createElement("a");
-
-    // Set initial style for the directory link
-    directoryLink.style.color = "black";
-
     directoryLink.href = "javascript:void(0)";
     directoryLink.textContent = directory;
     directoryLink.onclick = function () {
@@ -810,13 +771,10 @@ const fileHttpHandler = (name, dir, size, text) => {
 // Recursive function for downloading files
 const getFileHttp = async (fileName) => {
   try {
-    const response = await fetch(
-      `http://192.168.0.14:8000/open-directory?path=${fileName}`,
-      {
-        method: "GET",
-        mode: "cors",
-      }
-    );
+    const response = await fetch(`open-directory?path=${fileName}`, {
+      method: "GET",
+      mode: "cors",
+    });
 
     if (!response.ok) {
       throw new Error("Bad response from server");
