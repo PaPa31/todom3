@@ -1420,6 +1420,11 @@ code {
   color: #45a049;
 }*/
 
+.image-preview img {
+  width: 100%;
+  height: auto;
+}
+
 @media (min-width: 600px) {
   .flex-small {
     flex: 0 1 auto;
