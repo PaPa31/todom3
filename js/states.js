@@ -173,6 +173,8 @@ const liMaker = (arrIndex) => {
   li.appendChild(div);
   foldedClass.appendChild(li);
 
+  addClickListenersToImages(li);
+
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
