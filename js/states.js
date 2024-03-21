@@ -530,7 +530,7 @@ const showOrHideUndoDeleteButton = () => {
 //var phrase = "static/demo.md";
 var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
 
-const rootDirectory = "../";
+const rootDirectory = "../public/md/chron/";
 
 // Directory stack to keep track of the visited directories
 const directoryStack = [];
