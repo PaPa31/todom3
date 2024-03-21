@@ -1425,7 +1425,8 @@ code {
   height: auto;
 }
 
-#list-items .gallery img {
+#list-items .gallery img,
+#list-files .gallery img {
   cursor: pointer; /* not for preview imgs */
 }
 

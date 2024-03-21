@@ -401,6 +401,8 @@ const saveFile = () => {
 
 const mdToLi = (el, text) => {
   el.innerHTML = markdown(text);
+  // I want to add here
+  addClickListenersToImages(el);
   waitForIframe(el);
 };
 

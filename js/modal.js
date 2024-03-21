@@ -1,7 +1,7 @@
 let images = []; // Define images as a global variable
 
 // Function to create modal window for the clicked image
-function createModalForImage(imageUrl, images) {
+function createModalForImage(imageUrl) {
   // Create modal container
   const modal = document.createElement("div");
   modal.id = "imgModal";
@@ -11,7 +11,10 @@ function createModalForImage(imageUrl, images) {
   const closeBtn = document.createElement("span");
   closeBtn.classList.add("close");
   closeBtn.innerHTML = "&times;";
-  closeBtn.addEventListener("click", () => modal.remove());
+  closeBtn.addEventListener("click", () => {
+    modal.remove();
+    currentImageIndex = 0;
+  });
 
   // Create modal content (image)
   const modalImg = document.createElement("img");
@@ -43,11 +46,14 @@ function createModalForImage(imageUrl, images) {
 // Function to handle image click within a gallery block
 function handleImageClick(event) {
   const clickedImage = event.target;
-  const imageUrl = clickedImage.src;
-  images = Array.from(
-    clickedImage.closest(".gallery").querySelectorAll("img")
-  ).map((img) => img.src); // Assign images here
-  createModalForImage(imageUrl, images);
+  const galleryBlock = clickedImage.closest(".gallery");
+  if (galleryBlock) {
+    const imagesInBlock = Array.from(galleryBlock.querySelectorAll("img"));
+    const imageUrl = clickedImage.src;
+    currentImageIndex = imagesInBlock.findIndex((img) => img.src === imageUrl);
+    createModalForImage(imageUrl);
+    images = imagesInBlock.map((img) => img.src); // Update the global images array
+  }
 }
 
 // Function to add click event listeners to images within gallery blocks
@@ -60,11 +66,6 @@ function addClickListenersToImages(liDOM) {
     });
   });
 }
-
-// Call the function initially
-//addClickListenersToImages();
-
-let currentImageIndex = 0;
 
 // Function to show the previous image
 function prevImage() {
