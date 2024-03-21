@@ -11,10 +11,7 @@ function createModalForImage(imageUrl) {
   const closeBtn = document.createElement("span");
   closeBtn.classList.add("close");
   closeBtn.innerHTML = "&times;";
-  closeBtn.addEventListener("click", () => {
-    modal.remove();
-    currentImageIndex = 0;
-  });
+  closeBtn.addEventListener("click", () => modal.remove());
 
   // Create modal content (image)
   const modalImg = document.createElement("img");
