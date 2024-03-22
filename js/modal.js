@@ -1,6 +1,5 @@
 let images = []; // Define images as a global variable
 let modalImg; // Define modalImg as a global variable to access it from other functions
-modalImg = document.createElement("img");
 
 // Function to create modal window for the clicked image
 function createModalForImage(imageUrl) {
@@ -16,7 +15,7 @@ function createModalForImage(imageUrl) {
   closeBtn.addEventListener("click", () => modal.remove());
 
   // Create modal content (image)
-  //modalImg = document.createElement("img");
+  modalImg = document.createElement("img");
   modalImg.classList.add("modal-image-content");
   modalImg.src = imageUrl;
 
@@ -44,9 +43,9 @@ function createModalForImage(imageUrl) {
   // Add event listeners for keyboard arrow keys
   document.addEventListener("keydown", handleKeyDown);
 
-  // Add event listeners for touch swipe events on mobile devices
-  modalImg.addEventListener("touchstart", handleTouchStart);
-  modalImg.addEventListener("touchmove", handleTouchMove);
+  // Add event listeners for touch events
+  modalImg.addEventListener("touchstart", handleTouch);
+  modalImg.addEventListener("touchend", handleTouchEnd);
 }
 
 // Function to handle image click within a gallery block
@@ -123,18 +122,14 @@ function handleKeyDown(event) {
 let touchStartX = 0;
 let touchEndX = 0;
 
-// Function to handle touch start event
-function handleTouchStart(event) {
+// Function to handle touch swipe event
+function handleTouch(event) {
   touchStartX = event.touches[0].clientX;
 }
 
-// Function to handle touch move event
-function handleTouchMove(event) {
-  touchEndX = event.touches[0].clientX;
-}
-
-// Function to handle touch swipe event
-function handleTouch() {
+// Function to handle touch swipe end event
+function handleTouchEnd(event) {
+  touchEndX = event.changedTouches[0].clientX;
   if (touchStartX - touchEndX > 50) {
     // Swipe left
     nextImage();
@@ -143,6 +138,3 @@ function handleTouch() {
     prevImage();
   }
 }
-
-// Add event listeners for touch swipe gesture
-modalImg.addEventListener("touchend", handleTouch);
