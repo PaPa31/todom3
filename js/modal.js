@@ -50,6 +50,7 @@ function handleImageClick(event) {
     currentImageIndex = imagesInBlock.findIndex((img) => img.src === imageUrl);
     createModalForImage(imageUrl);
     images = imagesInBlock.map((img) => img.src); // Update the global images array
+    toggleButtonVisibility(); // Adjust visibility of buttons
   }
 }
 
@@ -70,6 +71,7 @@ function prevImage() {
     currentImageIndex--;
     const modalImg = document.querySelector(".modal-image-content");
     modalImg.src = images[currentImageIndex];
+    toggleButtonVisibility();
   }
 }
 
@@ -79,5 +81,26 @@ function nextImage() {
     currentImageIndex++;
     const modalImg = document.querySelector(".modal-image-content");
     modalImg.src = images[currentImageIndex];
+    toggleButtonVisibility();
+  }
+}
+
+// Function to toggle visibility of previous and next buttons
+function toggleButtonVisibility() {
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  if (currentImageIndex === 0) {
+    setTimeout(() => {
+      prevBtn.style.display = "none";
+    }, 0); // Adjust the delay as needed
+  } else {
+    prevBtn.style.display = "block";
+  }
+  if (currentImageIndex === images.length - 1) {
+    setTimeout(() => {
+      nextBtn.style.display = "none";
+    }, 0); // Adjust the delay as needed
+  } else {
+    nextBtn.style.display = "block";
   }
 }
