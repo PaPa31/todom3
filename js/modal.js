@@ -1,4 +1,6 @@
 let images = []; // Define images as a global variable
+let modalImg; // Define modalImg as a global variable to access it from other functions
+modalImg = document.createElement("img");
 
 // Function to create modal window for the clicked image
 function createModalForImage(imageUrl) {
@@ -14,7 +16,7 @@ function createModalForImage(imageUrl) {
   closeBtn.addEventListener("click", () => modal.remove());
 
   // Create modal content (image)
-  const modalImg = document.createElement("img");
+  //modalImg = document.createElement("img");
   modalImg.classList.add("modal-image-content");
   modalImg.src = imageUrl;
 
@@ -38,6 +40,13 @@ function createModalForImage(imageUrl) {
 
   // Append modal container to document body
   document.body.appendChild(modal);
+
+  // Add event listeners for keyboard arrow keys
+  document.addEventListener("keydown", handleKeyDown);
+
+  // Add event listeners for touch swipe events on mobile devices
+  modalImg.addEventListener("touchstart", handleTouchStart);
+  modalImg.addEventListener("touchmove", handleTouchMove);
 }
 
 // Function to handle image click within a gallery block
@@ -69,7 +78,6 @@ function addClickListenersToImages(liDOM) {
 function prevImage() {
   if (currentImageIndex > 0) {
     currentImageIndex--;
-    const modalImg = document.querySelector(".modal-image-content");
     modalImg.src = images[currentImageIndex];
     toggleButtonVisibility();
   }
@@ -79,7 +87,6 @@ function prevImage() {
 function nextImage() {
   if (currentImageIndex < images.length - 1) {
     currentImageIndex++;
-    const modalImg = document.querySelector(".modal-image-content");
     modalImg.src = images[currentImageIndex];
     toggleButtonVisibility();
   }
@@ -90,17 +97,52 @@ function toggleButtonVisibility() {
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   if (currentImageIndex === 0) {
-    setTimeout(() => {
-      prevBtn.style.display = "none";
-    }, 0); // Adjust the delay as needed
+    prevBtn.style.display = "none";
   } else {
     prevBtn.style.display = "block";
   }
   if (currentImageIndex === images.length - 1) {
-    setTimeout(() => {
-      nextBtn.style.display = "none";
-    }, 0); // Adjust the delay as needed
+    nextBtn.style.display = "none";
   } else {
     nextBtn.style.display = "block";
   }
 }
+
+// Function to handle keyboard arrow key events
+function handleKeyDown(event) {
+  if (event.keyCode === 37) {
+    // Left arrow key
+    prevImage();
+  } else if (event.keyCode === 39) {
+    // Right arrow key
+    nextImage();
+  }
+}
+
+// Variables to store touch position for swipe gesture
+let touchStartX = 0;
+let touchEndX = 0;
+
+// Function to handle touch start event
+function handleTouchStart(event) {
+  touchStartX = event.touches[0].clientX;
+}
+
+// Function to handle touch move event
+function handleTouchMove(event) {
+  touchEndX = event.touches[0].clientX;
+}
+
+// Function to handle touch swipe event
+function handleTouch() {
+  if (touchStartX - touchEndX > 50) {
+    // Swipe left
+    nextImage();
+  } else if (touchEndX - touchStartX > 50) {
+    // Swipe right
+    prevImage();
+  }
+}
+
+// Add event listeners for touch swipe gesture
+modalImg.addEventListener("touchend", handleTouch);
