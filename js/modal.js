@@ -1,5 +1,5 @@
 let images = []; // Define images as a global variable
-let modalImg; // Define modalImg as a global variable to access it from other functions
+let touchStartX, touchEndX; // Variables to store touch swipe coordinates
 
 // Function to create modal window for the clicked image
 function createModalForImage(imageUrl) {
@@ -15,7 +15,7 @@ function createModalForImage(imageUrl) {
   closeBtn.addEventListener("click", () => modal.remove());
 
   // Create modal content (image)
-  modalImg = document.createElement("img");
+  const modalImg = document.createElement("img");
   modalImg.classList.add("modal-image-content");
   modalImg.src = imageUrl;
 
@@ -39,13 +39,6 @@ function createModalForImage(imageUrl) {
 
   // Append modal container to document body
   document.body.appendChild(modal);
-
-  // Add event listeners for keyboard arrow keys
-  document.addEventListener("keydown", handleKeyDown);
-
-  // Add event listeners for touch events
-  modalImg.addEventListener("touchstart", handleTouch);
-  modalImg.addEventListener("touchend", handleTouchEnd);
 }
 
 // Function to handle image click within a gallery block
@@ -77,6 +70,7 @@ function addClickListenersToImages(liDOM) {
 function prevImage() {
   if (currentImageIndex > 0) {
     currentImageIndex--;
+    const modalImg = document.querySelector(".modal-image-content");
     modalImg.src = images[currentImageIndex];
     toggleButtonVisibility();
   }
@@ -86,6 +80,7 @@ function prevImage() {
 function nextImage() {
   if (currentImageIndex < images.length - 1) {
     currentImageIndex++;
+    const modalImg = document.querySelector(".modal-image-content");
     modalImg.src = images[currentImageIndex];
     toggleButtonVisibility();
   }
@@ -107,20 +102,17 @@ function toggleButtonVisibility() {
   }
 }
 
-// Function to handle keyboard arrow key events
+// Function to handle keydown event for keyboard navigation
 function handleKeyDown(event) {
-  if (event.keyCode === 37) {
-    // Left arrow key
+  if (event.key === "ArrowLeft") {
     prevImage();
-  } else if (event.keyCode === 39) {
-    // Right arrow key
+  } else if (event.key === "ArrowRight") {
     nextImage();
   }
 }
 
-// Variables to store touch position for swipe gesture
-let touchStartX = 0;
-let touchEndX = 0;
+// Add event listener for keydown event
+document.addEventListener("keydown", handleKeyDown);
 
 // Function to handle touch swipe event
 function handleTouch(event) {
@@ -138,3 +130,12 @@ function handleTouchEnd(event) {
     prevImage();
   }
 }
+
+// Add event listeners for touch events
+document.addEventListener("touchstart", handleTouch);
+document.addEventListener("touchend", handleTouchEnd);
+
+// Call the function initially
+addClickListenersToImages(document);
+
+let currentImageIndex = 0;
