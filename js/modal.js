@@ -1,5 +1,6 @@
 let images = []; // Define images as a global variable
 let touchStartX, touchEndX; // Variables to store touch swipe coordinates
+let modalImg = null; // Initialize modalImg as null
 
 // Function to create modal window for the clicked image
 function createModalForImage(imageUrl) {
@@ -12,10 +13,13 @@ function createModalForImage(imageUrl) {
   const closeBtn = document.createElement("span");
   closeBtn.classList.add("close");
   closeBtn.innerHTML = "&times;";
-  closeBtn.addEventListener("click", () => modal.remove());
+  closeBtn.addEventListener("click", () => {
+    modal.remove();
+    modalImg = null; // Clear modalImg when modal is removed
+  });
 
   // Create modal content (image)
-  const modalImg = document.createElement("img");
+  modalImg = document.createElement("img");
   modalImg.classList.add("modal-image-content");
   modalImg.src = imageUrl;
 
@@ -70,9 +74,11 @@ function addClickListenersToImages(liDOM) {
 function prevImage() {
   if (currentImageIndex > 0) {
     currentImageIndex--;
-    const modalImg = document.querySelector(".modal-image-content");
-    modalImg.src = images[currentImageIndex];
-    toggleButtonVisibility();
+    if (modalImg) {
+      // Check if modalImg is defined
+      modalImg.src = images[currentImageIndex];
+      toggleButtonVisibility();
+    }
   }
 }
 
@@ -80,9 +86,11 @@ function prevImage() {
 function nextImage() {
   if (currentImageIndex < images.length - 1) {
     currentImageIndex++;
-    const modalImg = document.querySelector(".modal-image-content");
-    modalImg.src = images[currentImageIndex];
-    toggleButtonVisibility();
+    if (modalImg) {
+      // Check if modalImg is defined
+      modalImg.src = images[currentImageIndex];
+      toggleButtonVisibility();
+    }
   }
 }
 
