@@ -22,6 +22,7 @@ function createModalForImage(imageUrl) {
   modalImg = document.createElement("img");
   modalImg.classList.add("modal-image-content");
   modalImg.src = imageUrl;
+  modalImg.addEventListener("click", handleModalImageClick);
 
   // Create previous button
   const prevBtn = document.createElement("button");
@@ -101,12 +102,12 @@ function toggleButtonVisibility() {
   if (currentImageIndex === 0) {
     prevBtn.style.display = "none";
   } else {
-    prevBtn.style.display = "block";
+    prevBtn.style.display = "";
   }
   if (currentImageIndex === images.length - 1) {
     nextBtn.style.display = "none";
   } else {
-    nextBtn.style.display = "block";
+    nextBtn.style.display = "";
   }
 }
 
@@ -143,7 +144,21 @@ function handleTouchEnd(event) {
 document.addEventListener("touchstart", handleTouch);
 document.addEventListener("touchend", handleTouchEnd);
 
-// Call the function initially
-addClickListenersToImages(document);
+// Function to handle click on left or right edges of the image
+function handleModalImageClick(event) {
+  const clickedX = event.clientX;
+  const modalImage = document.querySelector(".modal-image");
 
-let currentImageIndex = 0;
+  if (modalImage) {
+    // Modal image exists, proceed with the logic
+    const modalWidth = modalImage.offsetWidth;
+
+    if (clickedX < modalWidth / 2) {
+      // Clicked on the left side of the image
+      prevImage();
+    } else {
+      // Clicked on the right side of the image
+      nextImage();
+    }
+  }
+}

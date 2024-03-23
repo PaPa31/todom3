@@ -1459,12 +1459,17 @@ code {
 }
 
 .modal-image button {
+  display: none;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   padding: 10px;
   background-color: rgba(29, 72, 14, 0.5);
   border: none;
+}
+
+.modal-image:hover button {
+  display: block;
 }
 
 .modal-image button:active {
