@@ -1420,9 +1420,34 @@ code {
   color: #45a049;
 }*/
 
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.gallery li {
+  flex: 0 19% !important;
+}
+
 .gallery img {
   width: 100%;
   height: auto;
+  border-radius: 5px; /* Add rounded corners to thumbnails */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  transition: transform 0.3s ease; /* Add transition effect for hover */
+}
+
+.gallery > img {
+  max-width: 30%;
+  flex: initial;
+  margin: 0;
+}
+
+.gallery img:hover {
+  transform: scale(1.05); /* Enlarge the thumbnail on hover */
 }
 
 #list-items .gallery img,
