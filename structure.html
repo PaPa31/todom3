@@ -1,0 +1,312 @@
+<!--Todom structure-->
+<html>
+  <head></head>
+  <body>
+    <div class="container">
+      <div class="flex-row w-1440">
+        <div id="content" class="flex-small">
+          <form id="form1" class="flex-row markdown-body">
+            <div id="input-group">
+              <!--Button to clear Input Textarea-->
+              <button
+                id="x-button"
+                type="button"
+                title="Clear input"
+                class="bared btn"
+                style="display: none"
+              ></button>
+              <!--Button to cancel clearing Input Textarea-->
+              <button
+                id="return-last-input"
+                type="button"
+                title="Return the last typed string"
+                class="bared btn"
+                style="display: none"
+              ></button>
+              <!--Input Textarea - is the place where the user enters text -->
+              <textarea
+                id="input"
+                name="content"
+                data-provide="markdown"
+                rows="10"
+                placeholder="New"
+                required=""
+                spellcheck="false"
+                wrap="soft"
+                class="border"
+              ></textarea>
+              <!--Output Textarea serves to coordinate the Input Textarea and the Preview area-->
+              <textarea
+                id="output"
+                name="output"
+                data-provide="markdown"
+                rows="10"
+                placeholder="New"
+                spellcheck="false"
+                wrap="soft"
+              ></textarea>
+            </div>
+          </form>
+          <!--Open/Save buttons-->
+          <div id="first-button-row" class="flex-row">
+            <div id="open-save-buttons" class="flex-small">
+              <!--"Save as new" button adds to the itemsArray a new element-->
+              <button
+                id="save-as-new"
+                type="submit"
+                form="form1"
+                class="button-default btn-flex btn"
+              >
+                Save item
+              </button>
+              <!--hh-->
+              <button
+                id="save-as-old"
+                type="submit"
+                class="button-default btn-flex btn button-edit none"
+              >
+                Save as old</button
+              ><button
+                id="save-as-file"
+                type="button"
+                class="button-default btn-flex btn inline-block"
+              >
+                Save as file</button
+              ><button
+                id="open-file"
+                type="button"
+                class="button-default btn-flex btn"
+              >
+                Split file</button
+              ><button
+                id="open-dir"
+                type="button"
+                class="button-default btn-flex btn none"
+              >
+                Open dir
+              </button>
+            </div>
+            <div id="tools" class="flex-small">
+              <!--Light/dark theme toggle button-->
+              <button id="dark-button" type="button" class="btn">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  class="dark-toggle-icon"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"
+                  ></path>
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  class="light-toggle-icon"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"
+                  ></path>
+                </svg>
+                <div class="ball"></div>
+              </button>
+            </div>
+          </div>
+          <!--Visual change buttons-->
+          <div class="flex-row">
+            <div id="visual-change-buttons" class="flex-small">
+              <button
+                id="list-order"
+                type="button"
+                title="Direct/Reverse Order"
+                class="button-default btn-flex btn"
+                style="visibility: visible; opacity: 1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 60 60"
+                  class="sort-ascending"
+                >
+                  <path
+                    d="M9.2039 3.1694c-.1002.2508-.1878.501-.1878.5766 0 .2004-1.2156 1.4664-1.6794 1.7418-.702.4386-1.9926.777-3.1704.852l-1.1658.0756V9.26h5.2632l.0252 7.5444.0378 7.557h3.7596V2.807l-1.3536-.0378-1.3536-.0378-.1752.438zm38.94966 7.59486c-.1506.0624-.3762.2634-.5016.4638-.213.3258-.2256 1.278-.288 19.3992l-.0624 19.0488-4.5744-4.524c-2.5188-2.4936-4.6992-4.599-4.8498-4.6746-.564-.288-1.4034-.0876-1.6416.4134-.1758.351-.2256.8148-.1002 1.1658.0504.15 2.895 3.045 6.3036 6.4164l6.228 6.1404 1.9428-1.8672c1.0776-1.0278 3.9474-3.8598 6.3786-6.291 3.6594-3.6846 4.4112-4.4988 4.4112-4.7874 0-1.0398-1.0404-1.6416-1.98-1.1532-.1878.1002-2.3688 2.2182-4.8498 4.6998l-4.5114 4.524-.063-19.1736-.0624-19.1736-.3258-.3132c-.351-.3516-1.0278-.5022-1.4538-.3138zM8.8907 39.3497c-1.3032.2256-3.0078 1.2534-3.9474 2.3682-.564.6642-1.341 2.2932-1.629 3.3588-.1002.4134-.2256 1.1778-.276 1.704l-.075.9522h3.384l.075-.9144c.1002-1.203.489-2.4312 1.0152-3.1704.5388-.8022 1.3032-1.1904 2.4312-1.278 1.83-.1254 3.1956.6894 3.6594 2.193.4764 1.5288.2508 2.8572-.702 4.2354-.5514.8148-1.416 1.5792-3.246 2.8572-2.895 2.0298-4.1982 3.1332-5.1258 4.3362-.9774 1.278-1.5918 2.82-1.767 4.4364l-.0876.84h14.8128v-3.1332h-5.2632c-2.9826 0-5.2632-.0504-5.2632-.1128s.1878-.3762.4134-.714c.4134-.639.6144-.7896 2.6568-2.1432 4.023-2.6694 5.8776-4.3488 6.717-6.0654.6264-1.2534.777-1.8672.777-3.1206 0-1.8798-.639-3.4962-1.9176-4.7748-.8898-.9024-1.6794-1.3662-2.832-1.6668-.9528-.2502-2.9202-.3504-3.81-.1878z"
+                  ></path>
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 60 60"
+                  class="sort-descending"
+                >
+                  <path
+                    d="M47.918 10.784c-.151.063-.377.264-.502.464-.213.326-.226 1.278-.288 19.399l-.062 19.049-4.575-4.524c-2.519-2.494-4.699-4.599-4.85-4.675-.564-.288-1.403-.087-1.641.414-.176.351-.226.815-.1 1.166.05.15 2.895 3.045 6.303 6.416l6.228 6.14 1.943-1.867c1.078-1.028 3.947-3.86 6.379-6.291 3.659-3.684 4.411-4.499 4.411-4.787 0-1.04-1.041-1.642-1.98-1.153-.188.1-2.369 2.218-4.85 4.699l-4.511 4.524-.063-19.173-.063-19.174-.326-.313c-.351-.352-1.027-.502-1.453-.314ZM11.687 61.052c1.303-.225 3.008-1.253 3.948-2.368.564-.664 1.341-2.293 1.629-3.359.1-.413.225-1.178.276-1.704l.075-.952h-3.384l-.075.914c-.101 1.203-.489 2.432-1.016 3.171-.538.802-1.303 1.19-2.431 1.278-1.83.125-3.195-.69-3.659-2.193-.477-1.529-.251-2.857.702-4.236.551-.814 1.416-1.579 3.246-2.857 2.895-2.03 4.198-3.133 5.126-4.336.977-1.278 1.591-2.82 1.767-4.436l.087-.84H3.165v3.133h5.264c2.982 0 5.263.05 5.263.113 0 .062-.188.376-.414.714-.413.639-.614.789-2.656 2.143-4.023 2.669-5.878 4.349-6.717 6.065-.627 1.254-.777 1.867-.777 3.121 0 1.88.639 3.496 1.917 4.775.89.902 1.68 1.366 2.832 1.666.953.251 2.92.351 3.81.188Zm-.777-37.293c.1-.251.188-.501.188-.577 0-.2 1.215-1.466 1.679-1.742.702-.438 1.993-.777 3.171-.852l1.165-.075v-2.845H11.85l-.025-7.544-.038-7.557H8.028v21.554l1.353.038 1.354.038.175-.438Z"
+                  ></path>
+                </svg></button
+              ><button
+                id="items-files-toggle"
+                type="button"
+                class="header-button button-default btn-flex btn"
+              >
+                Items</button
+              ><button
+                id="fold-global-toggle"
+                type="button"
+                class="header-button transparent-border button-default btn-flex btn"
+                title="Fold/Unfold All"
+              ></button>
+            </div>
+            <div id="deletion-control-buttons" class="flex-small">
+              <button
+                id="undo-delete"
+                type="button"
+                class="transparent-border button-default btn-flex btn invisible inline-block"
+                title="Undo last delete"
+              >
+                <img src="img/undo-delete-6.svg" /><span
+                  id="deleted-counter"
+                  class="deletion-counter"
+                ></span></button
+              ><button
+                id="clear-trash"
+                type="button"
+                class="transparent-border button-default btn-flex btn invisible inline-block"
+                title="Clear Trash (Double-click)"
+              >
+                <img src="img/trash-x.svg" /></button
+              ><button
+                id="restore-deleted-item"
+                type="button"
+                class="transparent-border button-default btn-flex btn invisible inline-block"
+                title="Restore last Trashed item"
+              >
+                <img src="img/rotate-ccw-3.svg" /><span
+                  id="trashed-counter"
+                  class="deletion-counter"
+                ></span></button
+              ><button
+                id="delete-all-items"
+                type="button"
+                class="button-default btn-flex btn visible"
+              >
+                Delete All Items
+              </button>
+            </div>
+          </div>
+          <div id="main-listing">
+            <!--Item block -->
+            <ol id="list-items">
+              <!--Start of elements inserted dinamically-->
+              <!--Start of item #1-->
+              <li id="0">
+                <div class="md-item">
+                  <h2 id="topic-1">Topic 1</h2>
+                  <ol>
+                    <li>
+                      <p>Text 1</p>
+                      <p>Text 2</p>
+                      <p>Text 3</p>
+                    </li>
+                  </ol>
+                  <!-- Horizontal carousel with thumbnails -->
+                  <ul class="gallery">
+                    <li><img src="../public/img/topic-1/image_001.jpg" /></li>
+                    <li><img src="../public/img/topic-1/image_002.jpg" /></li>
+                    <li><img src="../public/img/topic-1/image_003.jpg" /></li>
+                  </ul>
+                </div>
+              </li>
+              <!--End of item #1-->
+              <!--Start of item #2-->
+              <li id="1">
+                <div class="md-item">
+                  <h2 id="topic-2">Topic 2</h2>
+                  <ol>
+                    <li>
+                      <p>Text 1</p>
+                      <p>Text 2</p>
+                      <p>Text 3</p>
+                    </li>
+                  </ol>
+                  <!-- Horizontal carousel with thumbnails -->
+                  <ul class="gallery">
+                    <li><img src="../public/img/topic-1/image_001.jpg" /></li>
+                    <li><img src="../public/img/topic-1/image_002.jpg" /></li>
+                    <li><img src="../public/img/topic-1/image_003.jpg" /></li>
+                    <li>
+                      <img
+                        src="../public/img/topic-2/clipboard_image_20240323112726.png"
+                      />
+                    </li>
+                    <li>
+                      <img
+                        src="../public/img/topic-2/clipboard_image_20240323112726.png"
+                      />
+                    </li>
+                    <li>
+                      <img
+                        src="../public/img/topic-2/clipboard_image_20240323112726.png"
+                      />
+                    </li>
+                    <li>
+                      <img
+                        src="../public/img/topic-2/clipboard_image_20240323112726.png"
+                      />
+                    </li>
+                  </ul>
+                  <ul>
+                    <li>Text 4</li>
+                  </ul>
+                  <ol start="2">
+                    <li>Text 1</li>
+                  </ol>
+                  <p>Text 2</p>
+                  <p>Text 3</p>
+                  <p>Text 4</p>
+                  <p>Text 5</p>
+                  <!-- Horizontal carousel with thumbnails -->
+                  <ul class="gallery">
+                    <img
+                      src="../public/img/topic-2/clipboard_image_20240323112726.png"
+                    />
+                  </ul>
+                  <ul>
+                    <li>
+                      <a href="https://aliexpress.ru/item/32817382503.html"
+                        >Link 1</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <!--End of item #2-->
+              <!--End of elements inserted dynamically-->
+            </ol>
+            <!--File block-->
+            <ol id="list-files" style="display: none">
+              <!--Start of elements inserted dinamically-->
+              <!--End of elements inserted dynamically-->
+            </ol>
+          </div>
+        </div>
+        <div class="flex-small">
+          <!--"Preview-area"-->
+          <div class="small-container markdown-body">
+            <ol class="preview-outer">
+              <li>
+                <div id="preview" style="max-height: 0px"></div>
+                <div
+                  id="position"
+                  style="max-height: 0px"
+                  class="parent-last-child"
+                ></div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

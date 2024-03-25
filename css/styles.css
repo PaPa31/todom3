@@ -1422,10 +1422,11 @@ code {
 
 .gallery {
   display: flex;
-  flex-wrap: wrap;
   gap: 5px;
   list-style-type: none;
   padding-left: 0;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  scroll-snap-type: x mandatory; /* Snap to each image */
 }
 
 .gallery li {
@@ -1438,6 +1439,11 @@ code {
   border-radius: 5px; /* Add rounded corners to thumbnails */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
   transition: transform 0.3s ease; /* Add transition effect for hover */
+  flex: 0 0 auto; /* Ensure images don't grow or shrink */
+  scroll-snap-align: start; /* Snap each image to the start */
+  width: 100px; /* Adjust width as needed */
+  height: 100%; /* Maintain aspect ratio */
+  margin-right: 10px; /* Add space between images */
 }
 
 .gallery > img {
