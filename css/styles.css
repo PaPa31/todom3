@@ -1422,34 +1422,32 @@ code {
 
 .gallery {
   display: flex;
-  gap: 5px;
+  gap: 3px;
   list-style-type: none;
   padding-left: 0;
-  overflow-x: auto; /* Enable horizontal scrolling */
+  /*overflow-x: auto;*/
   scroll-snap-type: x mandatory; /* Snap to each image */
+  overflow-y: hidden;
 }
 
 .gallery li {
   flex: 0 24% !important;
+  margin: 3px;
 }
 
 .gallery img {
-  width: 100%;
-  height: auto;
   border-radius: 5px; /* Add rounded corners to thumbnails */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
   transition: transform 0.3s ease; /* Add transition effect for hover */
   flex: 0 0 auto; /* Ensure images don't grow or shrink */
-  scroll-snap-align: start; /* Snap each image to the start */
-  width: 100px; /* Adjust width as needed */
-  height: 100%; /* Maintain aspect ratio */
-  margin-right: 10px; /* Add space between images */
+  width: 100px;
+  height: 100%;
 }
 
 .gallery > img {
   max-width: 30%;
   flex: initial;
-  margin: 0;
+  margin: 3px;
 }
 
 .gallery img:hover {
