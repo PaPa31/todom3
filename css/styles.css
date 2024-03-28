@@ -1425,13 +1425,11 @@ code {
   gap: 3px;
   list-style-type: none;
   padding-left: 0;
-  /*overflow-x: auto;*/
-  scroll-snap-type: x mandatory; /* Snap to each image */
   overflow-y: hidden;
 }
 
 .gallery li {
-  flex: 0 24% !important;
+  flex: 0 auto !important;
   margin: 3px;
 }
 
@@ -1448,10 +1446,6 @@ code {
   max-width: 30%;
   flex: initial;
   margin: 3px;
-}
-
-.gallery img:hover {
-  transform: scale(1.05); /* Enlarge the thumbnail on hover */
 }
 
 #list-items .gallery img,
