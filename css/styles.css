@@ -1426,6 +1426,7 @@ code {
   list-style-type: none;
   padding-left: 0;
   overflow-y: hidden;
+  position: relative;
 }
 
 .gallery li {
@@ -1540,7 +1541,6 @@ code {
 .gallery .next-btn:hover {
   background-color: rgba(31, 166, 12, 0.7);
 }
-
 
 /*carousel end*/
 @media (min-width: 600px) {
