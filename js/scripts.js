@@ -401,6 +401,7 @@ const saveFile = () => {
 
 const mdToLi = (el, text) => {
   el.innerHTML = markdown(text);
+  addButtonsToGallery(el);
   addClickListenersToImages(el);
   waitForIframe(el);
 };
