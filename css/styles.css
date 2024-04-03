@@ -1467,7 +1467,7 @@ code {
   top: 50%;
   transform: translateY(-50%);
   padding: 10px;
-  background-color: rgba(29, 72, 14, 0.5);
+  background-color: rgba(170, 10, 10, 0.5);
   border: none;
   color: #fff;
   cursor: pointer;
@@ -1484,7 +1484,7 @@ code {
 
 .gallery-wrapper .prev-btn:hover,
 .gallery-wrapper .next-btn:hover {
-  background-color: rgba(31, 166, 12, 0.7);
+  background-color: rgba(206, 12, 12, 0.84);
 }
 
 .gallery-wrapper button svg {
