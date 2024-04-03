@@ -97,8 +97,8 @@ function nextImage() {
 
 // Function to toggle visibility of previous and next buttons
 function toggleButtonVisibility() {
-  const prevBtn = document.getElementById("prevBtn");
-  const nextBtn = document.getElementById("nextBtn");
+  const prevBtn = modalImg.getElementById("prevBtn");
+  const nextBtn = modalImg.getElementById("nextBtn");
   if (currentImageIndex === 0) {
     prevBtn.style.display = "none";
   } else {
