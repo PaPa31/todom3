@@ -1487,6 +1487,12 @@ code {
   background-color: rgba(31, 166, 12, 0.7);
 }
 
+.gallery-wrapper button svg {
+  fill: #fff;
+  width: 19px;
+  height: 19px;
+}
+
 /* carousel end*/
 
 .modal-image {
