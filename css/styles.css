@@ -1447,7 +1447,8 @@ code {
   transition: transform 0.3s ease; /* Add transition effect for hover */
   flex: 0 0 auto; /* Ensure images don't grow or shrink */
   width: 100px;
-  height: auto;
+  height: 100px;
+  object-fit: cover;
 }
 
 .gallery > img {
@@ -1482,8 +1483,7 @@ code {
   right: 10px;
 }
 
-.gallery-wrapper .prev-btn:hover,
-.gallery-wrapper .next-btn:hover {
+.gallery-wrapper button:active {
   background-color: rgba(206, 12, 12, 0.84);
 }
 

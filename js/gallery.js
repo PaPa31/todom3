@@ -65,4 +65,9 @@ function checkButtonVisibility(gallery) {
   } else {
     nextBtn.style.display = "block";
   }
+
+  // Ensure Next button is hidden when at the right edge
+  if (gallery.scrollLeft + gallery.clientWidth >= gallery.scrollWidth - 1) {
+    nextBtn.style.display = "none";
+  }
 }
