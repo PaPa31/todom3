@@ -1420,27 +1420,34 @@ code {
   color: #45a049;
 }*/
 
+/* carousel start*/
+
+.gallery-wrapper {
+  position: relative; /* Ensure the wrapper is a reference for absolute positioning */
+  overflow: hidden; /* Hide overflow to prevent scrollbars */
+}
+
 .gallery {
   display: flex;
   gap: 3px;
   list-style-type: none;
   padding-left: 0;
-  overflow-y: hidden;
-  position: relative;
+  overflow-x: auto;
+  scroll-behavior: smooth;
 }
 
 .gallery li {
-  flex: 0 auto !important;
+  flex: 0 0 auto !important;
   margin: 3px;
 }
 
 .gallery img {
-  border-radius: 5px; /* Add rounded corners to thumbnails */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease; /* Add transition effect for hover */
   flex: 0 0 auto; /* Ensure images don't grow or shrink */
   width: 100px;
-  height: 100%;
+  height: auto;
 }
 
 .gallery > img {
@@ -1453,6 +1460,34 @@ code {
 #list-files .gallery img {
   cursor: pointer; /* not for preview imgs */
 }
+
+.gallery-wrapper .prev-btn,
+.gallery-wrapper .next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  background-color: rgba(29, 72, 14, 0.5);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.gallery-wrapper .prev-btn {
+  left: 10px;
+}
+
+.gallery-wrapper .next-btn {
+  right: 10px;
+}
+
+.gallery-wrapper .prev-btn:hover,
+.gallery-wrapper .next-btn:hover {
+  background-color: rgba(31, 166, 12, 0.7);
+}
+
+/* carousel end*/
 
 .modal-image {
   position: fixed;
@@ -1514,35 +1549,6 @@ code {
   right: 10px;
 }
 
-/*carousel start*/
-
-.gallery .prev-btn,
-.gallery .next-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 10px;
-  background-color: rgba(29, 72, 14, 0.5);
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  z-index: 1; /* Ensure buttons appear above gallery */
-}
-
-.gallery .prev-btn {
-  left: 10px;
-}
-
-.gallery .next-btn {
-  right: 10px;
-}
-
-.gallery .prev-btn:hover,
-.gallery .next-btn:hover {
-  background-color: rgba(31, 166, 12, 0.7);
-}
-
-/*carousel end*/
 @media (min-width: 600px) {
   .flex-small {
     flex: 0 1 auto;
