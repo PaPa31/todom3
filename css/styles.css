@@ -1462,8 +1462,8 @@ code {
   cursor: pointer; /* not for preview imgs */
 }
 
-.gallery-wrapper .prev-btn,
-.gallery-wrapper .next-btn {
+.gallery-wrapper button {
+  display: none;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -1491,6 +1491,10 @@ code {
   fill: #fff;
   width: 19px;
   height: 19px;
+}
+
+.gallery-wrapper:hover button {
+  display: block;
 }
 
 /* carousel end*/
