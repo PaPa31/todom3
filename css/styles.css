@@ -1559,6 +1559,19 @@ code {
   right: 10px;
 }
 
+details {
+  cursor: pointer;
+  padding: 10px 0 30px;
+}
+
+.image-fit-mode {
+  margin: 10px 0 30px !important;
+}
+
+.image-fit-mode img {
+  width: 100%;
+}
+
 @media (min-width: 600px) {
   .flex-small {
     flex: 0 1 auto;
