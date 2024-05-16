@@ -1569,7 +1569,11 @@ details {
 }
 
 .image-fit-mode img {
-  width: 100%;
+  max-width: 100%;
+}
+
+.image-fit-mode p {
+  margin: 0;
 }
 
 @media (min-width: 600px) {
