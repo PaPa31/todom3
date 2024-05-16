@@ -1559,22 +1559,26 @@ code {
   right: 10px;
 }
 
+/*single-image*/
+
 details {
   cursor: pointer;
-  padding: 10px 0 30px;
+  padding: 10px 10px 30px;
 }
 
-.image-fit-mode {
+.single-image {
   margin: 10px 0 30px !important;
 }
 
-.image-fit-mode img {
+.single-image img {
   max-width: 100%;
 }
 
-.image-fit-mode p {
+.single-image p {
   margin: 0;
 }
+
+/*single-image end*/
 
 @media (min-width: 600px) {
   .flex-small {
