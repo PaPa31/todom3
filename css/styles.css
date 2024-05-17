@@ -1434,6 +1434,7 @@ code {
   padding-left: 0;
   overflow-x: auto;
   scroll-behavior: smooth;
+  text-align: center;
 }
 
 .gallery li {
@@ -1559,12 +1560,17 @@ code {
   right: 10px;
 }
 
-/*single-image*/
+/*details*/
 
 details {
-  cursor: pointer;
   padding: 10px 10px 30px;
 }
+
+summary {
+  cursor: pointer;
+}
+
+/*single-image*/
 
 .single-image {
   margin: 10px 0 30px !important;
