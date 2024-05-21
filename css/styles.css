@@ -350,14 +350,16 @@ ol#list-files .main-act {
   width: 100%;
 }
 
+.ytb-iframe {
+  height: 100%;
+  margin-bottom: 15px;
+}
+
 .ytb-thumb {
   position: relative;
   display: flex;
   justify-content: center;
-  /*overflow-y: auto;*/
   align-items: center;
-  /*min-height: 65px;*/
-  min-height: 379px;
   margin-bottom: 15px;
   margin-top: 5px;
 }
@@ -521,11 +523,6 @@ image is undefined */
 
 .folded .resizable-div {
   justify-content: center;
-}
-
-.resizable-div iframe {
-  height: 64px;
-  min-height: 388px;
 }
 
 .folded .resizable-div iframe {
