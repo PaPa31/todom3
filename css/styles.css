@@ -357,7 +357,9 @@ ol#list-files .main-act {
   /*overflow-y: auto;*/
   align-items: center;
   /*min-height: 65px;*/
-  min-height: 390px;
+  min-height: 379px;
+  margin-bottom: 15px;
+  margin-top: 5px;
 }
 
 .ytb-thumb::-webkit-scrollbar {
