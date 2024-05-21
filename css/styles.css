@@ -52,6 +52,7 @@
   --todom-md-table: #dfdfdf;
 
   --todom-modal-container-bg: #565e63c7;
+  --todom-youtube-desc-color: #a41111;
 }
 
 .dark {
@@ -97,6 +98,7 @@
   --todom-md-table: #3e3e3e;
 
   --todom-modal-container-bg: #565e63c7;
+  --todom-youtube-desc-color: #e8a41c;
 }
 
 html {
@@ -367,10 +369,11 @@ ol#list-files .main-act {
   cursor: pointer;
   width: 100%;
   display: block;
-  position: absolute;
+  /*position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);*/
+  max-height: 100%;
 }
 
 /*if youtube thumbnail cover
@@ -387,9 +390,9 @@ image is undefined */
 .ytb-snip {
   position: absolute;
   padding: 0 4px;
-  border-radius: 4px;
   top: 0;
   background-color: var(--todom-background-translucent);
+  color: var(--todom-youtube-desc-color);
   display: none;
   overflow-y: auto;
   max-height: 100%;
