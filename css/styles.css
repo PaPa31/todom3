@@ -1092,7 +1092,7 @@ button.delete-current-save:hover {
   left: 0;
   right: 0;
   top: 11px;
-  z-index: -1;
+  /*z-index: -1;*/
 }
 
 #restore-deleted-item,
