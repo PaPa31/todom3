@@ -1577,6 +1577,11 @@ details {
   padding: 10px 10px 30px;
 }
 
+details[open] {
+  border: 1px solid green;
+  border-radius: 4px;
+}
+
 summary {
   cursor: pointer;
 }
@@ -1593,6 +1598,10 @@ summary {
 
 .single-image p {
   margin: 0;
+}
+
+.w50 {
+  width: 50%;
 }
 
 /*single-image end*/
