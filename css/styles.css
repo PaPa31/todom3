@@ -571,12 +571,27 @@ ol#list-items .folded .md-item :not(:first-child) {
 
 .resizable-div table {
   border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.resizable-div caption {
+  caption-side: bottom;
+  padding: 10px;
+  font-weight: bold;
 }
 
 .resizable-div td,
 .resizable-div th {
   border: 1px solid var(--todom-md-table);
   padding: 5px;
+}
+
+.resizable-div thead > tr {
+  background-color: var(--todom-md-table);
+}
+
+.resizable-div tbody > tr:nth-of-type(even) {
+  background-color: var(--todom-background-translucent);
 }
 
 .resizable-div img {
