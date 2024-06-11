@@ -1589,13 +1589,14 @@ code {
 /*details*/
 
 details {
+  border: 1px solid transparent;
   padding: 10px 10px 30px;
 }
 
 details[open] {
   border: 1px solid green;
   border-radius: 4px;
-  padding: 0;
+  padding-bottom: 0;
   margin-bottom: 10px;
 }
 
