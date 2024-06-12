@@ -1609,7 +1609,8 @@ summary {
   border: 1px dotted green;
   border-radius: 4px;
   padding: 10px;
-  display: inline list-item;
+  outline: none;
+  width: fit-content;
 }
 
 /*single-image*/
