@@ -1617,7 +1617,7 @@ summary {
 }
 
 summary:focus-visible {
-  outline: -webkit-focus-ring-color auto 1px;
+  outline: var(--todom-button-border) auto 1px;
 }
 
 /*single-image*/
