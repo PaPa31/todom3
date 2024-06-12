@@ -193,7 +193,8 @@ button#dark-button:active,
 button#dark-button:focus {
   border: 2px solid #626262;
   background-color: initial;
-  color: initial;
+  /*color: initial;*/
+  /* accessibility: outline is invisible when TAB toggle */
 }
 
 .ball {
@@ -236,7 +237,8 @@ button {
 }
 
 .save-history button {
-  transition-duration: 0s;
+  /*transition-duration: 0s;*/
+  /* accessibility: outline is invisible when TAB toggle */
 }
 
 .btn:focus-visible {
