@@ -1616,6 +1616,10 @@ summary {
   width: fit-content;
 }
 
+summary:focus-visible {
+  outline: -webkit-focus-ring-color auto 1px;
+}
+
 /*single-image*/
 
 .single-image {
