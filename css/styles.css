@@ -1594,14 +1594,22 @@ details {
 }
 
 details[open] {
-  border: 1px solid green;
+  border: 1px dotted red;
   border-radius: 4px;
   padding-bottom: 0;
   margin-bottom: 10px;
 }
 
+details[open] summary {
+  border: 1px dotted transparent;
+}
+
 summary {
   cursor: pointer;
+  border: 1px dotted green;
+  border-radius: 4px;
+  padding: 10px;
+  display: inline list-item;
 }
 
 /*single-image*/
