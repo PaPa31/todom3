@@ -1642,21 +1642,31 @@ summary:focus-visible {
 
 .transparent {
   /*mix-blend-mode: multiply;*/
-  background-color: black;
+  /*background-color: black;*/
 }
 
 .dark .transparent {
-  /*mix-blend-mode: multiply;*/
-  background-color: white;
+  mix-blend-mode: plus-lighter;
+  /*background-color: white;*/
 }
 
 text {
   fill: var(--todom-text-foreground) !important;
 }
 
-/*.dark text {
-  fill: var(--todom-text-foreground) !important;
-}*/
+object {
+  width: 100%;
+  height: auto;
+}
+
+.filter-svg {
+  filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(0deg) brightness(100%)
+    contrast(100%);
+}
+.dark .filter-svg {
+  filter: invert(100%) sepia(0%) saturate(100%) hue-rotate(0deg)
+    brightness(100%) contrast(100%);
+}
 
 @media (min-width: 600px) {
   .flex-small {

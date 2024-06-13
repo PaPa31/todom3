@@ -404,6 +404,7 @@ const mdToLi = (el, text) => {
   addButtonsAndWrapperToGalleries(el);
   addClickListenersToImages(el);
   waitForIframe(el);
+  waitForObjectTag(el);
 };
 
 const markdown = (s) => {
