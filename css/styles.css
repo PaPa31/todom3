@@ -1640,6 +1640,24 @@ summary:focus-visible {
 
 /*single-image end*/
 
+.transparent {
+  /*mix-blend-mode: multiply;*/
+  background-color: black;
+}
+
+.dark .transparent {
+  /*mix-blend-mode: multiply;*/
+  background-color: white;
+}
+
+text {
+  fill: var(--todom-text-foreground) !important;
+}
+
+/*.dark text {
+  fill: var(--todom-text-foreground) !important;
+}*/
+
 @media (min-width: 600px) {
   .flex-small {
     flex: 0 1 auto;
