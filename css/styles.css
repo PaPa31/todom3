@@ -1313,7 +1313,7 @@ textarea:active {
 }
 
 .parent-last-child {
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .last-child::after {
