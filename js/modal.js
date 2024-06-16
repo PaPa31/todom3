@@ -57,6 +57,11 @@ function handleImageClick(event) {
     createModalForImage(imageUrl);
     images = imagesInBlock.map((img) => img.src); // Update the global images array
     toggleButtonVisibility(); // Adjust visibility of buttons
+    // Add event listener for keydown event
+    document.addEventListener("keydown", handleKeyDown);
+    // Add event listeners for touch events
+    document.addEventListener("touchstart", handleTouch);
+    document.addEventListener("touchend", handleTouchEnd);
   }
 }
 
@@ -120,9 +125,6 @@ function handleKeyDown(event) {
   }
 }
 
-// Add event listener for keydown event
-document.addEventListener("keydown", handleKeyDown);
-
 // Function to handle touch swipe event
 function handleTouch(event) {
   touchStartX = event.touches[0].clientX;
@@ -139,10 +141,6 @@ function handleTouchEnd(event) {
     prevImage();
   }
 }
-
-// Add event listeners for touch events
-document.addEventListener("touchstart", handleTouch);
-document.addEventListener("touchend", handleTouchEnd);
 
 // Function to handle click on left or right edges of the image
 function handleModalImageClick(event) {
