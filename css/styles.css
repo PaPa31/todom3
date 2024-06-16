@@ -1549,6 +1549,7 @@ code {
 }
 
 .modal-image .close {
+  text-shadow: 0 0 black;
   color: #fff;
   font-size: 3rem;
   position: absolute;
