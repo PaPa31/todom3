@@ -200,6 +200,8 @@ const syncPreview = function () {
   const f = headAndTail();
   whatString(f);
 
+  position.style = "";
+  preview.style = "";
   const scrollTop = position.scrollHeight;
   let oldPositionHeight = position.clientHeight;
   let oldPositionHeight2 = position.scrollHeight;
