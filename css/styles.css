@@ -489,9 +489,10 @@ image is undefined */
 
 #preview,
 #position {
-  padding: 0.75rem;
+  padding-top: 0.25rem;
   padding-right: 36px;
   padding-bottom: 0;
+  padding-left: 0.75rem;
 }
 
 .md-item,
@@ -1190,7 +1191,7 @@ textarea:active {
 
 #input-label {
   transition: opacity 0.2s ease;
-  padding: 5px 0 0 0;
+  padding: 3px 0 0 0;
   line-height: 15px;
   text-align: center;
 }
