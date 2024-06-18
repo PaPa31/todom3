@@ -1306,10 +1306,11 @@ textarea:active {
 }*/
 
 .last-child {
-  overflow: hidden;
+  /*overflow: hidden;*/
   /*extra newlines in #position only*/
   /*white-space: pre-line;*/
   position: relative;
+  margin-bottom: 0px;
 }
 
 .parent-last-child {
