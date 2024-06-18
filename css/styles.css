@@ -1314,7 +1314,8 @@ textarea:active {
 }
 
 .parent-last-child {
-  /*overflow: hidden;*/
+  /*for numbered list etc.*/
+  overflow: hidden;
 }
 
 .last-child::after {
