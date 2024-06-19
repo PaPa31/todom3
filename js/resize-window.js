@@ -89,7 +89,7 @@ const reduceHeight = (offsetHeight) => {
 
   const scrollTop2 = position.scrollHeight;
   position.scrollTop = scrollTop2;
-  html.scrollTop = scrollTop2 - offsetScroll;
+  //html.scrollTop = scrollTop2 - offsetScroll;
 
   preview.style.maxHeight = position.clientHeight + "px";
   position.style.maxHeight = position.clientHeight + "px";
@@ -98,7 +98,7 @@ const reduceHeight = (offsetHeight) => {
 const increaseHeight = (plusHeight) => {
   const scrollTop2 = position.scrollHeight;
   position.scrollTop = scrollTop2;
-  html.scrollTop = scrollTop2 - plusHeight;
+  //html.scrollTop = scrollTop2 - plusHeight;
 
   const maxH = plusHeight < maxHeight ? plusHeight : maxHeight;
 
