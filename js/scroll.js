@@ -8,9 +8,9 @@ function handleLiScroll(event) {
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
 
-  if (!topVisible && !fullyVisible) {
+  if (!topVisible && !fullyVisible && rect.top < 0) {
     topInLi.classList.add("sticky");
-    topInLi.style.width = `${li.clientWidth - 10}px`; // Set the same width as li
+    topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
   } else {
     topInLi.classList.remove("sticky");
     topInLi.style.width = ""; // Reset to default width

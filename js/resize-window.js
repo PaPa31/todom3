@@ -119,12 +119,12 @@ const checkActiveWindowHeightDiff = (diffOldAndNewAW) => {
       const offsetHeight = maxHeight - currentHeight;
       reduceHeight(offsetHeight);
     } else {
-      console.log(" active >= visible ");
+      //console.log(" active >= visible ");
       const diffPosition = maxHeight - currentHeight;
       increaseHeight(diffPosition);
     }
   } else {
-    console.log(" position >= preview ");
+    //console.log(" position >= preview ");
   }
 };
 
