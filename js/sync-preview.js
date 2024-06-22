@@ -11,9 +11,14 @@ const whatClass = (el) => {
         }
         break;
       }
+      case "i":
+      case "b":
       case "em":
+      case "br":
       case "del":
-      case "cite": {
+      case "cite":
+      case "details":
+      case "summary": {
         el.classList.add("last-child-rb");
         break;
       }
