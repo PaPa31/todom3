@@ -187,6 +187,8 @@ const liMaker = (arrIndex) => {
   foldedClass.appendChild(li);
 
   //addClickListenersToImages(li);
+  //const liScrollHandler = handleLiScroll(li);
+  //li.addEventListener("scroll", liScrollHandler);
 
   addScrollListener(li);
   scrollToTargetAdjusted(li, preview.scrollTop);

@@ -1,4 +1,3 @@
-// Function to handle scroll events on li elements
 function handleLiScroll(event) {
   const li = event.target;
   const topInLi = li.querySelector(".top-in-li");
@@ -8,10 +7,10 @@ function handleLiScroll(event) {
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
 
-  if (!topVisible && !fullyVisible && rect.top < 0) {
+  if (!topVisible && !fullyVisible && rect.top < 0 && rect.bottom > 0) {
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
-  } else {
+  } else if (rect.bottom <= 0 || fullyVisible) {
     topInLi.classList.remove("sticky");
     topInLi.style.width = ""; // Reset to default width
   }
