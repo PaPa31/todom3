@@ -651,7 +651,7 @@ pre {
   font-family: monospace, monospace;
   margin-top: 0;
   padding: 16px;
-  overflow: auto;
+  /*overflow: auto;*/
   color: var(--todom-text-foreground);
   background-color: var(--todom-textCodeBlock-background);
   border-radius: 6px;
