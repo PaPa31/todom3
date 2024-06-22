@@ -26,7 +26,6 @@ const getLineHeight = (el) => {
 
 let offsetScroll = 0;
 let lastActiveWindowHeight = window.visualViewport.height;
-console.log('lastActiveWindowHeight = ', lastActiveWindowHeight);
 const resizeWindowHandler = (activeWindowHeight) => {
   const heightVisibleElements =
     form.clientHeight + preview.clientHeight + inputLabel.clientHeight;

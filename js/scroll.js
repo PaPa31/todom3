@@ -5,16 +5,15 @@ function handleLiScroll(event) {
   if (!topInLi) return; // Skip if there's no .top-in-li div
 
   const rect = li.getBoundingClientRect();
-  console.log("rect: ", rect);
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
-  console.log("topVisible: ", topVisible);
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
-  console.log("fullyVisible: ", fullyVisible);
 
   if (!topVisible && !fullyVisible) {
     topInLi.classList.add("sticky");
+    topInLi.style.width = `${li.clientWidth - 10}px`; // Set the same width as li
   } else {
     topInLi.classList.remove("sticky");
+    topInLi.style.width = ""; // Reset to default width
   }
 }
 

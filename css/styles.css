@@ -1674,6 +1674,7 @@ object {
 }
 
 :not(.folded) .sticky {
+  background-color: var(--todom-text-background);
   position: fixed;
   top: 0;
   width: 100%; /* Adjust as necessary for your layout */
