@@ -133,6 +133,8 @@ const changeCurrentInBefore = (ancestorEl, current) => {
 
 const liMaker = (arrIndex) => {
   const li = document.createElement("li");
+  const topDiv = document.createElement("div");
+  topDiv.setAttribute("class", "top-in-li");
   const div = document.createElement("div");
   let last, currentSave, currentFold;
 
@@ -144,7 +146,14 @@ const liMaker = (arrIndex) => {
     currentFold = getCurrentSpec("fold", correctedItemsIndex);
 
     div.setAttribute("class", "md-item");
-    if (currentFold) li.setAttribute("class", "folded");
+    if (currentFold) {
+      li.setAttribute("class", "folded");
+    } else {
+      // Attach the handleLiScroll function to the window scroll event for this li element
+      window.addEventListener("scroll", function () {
+        handleLiScroll({ target: li });
+      });
+    }
 
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
@@ -167,14 +176,19 @@ const liMaker = (arrIndex) => {
 
   div.addEventListener("dblclick", handleDblClick);
 
-  foldButtonMaker(li);
-  if (isItemState) saveHistoryDivMaker(li, last, currentSave);
-  mainActDivMaker(li);
+  //foldButtonMaker(li);
+  foldButtonMaker(topDiv);
+  //if (isItemState) saveHistoryDivMaker(li, last, currentSave);
+  if (isItemState) saveHistoryDivMaker(topDiv, last, currentSave);
+  //mainActDivMaker(li);
+  mainActDivMaker(topDiv);
+  li.appendChild(topDiv);
   li.appendChild(div);
   foldedClass.appendChild(li);
 
   //addClickListenersToImages(li);
 
+  addScrollListener(li);
   scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
@@ -190,13 +204,13 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   mdToLi(fileTextDiv, file.text);
 };
 
-const foldButtonMaker = (parentLi) => {
+const foldButtonMaker = (parentEl) => {
   const attr = {
     class: "button-default fold-button btn",
     title: "fold/unfold one",
     onclick: `foldOneItem(findParentTagOrClassRecursive(this))`,
   };
-  const buttonTag = createEl("button", attr, parentLi);
+  const buttonTag = createEl("button", attr, parentEl);
   createEl("span", null, buttonTag);
 };
 

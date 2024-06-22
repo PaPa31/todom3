@@ -1673,6 +1673,13 @@ object {
     brightness(100%) contrast(100%);
 }
 
+:not(.folded) .sticky {
+  position: fixed;
+  top: 0;
+  width: 100%; /* Adjust as necessary for your layout */
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
 @media (min-width: 600px) {
   .flex-small {
     flex: 0 1 auto;
