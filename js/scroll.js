@@ -6,10 +6,16 @@ function handleLiScroll(event) {
 
   const rect = li.getBoundingClientRect();
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
+  const bottomVisible = rect.bottom >= 0 && rect.bottom <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
 
-  // Add sticky class when the top of li element scrolls out of view upwards
-  if (!topVisible && rect.top < 0 && rect.bottom > 0) {
+  // Add sticky class when the top of li element scrolls out of view upwards and bottom is not visible
+  if (
+    !topVisible &&
+    !fullyVisible &&
+    rect.top < 0 &&
+    rect.bottom > window.innerHeight
+  ) {
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
   }
