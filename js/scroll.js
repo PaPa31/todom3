@@ -1,6 +1,8 @@
 // Define the maximum height limit for sticky behavior
 const liHeightLimit = 300; // Adjust this value as needed
-let predictBottom = 34; // Initial value, adjust as needed
+
+// Initial value for predictBottom
+let predictBottom = 34; // Adjust this value as needed
 
 // Function to handle scroll events on a specific li element
 function handleLiScroll(event) {
@@ -20,6 +22,13 @@ function handleLiScroll(event) {
 
   // Calculate the scroll limit dynamically
   const scrollLimit = window.innerHeight - predictBottom;
+
+  console.log(`liHeight: ${liHeight}`);
+  console.log(`topInLiHeight: ${topInLiHeight}`);
+  console.log(`rect.top: ${rect.top}`);
+  console.log(`rect.bottom: ${rect.bottom}`);
+  console.log(`window.innerHeight: ${window.innerHeight}`);
+  console.log(`scrollLimit: ${scrollLimit}`);
 
   if (!belowHeightLimit && rect.top < 0 && rect.bottom > scrollLimit) {
     topInLi.classList.add("sticky");
@@ -42,6 +51,8 @@ function handleLiScroll(event) {
     li.style.paddingTop = "";
   }
 }
+
+// Rest of your code...
 
 // Function to handle visibility changes using IntersectionObserver
 function handleVisibility(entries, observer) {
