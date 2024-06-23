@@ -23,42 +23,17 @@ function handleLiScroll(event) {
   // Calculate the scroll limit dynamically
   const scrollLimit = window.innerHeight - predictBottom;
 
-  console.log(`liHeight: ${liHeight}`);
-  console.log(`topInLiHeight: ${topInLiHeight}`);
-  console.log(`rect.top: ${rect.top}`);
-  console.log(`rect.bottom: ${rect.bottom}`);
-  console.log(`window.innerHeight: ${window.innerHeight}`);
-  console.log(`scrollLimit: ${scrollLimit}`);
-
-  // Log conditions and outcomes
-  console.log(`topVisible: ${topVisible}`);
-  console.log(`fullyVisible: ${fullyVisible}`);
-  console.log(`belowHeightLimit: ${belowHeightLimit}`);
-  console.log(
-    `rect.top < 0 && rect.bottom > scrollLimit: ${
-      rect.top < 0 && rect.bottom > scrollLimit
-    }`
-  );
-  console.log(`rect.bottom <= scrollLimit: ${rect.bottom <= scrollLimit}`);
-  console.log(
-    `rect.bottom <= scrollLimit && !topVisible && !fullyVisible && !belowHeightLimit: ${
-      rect.bottom <= scrollLimit &&
-      !topVisible &&
-      !fullyVisible &&
-      !belowHeightLimit
-    }`
-  );
-
-  if (!belowHeightLimit && rect.top < 0 && rect.bottom > scrollLimit) {
-    console.log("Adding sticky class");
-    topInLi.classList.add("sticky");
-    topInLi.style.width = `${li.clientWidth}px`;
-    li.style.paddingTop = `${topInLiHeight}px`;
-  } else {
-    console.log("Removing sticky class");
-    topInLi.classList.remove("sticky");
-    topInLi.style.width = "";
-    li.style.paddingTop = "";
+  // Log only at critical points
+  if (
+    !topVisible &&
+    !fullyVisible &&
+    !belowHeightLimit &&
+    rect.top < 0 &&
+    rect.bottom > scrollLimit
+  ) {
+    console.log(
+      `Adding sticky class - liHeight: ${liHeight}, topInLiHeight: ${topInLiHeight}, rect.top: ${rect.top}, rect.bottom: ${rect.bottom}, window.innerHeight: ${window.innerHeight}, scrollLimit: ${scrollLimit}`
+    );
   }
 
   if (
@@ -67,7 +42,29 @@ function handleLiScroll(event) {
     !fullyVisible &&
     !belowHeightLimit
   ) {
-    console.log("Removing sticky class");
+    console.log(
+      `Removing sticky class - liHeight: ${liHeight}, topInLiHeight: ${topInLiHeight}, rect.top: ${rect.top}, rect.bottom: ${rect.bottom}, window.innerHeight: ${window.innerHeight}, scrollLimit: ${scrollLimit}`
+    );
+  }
+
+  // Apply sticky class and padding
+  if (!belowHeightLimit && rect.top < 0 && rect.bottom > scrollLimit) {
+    topInLi.classList.add("sticky");
+    topInLi.style.width = `${li.clientWidth}px`;
+    li.style.paddingTop = `${topInLiHeight}px`;
+  } else {
+    topInLi.classList.remove("sticky");
+    topInLi.style.width = "";
+    li.style.paddingTop = "";
+  }
+
+  // Remove sticky class and padding
+  if (
+    rect.bottom <= scrollLimit &&
+    !topVisible &&
+    !fullyVisible &&
+    !belowHeightLimit
+  ) {
     topInLi.classList.remove("sticky");
     topInLi.style.width = "";
     li.style.paddingTop = "";
