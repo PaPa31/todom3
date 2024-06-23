@@ -5,7 +5,6 @@ function handleLiScroll(event) {
 
   const rect = li.getBoundingClientRect();
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
-  const bottomVisible = rect.bottom >= 0 && rect.bottom <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
 
   // Add sticky class when the top of li element scrolls out of view upwards and bottom is not visible
@@ -19,7 +18,7 @@ function handleLiScroll(event) {
     topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
   }
 
-  // Remove sticky class when the bottom of li element scrolls out of view downwards
+  // Remove sticky class when the bottom of li element scrolls out of view downwards or when fully visible
   if (rect.bottom <= 0 || fullyVisible) {
     topInLi.classList.remove("sticky");
     topInLi.style.width = ""; // Reset to default width
@@ -32,15 +31,8 @@ function handleLiScroll(event) {
   }
 }
 
-// Function to add scroll event listener to li elements as they become visible
 function addScrollListener(li) {
-  const rect = li.getBoundingClientRect();
-  const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
-
-  if (isVisible && !li.hasAttribute("data-scroll-listener")) {
-    li.setAttribute("data-scroll-listener", "true");
-    window.addEventListener("scroll", function () {
-      handleLiScroll({ target: li });
-    });
-  }
+  window.addEventListener("scroll", function () {
+    handleLiScroll({ target: li });
+  });
 }

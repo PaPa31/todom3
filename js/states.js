@@ -149,9 +149,7 @@ const liMaker = (arrIndex) => {
     if (currentFold) {
       li.setAttribute("class", "folded");
     } else {
-      window.addEventListener("scroll", function () {
-        handleLiScroll({ target: li });
-      });
+      addScrollListener(li); // Attach the scroll listener
     }
 
     const resizableDiv = document.createElement("div");
@@ -182,7 +180,9 @@ const liMaker = (arrIndex) => {
   li.appendChild(div);
   foldedClass.appendChild(li);
 
-  addScrollListener(li);
+  if (!currentFold) {
+    addScrollListener(li); // Attach the scroll listener again if not folded
+  }
 };
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
