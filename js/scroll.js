@@ -1,6 +1,5 @@
-// Define the maximum height limit for sticky behavior
-const liHeightLimit = 300; // Adjust this value as needed
-let predictBottom = 34; // Adjust this value as needed
+const liHeightLimit = 300;
+let predictBottom = 34;
 
 // Function to handle scroll events on a specific li element
 function handleLiScroll(event) {
@@ -21,7 +20,8 @@ function handleLiScroll(event) {
   // Calculate the scroll limit dynamically
   const scrollLimit = window.innerHeight - predictBottom;
 
-  // Logging variables for debugging
+  // Detailed logging for key variables
+  console.log(`\n--- Debug Info ---`);
   console.log(`liHeight: ${liHeight}`);
   console.log(`topInLiHeight: ${topInLiHeight}`);
   console.log(`rect.top: ${rect.top}`);
@@ -31,10 +31,12 @@ function handleLiScroll(event) {
 
   // Apply sticky class and padding
   if (!belowHeightLimit && rect.top < 0 && rect.bottom > scrollLimit) {
+    console.log("Adding sticky class");
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`;
     li.style.paddingTop = `${topInLiHeight}px`;
   } else {
+    console.log("Removing sticky class");
     topInLi.classList.remove("sticky");
     topInLi.style.width = "";
     li.style.paddingTop = "";
@@ -47,18 +49,34 @@ function handleLiScroll(event) {
     !fullyVisible &&
     !belowHeightLimit
   ) {
+    console.log("Forcing removal of sticky class");
     topInLi.classList.remove("sticky");
     topInLi.style.width = "";
     li.style.paddingTop = "";
   }
 }
 
-function addScrollListener(li) {
-  window.addEventListener("scroll", function () {
-    handleLiScroll({ target: li });
-  });
+// Debounce2 function to limit the rate at which the scroll handler is called
+function debounce2(func, wait) {
+  let timeout;
+  return function () {
+    const context = this,
+      args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), wait);
+  };
 }
 
+function addScrollListener(li) {
+  window.addEventListener(
+    "scroll",
+    debounce2(function () {
+      handleLiScroll({ target: li });
+    }, 100)
+  );
+}
+
+// Observer options
 const observerOptions = {
   root: null, // Use the viewport as the root
   rootMargin: "0px",
