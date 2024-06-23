@@ -18,13 +18,7 @@ function handleLiScroll(event) {
   // Calculate the scroll limit dynamically
   const scrollLimit = window.innerHeight - predictBottom;
 
-  if (
-    !belowHeightLimit &&
-    !topVisible &&
-    !fullyVisible &&
-    rect.top < 0 &&
-    rect.bottom > scrollLimit
-  ) {
+  if (!belowHeightLimit && rect.top < 0 && rect.bottom > scrollLimit) {
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`;
     li.style.paddingTop = `${topInLiHeight}px`;
@@ -35,14 +29,14 @@ function handleLiScroll(event) {
   }
 
   if (
-    rect.bottom < scrollLimit &&
+    rect.bottom <= scrollLimit &&
     !topVisible &&
     !fullyVisible &&
     !belowHeightLimit
   ) {
-    topInLi.classList.add("sticky");
-    topInLi.style.width = `${li.clientWidth}px`;
-    li.style.paddingTop = `${topInLiHeight}px`;
+    topInLi.classList.remove("sticky");
+    topInLi.style.width = "";
+    li.style.paddingTop = "";
   }
 }
 
