@@ -57,23 +57,17 @@ function handleLiScroll(event) {
   }
 }
 
-// Debounce function to limit the rate at which the scroll handler is called
-function debounce2(func, wait) {
-  let timeout;
-  return function () {
-    const context = this,
-      args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(context, args), wait);
-  };
-}
-
 function addScrollListener(li) {
   window.addEventListener(
     "scroll",
-    debounce2(function () {
-      handleLiScroll({ target: li });
-    }, 100)
+    debounce(
+      // Debounce function to limit the rate at which the scroll handler is called
+      function () {
+        handleLiScroll({ target: li });
+      },
+      100,
+      false
+    )
   );
 }
 
