@@ -1,5 +1,6 @@
 const liHeightLimit = 300;
-let predictBottom = 100; // Adjust this value as needed
+let predictBottom = 100;
+let suspendTop = -200;
 
 // Function to handle scroll events on a specific li element
 function handleLiScroll(event) {
@@ -18,16 +19,19 @@ function handleLiScroll(event) {
   const belowHeightLimit = liHeight < liHeightLimit;
 
   // Logging variables for debugging
-  console.log(`\n--- Debug Info ---`);
+  console.log(`\nli \#${li.id}: --- Debug Info ---`);
   console.log(`liHeight: ${liHeight}`);
   console.log(`topInLiHeight: ${topInLiHeight}`);
   console.log(`rect.top: ${rect.top}`);
   console.log(`rect.bottom: ${rect.bottom}`);
   console.log(`window.innerHeight: ${window.innerHeight}`);
-  console.log(`predictBottom: ${predictBottom}`);
 
   // Apply sticky class and padding
-  if (!belowHeightLimit && rect.top < 0 && rect.bottom > predictBottom) {
+  if (
+    !belowHeightLimit &&
+    rect.top < suspendTop &&
+    rect.bottom > predictBottom
+  ) {
     console.log("Adding sticky class");
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`;
