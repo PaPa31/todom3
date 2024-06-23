@@ -58,3 +58,35 @@ function addScrollListener(li) {
     handleLiScroll({ target: li });
   });
 }
+
+const observerOptions = {
+  root: null, // Use the viewport as the root
+  rootMargin: "0px",
+  threshold: 0, // Trigger when any part of the element is visible
+};
+
+const observerCallback = (entries, observer) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      addScrollListener(entry.target);
+    } else {
+      removeScrollListener(entry.target);
+    }
+  });
+};
+
+const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+function observeLiElements(li) {
+  observer.observe(li);
+}
+
+function unobserveLiElements(li) {
+  observer.unobserve(li);
+}
+
+function removeScrollListener(li) {
+  window.removeEventListener("scroll", function () {
+    handleLiScroll({ target: li });
+  });
+}

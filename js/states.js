@@ -149,7 +149,7 @@ const liMaker = (arrIndex) => {
     if (currentFold) {
       li.setAttribute("class", "folded");
     } else {
-      addScrollListener(li); // Attach the scroll listener
+      observeLiElements(li); // Observe the li element
     }
 
     const resizableDiv = document.createElement("div");
@@ -181,7 +181,7 @@ const liMaker = (arrIndex) => {
   foldedClass.appendChild(li);
 
   if (!currentFold) {
-    addScrollListener(li); // Attach the scroll listener again if not folded
+    observeLiElements(li); // Observe the li element again if not folded
   }
 };
 
