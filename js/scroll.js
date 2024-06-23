@@ -1,6 +1,6 @@
 // Define the maximum height limit for sticky behavior
 const liHeightLimit = 300; // Adjust this value as needed
-const predictBottom = 34; // Adjust this value as needed
+let predictBottom = 34; // Initial value, adjust as needed
 
 function handleLiScroll(event) {
   const li = event.target;
@@ -19,9 +19,10 @@ function handleLiScroll(event) {
   // Check if the li element height is below the limit
   const belowHeightLimit = liHeight < liHeightLimit;
 
-  // Calculate the scroll limit to remove sticky
-  const scrollLimit = window.innerHeight - predictBottom;
-  console.log("scrollLimit = ", scrollLimit);
+  // Calculate the scroll limit dynamically
+  const scrollLimit =
+    window.innerHeight - (rect.bottom - rect.top + predictBottom);
+
   // Add sticky class and padding when conditions are met
   if (
     !belowHeightLimit &&
