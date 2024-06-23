@@ -184,7 +184,6 @@ const liMaker = (arrIndex) => {
   foldedClass.appendChild(li);
 
   addScrollListener(li);
-  scrollToTargetAdjusted(li, preview.scrollTop);
 };
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
