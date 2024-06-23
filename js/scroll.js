@@ -6,6 +6,10 @@ let predictBottom = 34; // Adjust this value as needed
 
 // Function to handle scroll events on a specific li element
 function handleLiScroll(event) {
+  // Debounce logic
+  if (handleLiScroll.isRunning) return;
+  handleLiScroll.isRunning = true;
+
   const li = event.target;
   const topInLi = li.querySelector(".top-in-li");
   if (!topInLi) return; // Skip if there's no .top-in-li div
@@ -22,30 +26,6 @@ function handleLiScroll(event) {
 
   // Calculate the scroll limit dynamically
   const scrollLimit = window.innerHeight - predictBottom;
-
-  // Log only at critical points
-  if (
-    !topVisible &&
-    !fullyVisible &&
-    !belowHeightLimit &&
-    rect.top < 0 &&
-    rect.bottom > scrollLimit
-  ) {
-    console.log(
-      `Adding sticky class - liHeight: ${liHeight}, topInLiHeight: ${topInLiHeight}, rect.top: ${rect.top}, rect.bottom: ${rect.bottom}, window.innerHeight: ${window.innerHeight}, scrollLimit: ${scrollLimit}`
-    );
-  }
-
-  if (
-    rect.bottom <= scrollLimit &&
-    !topVisible &&
-    !fullyVisible &&
-    !belowHeightLimit
-  ) {
-    console.log(
-      `Removing sticky class - liHeight: ${liHeight}, topInLiHeight: ${topInLiHeight}, rect.top: ${rect.top}, rect.bottom: ${rect.bottom}, window.innerHeight: ${window.innerHeight}, scrollLimit: ${scrollLimit}`
-    );
-  }
 
   // Apply sticky class and padding
   if (!belowHeightLimit && rect.top < 0 && rect.bottom > scrollLimit) {
@@ -69,7 +49,14 @@ function handleLiScroll(event) {
     topInLi.style.width = "";
     li.style.paddingTop = "";
   }
+
+  // Debounce reset
+  setTimeout(() => {
+    handleLiScroll.isRunning = false;
+  }, 100); // Adjust debounce delay as needed
 }
+
+handleLiScroll.isRunning = false;
 
 // Rest of your code...
 
