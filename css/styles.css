@@ -1673,12 +1673,16 @@ object {
     brightness(100%) contrast(100%);
 }
 
-:not(.folded) .sticky {
+.folded .sticky {
+  position: relative;
+}
+
+li:not(.folded) .sticky {
   background-color: var(--todom-text-background);
   position: fixed;
   top: 0;
-  width: 100%; /* Adjust as necessary for your layout */
-  z-index: 1000; /* Ensure it appears above other elements */
+  width: 100%;
+  z-index: 1000;
 }
 
 @media (min-width: 600px) {
