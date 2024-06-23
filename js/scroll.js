@@ -26,15 +26,7 @@ function handleLiScroll(event) {
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`;
     li.style.paddingTop = `${topInLiHeight}px`;
-  }
-
-  if (
-    rect.top >= 0 ||
-    rect.bottom <= window.innerHeight ||
-    fullyVisible ||
-    belowHeightLimit ||
-    rect.bottom <= scrollLimit
-  ) {
+  } else {
     topInLi.classList.remove("sticky");
     topInLi.style.width = "";
     li.style.paddingTop = "";
