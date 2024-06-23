@@ -12,6 +12,9 @@ function handleLiScroll(event) {
   // Calculate the height of the topDiv
   const topInLiHeight = topInLi.getBoundingClientRect().height;
 
+  // Define predictBottom based on topInLi height
+  const predictBottom = topInLiHeight;
+
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
 
@@ -24,7 +27,7 @@ function handleLiScroll(event) {
     !topVisible &&
     !fullyVisible &&
     rect.top < 0 &&
-    rect.bottom > window.innerHeight
+    rect.bottom > window.innerHeight - predictBottom
   ) {
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
