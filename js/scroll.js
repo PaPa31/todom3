@@ -17,20 +17,16 @@ function handleLiScroll(event) {
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
   const belowHeightLimit = liHeight < liHeightLimit;
 
-  // Calculate the scroll limit dynamically
-  const scrollLimit = window.innerHeight - predictBottom;
-
-  // Detailed logging for key variables
+  // Logging variables for debugging
   console.log(`\n--- Debug Info ---`);
   console.log(`liHeight: ${liHeight}`);
   console.log(`topInLiHeight: ${topInLiHeight}`);
   console.log(`rect.top: ${rect.top}`);
   console.log(`rect.bottom: ${rect.bottom}`);
   console.log(`window.innerHeight: ${window.innerHeight}`);
-  console.log(`scrollLimit: ${scrollLimit}`);
 
   // Apply sticky class and padding
-  if (!belowHeightLimit && rect.top < 0 && rect.bottom > scrollLimit) {
+  if (!belowHeightLimit && rect.top < 0 && rect.bottom > 0) {
     console.log("Adding sticky class");
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`;
@@ -42,13 +38,8 @@ function handleLiScroll(event) {
     li.style.paddingTop = "";
   }
 
-  // Remove sticky class and padding
-  if (
-    rect.bottom <= scrollLimit &&
-    !topVisible &&
-    !fullyVisible &&
-    !belowHeightLimit
-  ) {
+  // Remove sticky class and padding when the li is no longer in the viewport
+  if (rect.bottom <= 0 && !topVisible && !fullyVisible && !belowHeightLimit) {
     console.log("Forcing removal of sticky class");
     topInLi.classList.remove("sticky");
     topInLi.style.width = "";
@@ -56,7 +47,7 @@ function handleLiScroll(event) {
   }
 }
 
-// Debounce2 function to limit the rate at which the scroll handler is called
+// Debounce function to limit the rate at which the scroll handler is called
 function debounce2(func, wait) {
   let timeout;
   return function () {
