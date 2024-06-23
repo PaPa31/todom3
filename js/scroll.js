@@ -6,6 +6,7 @@ function handleLiScroll(event) {
   const rect = li.getBoundingClientRect();
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+  const bottomVisible = rect.bottom >= 0 && rect.bottom <= window.innerHeight;
 
   // Add sticky class when the top of li element scrolls out of view upwards and bottom is not visible
   if (
@@ -18,14 +19,25 @@ function handleLiScroll(event) {
     topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
   }
 
-  // Remove sticky class when the bottom of li element scrolls out of view downwards or when fully visible
-  if (rect.bottom <= 0 || fullyVisible) {
+  // Remove sticky class when the bottom of li element scrolls out of view downwards
+  if (rect.bottom <= 0) {
+    topInLi.classList.remove("sticky");
+    topInLi.style.width = ""; // Reset to default width
+  }
+
+  // Remove sticky class when the top of li element becomes visible again
+  if (topVisible || fullyVisible) {
     topInLi.classList.remove("sticky");
     topInLi.style.width = ""; // Reset to default width
   }
 
   // Add sticky class to the next li when scrolling down and it appears at the top
-  if (rect.bottom < window.innerHeight && rect.bottom > 0 && !topVisible) {
+  if (
+    rect.bottom < window.innerHeight &&
+    rect.bottom > 0 &&
+    !topVisible &&
+    !fullyVisible
+  ) {
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
   }
