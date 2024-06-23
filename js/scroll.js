@@ -32,15 +32,19 @@ function handleLiScroll(event) {
     rect.top < suspendTop &&
     rect.bottom > predictBottom
   ) {
-    console.log("Adding sticky class");
-    topInLi.classList.add("sticky");
-    topInLi.style.width = `${li.clientWidth}px`;
-    li.style.paddingTop = `${topInLiHeight}px`;
+    if (!topInLi.classList.contains("sticky")) {
+      console.log("Adding sticky class");
+      topInLi.classList.add("sticky");
+      topInLi.style.width = `${li.clientWidth}px`;
+      li.style.paddingTop = `${topInLiHeight}px`;
+    }
   } else {
-    console.log("Removing sticky class");
-    topInLi.classList.remove("sticky");
-    topInLi.style.width = "";
-    li.style.paddingTop = "";
+    if (topInLi.classList.contains("sticky")) {
+      console.log("Removing sticky class");
+      topInLi.classList.remove("sticky");
+      topInLi.style.width = "";
+      li.style.paddingTop = "";
+    }
   }
 
   // Remove sticky class and padding when the li is no longer in the viewport
@@ -50,26 +54,32 @@ function handleLiScroll(event) {
     !fullyVisible &&
     !belowHeightLimit
   ) {
-    console.log("Forcing removal of sticky class");
-    topInLi.classList.remove("sticky");
-    topInLi.style.width = "";
-    li.style.paddingTop = "";
+    if (topInLi.classList.contains("sticky")) {
+      console.log("Forcing removal of sticky class");
+      topInLi.classList.remove("sticky");
+      topInLi.style.width = "";
+      li.style.paddingTop = "";
+    }
   }
 }
 
 function addScrollListener(li) {
-  window.addEventListener(
-    "scroll",
-    debounce(
-      // Debounce function to limit the rate at which the scroll handler is called
-      function () {
-        handleLiScroll({ target: li });
-      },
-      100,
-      false
-    ),
+  const debouncedScrollHandler = debounce(
+    () => {
+      handleLiScroll({ target: li });
+    },
+    100,
     false
   );
+  li._scrollHandler = debouncedScrollHandler; // Save reference for later removal
+  window.addEventListener("scroll", debouncedScrollHandler, false);
+}
+
+function removeScrollListener(li) {
+  if (li._scrollHandler) {
+    window.removeEventListener("scroll", li._scrollHandler);
+    delete li._scrollHandler;
+  }
 }
 
 // Observer options
