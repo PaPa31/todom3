@@ -1,5 +1,6 @@
 // Define the maximum height limit for sticky behavior
 const liHeightLimit = 300; // Adjust this value as needed
+const predictBottom = 34; // Adjust this value as needed
 
 function handleLiScroll(event) {
   const li = event.target;
@@ -12,22 +13,22 @@ function handleLiScroll(event) {
   // Calculate the height of the topDiv
   const topInLiHeight = topInLi.getBoundingClientRect().height;
 
-  // Define predictBottom based on topInLi height
-  const predictBottom = topInLiHeight;
-
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
 
   // Check if the li element height is below the limit
   const belowHeightLimit = liHeight < liHeightLimit;
 
+  // Calculate the scroll limit to remove sticky
+  const scrollLimit = window.innerHeight - predictBottom;
+  console.log("scrollLimit = ", scrollLimit);
   // Add sticky class and padding when conditions are met
   if (
     !belowHeightLimit &&
     !topVisible &&
     !fullyVisible &&
     rect.top < 0 &&
-    rect.bottom > window.innerHeight - predictBottom
+    rect.bottom > scrollLimit
   ) {
     topInLi.classList.add("sticky");
     topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
@@ -39,7 +40,8 @@ function handleLiScroll(event) {
     rect.top >= 0 ||
     rect.bottom <= window.innerHeight ||
     fullyVisible ||
-    belowHeightLimit
+    belowHeightLimit ||
+    rect.bottom <= scrollLimit
   ) {
     topInLi.classList.remove("sticky");
     topInLi.style.width = ""; // Reset to default width
