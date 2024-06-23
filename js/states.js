@@ -132,7 +132,6 @@ const changeCurrentInBefore = (ancestorEl, current) => {
 };
 
 const liMaker = (arrIndex) => {
-  // Function to create a new li element with its own scroll listener
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
   topDiv.setAttribute("class", "top-in-li");
@@ -150,7 +149,6 @@ const liMaker = (arrIndex) => {
     if (currentFold) {
       li.setAttribute("class", "folded");
     } else {
-      // Attach the handleLiScroll function to the window scroll event for this li element
       window.addEventListener("scroll", function () {
         handleLiScroll({ target: li });
       });
@@ -184,7 +182,6 @@ const liMaker = (arrIndex) => {
   li.appendChild(div);
   foldedClass.appendChild(li);
 
-  // Add scroll listener when li element is added to the DOM
   addScrollListener(li);
 };
 
