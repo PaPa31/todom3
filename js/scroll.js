@@ -32,7 +32,12 @@ function handleLiScroll(event) {
   }
 
   // Remove sticky class and padding when conditions are met
-  if (rect.top >= 0 || fullyVisible || belowHeightLimit) {
+  if (
+    rect.top >= 0 ||
+    rect.bottom <= window.innerHeight ||
+    fullyVisible ||
+    belowHeightLimit
+  ) {
     topInLi.classList.remove("sticky");
     topInLi.style.width = ""; // Reset to default width
     li.style.paddingTop = ""; // Remove padding
