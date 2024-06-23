@@ -1,10 +1,11 @@
-const liHeightLimit = 300;
-let predictBottom = 64;
+// Define the maximum height limit for sticky behavior
+const liHeightLimit = 300; // Adjust this value as needed
+let predictBottom = 34; // Initial value, adjust as needed
 
 function handleLiScroll(event) {
   const li = event.target;
   const topInLi = li.querySelector(".top-in-li");
-  if (!topInLi) return;
+  if (!topInLi) return; // Skip if there's no .top-in-li div
 
   const rect = li.getBoundingClientRect();
   const liHeight = li.clientHeight;
@@ -13,8 +14,9 @@ function handleLiScroll(event) {
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
   const belowHeightLimit = liHeight < liHeightLimit;
-  const scrollLimit =
-    window.innerHeight - (rect.bottom - rect.top + predictBottom);
+
+  // Calculate the scroll limit dynamically
+  const scrollLimit = window.innerHeight - predictBottom;
 
   if (
     !belowHeightLimit &&
@@ -33,8 +35,7 @@ function handleLiScroll(event) {
   }
 
   if (
-    rect.bottom < window.innerHeight &&
-    rect.bottom > 0 &&
+    rect.bottom < scrollLimit &&
     !topVisible &&
     !fullyVisible &&
     !belowHeightLimit
