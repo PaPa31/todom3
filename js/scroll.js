@@ -67,7 +67,8 @@ function addScrollListener(li) {
       },
       100,
       false
-    )
+    ),
+    false
   );
 }
 

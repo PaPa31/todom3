@@ -1674,8 +1674,9 @@ object {
 }
 
 .top-in-li {
-  height: auto;
-  overflow: hidden; /*workaround: default div has 0 height*/
+  /*workaround of workaround: folded oneliner falls out */
+  /*workaround: default div has 0 height*/
+  /*overflow: hidden;*/
 }
 
 .folded .sticky {
