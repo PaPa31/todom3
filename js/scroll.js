@@ -1,29 +1,21 @@
-// Define the maximum height limit for sticky behavior
-const liHeightLimit = 300; // Adjust this value as needed
-let predictBottom = 64; // Initial value, adjust as needed
+const liHeightLimit = 300;
+let predictBottom = 64;
 
 function handleLiScroll(event) {
   const li = event.target;
   const topInLi = li.querySelector(".top-in-li");
-  if (!topInLi) return; // Skip if there's no .top-in-li div
+  if (!topInLi) return;
 
   const rect = li.getBoundingClientRect();
   const liHeight = li.clientHeight;
-
-  // Calculate the height of the topDiv
   const topInLiHeight = topInLi.getBoundingClientRect().height;
 
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
-
-  // Check if the li element height is below the limit
   const belowHeightLimit = liHeight < liHeightLimit;
-
-  // Calculate the scroll limit dynamically
   const scrollLimit =
     window.innerHeight - (rect.bottom - rect.top + predictBottom);
 
-  // Add sticky class and padding when conditions are met
   if (
     !belowHeightLimit &&
     !topVisible &&
@@ -32,11 +24,10 @@ function handleLiScroll(event) {
     rect.bottom > scrollLimit
   ) {
     topInLi.classList.add("sticky");
-    topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
-    li.style.paddingTop = `${topInLiHeight}px`; // Add padding to li
+    topInLi.style.width = `${li.clientWidth}px`;
+    li.style.paddingTop = `${topInLiHeight}px`;
   }
 
-  // Remove sticky class and padding when conditions are met
   if (
     rect.top >= 0 ||
     rect.bottom <= window.innerHeight ||
@@ -45,11 +36,10 @@ function handleLiScroll(event) {
     rect.bottom <= scrollLimit
   ) {
     topInLi.classList.remove("sticky");
-    topInLi.style.width = ""; // Reset to default width
-    li.style.paddingTop = ""; // Remove padding
+    topInLi.style.width = "";
+    li.style.paddingTop = "";
   }
 
-  // Add sticky class and padding to the next li when conditions are met
   if (
     rect.bottom < window.innerHeight &&
     rect.bottom > 0 &&
@@ -58,8 +48,8 @@ function handleLiScroll(event) {
     !belowHeightLimit
   ) {
     topInLi.classList.add("sticky");
-    topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
-    li.style.paddingTop = `${topInLiHeight}px`; // Add padding to li
+    topInLi.style.width = `${li.clientWidth}px`;
+    li.style.paddingTop = `${topInLiHeight}px`;
   }
 }
 
