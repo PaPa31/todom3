@@ -2,6 +2,9 @@ const liHeightLimit = 300;
 let predictBottom = 100;
 let suspendTop = -200;
 
+// Hysteresis threshold
+const hysteresisThreshold = 10;
+
 // Function to handle scroll events on a specific li element
 function handleLiScroll(event) {
   const li = event.target;
@@ -29,8 +32,8 @@ function handleLiScroll(event) {
   // Apply sticky class and padding
   if (
     !belowHeightLimit &&
-    rect.top < suspendTop &&
-    rect.bottom > predictBottom
+    rect.top < suspendTop - hysteresisThreshold &&
+    rect.bottom > predictBottom + hysteresisThreshold
   ) {
     if (!topInLi.classList.contains("sticky")) {
       console.log("Adding sticky class");
@@ -49,7 +52,7 @@ function handleLiScroll(event) {
 
   // Remove sticky class and padding when the li is no longer in the viewport
   if (
-    rect.bottom <= predictBottom &&
+    rect.bottom <= predictBottom + hysteresisThreshold &&
     !topVisible &&
     !fullyVisible &&
     !belowHeightLimit
