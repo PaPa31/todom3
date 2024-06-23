@@ -2,14 +2,20 @@ const liHeightLimit = 300;
 let predictBottom = 100;
 let suspendTop = -200;
 
-// Hysteresis threshold
-const hysteresisThreshold = 10;
+// Async lock to handle only one scroll event at a time
+let scrollLock = false;
 
 // Function to handle scroll events on a specific li element
-function handleLiScroll(event) {
+async function handleLiScroll(event) {
+  if (scrollLock) return; // Skip if another scroll event is being processed
+  scrollLock = true;
+
   const li = event.target;
   const topInLi = li.querySelector(".top-in-li");
-  if (!topInLi) return; // Skip if there's no .top-in-li div
+  if (!topInLi) {
+    scrollLock = false;
+    return; // Skip if there's no .top-in-li div
+  }
 
   const rect = li.getBoundingClientRect();
   const liHeight = li.clientHeight;
@@ -32,8 +38,8 @@ function handleLiScroll(event) {
   // Apply sticky class and padding
   if (
     !belowHeightLimit &&
-    rect.top < suspendTop - hysteresisThreshold &&
-    rect.bottom > predictBottom + hysteresisThreshold
+    rect.top < suspendTop &&
+    rect.bottom > predictBottom
   ) {
     if (!topInLi.classList.contains("sticky")) {
       console.log("Adding sticky class");
@@ -52,7 +58,7 @@ function handleLiScroll(event) {
 
   // Remove sticky class and padding when the li is no longer in the viewport
   if (
-    rect.bottom <= predictBottom + hysteresisThreshold &&
+    rect.bottom <= predictBottom &&
     !topVisible &&
     !fullyVisible &&
     !belowHeightLimit
@@ -64,6 +70,8 @@ function handleLiScroll(event) {
       li.style.paddingTop = "";
     }
   }
+
+  scrollLock = false;
 }
 
 function addScrollListener(li) {
