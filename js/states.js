@@ -176,19 +176,12 @@ const liMaker = (arrIndex) => {
 
   div.addEventListener("dblclick", handleDblClick);
 
-  //foldButtonMaker(li);
   foldButtonMaker(topDiv);
-  //if (isItemState) saveHistoryDivMaker(li, last, currentSave);
   if (isItemState) saveHistoryDivMaker(topDiv, last, currentSave);
-  //mainActDivMaker(li);
   mainActDivMaker(topDiv);
   li.appendChild(topDiv);
   li.appendChild(div);
   foldedClass.appendChild(li);
-
-  //addClickListenersToImages(li);
-  //const liScrollHandler = handleLiScroll(li);
-  //li.addEventListener("scroll", liScrollHandler);
 
   addScrollListener(li);
   scrollToTargetAdjusted(li, preview.scrollTop);
