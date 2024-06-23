@@ -1,6 +1,6 @@
 // Define the maximum height limit for sticky behavior
 const liHeightLimit = 300; // Adjust this value as needed
-let predictBottom = 34; // Initial value, adjust as needed
+let predictBottom = 64; // Initial value, adjust as needed
 
 function handleLiScroll(event) {
   const li = event.target;
