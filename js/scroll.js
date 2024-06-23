@@ -31,6 +31,12 @@ function handleLiScroll(event) {
     topInLi.classList.remove("sticky");
     topInLi.style.width = ""; // Reset to default width
   }
+
+  // Add sticky class to the next li when scrolling down and it appears at the top
+  if (rect.bottom < window.innerHeight && rect.bottom > 0 && !topVisible) {
+    topInLi.classList.add("sticky");
+    topInLi.style.width = `${li.clientWidth}px`; // Set the same width as li
+  }
 }
 
 // Function to add scroll event listener to li elements as they become visible
