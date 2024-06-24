@@ -2,32 +2,28 @@ const liHeightLimit = 300;
 let predictBottom = 100;
 let suspendTop = -200;
 
-// Async lock to handle only one scroll event at a time
 let scrollLock = false;
 
-// Function to handle scroll events on a specific li element
-async function handleLiScroll(event) {
-  if (scrollLock) return; // Skip if another scroll event is being processed
+function handleLiScroll(event, callback) {
+  if (scrollLock) return;
   scrollLock = true;
 
   const li = event.target;
   const topInLi = li.querySelector(".top-in-li");
   if (!topInLi) {
     scrollLock = false;
-    return; // Skip if there's no .top-in-li div
+    if (callback) callback();
+    return;
   }
 
   const rect = li.getBoundingClientRect();
   const liHeight = li.clientHeight;
-
-  // Calculate the height of the topDiv
   const topInLiHeight = topInLi.getBoundingClientRect().height;
 
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
   const belowHeightLimit = liHeight < liHeightLimit;
 
-  // Logging variables for debugging
   console.log(`\nli \#${li.id}: --- Debug Info ---`);
   console.log(`liHeight: ${liHeight}`);
   console.log(`topInLiHeight: ${topInLiHeight}`);
@@ -35,7 +31,6 @@ async function handleLiScroll(event) {
   console.log(`rect.bottom: ${rect.bottom}`);
   console.log(`window.innerHeight: ${window.innerHeight}`);
 
-  // Apply sticky class and padding
   if (
     !belowHeightLimit &&
     rect.top < suspendTop &&
@@ -56,7 +51,6 @@ async function handleLiScroll(event) {
     }
   }
 
-  // Remove sticky class and padding when the li is no longer in the viewport
   if (
     rect.bottom <= predictBottom &&
     !topVisible &&
@@ -72,17 +66,20 @@ async function handleLiScroll(event) {
   }
 
   scrollLock = false;
+  if (callback) callback();
 }
 
 function addScrollListener(li) {
   const debouncedScrollHandler = debounce(
     () => {
-      handleLiScroll({ target: li });
+      handleLiScroll({ target: li }, () => {
+        // Optional callback after handling scroll
+      });
     },
     100,
     false
   );
-  li._scrollHandler = debouncedScrollHandler; // Save reference for later removal
+  li._scrollHandler = debouncedScrollHandler;
   window.addEventListener("scroll", debouncedScrollHandler, false);
 }
 
@@ -93,11 +90,10 @@ function removeScrollListener(li) {
   }
 }
 
-// Observer options
 const observerOptions = {
-  root: null, // Use the viewport as the root
+  root: null,
   rootMargin: "0px",
-  threshold: 0, // Trigger when any part of the element is visible
+  threshold: 0,
 };
 
 const observerCallback = (entries, observer) => {
@@ -118,10 +114,4 @@ function observeLiElements(li) {
 
 function unobserveLiElements(li) {
   observer.unobserve(li);
-}
-
-function removeScrollListener(li) {
-  window.removeEventListener("scroll", function () {
-    handleLiScroll({ target: li });
-  });
 }

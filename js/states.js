@@ -131,7 +131,7 @@ const changeCurrentInBefore = (ancestorEl, current) => {
   ancestorEl.style = "--todom-before-current-save: '" + ++current + "';";
 };
 
-const liMaker = (arrIndex) => {
+function liMaker(arrIndex) {
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
   topDiv.setAttribute("class", "top-in-li");
@@ -149,7 +149,7 @@ const liMaker = (arrIndex) => {
     if (currentFold) {
       li.setAttribute("class", "folded");
     } else {
-      observeLiElements(li); // Observe the li element
+      observeLiElements(li);
     }
 
     const resizableDiv = document.createElement("div");
@@ -181,9 +181,9 @@ const liMaker = (arrIndex) => {
   foldedClass.appendChild(li);
 
   if (!currentFold) {
-    observeLiElements(li); // Observe the li element again if not folded
+    observeLiElements(li);
   }
-};
+}
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
   const file = filesArray[arrIndex];
