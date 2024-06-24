@@ -1673,10 +1673,9 @@ object {
     brightness(100%) contrast(100%);
 }
 
-.top-in-li {
-  /*workaround of workaround: folded oneliner falls out */
+li:not(.folded) .top-in-li {
   /*workaround: default div has 0 height*/
-  /*overflow: hidden;*/
+  overflow: hidden;
 }
 
 .folded .sticky {
