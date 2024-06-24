@@ -38,7 +38,7 @@ function handleLiScroll(event, callback) {
   ) {
     if (!topInLi.classList.contains("sticky")) {
       console.log("Adding sticky class");
-      li.style.paddingTop = `${topInLiHeight}px`;
+      li.style.paddingTop = `39px`; // fix mismatch jerking
       topInLi.classList.add("sticky");
       topInLi.style.width = `${li.clientWidth}px`;
     }
