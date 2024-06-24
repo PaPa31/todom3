@@ -138,6 +138,10 @@ function liMaker(arrIndex) {
   const div = document.createElement("div");
   let last, currentSave, currentFold;
 
+  div.addEventListener("dblclick", handleDblClick);
+  foldButtonMaker(topDiv);
+  mainActDivMaker(topDiv);
+
   if (isItemState) {
     const correctedItemsIndex = indexedItems.indexOf(arrIndex.toString()) * 1;
     const textArr = itemsArray[correctedItemsIndex].text;
@@ -149,7 +153,7 @@ function liMaker(arrIndex) {
     if (currentFold) {
       li.setAttribute("class", "folded");
     } else {
-      observeLiElements(li);
+      //observeLiElements(li);
     }
 
     const resizableDiv = document.createElement("div");
@@ -160,22 +164,25 @@ function liMaker(arrIndex) {
     } else {
       initialInBefore(resizableDiv);
     }
+
+    saveHistoryDivMaker(topDiv, last, currentSave);
     div.appendChild(resizableDiv);
     li.id = idCounterItems;
   } else {
     const correctedFilesIndex = indexedFiles.indexOf(arrIndex.toString()) * 1;
+    fileInfoDivMaker(topDiv, correctedFilesIndex);
     div.setAttribute("class", "md-file");
 
-    fileInfoDivMaker(div, correctedFilesIndex);
+    const attr = { class: "file-text resizable-div" };
+    const fileTextDiv = createEl("div", attr, topDiv);
+    mdToLi(fileTextDiv, filesArray[correctedFilesIndex].text);
+    //mdToLi(fileTextDiv, file.text); //  const file = filesArray[arrIndex];
 
+
+    div.appendChild(fileTextDiv);
     li.id = idCounterFiles;
   }
 
-  div.addEventListener("dblclick", handleDblClick);
-
-  foldButtonMaker(topDiv);
-  if (isItemState) saveHistoryDivMaker(topDiv, last, currentSave);
-  mainActDivMaker(topDiv);
   li.appendChild(topDiv);
   li.appendChild(div);
   foldedClass.appendChild(li);
@@ -192,9 +199,6 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
   fileNameDiv.innerHTML = file.dir ? file.dir : file.name;
   const fileSizeDiv = createEl("div", { class: "file-size" }, fileInfoDiv);
   fileSizeDiv.innerHTML = file.size ? fileSizeTerm(file.size) : "";
-  const attr = { class: "file-text resizable-div" };
-  const fileTextDiv = createEl("div", attr, parentDiv);
-  mdToLi(fileTextDiv, file.text);
 };
 
 const foldButtonMaker = (parentEl) => {
