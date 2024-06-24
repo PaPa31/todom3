@@ -38,16 +38,16 @@ function handleLiScroll(event, callback) {
   ) {
     if (!topInLi.classList.contains("sticky")) {
       console.log("Adding sticky class");
+      li.style.paddingTop = `${topInLiHeight}px`;
       topInLi.classList.add("sticky");
       topInLi.style.width = `${li.clientWidth}px`;
-      li.style.paddingTop = `${topInLiHeight}px`;
     }
   } else {
     if (topInLi.classList.contains("sticky")) {
       console.log("Removing sticky class");
+      li.style.paddingTop = "";
       topInLi.classList.remove("sticky");
       topInLi.style.width = "";
-      li.style.paddingTop = "";
     }
   }
 
@@ -59,9 +59,9 @@ function handleLiScroll(event, callback) {
   ) {
     if (topInLi.classList.contains("sticky")) {
       console.log("Forcing removal of sticky class");
+      li.style.paddingTop = "";
       topInLi.classList.remove("sticky");
       topInLi.style.width = "";
-      li.style.paddingTop = "";
     }
   }
 
