@@ -10,10 +10,7 @@ function handleLiScroll(event) {
 
   const rect = li.getBoundingClientRect();
   const liHeight = li.clientHeight;
-
-  // Calculate the height of the topDiv
-  // Manually set the required height to avoid jerking
-  const topInLiHeight = 39;
+  const topInLiHeight = topInLi.getBoundingClientRect().height + topInLi.getBoundingClientRect().x;
 
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
