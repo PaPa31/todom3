@@ -10,7 +10,8 @@ function handleLiScroll(event) {
 
   const rect = li.getBoundingClientRect();
   const liHeight = li.clientHeight;
-  const topInLiHeight = topInLi.getBoundingClientRect().height + topInLi.getBoundingClientRect().x;
+  const topInLiHeight =
+    topInLi.getBoundingClientRect().height + topInLi.getBoundingClientRect().x;
 
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
@@ -104,4 +105,5 @@ function observeLiElements(li) {
 
 function unobserveLiElements(li) {
   observer.unobserve(li);
+  removeScrollListener(li);
 }
