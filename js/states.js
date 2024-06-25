@@ -153,7 +153,7 @@ function liMaker(arrIndex) {
     if (currentFold) {
       li.setAttribute("class", "folded");
     } else {
-      //observeLiElements(li);
+      observeLiElements(li);
     }
 
     const resizableDiv = document.createElement("div");
@@ -166,6 +166,7 @@ function liMaker(arrIndex) {
     }
 
     saveHistoryDivMaker(topDiv, last, currentSave);
+
     div.appendChild(resizableDiv);
     li.id = idCounterItems;
   } else {
@@ -176,8 +177,6 @@ function liMaker(arrIndex) {
     const attr = { class: "file-text resizable-div" };
     const fileTextDiv = createEl("div", attr, topDiv);
     mdToLi(fileTextDiv, filesArray[correctedFilesIndex].text);
-    //mdToLi(fileTextDiv, file.text); //  const file = filesArray[arrIndex];
-
 
     div.appendChild(fileTextDiv);
     li.id = idCounterFiles;
@@ -187,9 +186,9 @@ function liMaker(arrIndex) {
   li.appendChild(div);
   foldedClass.appendChild(li);
 
-  if (!currentFold) {
-    observeLiElements(li);
-  }
+  //if (!currentFold) {
+  //  observeLiElements(li);
+  //}
 }
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
