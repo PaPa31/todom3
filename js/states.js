@@ -153,7 +153,7 @@ function liMaker(arrIndex) {
     if (currentFold) {
       li.setAttribute("class", "folded");
     } else {
-      observeLiElements(li);
+      //observeLiElements(li);
     }
 
     const resizableDiv = document.createElement("div");
@@ -186,9 +186,20 @@ function liMaker(arrIndex) {
   li.appendChild(div);
   foldedClass.appendChild(li);
 
-  //if (!currentFold) {
-  //  observeLiElements(li);
-  //}
+  if (isItemState && !currentFold) {
+    //observeLiElements(li);
+    const liHeight = li.clientHeight;
+    const belowHeightLimit = liHeight < liHeightLimit;
+    if (belowHeightLimit) {
+      unobserveLiElements(li);
+      console.log(
+        `liMaker: Too small - ${liHeight}px: Stopped observing li #${li.id}`
+      );
+    } else {
+      observeLiElements(li);
+      console.log(`liMaker: Started observing li #${li.id}`);
+    }
+  }
 }
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
@@ -443,10 +454,19 @@ const foldGreen = (liDOM) => {
 const observerToggle = (liDOM) => {
   if (liDOM.classList.contains("folded")) {
     unobserveLiElements(liDOM);
-    console.log(`Stopped observing li #${liDOM.id}`);
+    console.log(`folded: Stopped observing li #${liDOM.id}`);
   } else {
-    observeLiElements(liDOM);
-    console.log(`Started observing li #${liDOM.id}`);
+    const liHeight = liDOM.clientHeight;
+    const belowHeightLimit = liHeight < liHeightLimit;
+    if (belowHeightLimit) {
+      unobserveLiElements(liDOM);
+      console.log(
+        `ObserverToggle: Too small - ${liHeight}px: Stopped observing li #${liDOM.id}`
+      );
+    } else {
+      observeLiElements(liDOM);
+      console.log(`Started observing li #${liDOM.id}`);
+    }
   }
 };
 
@@ -485,8 +505,17 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
   [...foldedClass.children].forEach((i) => {
     if (view) {
       i.removeAttribute("class");
-      observeLiElements(i);
-      console.log(`Started observing li #${i.id}`);
+      const liHeight = i.clientHeight;
+      const belowHeightLimit = liHeight < liHeightLimit;
+      if (belowHeightLimit) {
+        unobserveLiElements(i);
+        console.log(
+          `AllLiFold: Too small - ${liHeight}px: Stopped observing li #${i.id}`
+        );
+      } else {
+        observeLiElements(i);
+        console.log(`Started observing li #${i.id}`);
+      }
     } else {
       i.setAttribute("class", "folded");
       unobserveLiElements(i);
