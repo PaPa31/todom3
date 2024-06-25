@@ -440,6 +440,16 @@ const foldGreen = (liDOM) => {
   }
 };
 
+const observerToggle = (liDOM) => {
+  if (liDOM.classList.contains("folded")) {
+    unobserveLiElements(liDOM);
+    console.log(`Stopped observing li #${liDOM.id}`);
+  } else {
+    observeLiElements(liDOM);
+    console.log(`Started observing li #${liDOM.id}`);
+  }
+};
+
 const foldAndOffsetHeight = (liDOM) => {
   const initialScrollTop = window.scrollY;
   liDOM.classList.toggle("folded");
@@ -457,6 +467,7 @@ const foldOneItem = (liDOM) => {
     const fileIndexToFold = indexedFiles.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
+  observerToggle(liDOM);
   foldGreen(liDOM);
 };
 
@@ -474,8 +485,12 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
   [...foldedClass.children].forEach((i) => {
     if (view) {
       i.removeAttribute("class");
+      observeLiElements(i);
+      console.log(`Started observing li #${i.id}`);
     } else {
       i.setAttribute("class", "folded");
+      unobserveLiElements(i);
+      console.log(`Stopped observing li #${i.id}`);
     }
     const indexToFold = indexedArr.indexOf(i.id) * 1;
     mainArr[indexToFold].fold = !view;
