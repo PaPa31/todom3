@@ -44,21 +44,18 @@ function handleLiScroll(event) {
       li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
       topInLi.classList.add("sticky");
       topInLi.style.width = `${topInLiWidth}px`;
-
-      topInLi.style.transform = "translateY(-100%)";
-      setTimeout(() => {
-        topInLi.style.transform = "translateY(0)";
-      }, 10);
+      topInLi.style.transform = "translateY(0)";
     }
   } else {
     if (topInLi.classList.contains("sticky")) {
       console.log("Removing sticky class");
-      topInLi.style.transform = "translateY(-100%)";
-      setTimeout(() => {
+      topInLi.style.transform = "";
+
+      setTimeout(function () {
         li.style.paddingTop = "";
         topInLi.style.width = "";
         topInLi.classList.remove("sticky");
-      }, 300);
+      }, 310);
     }
   }
 
@@ -71,7 +68,7 @@ function handleLiScroll(event) {
   ) {
     if (topInLi.classList.contains("sticky")) {
       console.log("Forcing removal of sticky class");
-      topInLi.style.transform = "translateY(-100%)";
+      topInLi.style.transform = "";
 
       setTimeout(() => {
         li.style.paddingTop = "";
