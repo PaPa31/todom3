@@ -45,17 +45,15 @@ function handleLiScroll(event) {
       topInLi.classList.add("sticky");
       topInLi.style.width = `${topInLiWidth}px`;
 
-      topInLi.style.transform = "translateY(-100%)"; // Move it out of view initially
+      topInLi.style.transform = "translateY(-100%)";
       setTimeout(() => {
-        topInLi.style.transform = "translateY(0)"; // Smoothly bring it into view
+        topInLi.style.transform = "translateY(0)";
       }, 10);
     }
   } else {
     if (topInLi.classList.contains("sticky")) {
       console.log("Removing sticky class");
-
       topInLi.style.transform = "translateY(-100%)";
-
       setTimeout(() => {
         li.style.paddingTop = "";
         topInLi.style.width = "";
