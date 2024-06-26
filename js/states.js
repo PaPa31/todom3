@@ -173,6 +173,7 @@ function liDomMaker(arrIndex) {
     const correctedFilesIndex = indexedFiles.indexOf(arrIndex.toString()) * 1;
     fileInfoDivMaker(topDiv, correctedFilesIndex);
     div.setAttribute("class", "md-file");
+    li.setAttribute("class", "folded"); // initially all files are folded
 
     const attr = { class: "file-text resizable-div" };
     const fileTextDiv = createEl("div", attr, topDiv);
