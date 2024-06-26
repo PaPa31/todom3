@@ -106,4 +106,12 @@ function observeLiElements(li) {
 function unobserveLiElements(li) {
   observer.unobserve(li);
   removeScrollListener(li);
+  const topInLi = li.querySelector(".top-in-li");
+  if (!topInLi) return; // Skip if there's no .top-in-li div
+  if (topInLi.classList.contains("sticky")) {
+    console.log("All-in-one removal of sticky class");
+    li.style.paddingTop = "";
+    topInLi.classList.remove("sticky");
+    topInLi.style.width = "";
+  }
 }
