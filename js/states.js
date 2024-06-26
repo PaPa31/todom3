@@ -131,7 +131,7 @@ const changeCurrentInBefore = (ancestorEl, current) => {
   ancestorEl.style = "--todom-before-current-save: '" + ++current + "';";
 };
 
-function liMaker(arrIndex) {
+function liDomMaker(arrIndex) {
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
   topDiv.setAttribute("class", "top-in-li");
@@ -814,13 +814,13 @@ const fileHttpHandler = (name, dir, size, text) => {
   };
   filesArray.push(fileObj);
   //indexedFiles.push(idCounterFiles.toString());
-  //liMaker(idCounterFiles);
+  //liDomMaker(idCounterFiles);
   //idCounterFiles++;
   indexedFiles.push(idCounterFiles.toString());
   const correctedFilesIndex =
     indexedFiles.indexOf(idCounterFiles.toString()) * 1;
   filesArray[correctedFilesIndex].text = text;
-  liMaker(idCounterFiles);
+  liDomMaker(idCounterFiles);
   idCounterFiles++;
 };
 
@@ -909,7 +909,7 @@ function handleFiles(files) {
           };
           itemsArray.push(itemObj);
           indexedItems.push(idCounterItems.toString());
-          liMaker(idCounterItems);
+          liDomMaker(idCounterItems);
           idCounterItems++;
         }
       });
@@ -923,7 +923,7 @@ function handleFiles(files) {
         const correctedFilesIndex =
           indexedFiles.indexOf(idCounterFiles.toString()) * 1;
         filesArray[correctedFilesIndex].text = text;
-        liMaker(idCounterFiles);
+        liDomMaker(idCounterFiles);
         idCounterFiles++;
       });
     }
@@ -982,7 +982,7 @@ const handleFilesArray = () => {
   for (let i = 0; i < filesArray.length; i++) {
     // error?? instead 'i' need 'idCounterFiles'
     indexedFiles.push(idCounterFiles.toString());
-    liMaker(i);
+    liDomMaker(i);
     idCounterFiles++;
   }
 };
@@ -1016,7 +1016,7 @@ const saveItemFromFile = (fileName) => {
     };
     itemsSpecArray.push(specObj);
     indexedItems.push(idCounterItems.toString());
-    liMaker(idCounterItems);
+    liDomMaker(idCounterItems);
     idCounterItems++;
   }
   defaultMarkers();
@@ -1038,7 +1038,7 @@ function checkIt() {
   } else {
     filesArray[idCounterFiles].size = fileSizeGlobal;
     fileName = filesArray[idCounterFiles].name;
-    liMaker(idCounterFiles);
+    liDomMaker(idCounterFiles);
     idCounterFiles++;
   }
 
@@ -1110,7 +1110,7 @@ const initializeFileState = () => {
 
 const idleIterationPayload = (i) => {
   indexedItems.push(idCounterItems.toString());
-  liMaker(i);
+  liDomMaker(i);
   idCounterItems++;
 };
 

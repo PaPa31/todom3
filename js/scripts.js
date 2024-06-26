@@ -472,7 +472,7 @@ const saveItem = () => {
     };
     itemsSpecArray.push(specObj);
     indexedItems.push(idCounterItems.toString());
-    liMaker(idCounterItems);
+    liDomMaker(idCounterItems);
     idCounterItems++;
   }
   defaultMarkers();
@@ -639,7 +639,7 @@ const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
     if (todomArrVar) localStorage.setItem(todomArrVar, JSON.stringify(arr));
 
     indexedItems.push(idCounterItems.toString());
-    liMaker(idCounterItems);
+    liDomMaker(idCounterItems);
     idCounterItems++;
 
     len = len - 1;
