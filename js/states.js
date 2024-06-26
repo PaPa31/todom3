@@ -158,7 +158,7 @@ function liDomMaker(arrIndex) {
 
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
-    mdToLi(resizableDiv, textArr[currentSave]);
+    mdToTagsWithoutShape(resizableDiv, textArr[currentSave]);
     if (last > 0) {
       changeCurrentInBefore(resizableDiv, currentSave);
     } else {
@@ -176,7 +176,7 @@ function liDomMaker(arrIndex) {
 
     const attr = { class: "file-text resizable-div" };
     const fileTextDiv = createEl("div", attr, topDiv);
-    mdToLi(fileTextDiv, filesArray[correctedFilesIndex].text);
+    mdToTagsWithoutShape(fileTextDiv, filesArray[correctedFilesIndex].text);
 
     div.appendChild(fileTextDiv);
     li.id = idCounterFiles;
@@ -331,7 +331,7 @@ const deleteCurrentSave = (el) => {
     }
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToLi(resizableDiv, textArr[current]);
+  mdToTagsWithoutShape(resizableDiv, textArr[current]);
   if (lastAfter > 0) {
     changeCurrentInBefore(resizableDiv, current);
   } else {
@@ -354,7 +354,7 @@ const previousSave = (el) => {
     el.setAttribute("disable", true);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToLi(resizableDiv, textArr[current]);
+  mdToTagsWithoutShape(resizableDiv, textArr[current]);
   changeCurrentInBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
 };
@@ -373,7 +373,7 @@ const nextSave = (el) => {
     el.setAttribute("disable", true);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToLi(resizableDiv, textArr[current]);
+  mdToTagsWithoutShape(resizableDiv, textArr[current]);
   changeCurrentInBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
 };
@@ -1003,7 +1003,7 @@ const saveItemFromFile = (fileName) => {
     itemsSpecArray[itemIndex].save = textArr.length - 1;
     saveHistoryTracker(liDOM, textArr.length);
     const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-    mdToLi(resizableDiv, input.value);
+    mdToTagsWithoutShape(resizableDiv, input.value);
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const itemObj = {
@@ -1032,7 +1032,7 @@ function checkIt() {
     const resizableDiv = editedFileLiDOM.querySelector(
       ".file-text.resizable-div"
     );
-    mdToLi(resizableDiv, filesArray[fileIndexToEdit].text);
+    mdToTagsWithoutShape(resizableDiv, filesArray[fileIndexToEdit].text);
     fileName = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {

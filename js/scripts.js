@@ -399,7 +399,7 @@ const saveFile = () => {
   }
 };
 
-const mdToLi = (el, text) => {
+const mdToTagsWithoutShape = (el, text) => {
   el.innerHTML = markdown(text);
   addButtonsAndWrapperToGalleries(el);
   addClickListenersToImages(el);
@@ -435,7 +435,7 @@ saveAsOldButton.addEventListener("click", function (e) {
   const resizableDiv = editedItemLiDOM.querySelector(
     ".md-item > .resizable-div"
   );
-  mdToLi(resizableDiv, input.value);
+  mdToTagsWithoutShape(resizableDiv, input.value);
   scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
   joinSaveItemButton();
   defaultMarkers();
@@ -459,7 +459,7 @@ const saveItem = () => {
     const resizableDiv = editedItemLiDOM.querySelector(
       ".md-item > .resizable-div"
     );
-    mdToLi(resizableDiv, input.value);
+    mdToTagsWithoutShape(resizableDiv, input.value);
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
     joinSaveItemButton();
   } else {
