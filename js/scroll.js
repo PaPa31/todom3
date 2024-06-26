@@ -44,21 +44,23 @@ function handleLiScroll(event) {
       li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
       topInLi.classList.add("sticky");
       topInLi.style.width = `${topInLiWidth}px`;
-      //topInLi.style.backgroundColor = "red";
+
       topInLi.style.transform = "translateY(-100%)"; // Move it out of view initially
       setTimeout(() => {
-        topInLi.classList.remove("hide"); // Ensure hide class is removed
         topInLi.style.transform = "translateY(0)"; // Smoothly bring it into view
-      }, 10); // Small timeout to trigger transition
+      }, 10);
     }
   } else {
     if (topInLi.classList.contains("sticky")) {
       console.log("Removing sticky class");
-      li.style.paddingTop = "";
-      topInLi.classList.remove("sticky");
-      topInLi.style.width = "";
-      topInLi.classList.add("hide");
-      //topInLi.style.backgroundColor = "";
+
+      topInLi.style.transform = "translateY(-100%)";
+
+      setTimeout(() => {
+        li.style.paddingTop = "";
+        topInLi.style.width = "";
+        topInLi.classList.remove("sticky");
+      }, 300);
     }
   }
 
@@ -71,11 +73,13 @@ function handleLiScroll(event) {
   ) {
     if (topInLi.classList.contains("sticky")) {
       console.log("Forcing removal of sticky class");
-      li.style.paddingTop = "";
-      topInLi.classList.remove("sticky");
-      topInLi.style.width = "";
-      topInLi.classList.add("hide");
-      //topInLi.style.backgroundColor = "";
+      topInLi.style.transform = "translateY(-100%)";
+
+      setTimeout(() => {
+        li.style.paddingTop = "";
+        topInLi.style.width = "";
+        topInLi.classList.remove("sticky");
+      }, 300);
     }
   }
 }
