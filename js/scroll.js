@@ -38,12 +38,10 @@ function handleLiScroll(event) {
     topInLi.style.width = `${topInLiWidth}px`;
     topInLi.classList.add("sticky");
 
-    // Use requestAnimationFrame to ensure the hidden state is applied
+    // double requestAnimationFrame ensures that the DOM update is fully processed before applying the next class
     requestAnimationFrame(() => {
-      topInLi.classList.add("pre-show");
       requestAnimationFrame(() => {
         topInLi.classList.add("show");
-        topInLi.classList.remove("pre-show");
       });
     });
   }
@@ -87,13 +85,7 @@ function handleLiScroll(event) {
   ) {
     if (topInLi.classList.contains("sticky")) {
       console.log("Forcing removal of sticky class");
-      topInLi.style.transform = "";
-
-      setTimeout(() => {
-        li.style.paddingTop = "";
-        topInLi.style.width = "";
-        topInLi.classList.remove("sticky");
-      }, 300);
+      removeClasses();
     }
   }
 }

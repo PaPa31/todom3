@@ -1680,7 +1680,6 @@ li:not(.folded) .top-in-li {
 
 .top-in-li {
   transform: translateY(0);
-  transition: transform 0.3s ease-in-out;
 }
 
 li:not(.folded) .top-in-li.sticky {
@@ -1690,19 +1689,16 @@ li:not(.folded) .top-in-li.sticky {
   width: 100%;
   z-index: 1000;
   transform: translateY(-100%);
-  transition: none;
-}
-
-li:not(.folded) .top-in-li.sticky.pre-show {
-  transition: transform 0.3s ease-in-out;
 }
 
 li:not(.folded) .top-in-li.sticky.show {
   transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
 }
 
-li:not(.folded) .top-in-li.sticky.show.hide {
+li:not(.folded) .top-in-li.sticky.hide {
   transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
 }
 
 @media (min-width: 600px) {
