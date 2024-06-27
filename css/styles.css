@@ -1692,7 +1692,7 @@ li:not(.folded) .top-in-li.sticky {
   transform: translateY(-100%);
 }*/
 
-li:not(.folded) .top-in-li.sticky.show {
+li:not(.folded) .top-in-li.show {
   transform: translateY(0);
 }
 
