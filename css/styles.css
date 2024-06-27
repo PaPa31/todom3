@@ -1679,9 +1679,8 @@ li:not(.folded) .top-in-li {
 }
 
 .top-in-li {
-  opacity: 1; /* Initially visible */
-  transform: translateY(0); /* Initially in place */
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Example transition */
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
 }
 
 li:not(.folded) .top-in-li.sticky {
@@ -1690,16 +1689,20 @@ li:not(.folded) .top-in-li.sticky {
   top: 0;
   width: 100%;
   z-index: 1000;
-  transform: translateY(-100%); /* Initially moved up */
+  transform: translateY(-100%);
+  transition: none;
+}
+
+li:not(.folded) .top-in-li.sticky.pre-show {
+  transition: transform 0.3s ease-in-out;
 }
 
 li:not(.folded) .top-in-li.sticky.show {
-  transform: translateY(0); /* Moves into view */
+  transform: translateY(0);
 }
 
-li:not(.folded) .top-in-li.sticky.hide {
+li:not(.folded) .top-in-li.sticky.show.hide {
   transform: translateY(-100%);
-  opacity: 0; /* Hide the element */
 }
 
 @media (min-width: 600px) {
