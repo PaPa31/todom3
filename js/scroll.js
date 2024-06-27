@@ -33,6 +33,31 @@ function handleLiScroll(event) {
   //  }`
   //);
 
+  function addStickyClass() {
+    li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
+    topInLi.style.width = `${topInLiWidth}px`;
+    topInLi.classList.add("sticky");
+    topInLi.addEventListener("transitionend", addShowClass);
+  }
+
+  function addShowClass() {
+    topInLi.classList.add("show");
+    topInLi.removeEventListener("transitionend", addShowClass);
+  }
+
+  function removeClasses() {
+    topInLi.classList.add("hide");
+    topInLi.addEventListener(
+      "transitionend",
+      function () {
+        li.style.paddingTop = "";
+        topInLi.classList.remove("sticky", "show", "hide");
+        topInLi.style.width = "";
+      },
+      { once: true }
+    );
+  }
+
   // Apply sticky class and padding
   if (
     !belowHeightLimit &&
@@ -41,21 +66,12 @@ function handleLiScroll(event) {
   ) {
     if (!topInLi.classList.contains("sticky")) {
       console.log("Adding sticky class");
-      li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
-      topInLi.classList.add("sticky");
-      topInLi.style.width = `${topInLiWidth}px`;
-      topInLi.style.transform = "translateY(0)";
+      addStickyClass();
     }
   } else {
     if (topInLi.classList.contains("sticky")) {
       console.log("Removing sticky class");
-      topInLi.style.transform = "";
-
-      setTimeout(function () {
-        li.style.paddingTop = "";
-        topInLi.style.width = "";
-        topInLi.classList.remove("sticky");
-      }, 310);
+      removeClasses();
     }
   }
 

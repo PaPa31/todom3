@@ -135,7 +135,6 @@ function liDomMaker(arrIndex) {
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
   topDiv.setAttribute("class", "top-in-li");
-  //topDiv.style.transform = "translateY(0)";
   const div = document.createElement("div");
   let last, currentSave, currentFold;
 

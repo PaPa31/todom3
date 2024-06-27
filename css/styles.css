@@ -1676,24 +1676,29 @@ object {
 li:not(.folded) .top-in-li {
   /*workaround: default div has 0 height*/
   overflow: hidden;
-  transform: translateY(-100%);
+}
+
+.top-in-li {
+  opacity: 1; /* Initially visible */
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Example transition */
 }
 
 li:not(.folded) .top-in-li.sticky {
-  transition: transform 0.3s ease-in-out;
   background-color: var(--todom-text-background);
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
+  transform: translateY(-100%); /* Initially moved up */
 }
 
-/*li:not(.folded) .top-in-li.sticky.hide {
-  transform: translateY(-100%);
-}*/
+li:not(.folded) .top-in-li.sticky.show {
+  transform: translateY(0); /* Moves into view */
+}
 
-li:not(.folded) .top-in-li.show {
-  transform: translateY(0);
+li:not(.folded) .top-in-li.sticky.hide {
+  transform: translateY(-100%);
+  opacity: 0; /* Hide the element */
 }
 
 @media (min-width: 600px) {
