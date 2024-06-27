@@ -37,12 +37,10 @@ function handleLiScroll(event) {
     li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
     topInLi.style.width = `${topInLiWidth}px`;
     topInLi.classList.add("sticky");
-    topInLi.addEventListener("transitionend", addShowClass);
-  }
-
-  function addShowClass() {
-    topInLi.classList.add("show");
-    topInLi.removeEventListener("transitionend", addShowClass);
+    // Use requestAnimationFrame to ensure the hidden state is applied
+    requestAnimationFrame(() => {
+      topInLi.classList.add("show");
+    });
   }
 
   function removeClasses() {

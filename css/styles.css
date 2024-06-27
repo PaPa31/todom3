@@ -1680,6 +1680,7 @@ li:not(.folded) .top-in-li {
 
 .top-in-li {
   opacity: 1; /* Initially visible */
+  transform: translateY(0); /* Initially in place */
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Example transition */
 }
 
