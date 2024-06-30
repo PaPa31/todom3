@@ -1683,7 +1683,7 @@ li:not(.folded) .top-in-li {
 }
 
 li:not(.folded) .top-in-li.sticky {
-  background-color: var(--todom-text-background);
+  background-color: var(--todom-background);
   position: fixed;
   top: 0;
   width: 100%;

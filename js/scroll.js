@@ -10,30 +10,16 @@ function handleLiScroll(event) {
 
   const rect = li.getBoundingClientRect();
   const liHeight = li.clientHeight;
-  const topInLiHeight =
-    topInLi.getBoundingClientRect().height + topInLi.getBoundingClientRect().x;
   const topInLiWidth = topInLi.clientWidth;
 
   const topVisible = rect.top >= 0 && rect.top <= window.innerHeight;
   const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
   const belowHeightLimit = liHeight < liHeightLimit;
 
-  // Logging variables for debugging
-  console.log(`\nli \#${li.id}: --- Debug Info ---`);
-  console.log(`liHeight: ${liHeight}`);
-  console.log(`topInLiHeight: ${topInLiHeight}`);
-  console.log(`rect.top: ${rect.top}`);
-  console.log(`rect.bottom: ${rect.bottom}`);
-  console.log(`window.innerHeight: ${window.innerHeight}`);
-  //console.log(topInLi.getBoundingClientRect());
-  //console.log(`topInLi.clientWidth: ${topInLi.clientWidth}`);
-  //console.log(
-  //  `topInLi.getBoundingClientRect().width: ${
-  //    topInLi.getBoundingClientRect().width
-  //  }`
-  //);
-
   function addStickyClass() {
+    const topInLiHeight =
+      topInLi.getBoundingClientRect().height +
+      topInLi.getBoundingClientRect().x;
     li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
     topInLi.style.width = `${topInLiWidth}px`;
     topInLi.classList.add("sticky");
