@@ -1701,6 +1701,20 @@ li:not(.folded) .top-in-li.sticky.hide {
   transition: transform 0.3s ease-in-out;
 }
 
+.dual {
+  display: flex;
+}
+.dual > .editor {
+  flex: 1;
+}
+.dual > .md-item {
+  flex: 1;
+}
+
+.editor textarea {
+  height: 100%;
+}
+
 @media (min-width: 600px) {
   .flex-small {
     flex: 0 1 auto;

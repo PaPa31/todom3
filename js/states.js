@@ -135,6 +135,9 @@ function liDomMaker(arrIndex) {
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
   topDiv.setAttribute("class", "top-in-li");
+  //const dual = createEl("div", { class: "dual" }, li);
+  const dual = document.createElement("div");
+  dual.setAttribute("class", "dual");
   const div = document.createElement("div");
   let last, currentSave, currentFold;
 
@@ -183,8 +186,9 @@ function liDomMaker(arrIndex) {
     li.id = idCounterFiles;
   }
 
+  dual.appendChild(div);
   li.appendChild(topDiv);
-  li.appendChild(div);
+  li.appendChild(dual);
   foldedClass.appendChild(li);
 
   if (isItemState && !currentFold) {
@@ -271,7 +275,9 @@ const editButtonMaker = (paMainActDiv) => {
     class: "edit-item btn",
     ctrl: true,
     title: "Click -> edit, Ctrl+click - merge with input area",
-    onclick: isItemState ? `editItem(event, this)` : `editFile(event, this)`,
+    onclick: isItemState
+      ? `editInPlaceItem(event, this)`
+      : `editFile(event, this)`,
   };
   createEl("button", attr, paMainActDiv);
 };
