@@ -193,12 +193,8 @@ function liDomMaker(arrIndex) {
     const belowHeightLimit = liHeight < liHeightLimit;
     if (belowHeightLimit) {
       unobserveLiElements(li);
-      console.log(
-        `liMaker: Too small - ${liHeight}px: Stopped observing li #${li.id}`
-      );
     } else {
       observeLiElements(li);
-      console.log(`liMaker: Started observing li #${li.id}`);
     }
   }
 }
@@ -455,18 +451,13 @@ const foldGreen = (liDOM) => {
 const observerToggle = (liDOM) => {
   if (liDOM.classList.contains("folded")) {
     unobserveLiElements(liDOM);
-    console.log(`folded: Stopped observing li #${liDOM.id}`);
   } else {
     const liHeight = liDOM.clientHeight;
     const belowHeightLimit = liHeight < liHeightLimit;
     if (belowHeightLimit) {
       unobserveLiElements(liDOM);
-      console.log(
-        `ObserverToggle: Too small - ${liHeight}px: Stopped observing li #${liDOM.id}`
-      );
     } else {
       observeLiElements(liDOM);
-      console.log(`Started observing li #${liDOM.id}`);
     }
   }
 };
@@ -510,17 +501,12 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
       const belowHeightLimit = liHeight < liHeightLimit;
       if (belowHeightLimit) {
         unobserveLiElements(i);
-        console.log(
-          `AllLiFold: Too small - ${liHeight}px: Stopped observing li #${i.id}`
-        );
       } else {
         observeLiElements(i);
-        console.log(`Started observing li #${i.id}`);
       }
     } else {
       i.setAttribute("class", "folded");
       unobserveLiElements(i);
-      console.log(`Stopped observing li #${i.id}`);
     }
     const indexToFold = indexedArr.indexOf(i.id) * 1;
     mainArr[indexToFold].fold = !view;

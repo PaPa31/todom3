@@ -55,12 +55,10 @@ function handleLiScroll(event) {
     rect.bottom > predictBottom
   ) {
     if (!topInLi.classList.contains("sticky")) {
-      console.log("Adding sticky class");
       addStickyClass();
     }
   } else {
     if (topInLi.classList.contains("sticky")) {
-      console.log("Removing sticky class");
       removeClasses();
     }
   }
@@ -73,7 +71,6 @@ function handleLiScroll(event) {
     !belowHeightLimit
   ) {
     if (topInLi.classList.contains("sticky")) {
-      console.log("Forcing removal of sticky class");
       removeClasses();
     }
   }
@@ -126,7 +123,6 @@ function unobserveLiElements(li) {
   const topInLi = li.querySelector(".top-in-li");
   if (!topInLi) return; // Skip if there's no .top-in-li div
   if (topInLi.classList.contains("sticky")) {
-    console.log("All-in-one removal of sticky class");
     li.style.paddingTop = "";
     topInLi.classList.remove("sticky");
     ifTopInLiFixed = false;
