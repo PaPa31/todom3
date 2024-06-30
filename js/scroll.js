@@ -2,12 +2,11 @@ const liHeightLimit = 300;
 let predictBottom = 100;
 let suspendTop = -200;
 let ifTopInLiFixed = false;
-let topInLi = null;
 
 // Function to handle scroll events on a specific li element
 function handleLiScroll(event) {
   const li = event.target;
-  topInLi = li.querySelector(".top-in-li");
+  const topInLi = li.querySelector(".top-in-li");
   if (!topInLi) return; // Skip if there's no .top-in-li div
 
   const rect = li.getBoundingClientRect();
