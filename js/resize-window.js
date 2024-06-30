@@ -27,6 +27,7 @@ const getLineHeight = (el) => {
 let offsetScroll = 0;
 let lastActiveWindowHeight = window.visualViewport.height;
 const resizeWindowHandler = (activeWindowHeight) => {
+  changeFixedElementWidth();
   const heightVisibleElements =
     form.clientHeight + preview.clientHeight + inputLabel.clientHeight;
   const diffOldAndNewAW = lastActiveWindowHeight - activeWindowHeight;
@@ -128,6 +129,14 @@ const checkActiveWindowHeightDiff = (diffOldAndNewAW) => {
   }
 };
 
+function changeFixedElementWidth() {
+  if (ifTopInLiFixed) {
+    topInLi.style.width = `${
+      topInLi.nextSibling.getBoundingClientRect().width
+    }px`;
+  }
+}
+
 window.addEventListener(
   "resize",
   debounce(
@@ -137,7 +146,7 @@ window.addEventListener(
       const activeWindowHeight = window.visualViewport.height;
       resizeWindowHandler(activeWindowHeight);
     },
-    200,
+    0,
     false
   ),
   false

@@ -1,11 +1,13 @@
 const liHeightLimit = 300;
 let predictBottom = 100;
 let suspendTop = -200;
+let ifTopInLiFixed = false;
+let topInLi = null;
 
 // Function to handle scroll events on a specific li element
 function handleLiScroll(event) {
   const li = event.target;
-  const topInLi = li.querySelector(".top-in-li");
+  topInLi = li.querySelector(".top-in-li");
   if (!topInLi) return; // Skip if there's no .top-in-li div
 
   const rect = li.getBoundingClientRect();
@@ -21,6 +23,7 @@ function handleLiScroll(event) {
       topInLi.getBoundingClientRect().height +
       topInLi.getBoundingClientRect().x;
     li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
+    ifTopInLiFixed = true;
     topInLi.style.width = `${topInLiWidth}px`;
     topInLi.classList.add("sticky");
 
@@ -39,6 +42,7 @@ function handleLiScroll(event) {
       function () {
         li.style.paddingTop = "";
         topInLi.classList.remove("sticky", "show", "hide");
+        ifTopInLiFixed = false;
         topInLi.style.width = "";
       },
       { once: true }
@@ -126,6 +130,7 @@ function unobserveLiElements(li) {
     console.log("All-in-one removal of sticky class");
     li.style.paddingTop = "";
     topInLi.classList.remove("sticky");
+    ifTopInLiFixed = false;
     topInLi.style.width = "";
   }
 }
