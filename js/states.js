@@ -497,6 +497,17 @@ const foldOneItem = (e, liDOM) => {
     itemsSpecArray[itemIndexToFold].fold =
       !itemsSpecArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+
+    if (itemsSpecArray[itemIndexToFold].edit) {
+      const editor = liDOM.querySelector(".dual > .editor");
+      if (editor) editor.remove();
+      itemsSpecArray[itemIndexToFold].edit =
+        !itemsSpecArray[itemIndexToFold].edit;
+      localStorage.setItem(
+        "todomItemsSpecArray",
+        JSON.stringify(itemsSpecArray)
+      );
+    }
   } else {
     const fileIndexToFold = indexedFiles.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
@@ -518,7 +529,8 @@ const initialCheckFold = (stateVar) => {
 const allLiFold = (view, todomStr, indexedArr, mainArr) => {
   [...foldedClass.children].forEach((i) => {
     if (view) {
-      i.removeAttribute("class");
+      //i.removeAttribute("class");
+      i.classList.remove("folded");
       const liHeight = i.clientHeight;
       const belowHeightLimit = liHeight < liHeightLimit;
       if (belowHeightLimit) {
@@ -527,7 +539,8 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
         observeLiElements(i);
       }
     } else {
-      i.setAttribute("class", "folded");
+      //i.setAttribute("class", "folded");
+      i.classList.add("folded");
       unobserveLiElements(i);
     }
     const indexToFold = indexedArr.indexOf(i.id) * 1;
