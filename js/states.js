@@ -56,10 +56,6 @@ let editedFileLiDOM;
 
 let fileSizeGlobal;
 
-// index editing li
-let editingItems = [];
-let editingFiles = [];
-
 const fileSizeTerm = (numberOfBytes) => {
   // Approximate to the closest prefixed unit
   const units = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
@@ -102,7 +98,8 @@ const getCurrentSpec = (spec, itemIndex) => {
   let current;
 
   switch (spec) {
-    case "fold": {
+    case "fold":
+    case "edit": {
       if (_cur != undefined) {
         current = _cur;
       } else {
@@ -143,7 +140,7 @@ function liDomMaker(arrIndex) {
   const dual = document.createElement("div");
   dual.setAttribute("class", "dual");
   const div = document.createElement("div");
-  let last, currentSave, currentFold;
+  let last, currentSave, currentFold, currentEdit;
 
   div.addEventListener("dblclick", handleDblClick);
   foldButtonMaker(topDiv);
@@ -155,12 +152,12 @@ function liDomMaker(arrIndex) {
     last = textArr.length - 1;
     currentSave = getCurrentSpec("save", correctedItemsIndex);
     currentFold = getCurrentSpec("fold", correctedItemsIndex);
+    currentEdit = getCurrentSpec("edit", correctedItemsIndex);
 
     div.setAttribute("class", "md-item");
-    if (currentFold) {
-      li.setAttribute("class", "folded");
-    } else {
-      //observeLiElements(li);
+    if (currentFold) li.setAttribute("class", "folded");
+
+    if (currentEdit) {
     }
 
     const resizableDiv = document.createElement("div");

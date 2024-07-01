@@ -6,46 +6,34 @@ const editInPlaceItem = (e, element) => {
   const textArr = itemsArray[itemIndexToEdit2].text;
 
   const editing = textArr[current];
-  if (e.ctrlKey) {
-    intervalFocus(
-      element,
-      "background-color: var(--todom-main-action-icon-foreground);",
-      300
-    );
-    input.value = input.value
-      ? /^ *- /.test(editing)
-        ? input.value + "\n" + editing
-        : input.value + "\\\n" + editing
-      : editing;
-    scrollToLast();
-  } else {
-    itemIndexToEdit = itemIndexToEdit2;
-    editedItemLiDOM = editedItemLiDOM2;
-    intervalFocus(
-      element,
-      "background-color: var(--todom-textEdit-background);",
-      300
-    );
-    //const dual = createEl("div", { class: "dual" }, editedItemLiDOM);
-    const dual = editedItemLiDOM.querySelector(".dual");
+
+  intervalFocus(
+    element,
+    "background-color: var(--todom-textEdit-background);",
+    300
+  );
+
+  if (!itemsSpecArray[itemIndexToEdit2].edit) {
+    const dual = editedItemLiDOM2.querySelector(".dual");
     const editor = document.createElement("div");
     editor.setAttribute("class", "editor");
     dual.insertAdjacentElement("afterbegin", editor);
 
-    const textAttr = { id: `li${editedItemLiDOM.id}` };
+    const textAttr = { id: `li${editedItemLiDOM2.id}` };
     const textArea = createEl("textarea", textAttr, editor);
     textArea.value = editing;
-
-    //const file = filesArray[arrIndex];
-    //const fileInfoDiv = createEl("div", { class: "file-info" }, parentDiv);
-    //const fileNameDiv = createEl("div", { class: "file-name" }, fileInfoDiv);
-    //fileNameDiv.innerHTML = file.dir ? file.dir : file.name;
-    //const fileSizeDiv = createEl("div", { class: "file-size" }, fileInfoDiv);
-    //fileSizeDiv.innerHTML = file.size ? fileSizeTerm(file.size) : "";
-
-    //splitSaveItemButton();
-    //editUI("#" + (itemIndexToEdit + 1));
+  } else {
+    const editor = editedItemLiDOM2.querySelector(".dual > .editor");
+    if (editor) editor.remove();
   }
+
+  itemsSpecArray[itemIndexToEdit2].edit =
+    !itemsSpecArray[itemIndexToEdit2].edit;
+  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+
+  //splitSaveItemButton();
+  //editUI("#" + (itemIndexToEdit + 1));
+
   //  xUI();
   //  mdToInPlacePreview(input.value);
 };
