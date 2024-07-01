@@ -1679,11 +1679,8 @@ object {
 li:not(.folded) .top-in-li {
   /*workaround: default div has 0 height*/
   overflow: hidden;
+  transform: translateY(0); /*smooth transition for first appearing*/
 }
-
-/*.top-in-li {
-  transform: translateY(0);
-}*/
 
 li:not(.folded) .top-in-li.sticky {
   background-color: var(--todom-background);
