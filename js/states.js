@@ -480,13 +480,30 @@ const foldAndOffsetHeight = (liDOM) => {
 
 const foldOneItem = (e, liDOM) => {
   liDOM.classList.toggle("folded");
-  console.log("Pressed Fold button! ", ifTopInLiFixed);
   if (ifTopInLiFixed) {
-    liDOM.scrollIntoView(true);
-  } else {
+    // RULE: when pressing Ctrl it folds higher and unfolds lower
     if (e.ctrlKey) {
+      // to top window when sticky
+      // sticky: 4: fold/unfold
+      console.log("4");
       liDOM.scrollIntoView(false);
     } else {
+      // to top li when sticky
+      // sticky: 3: fold/unfold
+      console.log("3");
+      liDOM.scrollIntoView(true);
+    }
+  } else {
+    if (e.ctrlKey) {
+      // to bootom li
+      // not sticky: 2: regular + Ctrl fold/unfold
+      console.log("2");
+      liDOM.scrollIntoView(false);
+      handleLiScroll({ target: liDOM });
+    } else {
+      // not changing position
+      // not sticky: 1: regular (without Ctrl) fold/unfold
+      console.log("1");
       //liDOM.scrollIntoView(true);
       //foldAndOffsetHeight(liDOM);
     }
