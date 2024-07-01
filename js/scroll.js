@@ -23,7 +23,7 @@ function handleLiScroll(event) {
       topInLi.getBoundingClientRect().x;
     li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
     ifTopInLiFixed = true;
-    console.log("add: ", ifTopInLiFixed);
+    //console.log("add: ", ifTopInLiFixed);
     topInLi.style.width = `${topInLiWidth}px`;
     topInLi.classList.add("sticky");
 
@@ -43,7 +43,7 @@ function handleLiScroll(event) {
         li.style.paddingTop = "";
         topInLi.classList.remove("sticky", "show", "hide");
         ifTopInLiFixed = false;
-        console.log("remove: ", ifTopInLiFixed);
+        //console.log("remove: ", ifTopInLiFixed);
         topInLi.style.width = "";
       },
       { once: true }
@@ -125,9 +125,17 @@ function unobserveLiElements(li) {
   const topInLi = li.querySelector(".top-in-li");
   if (!topInLi) return; // Skip if there's no .top-in-li div
   if (topInLi.classList.contains("sticky")) {
-    li.style.paddingTop = "";
-    topInLi.classList.remove("sticky");
-    ifTopInLiFixed = false;
-    topInLi.style.width = "";
+    topInLi.classList.add("hide");
+    topInLi.addEventListener(
+      "transitionend",
+      function () {
+        li.style.paddingTop = "";
+        topInLi.classList.remove("sticky", "show", "hide");
+        ifTopInLiFixed = false;
+        //console.log("remove: ", ifTopInLiFixed);
+        topInLi.style.width = "";
+      },
+      { once: true }
+    );
   }
 }
