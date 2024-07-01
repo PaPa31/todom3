@@ -106,9 +106,8 @@ const joinSaveItemButton = () => {
   saveAsNewButton.innerText = "Save item";
 };
 
-const editItem = (e, element) => {
-  const editedItemLiDOM2 = findParentTagOrClassRecursive(element);
-  const itemIndexToEdit2 = indexedItems.indexOf(editedItemLiDOM2.id) * 1;
+const editItem = (e, element, parentLi) => {
+  const itemIndexToEdit2 = indexedItems.indexOf(parentLi.id) * 1;
 
   let current = getCurrentSpec("save", itemIndexToEdit2);
   const textArr = itemsArray[itemIndexToEdit2].text;
@@ -128,7 +127,7 @@ const editItem = (e, element) => {
     scrollToLast();
   } else {
     itemIndexToEdit = itemIndexToEdit2;
-    editedItemLiDOM = editedItemLiDOM2;
+    editedItemLiDOM = parentLi;
     intervalFocus(
       element,
       "background-color: var(--todom-textEdit-background);",

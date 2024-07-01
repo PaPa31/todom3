@@ -1,6 +1,14 @@
-const editInPlaceItem = (e, element) => {
-  const editedItemLiDOM2 = findParentTagOrClassRecursive(element);
-  const itemIndexToEdit2 = indexedItems.indexOf(editedItemLiDOM2.id) * 1;
+const selectEditor = (e, element) => {
+  const parentLi = findParentTagOrClassRecursive(element);
+  if (parentLi.classList.contains("folded")) {
+    editItem(e, element, parentLi);
+  } else {
+    editInPlaceItem(element, parentLi);
+  }
+};
+
+const editInPlaceItem = (element, parentLi) => {
+  const itemIndexToEdit2 = indexedItems.indexOf(parentLi.id) * 1;
 
   let current = getCurrentSpec("save", itemIndexToEdit2);
   const textArr = itemsArray[itemIndexToEdit2].text;
@@ -14,16 +22,16 @@ const editInPlaceItem = (e, element) => {
   );
 
   if (!itemsSpecArray[itemIndexToEdit2].edit) {
-    const dual = editedItemLiDOM2.querySelector(".dual");
+    const dual = parentLi.querySelector(".dual");
     const editor = document.createElement("div");
     editor.setAttribute("class", "editor");
     dual.insertAdjacentElement("afterbegin", editor);
 
-    const textAttr = { id: `li${editedItemLiDOM2.id}` };
+    const textAttr = { id: `li${parentLi.id}` };
     const textArea = createEl("textarea", textAttr, editor);
     textArea.value = editing;
   } else {
-    const editor = editedItemLiDOM2.querySelector(".dual > .editor");
+    const editor = parentLi.querySelector(".dual > .editor");
     if (editor) editor.remove();
   }
 

@@ -277,7 +277,7 @@ const editButtonMaker = (paMainActDiv) => {
     ctrl: true,
     title: "Click -> edit, Ctrl+click - merge with input area",
     onclick: isItemState
-      ? `editInPlaceItem(event, this)`
+      ? `selectEditor(event, this)`
       : `editFile(event, this)`,
   };
   createEl("button", attr, paMainActDiv);
