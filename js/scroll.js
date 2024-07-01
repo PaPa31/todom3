@@ -23,6 +23,7 @@ function handleLiScroll(event) {
       topInLi.getBoundingClientRect().x;
     li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
     ifTopInLiFixed = true;
+    console.log("add: ", ifTopInLiFixed);
     topInLi.style.width = `${topInLiWidth}px`;
     topInLi.classList.add("sticky");
 
@@ -42,6 +43,7 @@ function handleLiScroll(event) {
         li.style.paddingTop = "";
         topInLi.classList.remove("sticky", "show", "hide");
         ifTopInLiFixed = false;
+        console.log("remove: ", ifTopInLiFixed);
         topInLi.style.width = "";
       },
       { once: true }

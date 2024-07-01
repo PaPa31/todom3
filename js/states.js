@@ -220,7 +220,7 @@ const foldButtonMaker = (parentEl) => {
   const attr = {
     class: "button-default fold-button btn",
     title: "fold/unfold one",
-    onclick: `foldOneItem(findParentTagOrClassRecursive(this))`,
+    onclick: `foldOneItem(event, findParentTagOrClassRecursive(this))`,
   };
   const buttonTag = createEl("button", attr, parentEl);
   createEl("span", null, buttonTag);
@@ -474,12 +474,26 @@ const observerToggle = (liDOM) => {
 
 const foldAndOffsetHeight = (liDOM) => {
   const initialScrollTop = window.scrollY;
-  liDOM.classList.toggle("folded");
+  //liDOM.classList.toggle("folded");
   window.scrollTo(0, initialScrollTop);
 };
 
-const foldOneItem = (liDOM) => {
-  foldAndOffsetHeight(liDOM);
+const foldOneItem = (e, liDOM) => {
+  liDOM.classList.toggle("folded");
+  console.log("Pressed Fold button! ", ifTopInLiFixed);
+  if (ifTopInLiFixed) {
+    liDOM.scrollIntoView(true);
+  } else {
+    if (e.ctrlKey) {
+      liDOM.scrollIntoView(false);
+    } else {
+      //liDOM.scrollIntoView(true);
+      //foldAndOffsetHeight(liDOM);
+    }
+  }
+  //foldAndOffsetHeight(liDOM);
+  //preview.scrollIntoView(false);
+
   if (isItemState) {
     const itemIndexToFold = indexedItems.indexOf(liDOM.id) * 1;
     itemsSpecArray[itemIndexToFold].fold =
