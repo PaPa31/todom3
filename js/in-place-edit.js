@@ -1,3 +1,6 @@
+//let _textArea;
+//let inPlacePreview;
+
 const selectEditor = (e, element) => {
   const parentLi = findParentTagOrClassRecursive(element);
   if (parentLi.classList.contains("folded")) {
@@ -28,8 +31,14 @@ const editInPlaceItem = (element, parentLi) => {
     dual.insertAdjacentElement("afterbegin", editor);
 
     const textAttr = { id: `li${parentLi.id}` };
-    const textArea = createEl("textarea", textAttr, editor);
-    textArea.value = editing;
+    const _textArea = createEl("textarea", textAttr, editor);
+    _textArea.value = editing;
+
+    const inPlacePreview = dual.querySelector(".md-item > .resizable-div");
+
+    _textArea.addEventListener("input", () =>
+      updatePreview(inPlacePreview, _textArea.value)
+    );
   } else {
     const editor = parentLi.querySelector(".dual > .editor");
     if (editor) editor.remove();
@@ -38,14 +47,13 @@ const editInPlaceItem = (element, parentLi) => {
   itemsSpecArray[itemIndexToEdit2].edit =
     !itemsSpecArray[itemIndexToEdit2].edit;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-
-  //splitSaveItemButton();
-  //editUI("#" + (itemIndexToEdit + 1));
-
-  //  xUI();
-  //  mdToInPlacePreview(input.value);
 };
 
-//const mdToInPlacePreview = (markdownString) => {
-//  inPlacePreview.innerHTML = markdown(markdownString);
-//};
+const mdPreview = (inPlace, markdownString) => {
+  //console.log("hi", inPlace, markdownString);
+  inPlace.innerHTML = markdown(markdownString);
+};
+
+const updatePreview = (inPl, str) => {
+  debounce(mdPreview(inPl, str), 200, false);
+};
