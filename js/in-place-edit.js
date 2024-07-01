@@ -1,5 +1,3 @@
-let inPlacePreview = null;
-
 const editInPlaceItem = (e, element) => {
   const editedItemLiDOM2 = findParentTagOrClassRecursive(element);
   const itemIndexToEdit2 = indexedItems.indexOf(editedItemLiDOM2.id) * 1;

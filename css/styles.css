@@ -1165,14 +1165,17 @@ textarea {
   resize: none;
   border-radius: 4px;
   padding: 0.75rem;
-  outline: none;
-  font-size: 1rem;
-  font-family: inherit;
   width: 100%;
   max-width: 100%;
+  font-size: 1rem;
+  font-family: inherit;
   overflow: auto;
+  padding-right: 36px !important; /*this sync dual with God's blessing*/
+}
+
+textarea#input,
+textarea#output {
   height: 156px;
-  padding-right: 36px !important;
   /*make 2 textareas the same inner size*/
   overflow-y: overlay;
   float: left;
@@ -1678,9 +1681,9 @@ li:not(.folded) .top-in-li {
   overflow: hidden;
 }
 
-.top-in-li {
+/*.top-in-li {
   transform: translateY(0);
-}
+}*/
 
 li:not(.folded) .top-in-li.sticky {
   background-color: var(--todom-background);
@@ -1706,6 +1709,7 @@ li:not(.folded) .top-in-li.sticky.hide {
 }
 .dual > .editor {
   flex: 1;
+  z-index: 3; /*to see right border of outline*/
 }
 .dual > .md-item {
   flex: 1;
