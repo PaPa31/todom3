@@ -130,7 +130,7 @@ const checkActiveWindowHeightDiff = (diffOldAndNewAW) => {
 };
 
 function changeFixedElementWidth() {
-  if (ifTopInLiFixed) {
+  if (sticky) {
     const topInLi = document.querySelector("li > .top-in-li.sticky");
     topInLi.style.width = `${
       topInLi.nextSibling.getBoundingClientRect().width

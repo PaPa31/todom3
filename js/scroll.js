@@ -1,7 +1,7 @@
 const liHeightLimit = 300;
 let predictBottom = 100;
 let suspendTop = -200;
-let ifTopInLiFixed = false;
+let sticky = false;
 
 // Function to handle scroll events on a specific li element
 function handleLiScroll(event) {
@@ -22,8 +22,7 @@ function handleLiScroll(event) {
       topInLi.getBoundingClientRect().height +
       topInLi.getBoundingClientRect().x;
     li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
-    ifTopInLiFixed = true;
-    //console.log("add: ", ifTopInLiFixed);
+    sticky = true;
     topInLi.style.width = `${topInLiWidth}px`;
     topInLi.classList.add("sticky");
 
@@ -42,8 +41,7 @@ function handleLiScroll(event) {
       function () {
         li.style.paddingTop = "";
         topInLi.classList.remove("sticky", "show", "hide");
-        ifTopInLiFixed = false;
-        //console.log("remove: ", ifTopInLiFixed);
+        sticky = false;
         topInLi.style.width = "";
       },
       { once: true }
@@ -131,8 +129,7 @@ function unobserveLiElements(li) {
       function () {
         li.style.paddingTop = "";
         topInLi.classList.remove("sticky", "show", "hide");
-        ifTopInLiFixed = false;
-        //console.log("remove: ", ifTopInLiFixed);
+        sticky = false;
         topInLi.style.width = "";
       },
       { once: true }
