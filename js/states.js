@@ -135,7 +135,6 @@ function liDomMaker(arrIndex) {
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
   topDiv.setAttribute("class", "top-in-li");
-  //const dual = createEl("div", { class: "dual" }, li);
   const dual = document.createElement("div");
   dual.setAttribute("class", "dual");
   const div = document.createElement("div");
@@ -188,7 +187,6 @@ function liDomMaker(arrIndex) {
   foldedClass.appendChild(li);
 
   if (isItemState && !currentFold) {
-    //observeLiElements(li);
     const liHeight = li.clientHeight;
     const belowHeightLimit = liHeight < liHeightLimit;
     if (belowHeightLimit) {
@@ -521,7 +519,6 @@ const initialCheckFold = (stateVar) => {
 const allLiFold = (view, todomStr, indexedArr, mainArr) => {
   [...foldedClass.children].forEach((i) => {
     if (view) {
-      //i.removeAttribute("class");
       i.classList.remove("folded");
       const liHeight = i.clientHeight;
       const belowHeightLimit = liHeight < liHeightLimit;
@@ -531,7 +528,6 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
         observeLiElements(i);
       }
     } else {
-      //i.setAttribute("class", "folded");
       i.classList.add("folded");
       unobserveLiElements(i);
     }
