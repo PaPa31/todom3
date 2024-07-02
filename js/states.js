@@ -464,13 +464,8 @@ const observerToggle = (liDOM) => {
   }
 };
 
-const foldAndOffsetHeight = (liDOM) => {
-  const initialScrollTop = window.scrollY;
-  //liDOM.classList.toggle("folded");
-  window.scrollTo(0, initialScrollTop);
-};
-
 const foldOneItem = (e, liDOM) => {
+  const initialScrollTop = window.scrollY;
   liDOM.classList.toggle("folded");
   if (sticky) {
     // RULE: when pressing Ctrl it folds higher and unfolds lower
@@ -484,6 +479,8 @@ const foldOneItem = (e, liDOM) => {
       liDOM.scrollIntoView(false);
       // force show sticky
       handleLiScroll({ target: liDOM });
+    } else {
+      window.scrollTo(0, initialScrollTop);
     }
   }
 
