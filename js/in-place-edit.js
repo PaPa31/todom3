@@ -1,5 +1,3 @@
-let editor = false;
-
 const selectEditor = (e, element) => {
   const parentLi = findParentTagOrClassRecursive(element);
   if (parentLi.classList.contains("folded")) {
@@ -8,6 +6,8 @@ const selectEditor = (e, element) => {
     editInPlaceItem(element, parentLi);
   }
 };
+
+var editor = false;
 
 const editInPlaceItem = (element, parentLi) => {
   const itemIndexToEdit2 = indexedItems.indexOf(parentLi.id) * 1;
@@ -24,40 +24,58 @@ const editInPlaceItem = (element, parentLi) => {
 
   if (!editor) {
     const dual = parentLi.querySelector(".dual");
-    const editor = document.createElement("div");
-    editor.setAttribute("class", "editor");
-    dual.insertAdjacentElement("afterbegin", editor);
+    const _editor = document.createElement("div");
+    _editor.setAttribute("class", "editor");
+    dual.insertAdjacentElement("afterbegin", _editor);
 
     const textAttr = { id: `li${parentLi.id}` };
-    const _textArea = createEl("textarea", textAttr, editor);
+    const _textArea = createEl("textarea", textAttr, _editor);
     _textArea.value = editing;
 
-    const inPlacePreview = dual.querySelector(".md-item > .resizable-div");
+    const resizableDiv = dual.querySelector(".md-item > .resizable-div");
 
-    const inputListener = () => updatePreview(inPlacePreview, _textArea.value);
-    _textArea.addEventListener("input", inputListener);
+    const inputListener = () => mdUpdate(resizableDiv, _textArea.value);
+    __addListener("input", _textArea, inputListener);
 
-    // Store the input listener reference in the element for future removal
-    _textArea._inputListener = inputListener;
-  } else {
-    const editor = parentLi.querySelector(".dual > .editor");
-    if (editor) {
-      const _textArea = editor.querySelector("textarea");
-      if (_textArea && _textArea._inputListener)
-        editor.removeEventListener("input", _textArea._inputListener);
-      editor.remove();
-    }
-  }
-
-  editor = !editor;
+    editor = !editor; //1
+  } else removeEditor(parentLi);
 
   const mdUpdate = (inPlace, markdownString) => {
     mdToTagsWithoutShape(inPlace, markdownString);
     textArr[current] = markdownString;
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   };
-
-  const updatePreview = (inPl, str) => {
-    debounce(mdUpdate(inPl, str), 200, false);
-  };
 };
+
+function removeEditor(parentLi) {
+  const _editor = parentLi.querySelector(".dual > .editor");
+  if (_editor) {
+    const _textArea = _editor.querySelector("textarea");
+    if (_textArea) {
+      __removeListener("input", _textArea);
+    }
+    _editor.remove();
+  }
+  editor = !editor; //2
+}
+
+function __addListener(eventName, listenerEl, callback) {
+  const debouncedHandler = debounce(
+    () => {
+      callback(listenerEl);
+    },
+    100,
+    false
+  );
+  const str = `_${eventName}Handler`;
+  listenerEl[str] = debouncedHandler;
+  listenerEl.addEventListener(eventName, debouncedHandler, false);
+}
+
+function __removeListener(eventName, listenerEl) {
+  const str = `_${eventName}Handler`;
+  if (listenerEl[str]) {
+    listenerEl.removeEventListener(eventName, listenerEl[str]);
+    delete listenerEl[str];
+  }
+}
