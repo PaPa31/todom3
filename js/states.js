@@ -98,8 +98,7 @@ const getCurrentSpec = (spec, itemIndex) => {
   let current;
 
   switch (spec) {
-    case "fold":
-    case "edit": {
+    case "fold": {
       if (_cur != undefined) {
         current = _cur;
       } else {
@@ -140,7 +139,7 @@ function liDomMaker(arrIndex) {
   const dual = document.createElement("div");
   dual.setAttribute("class", "dual");
   const div = document.createElement("div");
-  let last, currentSave, currentFold, currentEdit;
+  let last, currentSave, currentFold;
 
   div.addEventListener("dblclick", handleDblClick);
   foldButtonMaker(topDiv);
@@ -152,13 +151,9 @@ function liDomMaker(arrIndex) {
     last = textArr.length - 1;
     currentSave = getCurrentSpec("save", correctedItemsIndex);
     currentFold = getCurrentSpec("fold", correctedItemsIndex);
-    currentEdit = getCurrentSpec("edit", correctedItemsIndex);
 
     div.setAttribute("class", "md-item");
     if (currentFold) li.setAttribute("class", "folded");
-
-    if (currentEdit) {
-    }
 
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");

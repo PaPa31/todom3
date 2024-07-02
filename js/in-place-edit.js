@@ -1,3 +1,5 @@
+let editor = false;
+
 const selectEditor = (e, element) => {
   const parentLi = findParentTagOrClassRecursive(element);
   if (parentLi.classList.contains("folded")) {
@@ -20,7 +22,7 @@ const editInPlaceItem = (element, parentLi) => {
     300
   );
 
-  if (!itemsSpecArray[itemIndexToEdit2].edit) {
+  if (!editor) {
     const dual = parentLi.querySelector(".dual");
     const editor = document.createElement("div");
     editor.setAttribute("class", "editor");
@@ -47,9 +49,7 @@ const editInPlaceItem = (element, parentLi) => {
     }
   }
 
-  itemsSpecArray[itemIndexToEdit2].edit =
-    !itemsSpecArray[itemIndexToEdit2].edit;
-  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+  editor = !editor;
 
   const mdUpdate = (inPlace, markdownString) => {
     mdToTagsWithoutShape(inPlace, markdownString);
