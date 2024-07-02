@@ -1,6 +1,3 @@
-//let _textArea;
-//let inPlacePreview;
-
 const selectEditor = (e, element) => {
   const parentLi = findParentTagOrClassRecursive(element);
   if (parentLi.classList.contains("folded")) {
@@ -15,7 +12,6 @@ const editInPlaceItem = (element, parentLi) => {
 
   let current = getCurrentSpec("save", itemIndexToEdit2);
   const textArr = itemsArray[itemIndexToEdit2].text;
-
   const editing = textArr[current];
 
   intervalFocus(
@@ -36,24 +32,32 @@ const editInPlaceItem = (element, parentLi) => {
 
     const inPlacePreview = dual.querySelector(".md-item > .resizable-div");
 
-    _textArea.addEventListener("input", () =>
-      updatePreview(inPlacePreview, _textArea.value)
-    );
+    const inputListener = () => updatePreview(inPlacePreview, _textArea.value);
+    _textArea.addEventListener("input", inputListener);
+
+    // Store the input listener reference in the element for future removal
+    _textArea._inputListener = inputListener;
   } else {
     const editor = parentLi.querySelector(".dual > .editor");
-    if (editor) editor.remove();
+    if (editor) {
+      const _textArea = editor.querySelector("textarea");
+      if (_textArea && _textArea._inputListener)
+        editor.removeEventListener("input", _textArea._inputListener);
+      editor.remove();
+    }
   }
 
   itemsSpecArray[itemIndexToEdit2].edit =
     !itemsSpecArray[itemIndexToEdit2].edit;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-};
 
-const mdPreview = (inPlace, markdownString) => {
-  //console.log("hi", inPlace, markdownString);
-  inPlace.innerHTML = markdown(markdownString);
-};
+  const mdUpdate = (inPlace, markdownString) => {
+    mdToTagsWithoutShape(inPlace, markdownString);
+    textArr[current] = markdownString;
+    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  };
 
-const updatePreview = (inPl, str) => {
-  debounce(mdPreview(inPl, str), 200, false);
+  const updatePreview = (inPl, str) => {
+    debounce(mdUpdate(inPl, str), 200, false);
+  };
 };
