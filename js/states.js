@@ -488,16 +488,7 @@ const foldOneItem = (e, liDOM) => {
       !itemsSpecArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 
-    if (editor) {
-      const _editor = liDOM.querySelector(".dual > .editor");
-      if (_editor) {
-        const _textArea = _editor.querySelector("textarea");
-        if (_textArea) {
-          __removeListener("input", _textArea);
-        }
-        _editor.remove();
-      }
-    }
+    if (editor) removeEditor(liDOM);
   } else {
     const fileIndexToFold = indexedFiles.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
