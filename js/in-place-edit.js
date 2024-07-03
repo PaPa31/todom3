@@ -7,13 +7,11 @@ const selectEditor = (e, element) => {
   }
 };
 
-var editor = false;
-
 const editInPlaceItem = (element, parentLi) => {
-  const itemIndexToEdit2 = indexedItems.indexOf(parentLi.id) * 1;
+  const editIndex = indexedItems.indexOf(parentLi.id) * 1;
 
-  let current = getCurrentSpec("save", itemIndexToEdit2);
-  const textArr = itemsArray[itemIndexToEdit2].text;
+  let current = getCurrentSpec("save", editIndex);
+  const textArr = itemsArray[editIndex].text;
   const editing = textArr[current];
 
   intervalFocus(
@@ -22,7 +20,7 @@ const editInPlaceItem = (element, parentLi) => {
     300
   );
 
-  if (!editor) {
+  if (!itemsSpecArray[editIndex].edit) {
     const dual = parentLi.querySelector(".dual");
     const _editor = document.createElement("div");
     _editor.setAttribute("class", "editor");
@@ -37,8 +35,8 @@ const editInPlaceItem = (element, parentLi) => {
     const inputListener = () => mdUpdate(resizableDiv, _textArea.value);
     __addListener("input", _textArea, inputListener);
 
-    editor = !editor; //1
-  } else removeEditor(parentLi);
+    itemsSpecArray[editIndex].edit = !itemsSpecArray[editIndex].edit; //1
+  } else removeEditor(parentLi, editIndex);
 
   const mdUpdate = (inPlace, markdownString) => {
     mdToTagsWithoutShape(inPlace, markdownString);
@@ -47,7 +45,7 @@ const editInPlaceItem = (element, parentLi) => {
   };
 };
 
-function removeEditor(parentLi) {
+function removeEditor(parentLi, editIndex) {
   const _editor = parentLi.querySelector(".dual > .editor");
   if (_editor) {
     const _textArea = _editor.querySelector("textarea");
@@ -56,7 +54,7 @@ function removeEditor(parentLi) {
     }
     _editor.remove();
   }
-  editor = !editor; //2
+  itemsSpecArray[editIndex].edit = !itemsSpecArray[editIndex].edit; //2
 }
 
 function __addListener(eventName, listenerEl, callback) {
