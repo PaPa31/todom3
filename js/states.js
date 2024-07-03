@@ -371,10 +371,10 @@ const nextSave = (el) => {
   }
   if (itemsSpecArray[itemIndex].edit) {
     changeEditor(liDOM, itemIndex, textArr[current]);
-  } else {
-    const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-    mdToTagsWithoutShape(resizableDiv, textArr[current]);
   }
+  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+  mdToTagsWithoutShape(resizableDiv, textArr[current]);
+
   changeCurrentInBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
 };
