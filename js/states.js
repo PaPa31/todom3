@@ -327,6 +327,9 @@ const deleteCurrentSave = (el) => {
       );
     }
   }
+  if (itemsSpecArray[itemIndex].edit) {
+    changeEditor(liDOM, itemIndex, textArr[current]);
+  }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToTagsWithoutShape(resizableDiv, textArr[current]);
   if (lastAfter > 0) {
@@ -349,6 +352,9 @@ const previousSave = (el) => {
   el.nextSibling.innerText = current + 1;
   if (current < 1) {
     el.setAttribute("disable", true);
+  }
+  if (itemsSpecArray[itemIndex].edit) {
+    changeEditor(liDOM, itemIndex, textArr[current]);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToTagsWithoutShape(resizableDiv, textArr[current]);
