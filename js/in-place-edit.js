@@ -12,7 +12,6 @@ const editInPlaceItem = (element, parentLi) => {
 
   let current = getCurrentSpec("save", editIndex);
   const textArr = itemsArray[editIndex].text;
-  const editing = textArr[current];
 
   intervalFocus(
     element,
@@ -21,21 +20,7 @@ const editInPlaceItem = (element, parentLi) => {
   );
 
   if (!itemsSpecArray[editIndex].edit) {
-    const dual = parentLi.querySelector(".dual");
-    const _editor = document.createElement("div");
-    _editor.setAttribute("class", "editor");
-    dual.insertAdjacentElement("afterbegin", _editor);
-
-    const textAttr = { id: `li${parentLi.id}` };
-    const _textArea = createEl("textarea", textAttr, _editor);
-    _textArea.value = editing;
-
-    const resizableDiv = dual.querySelector(".md-item > .resizable-div");
-
-    const inputListener = () => mdUpdate(resizableDiv, _textArea.value);
-    __addListener("input", _textArea, inputListener);
-
-    itemsSpecArray[editIndex].edit = !itemsSpecArray[editIndex].edit; //1
+    createEditor(parentLi, editIndex, textArr[current]);
   } else removeEditor(parentLi, editIndex);
 
   const mdUpdate = (inPlace, markdownString) => {
@@ -44,6 +29,22 @@ const editInPlaceItem = (element, parentLi) => {
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   };
 };
+
+function createEditor(parentLi, editIndex, text) {
+  const dual = parentLi.querySelector(".dual");
+  const _editor = document.createElement("div");
+  _editor.setAttribute("class", "editor");
+  dual.insertAdjacentElement("afterbegin", _editor);
+
+  const _textArea = createEl("textarea", { value: text }, _editor);
+
+  const resizableDiv = dual.querySelector(".md-item > .resizable-div");
+
+  const inputListener = () => mdUpdate(resizableDiv, _textArea.value);
+  __addListener("input", _textArea, inputListener);
+
+  itemsSpecArray[editIndex].edit = !itemsSpecArray[editIndex].edit; //1
+}
 
 function removeEditor(parentLi, editIndex) {
   const _editor = parentLi.querySelector(".dual > .editor");

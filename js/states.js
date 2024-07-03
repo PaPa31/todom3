@@ -369,10 +369,19 @@ const nextSave = (el) => {
   if (current >= textArr.length - 1) {
     el.setAttribute("disable", true);
   }
-  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToTagsWithoutShape(resizableDiv, textArr[current]);
+  if (itemsSpecArray[itemIndex].edit) {
+    changeEditor(liDOM, itemIndex, textArr[current]);
+  } else {
+    const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+    mdToTagsWithoutShape(resizableDiv, textArr[current]);
+  }
   changeCurrentInBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
+};
+
+const changeEditor = (parentLi, editIndex, text) => {
+  removeEditor(parentLi, editIndex);
+  createEditor(parentLi, editIndex, text);
 };
 
 const editFile = (e, element) => {
