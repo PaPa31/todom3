@@ -10,8 +10,9 @@ const selectEditor = (e, element) => {
 const editInPlaceItem = (element, parentLi) => {
   const editIndex = indexedItems.indexOf(parentLi.id) * 1;
 
-  let current = getCurrentSpec("save", editIndex);
+  const current = getCurrentSpec("save", editIndex);
   const textArr = itemsArray[editIndex].text;
+  const text = textArr[current];
 
   intervalFocus(
     element,
@@ -20,14 +21,16 @@ const editInPlaceItem = (element, parentLi) => {
   );
 
   if (!itemsSpecArray[editIndex].edit) {
-    createEditor(parentLi, editIndex, textArr[current]);
+    createEditor(parentLi, editIndex, text);
   } else removeEditor(parentLi, editIndex);
+};
 
-  const mdUpdate = (inPlace, markdownString) => {
-    mdToTagsWithoutShape(inPlace, markdownString);
-    textArr[current] = markdownString;
-    localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  };
+const mdUpdate = (inPlace, markdownString, itemIndex) => {
+  mdToTagsWithoutShape(inPlace, markdownString);
+  const current = getCurrentSpec("save", itemIndex);
+  const textArr = itemsArray[itemIndex].text;
+  textArr[current] = markdownString;
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 };
 
 function createEditor(parentLi, editIndex, text) {
@@ -36,11 +39,13 @@ function createEditor(parentLi, editIndex, text) {
   _editor.setAttribute("class", "editor");
   dual.insertAdjacentElement("afterbegin", _editor);
 
-  const _textArea = createEl("textarea", { value: text }, _editor);
+  const _textArea = createEl("textarea", {}, _editor);
+  _textArea.value = text;
 
   const resizableDiv = dual.querySelector(".md-item > .resizable-div");
 
-  const inputListener = () => mdUpdate(resizableDiv, _textArea.value);
+  const inputListener = () =>
+    mdUpdate(resizableDiv, _textArea.value, editIndex);
   __addListener("input", _textArea, inputListener);
 
   itemsSpecArray[editIndex].edit = !itemsSpecArray[editIndex].edit; //1
