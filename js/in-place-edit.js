@@ -7,6 +7,8 @@ const selectEditor = (e, element) => {
   }
 };
 
+let editor = [];
+
 const editInPlaceItem = (element, parentLi) => {
   const editIndex = indexedItems.indexOf(parentLi.id) * 1;
 
@@ -20,12 +22,13 @@ const editInPlaceItem = (element, parentLi) => {
     300
   );
 
-  if (!itemsSpecArray[editIndex].edit) {
+  if (!editor[editIndex]) {
     createEditor(parentLi, editIndex, text);
   } else removeEditor(parentLi, editIndex);
 };
 
 const mdUpdate = (inPlace, markdownString, itemIndex) => {
+  console.log("+");
   mdToTagsWithoutShape(inPlace, markdownString);
   const current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
@@ -48,7 +51,7 @@ function createEditor(parentLi, editIndex, text) {
     mdUpdate(resizableDiv, _textArea.value, editIndex);
   __addListener("input", _textArea, inputListener);
 
-  itemsSpecArray[editIndex].edit = !itemsSpecArray[editIndex].edit; //1
+  editor[editIndex] = !editor[editIndex]; //1
 }
 
 function removeEditor(parentLi, editIndex) {
@@ -60,7 +63,7 @@ function removeEditor(parentLi, editIndex) {
     }
     _editor.remove();
   }
-  itemsSpecArray[editIndex].edit = !itemsSpecArray[editIndex].edit; //2
+  editor[editIndex] = !editor[editIndex]; //2
 }
 
 function __addListener(eventName, listenerEl, callback) {

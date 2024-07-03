@@ -327,7 +327,7 @@ const deleteCurrentSave = (el) => {
       );
     }
   }
-  if (itemsSpecArray[itemIndex].edit) {
+  if (editor[itemIndex]) {
     changeEditor(liDOM, itemIndex, textArr[current]);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
@@ -353,7 +353,7 @@ const previousSave = (el) => {
   if (current < 1) {
     el.setAttribute("disable", true);
   }
-  if (itemsSpecArray[itemIndex].edit) {
+  if (editor[itemIndex]) {
     changeEditor(liDOM, itemIndex, textArr[current]);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
@@ -375,7 +375,7 @@ const nextSave = (el) => {
   if (current >= textArr.length - 1) {
     el.setAttribute("disable", true);
   }
-  if (itemsSpecArray[itemIndex].edit) {
+  if (editor[itemIndex]) {
     changeEditor(liDOM, itemIndex, textArr[current]);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
@@ -503,8 +503,7 @@ const foldOneItem = (e, liDOM) => {
       !itemsSpecArray[itemIndexToFold].fold;
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 
-    if (itemsSpecArray[itemIndexToFold].edit)
-      removeEditor(liDOM, itemIndexToFold);
+    if (editor[itemIndexToFold]) removeEditor(liDOM, itemIndexToFold);
   } else {
     const fileIndexToFold = indexedFiles.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
