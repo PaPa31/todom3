@@ -163,7 +163,13 @@ const putItemToTrash = (indexToTrash) => {
   localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 };
 
-const putItemToDeletedArray = (deletedText) => {
+const putItemToDeletedArray = (indexToDelete) => {
+  deletedArray.push(itemsArray[indexToDelete]);
+  deletedCounter.innerText = deletedArray.length;
+  undoLastDeleteButton.classList.replace("invisible", "visible");
+};
+
+const putSaveToDeletedArray = (deletedText) => {
   const deletedObj = {
     text: [deletedText],
     save: 0,
@@ -202,6 +208,8 @@ const deleteOneItem = (e, liDOM) => {
 
     if (!e.ctrlKey) {
       putItemToTrash(indexToDelete);
+    } else {
+      putItemToDeletedArray(indexToDelete);
     }
 
     removeItemFromMemory(liDOM, indexToDelete);

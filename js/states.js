@@ -304,7 +304,7 @@ const deleteCurrentSave = (el) => {
   const textArr = itemsArray[itemIndex].text;
 
   const lastBefore = textArr.length - 1;
-  putItemToDeletedArray(textArr[current]);
+  putSaveToDeletedArray(textArr[current]);
   if (lastBefore === 0) {
     removeItemFromMemory(liDOM, itemIndex);
     return;
