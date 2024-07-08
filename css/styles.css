@@ -1708,8 +1708,13 @@ li:not(.folded) .top-in-li.sticky.hide {
   flex: 1;
   z-index: 3; /*to see right border of outline*/
 }
-.dual > .md-item {
+.dual > .md-item,
+.dual > .md-file {
   flex: 1;
+}
+
+.md-file {
+  width: 100%;
 }
 
 .editor textarea {
