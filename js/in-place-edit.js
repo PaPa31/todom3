@@ -28,7 +28,6 @@ const editInPlaceItem = (element, parentLi) => {
 };
 
 const mdUpdate = (inPlace, markdownString, itemIndex) => {
-  console.log("+");
   mdToTagsWithoutShape(inPlace, markdownString);
   const current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
@@ -42,7 +41,8 @@ function createEditor(parentLi, editIndex, text) {
   _editor.setAttribute("class", "editor");
   dual.insertAdjacentElement("afterbegin", _editor);
 
-  const _textArea = createEl("textarea", {}, _editor);
+  const textAttr = { id: `li${parentLi.id}` };
+  const _textArea = createEl("textarea", textAttr, _editor);
   _textArea.value = text;
 
   const resizableDiv = dual.querySelector(".md-item > .resizable-div");
