@@ -293,6 +293,7 @@ const trashButtonMaker = (paMainActDiv) => {
 const setCurrentSave = (current, itemIndex) => {
   itemsSpecArray[itemIndex].save = current;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 };
 
 const deleteCurrentSave = (el) => {
