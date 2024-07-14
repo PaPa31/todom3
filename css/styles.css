@@ -352,125 +352,6 @@ ol#list-files .main-act {
   width: 100%;
 }
 
-.ytb-iframe {
-  height: 100%;
-  margin-bottom: 15px;
-}
-
-.ytb-thumb {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px;
-  margin-top: 5px;
-}
-
-.ytb-thumb::-webkit-scrollbar {
-  display: none;
-}
-
-.ytb-img {
-  display: flex !important;
-  cursor: pointer;
-  width: 100%;
-  display: block;
-}
-
-/*if youtube thumbnail cover
-image is undefined */
-[src="false"] {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border: 1px solid;
-}
-
-.ytb-snip {
-  position: absolute;
-  padding: 0 4px;
-  top: 0;
-  background-color: var(--todom-background-translucent);
-  color: var(--todom-youtube-desc-color);
-  display: none;
-  overflow-y: auto;
-  max-height: 100%;
-  z-index: 1;
-}
-
-.ytb-snip > * {
-  padding-bottom: 10px;
-}
-
-.folded .ytb-snip > * {
-  padding-bottom: 0;
-}
-
-.folded .ytb-snip {
-  top: 39px;
-  left: 0;
-  background-color: initial;
-}
-
-.ytb-title::before,
-.ytb-date::before,
-.ytb-desc::before {
-  font-weight: bold;
-}
-
-.ytb-title {
-  margin-top: 3px;
-}
-
-.folded .ytb-title {
-  background-color: var(--todom-background-translucent);
-  padding: 4px;
-  border-radius: 4px;
-}
-
-.ytb-title::before {
-  content: "Title: ";
-}
-
-.folded .ytb-title::before {
-  content: "";
-}
-
-.ytb-date::before {
-  content: "Published At: ";
-}
-
-.ytb-desc::before {
-  content: "Description: ";
-}
-
-.ytb-play {
-  position: absolute;
-  background: url(./../img/youtube-2.svg) no-repeat;
-  background-position: center;
-  cursor: pointer;
-  background-size: 68px;
-  border: 0;
-  display: flex !important;
-  width: 70px;
-  height: 50px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-}
-
-.folded .ytb-play {
-  right: 0;
-  background-size: 55px;
-}
-
-.ytb-loaded {
-  display: initial;
-}
-
 .md-item,
 .file-text {
   /*resize handle takes 10px from the right
@@ -1370,6 +1251,177 @@ code {
   display: block;
 }*/
 
+li:not(.folded) .top-in-li {
+  /*workaround: default div has 0 height*/
+  overflow: hidden;
+  transform: translateY(0); /*smooth transition for first appearing*/
+}
+
+li:not(.folded) .top-in-li.sticky {
+  background-color: var(--todom-background);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transform: translateY(-100%);
+}
+
+li:not(.folded) .top-in-li.sticky.show {
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+li:not(.folded) .top-in-li.sticky.hide {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.dual {
+  display: flex;
+}
+.dual > .editor {
+  flex: 1;
+  z-index: 3; /*to see right border of outline*/
+}
+.dual > .md-item,
+.dual > .md-file {
+  flex: 1;
+}
+
+.md-file {
+  width: 100%;
+}
+
+.editor textarea {
+  height: 100%;
+}
+
+/* ----- Start Built-in Modules & Pre-defined styles ----- */
+
+/*start youtube*/
+
+.ytb-iframe {
+  height: 100%;
+  margin-bottom: 15px;
+}
+
+.ytb-thumb {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+.ytb-thumb::-webkit-scrollbar {
+  display: none;
+}
+
+.ytb-img {
+  display: flex !important;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+}
+
+/*if youtube thumbnail cover
+image is undefined */
+[src="false"] {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 1px solid;
+}
+
+.ytb-snip {
+  position: absolute;
+  padding: 0 4px;
+  top: 0;
+  background-color: var(--todom-background-translucent);
+  color: var(--todom-youtube-desc-color);
+  display: none;
+  overflow-y: auto;
+  max-height: 100%;
+  z-index: 1;
+}
+
+.ytb-snip > * {
+  padding-bottom: 10px;
+}
+
+.folded .ytb-snip > * {
+  padding-bottom: 0;
+}
+
+.folded .ytb-snip {
+  top: 39px;
+  left: 0;
+  background-color: initial;
+}
+
+.ytb-title::before,
+.ytb-date::before,
+.ytb-desc::before {
+  font-weight: bold;
+}
+
+.ytb-title {
+  margin-top: 3px;
+}
+
+.folded .ytb-title {
+  background-color: var(--todom-background-translucent);
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.ytb-title::before {
+  content: "Title: ";
+}
+
+.folded .ytb-title::before {
+  content: "";
+}
+
+.ytb-date::before {
+  content: "Published At: ";
+}
+
+.ytb-desc::before {
+  content: "Description: ";
+}
+
+.ytb-play {
+  position: absolute;
+  background: url(./../img/youtube-2.svg) no-repeat;
+  background-position: center;
+  cursor: pointer;
+  background-size: 68px;
+  border: 0;
+  display: flex !important;
+  width: 70px;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.folded .ytb-play {
+  right: 0;
+  background-size: 55px;
+}
+
+.ytb-loaded {
+  display: initial;
+}
+
+/*end youtube*/
+
+/*start modal*/
 .modal-container > .flex-row {
   flex-direction: column-reverse;
 }
@@ -1456,7 +1508,9 @@ code {
   color: #45a049;
 }*/
 
-/* carousel start*/
+/*end modal*/
+
+/*carousel start*/
 
 .gallery-wrapper {
   position: relative; /* Ensure the wrapper is a reference for absolute positioning */
@@ -1536,6 +1590,7 @@ code {
 
 /* carousel end*/
 
+/*start modal image*/
 .modal-image {
   position: fixed;
   z-index: 6;
@@ -1597,7 +1652,9 @@ code {
   right: 10px;
 }
 
-/*details*/
+/*end modal image*/
+
+/*start details*/
 
 details {
   border: 1px solid transparent;
@@ -1628,7 +1685,9 @@ summary:focus-visible {
   outline: var(--todom-button-border) auto 1px;
 }
 
-/*single-image*/
+/*end details*/
+
+/*start single-image*/
 
 .single-image {
   margin: 10px 0 30px !important;
@@ -1646,8 +1705,9 @@ summary:focus-visible {
   width: 50%;
 }
 
-/*single-image end*/
+/*end single-image*/
 
+/*start SVG*/
 .transparent {
   /*mix-blend-mode: multiply;*/
   /*background-color: black;*/
@@ -1675,51 +1735,7 @@ object {
   filter: invert(100%) sepia(0%) saturate(100%) hue-rotate(0deg)
     brightness(100%) contrast(100%);
 }
-
-li:not(.folded) .top-in-li {
-  /*workaround: default div has 0 height*/
-  overflow: hidden;
-  transform: translateY(0); /*smooth transition for first appearing*/
-}
-
-li:not(.folded) .top-in-li.sticky {
-  background-color: var(--todom-background);
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  transform: translateY(-100%);
-}
-
-li:not(.folded) .top-in-li.sticky.show {
-  transform: translateY(0);
-  transition: transform 0.3s ease-in-out;
-}
-
-li:not(.folded) .top-in-li.sticky.hide {
-  transform: translateY(-100%);
-  transition: transform 0.3s ease-in-out;
-}
-
-.dual {
-  display: flex;
-}
-.dual > .editor {
-  flex: 1;
-  z-index: 3; /*to see right border of outline*/
-}
-.dual > .md-item,
-.dual > .md-file {
-  flex: 1;
-}
-
-.md-file {
-  width: 100%;
-}
-
-.editor textarea {
-  height: 100%;
-}
+/*end SVG*/
 
 .question {
   width: 75%;
@@ -1729,6 +1745,8 @@ li:not(.folded) .top-in-li.sticky.hide {
   padding: 10px;
   border-radius: 5px;
 }
+
+/* ----- End Built-in Modules & Pre-defined styles ----- */
 
 @media (min-width: 600px) {
   .flex-small {
