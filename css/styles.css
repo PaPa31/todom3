@@ -1721,6 +1721,15 @@ li:not(.folded) .top-in-li.sticky.hide {
   height: 100%;
 }
 
+.question {
+  width: 75%;
+  margin: 20px 0px;
+  margin-left: auto;
+  background-color: var(--todom-input-background);
+  padding: 10px;
+  border-radius: 5px;
+}
+
 @media (min-width: 600px) {
   .flex-small {
     flex: 0 1 auto;
