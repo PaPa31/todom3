@@ -187,15 +187,19 @@ function liDomMaker(arrIndex) {
   foldedClass.appendChild(li);
 
   if (isItemState && !currentFold) {
-    const liHeight = li.clientHeight;
-    const belowHeightLimit = liHeight < liHeightLimit;
-    if (belowHeightLimit) {
-      unobserveLiElements(li);
-    } else {
-      observeLiElements(li);
-    }
+    addOrRemoveScrollObserverToLi(li);
   }
 }
+
+const addOrRemoveScrollObserverToLi = (liDOM) => {
+  const liHeight = liDOM.clientHeight;
+  const belowHeightLimit = liHeight < liHeightLimit;
+  if (belowHeightLimit) {
+    unobserveLiElements(liDOM);
+  } else {
+    observeLiElements(liDOM);
+  }
+};
 
 const fileInfoDivMaker = (parentDiv, arrIndex) => {
   const file = filesArray[arrIndex];
