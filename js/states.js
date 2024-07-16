@@ -131,7 +131,7 @@ const changeCurrentInBefore = (ancestorEl, current) => {
   ancestorEl.style = "--todom-before-current-save: '" + ++current + "';";
 };
 
-function liDomMaker(arrIndex) {
+function liDomMaker(arrIndex, str) {
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
   topDiv.setAttribute("class", "top-in-li");
@@ -153,6 +153,8 @@ function liDomMaker(arrIndex) {
 
     div.setAttribute("class", "md-item");
     if (currentFold) li.setAttribute("class", "folded");
+    if (str && str === "new-from-file")
+      li.setAttribute("class", "new-from-file");
 
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
@@ -1037,7 +1039,7 @@ const saveItemFromFile = (fileName) => {
     };
     itemsSpecArray.push(specObj);
     indexedItems.push(idCounterItems.toString());
-    liDomMaker(idCounterItems);
+    liDomMaker(idCounterItems, "new-from-file");
     idCounterItems++;
   }
   defaultMarkers();
@@ -1163,6 +1165,14 @@ const arrCheckForNull = (arr) => {
   }
 };
 
+const newElementsFromOtherState = (stateDiv) => {
+  const newLiAll = stateDiv.querySelectorAll(".new-from-file");
+  newLiAll.forEach((newLi) => {
+    addOrRemoveScrollObserverToLi(newLi);
+    newLi.classList.remove("new-from-file");
+  });
+};
+
 const initializeItemState = () => {
   saveAsNewButton.innerText = "Save item";
   itemsFilesToggleButton.innerText = "Items";
@@ -1192,6 +1202,7 @@ const initializeItemState = () => {
       localStorage.removeItem("todomItemsSpecArray");
     }
   }
+  newElementsFromOtherState(foldedClass);
   showItemSortingArrows(foldedClass.childElementCount);
 };
 
