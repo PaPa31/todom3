@@ -27,9 +27,9 @@ const editInPlaceItem = (element, parentLi) => {
   } else removeEditor(parentLi, editIndex);
 };
 
-const mdUpdate = (inPlace, markdownString, itemIndex) => {
+const mdUpdate = (parentLi, inPlace, markdownString, itemIndex) => {
   mdToTagsWithoutShape(inPlace, markdownString);
-  addOrRemoveScrollObserverToLi(inPlace);
+  addOrRemoveScrollObserverToLi(parentLi);
   const current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
   textArr[current] = markdownString;
@@ -49,7 +49,7 @@ function createEditor(parentLi, editIndex, text) {
   const resizableDiv = dual.querySelector(".md-item > .resizable-div");
 
   const inputListener = () =>
-    mdUpdate(resizableDiv, _textArea.value, editIndex);
+    mdUpdate(parentLi, resizableDiv, _textArea.value, editIndex);
   __addListener("input", _textArea, inputListener);
 
   editor[editIndex] = !editor[editIndex]; //1
