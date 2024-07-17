@@ -1668,7 +1668,7 @@ details[open] {
   margin-bottom: 10px;
 }
 
-details[open] summary {
+details[open] > summary {
   border: 1px dotted transparent;
 }
 
