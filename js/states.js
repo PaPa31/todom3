@@ -153,12 +153,12 @@ function liDomMaker(arrIndex, str) {
 
     div.setAttribute("class", "md-item");
     if (currentFold) li.setAttribute("class", "folded");
-    if (str && str === "new-from-file")
-      li.setAttribute("class", "new-from-file");
 
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
     mdToTagsWithoutShape(resizableDiv, textArr[currentSave]);
+    if (str && str === "new-from-file")
+      li.setAttribute("class", "new-from-file");
     if (last > 0) {
       changeCurrentInBefore(resizableDiv, currentSave);
     } else {
@@ -339,6 +339,8 @@ const deleteCurrentSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToTagsWithoutShape(resizableDiv, textArr[current]);
+  addOrRemoveScrollObserverToLi(liDOM);
+
   if (lastAfter > 0) {
     changeCurrentInBefore(resizableDiv, current);
   } else {
@@ -365,6 +367,8 @@ const previousSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToTagsWithoutShape(resizableDiv, textArr[current]);
+  addOrRemoveScrollObserverToLi(liDOM);
+
   changeCurrentInBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
 };
@@ -387,6 +391,7 @@ const nextSave = (el) => {
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToTagsWithoutShape(resizableDiv, textArr[current]);
+  addOrRemoveScrollObserverToLi(liDOM);
 
   changeCurrentInBefore(resizableDiv, current);
   setCurrentSave(current, itemIndex);
@@ -1022,12 +1027,12 @@ const saveItemFromFile = (fileName) => {
     const itemId = indexedItems[itemIndex];
     itemsArray[itemIndex].text.push(input.value);
     const liDOM = document.getElementById(itemId);
-    liDOM.classList.add("new-from-file");
     const textArr = itemsArray[itemIndex].text;
     itemsSpecArray[itemIndex].save = textArr.length - 1;
     saveHistoryTracker(liDOM, textArr.length);
     const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
     mdToTagsWithoutShape(resizableDiv, input.value);
+    liDOM.classList.add("new-from-file");
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const itemObj = {
@@ -1057,6 +1062,7 @@ function checkIt() {
       ".file-text.resizable-div"
     );
     mdToTagsWithoutShape(resizableDiv, filesArray[fileIndexToEdit].text);
+    addOrRemoveScrollObserverToLi(editedFileLiDOM);
     fileName = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {

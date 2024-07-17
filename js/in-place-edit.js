@@ -29,6 +29,7 @@ const editInPlaceItem = (element, parentLi) => {
 
 const mdUpdate = (inPlace, markdownString, itemIndex) => {
   mdToTagsWithoutShape(inPlace, markdownString);
+  addOrRemoveScrollObserverToLi(inPlace);
   const current = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
   textArr[current] = markdownString;

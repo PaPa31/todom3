@@ -443,6 +443,8 @@ saveAsOldButton.addEventListener("click", function (e) {
     ".md-item > .resizable-div"
   );
   mdToTagsWithoutShape(resizableDiv, input.value);
+  addOrRemoveScrollObserverToLi(editedItemLiDOM);
+
   scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
   joinSaveItemButton();
   defaultMarkers();
@@ -467,6 +469,8 @@ const saveItem = () => {
       ".md-item > .resizable-div"
     );
     mdToTagsWithoutShape(resizableDiv, input.value);
+    addOrRemoveScrollObserverToLi(editedItemLiDOM);
+
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
     joinSaveItemButton();
   } else {
