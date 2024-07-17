@@ -1022,6 +1022,7 @@ const saveItemFromFile = (fileName) => {
     const itemId = indexedItems[itemIndex];
     itemsArray[itemIndex].text.push(input.value);
     const liDOM = document.getElementById(itemId);
+    liDOM.classList.add("new-from-file");
     const textArr = itemsArray[itemIndex].text;
     itemsSpecArray[itemIndex].save = textArr.length - 1;
     saveHistoryTracker(liDOM, textArr.length);
@@ -1202,8 +1203,8 @@ const initializeItemState = () => {
       localStorage.removeItem("todomItemsSpecArray");
     }
   }
-  newElementsFromOtherState(foldedClass);
   showItemSortingArrows(foldedClass.childElementCount);
+  newElementsFromOtherState(foldedClass);
 };
 
 itemsFilesToggleButton.addEventListener("click", function (e) {
