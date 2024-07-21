@@ -1,3 +1,4 @@
+//not used yet
 const $ = (selector = "", scope = document) => {
   const el =
     scope && scope.querySelector && selector
