@@ -140,7 +140,7 @@ function liDomMaker(arrIndex, str) {
   const div = document.createElement("div");
   let last, currentSave, currentFold;
 
-  div.addEventListener("dblclick", handleDblClick);
+  dual.addEventListener("dblclick", handleDblClick);
   foldButtonMaker(topDiv);
   mainActDivMaker(topDiv);
 

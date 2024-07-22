@@ -1279,6 +1279,11 @@ li:not(.folded) .top-in-li.sticky.hide {
 .dual {
   display: flex;
 }
+
+li:not(.folded) .dual {
+  width: fit-content;
+}
+
 .dual > .editor {
   flex: 1;
   z-index: 3; /*to see right border of outline*/
