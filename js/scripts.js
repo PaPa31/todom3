@@ -700,7 +700,15 @@ undoLastDeleteButton.addEventListener("click", function (e) {
 });
 
 function handleDblClick(event) {
-  event.target.style = "";
+  const initiator = event.target,
+    targetEl = isItemState
+      ? initiator.classList.contains("dual")
+        ? initiator
+        : findParentTagOrClassRecursive(initiator, undefined, "dual")
+      : initiator.classList.contains("file-text")
+      ? initiator
+      : findParentTagOrClassRecursive(initiator, undefined, "file-text");
+  targetEl.style = "";
 }
 
 const inputChange = function (e) {
