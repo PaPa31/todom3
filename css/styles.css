@@ -1294,6 +1294,7 @@ ol#list-items > li:not(.folded) .dual,
 .dual > .md-item,
 .dual > .md-file {
   flex: 1;
+  width: 50%;
 }
 
 .md-file {
