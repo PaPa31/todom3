@@ -1290,6 +1290,7 @@ ol#list-items > li:not(.folded) .dual,
 .dual > .editor {
   flex: 1;
   z-index: 3; /*to see right border of outline*/
+  padding: 3px; /*to see the top and left border of the outline, especially in Firefox*/
 }
 .dual > .md-item,
 .dual > .md-file {
@@ -1303,6 +1304,7 @@ ol#list-items > li:not(.folded) .dual,
 
 .editor textarea {
   height: 100%;
+  border-width: 1px; /*for Firefox*/
 }
 
 /* ----- Start Built-in Modules & Pre-defined styles ----- */
