@@ -490,21 +490,33 @@ const observerToggle = (liDOM) => {
 };
 
 const foldOneItem = (e, liDOM) => {
+  const currentIndex = indexedItems.indexOf(liDOM.id) * 1;
   const initialScrollTop = window.scrollY;
   liDOM.classList.toggle("folded");
+  console.log(sticky);
+
+  console.log(currentIndex);
+  console.log(stickyNumber);
+
   if (sticky) {
+    console.log("in");
+
     // RULE: when pressing Ctrl it folds higher and unfolds lower
     if (e.ctrlKey) {
+      console.log("1");
       liDOM.scrollIntoView(false);
     } else {
       liDOM.scrollIntoView(true);
     }
   } else {
     if (e.ctrlKey) {
+      console.log("3");
       liDOM.scrollIntoView(false);
       // force show sticky
       handleLiScroll({ target: liDOM });
     } else {
+      console.log("4");
+
       window.scrollTo(0, initialScrollTop);
     }
   }

@@ -2,6 +2,7 @@ const liHeightLimit = 300;
 let predictBottom = 100;
 let suspendTop = -200;
 let sticky = false;
+let stickyNumber;
 
 // Function to handle scroll events on a specific li element
 function handleLiScroll(event) {
@@ -23,6 +24,7 @@ function handleLiScroll(event) {
       topInLi.getBoundingClientRect().x;
     li.style.paddingTop = `${topInLiHeight}px`; // Set the paddingTop first to avoid jerking
     sticky = true;
+    stickyNumber = indexedItems.indexOf(li.id) * 1;
     topInLi.style.width = `${topInLiWidth}px`;
     topInLi.classList.add("sticky");
 
@@ -42,6 +44,7 @@ function handleLiScroll(event) {
         li.style.paddingTop = "";
         topInLi.classList.remove("sticky", "show", "hide");
         sticky = false;
+        stickyNumber = undefined;
         topInLi.style.width = "";
       },
       { once: true }
