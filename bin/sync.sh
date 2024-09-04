@@ -11,11 +11,10 @@ NOTIFICATION_TITLE="Synchronization Completed"
 sync_project() {
   local project_folder="$1"
   local github_repo="$2"
-  local repo_name="$3"
 
   cd "$project_folder" || return 1
 
-  echo "Syncing repository in: $repo_name" >> "$LOGFILE"
+  echo "Syncing repository in: $project_folder" >> "$LOGFILE"
 
   # Check if there are any changes in the working directory
   if [[ -n $(git status --short) ]]; then
@@ -27,60 +26,74 @@ sync_project() {
 
     # Check if the commit was successful
     if [[ $? -ne 0 ]]; then
-      echo "Failed to commit changes in: $repo_name" >> "$LOGFILE"
+      echo "Failed to commit changes in: $project_folder" >> "$LOGFILE"
       return 1
     fi
 
-    # Push changes to remote repository
-    echo "Pushing changes in: $repo_name" >> "$LOGFILE"
-    git push "$github_repo" master >> "$LOGFILE" 2>&1
+    # Flag to track if changes were pushed
+    local changes_pushed=true
 
-    # Check if the push was successful, and if not, log an error message
-    if [[ $? -ne 0 ]]; then
-      echo "Failed to push changes for repository in: $repo_name" >> "$LOGFILE"
-      return 1
-    fi
   else
-    echo "No changes in repository: $repo_name" >> "$LOGFILE"
+    echo "No changes in repository: $project_folder" >> "$LOGFILE"
+    changes_pushed=false
+  fi
+
+  # Push any unpushed commits, even if the working directory is clean
+  git push "$github_repo" master >> "$LOGFILE" 2>&1
+
+  # Check if the push was successful, and if not, log an error message
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to push changes for repository in: $project_folder" >> "$LOGFILE"
+    return 1
+  fi
+
+  # If the push was successful and no changes were committed, log it as already up-to-date
+  if [[ $changes_pushed == false ]]; then
+    echo "Repository is already up-to-date: $project_folder" >> "$LOGFILE"
+  else
+    echo "Changes pushed successfully for repository: $project_folder" >> "$LOGFILE"
   fi
 
   # Perform git pull to merge remote changes
-  echo "Pulling changes in: $repo_name" >> "$LOGFILE"
+  echo "Pulling changes in: $project_folder" >> "$LOGFILE"
   git pull origin master >> "$LOGFILE" 2>&1
 
   # Check if the pull was successful, and if not, log an error message
   if [[ $? -ne 0 ]]; then
-    echo "Failed to update the repository in: $repo_name" >> "$LOGFILE"
+    echo "Failed to update the repository in: $project_folder" >> "$LOGFILE"
     return 1
   fi
 
-  echo "Synchronized repository: $repo_name" >> "$LOGFILE"
+  echo "Syncing repository in: $project_folder completed successfully." >> "$LOGFILE"
 }
 
 # Function to display enhanced notification after synchronization
 send_notification() {
   local sync_summary=""
   local changes_info=""
+  local repositories_with_changes=()
 
-  # Check if there were changes committed during synchronization
   if grep -q "Autocommit" "$LOGFILE"; then
     sync_summary="Changes were synchronized successfully."
-
-    # Extract commit messages and count the number of files changed
-    changes_info+=$(grep "Autocommit" "$LOGFILE" | awk -F " at " '{ print $1" - "$2 }' | awk '{ sub(/\]$/, "", $NF); print $NF }' | paste -sd '; ')
-
-  else
-    sync_summary="No changes to synchronize."
+    changes_info=$(grep "Autocommit" "$LOGFILE" | awk -F " at " '{ print $1" - "$2 }' | awk '{ print $2 }' | paste -sd '; ')
+    file_count=$(grep "Autocommit" "$LOGFILE" | wc -l)
+    changes_info+="\n\nNumber of files changed: $file_count"
+  elif grep -q "Repository is already up-to-date" "$LOGFILE"; then
+    sync_summary="Repositories were already up-to-date."
   fi
 
-  local message="Private Repository:\n$(grep "Private Repository" "$LOGFILE" | grep -v "No changes in repository")\n\nPublic Repository:\n$(grep "Public Repository" "$LOGFILE" | grep -v "No changes in repository")\n\n$sync_summary\n\n$changes_info"
+  repositories_with_changes=($(grep "Syncing repository in:" "$LOGFILE" | awk -F "in: " '{ print $2 }'))
+  local repositories_changed=$(IFS=", "; echo "${repositories_with_changes[*]}")
+  changes_info+="\n\nRepositories:\n$repositories_changed"
+
+  local message="Synchronization completed\n\n$sync_summary\n\n$changes_info"
 
   if command -v notify-send &>/dev/null; then
     notify-send "$NOTIFICATION_TITLE" "$message" -i emblem-default
   elif command -v zenity &>/dev/null; then
     zenity --info --title="$NOTIFICATION_TITLE" --text="$message"
   else
-    echo -e "Notification: $NOTIFICATION_TITLE\n\n$message"
+    echo "Notification: $NOTIFICATION_TITLE\n\n$message"
   fi
 }
 
