@@ -10,7 +10,6 @@ NOTIFICATION_TITLE="Synchronization Completed"
 # Function to synchronize project folder with a GitHub repository
 sync_project() {
   local project_folder="$1"
-  local github_repo="$2"
 
   cd "$project_folder" || return 1
 
@@ -38,8 +37,11 @@ sync_project() {
     changes_pushed=false
   fi
 
+  # Identify the remote name (usually "origin")
+  local remote_name=$(git remote | head -n 1)
+
   # Push any unpushed commits, even if the working directory is clean
-  git push "$github_repo" master >> "$LOGFILE" 2>&1
+  git push "$remote_name" master >> "$LOGFILE" 2>&1
 
   # Check if the push was successful, and if not, log an error message
   if [[ $? -ne 0 ]]; then
@@ -56,7 +58,7 @@ sync_project() {
 
   # Perform git pull to merge remote changes
   echo "Pulling changes in: $project_folder" >> "$LOGFILE"
-  git pull origin master >> "$LOGFILE" 2>&1
+  git pull "$remote_name" master >> "$LOGFILE" 2>&1
 
   # Check if the pull was successful, and if not, log an error message
   if [[ $? -ne 0 ]]; then
