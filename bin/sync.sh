@@ -14,10 +14,7 @@ success=true
 # Function to synchronize project folder with a GitHub repository
 sync_project() {
   local project_folder="$2"
-  #local file_count=""
   temp="/home/papa31/temp"
-  #temp1="/home/papa31/temp1"
-  #temp2="/home/papa31/temp2"
 
   cd "$project_folder" || return 1
 
@@ -27,16 +24,13 @@ sync_project() {
   # Check if there are any changes in the working directory
   if [[ -n $(git status --short) ]]; then
     # Stage all changes, including file renames
-    git add -A > "$temp" 2>&1
-    cat $temp >> $LOGFILE
-    #cat $temp > $temp1
+    git add -A >> "$LOGFILE" 2>&1
 
     # Commit changes, with support for file renames
     git commit -am "Autocommit at $(date +'%Y-%m-%d %H:%M:%S')" > "$temp" 2>&1
     cat $temp >> $LOGFILE
-    #cat $temp > $temp2
 
-    # Retrieve the number of changed files
+    # Retrieve the number of changed files, if any
     if grep -q "changed" "$temp"; then
       file_count=$(grep -oE "[0-9]+ file[s]? changed" $temp)
       NOTIFY+="$file_count\n"
@@ -63,8 +57,7 @@ sync_project() {
 
   # Push any unpushed commits, even if the working directory is clean
   echo "Pushing changes:" >> "$LOGFILE"
-  git push "$remote_name" master > "$temp" 2>&1
-  cat $temp >> $LOGFILE
+  git push "$remote_name" master >> "$LOGFILE" 2>&1
 
   # Check if the push was successful, and if not, log an error message
   if [[ $? -ne 0 ]]; then
@@ -84,8 +77,7 @@ sync_project() {
 
   # Perform git pull to merge remote changes
   echo "Pulling changes:" >> "$LOGFILE"
-  git pull "$remote_name" master > "$temp" 2>&1
-  cat $temp >> $LOGFILE
+  git pull "$remote_name" master >> "$LOGFILE" 2>&1
 
   # Check if the pull was successful, and if not, log an error message
   if [[ $? -ne 0 ]]; then
@@ -96,7 +88,6 @@ sync_project() {
     return 1
   fi
 
-  #echo "Sync successful!" >> "$LOGFILE"
   echo >> "$LOGFILE"
   NOTIFY+="\n\n"
 
@@ -126,11 +117,10 @@ send_notification() {
 
 # Main script
 {
-  #sleep 10
+  sleep 10
 
   > "$LOGFILE"
 
-  #echo "--- Syncing repo(s) ---" >> "$LOGFILE"
   echo >> "$LOGFILE"
 
   # Sync private repository
@@ -138,8 +128,6 @@ send_notification() {
 
   # Sync public repository
   sync_project "2" "${PROJECT_FOLDERS[1]}" "$GITHUB_REPO_PUBLIC" "Public Repository"
-
-  #echo "--- Sync completed ---" >> "$LOGFILE"
 
   send_notification
 
