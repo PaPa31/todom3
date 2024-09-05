@@ -5,27 +5,48 @@ GITHUB_REPO_PRIVATE="git@github.com:PaPa31/md"
 GITHUB_REPO_PUBLIC="git@github.com:PaPa31/todom"
 
 LOGFILE="/home/papa31/logfile.log"
-NOTIFICATION_TITLE="Synchronization Completed"
+NOTIFICATION_TITLE="Sync Successful"
+
+NOTIFY=""
+
+success=true
 
 # Function to synchronize project folder with a GitHub repository
 sync_project() {
-  local project_folder="$1"
+  local project_folder="$2"
+  #local file_count=""
+  temp="/home/papa31/temp"
+  #temp1="/home/papa31/temp1"
+  #temp2="/home/papa31/temp2"
 
   cd "$project_folder" || return 1
 
-  echo "Syncing repository in: $project_folder" >> "$LOGFILE"
+  echo "$1. " "$project_folder" >> "$LOGFILE"
+  NOTIFY+="$1.$project_folder\n"
 
   # Check if there are any changes in the working directory
   if [[ -n $(git status --short) ]]; then
     # Stage all changes, including file renames
-    git add -A >> "$LOGFILE" 2>&1
+    git add -A > "$temp" 2>&1
+    cat $temp >> $LOGFILE
+    #cat $temp > $temp1
 
     # Commit changes, with support for file renames
-    git commit -am "Autocommit at $(date +'%Y-%m-%d %H:%M:%S')" >> "$LOGFILE" 2>&1
+    git commit -am "Autocommit at $(date +'%Y-%m-%d %H:%M:%S')" > "$temp" 2>&1
+    cat $temp >> $LOGFILE
+    #cat $temp > $temp2
+
+    # Retrieve the number of changed files
+    if grep -q "changed" "$temp"; then
+      file_count=$(grep -oE "[0-9]+ file[s]? changed" $temp)
+      NOTIFY+="$file_count\n"
+    fi
 
     # Check if the commit was successful
     if [[ $? -ne 0 ]]; then
-      echo "Failed to commit changes in: $project_folder" >> "$LOGFILE"
+      echo "  Failed to commit changes!" >> "$LOGFILE"
+      NOTIFY+="  Failed to commit changes!\n"
+      success=false
       return 1
     fi
 
@@ -33,7 +54,7 @@ sync_project() {
     local changes_pushed=true
 
   else
-    echo "No changes in repository: $project_folder" >> "$LOGFILE"
+    echo "  No changes in repository" >> "$LOGFILE"
     changes_pushed=false
   fi
 
@@ -41,54 +62,58 @@ sync_project() {
   local remote_name=$(git remote | head -n 1)
 
   # Push any unpushed commits, even if the working directory is clean
-  git push "$remote_name" master >> "$LOGFILE" 2>&1
+  echo "Pushing changes:" >> "$LOGFILE"
+  git push "$remote_name" master > "$temp" 2>&1
+  cat $temp >> $LOGFILE
 
   # Check if the push was successful, and if not, log an error message
   if [[ $? -ne 0 ]]; then
-    echo "Failed to push changes for repository in: $project_folder" >> "$LOGFILE"
+    echo "  Failed to push!" >> "$LOGFILE"
+    NOTIFY+="  Failed to push!\n"
+    success=false
     return 1
   fi
 
   # If the push was successful and no changes were committed, log it as already up-to-date
   if [[ $changes_pushed == false ]]; then
-    echo "Repository is already up-to-date: $project_folder" >> "$LOGFILE"
+    NOTIFY+="  Everything up-to-date.\n"
   else
-    echo "Changes pushed successfully for repository: $project_folder" >> "$LOGFILE"
+    echo "  Changes pushed successfully!" >> "$LOGFILE"
+    NOTIFY+="  Changes pushed successfully!\n"
   fi
 
   # Perform git pull to merge remote changes
-  echo "Pulling changes in: $project_folder" >> "$LOGFILE"
-  git pull "$remote_name" master >> "$LOGFILE" 2>&1
+  echo "Pulling changes:" >> "$LOGFILE"
+  git pull "$remote_name" master > "$temp" 2>&1
+  cat $temp >> $LOGFILE
 
   # Check if the pull was successful, and if not, log an error message
   if [[ $? -ne 0 ]]; then
-    echo "Failed to update the repository in: $project_folder" >> "$LOGFILE"
+    echo "  Failed to pull!" >> "$LOGFILE"
+    echo >> "$LOGFILE"
+    NOTIFY+="  Failed to pull\n\n"
+    success=false
     return 1
   fi
 
-  echo "Syncing repository in: $project_folder completed successfully." >> "$LOGFILE"
+  #echo "Sync successful!" >> "$LOGFILE"
+  echo >> "$LOGFILE"
+  NOTIFY+="\n\n"
+
+  rm $temp
 }
 
 # Function to display enhanced notification after synchronization
 send_notification() {
   local sync_summary=""
-  local changes_info=""
   local repositories_with_changes=()
 
-  if grep -q "Autocommit" "$LOGFILE"; then
-    sync_summary="Changes were synchronized successfully."
-    changes_info=$(grep "Autocommit" "$LOGFILE" | awk -F " at " '{ print $1" - "$2 }' | awk '{ print $2 }' | paste -sd '; ')
-    file_count=$(grep "Autocommit" "$LOGFILE" | wc -l)
-    changes_info+="\n\nNumber of files changed: $file_count"
-  elif grep -q "Repository is already up-to-date" "$LOGFILE"; then
-    sync_summary="Repositories were already up-to-date."
+  if [[ $success == false ]]; then
+    NOTIFICATION_TITLE="Sync Failed!!!"
+    sync_summary="  See ~/logfile.log"
   fi
 
-  repositories_with_changes=($(grep "Syncing repository in:" "$LOGFILE" | awk -F "in: " '{ print $2 }'))
-  local repositories_changed=$(IFS=", "; echo "${repositories_with_changes[*]}")
-  changes_info+="\n\nRepositories:\n$repositories_changed"
-
-  local message="Synchronization completed\n\n$sync_summary\n\n$changes_info"
+  local message="$sync_summary\n\n$NOTIFY"
 
   if command -v notify-send &>/dev/null; then
     notify-send "$NOTIFICATION_TITLE" "$message" -i emblem-default
@@ -101,17 +126,20 @@ send_notification() {
 
 # Main script
 {
-  sleep 10
+  #sleep 10
 
   > "$LOGFILE"
 
+  #echo "--- Syncing repo(s) ---" >> "$LOGFILE"
+  echo >> "$LOGFILE"
+
   # Sync private repository
-  sync_project "${PROJECT_FOLDERS[0]}" "$GITHUB_REPO_PRIVATE" "Private Repository"
+  sync_project "1" "${PROJECT_FOLDERS[0]}" "$GITHUB_REPO_PRIVATE" "Private Repository"
 
   # Sync public repository
-  sync_project "${PROJECT_FOLDERS[1]}" "$GITHUB_REPO_PUBLIC" "Public Repository"
+  sync_project "2" "${PROJECT_FOLDERS[1]}" "$GITHUB_REPO_PUBLIC" "Public Repository"
 
-  echo "Synchronization completed." >> "$LOGFILE"
+  #echo "--- Sync completed ---" >> "$LOGFILE"
 
   send_notification
 
