@@ -1676,7 +1676,7 @@ details[open] {
   border: 1px dotted red;
   border-radius: 4px;
   padding-bottom: 0;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 details[open] > summary {
@@ -1690,6 +1690,8 @@ summary {
   padding: 10px;
   outline: none;
   width: fit-content;
+  margin-left: -11px;
+  margin-top: -11px;
 }
 
 summary:focus-visible {
