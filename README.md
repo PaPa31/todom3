@@ -173,7 +173,7 @@ You can add an animated SVG using the `object` tag:
 <details>
   <summary>Hidden text</summary>
 
-You can see this text if you click щт the "Hidden text" heading.
+You can see this text if you click on the "Hidden text" heading.
 
 </details>
 ```
