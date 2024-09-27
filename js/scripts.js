@@ -109,10 +109,10 @@ const joinSaveItemButton = () => {
 const editItem = (e, element, parentLi) => {
   const itemIndexToEdit2 = indexedItems.indexOf(parentLi.id) * 1;
 
-  let current = getCurrentSpec("save", itemIndexToEdit2);
+  let currentSave = getCurrentSpec("save", itemIndexToEdit2);
   const textArr = itemsArray[itemIndexToEdit2].text;
 
-  const editing = textArr[current];
+  const editing = textArr[currentSave];
   if (e.ctrlKey) {
     intervalFocus(
       element,
@@ -169,7 +169,7 @@ const putItemToDeletedArray = (indexToDelete) => {
   undoLastDeleteButton.classList.replace("invisible", "visible");
 };
 
-const putSaveToDeletedArray = (deletedText) => {
+const putSaveToDeletedArray = (deletedText, deletedDate) => {
   const deletedObj = {
     text: [deletedText],
     save: 0,
@@ -432,9 +432,9 @@ const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
 };
 
 saveAsOldButton.addEventListener("click", function (e) {
-  const save = itemsSpecArray[itemIndexToEdit].save;
+  const currentSave = itemsSpecArray[itemIndexToEdit].save;
   const textArr = itemsArray[itemIndexToEdit].text;
-  textArr[save] = input.value;
+  textArr[currentSave] = input.value;
   //textArr.push(input.value);
   //const len = textArr.length;
   //itemsSpecArray[itemIndexToEdit].save = len - 1;
@@ -551,8 +551,8 @@ document.addEventListener("keyup", function (e) {
 const mergeAllItems = () => {
   itemsArray.forEach((item, index) => {
     const textArr = item.text;
-    const current = getCurrentSpec("save", index);
-    const text = textArr[current].replace(/\\$/, "");
+    const currentSave = getCurrentSpec("save", index);
+    const text = textArr[currentSave].replace(/\\$/, "");
     const regex = /(^ *#{1,6} *)|(^ *\d+\.* *)|(^ *\- *)|(^ *\>+ *)|(^ +)/;
     if (text) {
       input.value = input.value

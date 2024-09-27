@@ -127,8 +127,8 @@ const initialInBefore = (ancestorEl) => {
   ancestorEl.style.setProperty("--todom-before-display", "none");
 };
 
-const changeCurrentInBefore = (ancestorEl, current) => {
-  ancestorEl.style = "--todom-before-current-save: '" + ++current + "';";
+const changeCurrentInBefore = (ancestorEl, currentSave) => {
+  ancestorEl.style = "--todom-before-current-save: '" + ++currentSave + "';";
 };
 
 function liDomMaker(arrIndex, str) {
@@ -222,24 +222,24 @@ const foldButtonMaker = (parentEl) => {
   createEl("span", null, buttonTag);
 };
 
-const saveHistoryDivMaker = (paDiv, last, current) => {
+const saveHistoryDivMaker = (paDiv, last, currentSave) => {
   const saveHistoryDiv = createEl("div", { class: "save-history" }, paDiv);
-  previousSaveButtonMaker(saveHistoryDiv, current);
-  counterSaveSpanMaker(saveHistoryDiv, current);
-  nextSaveButtonMaker(saveHistoryDiv, current === last);
+  previousSaveButtonMaker(saveHistoryDiv, currentSave);
+  counterSaveSpanMaker(saveHistoryDiv, currentSave);
+  nextSaveButtonMaker(saveHistoryDiv, currentSave === last);
   deleteCurrentSaveButtonMaker(saveHistoryDiv);
 };
 
-const counterSaveSpanMaker = (paDiv, current) => {
+const counterSaveSpanMaker = (paDiv, currentSave) => {
   const counterSaveSpan = createEl("span", { class: "counter-save" }, paDiv);
-  counterSaveSpan.innerText = current + 1;
+  counterSaveSpan.innerText = currentSave + 1;
 };
 
-const previousSaveButtonMaker = (paDiv, current) => {
+const previousSaveButtonMaker = (paDiv, currentSave) => {
   const attr = {
     class: "previous-save btn",
     title: "Show previous save",
-    disable: current === 0 ? true : false,
+    disable: currentSave === 0 ? true : false,
     onclick: `previousSave(this)`,
   };
   createEl("button", attr, paDiv);
@@ -296,8 +296,8 @@ const trashButtonMaker = (paMainActDiv) => {
   createEl("button", attr, paMainActDiv);
 };
 
-const setCurrentSave = (current, itemIndex) => {
-  itemsSpecArray[itemIndex].save = current;
+const setCurrentSave = (currentSave, itemIndex) => {
+  itemsSpecArray[itemIndex].save = currentSave;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 };
@@ -306,26 +306,26 @@ const deleteCurrentSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItems.indexOf(liDOM.id) * 1;
 
-  let current = getCurrentSpec("save", itemIndex);
+  let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
 
   const lastBefore = textArr.length - 1;
-  putSaveToDeletedArray(textArr[current]);
+  putSaveToDeletedArray(textArr[currentSave]);
   if (lastBefore === 0) {
     removeItemFromMemory(liDOM, itemIndex);
     return;
   }
-  textArr.splice(current, 1);
+  textArr.splice(currentSave, 1);
   const lastAfter = textArr.length - 1;
-  if (current < lastAfter) {
-    // we do not change 'current' due to splice,
-    // 'current' points to the next position
-    //current++;
+  if (currentSave < lastAfter) {
+    // we do not change 'currentSave' due to splice,
+    // 'currentSave' points to the next position
+    //currentSave++;
   } else {
     el.previousSibling.setAttribute("disable", true);
-    if (current === lastBefore) {
-      current--;
-      el.previousSibling.previousSibling.innerText = current + 1;
+    if (currentSave === lastBefore) {
+      currentSave--;
+      el.previousSibling.previousSibling.innerText = currentSave + 1;
     }
     if (lastAfter === 0) {
       el.previousSibling.previousSibling.previousSibling.setAttribute(
@@ -335,66 +335,66 @@ const deleteCurrentSave = (el) => {
     }
   }
   if (editor[itemIndex]) {
-    changeEditor(liDOM, itemIndex, textArr[current]);
+    changeEditor(liDOM, itemIndex, textArr[currentSave]);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToTagsWithoutShape(resizableDiv, textArr[current]);
+  mdToTagsWithoutShape(resizableDiv, textArr[currentSave]);
   addOrRemoveScrollObserverToLi(liDOM);
 
   if (lastAfter > 0) {
-    changeCurrentInBefore(resizableDiv, current);
+    changeCurrentInBefore(resizableDiv, currentSave);
   } else {
     initialInBefore(resizableDiv);
   }
-  setCurrentSave(current, itemIndex);
+  setCurrentSave(currentSave, itemIndex);
 };
 
 const previousSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItems.indexOf(liDOM.id) * 1;
 
-  let current = getCurrentSpec("save", itemIndex);
+  let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
 
-  current--;
+  currentSave--;
   el.nextSibling.nextSibling.removeAttribute("disable");
-  el.nextSibling.innerText = current + 1;
-  if (current < 1) {
+  el.nextSibling.innerText = currentSave + 1;
+  if (currentSave < 1) {
     el.setAttribute("disable", true);
   }
   if (editor[itemIndex]) {
-    changeEditor(liDOM, itemIndex, textArr[current]);
+    changeEditor(liDOM, itemIndex, textArr[currentSave]);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToTagsWithoutShape(resizableDiv, textArr[current]);
+  mdToTagsWithoutShape(resizableDiv, textArr[currentSave]);
   addOrRemoveScrollObserverToLi(liDOM);
 
-  changeCurrentInBefore(resizableDiv, current);
-  setCurrentSave(current, itemIndex);
+  changeCurrentInBefore(resizableDiv, currentSave);
+  setCurrentSave(currentSave, itemIndex);
 };
 
 const nextSave = (el) => {
   const liDOM = findParentTagOrClassRecursive(el);
   const itemIndex = indexedItems.indexOf(liDOM.id) * 1;
 
-  let current = getCurrentSpec("save", itemIndex);
+  let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
 
-  current++;
-  el.previousSibling.innerText = current + 1;
+  currentSave++;
+  el.previousSibling.innerText = currentSave + 1;
   el.previousSibling.previousSibling.removeAttribute("disable");
-  if (current >= textArr.length - 1) {
+  if (currentSave >= textArr.length - 1) {
     el.setAttribute("disable", true);
   }
   if (editor[itemIndex]) {
-    changeEditor(liDOM, itemIndex, textArr[current]);
+    changeEditor(liDOM, itemIndex, textArr[currentSave]);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToTagsWithoutShape(resizableDiv, textArr[current]);
+  mdToTagsWithoutShape(resizableDiv, textArr[currentSave]);
   addOrRemoveScrollObserverToLi(liDOM);
 
-  changeCurrentInBefore(resizableDiv, current);
-  setCurrentSave(current, itemIndex);
+  changeCurrentInBefore(resizableDiv, currentSave);
+  setCurrentSave(currentSave, itemIndex);
 };
 
 const changeEditor = (parentLi, editIndex, text) => {
