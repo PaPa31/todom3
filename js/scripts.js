@@ -169,10 +169,11 @@ const putItemToDeletedArray = (indexToDelete) => {
   undoLastDeleteButton.classList.replace("invisible", "visible");
 };
 
-const putSaveToDeletedArray = (deletedText, deletedDate) => {
+const putSaveAndDateToDeletedArray = (deletedText, deletedDate) => {
   const deletedObj = {
     text: [deletedText],
     save: 0,
+    date: deletedDate,
   };
   deletedArray.push(deletedObj);
   deletedCounter.innerText = deletedArray.length;
@@ -373,6 +374,19 @@ function getCurrentDate() {
   var hour = ("0" + today.getHours()).slice(-2);
   var t = hour + minutes + seconds;
   return d + "-" + t;
+}
+
+function getFullCurrentDate() {
+  var today = new Date();
+  var y = today.getFullYear();
+  // JavaScript months are 0-based.
+  var m = ("0" + (today.getMonth() + 1)).slice(-2);
+  var d = ("0" + today.getDate()).slice(-2);
+  var seconds = ("0" + today.getSeconds()).slice(-2);
+  var minutes = ("0" + today.getMinutes()).slice(-2);
+  var hour = ("0" + today.getHours()).slice(-2);
+  var t = hour + minutes + seconds;
+  return y + "-" + m + "-" + d + "-" + t;
 }
 
 function getFirstCharsWithTrim(s) {
