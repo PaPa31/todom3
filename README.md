@@ -147,7 +147,7 @@ Run the script with the path to the directory containing images:
 $ create_html_image_tags.sh ~/static/public/img/russia-election
 ```
 
-This script will sort the images by modification time in ascending order (oldest first) before generating the HTML tags. The script includes the parent directory name in the `src` attribute of the `<img>` tags. Adjust the `src` path within the script as needed to match your directory structure.
+This script will sort the images by modification time in ascending order (oldest first) before generating the HTML tags. The script includes the parent directory name in the `src` attribute of the `<img>` tags. Adjust the `src` path within the script as needed to match your directory structure. For more details, run the script with `-h` or `--help` attribute.
 
 </details>
 
