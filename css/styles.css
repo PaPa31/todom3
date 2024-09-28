@@ -397,6 +397,21 @@ ol#list-files .main-act {
   height: initial;
 }
 
+.md-item .resizable-div::after {
+  content: var(--todom-before-current-date, "");
+  color: var(--todom-inputLabelEdit-foreground);
+  background-color: var(--todom-before-background);
+  padding: 2px 4px;
+  border-radius: 5px;
+  width: 30px;
+  display: var(--todom-before-display, initial);
+  text-align: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
 .md-item .resizable-div::before {
   content: var(--todom-before-current-save, "");
   color: var(--todom-inputLabelEdit-foreground);

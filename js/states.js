@@ -127,8 +127,14 @@ const initialInBefore = (ancestorEl) => {
   ancestorEl.style.setProperty("--todom-before-display", "none");
 };
 
-const changeCurrentInBefore = (ancestorEl, currentSave) => {
-  ancestorEl.style = "--todom-before-current-save: '" + ++currentSave + "';";
+const changeCurrentInBefore = (ancestorEl, currentSave, currentDate) => {
+  ancestorEl.style =
+    "--todom-before-current-save: '" +
+    ++currentSave +
+    "';" +
+    +"--todom-before-current-date: '" +
+    ++currentDate +
+    "';";
 };
 
 function liDomMaker(arrIndex, str) {
@@ -147,6 +153,7 @@ function liDomMaker(arrIndex, str) {
   if (isItemState) {
     const correctedItemsIndex = indexedItems.indexOf(arrIndex.toString()) * 1;
     const textArr = itemsArray[correctedItemsIndex].text;
+    const dateArr = itemsArray[correctedItemsIndex].date || "";
     last = textArr.length - 1;
     currentSave = getCurrentSpec("save", correctedItemsIndex);
     currentFold = getCurrentSpec("fold", correctedItemsIndex);
@@ -160,7 +167,7 @@ function liDomMaker(arrIndex, str) {
     if (str && str === "new-from-file")
       li.setAttribute("class", "new-from-file");
     if (last > 0) {
-      changeCurrentInBefore(resizableDiv, currentSave);
+      changeCurrentInBefore(resizableDiv, currentSave, dateArr[currentSave]);
     } else {
       initialInBefore(resizableDiv);
     }
@@ -308,14 +315,17 @@ const deleteCurrentSave = (el) => {
 
   let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
+  const dateArr = itemsArray[correctedItemsIndex].date || "";
+
+  putSaveAndDateToDeletedArray(textArr[currentSave], dateArr[currentSave]);
 
   const lastBefore = textArr.length - 1;
-  putSaveAndDateToDeletedArray(textArr[currentSave]);
   if (lastBefore === 0) {
     removeItemFromMemory(liDOM, itemIndex);
     return;
   }
   textArr.splice(currentSave, 1);
+  dateArr.splice(currentSave, 1);
   const lastAfter = textArr.length - 1;
   if (currentSave < lastAfter) {
     // we do not change 'currentSave' due to splice,
@@ -342,7 +352,7 @@ const deleteCurrentSave = (el) => {
   addOrRemoveScrollObserverToLi(liDOM);
 
   if (lastAfter > 0) {
-    changeCurrentInBefore(resizableDiv, currentSave);
+    changeCurrentInBefore(resizableDiv, currentSave, dateArr[currentSave]);
   } else {
     initialInBefore(resizableDiv);
   }
