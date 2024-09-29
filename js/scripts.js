@@ -177,11 +177,11 @@ const putSaveAndDateToDeletedArray = (deletedText, deletedDate) => {
     save: 0,
     //date: deletedDate,
   };
-  const deletedDate = {
+  const _deletedDate = {
     date: deletedDate,
   };
   deletedArray.push(deletedObj);
-  deletedArray.push(deletedDate);
+  deletedArray.push(_deletedDate);
   deletedCounter.innerText = deletedArray.length;
   undoLastDeleteButton.classList.replace("invisible", "visible");
 };
@@ -501,7 +501,6 @@ const saveItem = () => {
   } else {
     const itemObj = {
       text: [input.value],
-      date: getFullCurrentDate,
     };
     itemsArray.push(itemObj);
     const dateObj = {
@@ -676,8 +675,11 @@ const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
   if (len !== 0) {
     const returningObj = arr.pop();
     itemsArray.push({ text: returningObj.text });
-    itemDateArray.push({ date: returningObj.date });
     itemsSpecArray.push({ save: returningObj.save });
+
+    const returningDate = arr.pop();
+    itemDateArray.push({ date: returningDate.date });
+
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomItemDateArray", JSON.stringify(itemDateArray));
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));

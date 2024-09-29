@@ -131,11 +131,11 @@ const initialInBefore = (ancestorEl) => {
 };
 
 const changeCurrentInBefore = (ancestorEl, currentSave) => {
-  ancestorEl.style.setProperty("--todom-before-current-save:", currentSave);
+  ancestorEl.style = "--todom-before-current-save: '" + ++currentSave + "';";
 };
 
 const changeDateInAfter = (ancestorEl, currentDate) => {
-  ancestorEl.style.setProperty("--todom-before-current-date:", currentDate);
+  ancestorEl.style = "--todom-before-current-date: '" + currentDate + "';";
 };
 
 function liDomMaker(arrIndex, str) {
@@ -1170,11 +1170,11 @@ const initializeFileState = () => {
 const horizontalIteration = (arr, i) => {
   // maybe it should be removed this func,
   // when all your items will have dates
-  if (i in arr && arr[i].date != undefined) {
+  if (i in arr && arr.date != undefined) {
     // nothing
   } else {
-    arr[i].date.push("");
-    //arr[i].push({ date: [] });
+    //arr.date.push("");
+    arr.push({ date: [] });
   }
 };
 
