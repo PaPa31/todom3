@@ -157,7 +157,6 @@ const inputLabelNewOrEdit = (indexToDelete) => {
 
 const putItemToTrash = (indexToTrash) => {
   trashArray.push(itemsArray[indexToTrash]);
-  trashArray.push(itemDateArray[indexToTrash]);
   trashedCounter.innerText = trashArray.length;
   restoreItemButton.classList.replace("invisible", "visible");
   clearTrashButton.classList.replace("invisible", "visible");
@@ -166,7 +165,6 @@ const putItemToTrash = (indexToTrash) => {
 
 const putItemToDeletedArray = (indexToDelete) => {
   deletedArray.push(itemsArray[indexToDelete]);
-  deletedArray.push(itemDateArray[indexToDelete]);
   deletedCounter.innerText = deletedArray.length;
   undoLastDeleteButton.classList.replace("invisible", "visible");
 };
@@ -193,7 +191,6 @@ const removeItemFromMemory = (item, indexToDelete) => {
   showItemSortingArrows(foldedClass.childElementCount);
 
   itemsArray.splice(indexToDelete, 1);
-  itemDateArray.splice(indexToDelete, 1);
   indexedItems.splice(indexToDelete, 1);
   itemsSpecArray.splice(indexToDelete, 1);
 
@@ -202,11 +199,9 @@ const removeItemFromMemory = (item, indexToDelete) => {
   if (itemsArray.length == 0) {
     defaultItemStateVars();
     localStorage.removeItem("todomItemsArray");
-    localStorage.removeItem("todomItemDateArray");
     localStorage.removeItem("todomItemsSpecArray");
   } else {
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    localStorage.setItem("todomItemDateArray", JSON.stringify(itemDateArray));
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   }
 };
@@ -484,9 +479,7 @@ const saveItem = () => {
   if (itemIndexToEdit != null) {
     //save as new
     const textArr = itemsArray[itemIndexToEdit].text;
-    textArr.push(input.value);
-    const dateArr = itemDateArray[itemIndexToEdit].date;
-    dateArr.push(getFullCurrentDate);
+    textArr.push({ variant: input.value, date: getFullCurrentDate });
     const len = textArr.length;
     itemsSpecArray[itemIndexToEdit].save = len - 1;
     saveHistoryTracker(editedItemLiDOM, len);
@@ -500,13 +493,9 @@ const saveItem = () => {
     joinSaveItemButton();
   } else {
     const itemObj = {
-      text: [input.value],
+      text: [{ variant: input.value, date: getFullCurrentDate }],
     };
     itemsArray.push(itemObj);
-    const dateObj = {
-      date: getFullCurrentDate,
-    };
-    itemDateArray.push(dateObj);
     const specObj = {
       save: 0,
     };
@@ -517,7 +506,6 @@ const saveItem = () => {
   }
   defaultMarkers();
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  localStorage.setItem("todomItemDateArray", JSON.stringify(itemDateArray));
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
@@ -554,7 +542,6 @@ const defaultItemStateVars = () => {
   deleteAllItemsButton.classList.replace("visible", "invisible");
   indexedItems = [];
   itemsArray = [];
-  itemDateArray = [];
   itemsSpecArray = [];
   idCounterItems = 0;
   showItemSortingArrows(0);
@@ -674,14 +661,13 @@ const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
   let len = arr.length;
   if (len !== 0) {
     const returningObj = arr.pop();
-    itemsArray.push({ text: returningObj.text });
+    itemsArray.push({
+      text: [{ variant: returningObj.text, date: returningObj.date }],
+    });
+
     itemsSpecArray.push({ save: returningObj.save });
 
-    const returningDate = arr.pop();
-    itemDateArray.push({ date: returningDate.date });
-
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    localStorage.setItem("todomItemDateArray", JSON.stringify(itemDateArray));
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
     if (todomArrVar) localStorage.setItem(todomArrVar, JSON.stringify(arr));
 

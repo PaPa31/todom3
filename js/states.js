@@ -22,9 +22,6 @@ let isFoldFiles = localStorage.getItem("todomFoldFiles")
 let itemsArray = localStorage.getItem("todomItemsArray")
   ? JSON.parse(localStorage.getItem("todomItemsArray"))
   : [];
-let itemDateArray = localStorage.getItem("todomItemDateArray")
-  ? JSON.parse(localStorage.getItem("todomItemDateArray"))
-  : [];
 let itemsSpecArray = localStorage.getItem("todomItemsSpecArray")
   ? JSON.parse(localStorage.getItem("todomItemsSpecArray"))
   : [];
@@ -170,7 +167,6 @@ function liDomMaker(arrIndex, str) {
   if (isItemState) {
     const correctedItemsIndex = indexedItems.indexOf(arrIndex.toString()) * 1;
     const textArr = itemsArray[correctedItemsIndex].text;
-    const dateArr = itemDateArray[correctedItemsIndex].date;
     last = textArr.length - 1;
     currentSave = getCurrentSpec("save", correctedItemsIndex);
     currentFold = getCurrentSpec("fold", correctedItemsIndex);
@@ -333,9 +329,11 @@ const deleteCurrentSave = (el) => {
 
   let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
-  const dateArr = itemDateArray[itemIndex].date;
 
-  putSaveAndDateToDeletedArray(textArr[currentSave], dateArr[currentSave]);
+  putSaveAndDateToDeletedArray(
+    textArr[currentSave].variant,
+    textArr[currentSave].date
+  );
 
   const lastBefore = textArr.length - 1;
   if (lastBefore === 0) {
@@ -343,7 +341,7 @@ const deleteCurrentSave = (el) => {
     return;
   }
   textArr.splice(currentSave, 1);
-  dateArr.splice(currentSave, 1);
+
   const lastAfter = textArr.length - 1;
   if (currentSave < lastAfter) {
     // we do not change 'currentSave' due to splice,
@@ -384,7 +382,6 @@ const previousSave = (el) => {
 
   let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
-  const dateArr = itemDateArray[itemIndex].date;
 
   currentSave--;
   el.nextSibling.nextSibling.removeAttribute("disable");
@@ -393,15 +390,15 @@ const previousSave = (el) => {
     el.setAttribute("disable", true);
   }
   if (editor[itemIndex]) {
-    changeEditor(liDOM, itemIndex, textArr[currentSave]);
+    changeEditor(liDOM, itemIndex, textArr[currentSave].variant);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToTagsWithoutShape(resizableDiv, textArr[currentSave]);
+  mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
   addOrRemoveScrollObserverToLi(liDOM);
 
   changeCurrentInBefore(resizableDiv, currentSave);
   setCurrentSave(currentSave, itemIndex);
-  changeDateInAfter(resizableDiv, dateArr[currentSave]);
+  changeDateInAfter(resizableDiv, textArr[currentSave].date);
 };
 
 const nextSave = (el) => {
@@ -410,7 +407,6 @@ const nextSave = (el) => {
 
   let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
-  const dateArr = itemDateArray[itemIndex].date;
 
   currentSave++;
   el.previousSibling.innerText = currentSave + 1;
@@ -422,12 +418,12 @@ const nextSave = (el) => {
     changeEditor(liDOM, itemIndex, textArr[currentSave]);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToTagsWithoutShape(resizableDiv, textArr[currentSave]);
+  mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
   addOrRemoveScrollObserverToLi(liDOM);
 
   changeCurrentInBefore(resizableDiv, currentSave);
   setCurrentSave(currentSave, itemIndex);
-  changeDateInAfter(resizableDiv, dateArr[currentSave]);
+  changeDateInAfter(resizableDiv, textArr[currentSave].date);
 };
 
 const changeEditor = (parentLi, editIndex, text) => {
@@ -1064,8 +1060,7 @@ const saveItemFromFile = (fileName) => {
   const itemIndex = itemsArray.findIndex((s) => s.name && s.name === fileName);
   if (itemIndex !== -1) {
     const itemId = indexedItems[itemIndex];
-    itemsArray[itemIndex].text.push(input.value);
-    itemDateArray[itemIndex].date.push(getFullCurrentDate);
+    itemsArray[itemIndex].text[curren].variant.push(input.value);
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
     itemsSpecArray[itemIndex].save = textArr.length - 1;
@@ -1076,14 +1071,10 @@ const saveItemFromFile = (fileName) => {
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const itemObj = {
-      text: [input.value],
+      text: [{ variant: input.value, date: getFullCurrentDate }],
       name: fileName,
     };
     itemsArray.push(itemObj);
-    const dateObj = {
-      date: getFullCurrentDate,
-    };
-    itemDateArray.push(dateObj);
     const specObj = {
       save: 0,
     };
@@ -1094,7 +1085,6 @@ const saveItemFromFile = (fileName) => {
   }
   defaultMarkers();
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  localStorage.setItem("todomItemDateArray", JSON.stringify(itemDateArray));
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
@@ -1183,15 +1173,16 @@ const initializeFileState = () => {
   showItemSortingArrows(foldedClass.childElementCount);
 };
 
-const horizontalIteration = (arr, i) => {
+const horizontalIteration = (oneOfArr) => {
   // maybe it should be removed this func,
   // when all your items will have dates
-  if (i in arr && arr.date != undefined) {
-    // nothing
-  } else {
-    //arr.date.push("");
-    arr.push({ date: [] });
-  }
+  oneOfArr.text = oneOfArr.text.map((variant) => {
+    if (typeof variant === "string") {
+      // For old notes where the text is a string, wrap it with an object and set date to null
+      return { variant: variant, date: null };
+    }
+    return variant; // Keep existing objects with variant and date
+  });
 };
 
 const idleIterationPayload = (i) => {
@@ -1206,12 +1197,11 @@ const arrCheckForNull = (arr) => {
   const len1 = len;
   for (i = 0; i < len; i++) {
     if (i in arr && arr[i] != undefined) {
-      horizontalIteration(itemDateArray, i);
+      horizontalIteration(arr[i]);
       idleIterationPayload(i);
     } else {
       arr.splice(i, 1);
       itemsSpecArray.splice(i, 1); // sync
-      itemDateArray.splice(i, 1); // ?
       i--;
       len--;
     }
@@ -1223,16 +1213,9 @@ const arrCheckForNull = (arr) => {
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   }
 
-  // cut off extra if any
-  if (itemDateArray.length > len) {
-    itemDateArray.length = len;
-    localStorage.setItem("todomItemDateArray", JSON.stringify(itemDateArray));
-  }
-
   if (len1 > len) {
     console.log("null(s) was/were found and ignored!");
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    localStorage.setItem("todomItemDateArray", JSON.stringify(itemDateArray));
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   }
 };
@@ -1271,7 +1254,6 @@ const initializeItemState = () => {
       // sync by reset
       itemsSpecArray.length = 0;
       localStorage.removeItem("todomItemsArray");
-      localStorage.removeItem("todomItemDateArray");
       localStorage.removeItem("todomItemsSpecArray");
     }
   }
