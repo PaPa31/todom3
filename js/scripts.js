@@ -476,6 +476,8 @@ const saveItem = () => {
     //save as new
     const textArr = itemsArray[itemIndexToEdit].text;
     textArr.push(input.value);
+    const dateArr = itemsArray[itemIndexToEdit].date;
+    dateArr.push(getFullCurrentDate);
     const len = textArr.length;
     itemsSpecArray[itemIndexToEdit].save = len - 1;
     saveHistoryTracker(editedItemLiDOM, len);
@@ -490,6 +492,7 @@ const saveItem = () => {
   } else {
     const itemObj = {
       text: [input.value],
+      date: getFullCurrentDate,
     };
     itemsArray.push(itemObj);
     const specObj = {
@@ -658,6 +661,7 @@ const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
   if (len !== 0) {
     const returningObj = arr.pop();
     itemsArray.push({ text: returningObj.text });
+    itemsArray.push({ date: returningObj.date });
     itemsSpecArray.push({ save: returningObj.save });
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));

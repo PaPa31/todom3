@@ -127,14 +127,12 @@ const initialInBefore = (ancestorEl) => {
   ancestorEl.style.setProperty("--todom-before-display", "none");
 };
 
-const changeCurrentInBefore = (ancestorEl, currentSave, currentDate) => {
-  ancestorEl.style =
-    "--todom-before-current-save: '" +
-    ++currentSave +
-    "';" +
-    +"--todom-before-current-date: '" +
-    ++currentDate +
-    "';";
+const changeCurrentInBefore = (ancestorEl, currentSave) => {
+  ancestorEl.style.setProperty("--todom-before-current-save:", currentSave);
+};
+
+const changeDateInAfter = (ancestorEl, currentDate) => {
+  ancestorEl.style.setProperty("--todom-before-current-date:", currentDate);
 };
 
 function liDomMaker(arrIndex, str) {
@@ -153,7 +151,7 @@ function liDomMaker(arrIndex, str) {
   if (isItemState) {
     const correctedItemsIndex = indexedItems.indexOf(arrIndex.toString()) * 1;
     const textArr = itemsArray[correctedItemsIndex].text;
-    const dateArr = itemsArray[correctedItemsIndex].date || "";
+    const dateArr = itemsArray[correctedItemsIndex].date;
     last = textArr.length - 1;
     currentSave = getCurrentSpec("save", correctedItemsIndex);
     currentFold = getCurrentSpec("fold", correctedItemsIndex);
@@ -167,10 +165,11 @@ function liDomMaker(arrIndex, str) {
     if (str && str === "new-from-file")
       li.setAttribute("class", "new-from-file");
     if (last > 0) {
-      changeCurrentInBefore(resizableDiv, currentSave, dateArr[currentSave]);
+      changeCurrentInBefore(resizableDiv, currentSave);
     } else {
       initialInBefore(resizableDiv);
     }
+    changeDateInAfter(resizableDiv, dateArr[currentSave]);
 
     saveHistoryDivMaker(topDiv, last, currentSave);
 
@@ -315,7 +314,7 @@ const deleteCurrentSave = (el) => {
 
   let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
-  const dateArr = itemsArray[correctedItemsIndex].date || "";
+  const dateArr = itemsArray[itemIndex].date;
 
   putSaveAndDateToDeletedArray(textArr[currentSave], dateArr[currentSave]);
 
@@ -352,11 +351,12 @@ const deleteCurrentSave = (el) => {
   addOrRemoveScrollObserverToLi(liDOM);
 
   if (lastAfter > 0) {
-    changeCurrentInBefore(resizableDiv, currentSave, dateArr[currentSave]);
+    changeCurrentInBefore(resizableDiv, currentSave);
   } else {
     initialInBefore(resizableDiv);
   }
   setCurrentSave(currentSave, itemIndex);
+  changeDateInAfter(resizableDiv, dateArr[currentSave]);
 };
 
 const previousSave = (el) => {
@@ -365,6 +365,7 @@ const previousSave = (el) => {
 
   let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
+  const dateArr = itemsArray[itemIndex].date;
 
   currentSave--;
   el.nextSibling.nextSibling.removeAttribute("disable");
@@ -381,6 +382,7 @@ const previousSave = (el) => {
 
   changeCurrentInBefore(resizableDiv, currentSave);
   setCurrentSave(currentSave, itemIndex);
+  changeDateInAfter(resizableDiv, dateArr[currentSave]);
 };
 
 const nextSave = (el) => {
@@ -389,6 +391,7 @@ const nextSave = (el) => {
 
   let currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
+  const dateArr = itemsArray[itemIndex].date;
 
   currentSave++;
   el.previousSibling.innerText = currentSave + 1;
@@ -405,6 +408,7 @@ const nextSave = (el) => {
 
   changeCurrentInBefore(resizableDiv, currentSave);
   setCurrentSave(currentSave, itemIndex);
+  changeDateInAfter(resizableDiv, dateArr[currentSave]);
 };
 
 const changeEditor = (parentLi, editIndex, text) => {
@@ -1042,6 +1046,7 @@ const saveItemFromFile = (fileName) => {
   if (itemIndex !== -1) {
     const itemId = indexedItems[itemIndex];
     itemsArray[itemIndex].text.push(input.value);
+    itemsArray[itemIndex].date.push(getFullCurrentDate);
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
     itemsSpecArray[itemIndex].save = textArr.length - 1;
@@ -1053,6 +1058,7 @@ const saveItemFromFile = (fileName) => {
   } else {
     const itemObj = {
       text: [input.value],
+      date: getFullCurrentDate,
       name: fileName,
     };
     itemsArray.push(itemObj);
@@ -1154,6 +1160,17 @@ const initializeFileState = () => {
   showItemSortingArrows(foldedClass.childElementCount);
 };
 
+const horizontalIteration = (arr, i) => {
+  // maybe it should be removed this func,
+  // when all your items will have dates
+  if (arr[i].date != undefined) {
+    // nothing
+  } else {
+    //arr[i].date.push("");
+    //arr[i].push({ date: [] });
+  }
+};
+
 const idleIterationPayload = (i) => {
   indexedItems.push(idCounterItems.toString());
   liDomMaker(i);
@@ -1166,6 +1183,7 @@ const arrCheckForNull = (arr) => {
   const len1 = len;
   for (i = 0; i < len; i++) {
     if (i in arr && arr[i] != undefined) {
+      horizontalIteration(arr, i);
       idleIterationPayload(i);
     } else {
       arr.splice(i, 1);
