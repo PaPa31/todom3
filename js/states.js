@@ -176,7 +176,7 @@ function liDomMaker(arrIndex, str) {
 
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
-    mdToTagsWithoutShape(resizableDiv, textArr[currentSave]);
+    mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
     if (str && str === "new-from-file")
       li.setAttribute("class", "new-from-file");
     if (last > 0) {
@@ -184,7 +184,7 @@ function liDomMaker(arrIndex, str) {
     } else {
       initialInBefore(resizableDiv);
     }
-    changeDateInAfter(resizableDiv, dateArr[currentSave]);
+    changeDateInAfter(resizableDiv, textArr[currentSave].date);
 
     saveHistoryDivMaker(topDiv, last, currentSave);
 
@@ -361,10 +361,10 @@ const deleteCurrentSave = (el) => {
     }
   }
   if (editor[itemIndex]) {
-    changeEditor(liDOM, itemIndex, textArr[currentSave]);
+    changeEditor(liDOM, itemIndex, textArr[currentSave].variant);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-  mdToTagsWithoutShape(resizableDiv, textArr[currentSave]);
+  mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
   addOrRemoveScrollObserverToLi(liDOM);
 
   if (lastAfter > 0) {
@@ -373,7 +373,7 @@ const deleteCurrentSave = (el) => {
     initialInBefore(resizableDiv);
   }
   setCurrentSave(currentSave, itemIndex);
-  changeDateInAfter(resizableDiv, dateArr[currentSave]);
+  changeDateInAfter(resizableDiv, textArr[currentSave].date);
 };
 
 const previousSave = (el) => {
@@ -415,7 +415,7 @@ const nextSave = (el) => {
     el.setAttribute("disable", true);
   }
   if (editor[itemIndex]) {
-    changeEditor(liDOM, itemIndex, textArr[currentSave]);
+    changeEditor(liDOM, itemIndex, textArr[currentSave].variant);
   }
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
@@ -1060,7 +1060,9 @@ const saveItemFromFile = (fileName) => {
   const itemIndex = itemsArray.findIndex((s) => s.name && s.name === fileName);
   if (itemIndex !== -1) {
     const itemId = indexedItems[itemIndex];
-    itemsArray[itemIndex].text[curren].variant.push(input.value);
+    const currentSave = getCurrentSpec("save", itemIndex);
+    itemsArray[itemIndex].text[currentSave].variant.push(input.value);
+    // maybe need to add ++curentSave
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
     itemsSpecArray[itemIndex].save = textArr.length - 1;
