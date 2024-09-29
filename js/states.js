@@ -131,11 +131,27 @@ const initialInBefore = (ancestorEl) => {
 };
 
 const changeCurrentInBefore = (ancestorEl, currentSave) => {
-  ancestorEl.style = "--todom-before-current-save: '" + ++currentSave + "';";
+  if (/^\d+$/.test(currentSave)) {
+    // Regex to check if currentSave is a positive integer
+    ancestorEl.style.setProperty(
+      "--todom-before-current-save",
+      "'" + ++currentSave + "'"
+    );
+  } else {
+    console.error("Invalid currentSave format. Must be a number.");
+  }
 };
 
 const changeDateInAfter = (ancestorEl, currentDate) => {
-  ancestorEl.style = "--todom-before-current-date: '" + currentDate + "';";
+  if (/^\d{4}-\d{2}-\d{2}-\d{6}$/.test(currentDate)) {
+    // Regex to match YYYY-MM-DD-HHmmss format
+    ancestorEl.style.setProperty(
+      "--todom-before-current-date",
+      "'" + currentDate + "'"
+    );
+  } else {
+    console.error("Invalid date format. Must be in YYYY-MM-DD-HHmmss format.");
+  }
 };
 
 function liDomMaker(arrIndex, str) {
