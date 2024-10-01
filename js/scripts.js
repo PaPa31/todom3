@@ -479,7 +479,7 @@ const saveItem = () => {
   if (itemIndexToEdit != null) {
     //save as new
     const textArr = itemsArray[itemIndexToEdit].text;
-    textArr.push({ variant: input.value, date: getFullCurrentDate });
+    textArr.push({ variant: input.value, date: getFullCurrentDate() });
     const len = textArr.length;
     itemsSpecArray[itemIndexToEdit].save = len - 1;
     saveHistoryTracker(editedItemLiDOM, len);
@@ -493,7 +493,7 @@ const saveItem = () => {
     joinSaveItemButton();
   } else {
     const itemObj = {
-      text: [{ variant: input.value, date: getFullCurrentDate }],
+      text: [{ variant: input.value, date: getFullCurrentDate() }],
     };
     itemsArray.push(itemObj);
     const specObj = {

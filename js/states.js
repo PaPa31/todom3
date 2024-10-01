@@ -1073,7 +1073,7 @@ const saveItemFromFile = (fileName) => {
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const itemObj = {
-      text: [{ variant: input.value, date: getFullCurrentDate }],
+      text: [{ variant: input.value, date: getFullCurrentDate() }],
       name: fileName,
     };
     itemsArray.push(itemObj);
