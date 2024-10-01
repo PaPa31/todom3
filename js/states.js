@@ -1154,8 +1154,9 @@ const initializeFileState = () => {
   clearTrashButton.classList.replace("inline-block", "none");
   undoLastDeleteButton.classList.replace("inline-block", "none");
 
-  listItems.style.display = "none";
-  listFiles.style.display = "flex";
+  listItems.style.setProperty("display", "none");
+  listFiles.style.setProperty("display", "flex");
+
   foldedClass = document.getElementById("list-files");
 
   if (indexedFiles.length === 0) {
@@ -1241,8 +1242,8 @@ const initializeItemState = () => {
   clearTrashButton.classList.replace("none", "inline-block");
   undoLastDeleteButton.classList.replace("none", "inline-block");
 
-  listFiles.style.display = "none";
-  listItems.style.display = "flex";
+  listFiles.style.setProperty("display", "none");
+  listItems.style.setProperty("display", "flex");
   foldedClass = document.getElementById("list-items");
   initialCheckFold(isFoldItems);
 
