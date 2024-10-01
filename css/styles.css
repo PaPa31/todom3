@@ -403,8 +403,7 @@ ol#list-files .main-act {
   background-color: var(--todom-before-background);
   padding: 2px 4px;
   border-radius: 5px;
-  width: 30px;
-  display: var(--todom-before-display, initial);
+  width: 160px;
   text-align: center;
   position: absolute;
   top: 0;

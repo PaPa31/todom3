@@ -1181,7 +1181,7 @@ const horizontalIteration = (oneOfArr) => {
   oneOfArr.text = oneOfArr.text.map((variant) => {
     if (typeof variant === "string") {
       // For old notes where the text is a string, wrap it with an object and set date to null
-      return { variant: variant, date: null };
+      return { variant: variant, date: "0000-00-00-000000" };
     }
     return variant; // Keep existing objects with variant and date
   });
