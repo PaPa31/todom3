@@ -53,6 +53,8 @@
 
   --todom-modal-container-bg: #565e63c7;
   --todom-youtube-desc-color: #a41111;
+
+  --todom-btn-toggler-bg: #dbdbdb;
 }
 
 .dark {
@@ -99,6 +101,8 @@
 
   --todom-modal-container-bg: #565e63c7;
   --todom-youtube-desc-color: #e8a41c;
+
+  --todom-btn-toggler-bg: #444444;
 }
 
 html {
@@ -404,6 +408,7 @@ ol#list-files .main-act {
   padding: 2px 4px;
   border-radius: 5px;
   width: 160px;
+  display: var(--todom-after-display, initial);
   text-align: center;
   position: absolute;
   top: 0;
@@ -621,6 +626,10 @@ table {
 
 .transparent-border {
   border: 1px solid transparent !important;
+}
+
+.btn-toggler {
+  background-color: var(--todom-btn-toggler-bg);
 }
 
 #fold-global-toggle::after {

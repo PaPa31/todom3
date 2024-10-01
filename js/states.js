@@ -1,5 +1,6 @@
 const foldAllToggleButton = document.getElementById("fold-global-toggle");
 const itemsFilesToggleButton = document.getElementById("items-files-toggle");
+const dateToggler = document.getElementById("show-date");
 
 let foldedClass = document.getElementById("list-items");
 
@@ -125,6 +126,10 @@ const getCurrentSpec = (spec, itemIndex) => {
 
 const initialInBefore = (ancestorEl) => {
   ancestorEl.style.setProperty("--todom-before-display", "none");
+};
+
+const hideDateInAfter = (ancestorEl) => {
+  ancestorEl.style.setProperty("--todom-after-display", "none");
 };
 
 const changeCurrentInBefore = (ancestorEl, currentSave) => {
@@ -600,6 +605,17 @@ foldAllToggleButton.addEventListener("click", function (e) {
     isFoldFiles = !isFoldFiles;
   }
   foldAllToggleButton.classList.toggle("fold");
+  e.stopPropagation();
+});
+
+dateToggler.addEventListener("click", function (e) {
+  const getDispProp = listItems.style.getPropertyValue("--todom-after-display");
+  if (getDispProp != "none") {
+    listItems.style.setProperty("--todom-after-display", "none");
+  } else {
+    listItems.style.setProperty("--todom-after-display", "initial");
+  }
+
   e.stopPropagation();
 });
 
