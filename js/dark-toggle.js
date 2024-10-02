@@ -17,8 +17,9 @@ darkButton.addEventListener("click", (e) => {
   darkButton.innerHTML = darkMode ? icons.moon : icons.sun;
 });
 
-document.documentElement.classList.toggle("dark", isDarkMode());
-darkButton.innerHTML = isDarkMode() ? icons.moon : icons.sun;
+const darkMode = isDarkMode();
+document.documentElement.classList.toggle("dark", darkMode);
+darkButton.innerHTML = darkMode ? icons.moon : icons.sun;
 
 function isDarkMode() {
   return localStorage.getItem("todomDarkMode");
