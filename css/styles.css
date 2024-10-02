@@ -386,7 +386,7 @@ ol#list-files .main-act {
 }
 
 .md-item .resizable-div::after {
-  content: var(--todom-before-current-date, "");
+  content: var(--todom-after-current-date, "");
   color: var(--todom-inputLabelEdit-foreground);
   background-color: var(--todom-before-background);
   padding: 2px 4px;

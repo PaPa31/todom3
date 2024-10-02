@@ -142,7 +142,7 @@ const changeDateInAfter = (ancestorEl, currentDate) => {
   if (/^\d{4}-\d{2}-\d{2}-\d{6}$/.test(currentDate)) {
     // Regex to match YYYY-MM-DD-HHmmss format
     ancestorEl.style.setProperty(
-      "--todom-before-current-date",
+      "--todom-after-current-date",
       "'" + currentDate + "'"
     );
   } else {
