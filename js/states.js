@@ -610,19 +610,11 @@ foldAllToggleButton.addEventListener("click", function (e) {
 
 dateButton.addEventListener("click", function (e) {
   const dateMode = toggleDateMode();
-  listItems.style.setProperty(
-    "--todom-after-display",
-    dateMode ? "initial" : "none"
-  );
-
+  updateDateDisplay(dateMode);
   e.stopPropagation();
 });
 
-const dateMode = getDateMode();
-listItems.style.setProperty(
-  "--todom-after-display",
-  dateMode ? "initial" : "none"
-);
+updateDateDisplay(getDateMode());
 
 function getDateMode() {
   return localStorage.getItem("todomDateMode") === "set";
@@ -632,6 +624,13 @@ function toggleDateMode() {
   const dateMode = getDateMode();
   localStorage.setItem("todomDateMode", dateMode ? "" : "set");
   return !dateMode;
+}
+
+function updateDateDisplay(dateMode) {
+  listItems.style.setProperty(
+    "--todom-after-display",
+    dateMode ? "initial" : "none"
+  );
 }
 
 const showOrHideTrash = () => {
