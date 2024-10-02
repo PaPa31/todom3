@@ -610,11 +610,15 @@ foldAllToggleButton.addEventListener("click", function (e) {
 
 dateButton.addEventListener("click", function (e) {
   const dateMode = toggleDateMode();
+  updateButtonText(dateMode);
   updateDateDisplay(dateMode);
+
   e.stopPropagation();
 });
 
-updateDateDisplay(getDateMode());
+const dateMode = getDateMode();
+updateButtonText(dateMode);
+updateDateDisplay(dateMode);
 
 function getDateMode() {
   return localStorage.getItem("todomDateMode") === "set";
@@ -631,6 +635,10 @@ function updateDateDisplay(dateMode) {
     "--todom-after-display",
     dateMode ? "initial" : "none"
   );
+}
+
+function updateButtonText(dateMode) {
+  dateButton.innerHTML = dateMode ? "Hide<br>Date" : "Show<br>Date";
 }
 
 const showOrHideTrash = () => {
