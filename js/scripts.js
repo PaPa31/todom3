@@ -112,7 +112,7 @@ const editItem = (e, element, parentLi) => {
   let currentSave = getCurrentSpec("save", itemIndexToEdit2);
   const textArr = itemsArray[itemIndexToEdit2].text;
 
-  const editing = textArr[currentSave];
+  const editing = textArr[currentSave].variant;
   if (e.ctrlKey) {
     intervalFocus(
       element,
@@ -452,7 +452,7 @@ const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
 saveAsOldButton.addEventListener("click", function (e) {
   const currentSave = itemsSpecArray[itemIndexToEdit].save;
   const textArr = itemsArray[itemIndexToEdit].text;
-  textArr[currentSave] = input.value;
+  textArr[currentSave].variant = input.value;
   //textArr.push(input.value);
   //const len = textArr.length;
   //itemsSpecArray[itemIndexToEdit].save = len - 1;
@@ -570,7 +570,7 @@ const mergeAllItems = () => {
   itemsArray.forEach((item, index) => {
     const textArr = item.text;
     const currentSave = getCurrentSpec("save", index);
-    const text = textArr[currentSave].replace(/\\$/, "");
+    const text = textArr[currentSave].variant.replace(/\\$/, "");
     const regex = /(^ *#{1,6} *)|(^ *\d+\.* *)|(^ *\- *)|(^ *\>+ *)|(^ +)/;
     if (text) {
       input.value = input.value

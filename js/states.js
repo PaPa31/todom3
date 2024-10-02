@@ -1068,8 +1068,9 @@ const saveItemFromFile = (fileName) => {
     // maybe need to add ++curentSave
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
-    itemsSpecArray[itemIndex].save = textArr.length - 1;
-    saveHistoryTracker(liDOM, textArr.length);
+    const len =  textArr[currentSave].length
+    itemsSpecArray[itemIndex].save = len - 1;
+    saveHistoryTracker(liDOM, len);
     const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
     mdToTagsWithoutShape(resizableDiv, input.value);
     liDOM.classList.add("new-from-file");

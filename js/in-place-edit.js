@@ -12,9 +12,9 @@ let editor = [];
 const editInPlaceItem = (element, parentLi) => {
   const editIndex = indexedItems.indexOf(parentLi.id) * 1;
 
-  const current = getCurrentSpec("save", editIndex);
+  const currentSave = getCurrentSpec("save", editIndex);
   const textArr = itemsArray[editIndex].text;
-  const text = textArr[current];
+  const text = textArr[currentSave].variant;
 
   intervalFocus(
     element,
@@ -30,9 +30,9 @@ const editInPlaceItem = (element, parentLi) => {
 const mdUpdate = (parentLi, inPlace, markdownString, itemIndex) => {
   mdToTagsWithoutShape(inPlace, markdownString);
   addOrRemoveScrollObserverToLi(parentLi);
-  const current = getCurrentSpec("save", itemIndex);
+  const currentSave = getCurrentSpec("save", itemIndex);
   const textArr = itemsArray[itemIndex].text;
-  textArr[current] = markdownString;
+  textArr[currentSave].variant = markdownString;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 };
 
