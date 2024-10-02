@@ -1,6 +1,6 @@
 const foldAllToggleButton = document.getElementById("fold-global-toggle");
 const itemsFilesToggleButton = document.getElementById("items-files-toggle");
-const dateToggler = document.getElementById("show-date");
+const dateButton = document.getElementById("show-date");
 
 let foldedClass = document.getElementById("list-items");
 
@@ -608,16 +608,31 @@ foldAllToggleButton.addEventListener("click", function (e) {
   e.stopPropagation();
 });
 
-dateToggler.addEventListener("click", function (e) {
-  const getDispProp = listItems.style.getPropertyValue("--todom-after-display");
-  if (getDispProp != "none") {
-    listItems.style.setProperty("--todom-after-display", "none");
-  } else {
-    listItems.style.setProperty("--todom-after-display", "initial");
-  }
+dateButton.addEventListener("click", function (e) {
+  const dateMode = toggleDateMode();
+  listItems.style.setProperty(
+    "--todom-after-display",
+    dateMode ? "initial" : "none"
+  );
 
   e.stopPropagation();
 });
+
+const dateMode = getDateMode();
+listItems.style.setProperty(
+  "--todom-after-display",
+  dateMode ? "initial" : "none"
+);
+
+function getDateMode() {
+  return localStorage.getItem("todomDateMode") === "set";
+}
+
+function toggleDateMode() {
+  const dateMode = getDateMode();
+  localStorage.setItem("todomDateMode", dateMode ? "" : "set");
+  return !dateMode;
+}
 
 const showOrHideTrash = () => {
   if (trashArray.length) {
