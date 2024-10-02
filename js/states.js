@@ -127,6 +127,7 @@ const initialInBefore = (ancestorEl) => {
 };
 
 const changeCurrentInBefore = (ancestorEl, currentSave) => {
+  ancestorEl.style.removeProperty("--todom-before-display")
   if (/^\d+$/.test(currentSave)) {
     // Regex to check if currentSave is a positive integer
     ancestorEl.style.setProperty(
