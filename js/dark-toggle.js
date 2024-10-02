@@ -1,4 +1,7 @@
 const darkButton = document.getElementById("dark-button");
+const dateButton = document.getElementById("show-date");
+
+const listItems = document.getElementById("list-items");
 
 const icons = {
   moon: `
@@ -32,4 +35,37 @@ function toggleDarkMode() {
   localStorage.setItem("todomDarkMode", darkMode ? "" : "set");
   document.documentElement.classList.toggle("dark", !darkMode);
   return !darkMode;
+}
+
+dateButton.addEventListener("click", function (e) {
+  const dateMode = toggleDateMode();
+  updateButtonText(dateMode);
+  updateDateDisplay(dateMode);
+
+  e.stopPropagation();
+});
+
+const dateMode = getDateMode();
+updateButtonText(dateMode);
+updateDateDisplay(dateMode);
+
+function getDateMode() {
+  return localStorage.getItem("todomDateMode") === "set";
+}
+
+function toggleDateMode() {
+  const dateMode = getDateMode();
+  localStorage.setItem("todomDateMode", dateMode ? "" : "set");
+  return !dateMode;
+}
+
+function updateDateDisplay(dateMode) {
+  listItems.style.setProperty(
+    "--todom-after-display",
+    dateMode ? "initial" : "none"
+  );
+}
+
+function updateButtonText(dateMode) {
+  dateButton.innerHTML = dateMode ? "Hide<br>Date" : "Show<br>Date";
 }
