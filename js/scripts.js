@@ -171,7 +171,7 @@ const putItemToDeletedArray = (indexToDelete) => {
 
 const putSaveAndDateToDeletedArray = (deletedText, deletedDate) => {
   const deletedObj = {
-    text: [deletedText],
+    text: deletedText,
     save: 0,
     date: deletedDate,
   };
