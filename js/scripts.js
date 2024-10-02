@@ -173,13 +173,10 @@ const putSaveAndDateToDeletedArray = (deletedText, deletedDate) => {
   const deletedObj = {
     text: [deletedText],
     save: 0,
-    //date: deletedDate,
-  };
-  const _deletedDate = {
     date: deletedDate,
   };
+
   deletedArray.push(deletedObj);
-  deletedArray.push(_deletedDate);
   deletedCounter.innerText = deletedArray.length;
   undoLastDeleteButton.classList.replace("invisible", "visible");
 };

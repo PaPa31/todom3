@@ -126,10 +126,6 @@ const initialInBefore = (ancestorEl) => {
   ancestorEl.style.setProperty("--todom-before-display", "none");
 };
 
-const hideDateInAfter = (ancestorEl) => {
-  ancestorEl.style.setProperty("--todom-after-display", "none");
-};
-
 const changeCurrentInBefore = (ancestorEl, currentSave) => {
   if (/^\d+$/.test(currentSave)) {
     // Regex to check if currentSave is a positive integer
