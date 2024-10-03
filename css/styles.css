@@ -53,8 +53,6 @@
 
   --todom-modal-container-bg: #565e63c7;
   --todom-youtube-desc-color: #a41111;
-
-  --todom-btn-toggler-bg: #dbdbdb;
 }
 
 .dark {
@@ -101,8 +99,6 @@
 
   --todom-modal-container-bg: #565e63c7;
   --todom-youtube-desc-color: #e8a41c;
-
-  --todom-btn-toggler-bg: #444444;
 }
 
 html {
@@ -180,7 +176,7 @@ button,
   text-decoration: none;
 }
 
-#dark-button {
+.btn-toggler {
   width: 39px;
   height: 39px;
   border-radius: 6px;
@@ -189,13 +185,13 @@ button,
   padding: 0;
 }
 
-#dark-button:hover {
+.btn-toggler:hover {
   opacity: 1;
 }
 
-button#dark-button,
-button#dark-button:active,
-button#dark-button:focus {
+button.btn-toggler,
+button.btn-toggler:active,
+button.btn-toggler:focus {
   border: 2px solid #626262;
   background-color: initial;
   /*color: initial;*/
@@ -612,10 +608,6 @@ table {
   border: 1px solid transparent !important;
 }
 
-.btn-toggler {
-  background-color: var(--todom-btn-toggler-bg);
-}
-
 #fold-global-toggle::after {
   content: "<";
 }
@@ -825,7 +817,7 @@ ol.preview-outer p {
 }
 
 #list-order:hover {
-  fill: var(--todom-button-hoverForeground);
+  /*fill: var(--todom-button-hoverForeground);*/
 }
 
 .sort-ascending,
@@ -850,6 +842,7 @@ ol.preview-outer p {
 .reversed .sort-descending {
   opacity: 1;
   display: inline-block;
+  padding-top: 3px;
 }
 
 .reversed #list-order {
@@ -859,10 +852,10 @@ ol.preview-outer p {
 }
 
 #list-order {
-  border-width: 1px;
+  /*border-width: 1px;*/
   transition: all 0.2s linear;
-  padding-bottom: 1px;
-  padding-top: 3px;
+  /*padding-bottom: 1px;
+  padding-top: 3px;*/
   padding-left: 1px;
   padding-right: 1px;
   flex: 0 39px;

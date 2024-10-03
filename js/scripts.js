@@ -238,7 +238,7 @@ const showItemSortingArrows = (count) => {
   const arrows = document.getElementById("list-order");
   if (count > 1) {
     //with only opacity rule the arrows are hidden but still clickable
-    arrows.style = "visibility: visible; opacity: 1";
+    arrows.style = "";
   } else {
     arrows.style = "visibility: hidden; opacity: 0";
   }

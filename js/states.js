@@ -127,7 +127,7 @@ const initialInBefore = (ancestorEl) => {
 };
 
 const changeCurrentInBefore = (ancestorEl, currentSave) => {
-  ancestorEl.style.removeProperty("--todom-before-display")
+  ancestorEl.style.removeProperty("--todom-before-display");
   if (/^\d+$/.test(currentSave)) {
     // Regex to check if currentSave is a positive integer
     ancestorEl.style.setProperty(
@@ -235,7 +235,7 @@ const fileInfoDivMaker = (parentDiv, arrIndex) => {
 
 const foldButtonMaker = (parentEl) => {
   const attr = {
-    class: "button-default fold-button btn",
+    class: "btn-toggler fold-button btn",
     title: "fold/unfold one",
     onclick: `foldOneItem(event, findParentTagOrClassRecursive(this))`,
   };
@@ -1065,7 +1065,7 @@ const saveItemFromFile = (fileName) => {
     // maybe need to add ++curentSave
     const liDOM = document.getElementById(itemId);
     const textArr = itemsArray[itemIndex].text;
-    const len =  textArr[currentSave].length
+    const len = textArr[currentSave].length;
     itemsSpecArray[itemIndex].save = len - 1;
     saveHistoryTracker(liDOM, len);
     const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
