@@ -990,7 +990,7 @@ button.delete-current-save:hover {
   /*z-index: -1;*/
 }
 
-#restore-deleted-item,
+#restore-trashed-item,
 #undo-delete {
   position: relative;
 }
@@ -1000,7 +1000,7 @@ button.delete-current-save:hover {
   /*accessibility: breaks direct order*/
 }
 
-#restore-deleted-item img,
+#restore-trashed-item img,
 #clear-trash img,
 #undo-delete img {
   width: 33px;
@@ -1008,7 +1008,7 @@ button.delete-current-save:hover {
   opacity: 0.6;
 }
 
-#restore-deleted-item:hover img,
+#restore-trashed-item:hover img,
 #clear-trash:hover img,
 #undo-delete:hover img {
   opacity: 1;

@@ -606,10 +606,10 @@ foldAllToggleButton.addEventListener("click", function (e) {
 const showOrHideTrash = () => {
   if (trashArray.length) {
     trashedCounter.innerText = trashArray.length;
-    restoreItemButton.classList.replace("invisible", "visible");
+    restoreTrashedItemButton.classList.replace("invisible", "visible");
     clearTrashButton.classList.replace("invisible", "visible");
   } else {
-    restoreItemButton.classList.replace("visible", "invisible");
+    restoreTrashedItemButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.replace("visible", "invisible");
   }
 };
@@ -1151,7 +1151,7 @@ const initializeFileState = () => {
   saveAsFileButton.classList.replace("inline-block", "none");
   openDirButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("inline-block", "none");
-  restoreItemButton.classList.replace("inline-block", "none");
+  restoreTrashedItemButton.classList.replace("inline-block", "none");
   clearTrashButton.classList.replace("inline-block", "none");
   undoLastDeleteButton.classList.replace("inline-block", "none");
 
@@ -1239,7 +1239,7 @@ const initializeItemState = () => {
   deleteAllItemsButton.innerText = "Delete All Items";
   saveAsFileButton.classList.replace("none", "inline-block");
   openDirButton.classList.replace("inline-block", "none");
-  restoreItemButton.classList.replace("none", "inline-block");
+  restoreTrashedItemButton.classList.replace("none", "inline-block");
   clearTrashButton.classList.replace("none", "inline-block");
   undoLastDeleteButton.classList.replace("none", "inline-block");
 

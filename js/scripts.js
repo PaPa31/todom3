@@ -9,7 +9,7 @@ const xButton = document.getElementById("x-button");
 const returnInputButton = document.getElementById("return-last-input");
 
 const deleteAllItemsButton = document.getElementById("delete-all-items");
-const restoreItemButton = document.getElementById("restore-deleted-item");
+const restoreTrashedItemButton = document.getElementById("restore-trashed-item");
 const clearTrashButton = document.getElementById("clear-trash");
 const undoLastDeleteButton = document.getElementById("undo-delete");
 const saveAsOldButton = document.getElementById("save-as-old");
@@ -40,8 +40,8 @@ saveAsOldButton.removeAttribute("style");
 openDirButton.classList.add("none");
 openDirButton.removeAttribute("style");
 
-restoreItemButton.classList.add("invisible", "none");
-restoreItemButton.removeAttribute("style");
+restoreTrashedItemButton.classList.add("invisible", "none");
+restoreTrashedItemButton.removeAttribute("style");
 
 undoLastDeleteButton.classList.add("invisible", "none");
 undoLastDeleteButton.removeAttribute("style");
@@ -158,7 +158,7 @@ const inputLabelNewOrEdit = (indexToDelete) => {
 const putItemToTrash = (indexToTrash) => {
   trashArray.push(itemsArray[indexToTrash]);
   trashedCounter.innerText = trashArray.length;
-  restoreItemButton.classList.replace("invisible", "visible");
+  restoreTrashedItemButton.classList.replace("invisible", "visible");
   clearTrashButton.classList.replace("invisible", "visible");
   localStorage.setItem("todomTrashArray", JSON.stringify(trashArray));
 };
@@ -684,10 +684,10 @@ const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
   showItemSortingArrows(foldedClass.childElementCount);
 };
 
-restoreItemButton.addEventListener("click", function () {
+restoreTrashedItemButton.addEventListener("click", function () {
   restoreHandler(
     trashArray,
-    [restoreItemButton, clearTrashButton],
+    [restoreTrashedItemButton, clearTrashButton],
     trashedCounter,
     "todomTrashArray"
   );
@@ -698,7 +698,7 @@ clearTrashButton.addEventListener("click", function (e) {
   if (twoClickTrashClear) {
     trashArray = [];
     localStorage.removeItem("todomTrashArray");
-    restoreItemButton.classList.replace("visible", "invisible");
+    restoreTrashedItemButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.replace("visible", "invisible");
     clearTrashButton.classList.remove("filter-red");
     window.setTimeout(function () {
