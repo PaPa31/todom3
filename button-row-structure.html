@@ -1,4 +1,32 @@
+<!--I have this two row button structure in my Todom app.
+What style can I apply to get some space between the two buttons? -->
+
+<!--1) I don't need space under or above the button, but I do need space between buttons in a row.
+3) There is enough space between the large buttons, but not enough between the small buttons
+2) I don't need space to the left of the first button in a row
+3) I don't need space to the right of the last button in a row-->
+
 <style>
+  #content {
+    margin-bottom: 100vh;
+  }
+
+  .flex-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+  }
+
+  #content .flex-row {
+    margin: 0 auto 0.5em;
+  }
+
+  .flex-small {
+    gap: 0.15em;
+  }
+
   .button,
   a.button,
   button,
@@ -42,18 +70,6 @@
     background-color: initial;
     /*color: initial;*/
     /* accessibility: outline is invisible when TAB toggle */
-  }
-
-  .flex-row {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    padding: 0;
-    margin: 0;
-  }
-
-  #content .flex-row {
-    margin: 0 auto 0.5em;
   }
 
   .button-default {
@@ -210,6 +226,3 @@
     </div>
   </div>
 </div>
-
-<!--I have this two row button structure in my Todom app.
-What style can I apply to get some space between the two buttons.-->

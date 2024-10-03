@@ -577,6 +577,10 @@ table {
   /*width: 95%;*/
 }
 
+.flex-small {
+  gap: 0.15em;
+}
+
 .button-default {
   background-color: transparent;
   border: 1px solid var(--todom-button-border);
@@ -720,7 +724,6 @@ h6 {
 
 .btn-flex {
   flex: initial;
-  margin-right: 0.5%;
   height: 39px;
   padding: 0;
 }
