@@ -216,6 +216,10 @@ button.btn-toggler:focus {
   color: #a4a400;
 }
 
+button#fold-global-toggle {
+  width: auto;
+}
+
 button {
   transition: all 0.2s ease;
 }
@@ -842,7 +846,7 @@ ol.preview-outer p {
 .reversed .sort-descending {
   opacity: 1;
   display: inline-block;
-  padding-top: 3px;
+  padding-top: 2px;
 }
 
 .reversed #list-order {
