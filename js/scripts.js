@@ -9,7 +9,9 @@ const xButton = document.getElementById("x-button");
 const returnInputButton = document.getElementById("return-last-input");
 
 const deleteAllItemsButton = document.getElementById("delete-all-items");
-const restoreTrashedItemButton = document.getElementById("restore-trashed-item");
+const restoreTrashedItemButton = document.getElementById(
+  "restore-trashed-item"
+);
 const clearTrashButton = document.getElementById("clear-trash");
 const undoLastDeleteButton = document.getElementById("undo-delete");
 const saveAsOldButton = document.getElementById("save-as-old");
@@ -171,9 +173,7 @@ const putItemToDeletedArray = (indexToDelete) => {
 
 const putSaveAndDateToDeletedArray = (deletedText, deletedDate) => {
   const deletedObj = {
-    text: deletedText,
-    save: 0,
-    date: deletedDate,
+    text: [{ variant: deletedText, date: deletedDate }],
   };
 
   deletedArray.push(deletedObj);
@@ -654,19 +654,16 @@ returnInputButton.addEventListener("click", function () {
   input.focus();
 });
 
-const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
+const restoreHandler = (arr, btns, counterEl, todomArr) => {
   let len = arr.length;
   if (len !== 0) {
     const returningObj = arr.pop();
-    itemsArray.push({
-      text: [{ variant: returningObj.text, date: returningObj.date }],
-    });
+    itemsArray.push(returningObj);
 
-    itemsSpecArray.push({ save: returningObj.save });
+    itemsSpecArray.push({ save: 0 });
 
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-    if (todomArrVar) localStorage.setItem(todomArrVar, JSON.stringify(arr));
 
     indexedItems.push(idCounterItems.toString());
     liDomMaker(idCounterItems);
@@ -677,7 +674,9 @@ const restoreHandler = (arr, btns, counterEl, todomArrVar) => {
   }
   if (len === 0) {
     btns.map((i) => i.classList.replace("visible", "invisible"));
-    if (todomArrVar) localStorage.removeItem(todomArrVar);
+    if (todomArr) localStorage.removeItem(todomArr);
+  } else {
+    if (todomArr) localStorage.setItem(todomArr, JSON.stringify(arr));
   }
   deleteAllItemsButton.classList.replace("none", "inline-block");
   deleteAllItemsButton.classList.replace("invisible", "visible");
