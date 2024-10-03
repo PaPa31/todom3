@@ -1,0 +1,215 @@
+<style>
+  .button,
+  a.button,
+  button,
+  [type="submit"],
+  [type="reset"],
+  [type="button"] {
+    line-height: 1rem;
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-block;
+    border: 1px solid var(--todom-border);
+    background-color: var(--todom-button-background);
+    color: var(--todom-button-foreground);
+    border-radius: 4px;
+    font-weight: 600;
+    font-family: Arial;
+    text-transform: none;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .btn-toggler {
+    width: 39px;
+    height: 39px;
+    border-radius: 6px;
+    position: relative;
+    opacity: 0.6;
+    padding: 0;
+  }
+
+  .btn-toggler:hover {
+    opacity: 1;
+  }
+
+  button.btn-toggler,
+  button.btn-toggler:active,
+  button.btn-toggler:focus {
+    border: 2px solid #626262;
+    background-color: initial;
+    /*color: initial;*/
+    /* accessibility: outline is invisible when TAB toggle */
+  }
+
+  .flex-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+  }
+
+  #content .flex-row {
+    margin: 0 auto 0.5em;
+  }
+
+  .button-default {
+    background-color: transparent;
+    border: 1px solid var(--todom-button-border);
+    color: var(--todom-button-foreground);
+  }
+
+  .button-default:hover {
+    background-color: var(--todom-button-hoverBackground);
+    border-color: var(--todom-button-hoverBackground);
+    color: var(--todom-button-hoverForeground);
+  }
+
+  .button-default:active {
+    color: var(--todom-button-active);
+    background-color: var(--todom-button-active);
+    border-color: var(--todom-button-active);
+  }
+
+  .header-button {
+    font-size: 2rem;
+  }
+
+  .btn {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .btn-flex {
+    flex: initial;
+    margin-right: 0.5%;
+    height: 39px;
+    padding: 0;
+  }
+
+  #first-button-row .btn-flex {
+    padding: 0 3%;
+  }
+
+  #open-save-buttons {
+    display: flex;
+    flex: 4;
+  }
+
+  #tools {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  #visual-change-buttons {
+    display: flex;
+    flex: 1;
+  }
+
+  #items-files-toggle {
+    flex: 0 200px;
+  }
+
+  #fold-global-toggle {
+    flex: none;
+  }
+
+  #deletion-control-buttons {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  #delete-all-items {
+    flex: 0 115px;
+  }
+
+  .visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .invisible {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .none {
+    display: none;
+  }
+
+  .transparent-border {
+    border: 1px solid transparent !important;
+  }
+
+  @media (min-width: 600px) {
+    .flex-small {
+      flex: 0 1 auto;
+      margin-bottom: 0;
+    }
+  }
+</style>
+
+<div id="content">
+  <form id="form1">
+    <!-- form -->
+  </form>
+  <div id="first-button-row" class="flex-row">
+    <div id="open-save-buttons" class="flex-small">
+      <button
+        id="save-as-new"
+        class="button-default btn-flex btn"
+        form="form1"
+      ></button>
+      <button id="save-as-old" class="button-default btn-flex btn"></button>
+      <button id="save-as-file" class="button-default btn-flex btn"></button>
+      <button id="open-file" class="button-default btn-flex btn"></button>
+      <button id="open-dir" class="button-default btn-flex btn"></button>
+    </div>
+    <div id="tools" class="flex-small">
+      <button id="show-date" class="btn-toggler btn"></button>
+      <button id="dark-button" class="btn-toggler btn"></button>
+    </div>
+  </div>
+  <div class="flex-row">
+    <div id="visual-change-buttons" class="flex-small">
+      <button id="list-order" class="btn-toggler btn"></button>
+      <button
+        id="items-files-toggle"
+        class="header-button button-default btn"
+      ></button>
+      <button
+        id="fold-global-toggle"
+        class="header-button btn-toggler btn"
+      ></button>
+    </div>
+    <div id="deletion-control-buttons" class="flex-small">
+      <button
+        id="undo-delete"
+        class="transparent-border button-default btn invisible inline-block"
+      ></button>
+      <button
+        id="clear-trash"
+        class="transparent-border button-default btn invisible inline-block"
+      ></button>
+      <button
+        id="restore-deleted-item"
+        class="transparent-border button-default btn invisible inline-block"
+      ></button>
+      <button id="delete-all-items" class="button-default btn visible">
+        Delete All Items
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--I have this two row button structure in my Todom app.
+What style can I apply to get some space between the two buttons.-->
