@@ -23,8 +23,8 @@ What style can I apply to get some space between the two buttons? -->
     margin: 0 auto 0.5em;
   }
 
-  .flex-small {
-    gap: 0.15em;
+  .flex-small .btn-flex:not(:last-child) {
+    margin-right: 2px;
   }
 
   .button,
@@ -191,36 +191,36 @@ What style can I apply to get some space between the two buttons? -->
       <button id="open-dir" class="button-default btn-flex btn"></button>
     </div>
     <div id="tools" class="flex-small">
-      <button id="show-date" class="btn-toggler btn"></button>
-      <button id="dark-button" class="btn-toggler btn"></button>
+      <button id="show-date" class="btn-toggler btn-flex btn"></button>
+      <button id="dark-button" class="btn-toggler btn-flex btn"></button>
     </div>
   </div>
   <div class="flex-row">
     <div id="visual-change-buttons" class="flex-small">
-      <button id="list-order" class="btn-toggler btn"></button>
+      <button id="list-order" class="btn-toggler btn-flex btn"></button>
       <button
         id="items-files-toggle"
-        class="header-button button-default btn"
+        class="header-button button-default btn-flex btn"
       ></button>
       <button
         id="fold-global-toggle"
-        class="header-button btn-toggler btn"
+        class="header-button btn-toggler btn-flex btn"
       ></button>
     </div>
     <div id="deletion-control-buttons" class="flex-small">
       <button
         id="undo-delete"
-        class="transparent-border button-default btn invisible inline-block"
+        class="transparent-border button-default btn-flex btn invisible inline-block"
       ></button>
       <button
         id="clear-trash"
-        class="transparent-border button-default btn invisible inline-block"
+        class="transparent-border button-default btn-flex btn invisible inline-block"
       ></button>
       <button
         id="restore-trashed-item"
-        class="transparent-border button-default btn invisible inline-block"
+        class="transparent-border button-default btn-flex btn invisible inline-block"
       ></button>
-      <button id="delete-all-items" class="button-default btn visible">
+      <button id="delete-all-items" class="button-default btn-flex btn visible">
         Delete All Items
       </button>
     </div>

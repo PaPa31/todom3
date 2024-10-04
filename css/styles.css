@@ -579,8 +579,8 @@ table {
   /*width: 95%;*/
 }
 
-.flex-small {
-  gap: 0.15em;
+.flex-small .btn-flex:not(:last-child) {
+  margin-right: 2px;
 }
 
 .button-default {
