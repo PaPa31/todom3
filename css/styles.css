@@ -863,6 +863,8 @@ ol.preview-outer p {
 #list-order {
   transition: all 0.2s linear;
   padding-bottom: 2px;
+  padding-left: 3px;
+  padding-right: 3px;
   flex: 0 39px;
   display: inline-flex;
   justify-content: center;
@@ -876,7 +878,7 @@ ol.preview-outer p {
 #list-order svg {
   width: 28px;
   height: 31px;
-  position: absolute;
+  /*position: absolute;*/
 }
 
 #x-button:hover,
