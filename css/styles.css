@@ -220,6 +220,7 @@ button#dark-button svg {
 
 button#fold-global-toggle {
   width: auto;
+  padding-bottom: 2px;
 }
 
 button {
@@ -1777,7 +1778,12 @@ object {
 }
 
 /* ----- End Built-in Modules & Pre-defined styles ----- */
-
+@media (max-width: 412px) {
+  #items-files-toggle {
+    flex: 0 auto;
+    padding: 0 3px;
+  }
+}
 @media (min-width: 600px) {
   .flex-small {
     flex: 0 1 auto;
