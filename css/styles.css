@@ -198,13 +198,15 @@ button.btn-toggler:focus {
   /* accessibility: outline is invisible when TAB toggle */
 }
 
-.light-toggle-icon,
-.dark-toggle-icon {
-  float: left;
-  left: 3px;
-  top: 3px;
-  height: 29px;
-  width: 29px;
+button#dark-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button#dark-button svg {
+  width: 31px;
+  height: 31px;
   position: absolute;
 }
 
