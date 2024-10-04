@@ -726,6 +726,7 @@ h6 {
 
 .btn-flex {
   flex: initial;
+  margin-right: 0.5%;
   height: 39px;
   padding: 0;
 }
