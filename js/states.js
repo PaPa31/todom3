@@ -952,23 +952,29 @@ function handleFiles(files) {
           };
           filesArray.push(fileObj);
           let reader = new FileReader();
-          reader.onload = (event) => resolve(event.target.result);
+          reader.onload = (event) =>
+            resolve({
+              content: event.target.result,
+              date: file.lastModifiedDate || new Date(file.lastModified),
+            });
           reader.readAsText(file);
         });
       }
     })()
-  ).then((texts) => {
-    if (texts[0] === undefined) {
+  ).then((fileDataArray) => {
+    if (fileDataArray.length === 0) {
       alert("No File/Directory selected!");
       fileElem.value = null;
       return;
     }
     if (isItemState) {
-      const arrItems = texts[0].split("\n");
+      const arrItems = fileDataArray[0].content.split("\n");
       arrItems.forEach((item) => {
         if (item) {
           const itemObj = {
-            text: [item],
+            text: [
+              { variant: item, date: fileDataArray[0].date.toLocaleString() },
+            ],
           };
           itemsArray.push(itemObj);
           indexedItems.push(idCounterItems.toString());
@@ -981,11 +987,12 @@ function handleFiles(files) {
       if (filesArray.length === 0) fileElem.value = null;
     } else {
       // Files
-      texts.forEach((text) => {
+      fileDataArray.forEach((fileData, index) => {
         indexedFiles.push(idCounterFiles.toString());
-        const correctedFilesIndex =
-          indexedFiles.indexOf(idCounterFiles.toString()) * 1;
-        filesArray[correctedFilesIndex].text = text;
+        //const correctedFilesIndex =
+        //  indexedFiles.indexOf(idCounterFiles.toString()) * 1;
+        //filesArray[correctedFilesIndex].text = text;
+        filesArray[index].text = fileData.content;
         liDomMaker(idCounterFiles);
         idCounterFiles++;
       });
