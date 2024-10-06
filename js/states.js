@@ -947,6 +947,27 @@ const getFileHttp = async (fileName) => {
   }
 };
 
+async function saveFile(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch("upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  const result = await response.json();
+  console.log(result.message);
+}
+
+document.getElementById("uploadButton").addEventListener("click", () => {
+  const fileInput = document.getElementById("fileInput");
+  const file = fileInput.files[0];
+  if (file) {
+    saveFile(file);
+  }
+});
+
 function handleFiles(files) {
   Promise.all(
     (function* () {

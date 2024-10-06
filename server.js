@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs").promises;
 const cors = require("cors");
+const multer = require("multer");
 
 const app = express();
 const PORT = 8000;
@@ -13,6 +14,8 @@ app.use(express.static(path.join(__dirname, "")));
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "..")));
+
+const upload = multer({ dest: "uploads/" }); // Define the upload directory
 
 // Middleware function to log requested files
 app.use((req, res, next) => {
@@ -26,6 +29,20 @@ app.use((req, res, next) => {
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// Route to handle file uploads
+app.post("/upload", upload.single("file"), (req, res) => {
+  if (!req.file) {
+    return res
+      .status(400)
+      .json({ success: false, message: "No file uploaded" });
+  }
+
+  // File is automatically saved in the 'uploads' directory
+  res
+    .status(200)
+    .json({ success: true, message: "File uploaded successfully" });
 });
 
 app.get("/open-directory", async (req, res) => {
