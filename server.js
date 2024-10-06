@@ -45,6 +45,27 @@ app.post("/upload", upload.single("file"), (req, res) => {
     .json({ success: true, message: "File uploaded successfully" });
 });
 
+app.post("/save-file", async (req, res) => {
+  try {
+    const { fileName, fileContent } = req.body;
+
+    // Define the full path where the file will be saved
+    const fullPath = path.join(__dirname, "../public/md/chron/", fileName);
+
+    // Save the file content to the specified path
+    await fs.writeFile(fullPath, fileContent, "utf8");
+
+    res
+      .status(200)
+      .json({ success: true, message: "File saved successfully." });
+  } catch (error) {
+    console.error("Error saving file: ", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to save the file." });
+  }
+});
+
 app.get("/open-directory", async (req, res) => {
   try {
     const directoryPath = req.query.path || "";

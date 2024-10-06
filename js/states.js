@@ -947,26 +947,43 @@ const getFileHttp = async (fileName) => {
   }
 };
 
-async function saveFile(file) {
-  const formData = new FormData();
-  formData.append("file", file);
+// Function to save the file content to the server
+async function saveFileHttp(fileName, fileContent) {
+  try {
+    const response = await fetch(`save-file`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fileName: fileName,
+        fileContent: fileContent,
+      }),
+    });
 
-  const response = await fetch("upload", {
-    method: "POST",
-    body: formData,
-  });
+    if (!response.ok) {
+      throw new Error("Failed to save file.");
+    }
 
-  const result = await response.json();
-  console.log(result.message);
+    const result = await response.json();
+    console.log(result.message);
+  } catch (error) {
+    console.error("Error while saving the file: ", error);
+  }
 }
 
-document.getElementById("uploadButton").addEventListener("click", () => {
-  const fileInput = document.getElementById("fileInput");
-  const file = fileInput.files[0];
-  if (file) {
-    saveFile(file);
-  }
-});
+// Example of how to call this function
+function onSaveButtonClick(fileName) {
+  const fileContent = getFileContentFromUI(); // Assume you have this function to get file content from UI
+  saveFileHttp(fileName, fileContent);
+}
+
+// Helper function to get file content from the UI (you need to implement this based on your UI)
+function getFileContentFromUI() {
+  // Assuming you are editing file contents in a textarea or similar
+  const textarea = document.getElementById("fileContentEditor");
+  return textarea.value;
+}
 
 function handleFiles(files) {
   Promise.all(
