@@ -1,4 +1,4 @@
-const liHeightLimit = 300;
+var liHeightLimit = 300; // global
 let predictBottom = 100;
 let suspendTop = -200;
 let sticky = false;

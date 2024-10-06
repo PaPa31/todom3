@@ -596,8 +596,11 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
       i.classList.add("folded");
       unobserveLiElements(i);
     }
-    const indexToFold = indexedArr.indexOf(i.id) * 1;
-    mainArr[indexToFold].fold = !view;
+
+    if (indexedArr.length != 0) {
+      const indexToFold = indexedArr.indexOf(i.id) * 1;
+      mainArr[indexToFold].fold = !view;
+    }
   });
   localStorage.setItem(todomStr, JSON.stringify(!view));
 };
@@ -999,6 +1002,7 @@ function handleFiles(files) {
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
       filesArray.splice(idCounterFiles, 1);
       if (filesArray.length === 0) fileElem.value = null;
+      allLiFold(isFoldItems, "todomFoldItems", indexedItems, itemsSpecArray);
     } else {
       // Files
       fileDataArray.forEach((fileData, index) => {
@@ -1010,9 +1014,10 @@ function handleFiles(files) {
         liDomMaker(idCounterFiles);
         idCounterFiles++;
       });
+      initialCheckFold(isFoldFiles);
+      allLiFold(!isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
     }
-    initialCheckFold(isFoldFiles);
-    allLiFold(!isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
+
     showOrHideDeleteAllItems();
     showItemSortingArrows(foldedClass.childElementCount);
   });
