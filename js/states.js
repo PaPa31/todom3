@@ -1005,12 +1005,11 @@ function handleFiles(files) {
       allLiFold(isFoldItems, "todomFoldItems", indexedItems, itemsSpecArray);
     } else {
       // Files
-      fileDataArray.forEach((fileData, index) => {
+      fileDataArray.forEach((fileData) => {
         indexedFiles.push(idCounterFiles.toString());
-        //const correctedFilesIndex =
-        //  indexedFiles.indexOf(idCounterFiles.toString()) * 1;
-        //filesArray[correctedFilesIndex].text = text;
-        filesArray[index].text = fileData.content;
+        const correctedFilesIndex =
+          indexedFiles.indexOf(idCounterFiles.toString()) * 1;
+        filesArray[correctedFilesIndex].text = fileData.content;
         liDomMaker(idCounterFiles);
         idCounterFiles++;
       });
