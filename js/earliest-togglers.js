@@ -1,7 +1,7 @@
 const darkButton = document.getElementById("dark-button");
 const dateButton = document.getElementById("show-date");
 
-const listItems = document.getElementById("list-items");
+var listItems = document.getElementById("list-items");
 
 const icons = {
   moon: `
