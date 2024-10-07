@@ -14,6 +14,9 @@ app.use(express.static(path.join(__dirname, "")));
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "..")));
 
+// Add this line to parse incoming JSON requests
+app.use(express.json());
+
 // Middleware function to log requested files
 app.use((req, res, next) => {
   const originalSend = res.send;

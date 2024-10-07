@@ -972,19 +972,6 @@ async function saveFileHttp(fileName, fileContent) {
   }
 }
 
-// Example of how to call this function
-function onSaveButtonClick(fileName) {
-  const fileContent = getFileContentFromUI(); // Assume you have this function to get file content from UI
-  saveFileHttp(fileName, fileContent);
-}
-
-// Helper function to get file content from the UI (you need to implement this based on your UI)
-function getFileContentFromUI() {
-  // Assuming you are editing file contents in a textarea or similar
-  const textarea = document.getElementById("fileContentEditor");
-  return textarea.value;
-}
-
 function handleFiles(files) {
   Promise.all(
     (function* () {

@@ -312,10 +312,16 @@ saveAsFileButton.addEventListener("click", function (e) {
   if (input.value) {
     var fileName =
       getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
-    var myFile = new File([input.value], fileName, {
-      type: "text/plain;charset=utf-8",
-    });
-    saveAs(myFile);
+
+    if (window.location.protocol === "file:") {
+      var myFile = new File([input.value], fileName, {
+        type: "text/plain;charset=utf-8",
+      });
+      saveAs(myFile);
+    } else {
+      saveFileHttp(fileName, input.value);
+    }
+
     saveItem();
 
     clearInputAndPreviewAreas();
