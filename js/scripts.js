@@ -319,7 +319,7 @@ saveAsFileButton.addEventListener("click", function (e) {
       });
       saveAs(myFile);
     } else {
-      saveFileHttp(fileName, input.value);
+      openDirectory(rootDirectory, true);
     }
 
     saveItem();

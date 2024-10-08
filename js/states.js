@@ -725,7 +725,7 @@ async function onOpenButtonClick() {
 //}
 
 // Function to open a directory
-async function openDirectory(directoryPath) {
+async function openDirectory(directoryPath, save) {
   try {
     // Remove trailing slashes
     directoryPath = directoryPath.replace(/\/+$/, "");
@@ -948,7 +948,7 @@ const getFileHttp = async (fileName) => {
 };
 
 // Function to save the file content to the server
-async function saveFileHttp(fileName, fileContent) {
+async function saveFileHttp(fileName, fileContent, saveDirectory) {
   try {
     const response = await fetch(`save-file`, {
       method: "POST",
@@ -956,7 +956,7 @@ async function saveFileHttp(fileName, fileContent) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fileName: fileName,
+        fileName: `${saveDirectory}/${fileName}`, // Use the selected save directory
         fileContent: fileContent,
       }),
     });
