@@ -735,43 +735,49 @@ async function onOpenButtonClick() {
 
 // Function to open a directory
 async function openDirectory(directoryPath, save = false) {
-  try {
-    // Remove trailing slashes
-    directoryPath = directoryPath.replace(/\/+$/, "");
+  return new Promise(async (resolve, reject) => {
+    // Wrap in Promise
+    try {
+      // Remove trailing slashes
+      directoryPath = directoryPath.replace(/\/+$/, "");
 
-    // Update the current directory when navigating into a new directory
-    currentDirectory = directoryPath;
+      // Update the current directory when navigating into a new directory
+      currentDirectory = directoryPath;
 
-    const response = await fetch(`open-directory?path=${directoryPath}`, {
-      method: "GET",
-      mode: "cors",
-    });
+      const response = await fetch(`open-directory?path=${directoryPath}`, {
+        method: "GET",
+        mode: "cors",
+      });
 
-    const fileTree = await response.json();
+      const fileTree = await response.json();
 
-    if (fileTree.success) {
-      // Show the directory modal with the correct behavior (open or save)
-      createDirectoryModal(
-        fileTree.tree.map((file) => file.name),
-        //onDirectorySelected(currentDirectory),
-        (selectedDirectory) => {
-          // Push the current directory onto the stack
-          directoryStack.push(currentDirectory);
-          openDirectory(`${directoryPath}/${selectedDirectory}`, save);
-        },
-        () => {
-          currentDirectory = directoryStack.pop();
-          openDirectory(currentDirectory, save);
-        },
-        //onBackButtonClick,
-        save // Pass the save flag to the modal
-      );
-    } else {
-      console.error(fileTree.error);
+      if (fileTree.success) {
+        // Show the directory modal with the correct behavior (open or save)
+        createDirectoryModal(
+          fileTree.tree.map((file) => file.name),
+          //onDirectorySelected(currentDirectory),
+          (selectedDirectory) => {
+            // Push the current directory onto the stack
+            directoryStack.push(currentDirectory);
+            openDirectory(`${directoryPath}/${selectedDirectory}`, save).then(
+              resolve
+            );
+          },
+          () => {
+            currentDirectory = directoryStack.pop();
+            openDirectory(currentDirectory, save).then(resolve);
+          },
+          //onBackButtonClick,
+          save,
+          resolve // Pass resolve to resolve when modal is done
+        );
+      } else {
+        reject(fileTree.error);
+      }
+    } catch (error) {
+      reject(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
+  });
 }
 
 // Function to create and show the directory modal
@@ -779,7 +785,8 @@ function createDirectoryModal(
   directories,
   onDirectorySelected,
   onBackButtonClick,
-  save = false
+  save = false,
+  resolve
 ) {
   // Check if the modal already exists
   const existingModal = document.getElementById("directoryModal");
@@ -811,6 +818,7 @@ function createDirectoryModal(
     modalContainer.style.display = "none"; // Hide the modal on close
     // Remove the style to allow scrolling
     document.documentElement.style.overflow = "";
+    resolve();
   };
 
   // Append close button to content
@@ -822,7 +830,7 @@ function createDirectoryModal(
   backButton.style.visibility = "hidden";
   backButton.onclick = function () {
     currentDirectory = directoryStack.pop();
-    openDirectory(currentDirectory, save);
+    openDirectory(currentDirectory, save).then(resolve);
   };
 
   topSection.appendChild(backButton);
@@ -836,7 +844,8 @@ function createDirectoryModal(
       modalContainer.style.display = "none";
       document.documentElement.style.overflow = "";
       //saveFileHttp(fileName, input.value, currentDirectory);
-      onSaveButtonClick(); // Call save logic
+      //onSaveButtonClick(); // Call save logic
+      resolve();
     };
 
     topSection.appendChild(saveButton);
@@ -849,6 +858,7 @@ function createDirectoryModal(
     onOpenButtonClick();
     modalContainer.style.display = "none";
     document.documentElement.style.overflow = "";
+    resolve();
   };
 
   topSection.appendChild(openButton);
@@ -870,7 +880,7 @@ function createDirectoryModal(
     directoryLink.textContent = directory;
     directoryLink.onclick = function () {
       directoryStack.push(currentDirectory);
-      openDirectory(`${currentDirectory}/${directory}`, save);
+      openDirectory(`${currentDirectory}/${directory}`, save).then(resolve);
     };
 
     listItem.appendChild(directoryLink);
@@ -898,6 +908,7 @@ function createDirectoryModal(
       modalContainer.style.display = "none";
       // Remove the style to allow scrolling
       document.documentElement.style.overflow = "";
+      resolve();
     }
   });
 }

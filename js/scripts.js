@@ -308,18 +308,20 @@ openFileButton.addEventListener("click", function (e) {
   fileElem.click();
 });
 
-saveAsFileButton.addEventListener("click", function (e) {
+saveAsFileButton.addEventListener("click", async function (e) {
   if (input.value) {
-    var fileName =
+    const fileName =
       getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
+    const fileContent = input.value;
 
     if (window.location.protocol === "file:") {
-      var myFile = new File([input.value], fileName, {
+      var myFile = new File([fileContent], fileName, {
         type: "text/plain;charset=utf-8",
       });
       saveAs(myFile);
     } else {
-      openDirectory(rootDirectory, true);
+      await openDirectory(rootDirectory, true);
+      saveFileHttp(fileName, fileContent);
     }
 
     saveItem();
