@@ -35,8 +35,11 @@ app.post("/save-file", async (req, res) => {
   try {
     const { fileName, fileContent } = req.body;
 
-    // Define the full path where the file will be saved
-    const fullPath = path.join(__dirname, "../public/md/chron/", fileName);
+    // Construct the full path without duplicating 'public/md'
+    const fullPath = path.join(__dirname, fileName);
+
+    // Ensure the directory exists before writing the file
+    await fs.mkdir(path.dirname(fullPath), { recursive: true });
 
     // Save the file content to the specified path
     await fs.writeFile(fullPath, fileContent, "utf8");
