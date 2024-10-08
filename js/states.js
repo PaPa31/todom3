@@ -3,6 +3,16 @@ const itemsFilesToggleButton = document.getElementById("items-files-toggle");
 
 let foldedClass = document.getElementById("list-items");
 
+//var phrase = "static/demo.md";
+//var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
+
+const rootDirectory = "../public/md/chron/";
+
+// Directory stack to keep track of the visited directories
+const directoryStack = [];
+
+let saveDirectory = rootDirectory;
+
 const listFiles = document.getElementById("list-files");
 
 let fileElem = document.getElementById("file-elem");
@@ -659,13 +669,12 @@ const showOrHideUndoDeleteButton = () => {
   }
 };
 
-//var phrase = "static/demo.md";
-var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
-
-const rootDirectory = "../public/md/chron/";
-
-// Directory stack to keep track of the visited directories
-const directoryStack = [];
+function onSaveButtonClick() {
+  const fileName =
+    getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
+  const fileContent = input.value;
+  saveFileHttp(fileName, fileContent); // Save the file using the selected directory
+}
 
 async function onOpenButtonClick() {
   console.log("Start loading!!");
@@ -725,7 +734,7 @@ async function onOpenButtonClick() {
 //}
 
 // Function to open a directory
-async function openDirectory(directoryPath, save) {
+async function openDirectory(directoryPath, save = false) {
   try {
     // Remove trailing slashes
     directoryPath = directoryPath.replace(/\/+$/, "");
@@ -741,20 +750,21 @@ async function openDirectory(directoryPath, save) {
     const fileTree = await response.json();
 
     if (fileTree.success) {
-      // Show the directory modal with nested structure
+      // Show the directory modal with the correct behavior (open or save)
       createDirectoryModal(
         fileTree.tree.map((file) => file.name),
         //onDirectorySelected(currentDirectory),
         (selectedDirectory) => {
           // Push the current directory onto the stack
           directoryStack.push(currentDirectory);
-          openDirectory(`${directoryPath}/${selectedDirectory}`);
+          openDirectory(`${directoryPath}/${selectedDirectory}`, save);
         },
         () => {
           currentDirectory = directoryStack.pop();
-          openDirectory(currentDirectory);
-        }
-        //onBackButtonClick
+          openDirectory(currentDirectory, save);
+        },
+        //onBackButtonClick,
+        save // Pass the save flag to the modal
       );
     } else {
       console.error(fileTree.error);
@@ -768,7 +778,8 @@ async function openDirectory(directoryPath, save) {
 function createDirectoryModal(
   directories,
   onDirectorySelected,
-  onBackButtonClick
+  onBackButtonClick,
+  save = false
 ) {
   // Check if the modal already exists
   const existingModal = document.getElementById("directoryModal");
@@ -811,10 +822,25 @@ function createDirectoryModal(
   backButton.style.visibility = "hidden";
   backButton.onclick = function () {
     currentDirectory = directoryStack.pop();
-    openDirectory(currentDirectory);
+    openDirectory(currentDirectory, save);
   };
 
   topSection.appendChild(backButton);
+
+  // Create save button if in save mode
+  if (save) {
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Save Here";
+    saveButton.onclick = function () {
+      saveDirectory = currentDirectory; // Set the current directory as the save location
+      modalContainer.style.display = "none";
+      document.documentElement.style.overflow = "";
+      //saveFileHttp(fileName, input.value, currentDirectory);
+      onSaveButtonClick(); // Call save logic
+    };
+
+    topSection.appendChild(saveButton);
+  }
 
   // Create open button
   const openButton = document.createElement("button");
@@ -844,7 +870,7 @@ function createDirectoryModal(
     directoryLink.textContent = directory;
     directoryLink.onclick = function () {
       directoryStack.push(currentDirectory);
-      openDirectory(`${currentDirectory}/${directory}`);
+      openDirectory(`${currentDirectory}/${directory}`, save);
     };
 
     listItem.appendChild(directoryLink);
@@ -948,7 +974,7 @@ const getFileHttp = async (fileName) => {
 };
 
 // Function to save the file content to the server
-async function saveFileHttp(fileName, fileContent, saveDirectory) {
+async function saveFileHttp(fileName, fileContent) {
   try {
     const response = await fetch(`save-file`, {
       method: "POST",
@@ -956,7 +982,7 @@ async function saveFileHttp(fileName, fileContent, saveDirectory) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fileName: `${saveDirectory}/${fileName}`, // Use the selected save directory
+        fileName: `${saveDirectory}/${fileName}`, // Use the dynamically selected directory
         fileContent: fileContent,
       }),
     });
