@@ -877,11 +877,24 @@ function createDirectoryModal(
     const listItem = document.createElement("li");
     const directoryLink = document.createElement("a");
     directoryLink.href = "javascript:void(0)";
-    directoryLink.textContent = directory;
-    directoryLink.onclick = function () {
-      directoryStack.push(currentDirectory);
-      openDirectory(`${currentDirectory}/${directory}`, save).then(resolve);
-    };
+    directoryLink.textContent = directory.name;
+
+    // if it's a directory, open it
+    if (directory.isDirectory) {
+      directoryLink.onclick = function () {
+        directoryStack.push(currentDirectory);
+        openDirectory(`${currentDirectory}/${directory}`, save).then(resolve);
+      };
+    } else {
+      // If it's a file, trigger logic to open the file (e.g., fetch the file content)
+      directoryLink.onclick = async function () {
+        onOpenButtonClick();
+        //const filePath = `${currentDirectory}/${directory.name}`;
+        //const fileContent = await fetchFile(filePath); // Fetch file content via HTTP
+        //displayFileContent(fileContent); // Display the content to the user
+        resolve(); // Ensure the promise is resolved after opening the file
+      };
+    }
 
     listItem.appendChild(directoryLink);
     directoryList.appendChild(listItem);
