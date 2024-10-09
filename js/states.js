@@ -687,6 +687,17 @@ async function onOpenButtonClick() {
   showItemSortingArrows(foldedClass.childElementCount);
 }
 
+async function displayFileContent(fileContent) {
+  console.log("Start loading!!");
+  await getFileHttp(fileContent);
+
+  console.log("А теперь - дискотека!!!");
+  initialCheckFold(isFoldFiles);
+  allLiFold(!isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
+  showOrHideDeleteAllItems();
+  showItemSortingArrows(foldedClass.childElementCount);
+}
+
 // Function to handle directory selection
 //function onDirectorySelected(selectedDirectory) {
 //  // Push the current directory onto the stack
@@ -754,7 +765,7 @@ async function openDirectory(directoryPath, save = false) {
       if (fileTree.success) {
         // Show the directory modal with the correct behavior (open or save)
         createDirectoryModal(
-          fileTree.tree.map((file) => file.name),
+          fileTree.tree.map((file) => file),
           //onDirectorySelected(currentDirectory),
           (selectedDirectory) => {
             // Push the current directory onto the stack
@@ -849,19 +860,19 @@ function createDirectoryModal(
     };
 
     topSection.appendChild(saveButton);
+  } else {
+    // Create open button
+    const openButton = document.createElement("button");
+    openButton.textContent = "Open";
+    openButton.onclick = function () {
+      onOpenButtonClick();
+      modalContainer.style.display = "none";
+      document.documentElement.style.overflow = "";
+      resolve();
+    };
+
+    topSection.appendChild(openButton);
   }
-
-  // Create open button
-  const openButton = document.createElement("button");
-  openButton.textContent = "Open";
-  openButton.onclick = function () {
-    onOpenButtonClick();
-    modalContainer.style.display = "none";
-    document.documentElement.style.overflow = "";
-    resolve();
-  };
-
-  topSection.appendChild(openButton);
 
   // Check if the directory stack is empty to decide whether to show the back button
   if (directoryStack.length > 0) {
@@ -881,18 +892,18 @@ function createDirectoryModal(
 
     // if it's a directory, open it
     if (directory.isDirectory) {
+      directoryLink.classList.add("directory-link");
       directoryLink.onclick = function () {
         directoryStack.push(currentDirectory);
         openDirectory(`${currentDirectory}/${directory}`, save).then(resolve);
       };
     } else {
-      // If it's a file, trigger logic to open the file (e.g., fetch the file content)
+      // If it's a file, style it and handle file opening on click
+      directoryLink.classList.add("file-link"); // Apply file styling
       directoryLink.onclick = async function () {
-        onOpenButtonClick();
-        //const filePath = `${currentDirectory}/${directory.name}`;
-        //const fileContent = await fetchFile(filePath); // Fetch file content via HTTP
-        //displayFileContent(fileContent); // Display the content to the user
-        resolve(); // Ensure the promise is resolved after opening the file
+        const filePath = `${currentDirectory}/${directory.name}`;
+        displayFileContent(filePath);
+        resolve();
       };
     }
 

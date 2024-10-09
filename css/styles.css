@@ -1537,6 +1537,16 @@ image is undefined */
   color: #45a049;
 }*/
 
+.directory-link {
+  color: blue; /* Style for directories */
+  font-weight: bold;
+}
+
+.file-link {
+  color: green; /* Style for files */
+  font-style: italic;
+}
+
 /*end modal*/
 
 /*carousel start*/
