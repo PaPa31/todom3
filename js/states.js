@@ -846,19 +846,30 @@ function createDirectoryModal(
 
   topSection.appendChild(backButton);
 
-  // Create save button if in save mode
+  // Add input for file name if in save mode
+  let inputField;
+
   if (save) {
+    // Create file name input field
+    inputField = document.createElement("input");
+    inputField.type = "text";
+    inputField.value =
+      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md"; // Default file name
+    inputField.placeholder = "Enter file name"; // Placeholder text
+    topSection.appendChild(inputField);
+
+    // Create save button if in save mode
     const saveButton = document.createElement("button");
     saveButton.textContent = "Save Here";
     saveButton.onclick = function () {
-      saveDirectory = currentDirectory; // Set the current directory as the save location
-      modalContainer.style.display = "none";
-      document.documentElement.style.overflow = "";
-      //saveFileHttp(fileName, input.value, currentDirectory);
-      //onSaveButtonClick(); // Call save logic
-      resolve();
+      const newFileName = inputField.value.trim();
+      if (newFileName) {
+        saveDirectory = currentDirectory; // Set the current directory as the save location
+        modalContainer.style.display = "none";
+        document.documentElement.style.overflow = "";
+        resolve(newFileName); // Resolve with the new file name
+      }
     };
-
     topSection.appendChild(saveButton);
   } else {
     // Create open button

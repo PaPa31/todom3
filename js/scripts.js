@@ -320,8 +320,8 @@ saveAsFileButton.addEventListener("click", async function (e) {
       });
       saveAs(myFile);
     } else {
-      await openDirectory(rootDirectory, true);
-      saveFileHttp(fileName, fileContent);
+      const newFileName = await openDirectory(rootDirectory, true);
+      saveFileHttp(newFileName, fileContent);
     }
 
     saveItem();
