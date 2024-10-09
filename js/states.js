@@ -895,7 +895,9 @@ function createDirectoryModal(
       directoryLink.classList.add("directory-link");
       directoryLink.onclick = function () {
         directoryStack.push(currentDirectory);
-        openDirectory(`${currentDirectory}/${directory}`, save).then(resolve);
+        openDirectory(`${currentDirectory}/${directory.name}`, save).then(
+          resolve
+        );
       };
     } else {
       // If it's a file, style it and handle file opening on click
