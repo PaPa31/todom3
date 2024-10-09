@@ -7,6 +7,7 @@ let foldedClass = document.getElementById("list-items");
 //var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
 
 const rootDirectory = "../public/md/chron/";
+let initialFileName = null;
 
 // Directory stack to keep track of the visited directories
 const directoryStack = [];
@@ -669,12 +670,12 @@ const showOrHideUndoDeleteButton = () => {
   }
 };
 
-function onSaveButtonClick() {
-  const fileName =
-    getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
-  const fileContent = input.value;
-  saveFileHttp(fileName, fileContent); // Save the file using the selected directory
-}
+//function onSaveButtonClick() {
+//  const fileName =
+//    getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
+//  const fileContent = input.value;
+//  saveFileHttp(fileName, fileContent); // Save the file using the selected directory
+//}
 
 async function onOpenButtonClick() {
   console.log("Start loading!!");
@@ -826,6 +827,10 @@ function createDirectoryModal(
 
   // Add input for file name if in save mode
   let inputField;
+  if (initialFileName === null) {
+    initialFileName =
+      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
+  }
 
   const soButton = document.createElement("button");
 
@@ -833,10 +838,14 @@ function createDirectoryModal(
     // Create file name input field
     inputField = document.createElement("input");
     inputField.type = "text";
-    inputField.value =
-      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md"; // Default file name
+    inputField.value = initialFileName;
     inputField.placeholder = "Enter file name"; // Placeholder text
     topSection.appendChild(inputField);
+
+    // Add an event listener to update the global `initialFileName` when the user changes the input
+    inputField.addEventListener("input", function () {
+      initialFileName = inputField.value.trim(); // Update the global variable
+    });
 
     // Create save button
     soButton.textContent = "Save Here";
@@ -846,6 +855,10 @@ function createDirectoryModal(
         saveDirectory = currentDirectory; // Set the current directory as the save location
         modalContainer.style.display = "none";
         document.documentElement.style.overflow = "";
+
+        // Reset `initialFileName` after saving
+        initialFileName = null;
+
         resolve(newFileName); // Resolve with the new file name
       }
     };
@@ -880,6 +893,10 @@ function createDirectoryModal(
     modalContainer.style.display = "none"; // Hide the modal on close
     // Remove the style to allow scrolling
     document.documentElement.style.overflow = "";
+
+    // Reset `initialFileName` if the modal is closed
+    initialFileName = null;
+
     resolve(null); // Resolve with null when modal is closed
   };
 
@@ -947,6 +964,10 @@ function createDirectoryModal(
       modalContainer.style.display = "none";
       // Remove the style to allow scrolling
       document.documentElement.style.overflow = "";
+
+      // Reset `initialFileName` if clicking outside the modal
+      initialFileName = null;
+
       resolve(null);
     }
   });
