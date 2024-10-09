@@ -815,11 +815,62 @@ function createDirectoryModal(
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal-content", "flex-row");
 
+  const buttonLine = document.createElement("div");
+  buttonLine.classList.add("button-line");
+
   const topSection = document.createElement("div");
   topSection.classList.add("top-section", "flex-small");
 
   const contentSection = document.createElement("div");
   contentSection.classList.add("content-section", "flex-small");
+
+  // Add input for file name if in save mode
+  let inputField;
+
+  const soButton = document.createElement("button");
+
+  if (save) {
+    // Create file name input field
+    inputField = document.createElement("input");
+    inputField.type = "text";
+    inputField.value =
+      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md"; // Default file name
+    inputField.placeholder = "Enter file name"; // Placeholder text
+    topSection.appendChild(inputField);
+
+    // Create save button
+    soButton.textContent = "Save Here";
+    soButton.onclick = function () {
+      const newFileName = inputField.value.trim();
+      if (newFileName) {
+        saveDirectory = currentDirectory; // Set the current directory as the save location
+        modalContainer.style.display = "none";
+        document.documentElement.style.overflow = "";
+        resolve(newFileName); // Resolve with the new file name
+      }
+    };
+  } else {
+    // Create open button
+    soButton.textContent = "Open";
+    soButton.onclick = function () {
+      onOpenButtonClick();
+      modalContainer.style.display = "none";
+      document.documentElement.style.overflow = "";
+      resolve();
+    };
+  }
+
+  // Create back button
+  const backButton = document.createElement("button");
+  backButton.textContent = "Back";
+  backButton.style.visibility = "hidden";
+  backButton.onclick = function () {
+    currentDirectory = directoryStack.pop();
+    openDirectory(currentDirectory, save).then(resolve);
+  };
+
+  buttonLine.appendChild(backButton);
+  buttonLine.appendChild(soButton);
 
   // Create close button
   const closeButton = document.createElement("div");
@@ -833,57 +884,8 @@ function createDirectoryModal(
   };
 
   // Append close button to content
-  topSection.appendChild(closeButton);
-
-  // Create back button
-  const backButton = document.createElement("button");
-  backButton.textContent = "Back";
-  backButton.style.visibility = "hidden";
-  backButton.onclick = function () {
-    currentDirectory = directoryStack.pop();
-    openDirectory(currentDirectory, save).then(resolve);
-  };
-
-  topSection.appendChild(backButton);
-
-  // Add input for file name if in save mode
-  let inputField;
-
-  if (save) {
-    // Create file name input field
-    inputField = document.createElement("input");
-    inputField.type = "text";
-    inputField.value =
-      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md"; // Default file name
-    inputField.placeholder = "Enter file name"; // Placeholder text
-    topSection.appendChild(inputField);
-
-    // Create save button if in save mode
-    const saveButton = document.createElement("button");
-    saveButton.textContent = "Save Here";
-    saveButton.onclick = function () {
-      const newFileName = inputField.value.trim();
-      if (newFileName) {
-        saveDirectory = currentDirectory; // Set the current directory as the save location
-        modalContainer.style.display = "none";
-        document.documentElement.style.overflow = "";
-        resolve(newFileName); // Resolve with the new file name
-      }
-    };
-    topSection.appendChild(saveButton);
-  } else {
-    // Create open button
-    const openButton = document.createElement("button");
-    openButton.textContent = "Open";
-    openButton.onclick = function () {
-      onOpenButtonClick();
-      modalContainer.style.display = "none";
-      document.documentElement.style.overflow = "";
-      resolve();
-    };
-
-    topSection.appendChild(openButton);
-  }
+  buttonLine.appendChild(closeButton);
+  topSection.appendChild(buttonLine);
 
   // Check if the directory stack is empty to decide whether to show the back button
   if (directoryStack.length > 0) {

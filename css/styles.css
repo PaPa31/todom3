@@ -1465,6 +1465,7 @@ image is undefined */
   height: 100%;
   overflow-y: auto;
   padding-top: 20px;
+  z-index: 6;
 }
 
 .modal-content {
@@ -1483,6 +1484,15 @@ image is undefined */
   background-color: var(--todom-input-background);
   padding: 20px;
   border-radius: 0 0 8px 8px;
+}
+
+.top-section input {
+  border-radius: 4px;
+  padding: 0.25rem;
+  margin: 0.75em 0;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid var(--todom-border);
 }
 
 .content-section {
