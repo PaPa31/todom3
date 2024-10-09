@@ -321,6 +321,10 @@ saveAsFileButton.addEventListener("click", async function (e) {
       saveAs(myFile);
     } else {
       const newFileName = await openDirectory(rootDirectory, true);
+      if (!newFileName) {
+        console.log("Save operation canceled or no file name provided.");
+        return;
+      }
       saveFileHttp(newFileName, fileContent);
     }
 

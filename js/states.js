@@ -880,7 +880,7 @@ function createDirectoryModal(
     modalContainer.style.display = "none"; // Hide the modal on close
     // Remove the style to allow scrolling
     document.documentElement.style.overflow = "";
-    resolve();
+    resolve(null); // Resolve with null when modal is closed
   };
 
   // Append close button to content
@@ -947,7 +947,7 @@ function createDirectoryModal(
       modalContainer.style.display = "none";
       // Remove the style to allow scrolling
       document.documentElement.style.overflow = "";
-      resolve();
+      resolve(null);
     }
   });
 }
