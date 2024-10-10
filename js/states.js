@@ -679,7 +679,12 @@ const showOrHideUndoDeleteButton = () => {
 
 async function onOpenButtonClick() {
   console.log("Start loading!!");
-  await getFileHttp(currentDirectory);
+  const includeNestedFiles = document.getElementById(
+    "nestedFilesCheckbox"
+  ).checked;
+
+  // Fetch files, including nested directories only if the checkbox is checked
+  await getFileHttp(currentDirectory, includeNestedFiles);
 
   console.log("А теперь - дискотека!!!");
   initialCheckFold(isFoldFiles);
@@ -877,6 +882,18 @@ function createDirectoryModal(
     };
     buttonLine.appendChild(createFolderButton);
   } else {
+    // Add this checkbox near the "Open" button in the modal
+    const nestedFilesCheckbox = document.createElement("input");
+    nestedFilesCheckbox.type = "checkbox";
+    nestedFilesCheckbox.id = "nestedFilesCheckbox";
+    nestedFilesCheckbox.checked = false; // Default: do not include nested files
+
+    const nestedFilesLabel = document.createElement("label");
+    nestedFilesLabel.for = "nestedFilesCheckbox";
+    nestedFilesLabel.textContent = "Include nested files";
+    topSection.appendChild(nestedFilesCheckbox);
+    topSection.appendChild(nestedFilesLabel);
+
     // Create open button
     soButton.textContent = "Open";
     soButton.onclick = function () {
@@ -1014,7 +1031,7 @@ const fileHttpHandler = (name, dir, size, text) => {
 };
 
 // Recursive function for downloading files
-const getFileHttp = async (fileName) => {
+const getFileHttp = async (fileName, includeNestedFiles = false) => {
   try {
     const response = await fetch(`open-directory?path=${fileName}`, {
       method: "GET",
@@ -1041,12 +1058,20 @@ const getFileHttp = async (fileName) => {
 
     if (isJSON && directoryListing && Array.isArray(directoryListing.tree)) {
       // It's a directory; create an array of promises for each file
+      // or It's a directory; get files
       const filePromises = directoryListing.tree.map(async (file) => {
         const filePath = fileName + "/" + file.name;
-        await getFileHttp(filePath);
+
+        if (!file.isDirectory) {
+          // If it's a file, process it
+          await getFileHttp(filePath, includeNestedFiles);
+        } else if (includeNestedFiles && file.isDirectory) {
+          // If nested files are allowed, process the directory
+          await getFileHttp(filePath, includeNestedFiles);
+        }
       });
 
-      // Wait for all promises to resolve
+      // Wait for all files and directories to be processed
       await Promise.all(filePromises);
     } else {
       // Handle the file content here
