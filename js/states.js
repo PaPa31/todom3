@@ -835,6 +835,19 @@ function createDirectoryModal(
   const soButton = document.createElement("button");
 
   if (save) {
+    // Create "Create Folder" button
+    const createFolderButton = document.createElement("button");
+    createFolderButton.textContent = "Create Folder";
+    createFolderButton.onclick = function () {
+      const folderName = prompt("Enter new folder name:");
+      if (folderName && folderName.trim()) {
+        createNewFolder(currentDirectory, folderName.trim()).then(() => {
+          // Refresh the directory listing after creating the folder
+          openDirectory(currentDirectory, save).then(resolve);
+        });
+      }
+    };
+
     // Create file name input field
     inputField = document.createElement("input");
     inputField.type = "text";
@@ -862,6 +875,7 @@ function createDirectoryModal(
         resolve(newFileName); // Resolve with the new file name
       }
     };
+    buttonLine.appendChild(createFolderButton);
   } else {
     // Create open button
     soButton.textContent = "Open";
@@ -1066,6 +1080,31 @@ async function saveFileHttp(fileName, fileContent) {
     console.log(result.message);
   } catch (error) {
     console.error("Error while saving the file: ", error);
+  }
+}
+
+// Function to create a new folder
+async function createNewFolder(currentDirectory, folderName) {
+  try {
+    const response = await fetch(`create-folder`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        directory: currentDirectory,
+        folderName: folderName,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create folder.");
+    }
+
+    const result = await response.json();
+    console.log("Folder created successfully:", result);
+  } catch (error) {
+    console.error("Error creating folder:", error);
   }
 }
 

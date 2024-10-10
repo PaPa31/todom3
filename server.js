@@ -55,6 +55,23 @@ app.post("/save-file", async (req, res) => {
   }
 });
 
+app.post("/create-folder", async (req, res) => {
+  const { directory, folderName } = req.body;
+  const fullPath = path.join(__dirname, directory, folderName);
+
+  try {
+    await fs.mkdir(fullPath, { recursive: true }); // Ensure the directory is created
+    res
+      .status(200)
+      .json({ success: true, message: "Folder created successfully" });
+  } catch (error) {
+    console.error("Error creating folder:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to create folder" });
+  }
+});
+
 app.get("/open-directory", async (req, res) => {
   try {
     const directoryPath = req.query.path || "";
