@@ -969,12 +969,19 @@ function createDirectoryModal(
     } else {
       // If it's a file, style it and handle file opening on click
       directoryLink.classList.add("file-link"); // Apply file styling
-      directoryLink.onclick = async function () {
-        if (selectedFile) {
-          selectedFile.classList.remove("selected"); // Remove previous selection
+      directoryLink.onclick = function () {
+        if (directoryLink.classList.contains("selected")) {
+          // If the file is already selected, deselect it
+          directoryLink.classList.remove("selected");
+          selectedFile = null;
+        } else {
+          // If no file is selected or another file is selected, select this one
+          if (selectedFile) {
+            selectedFile.classList.remove("selected"); // Remove previous selection
+          }
+          directoryLink.classList.add("selected"); // Mark this file as selected
+          selectedFile = directoryLink; // Track the selected file
         }
-        directoryLink.classList.add("selected"); // Mark this file as selected
-        selectedFile = directoryLink; // Track the selected file
       };
     }
 
