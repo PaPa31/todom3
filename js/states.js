@@ -8,6 +8,7 @@ let foldedClass = document.getElementById("list-items");
 
 const rootDirectory = "../public/md/chron/";
 let initialFileName = null;
+let selectedFile = null; // To track the selected file
 
 // Directory stack to keep track of the visited directories
 const directoryStack = [];
@@ -897,10 +898,13 @@ function createDirectoryModal(
     // Create open button
     soButton.textContent = "Open";
     soButton.onclick = function () {
-      onOpenButtonClick();
-      modalContainer.style.display = "none";
-      document.documentElement.style.overflow = "";
-      resolve();
+      if (selectedFile) {
+        onOpenButtonClick(selectedFile);
+        modalContainer.style.display = "none";
+        document.documentElement.style.overflow = "";
+      } else {
+        alert("Please select a file to open."); // Show a message if no file selected
+      }
     };
   }
 
@@ -959,14 +963,18 @@ function createDirectoryModal(
         openDirectory(`${currentDirectory}/${directory.name}`, save).then(
           resolve
         );
+        selectedFile = null; // Clear selected file when a directory is clicked
+        clearFileSelection(); // Remove selection styling
       };
     } else {
       // If it's a file, style it and handle file opening on click
       directoryLink.classList.add("file-link"); // Apply file styling
       directoryLink.onclick = async function () {
-        const filePath = `${currentDirectory}/${directory.name}`;
-        displayFileContent(filePath);
-        resolve();
+        if (selectedFile) {
+          selectedFile.classList.remove("selected"); // Remove previous selection
+        }
+        directoryLink.classList.add("selected"); // Mark this file as selected
+        selectedFile = directoryLink; // Track the selected file
       };
     }
 
@@ -1002,6 +1010,11 @@ function createDirectoryModal(
       resolve(null);
     }
   });
+}
+
+function clearFileSelection() {
+  const selectedElements = document.querySelectorAll(".file-link.selected");
+  selectedElements.forEach((element) => element.classList.remove("selected"));
 }
 
 // Example: Attach this function to your "Open Directory" button
