@@ -1556,6 +1556,10 @@ image is undefined */
   font-style: italic;
 }
 
+a.file-link.selected {
+  color: #ff4a00;
+}
+
 /*end modal*/
 
 /*carousel start*/
