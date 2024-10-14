@@ -8,7 +8,7 @@ let foldedClass = document.getElementById("list-items");
 
 const rootDirectory = "../public/md/chron/";
 let initialFileName = null;
-let selectedFile = null; // To track the selected file
+let selectedFiles = []; // Array to track multiple selected files
 
 // Directory stack to keep track of the visited directories
 const directoryStack = [];
@@ -678,14 +678,23 @@ const showOrHideUndoDeleteButton = () => {
 //  saveFileHttp(fileName, fileContent); // Save the file using the selected directory
 //}
 
-async function onOpenButtonClick() {
+async function onOpenButtonClick(fileLinks) {
   console.log("Start loading!!");
   const includeNestedFiles = document.getElementById(
     "nestedFilesCheckbox"
   ).checked;
 
-  // Fetch files, including nested directories only if the checkbox is checked
-  await getFileHttp(currentDirectory, includeNestedFiles);
+  // Loop through each selected file and fetch the file content
+  for (let fileLink of fileLinks) {
+    const filePath = `${currentDirectory}/${fileLink.textContent.trim()}`; // Get file path from the link text
+
+    try {
+      await getFileHttp(filePath, includeNestedFiles); // Fetch each selected file content
+      console.log(`Loaded file: ${filePath}`);
+    } catch (error) {
+      console.error(`Failed to load file: ${filePath}`, error);
+    }
+  }
 
   console.log("А теперь - дискотека!!!");
   initialCheckFold(isFoldFiles);
@@ -898,12 +907,12 @@ function createDirectoryModal(
     // Create open button
     soButton.textContent = "Open";
     soButton.onclick = function () {
-      if (selectedFile) {
-        onOpenButtonClick(selectedFile);
+      if (selectedFiles.length > 0) {
+        onOpenButtonClick(selectedFiles); // Pass all selected files to be opened
         modalContainer.style.display = "none";
         document.documentElement.style.overflow = "";
       } else {
-        alert("Please select a file to open."); // Show a message if no file selected
+        alert("Please select at least one file to open.");
       }
     };
   }
@@ -963,7 +972,7 @@ function createDirectoryModal(
         openDirectory(`${currentDirectory}/${directory.name}`, save).then(
           resolve
         );
-        selectedFile = null; // Clear selected file when a directory is clicked
+        selectedFiles = []; // Clear selected files when a directory is clicked
         clearFileSelection(); // Remove selection styling
       };
     } else {
@@ -973,14 +982,13 @@ function createDirectoryModal(
         if (directoryLink.classList.contains("selected")) {
           // If the file is already selected, deselect it
           directoryLink.classList.remove("selected");
-          selectedFile = null;
+          selectedFiles = selectedFiles.filter(
+            (file) => file !== directoryLink
+          ); // Remove from the selected list
         } else {
-          // If no file is selected or another file is selected, select this one
-          if (selectedFile) {
-            selectedFile.classList.remove("selected"); // Remove previous selection
-          }
-          directoryLink.classList.add("selected"); // Mark this file as selected
-          selectedFile = directoryLink; // Track the selected file
+          // Select this file (allow multiple selections)
+          directoryLink.classList.add("selected");
+          selectedFiles.push(directoryLink); // Add to the selected list
         }
       };
     }
