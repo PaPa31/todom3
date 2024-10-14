@@ -680,32 +680,18 @@ const showOrHideUndoDeleteButton = () => {
 
 async function onOpenButtonClick(fileLinks) {
   console.log("Start loading!!");
-  const includeNestedFiles = document.getElementById(
-    "nestedFilesCheckbox"
-  ).checked;
 
   // Loop through each selected file and fetch the file content
   for (let fileLink of fileLinks) {
     const filePath = `${currentDirectory}/${fileLink.textContent.trim()}`; // Get file path from the link text
 
     try {
-      await getFileHttp(filePath, includeNestedFiles); // Fetch each selected file content
+      await getFileHttp(filePath); // Fetch each selected file content
       console.log(`Loaded file: ${filePath}`);
     } catch (error) {
       console.error(`Failed to load file: ${filePath}`, error);
     }
   }
-
-  console.log("А теперь - дискотека!!!");
-  initialCheckFold(isFoldFiles);
-  allLiFold(!isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
-  showOrHideDeleteAllItems();
-  showItemSortingArrows(foldedClass.childElementCount);
-}
-
-async function displayFileContent(fileContent) {
-  console.log("Start loading!!");
-  await getFileHttp(fileContent);
 
   console.log("А теперь - дискотека!!!");
   initialCheckFold(isFoldFiles);
@@ -892,18 +878,6 @@ function createDirectoryModal(
     };
     buttonLine.appendChild(createFolderButton);
   } else {
-    // Add this checkbox near the "Open" button in the modal
-    const nestedFilesCheckbox = document.createElement("input");
-    nestedFilesCheckbox.type = "checkbox";
-    nestedFilesCheckbox.id = "nestedFilesCheckbox";
-    nestedFilesCheckbox.checked = false; // Default: do not include nested files
-
-    const nestedFilesLabel = document.createElement("label");
-    nestedFilesLabel.for = "nestedFilesCheckbox";
-    nestedFilesLabel.textContent = "Include nested files";
-    topSection.appendChild(nestedFilesCheckbox);
-    topSection.appendChild(nestedFilesLabel);
-
     // Create open button
     soButton.textContent = "Open";
     soButton.onclick = function () {
@@ -1059,7 +1033,7 @@ const fileHttpHandler = (name, dir, size, text) => {
 };
 
 // Recursive function for downloading files
-const getFileHttp = async (fileName, includeNestedFiles = false) => {
+const getFileHttp = async (fileName) => {
   try {
     const response = await fetch(`open-directory?path=${fileName}`, {
       method: "GET",
@@ -1092,10 +1066,7 @@ const getFileHttp = async (fileName, includeNestedFiles = false) => {
 
         if (!file.isDirectory) {
           // If it's a file, process it
-          await getFileHttp(filePath, includeNestedFiles);
-        } else if (includeNestedFiles && file.isDirectory) {
-          // If nested files are allowed, process the directory
-          await getFileHttp(filePath, includeNestedFiles);
+          await getFileHttp(filePath);
         }
       });
 
