@@ -1134,6 +1134,26 @@ const getFileHttp = async (fileName, includeNestedFiles = false) => {
 // Function to save the file content to the server
 async function saveFileHttp(fileName, fileContent) {
   try {
+    // Check if the file already exists by sending a HEAD request
+    const fileExistsResponse = await fetch(
+      `open-directory?path=${saveDirectory}/${fileName}`,
+      {
+        method: "HEAD",
+        mode: "cors",
+      }
+    );
+
+    // If the file exists, confirm if the user wants to overwrite
+    if (fileExistsResponse.ok) {
+      const overwrite = confirm(
+        `File "${fileName}" already exists. Do you want to overwrite it?`
+      );
+      if (!overwrite) {
+        console.log("File save canceled.");
+        return;
+      }
+    }
+
     const response = await fetch(`save-file`, {
       method: "POST",
       headers: {
