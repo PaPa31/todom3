@@ -678,7 +678,21 @@ const showOrHideUndoDeleteButton = () => {
 //  saveFileHttp(fileName, fileContent); // Save the file using the selected directory
 //}
 
-async function onOpenButtonClick(fileLinks) {
+async function openAllFiles(currentDirectory) {
+  console.log("Start loading!!");
+
+  const includeNestedFiles = document.getElementById(
+    "nestedFilesCheckbox"
+  ).checked;
+
+  // Fetch files, including nested directories only if the checkbox is checked
+  await getFileHttp(currentDirectory, includeNestedFiles);
+
+  console.log("А теперь - дискотека!!!");
+  afterHttpOpen();
+}
+
+async function openSelectedFiles(fileLinks) {
   console.log("Start loading!!");
 
   // Loop through each selected file and fetch the file content
@@ -694,6 +708,10 @@ async function onOpenButtonClick(fileLinks) {
   }
 
   console.log("А теперь - дискотека!!!");
+  afterHttpOpen();
+}
+
+function afterHttpOpen() {
   initialCheckFold(isFoldFiles);
   allLiFold(!isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
   showOrHideDeleteAllItems();
@@ -835,6 +853,8 @@ function createDirectoryModal(
 
   const soButton = document.createElement("button");
 
+  const openAllButton = document.createElement("button");
+
   if (save) {
     // Create "Create Folder" button
     const createFolderButton = document.createElement("button");
@@ -878,11 +898,32 @@ function createDirectoryModal(
     };
     buttonLine.appendChild(createFolderButton);
   } else {
+    // Add this checkbox near the "Open" button in the modal
+    const nestedFilesCheckbox = document.createElement("input");
+    nestedFilesCheckbox.type = "checkbox";
+    nestedFilesCheckbox.id = "nestedFilesCheckbox";
+    nestedFilesCheckbox.checked = false; // Default: do not include nested files
+
+    const nestedFilesLabel = document.createElement("label");
+    nestedFilesLabel.for = "nestedFilesCheckbox";
+    nestedFilesLabel.textContent = "Include nested files";
+    topSection.appendChild(nestedFilesCheckbox);
+    topSection.appendChild(nestedFilesLabel);
+
+    openAllButton.textContent = "Open All Files";
+    openAllButton.onclick = function () {
+      openAllFiles(currentDirectory);
+
+      modalContainer.style.display = "none"; // Hide the modal after opening files
+      // Remove the style to allow scrolling
+      document.documentElement.style.overflow = "";
+    };
+
     // Create open button
     soButton.textContent = "Open";
     soButton.onclick = function () {
       if (selectedFiles.length > 0) {
-        onOpenButtonClick(selectedFiles); // Pass all selected files to be opened
+        openSelectedFiles(selectedFiles); // Pass all selected files to be opened
         modalContainer.style.display = "none";
         document.documentElement.style.overflow = "";
       } else {
@@ -902,6 +943,7 @@ function createDirectoryModal(
 
   buttonLine.appendChild(backButton);
   buttonLine.appendChild(soButton);
+  buttonLine.appendChild(openAllButton);
 
   // Create close button
   const closeButton = document.createElement("div");
@@ -1033,7 +1075,7 @@ const fileHttpHandler = (name, dir, size, text) => {
 };
 
 // Recursive function for downloading files
-const getFileHttp = async (fileName) => {
+const getFileHttp = async (fileName, includeNestedFiles = false) => {
   try {
     const response = await fetch(`open-directory?path=${fileName}`, {
       method: "GET",
@@ -1067,6 +1109,9 @@ const getFileHttp = async (fileName) => {
         if (!file.isDirectory) {
           // If it's a file, process it
           await getFileHttp(filePath);
+        } else if (includeNestedFiles && file.isDirectory) {
+          // If nested files are allowed, process the directory
+          await getFileHttp(filePath, includeNestedFiles);
         }
       });
 
