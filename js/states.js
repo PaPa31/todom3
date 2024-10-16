@@ -344,7 +344,6 @@ const trashButtonMaker = (paMainActDiv) => {
 const setCurrentSave = (currentSave, itemIndex) => {
   itemsSpecArray[itemIndex].save = currentSave;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-  //localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 };
 
 const deleteCurrentSave = (el) => {
@@ -397,6 +396,7 @@ const deleteCurrentSave = (el) => {
     initialInBefore(resizableDiv);
   }
   setCurrentSave(currentSave, itemIndex);
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   changeDateInAfter(resizableDiv, textArr[currentSave].date);
 };
 
