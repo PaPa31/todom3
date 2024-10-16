@@ -935,7 +935,8 @@ function createDirectoryModal(
   // Create back button
   const backButton = document.createElement("button");
   backButton.textContent = "Back";
-  backButton.style.visibility = "hidden";
+  backButton.style.visibility =
+    directoryStack.length > 0 ? "visible" : "hidden";
   backButton.onclick = function () {
     currentDirectory = directoryStack.pop();
     openDirectory(currentDirectory, save).then(resolve);
