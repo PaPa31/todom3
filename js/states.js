@@ -1134,26 +1134,7 @@ const getFileHttp = async (fileName, includeNestedFiles = false) => {
 // Function to save the file content to the server
 async function saveFileHttp(fileName, fileContent) {
   try {
-    // Check if the file already exists by sending a HEAD request
-    const fileExistsResponse = await fetch(
-      `open-directory?path=${saveDirectory}/${fileName}`,
-      {
-        method: "HEAD",
-        mode: "cors",
-      }
-    );
-
-    // If the file exists, confirm if the user wants to overwrite
-    if (fileExistsResponse.ok) {
-      const overwrite = confirm(
-        `File "${fileName}" already exists. Do you want to overwrite it?`
-      );
-      if (!overwrite) {
-        console.log("File save canceled.");
-        return;
-      }
-    }
-
+    // Try to save the file directly
     const response = await fetch(`save-file`, {
       method: "POST",
       headers: {
@@ -1162,10 +1143,37 @@ async function saveFileHttp(fileName, fileContent) {
       body: JSON.stringify({
         fileName: `${saveDirectory}/${fileName}`, // Use the dynamically selected directory
         fileContent: fileContent,
+        overwrite: false, // By default, do not overwrite
       }),
     });
 
-    if (!response.ok) {
+    // Handle 409 Conflict (file already exists)
+    if (response.status === 409) {
+      const overwrite = confirm(
+        `File "${fileName}" already exists. Do you want to overwrite it?`
+      );
+      if (!overwrite) {
+        console.log("File save canceled.");
+        return; // Stop if the user doesn't want to overwrite
+      }
+
+      // If the user confirms, retry the save operation with overwrite flag
+      const overwriteResponse = await fetch(`save-file`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fileName: `${saveDirectory}/${fileName}`, // Use the dynamically selected directory
+          fileContent: fileContent,
+          overwrite: true, // Now allow overwriting
+        }),
+      });
+
+      if (!overwriteResponse.ok) {
+        throw new Error("Failed to overwrite the file.");
+      }
+    } else if (!response.ok) {
       throw new Error("Failed to save file.");
     }
 

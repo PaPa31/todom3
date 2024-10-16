@@ -33,15 +33,32 @@ app.get("/", (req, res) => {
 
 app.post("/save-file", async (req, res) => {
   try {
-    const { fileName, fileContent } = req.body;
-
-    // Construct the full path without duplicating 'public/md'
+    const { fileName, fileContent, overwrite } = req.body;
     const fullPath = path.join(__dirname, fileName);
+
+    // Check if the file already exists, unless overwrite is true
+    if (!overwrite) {
+      try {
+        // Check if the file exists using fs.promises.stat
+        await fs.stat(fullPath); // This will throw an error if the file doesn't exist
+
+        // If the file exists and overwrite is false, return a 409 Conflict
+        return res
+          .status(409)
+          .json({ success: false, message: "File already exists." });
+      } catch (err) {
+        if (err.code !== "ENOENT") {
+          // If it's another error, rethrow it
+          throw err;
+        }
+        // If ENOENT, continue to save the file
+      }
+    }
 
     // Ensure the directory exists before writing the file
     await fs.mkdir(path.dirname(fullPath), { recursive: true });
 
-    // Save the file content to the specified path
+    // Save (or overwrite) the file
     await fs.writeFile(fullPath, fileContent, "utf8");
 
     res
