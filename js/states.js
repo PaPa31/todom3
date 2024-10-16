@@ -849,8 +849,6 @@ function createDirectoryModal(
 
   const soButton = document.createElement("button");
 
-  const openAllButton = document.createElement("button");
-
   if (save) {
     if (initialFileName === null) {
       initialFileName =
@@ -910,6 +908,7 @@ function createDirectoryModal(
     topSection.appendChild(nestedFilesCheckbox);
     topSection.appendChild(nestedFilesLabel);
 
+    const openAllButton = document.createElement("button");
     openAllButton.textContent = "Open All Files";
     openAllButton.onclick = function () {
       openAllFiles(currentDirectory);
@@ -918,6 +917,7 @@ function createDirectoryModal(
       // Remove the style to allow scrolling
       document.documentElement.style.overflow = "";
     };
+    buttonLine.appendChild(openAllButton);
 
     // Create open button
     soButton.textContent = "Open";
@@ -944,7 +944,6 @@ function createDirectoryModal(
 
   buttonLine.appendChild(backButton);
   buttonLine.appendChild(soButton);
-  buttonLine.appendChild(openAllButton);
 
   // Create close button
   const closeButton = document.createElement("div");
