@@ -1547,7 +1547,7 @@ image is undefined */
 }*/
 
 .directory-link {
-  color: blue; /* Style for directories */
+  color: #5252cd; /* Style for directories */
   font-weight: bold;
 }
 
