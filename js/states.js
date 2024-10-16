@@ -1141,44 +1141,48 @@ async function saveFileHttp(fileName, fileContent) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fileName: `${saveDirectory}/${fileName}`, // Use the dynamically selected directory
+        fileName: `${saveDirectory}/${fileName}`,
         fileContent: fileContent,
         overwrite: false, // By default, do not overwrite
       }),
     });
 
-    // Handle 409 Conflict (file already exists)
+    // Check for 409 Conflict and handle it without throwing an error
     if (response.status === 409) {
+      console.log("File already exists.");
       const overwrite = confirm(
         `File "${fileName}" already exists. Do you want to overwrite it?`
       );
       if (!overwrite) {
         console.log("File save canceled.");
-        return; // Stop if the user doesn't want to overwrite
+        return;
       }
 
-      // If the user confirms, retry the save operation with overwrite flag
+      // Retry with overwrite flag
       const overwriteResponse = await fetch(`save-file`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fileName: `${saveDirectory}/${fileName}`, // Use the dynamically selected directory
+          fileName: `${saveDirectory}/${fileName}`,
           fileContent: fileContent,
           overwrite: true, // Now allow overwriting
         }),
       });
 
-      if (!overwriteResponse.ok) {
+      if (overwriteResponse.ok) {
+        const result = await overwriteResponse.json();
+        console.log(result.message);
+      } else {
         throw new Error("Failed to overwrite the file.");
       }
     } else if (!response.ok) {
       throw new Error("Failed to save file.");
+    } else {
+      const result = await response.json();
+      console.log(result.message);
     }
-
-    const result = await response.json();
-    console.log(result.message);
   } catch (error) {
     console.error("Error while saving the file: ", error);
   }
