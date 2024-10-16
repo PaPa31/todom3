@@ -846,16 +846,16 @@ function createDirectoryModal(
 
   // Add input for file name if in save mode
   let inputField;
-  if (initialFileName === null) {
-    initialFileName =
-      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
-  }
 
   const soButton = document.createElement("button");
 
   const openAllButton = document.createElement("button");
 
   if (save) {
+    if (initialFileName === null) {
+      initialFileName =
+        getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
+    }
     // Create "Create Folder" button
     const createFolderButton = document.createElement("button");
     createFolderButton.textContent = "Create Folder";
