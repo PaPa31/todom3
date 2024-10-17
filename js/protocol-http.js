@@ -5,7 +5,6 @@
 
 const rootDirectory = "../public/md/chron/";
 let initialFileName = null;
-let selectedFiles = []; // Array to track multiple selected files
 
 // Directory stack to keep track of the visited directories
 const directoryStack = [];
@@ -160,6 +159,8 @@ function createDirectoryModal(
   save = false,
   resolve
 ) {
+  let selectedFiles = []; // Array to track multiple selected files
+
   // Check if the modal already exists
   const existingModal = document.getElementById("directoryModal");
   if (existingModal) {
