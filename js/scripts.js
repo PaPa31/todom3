@@ -299,16 +299,24 @@ function scrollToTargetAdjusted(targetElement, offset) {
 }
 
 openDirButton.addEventListener("click", function (e) {
-  fileElem.setAttribute("webkitdirectory", "true");
-  fileElem.click();
+  if (window.location.protocol === "file:") {
+    webKitDirToTrue();
+    fileProtocolOpenDirectoryClick();
+  } else {
+    httpProtocolOpenDirectoryClick();
+  }
 });
 
 openFileButton.addEventListener("click", function (e) {
-  fileElem.removeAttribute("webkitdirectory");
-  fileElem.click();
+  if (window.location.protocol === "file:") {
+    webKitDirRemove();
+    fileProtocolOpenDirectoryClick();
+  } else {
+    httpProtocolOpenDirectoryClick();
+  }
 });
 
-saveAsFileButton.addEventListener("click", async function (e) {
+saveAsFileButton.addEventListener("click", function () {
   if (input.value) {
     const fileName =
       getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
@@ -320,12 +328,7 @@ saveAsFileButton.addEventListener("click", async function (e) {
       });
       saveAs(myFile);
     } else {
-      const newFileName = await openDirectory(rootDirectory, true);
-      if (!newFileName) {
-        console.log("Save operation canceled or no file name provided.");
-        return;
-      }
-      saveFileHttp(newFileName, fileContent);
+      handleHttpSaveFile(fileContent);
     }
 
     saveItem();
@@ -340,39 +343,43 @@ saveAsFileButton.addEventListener("click", async function (e) {
 });
 
 const fileDownload = (fileName) => {
-  var blob = new Blob([input.value], {
-    type: "text/plain;charset=utf-8",
-  });
-
-  fileSizeGlobal = blob.size;
-
-  if (typeof window.navigator.msSaveBlob !== "undefined") {
-    window.navigator.msSaveBlob(blob, fileName);
-  } else {
-    var blobURL =
-      window.URL && window.URL.createObjectURL
-        ? window.URL.createObjectURL(blob)
-        : window.webkitURL.createObjectURL(blob);
-    var tempLink = document.createElement("a");
-    tempLink.style.display = "none";
-    tempLink.href = blobURL;
-    tempLink.setAttribute("download", fileName);
-
-    if (typeof tempLink.download === "undefined") {
-      tempLink.setAttribute("target", "_blank");
-    }
-    tempLink.addEventListener("click", (e) => {
-      e.stopPropagation();
-      initialize();
+  if (window.location.protocol === "file:") {
+    var blob = new Blob([input.value], {
+      type: "text/plain;charset=utf-8",
     });
 
-    document.body.appendChild(tempLink);
-    tempLink.click();
+    fileSizeGlobal = blob.size;
 
-    setTimeout(function () {
-      document.body.removeChild(tempLink);
-      window.URL.revokeObjectURL(blobURL);
-    }, 1000);
+    if (typeof window.navigator.msSaveBlob !== "undefined") {
+      window.navigator.msSaveBlob(blob, fileName);
+    } else {
+      var blobURL =
+        window.URL && window.URL.createObjectURL
+          ? window.URL.createObjectURL(blob)
+          : window.webkitURL.createObjectURL(blob);
+      var tempLink = document.createElement("a");
+      tempLink.style.display = "none";
+      tempLink.href = blobURL;
+      tempLink.setAttribute("download", fileName);
+
+      if (typeof tempLink.download === "undefined") {
+        tempLink.setAttribute("target", "_blank");
+      }
+      tempLink.addEventListener("click", (e) => {
+        e.stopPropagation();
+        initialize();
+      });
+
+      document.body.appendChild(tempLink);
+      tempLink.click();
+
+      setTimeout(function () {
+        document.body.removeChild(tempLink);
+        window.URL.revokeObjectURL(blobURL);
+      }, 1000);
+    }
+  } else {
+    handleHttpSaveFile(input.value);
   }
 };
 
@@ -540,7 +547,7 @@ const defaultFileStateVars = () => {
   indexedFiles = [];
   filesArray = [];
   idCounterFiles = 0;
-  fileElem.value = null;
+  nullFileElem();
   showItemSortingArrows(0);
   foldedClass.innerHTML = "";
 };
