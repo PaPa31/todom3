@@ -490,8 +490,7 @@ const deleteOneFile = (e, liDOM) => {
     indexedFiles.splice(indexToDelete, 1);
 
     showOrHideDeleteAllItems();
-    if (window.location.protocol === "file:" && filesArray.length === 0)
-      nullFileElem();
+    if (protocol === "file:" && filesArray.length === 0) nullFileElem();
 
     twoClickToTrash = false;
     lastClickId = undefined;
@@ -677,7 +676,7 @@ const initializeFileState = () => {
     idCounterFiles = 0;
     indexedFiles = [];
 
-    if (window.location.protocol === "file:") {
+    if (protocol === "file:") {
       fileProtocolOpenDirectoryClick();
     } else {
       //getFileHttp(phrase);
@@ -787,7 +786,7 @@ itemsFilesToggleButton.addEventListener("click", function (e) {
     showOrHideTrash();
     showOrHideUndoDeleteButton();
   } else {
-    if (window.location.protocol === "file:") webKitDirToTrue();
+    if (protocol === "file:") webKitDirToTrue();
     initializeFileState();
   }
   showOrHideDeleteAllItems();

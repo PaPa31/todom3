@@ -299,7 +299,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 }
 
 openDirButton.addEventListener("click", function (e) {
-  if (window.location.protocol === "file:") {
+  if (protocol === "file:") {
     webKitDirToTrue();
     fileProtocolOpenDirectoryClick();
   } else {
@@ -308,7 +308,7 @@ openDirButton.addEventListener("click", function (e) {
 });
 
 openFileButton.addEventListener("click", function (e) {
-  if (window.location.protocol === "file:") {
+  if (protocol === "file:") {
     webKitDirRemove();
     fileProtocolOpenDirectoryClick();
   } else {
@@ -322,7 +322,7 @@ saveAsFileButton.addEventListener("click", function () {
       getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
     const fileContent = input.value;
 
-    if (window.location.protocol === "file:") {
+    if (protocol === "file:") {
       var myFile = new File([fileContent], fileName, {
         type: "text/plain;charset=utf-8",
       });
@@ -337,7 +337,7 @@ saveAsFileButton.addEventListener("click", function () {
 });
 
 const fileDownload = (fileName) => {
-  if (window.location.protocol === "file:") {
+  if (protocol === "file:") {
     var blob = new Blob([input.value], {
       type: "text/plain;charset=utf-8",
     });
@@ -546,7 +546,7 @@ const defaultFileStateVars = () => {
   indexedFiles = [];
   filesArray = [];
   idCounterFiles = 0;
-  if (window.location.protocol === "file:") nullFileElem();
+  if (protocol === "file:") nullFileElem();
   showItemSortingArrows(0);
   foldedClass.innerHTML = "";
 };
