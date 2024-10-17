@@ -1172,15 +1172,13 @@ async function saveFileHttp(fileName, fileContent) {
       });
 
       if (overwriteResponse.ok) {
-        const result = await overwriteResponse.json();
-        console.log("File saved successfully.");
+        console.log("File saved successfully after overwrite.");
       } else {
         console.error("Failed to overwrite the file.");
       }
     } else if (!response.ok) {
       console.error("Failed to save file.");
     } else {
-      const result = await response.json();
       console.log("File saved successfully.");
     }
   } catch (error) {
