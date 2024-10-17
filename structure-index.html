@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TODOm</title>
+    <link type="text/css" rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- Your existing HTML content here -->
+
+    <script type="text/javascript" src="js/earliest-togglers.js"></script>
+    <!-- Other existing scripts -->
+
+    <!-- Dynamic script loader for protocol -->
+    <script type="text/javascript">
+      if (window.location.protocol === "file:") {
+        // Load file protocol logic
+        var script = document.createElement("script");
+        script.src = "js/protocol-file.js";
+        document.head.appendChild(script);
+      } else if (
+        window.location.protocol === "http:" ||
+        window.location.protocol === "https:"
+      ) {
+        // Load HTTP protocol logic
+        var script = document.createElement("script");
+        script.src = "js/protocol-http.js";
+        document.head.appendChild(script);
+      }
+    </script>
+
+    <script type="text/javascript" src="js/states.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/sync-preview.js"></script>
+    <script type="text/javascript" src="js/resize-window.js"></script>
+    <script type="text/javascript" src="js/in-place-edit.js"></script>
+  </body>
+</html>
