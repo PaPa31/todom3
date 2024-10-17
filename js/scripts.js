@@ -546,7 +546,7 @@ const defaultFileStateVars = () => {
   indexedFiles = [];
   filesArray = [];
   idCounterFiles = 0;
-  nullFileElem();
+  if (window.location.protocol === "file:") nullFileElem();
   showItemSortingArrows(0);
   foldedClass.innerHTML = "";
 };
