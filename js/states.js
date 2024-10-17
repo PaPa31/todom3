@@ -1147,7 +1147,7 @@ async function saveFileHttp(fileName, fileContent) {
       }),
     });
 
-    // Check for 409 Conflict and handle it without throwing an error
+    // Check for 409 Conflict and handle it without treating it as a critical error
     if (response.status === 409) {
       console.log("File already exists.");
       const overwrite = confirm(
@@ -1155,7 +1155,7 @@ async function saveFileHttp(fileName, fileContent) {
       );
       if (!overwrite) {
         console.log("File save canceled.");
-        return;
+        return; // Stop if the user doesn't want to overwrite
       }
 
       // Retry with overwrite flag
@@ -1173,15 +1173,15 @@ async function saveFileHttp(fileName, fileContent) {
 
       if (overwriteResponse.ok) {
         const result = await overwriteResponse.json();
-        console.log(result.message);
+        console.log("File saved successfully.");
       } else {
-        throw new Error("Failed to overwrite the file.");
+        console.error("Failed to overwrite the file.");
       }
     } else if (!response.ok) {
-      throw new Error("Failed to save file.");
+      console.error("Failed to save file.");
     } else {
       const result = await response.json();
-      console.log(result.message);
+      console.log("File saved successfully.");
     }
   } catch (error) {
     console.error("Error while saving the file: ", error);
