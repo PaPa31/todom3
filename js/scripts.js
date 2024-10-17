@@ -332,13 +332,7 @@ saveAsFileButton.addEventListener("click", function () {
     }
 
     saveItem();
-
-    clearInputAndPreviewAreas();
-    defaultMarkers();
-    hideAndNewInputLabel();
-    ifReturnAndNoneX();
-    showOrHideDeleteAllItems();
-    localStorage.removeItem("todomLastInputValue");
+    updateUI();
   }
 });
 
@@ -520,20 +514,25 @@ const saveItem = () => {
     liDomMaker(idCounterItems);
     idCounterItems++;
   }
-  defaultMarkers();
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
+
+function updateUI() {
+  clearInputAndPreviewAreas();
+  defaultMarkers();
+  hideAndNewInputLabel();
+  ifReturnAndNoneX();
+  showOrHideDeleteAllItems();
+  localStorage.removeItem("todomLastInputValue");
+}
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   if (isItemState) {
     saveItem();
-    clearInputAndPreviewAreas();
-    localStorage.removeItem("todomLastInputValue");
-    hideAndNewInputLabel();
-    ifReturnAndNoneX();
-    showOrHideDeleteAllItems();
+    updateUI();
+
     showItemSortingArrows(foldedClass.childElementCount);
   } else {
     saveFile();

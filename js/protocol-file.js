@@ -202,12 +202,7 @@ function checkIt() {
     isItemState = !isItemState;
   }
 
-  clearInputAndPreviewAreas();
-  defaultMarkers();
-  hideAndNewInputLabel();
-  ifReturnAndNoneX();
-  showOrHideDeleteAllItems();
-  localStorage.removeItem("todomLastInputValue");
+  updateUI();
 
   document.body.onfocus = null;
 
