@@ -140,70 +140,9 @@ function initialize() {
   //console.log("initializing");
 }
 
-const saveItemFromFile = (fileName) => {
-  const itemIndex = itemsArray.findIndex((s) => s.name && s.name === fileName);
-  if (itemIndex !== -1) {
-    const itemId = indexedItems[itemIndex];
-    const currentSave = getCurrentSpec("save", itemIndex);
-    itemsArray[itemIndex].text[currentSave].variant.push(input.value);
-    // maybe need to add ++curentSave
-    const liDOM = document.getElementById(itemId);
-    const textArr = itemsArray[itemIndex].text;
-    const len = textArr[currentSave].length;
-    itemsSpecArray[itemIndex].save = len - 1;
-    saveHistoryTracker(liDOM, len);
-    const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-    mdToTagsWithoutShape(resizableDiv, input.value);
-    liDOM.classList.add("new-from-file");
-    scrollToTargetAdjusted(liDOM, preview.scrollTop);
-  } else {
-    const itemObj = {
-      text: [{ variant: input.value, date: getFullCurrentDate() }],
-      name: fileName,
-    };
-    itemsArray.push(itemObj);
-    const specObj = {
-      save: 0,
-    };
-    itemsSpecArray.push(specObj);
-    indexedItems.push(idCounterItems.toString());
-    liDomMaker(idCounterItems, "new-from-file");
-    idCounterItems++;
-  }
-  defaultMarkers();
-  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-};
-
 function checkIt() {
   //console.log("start checking");
-  const previewOffset = preview.scrollTop;
-  let fileName;
-  if (fileIndexToEdit != null) {
-    const resizableDiv = editedFileLiDOM.querySelector(
-      ".file-text.resizable-div"
-    );
-    mdToTagsWithoutShape(resizableDiv, filesArray[fileIndexToEdit].text);
-    addOrRemoveScrollObserverToLi(editedFileLiDOM);
-    fileName = filesArray[fileIndexToEdit].name;
-    scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
-  } else {
-    filesArray[idCounterFiles].size = fileSizeGlobal;
-    fileName = filesArray[idCounterFiles].name;
-    liDomMaker(idCounterFiles);
-    idCounterFiles++;
-  }
-
-  if (!isItemState) {
-    foldedClass = document.getElementById("list-items");
-    isItemState = !isItemState;
-    saveItemFromFile(fileName);
-    foldedClass = document.getElementById("list-files");
-    isItemState = !isItemState;
-  }
-
-  updateUI();
-
+  drawFile();
   document.body.onfocus = null;
 
   //console.log("checked");
