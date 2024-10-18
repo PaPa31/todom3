@@ -499,20 +499,18 @@ function getFirstCharsWithTrim(s) {
 const saveFile = () => {
   let fileName;
 
-  if (input.value) {
-    if (fileIndexToEdit != null) {
-      const _fi = filesArray[fileIndexToEdit];
-      fileName = _fi.name;
-      _fi.text = input.value;
-      fileDownload(fileName);
-    } else {
-      fileName =
-        getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
-      const file = { name: fileName, text: input.value };
-      filesArray.push(file);
-      indexedFiles.push(idCounterFiles.toString());
-      fileDownload(fileName);
-    }
+  if (fileIndexToEdit != null) {
+    const _fi = filesArray[fileIndexToEdit];
+    fileName = _fi.name;
+    _fi.text = input.value;
+    fileDownload(fileName);
+  } else {
+    fileName =
+      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
+    const file = { name: fileName, text: input.value };
+    filesArray.push(file);
+    indexedFiles.push(idCounterFiles.toString());
+    fileDownload(fileName);
   }
 };
 
@@ -611,13 +609,15 @@ function updateUI() {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  if (isItemState) {
-    saveItem();
-    updateUI();
+  if (input.value) {
+    if (isItemState) {
+      saveItem();
+      updateUI();
 
-    showItemSortingArrows(foldedClass.childElementCount);
-  } else {
-    saveFile();
+      showItemSortingArrows(foldedClass.childElementCount);
+    } else {
+      saveFile();
+    }
   }
 });
 
