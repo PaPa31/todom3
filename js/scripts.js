@@ -316,7 +316,7 @@ openFileButton.addEventListener("click", function (e) {
   }
 });
 
-saveAsFileButton.addEventListener("click", function () {
+saveAsFileButton.addEventListener("click", async function () {
   if (input.value) {
     const fileName =
       getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
@@ -328,7 +328,12 @@ saveAsFileButton.addEventListener("click", function () {
       });
       saveAs(myFile);
     } else {
-      handleHttpSaveFile(fileContent);
+      const newFileName = await openDirectory(rootDirectory, true);
+      if (!newFileName) {
+        console.log("Save operation canceled or no file name provided.");
+        return;
+      }
+      saveFileHttp(newFileName, fileContent);
     }
 
     saveItem();
@@ -336,7 +341,7 @@ saveAsFileButton.addEventListener("click", function () {
   }
 });
 
-const fileDownload = (fileName) => {
+const fileDownload = async (fileName) => {
   if (protocol === "file:") {
     var blob = new Blob([input.value], {
       type: "text/plain;charset=utf-8",
@@ -373,7 +378,15 @@ const fileDownload = (fileName) => {
       }, 1000);
     }
   } else {
-    handleHttpSaveFile(input.value);
+    const newFileName = await openDirectory(rootDirectory, true);
+    if (!newFileName) {
+      console.log("Save operation canceled or no file name provided.");
+      return;
+    }
+    saveFileHttp(newFileName, fileContent);
+
+    saveItem();
+    updateUI();
   }
 };
 
