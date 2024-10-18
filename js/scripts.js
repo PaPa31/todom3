@@ -349,13 +349,16 @@ const saveItemFromFile = (fileName) => {
     itemsArray[itemIndex].text[currentSave].variant.push(input.value);
     // maybe need to add ++curentSave
     const liDOM = document.getElementById(itemId);
+    liDOM.classList.add("new-from-file");
+
     const textArr = itemsArray[itemIndex].text;
     const len = textArr[currentSave].length;
     itemsSpecArray[itemIndex].save = len - 1;
     saveHistoryTracker(liDOM, len);
+
     const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
     mdToTagsWithoutShape(resizableDiv, input.value);
-    liDOM.classList.add("new-from-file");
+
     scrollToTargetAdjusted(liDOM, preview.scrollTop);
   } else {
     const itemObj = {
@@ -567,21 +570,23 @@ saveAsOldButton.addEventListener("click", function (e) {
   ifReturnAndNoneX();
 });
 
+function newSave(liDOM, itemIndex) {
+  const textArr = itemsArray[itemIndex].text;
+  textArr.push({ variant: input.value, date: getFullCurrentDate() });
+  const len = textArr.length;
+  itemsSpecArray[itemIndexToEdit].save = len - 1;
+  saveHistoryTracker(editedItemLiDOM, len);
+
+  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+  mdToTagsWithoutShape(resizableDiv, input.value);
+  addOrRemoveScrollObserverToLi(liDOM);
+  scrollToTargetAdjusted(liDOM, preview.scrollTop);
+}
+
 const saveItem = () => {
   if (itemIndexToEdit != null) {
     //save as new
-    const textArr = itemsArray[itemIndexToEdit].text;
-    textArr.push({ variant: input.value, date: getFullCurrentDate() });
-    const len = textArr.length;
-    itemsSpecArray[itemIndexToEdit].save = len - 1;
-    saveHistoryTracker(editedItemLiDOM, len);
-    const resizableDiv = editedItemLiDOM.querySelector(
-      ".md-item > .resizable-div"
-    );
-    mdToTagsWithoutShape(resizableDiv, input.value);
-    addOrRemoveScrollObserverToLi(editedItemLiDOM);
-
-    scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
+    newSave(editedItemLiDOM, itemIndexToEdit);
     joinSaveItemButton();
   } else {
     const itemObj = {
