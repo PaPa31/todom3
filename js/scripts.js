@@ -345,21 +345,10 @@ const saveItemFromFile = (fileName) => {
   const itemIndex = itemsArray.findIndex((s) => s.name && s.name === fileName);
   if (itemIndex !== -1) {
     const itemId = indexedItems[itemIndex];
-    const currentSave = getCurrentSpec("save", itemIndex);
-    itemsArray[itemIndex].text[currentSave].variant.push(input.value);
-    // maybe need to add ++curentSave
     const liDOM = document.getElementById(itemId);
     liDOM.classList.add("new-from-file");
 
-    const textArr = itemsArray[itemIndex].text;
-    const len = textArr[currentSave].length;
-    itemsSpecArray[itemIndex].save = len - 1;
-    saveHistoryTracker(liDOM, len);
-
-    const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
-    mdToTagsWithoutShape(resizableDiv, input.value);
-
-    scrollToTargetAdjusted(liDOM, preview.scrollTop);
+    newSave(liDOM, itemIndex);
   } else {
     const itemObj = {
       text: [{ variant: input.value, date: getFullCurrentDate() }],
