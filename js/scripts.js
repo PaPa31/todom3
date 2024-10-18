@@ -574,8 +574,8 @@ function newSave(liDOM, itemIndex) {
   const textArr = itemsArray[itemIndex].text;
   textArr.push({ variant: input.value, date: getFullCurrentDate() });
   const len = textArr.length;
-  itemsSpecArray[itemIndexToEdit].save = len - 1;
-  saveHistoryTracker(editedItemLiDOM, len);
+  itemsSpecArray[itemIndex].save = len - 1;
+  saveHistoryTracker(liDOM, len);
 
   const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
   mdToTagsWithoutShape(resizableDiv, input.value);
