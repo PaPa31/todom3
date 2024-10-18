@@ -383,7 +383,7 @@ const fileDownload = async (fileName) => {
       console.log("Save operation canceled or no file name provided.");
       return;
     }
-    saveFileHttp(newFileName, fileContent);
+    saveFileHttp(newFileName, input.value);
 
     saveItem();
     updateUI();
