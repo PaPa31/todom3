@@ -516,13 +516,7 @@ const observerToggle = (liDOM) => {
   if (liDOM.classList.contains("folded")) {
     unobserveLiElements(liDOM);
   } else {
-    const liHeight = liDOM.clientHeight;
-    const belowHeightLimit = liHeight < liHeightLimit;
-    if (belowHeightLimit) {
-      unobserveLiElements(liDOM);
-    } else {
-      observeLiElements(liDOM);
-    }
+    addOrRemoveScrollObserverToLi(liDOM);
   }
 };
 
