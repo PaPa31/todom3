@@ -134,20 +134,6 @@ const handleFilesArray = () => {
   }
 };
 
-function initialize() {
-  document.body.onfocus = checkIt;
-
-  //console.log("initializing");
-}
-
-function checkIt() {
-  //console.log("start checking");
-  drawFile();
-  document.body.onfocus = null;
-
-  //console.log("checked");
-}
-
 fileElem.addEventListener("click", function (e) {
   e.stopPropagation();
 });

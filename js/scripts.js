@@ -429,8 +429,10 @@ function saveFileFile(fileName) {
     }
     tempLink.addEventListener("click", (e) => {
       e.stopPropagation();
-      //initialize();
-      drawFile();
+      document.body.onfocus = () => {
+        drawFile();
+        document.body.onfocus = null; // Remove the event listener after it's executed
+      };
     });
 
     document.body.appendChild(tempLink);
