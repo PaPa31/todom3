@@ -405,42 +405,48 @@ function drawFile() {
   updateUI();
 }
 
-const fileDownload = async (fileName) => {
-  if (protocol === "file:") {
-    var blob = new Blob([input.value], {
-      type: "text/plain;charset=utf-8",
+function saveFileFile(fileName) {
+  var blob = new Blob([input.value], {
+    type: "text/plain;charset=utf-8",
+  });
+
+  fileSizeGlobal = blob.size;
+
+  if (typeof window.navigator.msSaveBlob !== "undefined") {
+    window.navigator.msSaveBlob(blob, fileName);
+  } else {
+    var blobURL =
+      window.URL && window.URL.createObjectURL
+        ? window.URL.createObjectURL(blob)
+        : window.webkitURL.createObjectURL(blob);
+    var tempLink = document.createElement("a");
+    tempLink.style.display = "none";
+    tempLink.href = blobURL;
+    tempLink.setAttribute("download", fileName);
+
+    if (typeof tempLink.download === "undefined") {
+      tempLink.setAttribute("target", "_blank");
+    }
+    tempLink.addEventListener("click", (e) => {
+      e.stopPropagation();
+      //initialize();
+      drawFile();
     });
 
-    fileSizeGlobal = blob.size;
+    document.body.appendChild(tempLink);
+    tempLink.click();
 
-    if (typeof window.navigator.msSaveBlob !== "undefined") {
-      window.navigator.msSaveBlob(blob, fileName);
-    } else {
-      var blobURL =
-        window.URL && window.URL.createObjectURL
-          ? window.URL.createObjectURL(blob)
-          : window.webkitURL.createObjectURL(blob);
-      var tempLink = document.createElement("a");
-      tempLink.style.display = "none";
-      tempLink.href = blobURL;
-      tempLink.setAttribute("download", fileName);
+    setTimeout(function () {
+      document.body.removeChild(tempLink);
+      window.URL.revokeObjectURL(blobURL);
+    }, 1000);
+  }
+}
 
-      if (typeof tempLink.download === "undefined") {
-        tempLink.setAttribute("target", "_blank");
-      }
-      tempLink.addEventListener("click", (e) => {
-        e.stopPropagation();
-        initialize();
-      });
-
-      document.body.appendChild(tempLink);
-      tempLink.click();
-
-      setTimeout(function () {
-        document.body.removeChild(tempLink);
-        window.URL.revokeObjectURL(blobURL);
-      }, 1000);
-    }
+const fileDownload = async (fileName) => {
+  // here
+  if (protocol === "file:") {
+    saveFileFile(fileName);
   } else {
     const newFileName = await openDirectory(rootDirectory, true);
     if (!newFileName) {
