@@ -337,7 +337,7 @@ saveAsFileButton.addEventListener("click", async function () {
     }
 
     saveItem();
-    updateUI();
+    updateUI6();
   }
 });
 
@@ -394,7 +394,7 @@ function drawFile() {
     isItemState = !isItemState;
   }
 
-  updateUI();
+  updateUI6();
 }
 
 function saveFileFile(fileName) {
@@ -599,7 +599,7 @@ const saveItem = () => {
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
-function updateUI() {
+function updateUI6() {
   clearInputAndPreviewAreas();
   defaultMarkers();
   hideAndNewInputLabel();
@@ -613,7 +613,7 @@ form.addEventListener("submit", function (e) {
   if (input.value) {
     if (isItemState) {
       saveItem();
-      updateUI();
+      updateUI6();
 
       showItemSortingArrows(foldedClass.childElementCount);
     } else {
