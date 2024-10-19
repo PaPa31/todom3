@@ -108,7 +108,7 @@ const joinSaveItemButton = () => {
   saveAsNewButton.innerText = "Save item";
 };
 
-const editItem = (e, element, parentLi) => {
+const editItem = (e, editButtonElem, parentLi) => {
   const itemIndexToEdit2 = indexedItems.indexOf(parentLi.id) * 1;
 
   let currentSave = getCurrentSpec("save", itemIndexToEdit2);
@@ -117,7 +117,7 @@ const editItem = (e, element, parentLi) => {
   const editing = textArr[currentSave].variant;
   if (e.ctrlKey) {
     intervalFocus(
-      element,
+      editButtonElem,
       "background-color: var(--todom-main-action-icon-foreground);",
       300
     );
@@ -131,7 +131,7 @@ const editItem = (e, element, parentLi) => {
     itemIndexToEdit = itemIndexToEdit2;
     editedItemLiDOM = parentLi;
     intervalFocus(
-      element,
+      editButtonElem,
       "background-color: var(--todom-textEdit-background);",
       300
     );

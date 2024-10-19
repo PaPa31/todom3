@@ -1,15 +1,15 @@
-const selectEditor = (e, element) => {
-  const parentLi = findParentTagOrClassRecursive(element);
+const selectEditor = (e, editButtonElem) => {
+  const parentLi = findParentTagOrClassRecursive(editButtonElem);
   if (parentLi.classList.contains("folded")) {
-    editItem(e, element, parentLi);
+    editItem(e, editButtonElem, parentLi);
   } else {
-    editInPlaceItem(element, parentLi);
+    editInPlaceItem(editButtonElem, parentLi);
   }
 };
 
 let editor = [];
 
-const editInPlaceItem = (element, parentLi) => {
+const editInPlaceItem = (editButtonElem, parentLi) => {
   const editIndex = indexedItems.indexOf(parentLi.id) * 1;
 
   const currentSave = getCurrentSpec("save", editIndex);
@@ -17,7 +17,7 @@ const editInPlaceItem = (element, parentLi) => {
   const text = textArr[currentSave].variant;
 
   intervalFocus(
-    element,
+    editButtonElem,
     "background-color: var(--todom-textEdit-background);",
     300
   );
