@@ -533,6 +533,14 @@ const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
   saveEl.querySelector(".next-save").setAttribute("disable", true);
 };
 
+function updateUI5() {
+  clearInputAndPreviewAreas();
+  defaultMarkers();
+  hideAndNewInputLabel();
+  ifReturnAndNoneX();
+  localStorage.removeItem("todomLastInputValue");
+}
+
 saveAsOldButton.addEventListener("click", function (e) {
   const currentSave = itemsSpecArray[itemIndexToEdit].save;
   const textArr = itemsArray[itemIndexToEdit].text;
@@ -547,16 +555,13 @@ saveAsOldButton.addEventListener("click", function (e) {
   mdToTagsWithoutShape(resizableDiv, input.value);
   addOrRemoveScrollObserverToLi(editedItemLiDOM);
 
-  scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
-  joinSaveItemButton();
-  defaultMarkers();
+  updateUI5();
+
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 
-  clearInputAndPreviewAreas();
-  localStorage.removeItem("todomLastInputValue");
-  hideAndNewInputLabel();
-  ifReturnAndNoneX();
+  scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
+  joinSaveItemButton();
 });
 
 function newSave(liDOM, itemIndex) {
