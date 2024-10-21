@@ -575,13 +575,7 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
   [...foldedClass.children].forEach((i) => {
     if (view) {
       i.classList.remove("folded");
-      const liHeight = i.clientHeight;
-      const belowHeightLimit = liHeight < liHeightLimit;
-      if (belowHeightLimit) {
-        unobserveLiElements(i);
-      } else {
-        observeLiElements(i);
-      }
+      addOrRemoveScrollObserverToLi(i);
     } else {
       i.classList.add("folded");
       unobserveLiElements(i);
