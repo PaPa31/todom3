@@ -370,7 +370,7 @@ const deleteCurrentSave = (el) => {
   if (editor[itemIndex]) {
     changeEditor(liDOM, itemIndex, textArr[currentSave].variant);
   }
-  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+  const resizableDiv = liDOM.querySelector(".resizable-div");
   mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
   addOrRemoveScrollObserverToLi(liDOM);
 
@@ -400,7 +400,7 @@ const previousSave = (el) => {
   if (editor[itemIndex]) {
     changeEditor(liDOM, itemIndex, textArr[currentSave].variant);
   }
-  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+  const resizableDiv = liDOM.querySelector(".resizable-div");
   mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
   addOrRemoveScrollObserverToLi(liDOM);
 
@@ -425,7 +425,7 @@ const nextSave = (el) => {
   if (editor[itemIndex]) {
     changeEditor(liDOM, itemIndex, textArr[currentSave].variant);
   }
-  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+  const resizableDiv = liDOM.querySelector(".resizable-div");
   mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
   addOrRemoveScrollObserverToLi(liDOM);
 

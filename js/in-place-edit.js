@@ -46,7 +46,7 @@ function createEditor(parentLi, editIndex, text) {
   const _textArea = createEl("textarea", textAttr, _editor);
   _textArea.value = text;
 
-  const resizableDiv = dual.querySelector(".md-item > .resizable-div");
+  const resizableDiv = dual.querySelector(".resizable-div");
 
   const inputListener = () =>
     mdUpdate(resizableDiv, _textArea.value, editIndex);

@@ -372,9 +372,7 @@ function drawFile() {
   const previewOffset = preview.scrollTop;
   let fileName;
   if (fileIndexToEdit != null) {
-    const resizableDiv = editedFileLiDOM.querySelector(
-      ".file-text.resizable-div"
-    );
+    const resizableDiv = editedFileLiDOM.querySelector(".resizable-div");
     mdToTagsWithoutShape(resizableDiv, filesArray[fileIndexToEdit].text);
     addOrRemoveScrollObserverToLi(editedFileLiDOM);
     fileName = filesArray[fileIndexToEdit].name;
@@ -549,9 +547,7 @@ saveAsOldButton.addEventListener("click", function (e) {
   //const len = textArr.length;
   //itemsSpecArray[itemIndexToEdit].save = len - 1;
   //saveHistoryTracker(editedItemLiDOM, len);
-  const resizableDiv = editedItemLiDOM.querySelector(
-    ".md-item > .resizable-div"
-  );
+  const resizableDiv = editedItemLiDOM.querySelector(".resizable-div");
   mdToTagsWithoutShape(resizableDiv, input.value);
   addOrRemoveScrollObserverToLi(editedItemLiDOM);
 
@@ -571,7 +567,7 @@ function newSave(liDOM, itemIndex) {
   itemsSpecArray[itemIndex].save = len - 1;
   saveHistoryTracker(liDOM, len);
 
-  const resizableDiv = liDOM.querySelector(".md-item > .resizable-div");
+  const resizableDiv = liDOM.querySelector(".resizable-div");
   mdToTagsWithoutShape(resizableDiv, input.value);
   addOrRemoveScrollObserverToLi(liDOM);
 }
