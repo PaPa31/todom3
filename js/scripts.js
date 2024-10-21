@@ -363,7 +363,6 @@ const saveItemFromFile = (fileName) => {
     liDomMaker(idCounterItems, "new-from-file");
     idCounterItems++;
   }
-  defaultMarkers();
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
