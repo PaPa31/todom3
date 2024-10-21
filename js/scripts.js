@@ -569,13 +569,13 @@ function newSave(liDOM, itemIndex) {
 
   const resizableDiv = liDOM.querySelector(".resizable-div");
   mdToTagsWithoutShape(resizableDiv, input.value);
-  addOrRemoveScrollObserverToLi(liDOM);
 }
 
 const saveItem = () => {
   if (itemIndexToEdit != null) {
     //save as new
     newSave(editedItemLiDOM, itemIndexToEdit);
+    addOrRemoveScrollObserverToLi(liDOM);
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
     joinSaveItemButton();
   } else {
