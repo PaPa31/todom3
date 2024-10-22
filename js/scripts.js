@@ -318,8 +318,21 @@ openFileButton.addEventListener("click", function (e) {
 
 saveAsFileButton.addEventListener("click", async function () {
   if (input.value) {
+    let savedDate; // Declare savedDate outside of the block
+
+    if (itemIndexToEdit != null) {
+      const currentSave = itemsSpecArray[itemIndexToEdit].save;
+      const textArr = itemsArray[itemIndexToEdit].text;
+      const date = textArr[currentSave].date;
+      savedDate =
+        textArr && date !== "0000-00-00-000000" ? date : getCurrentDate();
+    } else {
+      savedDate = getCurrentDate(); // Fallback if itemIndexToEdit is null
+    }
+
+    // Generate the file name using the valid date or fallback to current date
     const fileName =
-      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
+      savedDate + "-" + getFirstCharsWithTrim(input.value) + ".md";
     const fileContent = input.value;
 
     if (protocol === "file:") {
