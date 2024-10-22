@@ -569,7 +569,7 @@ const saveItem = () => {
   if (itemIndexToEdit != null) {
     //save as new
     newSave(editedItemLiDOM, itemIndexToEdit);
-    addOrRemoveScrollObserverToLi(liDOM);
+    addOrRemoveScrollObserverToLi(editedItemLiDOM);
     scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
     joinSaveItemButton();
   } else {
