@@ -354,14 +354,9 @@ const saveItemFromFile = (fileName) => {
       text: [{ variant: input.value, date: getFullCurrentDate() }],
       name: fileName,
     };
-    itemsArray.push(itemObj);
-    const specObj = {
-      save: 0,
-    };
-    itemsSpecArray.push(specObj);
-    indexedItems.push(idCounterItems.toString());
-    liDomMaker(idCounterItems, "new-from-file");
-    idCounterItems++;
+    const specObj = { save: 0 };
+
+    pushItemArrays(itemObj, specObj, "new-from-file");
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
@@ -581,14 +576,8 @@ const saveItem = () => {
     const itemObj = {
       text: [{ variant: input.value, date: getFullCurrentDate() }],
     };
-    itemsArray.push(itemObj);
-    const specObj = {
-      save: 0,
-    };
-    itemsSpecArray.push(specObj);
-    indexedItems.push(idCounterItems.toString());
-    liDomMaker(idCounterItems);
-    idCounterItems++;
+    const specObj = { save: 0 };
+    pushItemArrays(itemObj, specObj);
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
@@ -750,20 +739,23 @@ returnInputButton.addEventListener("click", function () {
   input.focus();
 });
 
+function pushItemArrays(itemObj, specObj, extra_class = "") {
+  itemsArray.push(itemObj);
+  itemsSpecArray.push(specObj);
+  indexedItems.push(idCounterItems.toString());
+  liDomMaker(idCounterItems, extra_class);
+  idCounterItems++;
+}
+
 const restoreHandler = (arr, btns, counterEl, todomArr) => {
   let len = arr.length;
   if (len !== 0) {
     const returningObj = arr.pop();
-    itemsArray.push(returningObj);
-
-    itemsSpecArray.push({ save: 0 });
+    const specObj = { save: 0 };
+    pushItemArrays(returningObj, specObj);
 
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
     localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-
-    indexedItems.push(idCounterItems.toString());
-    liDomMaker(idCounterItems);
-    idCounterItems++;
 
     len = len - 1;
     counterEl.innerText = len;
