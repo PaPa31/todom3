@@ -537,18 +537,17 @@ saveAsOldButton.addEventListener("click", function (e) {
   const currentSave = itemsSpecArray[itemIndexToEdit].save;
   const textArr = itemsArray[itemIndexToEdit].text;
   textArr[currentSave].variant = input.value;
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   //textArr.push(input.value);
   //const len = textArr.length;
   //itemsSpecArray[itemIndexToEdit].save = len - 1;
   //saveHistoryTracker(editedItemLiDOM, len);
+  //localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   const resizableDiv = editedItemLiDOM.querySelector(".resizable-div");
   mdToTagsWithoutShape(resizableDiv, input.value);
   addOrRemoveScrollObserverToLi(editedItemLiDOM);
 
   updateUI5();
-
-  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 
   scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
   joinSaveItemButton();
@@ -559,6 +558,7 @@ function newSave(liDOM, itemIndex) {
   textArr.push({ variant: input.value, date: getFullCurrentDate() });
   const len = textArr.length;
   itemsSpecArray[itemIndex].save = len - 1;
+  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   saveHistoryTracker(liDOM, len);
 
   const resizableDiv = liDOM.querySelector(".resizable-div");
@@ -580,7 +580,6 @@ const saveItem = () => {
     pushItemArrays(itemObj, specObj);
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
 function updateUI6() {
