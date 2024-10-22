@@ -538,11 +538,6 @@ saveAsOldButton.addEventListener("click", function (e) {
   const textArr = itemsArray[itemIndexToEdit].text;
   textArr[currentSave].variant = input.value;
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  //textArr.push(input.value);
-  //const len = textArr.length;
-  //itemsSpecArray[itemIndexToEdit].save = len - 1;
-  //saveHistoryTracker(editedItemLiDOM, len);
-  //localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
   const resizableDiv = editedItemLiDOM.querySelector(".resizable-div");
   mdToTagsWithoutShape(resizableDiv, input.value);
   addOrRemoveScrollObserverToLi(editedItemLiDOM);
