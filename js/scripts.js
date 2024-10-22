@@ -318,7 +318,7 @@ openFileButton.addEventListener("click", function (e) {
 
 saveAsFileButton.addEventListener("click", async function () {
   if (input.value) {
-    let savedDate; // Declare savedDate outside of the block
+    let savedDate;
 
     if (itemIndexToEdit != null) {
       const currentSave = itemsSpecArray[itemIndexToEdit].save;
@@ -330,9 +330,14 @@ saveAsFileButton.addEventListener("click", async function () {
       savedDate = getCurrentDate(); // Fallback if itemIndexToEdit is null
     }
 
-    // Generate the file name using the valid date or fallback to current date
+    // Extract the first 6 digits for the folder name and last 8 digits for the file name
+    const folderName = savedDate.substring(0, 7); // First 6 digits
+    const fileBaseName = savedDate.substring(8); // Last 8 digits
+
+    // Generate the file name with only the last 8 digits of the date
     const fileName =
-      savedDate + "-" + getFirstCharsWithTrim(input.value) + ".md";
+      fileBaseName + "-" + getFirstCharsWithTrim(input.value) + ".md";
+
     const fileContent = input.value;
 
     if (protocol === "file:") {
@@ -341,7 +346,9 @@ saveAsFileButton.addEventListener("click", async function () {
       });
       saveAs(myFile);
     } else {
-      const newFileName = await openDirectory(rootDirectory, true);
+      // Now save to the folderName directory
+      const folderPath = rootDirectory + "/" + folderName;
+      const newFileName = await openDirectory(folderPath, true);
       if (!newFileName) {
         console.log("Save operation canceled or no file name provided.");
         return;
