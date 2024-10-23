@@ -576,6 +576,7 @@ function newSave(liDOM, itemIndex) {
 
   const resizableDiv = liDOM.querySelector(".resizable-div");
   saveHistoryTracker(liDOM, resizableDiv, lastSave);
+  changeDateInAfter(resizableDiv, textArr[lastSave].date);
   mdToTagsWithoutShape(resizableDiv, input.value);
 }
 
