@@ -198,6 +198,12 @@ button.btn-toggler:focus {
   /* accessibility: outline is invisible when TAB toggle */
 }
 
+button#show-date {
+  color: var(--todom-inputLabelEdit-foreground);
+  background-color: var(--todom-before-background);
+  font-weight: 100;
+}
+
 button#dark-button {
   display: inline-flex;
   justify-content: center;
