@@ -200,8 +200,12 @@ button.btn-toggler:focus {
 
 button#show-date {
   color: var(--todom-inputLabelEdit-foreground);
-  background-color: var(--todom-before-background);
   font-weight: 100;
+  padding: 0 !important;
+}
+
+#show-date > span.red {
+  background-color: var(--todom-before-background);
 }
 
 button#dark-button {

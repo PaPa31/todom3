@@ -92,16 +92,19 @@ function updateDateDisplay(dateMode) {
 function updateButtonText(dateMode) {
   switch (dateMode) {
     case MODES.HIDE_BOTH:
-      dateButton.innerHTML = "Show<br>Save";
+      dateButton.innerHTML = "<span>Save</span><br><span>Date</span>";
       break;
     case MODES.HIDE_DATE:
-      dateButton.innerHTML = "Show<br>Date";
+      dateButton.innerHTML =
+        "<span class='red'>Save</span><br><span>Date</span>";
       break;
     case MODES.HIDE_SAVE:
-      dateButton.innerHTML = "Show<br>Both";
+      dateButton.innerHTML =
+        "<span>Save</span><br><span class='red'>Date</span>";
       break;
     case MODES.SHOW_BOTH:
-      dateButton.innerHTML = "Hide<br>Both";
+      dateButton.innerHTML =
+        "<span class='red'>Save</span><br><span class='red'>Date</span>";
       break;
   }
 }
