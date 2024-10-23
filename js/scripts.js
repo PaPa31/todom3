@@ -533,12 +533,11 @@ const markdown = (s) => {
   return marked.parse(s);
 };
 
-const saveHistoryTracker = (liDOM, lengthSaveHistory) => {
+const saveHistoryTracker = (liDOM, resizableDiv, lengthSaveHistory) => {
   const saveEl = liDOM.querySelector(".save-history");
   if (lengthSaveHistory > 1) {
     saveEl.querySelector(".counter-save").innerText = lengthSaveHistory;
-    const elForBefore = liDOM.querySelector(".resizable-div");
-    changeCurrentInBefore(elForBefore, lengthSaveHistory - 1);
+    changeCurrentInBefore(resizableDiv, lengthSaveHistory - 1);
     saveEl.removeAttribute("disable");
     saveEl.querySelector(".previous-save").removeAttribute("disable");
   }
@@ -574,9 +573,9 @@ function newSave(liDOM, itemIndex) {
   const len = textArr.length;
   itemsSpecArray[itemIndex].save = len - 1;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-  saveHistoryTracker(liDOM, len);
 
   const resizableDiv = liDOM.querySelector(".resizable-div");
+  saveHistoryTracker(liDOM, resizableDiv, len);
   mdToTagsWithoutShape(resizableDiv, input.value);
 }
 
