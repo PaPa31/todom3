@@ -3,6 +3,13 @@ const dateButton = document.getElementById("show-date");
 
 var listItems = document.getElementById("list-items");
 
+const MODES = {
+  HIDE_BOTH: 0,
+  HIDE_DATE: 1,
+  HIDE_SAVE: 2,
+  SHOW_BOTH: 3,
+};
+
 const icons = {
   moon: `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="dark-toggle-icon">
@@ -37,6 +44,7 @@ function toggleDarkMode() {
   return !darkMode;
 }
 
+// Initialize state
 dateButton.addEventListener("click", function (e) {
   const dateMode = toggleDateMode();
   updateButtonText(dateMode);
@@ -50,22 +58,50 @@ updateButtonText(dateMode);
 updateDateDisplay(dateMode);
 
 function getDateMode() {
-  return localStorage.getItem("todomDateMode") === "set";
+  return parseInt(localStorage.getItem("todomDateMode") || MODES.HIDE_BOTH);
 }
 
 function toggleDateMode() {
   const dateMode = getDateMode();
-  localStorage.setItem("todomDateMode", dateMode ? "" : "set");
-  return !dateMode;
+  const nextMode = (dateMode + 1) % 4; // Rotate through the 4 states
+  localStorage.setItem("todomDateMode", nextMode);
+  return nextMode;
 }
 
 function updateDateDisplay(dateMode) {
-  listItems.style.setProperty(
-    "--todom-after-display",
-    dateMode ? "initial" : "none"
-  );
+  switch (dateMode) {
+    case MODES.HIDE_BOTH:
+      listItems.style.setProperty("--todom-before-display", "none");
+      listItems.style.setProperty("--todom-after-display", "none");
+      break;
+    case MODES.HIDE_DATE:
+      listItems.style.setProperty("--todom-before-display", "initial");
+      listItems.style.setProperty("--todom-after-display", "none");
+      break;
+    case MODES.HIDE_SAVE:
+      listItems.style.setProperty("--todom-before-display", "none");
+      listItems.style.setProperty("--todom-after-display", "initial");
+      break;
+    case MODES.SHOW_BOTH:
+      listItems.style.setProperty("--todom-before-display", "initial");
+      listItems.style.setProperty("--todom-after-display", "initial");
+      break;
+  }
 }
 
 function updateButtonText(dateMode) {
-  dateButton.innerHTML = dateMode ? "Hide<br>Date" : "Show<br>Date";
+  switch (dateMode) {
+    case MODES.HIDE_BOTH:
+      dateButton.innerHTML = "Show<br>Save";
+      break;
+    case MODES.HIDE_DATE:
+      dateButton.innerHTML = "Show<br>Date";
+      break;
+    case MODES.HIDE_SAVE:
+      dateButton.innerHTML = "Show<br>Both";
+      break;
+    case MODES.SHOW_BOTH:
+      dateButton.innerHTML = "Hide<br>Both";
+      break;
+  }
 }
