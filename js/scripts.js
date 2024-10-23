@@ -533,11 +533,11 @@ const markdown = (s) => {
   return marked.parse(s);
 };
 
-const saveHistoryTracker = (liDOM, resizableDiv, lengthSaveHistory) => {
+const saveHistoryTracker = (liDOM, resizableDiv, lastSave) => {
   const saveEl = liDOM.querySelector(".save-history");
-  if (lengthSaveHistory > 1) {
-    saveEl.querySelector(".counter-save").innerText = lengthSaveHistory;
-    changeCurrentInBefore(resizableDiv, lengthSaveHistory - 1);
+  if (lastSave > 1) {
+    saveEl.querySelector(".counter-save").innerText = lastSave + 1;
+    changeCurrentInBefore(resizableDiv, lastSave);
     saveEl.removeAttribute("disable");
     saveEl.querySelector(".previous-save").removeAttribute("disable");
   }
@@ -570,12 +570,12 @@ saveAsOldButton.addEventListener("click", function (e) {
 function newSave(liDOM, itemIndex) {
   const textArr = itemsArray[itemIndex].text;
   textArr.push({ variant: input.value, date: getFullCurrentDate() });
-  const len = textArr.length;
-  itemsSpecArray[itemIndex].save = len - 1;
+  const lastSave = textArr.length - 1;
+  itemsSpecArray[itemIndex].save = lastSave;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 
   const resizableDiv = liDOM.querySelector(".resizable-div");
-  saveHistoryTracker(liDOM, resizableDiv, len);
+  saveHistoryTracker(liDOM, resizableDiv, lastSave);
   mdToTagsWithoutShape(resizableDiv, input.value);
 }
 
