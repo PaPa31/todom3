@@ -675,7 +675,8 @@ const initializeFileState = () => {
   showItemSortingArrows(foldedClass.childElementCount);
 };
 
-const horizontalIteration = (oneOfArr) => {
+const datePlaceholder = (oneOfArr) => {
+  // for backward compatibility
   // maybe it should be removed this func,
   // when all your items will have dates
   oneOfArr.text = oneOfArr.text.map((variant) => {
@@ -699,7 +700,7 @@ const arrCheckForNull = (arr, arr2) => {
   const len1 = len;
   for (i = 0; i < len; i++) {
     if (i in arr && arr[i] != undefined) {
-      horizontalIteration(arr[i]);
+      datePlaceholder(arr[i]);
       drawLi(i);
     } else {
       arr.splice(i, 1);
