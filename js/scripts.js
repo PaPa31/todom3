@@ -377,6 +377,7 @@ const saveItemFromFile = (fileName) => {
     const specObj = { save: 0 };
 
     pushItemArrays(itemObj, specObj);
+    drawLi(idCounterItems);
     const itemId = indexedItems[idCounterItems - 1];
     const liDOM = document.getElementById(itemId);
     liDOM.classList.add("new-from-file");
@@ -595,6 +596,7 @@ const saveItem = () => {
     };
     const specObj = { save: 0 };
     pushItemArrays(itemObj, specObj);
+    drawLi(idCounterItems);
     showItemSortingArrows(foldedClass.childElementCount);
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
@@ -757,9 +759,6 @@ returnInputButton.addEventListener("click", function () {
 function pushItemArrays(itemObj, specObj) {
   itemsArray.push(itemObj);
   itemsSpecArray.push(specObj);
-  indexedItems.push(idCounterItems.toString());
-  liDomMaker(idCounterItems);
-  idCounterItems++;
 }
 
 const restoreHandler = (arr, btns, counterEl, todomArr) => {
@@ -768,9 +767,9 @@ const restoreHandler = (arr, btns, counterEl, todomArr) => {
     const returningObj = arr.pop();
     const specObj = { save: 0 };
     pushItemArrays(returningObj, specObj);
+    drawLi(idCounterItems);
 
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 
     len = len - 1;
     counterEl.innerText = len;
