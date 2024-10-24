@@ -693,7 +693,7 @@ const drawLi = (i) => {
   idCounterItems++;
 };
 
-const arrCheckForNull = (arr) => {
+const arrCheckForNull = (arr, arr2) => {
   let len = arr.length,
     i;
   const len1 = len;
@@ -703,7 +703,7 @@ const arrCheckForNull = (arr) => {
       drawLi(i);
     } else {
       arr.splice(i, 1);
-      itemsSpecArray.splice(i, 1); // sync
+      arr2.splice(i, 1); // sync
       i--;
       len--;
     }
@@ -751,7 +751,7 @@ const initializeItemState = () => {
     indexedItems = [];
 
     if (itemsArray.length !== 0) {
-      arrCheckForNull(itemsArray);
+      arrCheckForNull(itemsArray, itemsSpecArray);
     } else {
       // sync by reset
       itemsSpecArray.length = 0;
