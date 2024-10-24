@@ -316,7 +316,7 @@ openFileButton.addEventListener("click", function (e) {
   }
 });
 
-function fromPath() {
+function extractFolderAndCreateFileName() {
   let savedDate;
 
   if (itemIndexToEdit != null) {
@@ -329,8 +329,8 @@ function fromPath() {
     savedDate = getCurrentDate(); // Fallback if itemIndexToEdit is null
   }
 
-  const folderName = savedDate.substring(0, 7); // First 6 digits
-  const fileBaseName = savedDate.substring(8); // Last 8 digits
+  const folderName = savedDate.substring(0, 7);
+  const fileBaseName = savedDate.substring(8);
 
   const fileName =
     fileBaseName + "-" + getFirstCharsWithTrim(input.value) + ".md";
@@ -341,7 +341,7 @@ function fromPath() {
 saveAsFileButton.addEventListener("click", async function () {
   if (input.value) {
     const fileContent = input.value;
-    const path = fromPath(); // Call fromPath() once and use the result
+    const path = extractFolderAndCreateFileName();
 
     if (protocol === "file:") {
       var myFile = new File([fileContent], path.fileName, {
@@ -349,7 +349,7 @@ saveAsFileButton.addEventListener("click", async function () {
       });
       saveAs(myFile);
     } else {
-      // Now save to the folderName directory
+      // HTTP protocol
       const folderPath = rootDirectory + "/" + path.folderName;
       const newFileName = await openDirectory(folderPath, true);
       if (!newFileName) {
