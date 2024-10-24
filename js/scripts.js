@@ -360,7 +360,6 @@ saveAsFileButton.addEventListener("click", async function () {
     }
 
     saveItem();
-    updateUI6();
   }
 });
 
@@ -598,6 +597,7 @@ const saveItem = () => {
     pushItemArrays(itemObj, specObj);
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  updateUI6();
 };
 
 function updateUI6() {
@@ -614,8 +614,6 @@ form.addEventListener("submit", function (e) {
   if (input.value) {
     if (isItemState) {
       saveItem();
-      updateUI6();
-
       showItemSortingArrows(foldedClass.childElementCount);
     } else {
       saveFile();
