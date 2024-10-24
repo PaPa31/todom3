@@ -382,7 +382,6 @@ const saveItemFromFile = (fileName) => {
     liDOM.classList.add("new-from-file");
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 };
 
 function drawFile() {
