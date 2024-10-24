@@ -316,38 +316,41 @@ openFileButton.addEventListener("click", function (e) {
   }
 });
 
+function fromPath() {
+  let savedDate;
+
+  if (itemIndexToEdit != null) {
+    const currentSave = itemsSpecArray[itemIndexToEdit].save;
+    const textArr = itemsArray[itemIndexToEdit].text;
+    const date = textArr[currentSave].date;
+    savedDate =
+      textArr && date !== "0000-00-00-000000" ? date : getCurrentDate();
+  } else {
+    savedDate = getCurrentDate(); // Fallback if itemIndexToEdit is null
+  }
+
+  const folderName = savedDate.substring(0, 7); // First 6 digits
+  const fileBaseName = savedDate.substring(8); // Last 8 digits
+
+  const fileName =
+    fileBaseName + "-" + getFirstCharsWithTrim(input.value) + ".md";
+
+  return { folderName, fileName };
+}
+
 saveAsFileButton.addEventListener("click", async function () {
   if (input.value) {
-    let savedDate;
-
-    if (itemIndexToEdit != null) {
-      const currentSave = itemsSpecArray[itemIndexToEdit].save;
-      const textArr = itemsArray[itemIndexToEdit].text;
-      const date = textArr[currentSave].date;
-      savedDate =
-        textArr && date !== "0000-00-00-000000" ? date : getCurrentDate();
-    } else {
-      savedDate = getCurrentDate(); // Fallback if itemIndexToEdit is null
-    }
-
-    // Extract the first 6 digits for the folder name and last 8 digits for the file name
-    const folderName = savedDate.substring(0, 7); // First 6 digits
-    const fileBaseName = savedDate.substring(8); // Last 8 digits
-
-    // Generate the file name with only the last 8 digits of the date
-    const fileName =
-      fileBaseName + "-" + getFirstCharsWithTrim(input.value) + ".md";
-
     const fileContent = input.value;
+    const path = fromPath(); // Call fromPath() once and use the result
 
     if (protocol === "file:") {
-      var myFile = new File([fileContent], fileName, {
+      var myFile = new File([fileContent], path.fileName, {
         type: "text/plain;charset=utf-8",
       });
       saveAs(myFile);
     } else {
       // Now save to the folderName directory
-      const folderPath = rootDirectory + "/" + folderName;
+      const folderPath = rootDirectory + "/" + path.folderName;
       const newFileName = await openDirectory(folderPath, true);
       if (!newFileName) {
         console.log("Save operation canceled or no file name provided.");
