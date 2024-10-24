@@ -593,6 +593,7 @@ const saveItem = () => {
     };
     const specObj = { save: 0 };
     pushItemArrays(itemObj, specObj);
+    showItemSortingArrows(foldedClass.childElementCount);
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   updateUI6();
