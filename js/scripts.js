@@ -376,7 +376,10 @@ const saveItemFromFile = (fileName) => {
     };
     const specObj = { save: 0 };
 
-    pushItemArrays(itemObj, specObj, "new-from-file");
+    pushItemArrays(itemObj, specObj);
+    const itemId = indexedItems[idCounterItems - 1];
+    const liDOM = document.getElementById(itemId);
+    liDOM.classList.add("new-from-file");
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
@@ -752,11 +755,11 @@ returnInputButton.addEventListener("click", function () {
   input.focus();
 });
 
-function pushItemArrays(itemObj, specObj, extra_class = "") {
+function pushItemArrays(itemObj, specObj) {
   itemsArray.push(itemObj);
   itemsSpecArray.push(specObj);
   indexedItems.push(idCounterItems.toString());
-  liDomMaker(idCounterItems, extra_class);
+  liDomMaker(idCounterItems);
   idCounterItems++;
 }
 

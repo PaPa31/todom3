@@ -159,7 +159,7 @@ function formatDate(date) {
   return `${year}-${month}-${day}-${hours}${minutes}${seconds}`;
 }
 
-function liDomMaker(arrIndex, str) {
+function liDomMaker(arrIndex) {
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
   topDiv.setAttribute("class", "top-in-li");
@@ -185,8 +185,6 @@ function liDomMaker(arrIndex, str) {
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
     mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
-    if (str && str === "new-from-file")
-      li.setAttribute("class", "new-from-file");
     if (last > 0) {
       changeCurrentInBefore(resizableDiv, textArr.length);
     } else {
