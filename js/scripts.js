@@ -572,13 +572,13 @@ saveAsOldButton.addEventListener("click", function (e) {
 function newSave(liDOM, itemIndex) {
   const textArr = itemsArray[itemIndex].text;
   textArr.push({ variant: input.value, date: getFullCurrentDate() });
-  const lastSave = textArr.length - 1;
-  itemsSpecArray[itemIndex].save = lastSave;
+  const lengthSave = textArr.length;
+  itemsSpecArray[itemIndex].save = lengthSave - 1;
   localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
 
   const resizableDiv = liDOM.querySelector(".resizable-div");
-  saveHistoryTracker(liDOM, resizableDiv, textArr.length);
-  changeDateInAfter(resizableDiv, textArr[lastSave].date);
+  saveHistoryTracker(liDOM, resizableDiv, lengthSave);
+  changeDateInAfter(resizableDiv, textArr[lengthSave - 1].date);
   mdToTagsWithoutShape(resizableDiv, input.value);
 }
 
