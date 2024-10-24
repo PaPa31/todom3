@@ -324,14 +324,12 @@ function extractFolderAndCreateFileName() {
     const textArr = itemsArray[itemIndexToEdit].text;
     const date = textArr[currentSave].date;
     savedDate =
-      textArr && date !== "0000-00-00-000000" ? date : getCurrentDate();
+      textArr && date !== "0000-00-00-000000" ? date : getFullCurrentDate();
   } else {
-    savedDate = getCurrentDate(); // Fallback if itemIndexToEdit is null
+    savedDate = getFullCurrentDate();
   }
-
   const folderName = savedDate.substring(0, 7);
   const fileBaseName = savedDate.substring(8);
-
   const fileName =
     fileBaseName + "-" + getFirstCharsWithTrim(input.value) + ".md";
 
