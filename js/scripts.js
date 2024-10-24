@@ -452,10 +452,10 @@ function saveFileFile(fileName) {
 }
 
 const fileDownload = async (fileName) => {
-  // here
   if (protocol === "file:") {
     saveFileFile(fileName);
   } else {
+    // HTTP protocol
     const newFileName = await openDirectory(rootDirectory, true);
     if (!newFileName) {
       console.log("Save operation canceled or no file name provided.");
@@ -505,16 +505,16 @@ function getFirstCharsWithTrim(s) {
 }
 
 const saveFile = () => {
+  const path = extractFolderAndCreateFileName();
   let fileName;
 
   if (fileIndexToEdit != null) {
     const _fi = filesArray[fileIndexToEdit];
-    fileName = _fi.name;
+    fileName = _fi.name || path.fileName;
     _fi.text = input.value;
     fileDownload(fileName);
   } else {
-    fileName =
-      getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
+    fileName = path.fileName;
     const file = { name: fileName, text: input.value };
     filesArray.push(file);
     indexedFiles.push(idCounterFiles.toString());
