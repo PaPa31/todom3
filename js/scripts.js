@@ -613,7 +613,6 @@ form.addEventListener("submit", function (e) {
   if (input.value) {
     if (isItemState) {
       saveItem();
-      showItemSortingArrows(foldedClass.childElementCount);
     } else {
       saveFile();
     }
