@@ -10,6 +10,13 @@ const MODES = {
   SHOW_BOTH: 3,
 };
 
+const VALID_MODES = [
+  MODES.HIDE_BOTH,
+  MODES.HIDE_DATE,
+  MODES.HIDE_SAVE,
+  MODES.SHOW_BOTH,
+];
+
 const icons = {
   moon: `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="dark-toggle-icon">
@@ -58,7 +65,15 @@ updateButtonText(dateMode);
 updateDateDisplay(dateMode);
 
 function getDateMode() {
-  return parseInt(localStorage.getItem("todomDateMode") || MODES.HIDE_BOTH);
+  const storedMode = localStorage.getItem("todomDateMode");
+  const parsedMode = parseInt(storedMode);
+
+  // Check if the mode is valid; if not, reset to the default (HIDE_BOTH)
+  if (!VALID_MODES.includes(parsedMode)) {
+    localStorage.setItem("todomDateMode", MODES.HIDE_BOTH);
+    return MODES.HIDE_BOTH;
+  }
+  return parsedMode;
 }
 
 function toggleDateMode() {
