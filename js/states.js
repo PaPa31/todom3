@@ -128,7 +128,7 @@ const changeCurrentInBefore = (ancestorEl, currentSave) => {
     // Regex to check if currentSave is a positive integer
     ancestorEl.style.setProperty(
       "--todom-before-current-save",
-      "'" + ++currentSave + "'"
+      "'" + currentSave + "'"
     );
   } else {
     console.error("Invalid currentSave format. Must be a number.");
@@ -188,7 +188,7 @@ function liDomMaker(arrIndex, str) {
     if (str && str === "new-from-file")
       li.setAttribute("class", "new-from-file");
     if (last > 0) {
-      changeCurrentInBefore(resizableDiv, currentSave);
+      changeCurrentInBefore(resizableDiv, textArr.length);
     } else {
       initialInBefore(resizableDiv);
     }
@@ -375,7 +375,7 @@ const deleteCurrentSave = (el) => {
   addOrRemoveScrollObserverToLi(liDOM);
 
   if (lastAfter > 0) {
-    changeCurrentInBefore(resizableDiv, currentSave);
+    changeCurrentInBefore(resizableDiv, textArr.length);
   } else {
     initialInBefore(resizableDiv);
   }
@@ -404,7 +404,7 @@ const previousSave = (el) => {
   mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
   addOrRemoveScrollObserverToLi(liDOM);
 
-  changeCurrentInBefore(resizableDiv, currentSave);
+  changeCurrentInBefore(resizableDiv, textArr.length);
   setCurrentSave(currentSave, itemIndex);
   changeDateInAfter(resizableDiv, textArr[currentSave].date);
 };
@@ -429,7 +429,7 @@ const nextSave = (el) => {
   mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
   addOrRemoveScrollObserverToLi(liDOM);
 
-  changeCurrentInBefore(resizableDiv, currentSave);
+  changeCurrentInBefore(resizableDiv, textArr.length);
   setCurrentSave(currentSave, itemIndex);
   changeDateInAfter(resizableDiv, textArr[currentSave].date);
 };
