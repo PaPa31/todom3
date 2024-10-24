@@ -689,7 +689,7 @@ const horizontalIteration = (oneOfArr) => {
   });
 };
 
-const idleIterationPayload = (i) => {
+const drawLi = (i) => {
   indexedItems.push(idCounterItems.toString());
   liDomMaker(i);
   idCounterItems++;
@@ -702,7 +702,7 @@ const arrCheckForNull = (arr) => {
   for (i = 0; i < len; i++) {
     if (i in arr && arr[i] != undefined) {
       horizontalIteration(arr[i]);
-      idleIterationPayload(i);
+      drawLi(i);
     } else {
       arr.splice(i, 1);
       itemsSpecArray.splice(i, 1); // sync
