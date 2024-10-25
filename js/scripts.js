@@ -385,7 +385,7 @@ const saveItemFromFile = (fileName) => {
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 };
 
-function drawFile() {
+function drawFile(fileSize) {
   const previewOffset = preview.scrollTop;
   let fileName;
   if (fileIndexToEdit != null) {
@@ -395,7 +395,7 @@ function drawFile() {
     fileName = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {
-    filesArray[idCounterFiles].size = fileSizeGlobal;
+    filesArray[idCounterFiles].size = fileSize;
     fileName = filesArray[idCounterFiles].name;
     liDomMaker(idCounterFiles);
     idCounterFiles++;
@@ -412,13 +412,7 @@ function drawFile() {
   updateUI6();
 }
 
-function saveFileFile(fileName) {
-  var blob = new Blob([input.value], {
-    type: "text/plain;charset=utf-8",
-  });
-
-  fileSizeGlobal = blob.size;
-
+function saveFileFile(fileName, blob, fileSize) {
   if (typeof window.navigator.msSaveBlob !== "undefined") {
     window.navigator.msSaveBlob(blob, fileName);
   } else {
@@ -437,7 +431,7 @@ function saveFileFile(fileName) {
     tempLink.addEventListener("click", (e) => {
       e.stopPropagation();
       document.body.onfocus = () => {
-        drawFile();
+        drawFile(fileSize);
         document.body.onfocus = null; // Remove the event listener after it's executed
       };
     });
@@ -453,8 +447,14 @@ function saveFileFile(fileName) {
 }
 
 const fileDownload = async (fileName) => {
+  var blob = new Blob([input.value], {
+    type: "text/plain;charset=utf-8",
+  });
+
+  const fileSize = blob.size;
+
   if (protocol === "file:") {
-    saveFileFile(fileName);
+    saveFileFile(fileName, blob, fileSize);
   } else {
     // HTTP protocol
     const newFileName = await openDirectory(rootDirectory, true);
@@ -464,7 +464,7 @@ const fileDownload = async (fileName) => {
     }
     saveFileHttp(newFileName, input.value);
 
-    drawFile();
+    drawFile(fileSize);
   }
 };
 

@@ -49,8 +49,6 @@ let editedItemLiDOM;
 let fileIndexToEdit;
 let editedFileLiDOM;
 
-let fileSizeGlobal;
-
 const fileSizeTerm = (numberOfBytes) => {
   // Approximate to the closest prefixed unit
   const units = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
