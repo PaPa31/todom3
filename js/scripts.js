@@ -536,11 +536,11 @@ const markdown = (s) => {
   return marked.parse(s);
 };
 
-const saveHistoryTracker = (liDOM, resizableDiv, lastSave) => {
+const saveHistoryTracker = (liDOM, resizableDiv, lengthSave) => {
   const saveEl = liDOM.querySelector(".save-history");
-  if (lastSave > 1) {
-    saveEl.querySelector(".counter-save").innerText = lastSave;
-    changeCurrentInBefore(resizableDiv, lastSave);
+  if (lengthSave > 1) {
+    saveEl.querySelector(".counter-save").innerText = lengthSave;
+    changeCurrentInBefore(resizableDiv, lengthSave);
     saveEl.removeAttribute("disable");
     saveEl.querySelector(".previous-save").removeAttribute("disable");
   }
