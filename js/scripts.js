@@ -389,14 +389,14 @@ function drawFile(fileSize) {
   const previewOffset = preview.scrollTop;
   let fileName;
   if (fileIndexToEdit != null) {
+    fileName = filesArray[fileIndexToEdit].name;
     const resizableDiv = editedFileLiDOM.querySelector(".resizable-div");
     mdToTagsWithoutShape(resizableDiv, filesArray[fileIndexToEdit].text);
     addOrRemoveScrollObserverToLi(editedFileLiDOM);
-    fileName = filesArray[fileIndexToEdit].name;
     scrollToTargetAdjusted(editedFileLiDOM, previewOffset);
   } else {
-    filesArray[idCounterFiles].size = fileSize;
     fileName = filesArray[idCounterFiles].name;
+    filesArray[idCounterFiles].size = fileSize;
     liDomMaker(idCounterFiles);
     idCounterFiles++;
   }
@@ -768,6 +768,8 @@ const restoreHandler = (arr, btns, counterEl, todomArr) => {
     const specObj = { save: 0 };
     pushItemArrays(returningObj, specObj);
     drawLi(idCounterItems);
+    showItemSortingArrows(foldedClass.childElementCount);
+    sho(deleteAllItemsButton);
 
     localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 
@@ -780,8 +782,6 @@ const restoreHandler = (arr, btns, counterEl, todomArr) => {
   } else {
     if (todomArr) localStorage.setItem(todomArr, JSON.stringify(arr));
   }
-  sho(deleteAllItemsButton);
-  showItemSortingArrows(foldedClass.childElementCount);
 };
 
 restoreTrashedItemButton.addEventListener("click", function () {
