@@ -361,7 +361,7 @@ saveAsFileButton.addEventListener("click", async function () {
   }
 });
 
-const saveItemFromFile = (fileName) => {
+const saveItemFromFile = async (fileName) => {
   const itemIndex = itemsArray.findIndex((s) => s.name && s.name === fileName);
   if (itemIndex !== -1) {
     const itemId = indexedItems[itemIndex];
@@ -385,7 +385,7 @@ const saveItemFromFile = (fileName) => {
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 };
 
-function drawFile(fileSize) {
+async function drawFile(fileSize) {
   const previewOffset = preview.scrollTop;
   let fileName;
   if (fileIndexToEdit != null) {
@@ -404,7 +404,7 @@ function drawFile(fileSize) {
   if (!isItemState) {
     foldedClass = document.getElementById("list-items");
     isItemState = !isItemState;
-    saveItemFromFile(fileName);
+    await saveItemFromFile(fileName);
     foldedClass = document.getElementById("list-files");
     isItemState = !isItemState;
   }
