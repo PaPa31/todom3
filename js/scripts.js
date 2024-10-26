@@ -780,8 +780,7 @@ const restoreHandler = (arr, btns, counterEl, todomArr) => {
   } else {
     if (todomArr) localStorage.setItem(todomArr, JSON.stringify(arr));
   }
-  deleteAllItemsButton.classList.replace("none", "inline-block");
-  deleteAllItemsButton.classList.replace("invisible", "visible");
+  sho(deleteAllItemsButton);
   showItemSortingArrows(foldedClass.childElementCount);
 };
 
