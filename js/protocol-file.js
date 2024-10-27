@@ -144,10 +144,6 @@ fileElem.addEventListener(
   false
 );
 
-function fileProtocolOpenDirectoryClick() {
-  fileElem.click();
-}
-
 function webKitDirToTrue() {
   fileElem.setAttribute("webkitdirectory", "true");
 }

@@ -661,7 +661,7 @@ const initializeFileState = () => {
     indexedFiles = [];
 
     if (protocol === "file:") {
-      fileProtocolOpenDirectoryClick();
+      fileElem.click();
     } else {
       //getFileHttp(phrase);
       //getFileHttp(dir);

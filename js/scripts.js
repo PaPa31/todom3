@@ -301,7 +301,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 openDirButton.addEventListener("click", function (e) {
   if (protocol === "file:") {
     webKitDirToTrue();
-    fileProtocolOpenDirectoryClick();
+    fileElem.click();
   } else {
     httpProtocolOpenDirectoryClick();
   }
@@ -310,7 +310,7 @@ openDirButton.addEventListener("click", function (e) {
 openFileButton.addEventListener("click", function (e) {
   if (protocol === "file:") {
     webKitDirRemove();
-    fileProtocolOpenDirectoryClick();
+    fileElem.click();
   } else {
     httpProtocolOpenDirectoryClick();
   }
