@@ -347,7 +347,7 @@ saveAsFileButton.addEventListener("click", async function () {
       });
       saveAs(myFile);
     } else {
-      // HTTP protocol
+      // HTTP protocol 1
       const folderPath = rootDirectory + "/" + path.folderName;
       const newFileName = await openDirectory(folderPath, true);
       if (!newFileName) {
@@ -446,7 +446,7 @@ function saveFileFile(fileName, blob, fileSize) {
   }
 }
 
-const fileDownload = async (fileName) => {
+const fileDownload = async ({ fileName, folderName }) => {
   var blob = new Blob([input.value], {
     type: "text/plain;charset=utf-8",
   });
@@ -456,8 +456,9 @@ const fileDownload = async (fileName) => {
   if (protocol === "file:") {
     saveFileFile(fileName, blob, fileSize);
   } else {
-    // HTTP protocol
-    const newFileName = await openDirectory(rootDirectory, true);
+    // HTTP protocol 2
+    const folderPath = rootDirectory + "/" + folderName;
+    const newFileName = await openDirectory(folderPath, true);
     if (!newFileName) {
       console.log("Save operation canceled or no file name provided.");
       return;
@@ -525,14 +526,13 @@ const saveFile = () => {
     const _fi = filesArray[fileIndexToEdit];
     fileName = _fi.name || path.fileName;
     _fi.text = input.value;
-    fileDownload(fileName);
   } else {
     fileName = path.fileName;
     const file = { name: fileName, text: input.value };
     filesArray.push(file);
     indexedFiles.push(idCounterFiles.toString());
-    fileDownload(fileName);
   }
+  fileDownload(path);
 };
 
 const mdToTagsWithoutShape = (el, text) => {
