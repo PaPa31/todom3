@@ -336,16 +336,6 @@ function extractFolderAndCreateFileName() {
   return { folderName, fileName };
 }
 
-async function passFolderHttp(folderName) {
-  const folderPath = rootDirectory + "/" + folderName;
-  const newFileName = await openDirectory(folderPath, true);
-  if (!newFileName) {
-    console.log("Save operation canceled or no file name provided.");
-    return;
-  }
-  saveFileHttp(newFileName, input.value);
-}
-
 saveAsFileButton.addEventListener("click", async function () {
   if (input.value) {
     const path = extractFolderAndCreateFileName();
@@ -412,40 +402,6 @@ async function drawFile(fileSize) {
   }
 
   updateUI6();
-}
-
-function saveFileFile(fileName, blob, fileSize) {
-  if (typeof window.navigator.msSaveBlob !== "undefined") {
-    window.navigator.msSaveBlob(blob, fileName);
-  } else {
-    var blobURL =
-      window.URL && window.URL.createObjectURL
-        ? window.URL.createObjectURL(blob)
-        : window.webkitURL.createObjectURL(blob);
-    var tempLink = document.createElement("a");
-    tempLink.style.display = "none";
-    tempLink.href = blobURL;
-    tempLink.setAttribute("download", fileName);
-
-    if (typeof tempLink.download === "undefined") {
-      tempLink.setAttribute("target", "_blank");
-    }
-    tempLink.addEventListener("click", (e) => {
-      e.stopPropagation();
-      document.body.onfocus = () => {
-        drawFile(fileSize);
-        document.body.onfocus = null; // Remove the event listener after it's executed
-      };
-    });
-
-    document.body.appendChild(tempLink);
-    tempLink.click();
-
-    setTimeout(function () {
-      document.body.removeChild(tempLink);
-      window.URL.revokeObjectURL(blobURL);
-    }, 1000);
-  }
 }
 
 const fileDownload = async ({ fileName, folderName }) => {

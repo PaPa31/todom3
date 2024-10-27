@@ -552,3 +552,13 @@ async function createNewFolder(currentDirectory, folderName) {
     console.error("Error creating folder:", error);
   }
 }
+
+async function passFolderHttp(folderName) {
+  const folderPath = rootDirectory + "/" + folderName;
+  const newFileName = await openDirectory(folderPath, true);
+  if (!newFileName) {
+    console.log("Save operation canceled or no file name provided.");
+    return;
+  }
+  saveFileHttp(newFileName, input.value);
+}
