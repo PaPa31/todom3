@@ -336,25 +336,27 @@ function extractFolderAndCreateFileName() {
   return { folderName, fileName };
 }
 
+async function passFolderHttp(folderName) {
+  const folderPath = rootDirectory + "/" + folderName;
+  const newFileName = await openDirectory(folderPath, true);
+  if (!newFileName) {
+    console.log("Save operation canceled or no file name provided.");
+    return;
+  }
+  saveFileHttp(newFileName, input.value);
+}
+
 saveAsFileButton.addEventListener("click", async function () {
   if (input.value) {
-    const fileContent = input.value;
     const path = extractFolderAndCreateFileName();
 
     if (protocol === "file:") {
-      var myFile = new File([fileContent], path.fileName, {
+      var myFile = new File([input.value], path.fileName, {
         type: "text/plain;charset=utf-8",
       });
       saveAs(myFile);
     } else {
-      // HTTP protocol 1
-      const folderPath = rootDirectory + "/" + path.folderName;
-      const newFileName = await openDirectory(folderPath, true);
-      if (!newFileName) {
-        console.log("Save operation canceled or no file name provided.");
-        return;
-      }
-      saveFileHttp(newFileName, fileContent);
+      await passFolderHttp(path.folderName);
     }
 
     saveItem();
@@ -456,15 +458,7 @@ const fileDownload = async ({ fileName, folderName }) => {
   if (protocol === "file:") {
     saveFileFile(fileName, blob, fileSize);
   } else {
-    // HTTP protocol 2
-    const folderPath = rootDirectory + "/" + folderName;
-    const newFileName = await openDirectory(folderPath, true);
-    if (!newFileName) {
-      console.log("Save operation canceled or no file name provided.");
-      return;
-    }
-    saveFileHttp(newFileName, input.value);
-
+    await passFolderHttp(folderName);
     drawFile(fileSize);
   }
 };
