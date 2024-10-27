@@ -48,9 +48,7 @@ function handleFiles(files) {
       arrItems.forEach((item) => {
         if (item) {
           const itemObj = {
-            text: [
-              { variant: item, date: fileDataArray[0].date.toLocaleString() },
-            ],
+            text: [{ variant: item, date: fileDataArray[0].date }],
           };
           itemsArray.push(itemObj);
           indexedItems.push(idCounterItems.toString());
@@ -61,7 +59,7 @@ function handleFiles(files) {
       localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
       filesArray.splice(idCounterFiles, 1);
       if (filesArray.length === 0) fileElem.value = null;
-      allLiFold(isFoldItems, "todomFoldItems", indexedItems, itemsSpecArray);
+      //allLiFold(isFoldItems, "todomFoldItems", indexedItems, itemsSpecArray);
     } else {
       // Files
       fileDataArray.forEach((fileData) => {
