@@ -203,14 +203,30 @@ button#show-date {
   font-weight: 300;
   padding: 0 !important;
   display: inline-flex;
-  flex-wrap: wrap;
-  align-content: space-around;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
 }
 
 button#show-date > span {
-  width: 95%;
-  border-radius: 4px;
+  flex-grow: 1;
+}
+
+button#show-date > span:nth-child(1) {
+  border-radius: 4px 4px 0 0;
+}
+
+button#show-date > span:nth-child(3) {
+  border-radius: 0 0 4px 4px;
+}
+
+button#show-date > hr {
+  opacity: 0.75;
+  flex: 0 1 auto;
+  margin: 0;
+  border-top: none;
+  border-color: var(--todom-inputLabelEdit-foreground);
+  border-radius: 0px;
 }
 
 button#show-date > span.red {
