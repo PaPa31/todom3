@@ -145,18 +145,6 @@ const changeDateInAfter = (ancestorEl, currentDate) => {
   }
 };
 
-function formatDate(date) {
-  const pad = (n) => (n < 10 ? "0" + n : n);
-  const year = date.getFullYear();
-  const month = pad(date.getMonth() + 1);
-  const day = pad(date.getDate());
-  const hours = pad(date.getHours());
-  const minutes = pad(date.getMinutes());
-  const seconds = pad(date.getSeconds());
-
-  return `${year}-${month}-${day}-${hours}${minutes}${seconds}`;
-}
-
 function liDomMaker(arrIndex) {
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
