@@ -144,18 +144,6 @@ fileElem.addEventListener(
   false
 );
 
-function webKitDirToTrue() {
-  fileElem.setAttribute("webkitdirectory", "true");
-}
-
-function webKitDirRemove() {
-  fileElem.removeAttribute("webkitdirectory");
-}
-
-function nullFileElem() {
-  fileElem.value = null;
-}
-
 function saveFileFile(fileName, blob, fileSize) {
   if (typeof window.navigator.msSaveBlob !== "undefined") {
     window.navigator.msSaveBlob(blob, fileName);

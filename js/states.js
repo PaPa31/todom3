@@ -474,7 +474,7 @@ const deleteOneFile = (e, liDOM) => {
     indexedFiles.splice(indexToDelete, 1);
 
     showOrHideDeleteAllItems();
-    if (protocol === "file:" && filesArray.length === 0) nullFileElem();
+    if (protocol === "file:" && filesArray.length === 0) fileElem.value = null;
 
     twoClickToTrash = false;
     lastClickId = undefined;
@@ -759,7 +759,7 @@ itemsFilesToggleButton.addEventListener("click", function (e) {
     showOrHideTrash();
     showOrHideUndoDeleteButton();
   } else {
-    if (protocol === "file:") webKitDirToTrue();
+    if (protocol === "file:") fileElem.setAttribute("webkitdirectory", "true");
     initializeFileState();
   }
   showOrHideDeleteAllItems();

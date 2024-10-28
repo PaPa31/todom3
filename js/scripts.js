@@ -300,7 +300,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 
 openDirButton.addEventListener("click", function (e) {
   if (protocol === "file:") {
-    webKitDirToTrue();
+    fileElem.setAttribute("webkitdirectory", "true");
     fileElem.click();
   } else {
     httpProtocolOpenDirectoryClick();
@@ -309,7 +309,7 @@ openDirButton.addEventListener("click", function (e) {
 
 openFileButton.addEventListener("click", function (e) {
   if (protocol === "file:") {
-    webKitDirRemove();
+    fileElem.removeAttribute("webkitdirectory");
     fileElem.click();
   } else {
     httpProtocolOpenDirectoryClick();
@@ -592,7 +592,7 @@ const defaultFileStateVars = () => {
   indexedFiles = [];
   filesArray = [];
   idCounterFiles = 0;
-  if (protocol === "file:") nullFileElem();
+  if (protocol === "file:") fileElem.value = null;
   showItemSortingArrows(0);
   foldedClass.innerHTML = "";
 };
