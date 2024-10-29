@@ -461,8 +461,7 @@ function getFirstCharsWithTrim(s) {
   return s.replace(/-$/, "");
 }
 
-const saveFile = () => {
-  const path = extractFolderAndCreateFileName();
+function pushFilesArray(path) {
   let fileName;
 
   if (fileIndexToEdit != null) {
@@ -475,6 +474,11 @@ const saveFile = () => {
     filesArray.push(file);
     indexedFiles.push(idCounterFiles.toString());
   }
+}
+
+const saveFile = () => {
+  const path = extractFolderAndCreateFileName();
+  pushFilesArray(path);
   fileDownload(path);
 };
 
