@@ -164,7 +164,10 @@ function saveFileFile(fileName, blob, fileSize, drawItemOnly) {
       e.stopPropagation();
       document.body.onfocus = () => {
         if (drawItemOnly) saveItem();
-        else drawFile(fileSize);
+        else {
+          pushFilesArray(fileName);
+          drawFile(fileSize);
+        }
         document.body.onfocus = null; // Remove the event listener after it's executed
       };
     });

@@ -338,10 +338,8 @@ function extractFolderAndCreateFileName() {
 
 saveAsFileButton.addEventListener("click", async function () {
   if (input.value) {
-    const path = extractFolderAndCreateFileName();
-
     const drawItemOnly = true;
-    fileDownload(path, drawItemOnly);
+    fileDownload(drawItemOnly);
   }
 });
 
@@ -396,7 +394,9 @@ async function drawFile(fileSize) {
   updateUI6();
 }
 
-const fileDownload = async ({ fileName, folderName }, drawItemOnly = false) => {
+const fileDownload = async (drawItemOnly = false) => {
+  const path = extractFolderAndCreateFileName();
+
   var blob = new Blob([input.value], {
     type: "text/plain;charset=utf-8",
   });
@@ -404,11 +404,14 @@ const fileDownload = async ({ fileName, folderName }, drawItemOnly = false) => {
   const fileSize = blob.size;
 
   if (protocol === "file:") {
-    saveFileFile(fileName, blob, fileSize, drawItemOnly);
+    saveFileFile(path.fileName, blob, fileSize, drawItemOnly);
   } else {
-    await passFolderHttp(folderName);
+    await passFolderHttp(path.folderName);
     if (drawItemOnly) saveItem();
-    else drawFile(fileSize);
+    else {
+      pushFilesArray(path.fileName);
+      drawFile(fileSize);
+    }
   }
 };
 
@@ -461,26 +464,20 @@ function getFirstCharsWithTrim(s) {
   return s.replace(/-$/, "");
 }
 
-function pushFilesArray(path) {
-  let fileName;
+function pushFilesArray(fileName) {
+  let _fileName;
 
   if (fileIndexToEdit != null) {
     const _fi = filesArray[fileIndexToEdit];
-    fileName = _fi.name || path.fileName;
+    _fileName = _fi.name || fileName;
     _fi.text = input.value;
   } else {
-    fileName = path.fileName;
-    const file = { name: fileName, text: input.value };
+    _fileName = fileName;
+    const file = { name: _fileName, text: input.value };
     filesArray.push(file);
     indexedFiles.push(idCounterFiles.toString());
   }
 }
-
-const saveFile = () => {
-  const path = extractFolderAndCreateFileName();
-  pushFilesArray(path);
-  fileDownload(path);
-};
 
 const mdToTagsWithoutShape = (el, text) => {
   el.innerHTML = markdown(text);
@@ -577,7 +574,7 @@ form.addEventListener("submit", function (e) {
     if (isItemState) {
       saveItem();
     } else {
-      saveFile();
+      fileDownload();
     }
   }
 });
