@@ -340,16 +340,8 @@ saveAsFileButton.addEventListener("click", async function () {
   if (input.value) {
     const path = extractFolderAndCreateFileName();
 
-    if (protocol === "file:") {
-      var myFile = new File([input.value], path.fileName, {
-        type: "text/plain;charset=utf-8",
-      });
-      saveAs(myFile);
-    } else {
-      await passFolderHttp(path.folderName);
-    }
-
-    saveItem();
+    const drawItemOnly = true;
+    fileDownload(path, drawItemOnly);
   }
 });
 
@@ -404,7 +396,7 @@ async function drawFile(fileSize) {
   updateUI6();
 }
 
-const fileDownload = async ({ fileName, folderName }) => {
+const fileDownload = async ({ fileName, folderName }, drawItemOnly = false) => {
   var blob = new Blob([input.value], {
     type: "text/plain;charset=utf-8",
   });
@@ -412,10 +404,11 @@ const fileDownload = async ({ fileName, folderName }) => {
   const fileSize = blob.size;
 
   if (protocol === "file:") {
-    saveFileFile(fileName, blob, fileSize);
+    saveFileFile(fileName, blob, fileSize, drawItemOnly);
   } else {
     await passFolderHttp(folderName);
-    drawFile(fileSize);
+    if (drawItemOnly) saveItem();
+    else drawFile(fileSize);
   }
 };
 

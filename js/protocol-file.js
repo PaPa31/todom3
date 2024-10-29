@@ -144,7 +144,7 @@ fileElem.addEventListener(
   false
 );
 
-function saveFileFile(fileName, blob, fileSize) {
+function saveFileFile(fileName, blob, fileSize, drawItemOnly) {
   if (typeof window.navigator.msSaveBlob !== "undefined") {
     window.navigator.msSaveBlob(blob, fileName);
   } else {
@@ -163,7 +163,8 @@ function saveFileFile(fileName, blob, fileSize) {
     tempLink.addEventListener("click", (e) => {
       e.stopPropagation();
       document.body.onfocus = () => {
-        drawFile(fileSize);
+        if (drawItemOnly) saveItem();
+        else drawFile(fileSize);
         document.body.onfocus = null; // Remove the event listener after it's executed
       };
     });
