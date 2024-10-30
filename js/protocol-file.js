@@ -144,7 +144,7 @@ fileElem.addEventListener(
   false
 );
 
-function saveFileFile(fileName, blob, fileSize, drawItemOnly) {
+async function saveFileFile(fileName, blob, fileSize, drawItemOnly) {
   if (typeof window.navigator.msSaveBlob !== "undefined") {
     window.navigator.msSaveBlob(blob, fileName);
   } else {

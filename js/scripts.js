@@ -404,7 +404,7 @@ const fileDownload = async (drawItemOnly = false) => {
   const fileSize = blob.size;
 
   if (protocol === "file:") {
-    saveFileFile(path.fileName, blob, fileSize, drawItemOnly);
+    await saveFileFile(path.fileName, blob, fileSize, drawItemOnly);
   } else {
     await passFolderHttp(path.folderName);
     if (drawItemOnly) saveItem();
