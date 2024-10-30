@@ -344,6 +344,9 @@ saveAsFileButton.addEventListener("click", async function () {
 });
 
 const saveItemFromFile = async (fileName) => {
+  foldedClass = document.getElementById("list-items");
+  isItemState = !isItemState;
+
   const itemIndex = itemsArray.findIndex((s) => s.name && s.name === fileName);
   if (itemIndex !== -1) {
     const itemId = indexedItems[itemIndex];
@@ -365,6 +368,9 @@ const saveItemFromFile = async (fileName) => {
     liDOM.classList.add("new-from-file");
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+
+  foldedClass = document.getElementById("list-files");
+  isItemState = !isItemState;
 };
 
 async function drawFile(fileSize) {
@@ -383,13 +389,7 @@ async function drawFile(fileSize) {
     idCounterFiles++;
   }
 
-  if (!isItemState) {
-    foldedClass = document.getElementById("list-items");
-    isItemState = !isItemState;
-    await saveItemFromFile(fileName);
-    foldedClass = document.getElementById("list-files");
-    isItemState = !isItemState;
-  }
+  if (!isItemState) await saveItemFromFile(fileName);
 
   updateUI6();
 }
