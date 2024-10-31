@@ -1,7 +1,7 @@
 const darkButton = document.getElementById("dark-button");
 const dateButton = document.getElementById("show-date");
 
-var listItems = document.getElementById("list-items");
+var listItems = document.getElementById("list-items"); // global variable
 
 const MODES = {
   HIDE_BOTH: 0,
