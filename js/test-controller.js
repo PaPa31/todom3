@@ -1,22 +1,21 @@
-// test-controller.js: тест-контроллер для функций StateController
+// test-controller.js: Обновленная версия тестов для StateController
 
 function runTests() {
   var tests = [
-    function testProtocol() {
-      var controller = new StateController("file:");
+    function testFileProtocol() {
+      var controller = new StateController(window.location.protocol); // Передаем текущий протокол
       console.assert(
         controller.getProtocol() === "file:",
         "Проверка протокола 'file:'"
       );
     },
-    function testDefaultProtocol() {
-      var controller = new StateController("http:");
+    function testHTTPProtocol() {
+      var controller = new StateController("http:"); // Проверка для HTTP
       console.assert(
         controller.getProtocol() === "http:",
         "Проверка протокола 'http:'"
       );
     },
-    // Добавляйте новые тесты для контроллера здесь
   ];
 
   tests.forEach(function (test) {
@@ -29,7 +28,6 @@ function runTests() {
   });
 }
 
-// Запускайте тесты, когда параметр "test=true" указан в URL
 if (window.location.search.indexOf("test=true") > -1) {
   runTests();
 }
