@@ -58,15 +58,6 @@ returnInputButton.style = "display:none";
 
 let variant = true;
 
-if (lastInputValue) {
-  xButton.style = "display:block";
-  inputLabel.classList.replace("invisible", "visible");
-  input.value = lastInputValue;
-  input.scrollTop = input.scrollHeight;
-} else {
-  xButton.style = "display:none";
-}
-
 const scrollToLast = () => {
   preview.scrollIntoView(false);
   input.focus();
@@ -264,17 +255,6 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-html.addEventListener("click", function () {
-  //if (event.target === modalContainer) {
-  //  modalContainer.style.display = "none";
-  //}
-  if (twoClickTrashClear) clearTrashButton.classList.remove("filter-red");
-  twoClickTrashClear = false;
-  if (twoClickToTrash)
-    lastItem.querySelector(".delete-one-item").classList.remove("filter-red");
-  twoClickToTrash = false;
-});
-
 const intervalFocus = (element, cssRule, interval) => {
   element.style = cssRule;
   window.setTimeout(function () {
@@ -298,24 +278,6 @@ function scrollToTargetAdjusted(targetElement, offset) {
   );
 }
 
-openDirButton.addEventListener("click", function (e) {
-  if (window.protocol === "file:") {
-    fileElem.setAttribute("webkitdirectory", "true");
-    fileElem.click();
-  } else {
-    httpProtocolOpenDirectoryClick();
-  }
-});
-
-openFileButton.addEventListener("click", function (e) {
-  if (window.protocol === "file:") {
-    fileElem.removeAttribute("webkitdirectory");
-    fileElem.click();
-  } else {
-    httpProtocolOpenDirectoryClick();
-  }
-});
-
 function extractFolderAndCreateFileName() {
   let savedDate;
 
@@ -335,13 +297,6 @@ function extractFolderAndCreateFileName() {
 
   return { folderName, fileName };
 }
-
-saveAsFileButton.addEventListener("click", async function () {
-  if (input.value) {
-    const drawItemOnly = true;
-    fileDownload(drawItemOnly);
-  }
-});
 
 const saveItemFromFile = async (fileName) => {
   foldedClass = document.getElementById("list-items");
@@ -511,21 +466,6 @@ function updateUI5() {
   localStorage.removeItem("todomLastInputValue");
 }
 
-saveAsOldButton.addEventListener("click", function (e) {
-  const currentSave = itemsSpecArray[itemIndexToEdit].save;
-  const textArr = itemsArray[itemIndexToEdit].text;
-  textArr[currentSave].variant = input.value;
-  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
-  const resizableDiv = editedItemLiDOM.querySelector(".resizable-div");
-  mdToTagsWithoutShape(resizableDiv, input.value);
-  addOrRemoveScrollObserverToLi(editedItemLiDOM);
-
-  updateUI5();
-
-  scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
-  joinSaveItemButton();
-});
-
 function newSave(liDOM, itemIndex) {
   const textArr = itemsArray[itemIndex].text;
   textArr.push({ variant: input.value, date: getFullCurrentDate() });
@@ -568,17 +508,6 @@ function updateUI6() {
   localStorage.removeItem("todomLastInputValue");
 }
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  if (input.value) {
-    if (isItemState) {
-      saveItem();
-    } else {
-      fileDownload();
-    }
-  }
-});
-
 const defaultFileStateVars = () => {
   defaultMarkers();
   inputLabel.innerHTML = "<div>New</div>";
@@ -603,24 +532,6 @@ const defaultItemStateVars = () => {
   foldedClass.innerHTML = "";
 };
 
-document.addEventListener("keydown", function (e) {
-  switch (e.key) {
-    case "Control":
-      deleteAllItemsButton.innerText = "Merge All Items";
-      foldedClass.classList.add("ctrl");
-      break;
-  }
-});
-
-document.addEventListener("keyup", function (e) {
-  switch (e.key) {
-    case "Control":
-      deleteAllItemsButton.innerText = "Delete All Items";
-      foldedClass.classList.remove("ctrl");
-      break;
-  }
-});
-
 const mergeAllItems = () => {
   itemsArray.forEach((item, index) => {
     const textArr = item.text;
@@ -639,28 +550,6 @@ const mergeAllItems = () => {
   mdToPreview(input.value);
   scrollToLast();
 };
-
-deleteAllItemsButton.addEventListener("click", function (e) {
-  if (isItemState) {
-    if (e.ctrlKey) {
-      mergeAllItems();
-    } else {
-      if (confirm("Are you sure?")) {
-        defaultItemStateVars();
-        localStorage.removeItem("todomItemsArray");
-        localStorage.removeItem("todomItemsSpecArray");
-      } else {
-        e.preventDefault();
-      }
-    }
-  } else {
-    if (confirm("Are you sure?")) {
-      defaultFileStateVars();
-    } else {
-      e.preventDefault();
-    }
-  }
-});
 
 const defaultMarkers = () => {
   itemIndexToEdit = null;
@@ -687,30 +576,6 @@ const clearInputAndPreviewAreas = () => {
   preview.innerHTML = "";
   position.innerHTML = "";
 };
-
-xButton.addEventListener("click", function (e) {
-  if (itemIndexToEdit != null || fileIndexToEdit != null) {
-    defaultMarkers();
-  } else {
-    localStorage.removeItem("todomLastInputValue");
-  }
-
-  hideAndNewInputLabel();
-  ifReturnAndNoneX();
-  clearInputAndPreviewAreas();
-  joinSaveItemButton();
-  input.focus();
-});
-
-returnInputButton.addEventListener("click", function () {
-  input.value = lastInputValue;
-  mdToPreview(input.value);
-  localStorage.setItem("todomLastInputValue", lastInputValue);
-  inputLabel.classList.replace("invisible", "visible");
-  returnInputButton.style = "display:none";
-  xButton.style = "display:block";
-  input.focus();
-});
 
 function pushItemArrays(itemObj, specObj) {
   itemsArray.push(itemObj);
@@ -739,6 +604,146 @@ const restoreHandler = (arr, btns, counterEl, todomArr) => {
     if (todomArr) localStorage.setItem(todomArr, JSON.stringify(arr));
   }
 };
+
+function handleDblClick(event) {
+  const initiator = event.target,
+    targetEl = isItemState
+      ? initiator.classList.contains("dual")
+        ? initiator
+        : findParentTagOrClassRecursive(initiator, undefined, "dual")
+      : initiator.classList.contains("file-text")
+      ? initiator
+      : findParentTagOrClassRecursive(initiator, undefined, "file-text");
+  targetEl.style = "";
+}
+
+const inputChange = function (e) {
+  lastInputValue = e.target.value;
+  if (lastInputValue) {
+    inputLabel.classList.replace("invisible", "visible");
+    xButton.style = "display:block";
+  } else {
+    inputLabel.classList.replace("visible", "invisible");
+    xButton.style = "display:none";
+  }
+  returnInputButton.style = "display:none";
+
+  localStorage.setItem("todomLastInputValue", lastInputValue);
+  mdToPreview(e.target.value);
+  if (preview.innerHTML === "") position.innerHTML = "";
+};
+
+var inputHandler = function (e) {
+  debounce(inputChange(e), 200, false);
+};
+
+html.addEventListener("click", function () {
+  //if (event.target === modalContainer) {
+  //  modalContainer.style.display = "none";
+  //}
+  if (twoClickTrashClear) clearTrashButton.classList.remove("filter-red");
+  twoClickTrashClear = false;
+  if (twoClickToTrash)
+    lastItem.querySelector(".delete-one-item").classList.remove("filter-red");
+  twoClickToTrash = false;
+});
+
+openDirButton.addEventListener("click", function (e) {
+  if (window.protocol === "file:") {
+    fileElem.setAttribute("webkitdirectory", "true");
+    fileElem.click();
+  } else {
+    httpProtocolOpenDirectoryClick();
+  }
+});
+
+openFileButton.addEventListener("click", function (e) {
+  if (window.protocol === "file:") {
+    fileElem.removeAttribute("webkitdirectory");
+    fileElem.click();
+  } else {
+    httpProtocolOpenDirectoryClick();
+  }
+});
+
+saveAsFileButton.addEventListener("click", async function () {
+  if (input.value) {
+    const drawItemOnly = true;
+    fileDownload(drawItemOnly);
+  }
+});
+
+saveAsOldButton.addEventListener("click", function (e) {
+  const currentSave = itemsSpecArray[itemIndexToEdit].save;
+  const textArr = itemsArray[itemIndexToEdit].text;
+  textArr[currentSave].variant = input.value;
+  localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
+  const resizableDiv = editedItemLiDOM.querySelector(".resizable-div");
+  mdToTagsWithoutShape(resizableDiv, input.value);
+  addOrRemoveScrollObserverToLi(editedItemLiDOM);
+
+  updateUI5();
+
+  scrollToTargetAdjusted(editedItemLiDOM, preview.scrollTop);
+  joinSaveItemButton();
+});
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (input.value) {
+    if (isItemState) {
+      saveItem();
+    } else {
+      fileDownload();
+    }
+  }
+});
+
+deleteAllItemsButton.addEventListener("click", function (e) {
+  if (isItemState) {
+    if (e.ctrlKey) {
+      mergeAllItems();
+    } else {
+      if (confirm("Are you sure?")) {
+        defaultItemStateVars();
+        localStorage.removeItem("todomItemsArray");
+        localStorage.removeItem("todomItemsSpecArray");
+      } else {
+        e.preventDefault();
+      }
+    }
+  } else {
+    if (confirm("Are you sure?")) {
+      defaultFileStateVars();
+    } else {
+      e.preventDefault();
+    }
+  }
+});
+
+xButton.addEventListener("click", function (e) {
+  if (itemIndexToEdit != null || fileIndexToEdit != null) {
+    defaultMarkers();
+  } else {
+    localStorage.removeItem("todomLastInputValue");
+  }
+
+  hideAndNewInputLabel();
+  ifReturnAndNoneX();
+  clearInputAndPreviewAreas();
+  joinSaveItemButton();
+  input.focus();
+});
+
+returnInputButton.addEventListener("click", function () {
+  input.value = lastInputValue;
+  mdToPreview(input.value);
+  localStorage.setItem("todomLastInputValue", lastInputValue);
+  inputLabel.classList.replace("invisible", "visible");
+  returnInputButton.style = "display:none";
+  xButton.style = "display:block";
+  input.focus();
+});
 
 restoreTrashedItemButton.addEventListener("click", function () {
   restoreHandler(
@@ -774,39 +779,34 @@ undoLastDeleteButton.addEventListener("click", function (e) {
   restoreHandler(deletedArray, [undoLastDeleteButton], deletedCounter);
 });
 
-function handleDblClick(event) {
-  const initiator = event.target,
-    targetEl = isItemState
-      ? initiator.classList.contains("dual")
-        ? initiator
-        : findParentTagOrClassRecursive(initiator, undefined, "dual")
-      : initiator.classList.contains("file-text")
-      ? initiator
-      : findParentTagOrClassRecursive(initiator, undefined, "file-text");
-  targetEl.style = "";
-}
-
-const inputChange = function (e) {
-  lastInputValue = e.target.value;
-  if (lastInputValue) {
-    inputLabel.classList.replace("invisible", "visible");
-    xButton.style = "display:block";
-  } else {
-    inputLabel.classList.replace("visible", "invisible");
-    xButton.style = "display:none";
-  }
-  returnInputButton.style = "display:none";
-
-  localStorage.setItem("todomLastInputValue", lastInputValue);
-  mdToPreview(e.target.value);
-  if (preview.innerHTML === "") position.innerHTML = "";
-};
-
-var inputHandler = function (e) {
-  debounce(inputChange(e), 200, false);
-};
-
 input.addEventListener("input", inputHandler);
+
+document.addEventListener("keydown", function (e) {
+  switch (e.key) {
+    case "Control":
+      deleteAllItemsButton.innerText = "Merge All Items";
+      foldedClass.classList.add("ctrl");
+      break;
+  }
+});
+
+document.addEventListener("keyup", function (e) {
+  switch (e.key) {
+    case "Control":
+      deleteAllItemsButton.innerText = "Delete All Items";
+      foldedClass.classList.remove("ctrl");
+      break;
+  }
+});
+
+if (lastInputValue) {
+  xButton.style = "display:block";
+  inputLabel.classList.replace("invisible", "visible");
+  input.value = lastInputValue;
+  input.scrollTop = input.scrollHeight;
+} else {
+  xButton.style = "display:none";
+}
 
 if (input.value) {
   xUI();

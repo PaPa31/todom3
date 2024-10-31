@@ -574,19 +574,6 @@ const allLiFold = (view, todomStr, indexedArr, mainArr) => {
   localStorage.setItem(todomStr, JSON.stringify(!view));
 };
 
-foldAllToggleButton.addEventListener("click", function (e) {
-  if (isItemState) {
-    allLiFold(isFoldItems, "todomFoldItems", indexedItems, itemsSpecArray);
-    isFoldItems = !isFoldItems;
-    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
-  } else {
-    allLiFold(isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
-    isFoldFiles = !isFoldFiles;
-  }
-  foldAllToggleButton.classList.toggle("fold");
-  e.stopPropagation();
-});
-
 const showOrHideTrash = () => {
   if (trashArray.length) {
     trashedCounter.innerText = trashArray.length;
@@ -750,6 +737,19 @@ const initializeItemState = () => {
   showItemSortingArrows(foldedClass.childElementCount);
   newElementsFromOtherState(foldedClass);
 };
+
+foldAllToggleButton.addEventListener("click", function (e) {
+  if (isItemState) {
+    allLiFold(isFoldItems, "todomFoldItems", indexedItems, itemsSpecArray);
+    isFoldItems = !isFoldItems;
+    localStorage.setItem("todomItemsSpecArray", JSON.stringify(itemsSpecArray));
+  } else {
+    allLiFold(isFoldFiles, "todomFoldFiles", indexedFiles, filesArray);
+    isFoldFiles = !isFoldFiles;
+  }
+  foldAllToggleButton.classList.toggle("fold");
+  e.stopPropagation();
+});
 
 itemsFilesToggleButton.addEventListener("click", function (e) {
   isItemState = !isItemState;
