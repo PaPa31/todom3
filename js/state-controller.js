@@ -11,5 +11,3 @@ class StateController {
 
   // Другие методы управления состояниями...
 }
-
-export default StateController;
