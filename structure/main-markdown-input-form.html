@@ -1,0 +1,43 @@
+<!--The main form for entering notes-->
+<form id="form1" class="flex-row markdown-body">
+  <div id="input-group">
+    <!--Button to clear Input Textarea-->
+    <button
+      id="x-button"
+      type="button"
+      title="Clear input"
+      class="bared btn"
+      style="display: none"
+    ></button>
+    <!--Button to cancel clearing Input Textarea-->
+    <button
+      id="return-last-input"
+      type="button"
+      title="Return the last typed string"
+      class="bared btn"
+      style="display: none"
+    ></button>
+    <!--Input Textarea - is the place where the user enters text -->
+    <textarea
+      id="input"
+      name="content"
+      data-provide="markdown"
+      rows="10"
+      placeholder="New"
+      required=""
+      spellcheck="false"
+      wrap="soft"
+      class="border"
+    ></textarea>
+    <!--Output Textarea serves to coordinate the Input Textarea and the Preview area-->
+    <textarea
+      id="output"
+      name="output"
+      data-provide="markdown"
+      rows="10"
+      placeholder="New"
+      spellcheck="false"
+      wrap="soft"
+    ></textarea>
+  </div>
+</form>
