@@ -12,9 +12,9 @@ const appController = (() => {
 
   // Загрузка скриптов для протокола
   const loadProtocolScripts = () => {
-    if (protocol === "file:") {
+    if (window.protocol === "file:") {
       loadScript("js/protocol-file.js");
-    } else if (protocol === "http:" || protocol === "https:") {
+    } else if (window.protocol === "http:" || window.protocol === "https:") {
       loadScript("js/protocol-http.js");
     }
   };
@@ -55,9 +55,9 @@ const appController = (() => {
     loadProtocolScripts();
 
     // Проверка протокола и инициализация в зависимости от него
-    if (protocol === "file:") {
+    if (window.protocol === "file:") {
       actions.openExistingNote();
-    } else if (protocol === "http:" || protocol === "https:") {
+    } else if (window.protocol === "http:" || window.protocol === "https:") {
       actions.openExistingNote();
     }
   };

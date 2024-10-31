@@ -299,7 +299,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
 }
 
 openDirButton.addEventListener("click", function (e) {
-  if (protocol === "file:") {
+  if (window.protocol === "file:") {
     fileElem.setAttribute("webkitdirectory", "true");
     fileElem.click();
   } else {
@@ -308,7 +308,7 @@ openDirButton.addEventListener("click", function (e) {
 });
 
 openFileButton.addEventListener("click", function (e) {
-  if (protocol === "file:") {
+  if (window.protocol === "file:") {
     fileElem.removeAttribute("webkitdirectory");
     fileElem.click();
   } else {
@@ -403,7 +403,7 @@ const fileDownload = async (drawItemOnly = false) => {
 
   const fileSize = blob.size;
 
-  if (protocol === "file:") {
+  if (window.protocol === "file:") {
     await saveFileFile(path.fileName, blob, fileSize, drawItemOnly);
   } else {
     await passFolderHttp(path.folderName);
@@ -586,7 +586,7 @@ const defaultFileStateVars = () => {
   indexedFiles = [];
   filesArray = [];
   idCounterFiles = 0;
-  if (protocol === "file:") fileElem.value = null;
+  if (window.protocol === "file:") fileElem.value = null;
   showItemSortingArrows(0);
   foldedClass.innerHTML = "";
 };
