@@ -1,6 +1,6 @@
 //alert('file:')
 
-let fileElem = document.getElementById("file-elem");
+var fileElem = (window.fileElem = document.getElementById("file-elem"));
 // emptying the FileList
 fileElem.value = null;
 
