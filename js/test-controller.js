@@ -1,5 +1,4 @@
 // Тесты для earliest-togglers.js с сохранением исходного состояния
-
 function testEarliestTogglers() {
   console.log("Запуск тестов для earliest-togglers.js");
 
@@ -52,8 +51,54 @@ function testEarliestTogglers() {
   }
 }
 
-// Строгая версия тестов для проверки протокола
+// Тесты для функций в list-order.js
+function testListOrderFunctions() {
+  console.log("Запуск тестов для list-order.js");
 
+  // Сохранение исходного значения из localStorage
+  const originalListOrder = localStorage.getItem("todomListReverseOrder");
+
+  try {
+    // Тест функции isReversed
+    localStorage.setItem("todomListReverseOrder", "set");
+    console.assert(
+      isReversed() === "set",
+      "Проверка обратного порядка списка включена"
+    );
+
+    localStorage.removeItem("todomListReverseOrder");
+    console.assert(
+      isReversed() === null,
+      "Проверка обратного порядка списка выключена"
+    );
+
+    // Тест toggleReversedMode с переключением класса
+    const contentElement = document.getElementById("content");
+    contentElement.classList.remove("reversed");
+    toggleReversedMode();
+    console.assert(
+      contentElement.classList.contains("reversed"),
+      "Класс 'reversed' добавлен"
+    );
+
+    toggleReversedMode();
+    console.assert(
+      !contentElement.classList.contains("reversed"),
+      "Класс 'reversed' удален"
+    );
+
+    console.log("Тесты для list-order.js успешно завершены");
+  } finally {
+    // Восстановление исходного значения
+    if (originalListOrder !== null) {
+      localStorage.setItem("todomListReverseOrder", originalListOrder);
+    } else {
+      localStorage.removeItem("todomListReverseOrder");
+    }
+  }
+}
+
+// Строгая версия тестов для проверки протокола
 function runTests() {
   var tests = [
     function testFileProtocol() {
@@ -95,5 +140,6 @@ function runTests() {
 
 if (window.location.search.includes("test=true")) {
   testEarliestTogglers(); // Запуск тестов для earliest-togglers.js
+  testListOrderFunctions(); // Запуск тестов для list-order.js
   runTests(); // Запуск других тестов
 }
