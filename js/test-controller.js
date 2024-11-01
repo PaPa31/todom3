@@ -55,8 +55,9 @@ function testEarliestTogglers() {
 function testListOrderFunctions() {
   console.log("Запуск тестов для list-order.js");
 
-  // Сохранение исходного значения из localStorage
+  // Сохраняем исходное значение
   const originalListOrder = localStorage.getItem("todomListReverseOrder");
+  const contentElement = document.getElementById("content"); // Инициализация один раз
 
   try {
     // Тест функции isReversed
@@ -73,7 +74,6 @@ function testListOrderFunctions() {
     );
 
     // Тест toggleReversedMode с переключением класса
-    const contentElement = document.getElementById("content");
     contentElement.classList.remove("reversed");
     toggleReversedMode();
     console.assert(
@@ -89,11 +89,18 @@ function testListOrderFunctions() {
 
     console.log("Тесты для list-order.js успешно завершены");
   } finally {
-    // Восстановление исходного значения
+    // Восстанавливаем исходное значение в localStorage
     if (originalListOrder !== null) {
       localStorage.setItem("todomListReverseOrder", originalListOrder);
     } else {
       localStorage.removeItem("todomListReverseOrder");
+    }
+
+    // Устанавливаем класс 'reversed' в соответствии с значением в localStorage
+    if (isReversed()) {
+      contentElement.classList.add("reversed");
+    } else {
+      contentElement.classList.remove("reversed");
     }
   }
 }
