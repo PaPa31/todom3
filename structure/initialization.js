@@ -7,8 +7,6 @@ let foldedClass = document.getElementById("list-items");
 
 const listFiles = document.getElementById("list-files");
 
-var listItems = document.getElementById("list-items");
-
 // starting in Item state & Unfolded view
 let isItemState = true;
 let isFoldItems = localStorage.getItem("todomFoldItems")
