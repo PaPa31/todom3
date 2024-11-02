@@ -23,10 +23,20 @@ const appController = (() => {
   };
 
   // Функция для подгрузки скриптов
-  const loadScript = (src) => {
+  const loadScript = (src, callback) => {
     const script = document.createElement("script");
     script.src = src;
+    if (callback) script.onload = callback;
     document.head.appendChild(script);
+  };
+
+  // Запуск тестов, если указан параметр test=true
+  const initializeTests = () => {
+    if (window.location.search.includes("test=true")) {
+      loadScript("js/test-runner.js", () => {
+        loadScript("js/test-controller.js");
+      });
+    }
   };
 
   // Действия приложения
@@ -39,13 +49,6 @@ const appController = (() => {
     openFile: () => console.log("Opening file"),
     openFolder: () => console.log("Opening folder"),
     saveFile: () => console.log("Saving file"),
-  };
-
-  // Запуск тестов, если указан параметр test=true
-  const initializeTests = () => {
-    if (window.location.search.includes("test=true")) {
-      loadScript("js/test-controller.js");
-    }
   };
 
   // Инициализация приложения

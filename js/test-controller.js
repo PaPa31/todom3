@@ -1,152 +1,130 @@
-// Тесты для earliest-togglers.js с сохранением исходного состояния
-function testEarliestTogglers() {
-  console.log("Запуск тестов для earliest-togglers.js");
+// test-controller.js с оберткой runTest из test-runner.js
 
-  // Сохранение исходных значений в localStorage
+function testEarliestTogglers() {
   const originalDarkMode = localStorage.getItem("todomDarkMode");
   const originalDateMode = localStorage.getItem("todomDateMode");
 
-  try {
-    // Тест функции isDarkMode
+  // Тест функции isDarkMode
+  runTest("Проверка включенного темного режима", function () {
     localStorage.setItem("todomDarkMode", "set");
-    console.assert(
-      isDarkMode() === "set",
-      "Проверка включенного темного режима"
-    );
-    localStorage.removeItem("todomDarkMode");
-    console.assert(
-      isDarkMode() === null,
-      "Проверка выключенного темного режима"
-    );
+    console.assert(isDarkMode() === "set", "Темный режим включен");
+  });
 
-    // Тест функции getDateMode с проверкой значения по умолчанию
+  runTest("Проверка выключенного темного режима", function () {
+    localStorage.removeItem("todomDarkMode");
+    console.assert(isDarkMode() === null, "Темный режим выключен");
+  });
+
+  // Тест функции getDateMode
+  runTest("Проверка режима даты по умолчанию", function () {
     localStorage.removeItem("todomDateMode");
     console.assert(
       getDateMode() === MODES.HIDE_BOTH,
-      "Проверка режима даты по умолчанию"
+      "Режим даты по умолчанию"
     );
+  });
 
-    // Тест toggleDateMode: проверка перехода между режимами
+  // Тест функции toggleDateMode
+  runTest("Проверка переключения режима даты", function () {
     const initialMode = getDateMode();
     const nextMode = toggleDateMode();
     console.assert(
       nextMode === (initialMode + 1) % 4,
-      "Проверка переключения режима даты"
+      "Переключение режима даты"
     );
+  });
 
-    console.log("Тесты для earliest-togglers.js успешно завершены");
-  } finally {
-    // Восстанавливаем исходные значения в localStorage
-    if (originalDarkMode !== null) {
-      localStorage.setItem("todomDarkMode", originalDarkMode);
-    } else {
-      localStorage.removeItem("todomDarkMode");
-    }
+  // Восстановление исходных значений
+  if (originalDarkMode !== null) {
+    localStorage.setItem("todomDarkMode", originalDarkMode);
+  } else {
+    localStorage.removeItem("todomDarkMode");
+  }
 
-    if (originalDateMode !== null) {
-      localStorage.setItem("todomDateMode", originalDateMode);
-    } else {
-      localStorage.removeItem("todomDateMode");
-    }
+  if (originalDateMode !== null) {
+    localStorage.setItem("todomDateMode", originalDateMode);
+  } else {
+    localStorage.removeItem("todomDateMode");
   }
 }
 
-// Тесты для функций в list-order.js
 function testListOrderFunctions() {
-  console.log("Запуск тестов для list-order.js");
-
-  // Сохраняем исходное значение
   const originalListOrder = localStorage.getItem("todomListReverseOrder");
-  const contentElement = document.getElementById("content"); // Инициализация один раз
+  const contentElement = document.getElementById("content");
 
-  try {
-    // Тест функции isReversed
+  // Тест функции isReversed
+  runTest("Проверка обратного порядка списка включена", function () {
     localStorage.setItem("todomListReverseOrder", "set");
-    console.assert(
-      isReversed() === "set",
-      "Проверка обратного порядка списка включена"
-    );
+    console.assert(isReversed() === "set", "Обратный порядок включен");
+  });
 
+  runTest("Проверка обратного порядка списка выключена", function () {
     localStorage.removeItem("todomListReverseOrder");
-    console.assert(
-      isReversed() === null,
-      "Проверка обратного порядка списка выключена"
-    );
+    console.assert(isReversed() === null, "Обратный порядок выключен");
+  });
 
-    // Тест toggleReversedMode с переключением класса
+  // Тест функции toggleReversedMode
+  runTest("Проверка класса 'reversed' добавлен", function () {
     contentElement.classList.remove("reversed");
     toggleReversedMode();
     console.assert(
       contentElement.classList.contains("reversed"),
       "Класс 'reversed' добавлен"
     );
+  });
 
+  runTest("Проверка класса 'reversed' удален", function () {
     toggleReversedMode();
     console.assert(
       !contentElement.classList.contains("reversed"),
       "Класс 'reversed' удален"
     );
+  });
 
-    console.log("Тесты для list-order.js успешно завершены");
-  } finally {
-    // Восстанавливаем исходное значение в localStorage
-    if (originalListOrder !== null) {
-      localStorage.setItem("todomListReverseOrder", originalListOrder);
-    } else {
-      localStorage.removeItem("todomListReverseOrder");
-    }
-
-    // Устанавливаем класс 'reversed' в соответствии с значением в localStorage
-    if (isReversed()) {
-      contentElement.classList.add("reversed");
-    } else {
-      contentElement.classList.remove("reversed");
-    }
+  // Восстанавливаем исходное значение и синхронизируем отображение
+  if (originalListOrder !== null) {
+    localStorage.setItem("todomListReverseOrder", originalListOrder);
+  } else {
+    localStorage.removeItem("todomListReverseOrder");
+  }
+  if (isReversed()) {
+    contentElement.classList.add("reversed");
+  } else {
+    contentElement.classList.remove("reversed");
   }
 }
 
-// Строгая версия тестов для проверки протокола
-function runTests() {
-  var tests = [
-    function testFileProtocol() {
-      var controller = new StateController("file:");
-      if (window.location.protocol !== "file:") {
-        throw new Error("Протокол тестирования не соответствует 'file:'");
-      }
-      console.assert(
-        controller.getProtocol() === "file:",
-        "Проверка протокола 'file:'"
-      );
-    },
-    function testHTTPProtocol() {
-      var controller = new StateController("http:");
-      if (
-        window.location.protocol !== "http:" &&
-        window.location.protocol !== "https:"
-      ) {
-        throw new Error(
-          "Протокол тестирования не соответствует 'http:' или 'https:'"
-        );
-      }
-      console.assert(
-        controller.getProtocol() === "http:",
-        "Проверка протокола 'http:'"
-      );
-    },
-  ];
-
-  tests.forEach(function (test) {
-    try {
-      test();
-      console.log(test.name + " прошел успешно.");
-    } catch (e) {
-      console.error(test.name + " не прошел:", e.message);
+function runProtocolTests() {
+  runTest("Проверка протокола 'file:'", function () {
+    var controller = new StateController("file:");
+    if (window.location.protocol !== "file:") {
+      throw new Error("Протокол тестирования не соответствует 'file:'");
     }
+    console.assert(
+      controller.getProtocol() === "file:",
+      "Проверка протокола 'file:'"
+    );
+  });
+
+  runTest("Проверка протокола 'http:'", function () {
+    var controller = new StateController("http:");
+    if (
+      window.location.protocol !== "http:" &&
+      window.location.protocol !== "https:"
+    ) {
+      throw new Error(
+        "Протокол тестирования не соответствует 'http:' или 'https:'"
+      );
+    }
+    console.assert(
+      controller.getProtocol() === "http:",
+      "Проверка протокола 'http:'"
+    );
   });
 }
 
 if (window.location.search.includes("test=true")) {
-  testEarliestTogglers(); // Запуск тестов для earliest-togglers.js
-  testListOrderFunctions(); // Запуск тестов для list-order.js
-  runTests(); // Запуск других тестов
+  testEarliestTogglers();
+  testListOrderFunctions();
+  runProtocolTests();
 }
