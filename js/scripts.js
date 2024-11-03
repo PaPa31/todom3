@@ -298,7 +298,7 @@ function extractFolderAndCreateFileName() {
   return { folderName, fileName };
 }
 
-const saveItemFromFile = async (fileName) => {
+const saveItemFromFile = (fileName) => {
   foldedClass = document.getElementById("list-items");
   isItemState = !isItemState;
 
@@ -327,7 +327,7 @@ const saveItemFromFile = async (fileName) => {
   isItemState = !isItemState;
 };
 
-async function drawFile(fileSize) {
+function drawFile(fileSize) {
   const previewOffset = preview.scrollTop;
   let fileName;
   if (fileIndexToEdit != null) {
@@ -343,7 +343,7 @@ async function drawFile(fileSize) {
     idCounterFiles++;
   }
 
-  if (!isItemState) await saveItemFromFile(fileName);
+  if (!isItemState) saveItemFromFile(fileName);
 
   updateUI6();
 }
