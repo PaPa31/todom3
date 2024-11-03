@@ -812,6 +812,20 @@ if (input.value) {
   mdToPreview(input.value);
   //preview.scrollTop = preview.scrollHeight;
 }
+
+//  Инициализация `marked` с уникальными id
+const renderer = new marked.Renderer();
+const slugger = new marked.Slugger();
+
+renderer.heading = (text, level) => {
+  // Добавляем префикс `note-` чтобы не конфликтовать с 'mocha'
+  // Добавляем постфикс для уникальности
+  const slug = `note-${slugger.slug(text)}`;
+  return `<h${level} id="${slug}">${text}</h${level}>`;
+};
+
+marked.use({ renderer });
+
 initializeItemState();
 showOrHideDeleteAllItems();
 showOrHideTrash();
