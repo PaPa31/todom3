@@ -317,10 +317,9 @@ const saveItemFromFile = async (fileName) => {
     const specObj = { save: 0 };
 
     pushItemArrays(itemObj, specObj);
-    drawLi(idCounterItems);
-    const itemId = indexedItems[idCounterItems - 1];
-    const liDOM = document.getElementById(itemId);
-    liDOM.classList.add("new-from-file");
+    indexedItems.push(idCounterItems.toString());
+    liDomMaker(idCounterItems, "new-from-file");
+    idCounterItems++;
   }
   localStorage.setItem("todomItemsArray", JSON.stringify(itemsArray));
 

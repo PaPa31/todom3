@@ -145,7 +145,7 @@ const changeDateInAfter = (ancestorEl, currentDate) => {
   }
 };
 
-function liDomMaker(arrIndex) {
+function liDomMaker(arrIndex, newFromFile = null) {
   const li = document.createElement("li");
   const topDiv = document.createElement("div");
   topDiv.setAttribute("class", "top-in-li");
@@ -171,6 +171,8 @@ function liDomMaker(arrIndex) {
     const resizableDiv = document.createElement("div");
     resizableDiv.setAttribute("class", "resizable-div");
     mdToTagsWithoutShape(resizableDiv, textArr[currentSave].variant);
+    if (newFromFile && newFromFile === "new-from-file")
+      li.setAttribute("class", "new-from-file");
     if (last > 0) {
       changeCurrentInBefore(resizableDiv, textArr.length);
     } else {
