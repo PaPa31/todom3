@@ -3,7 +3,7 @@
 //var phrase = "static/demo.md";
 //var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
 
-const rootDirectory = "../public/md/chron/";
+const rootDirectory = "public/md/chron/";
 let initialFileName = null;
 
 // Directory stack to keep track of the visited directories
@@ -115,10 +115,14 @@ async function openDirectory(directoryPath, save = false) {
       // Update the current directory when navigating into a new directory
       currentDirectory = directoryPath;
 
-      const response = await fetch(`open-directory?path=${directoryPath}`, {
-        method: "GET",
-        mode: "cors",
-      });
+      const response = await fetch(
+        `protocol-http.cgi?action=open-directory&path=${encodeURIComponent(
+          directoryPath
+        )}`,
+        {
+          method: "GET",
+        }
+      );
 
       const fileTree = await response.json();
 
@@ -423,10 +427,14 @@ const fileHttpHandler = (name, dir, size, text) => {
 // Recursive function for downloading files
 const getFileHttp = async (fileName, includeNestedFiles = false) => {
   try {
-    const response = await fetch(`open-directory?path=${fileName}`, {
-      method: "GET",
-      mode: "cors",
-    });
+    const response = await fetch(
+      `protocol-http.cgi?action=open-directory&path=${encodeURIComponent(
+        fileName
+      )}`,
+      {
+        method: "GET",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Bad response from server");
@@ -477,7 +485,7 @@ const getFileHttp = async (fileName, includeNestedFiles = false) => {
 async function saveFileHttp(fileName, fileContent) {
   try {
     // Try to save the file directly
-    const response = await fetch(`save-file`, {
+    const response = await fetch(`protocol-http.cgi?action=save-file`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -501,17 +509,20 @@ async function saveFileHttp(fileName, fileContent) {
       }
 
       // Retry with overwrite flag
-      const overwriteResponse = await fetch(`save-file`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fileName: `${saveDirectory}/${fileName}`,
-          fileContent: fileContent,
-          overwrite: true, // Now allow overwriting
-        }),
-      });
+      const overwriteResponse = await fetch(
+        `protocol-http.cgi?action=save-file`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fileName: `${saveDirectory}/${fileName}`,
+            fileContent: fileContent,
+            overwrite: true, // Now allow overwriting
+          }),
+        }
+      );
 
       if (overwriteResponse.ok) {
         console.log("File saved successfully after overwrite.");
@@ -531,7 +542,7 @@ async function saveFileHttp(fileName, fileContent) {
 // Function to create a new folder
 async function createNewFolder(currentDirectory, folderName) {
   try {
-    const response = await fetch(`create-folder`, {
+    const response = await fetch(`protocol-http.cgi?action=create-folder`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
