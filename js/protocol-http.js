@@ -484,20 +484,25 @@ const getFileHttp = async (fileName, includeNestedFiles = false) => {
 // Function to save the file content to the server
 async function saveFileHttp(fileName, fileContent) {
   try {
-    // Try to save the file directly
+    // Prepare the payload (no redundant encoding for fileContent)
+    const payload = new URLSearchParams({
+      fileName: `${saveDirectory}/${fileName}`,
+      fileContent: fileContent, // Direct raw content
+      overwrite: "false", // Default to not overwrite
+    });
+
+    console.log("Debug: Payload", payload.toString());
+
+    // Initial file save attempt
     const response = await fetch(`protocol-http.cgi?action=save-file`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: JSON.stringify({
-        fileName: `${saveDirectory}/${fileName}`,
-        fileContent: fileContent,
-        overwrite: false, // By default, do not overwrite
-      }),
+      body: payload.toString(),
     });
 
-    // Check for 409 Conflict and handle it without treating it as a critical error
+    // Handle 409 Conflict (file exists)
     if (response.status === 409) {
       console.log("File already exists.");
       const overwrite = confirm(
@@ -505,22 +510,22 @@ async function saveFileHttp(fileName, fileContent) {
       );
       if (!overwrite) {
         console.log("File save canceled.");
-        return; // Stop if the user doesn't want to overwrite
+        return; // Abort if the user doesn't want to overwrite
       }
 
-      // Retry with overwrite flag
+      // Update payload to allow overwriting
+      payload.set("overwrite", "true");
+      console.log("Debug: Overwrite Payload", payload.toString());
+
+      // Retry saving the file with overwrite
       const overwriteResponse = await fetch(
         `protocol-http.cgi?action=save-file`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
           },
-          body: JSON.stringify({
-            fileName: `${saveDirectory}/${fileName}`,
-            fileContent: fileContent,
-            overwrite: true, // Now allow overwriting
-          }),
+          body: payload.toString(),
         }
       );
 

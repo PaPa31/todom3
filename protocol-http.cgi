@@ -26,24 +26,51 @@ else
   echo "Path does not exist: $absolute_path" >> /tmp/cgi-debug.log
 fi
 
+read_raw_content() {
+  CONTENT=$(cat) # Read raw data from standard input
+}
+
+# Decode URL-encoded values
+url_decode() {
+  printf '%b' "$(echo "$1" | sed 's/%/\\x/g')"
+}
+
 case "$action" in
   save-file)
-    read CONTENT
-    fileName=$(echo "$CONTENT" | sed -n 's/.*"fileName":"\([^"]*\)".*/\1/p')
-    fileContent=$(echo "$CONTENT" | sed -n 's/.*"fileContent":"\([^"]*\)".*/\1/p')
-    overWrite=$(echo "$CONTENT" | grep -q '"overwrite": *true' && echo true || echo false)
+    # Read raw input
+    read_raw_content
+    echo "Debug: CONTENT=$CONTENT" >> /tmp/cgi-debug.log
 
+    # Parse key-value pairs
+    fileName=$(echo "$CONTENT" | sed -n 's/.*fileName=\([^&]*\).*/\1/p')
+    fileContent=$(echo "$CONTENT" | sed -n 's/.*fileContent=\([^&]*\).*/\1/p')
+    overWrite=$(echo "$CONTENT" | sed -n 's/.*overwrite=\([^&]*\).*/\1/p')
+
+    # Decode URL-encoded values
+    fileName=$(url_decode "$fileName")
+    fileContent=$(url_decode "$fileContent")
+    # Decode URL-encoded content and replace + with space
+    fileContent=$(echo "$fileContent" | sed 's/+/ /g' )
+
+    echo "Debug: Decoded fileName=$fileName" >> /tmp/cgi-debug.log
+    echo "Debug: Decoded fileContent=$fileContent" >> /tmp/cgi-debug.log
+
+   # Resolve file path
     targetPath="${root_dir}/${fileName}"
 
-    if [ "$overWrite" = false ] && [ -f "$targetPath" ]; then
+
+    # Check overwrite flag and handle file operations
+    if [ "$overwrite" != "true" ] && [ -f "$targetPath" ]; then
       echo '{ "success": false, "message": "File already exists." }'
     else
-      echo "$fileContent" > "$targetPath" && echo '{ "success": true, "message": "File saved successfully." }' || echo '{ "success": false, "message": "Failed to save the file." }'
+      # Write file content
+      printf "%s" "$fileContent" > "$targetPath" && echo '{ "success": true, "message": "File saved successfully." }' || echo '{ "success": false, "message": "Failed to save the file." }'
     fi
     ;;
-    
+
   create-folder)
-    read CONTENT
+    read_raw_content
+    echo "Debug: CONTENT=$CONTENT" >> /tmp/cgi-debug.log
     directory=$(echo "$CONTENT" | sed -n 's/.*"directory":"\([^"]*\)".*/\1/p')
     folderName=$(echo "$CONTENT" | sed -n 's/.*"folderName":"\([^"]*\)".*/\1/p')
 
