@@ -413,6 +413,7 @@ ol#list-files .main-act {
   justify-content: start;
   height: 100%;
   position: relative;
+  padding: 10px;
 }
 
 .folded .resizable-div {
@@ -1322,13 +1323,21 @@ li:not(.folded) .top-in-li.sticky.hide {
   display: flex;
 }
 
-.md-item,
+/*.md-item,
 .file-text {
   padding: 10px;
-}
+}*/
 
-ol#list-items > li:not(.folded) .dual {
+/*ol#list-items > li:not(.folded) .dual {
   padding: 0px 4px 4px 0px;
+}*/
+
+li:not(.folded) .dual {
+  /*resize handle takes 10px from the right
+  and 10px from the bottom
+  */
+  resize: both;
+  overflow: auto;
 }
 
 ol#list-items > li:not(.folded) .dual,
@@ -1336,8 +1345,8 @@ ol#list-items > li:not(.folded) .dual,
   /*resize handle takes 10px from the right
   and 10px from the bottom
   */
-  resize: both;
-  overflow: auto;
+  /*resize: both;
+  overflow: auto;*/
 }
 
 .dual > .editor {
