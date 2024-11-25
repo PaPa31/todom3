@@ -109,9 +109,7 @@ const coverDivMaker = (iframe) => {
 
 const replaceImageWithIframe = function (e) {
   const papa = e.target.parentNode,
-    targetEl = isItemState
-      ? findParentTagOrClassRecursive(papa, undefined, "dual")
-      : findParentTagOrClassRecursive(papa, undefined, "file-text");
+    targetEl = findParentTagOrClassRecursive(papa, undefined, "dual");
   targetEl.style.width = targetEl.offsetWidth + "px";
   targetEl.style.height = targetEl.offsetHeight + "px";
   const iframe = createEl("iframe", {

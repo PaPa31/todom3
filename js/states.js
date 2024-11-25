@@ -190,7 +190,7 @@ function liDomMaker(arrIndex, newFromFile = null) {
     div.setAttribute("class", "md-file");
     li.setAttribute("class", "folded"); // initially all files are folded
 
-    const attr = { class: "file-text resizable-div" };
+    const attr = { class: "resizable-div" };
     const fileTextDiv = createEl("div", attr, topDiv);
     mdToTagsWithoutShape(fileTextDiv, filesArray[correctedFilesIndex].text);
 

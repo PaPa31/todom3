@@ -1332,7 +1332,7 @@ li:not(.folded) .dual {
   and 10px from the bottom
   */
   resize: both;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .dual > .editor {
@@ -1345,6 +1345,7 @@ li:not(.folded) .dual {
   flex: 1;
   width: 50%;
   padding: 10px;
+  overflow: auto;
 }
 
 .md-file {

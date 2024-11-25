@@ -84,7 +84,7 @@ function liDomMaker(arrIndex) {
 
     div.setAttribute("class", "md-file");
 
-    const attr = { class: "file-text resizable-div" };
+    const attr = { class: "resizable-div" };
     const fileTextDiv = createEl("div", attr, topDiv);
     mdToTagsWithoutShape(fileTextDiv, filesArray[correctedFilesIndex].text);
 
