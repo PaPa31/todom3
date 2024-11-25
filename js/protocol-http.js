@@ -532,7 +532,8 @@ async function saveFileHttp(fileName, fileContent) {
       if (overwriteResponse.ok) {
         console.log("File saved successfully after overwrite.");
       } else {
-        console.error("Failed to overwrite the file.");
+        const overwriteData = await overwriteResponse.json();
+        console.error("Failed to overwrite the file: ", overwriteData.message);
       }
     } else if (!response.ok) {
       console.error("Failed to save file.");

@@ -16,6 +16,13 @@ root_dir="/www"  # Adjust based on actual document root
 
 # Resolve to absolute path within /www
 absolute_path="${root_dir}/${relative_path}"
+
+# Sanitize file path (prevent directory traversal)
+if ! echo "$absolute_path" | grep -q "^${root_dir}"; then
+  echo '{ "success": false, "message": "Invalid file path." }'
+  exit 1
+fi
+
 echo "Resolved Path: $absolute_path" >> /tmp/cgi-debug.log
 
 # Check if path exists and log permissions
@@ -49,6 +56,13 @@ case "$action" in
     # Decode URL-encoded values
     fileName=$(url_decode "$fileName")
     fileContent=$(url_decode "$fileContent")
+
+    # Sanitize file name to prevent traversal
+    if echo "$fileName" | grep -q '\.\.'; then
+      echo '{ "success": false, "message": "Invalid file name." }'
+      exit 1
+    fi
+
     # Decode URL-encoded content and replace + with space
     fileContent=$(echo "$fileContent" | sed 's/+/ /g' )
 
@@ -58,13 +72,16 @@ case "$action" in
    # Resolve file path
     targetPath="${root_dir}/${fileName}"
 
-
     # Check overwrite flag and handle file operations
-    if [ "$overwrite" != "true" ] && [ -f "$targetPath" ]; then
+    if [ "$overWrite" != "true" ] && [ -f "$targetPath" ]; then
       echo '{ "success": false, "message": "File already exists." }'
     else
-      # Write file content
-      printf "%s" "$fileContent" > "$targetPath" && echo '{ "success": true, "message": "File saved successfully." }' || echo '{ "success": false, "message": "Failed to save the file." }'
+      # Safely write file content
+      if printf "%s" "$fileContent" > "$targetPath"; then
+        echo '{ "success": true, "message": "File saved successfully." }'
+      else
+        echo '{ "success": false, "message": "Failed to save the file." }'
+      fi
     fi
     ;;
 
