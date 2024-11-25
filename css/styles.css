@@ -320,7 +320,7 @@ ol#list-items .folded .md-item {
 }
 
 .file-info {
-  overflow: auto;
+  overflow: hidden;
 }
 
 .file-text {
@@ -380,7 +380,7 @@ ol#list-files .main-act {
 
 .file-name,
 .file-size {
-  line-height: 19px;
+  line-height: 17px;
 }
 
 #preview,
@@ -1298,6 +1298,7 @@ li:not(.folded) .top-in-li {
   /*workaround: default div has 0 height*/
   overflow: hidden;
   transform: translateY(0); /*smooth transition for first appearing*/
+  padding-bottom: 2px;
 }
 
 li:not(.folded) .top-in-li.sticky {
