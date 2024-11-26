@@ -22,8 +22,17 @@ You can use these pre-defined CSS styles:
 
 If you insert the standard Youtube shared block:
 
-```
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RvTEh9FhSz4?si=hMTZS1GE65Nqz9ev" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+```html
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/RvTEh9FhSz4?si=hMTZS1GE65Nqz9ev"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
 ```
 
 you will get an thumbnail image with description and Youtube play button.
@@ -32,11 +41,11 @@ you will get an thumbnail image with description and Youtube play button.
 
 If you insert a block like this:
 
-```
+```html
 <ul class="gallery">
-<li><img src="../public/img/cf-inside/cf-corsair-2GB-01.png" /></li>
-<li><img src="../public/img/cf-inside/cf-corsair-2GB-02.png" /></li>
-<li><img src="../public/img/cf-inside/cf-corsair-2GB-03.png" /></li>
+  <li><img src="../public/img/cf-inside/cf-corsair-2GB-01.png" /></li>
+  <li><img src="../public/img/cf-inside/cf-corsair-2GB-02.png" /></li>
+  <li><img src="../public/img/cf-inside/cf-corsair-2GB-03.png" /></li>
 </ul>
 ```
 
@@ -136,15 +145,14 @@ fi
 
 # End the HTML output
 echo '</ul>'
-
 ```
 
 </details>
 
-Run the script with the path to the directory containing images:
+Open your shell-terminal and Run the script with the path to the directory containing images:
 
-```
-$ create_html_image_tags.sh ~/static/public/img/russia-election
+```sh
+create_html_image_tags.sh ~/static/public/img/russia-election
 ```
 
 This script will sort the images by modification time in ascending order (oldest first) before generating the HTML tags. The script includes the parent directory name in the `src` attribute of the `<img>` tags. Adjust the `src` path within the script as needed to match your directory structure. For more details, run the script with `-h` or `--help` attribute.
@@ -155,31 +163,36 @@ This script will sort the images by modification time in ascending order (oldest
 
 You can add an animated SVG using the `object` tag:
 
-```
-<object type="image/svg+xml" data="../public/img/SVG/animated-clock.svg" ></object>
+```html
+<object
+  type="image/svg+xml"
+  data="../public/img/SVG/animated-clock.svg"
+></object>
 ```
 
 ### 4. Single IMG
 
-```
+```html
 <div class="single-image">
-<img src="../public/img/DMP-Group/iad-100xx-RDC-processor.jpg" />
+  <img src="../public/img/DMP-Group/iad-100xx-RDC-processor.jpg" />
 </div>
 ```
 
 ### 5. Green/Red border `details` > `summary`
 
-```
+```html
 <details>
   <summary>Hidden text</summary>
 
-You can see this text if you click on the "Hidden text" heading.
-
+  You can see this text if you click on the "Hidden text" heading.
 </details>
 ```
 
 ### 6. Right-floating question as ChatGPT
 
-```
-<div class="question">And if I work with 1) old PATA CF-disks with 2) old Syslinux bootloaders that loads 3) an old Linux kernels?</div>
+```html
+<div class="question">
+  And if I work with 1) old PATA CF-disks with 2) old Syslinux bootloaders that
+  loads 3) an old Linux kernels?
+</div>
 ```
