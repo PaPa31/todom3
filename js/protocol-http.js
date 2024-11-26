@@ -502,46 +502,47 @@ async function saveFileHttp(fileName, fileContent) {
       body: payload.toString(),
     });
 
+    const result = await response.json();
+
     // Handle 409 Conflict (file exists)
-    if (response.status === 409) {
+    if (result.fileExists) {
       console.log("File already exists.");
       const overwrite = confirm(
         `File "${fileName}" already exists. Do you want to overwrite it?`
       );
-      if (!overwrite) {
-        console.log("File save canceled.");
-        return; // Abort if the user doesn't want to overwrite
-      }
 
-      // Update payload to allow overwriting
-      payload.set("overwrite", "true");
-      console.log("Debug: Overwrite Payload", payload.toString());
+      if (overwrite) {
+        payload.set("overwrite", "true");
+        console.log("Debug: Overwrite Payload", payload.toString());
 
-      // Retry saving the file with overwrite
-      const overwriteResponse = await fetch(
-        `protocol-http.cgi?action=save-file`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: payload.toString(),
+        // Retry with overwrite
+        const overwriteResponse = await fetch(
+          `protocol-http.cgi?action=save-file`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: payload.toString(),
+          }
+        );
+
+        const overwriteResult = await overwriteResponse.json();
+        if (overwriteResult.success) {
+          console.log("File overwritten successfully.");
+        } else {
+          console.error("Error overwriting file: ", overwriteResult.message);
         }
-      );
-
-      if (overwriteResponse.ok) {
-        console.log("File saved successfully after overwrite.");
       } else {
-        const overwriteData = await overwriteResponse.json();
-        console.error("Failed to overwrite the file: ", overwriteData.message);
+        console.log("File save canceled.");
       }
-    } else if (!response.ok) {
-      console.error("Failed to save file.");
-    } else {
+    } else if (result.success) {
       console.log("File saved successfully.");
+    } else {
+      console.error("File save failed: ", result.message);
     }
   } catch (error) {
-    console.error("Error while saving the file: ", error);
+    console.error("Error saving the file: ", error);
   }
 }
 

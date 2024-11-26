@@ -51,7 +51,9 @@ case "$action" in
     # Parse key-value pairs
     fileName=$(echo "$CONTENT" | sed -n 's/.*fileName=\([^&]*\).*/\1/p')
     fileContent=$(echo "$CONTENT" | sed -n 's/.*fileContent=\([^&]*\).*/\1/p')
-    overWrite=$(echo "$CONTENT" | sed -n 's/.*overwrite=\([^&]*\).*/\1/p')
+    overwrite=$(echo "$CONTENT" | sed -n 's/.*overwrite=\([^&]*\).*/\1/p')
+
+    echo "Debug: overwrite=$overwrite" >> /tmp/cgi-debug.log
 
     # Decode URL-encoded values
     fileName=$(url_decode "$fileName")
@@ -72,11 +74,20 @@ case "$action" in
    # Resolve file path
     targetPath="${root_dir}/${fileName}"
 
-    # Check overwrite flag and handle file operations
-    if [ "$overWrite" != "true" ] && [ -f "$targetPath" ]; then
-      echo '{ "success": false, "message": "File already exists." }'
+    if [ -f "$targetPath" ]; then
+      if [ "$overwrite" = "true" ]; then
+        # Overwrite the file
+        if printf "%s" "$fileContent" > "$targetPath"; then
+          echo '{ "success": true, "message": "File overwritten successfully." }'
+        else
+          echo '{ "success": false, "message": "Failed to overwrite the file." }'
+        fi
+      else
+        # Inform client the file exists
+        echo '{ "success": false, "message": "File already exists.", "fileExists": true }'
+      fi
     else
-      # Safely write file content
+      # Save the file as it doesn't exist
       if printf "%s" "$fileContent" > "$targetPath"; then
         echo '{ "success": true, "message": "File saved successfully." }'
       else
