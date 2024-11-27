@@ -33,8 +33,17 @@ else
   echo "Path does not exist: $absolute_path" >> /tmp/cgi-debug.log
 fi
 
+# Function to read raw input data
 read_raw_content() {
-  CONTENT=$(cat) # Read raw data from standard input
+  CONTENT=""
+  while IFS= read -r line; do
+    CONTENT="${CONTENT}${line}"
+  done
+}
+
+# Decode JSON values using jq or manual parsing
+parse_json_field() {
+  echo "$1" | sed -n "s/.*\"$2\":\"\([^\"]*\)\".*/\1/p"
 }
 
 # Decode URL-encoded values
@@ -47,11 +56,12 @@ case "$action" in
     # Read raw input
     read_raw_content
     echo "Debug: CONTENT=$CONTENT" >> /tmp/cgi-debug.log
+    echo "Content-Length: $CONTENT_LENGTH" >> /tmp/cgi-debug.log
+    echo "$CONTENT" | head -c 100 >> /tmp/cgi-debug.log
 
-    # Parse key-value pairs
-    fileName=$(echo "$CONTENT" | sed -n 's/.*fileName=\([^&]*\).*/\1/p')
-    fileContent=$(echo "$CONTENT" | sed -n 's/.*fileContent=\([^&]*\).*/\1/p')
-    overwrite=$(echo "$CONTENT" | sed -n 's/.*overwrite=\([^&]*\).*/\1/p')
+    fileName=$(parse_json_field "$CONTENT" "fileName")
+    fileContent=$(parse_json_field "$CONTENT" "fileContent")
+    overwrite=$(parse_json_field "$CONTENT" "overwrite")
 
     echo "Debug: overwrite=$overwrite" >> /tmp/cgi-debug.log
 
@@ -59,40 +69,31 @@ case "$action" in
     fileName=$(url_decode "$fileName")
     fileContent=$(url_decode "$fileContent")
 
-    # Sanitize file name to prevent traversal
-    if echo "$fileName" | grep -q '\.\.'; then
-      echo '{ "success": false, "message": "Invalid file name." }'
-      exit 1
-    fi
-
     # Decode URL-encoded content and replace + with space
     fileContent=$(echo "$fileContent" | sed 's/+/ /g' )
 
     echo "Debug: Decoded fileName=$fileName" >> /tmp/cgi-debug.log
     echo "Debug: Decoded fileContent=$fileContent" >> /tmp/cgi-debug.log
 
-   # Resolve file path
-    targetPath="${root_dir}/${fileName}"
+    # Sanitize file path
+    sanitized_path="${root_dir}/${fileName}"
+    if ! echo "$sanitized_path" | grep -q "^${root_dir}"; then
+      echo '{ "success": false, "message": "Invalid file path." }'
+      exit 1
+    fi
 
-    if [ -f "$targetPath" ]; then
-      if [ "$overwrite" = "true" ]; then
-        # Overwrite the file
-        if printf "%s" "$fileContent" > "$targetPath"; then
-          echo '{ "success": true, "message": "File overwritten successfully." }'
-        else
-          echo '{ "success": false, "message": "Failed to overwrite the file." }'
-        fi
+      # Save or overwrite the file
+      if [ -f "$sanitized_path" ] && [ "$overwrite" != "true" ]; then
+        echo '{ "success": false, "fileExists": true, "message": "File already exists." }'
       else
-        # Inform client the file exists
-        echo '{ "success": false, "message": "File already exists.", "fileExists": true }'
+        if printf "%s" "$fileContent" > "$sanitized_path"; then
+          echo '{ "success": true, "message": "File saved successfully." }'
+        else
+          echo '{ "success": false, "message": "Failed to save the file." }'
+        fi
       fi
     else
-      # Save the file as it doesn't exist
-      if printf "%s" "$fileContent" > "$targetPath"; then
-        echo '{ "success": true, "message": "File saved successfully." }'
-      else
-        echo '{ "success": false, "message": "Failed to save the file." }'
-      fi
+      echo '{ "success": false, "message": "Invalid action." }'
     fi
     ;;
 

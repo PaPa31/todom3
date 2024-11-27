@@ -482,59 +482,33 @@ const getFileHttp = async (fileName, includeNestedFiles = false) => {
 };
 
 // Function to save the file content to the server
-async function saveFileHttp(fileName, fileContent) {
+async function saveFileHttp(fileName, fileContent, overwrite = false) {
   try {
-    // Prepare the payload (no redundant encoding for fileContent)
-    const payload = new URLSearchParams({
+    const payload = JSON.stringify({
       fileName: `${saveDirectory}/${fileName}`,
-      fileContent: fileContent, // Direct raw content
-      overwrite: "false", // Default to not overwrite
+      fileContent: fileContent,
+      overwrite: overwrite,
     });
 
-    console.log("Debug: Payload", payload.toString());
-
-    // Initial file save attempt
     const response = await fetch(`protocol-http.cgi?action=save-file`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
-      body: payload.toString(),
+      body: payload,
     });
 
     const result = await response.json();
 
-    // Handle 409 Conflict (file exists)
     if (result.fileExists) {
-      console.log("File already exists.");
-      const overwrite = confirm(
+      const userWantsToOverwrite = confirm(
         `File "${fileName}" already exists. Do you want to overwrite it?`
       );
-
-      if (overwrite) {
-        payload.set("overwrite", "true");
-        console.log("Debug: Overwrite Payload", payload.toString());
-
-        // Retry with overwrite
-        const overwriteResponse = await fetch(
-          `protocol-http.cgi?action=save-file`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: payload.toString(),
-          }
-        );
-
-        const overwriteResult = await overwriteResponse.json();
-        if (overwriteResult.success) {
-          console.log("File overwritten successfully.");
-        } else {
-          console.error("Error overwriting file: ", overwriteResult.message);
-        }
+      if (userWantsToOverwrite) {
+        // Retry with overwrite set to true
+        await saveFileHttp(fileName, fileContent, true);
       } else {
-        console.log("File save canceled.");
+        console.log("File save canceled by user.");
       }
     } else if (result.success) {
       console.log("File saved successfully.");
