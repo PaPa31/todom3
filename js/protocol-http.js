@@ -3,7 +3,7 @@
 //var phrase = "static/demo.md";
 //var phrase = "md/chron/2024-02/12-120508-best-pc-games.md";
 
-const rootDirectory = "webdav/md/chron/";
+const rootDirectory = "webdav/md/chron";
 let initialFileName = null;
 
 // Directory stack to keep track of the visited directories
@@ -481,23 +481,41 @@ const getFileHttp = async (fileName, includeNestedFiles = false) => {
   }
 };
 
+function encodeBase64UTF8(input) {
+  return btoa(unescape(encodeURIComponent(input)));
+}
+
 // Function to save the file content to the server
 async function saveFileHttp(fileName, fileContent, overwrite = false) {
   try {
     console.log(`File size: ${fileContent.length} bytes`);
 
+    //const payload = JSON.stringify({
+    //  fileName: `${saveDirectory}/${fileName}`,
+    //  fileContent: btoa(fileContent),
+    //  overwrite: overwrite,
+    //});
+
+    //const payload = new URLSearchParams({
+    //  fileName: `${saveDirectory}/${fileName}`,
+    //  fileContent: encodeBase64UTF8(fileContent), // Direct raw content
+    //  overwrite: overwrite, // Default to not overwrite
+    //});
+
     const payload = JSON.stringify({
-      fileName: `${saveDirectory}/${fileName}`,
-      fileContent: fileContent,
-      overwrite: overwrite,
+      fileName: encodeURIComponent(`${saveDirectory}/${fileName}`),
+      fileContent: encodeBase64UTF8(fileContent), // Direct raw content
+      overwrite: overwrite, // Default to not overwrite
     });
+
+    //console.log("Debug: Payload", payload.toString());
 
     console.log("Debug: Payload", payload);
 
     const response = await fetch(`protocol-http.cgi?action=save-file`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json; charset=utf-8",
       },
       body: payload,
     });

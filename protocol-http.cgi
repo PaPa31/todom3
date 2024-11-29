@@ -1,5 +1,9 @@
 #!/bin/sh
-echo "Content-Type: application/json; charset=UTF-8"
+
+read CONTENT
+
+#echo "Content-Type: application/x-www-form-urlencoded; charset=UTF-8"
+echo "Content-Type: application/json; charset=utf-8"
 echo ""
 
 # Log incoming request (for debugging)
@@ -51,28 +55,49 @@ parse_json_field() {
 }
 
 # Decode URL-encoded values
-url_decode() {
+urldecode() {
   printf '%b' "$(echo "$1" | sed 's/%/\\x/g')"
 }
+
+
+url_decode() {
+    echo -e "$(echo "$1" | sed 's/%/\\x/g')"
+}
+
 
 case "$action" in
   save-file)
     # Read raw input
-    read_raw_content
+    #read_raw_content
     echo "Debug: CONTENT=$CONTENT" >> /tmp/cgi-debug.log
     echo "Content-Length: $CONTENT_LENGTH" >> /tmp/cgi-debug.log
  
-    fileName=$(parse_json_field "$CONTENT" "fileName")
+    # Extract `filename` and `data`
+    #fileName=$(echo "$CONTENT" | sed -n 's/.*fileName=\([^&]*\).*/\1/p')
+    fileName=$(echo "$CONTENT" | sed -n 's/.*\"fileName\":\"\([^\"]*\)\".*/\1/p')
+    #fileName=$(parse_json_field "$CONTENT" "fileName")
+    echo "Debug: Decoded fileName=$fileName" >> /tmp/cgi-debug.log
+    fileName=$(urldecode "$fileName")
     echo "Debug: Decoded fileName=$fileName" >> /tmp/cgi-debug.log
 
-    #fileContent=$(parse_json_field "$CONTENT" "fileContent")
-    fileContent=$(echo "$CONTENT" | sed -n 's/.*\"fileContent\":\"\([^\"]*\)\".*/\1/p')
-    echo "Debug: Decoded fileContent=$fileContent" >> /tmp/cgi-debug.log
 
+    #fileContent=$(echo "$CONTENT" | sed -n 's/^.*fileContent=\([^&]*\)&.*$/\1/p')
+    fileContent=$(parse_json_field "$CONTENT" "fileContent")
+    #fileContent=$(echo "$CONTENT" | sed -n 's/.*\"fileContent\":\"\([^\"]*\)\".*/\1/p')
+    echo "Debug: Decoded fileContent=$fileContent" >> /tmp/cgi-debug.log
+    #fileContent=$(urldecode "$fileContent")
+    #echo "Debug: Decoded fileContent=$fileContent" >> /tmp/cgi-debug.log
+
+    #overwrite=$(echo "$CONTENT" | sed -n 's/^.*overwrite=\(.*\)$/\1/p')
     #overwrite=$(parse_json_field "$CONTENT" "overwrite")
     overwrite=$(echo "$CONTENT" | sed -n 's/.*\"overwrite\":\([^\}]*\).*/\1/p')
     echo "Debug: Decoded overwrite=$overwrite" >> /tmp/cgi-debug.log
+    #overwrite=$(urldecode "$overwrite")
+    #echo "Debug: Decoded overwrite=$overwrite" >> /tmp/cgi-debug.log
   
+    # Decode Base64 and save to file
+    fileContent=$(echo "$fileContent" | base64 -d )
+    echo "Debug: Decoded base64 fileContent=$fileContent" >> /tmp/cgi-debug.log
 
     # Decode URL-encoded values
     #fileName=$(url_decode "$fileName")
