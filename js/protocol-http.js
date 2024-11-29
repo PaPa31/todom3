@@ -484,11 +484,15 @@ const getFileHttp = async (fileName, includeNestedFiles = false) => {
 // Function to save the file content to the server
 async function saveFileHttp(fileName, fileContent, overwrite = false) {
   try {
+    console.log(`File size: ${fileContent.length} bytes`);
+
     const payload = JSON.stringify({
       fileName: `${saveDirectory}/${fileName}`,
       fileContent: fileContent,
       overwrite: overwrite,
     });
+
+    console.log("Debug: Payload", payload);
 
     const response = await fetch(`protocol-http.cgi?action=save-file`, {
       method: "POST",

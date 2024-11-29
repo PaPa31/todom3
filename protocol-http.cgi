@@ -35,10 +35,14 @@ fi
 
 # Function to read raw input data
 read_raw_content() {
-  CONTENT=""
-  while IFS= read -r line; do
-    CONTENT="${CONTENT}${line}"
-  done
+  CONTENT=$(cat) # Read raw data from standard input
+  #CONTENT=""
+  #while IFS= read -r line; do
+  #  CONTENT="${CONTENT}${line}"
+  #done
+  echo "Content length: ${#CONTENT}" >> /tmp/cgi-debug.log
+  echo "Content length: $CONTENT_LENGTH" >> /tmp/cgi-debug.log
+
 }
 
 # Decode JSON values using jq or manual parsing
@@ -57,23 +61,28 @@ case "$action" in
     read_raw_content
     echo "Debug: CONTENT=$CONTENT" >> /tmp/cgi-debug.log
     echo "Content-Length: $CONTENT_LENGTH" >> /tmp/cgi-debug.log
-    echo "$CONTENT" | head -c 100 >> /tmp/cgi-debug.log
-
+ 
     fileName=$(parse_json_field "$CONTENT" "fileName")
-    fileContent=$(parse_json_field "$CONTENT" "fileContent")
-    overwrite=$(parse_json_field "$CONTENT" "overwrite")
+    echo "Debug: Decoded fileName=$fileName" >> /tmp/cgi-debug.log
 
-    echo "Debug: overwrite=$overwrite" >> /tmp/cgi-debug.log
+    #fileContent=$(parse_json_field "$CONTENT" "fileContent")
+    fileContent=$(echo "$CONTENT" | sed -n 's/.*\"fileContent\":\"\([^\"]*\)\".*/\1/p')
+    echo "Debug: Decoded fileContent=$fileContent" >> /tmp/cgi-debug.log
+
+    #overwrite=$(parse_json_field "$CONTENT" "overwrite")
+    overwrite=$(echo "$CONTENT" | sed -n 's/.*\"overwrite\":\([^\}]*\).*/\1/p')
+    echo "Debug: Decoded overwrite=$overwrite" >> /tmp/cgi-debug.log
+  
 
     # Decode URL-encoded values
-    fileName=$(url_decode "$fileName")
-    fileContent=$(url_decode "$fileContent")
+    #fileName=$(url_decode "$fileName")
+    #fileContent=$(url_decode "$fileContent")
 
     # Decode URL-encoded content and replace + with space
-    fileContent=$(echo "$fileContent" | sed 's/+/ /g' )
+    #fileContent=$(echo "$fileContent" | sed 's/+/ /g' )
 
-    echo "Debug: Decoded fileName=$fileName" >> /tmp/cgi-debug.log
-    echo "Debug: Decoded fileContent=$fileContent" >> /tmp/cgi-debug.log
+
+
 
     # Sanitize file path
     sanitized_path="${root_dir}/${fileName}"
@@ -82,18 +91,15 @@ case "$action" in
       exit 1
     fi
 
-      # Save or overwrite the file
-      if [ -f "$sanitized_path" ] && [ "$overwrite" != "true" ]; then
-        echo '{ "success": false, "fileExists": true, "message": "File already exists." }'
-      else
-        if printf "%s" "$fileContent" > "$sanitized_path"; then
-          echo '{ "success": true, "message": "File saved successfully." }'
-        else
-          echo '{ "success": false, "message": "Failed to save the file." }'
-        fi
-      fi
+    # Save or overwrite the file
+    if [ -f "$sanitized_path" ] && [ "$overwrite" != "true" ]; then
+      echo '{ "success": false, "fileExists": true, "message": "File already exists." }'
     else
-      echo '{ "success": false, "message": "Invalid action." }'
+      if printf "%s" "$fileContent" > "$sanitized_path"; then
+        echo '{ "success": true, "message": "File saved successfully." }'
+      else
+        echo '{ "success": false, "message": "Failed to save the file." }'
+      fi
     fi
     ;;
 
