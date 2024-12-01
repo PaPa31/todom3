@@ -489,6 +489,20 @@ function encodeBase64UTF8(input) {
 async function saveFileHttp(fileName, fileContent, overwrite = false) {
   try {
     console.log(`File size: ${fileContent.length} bytes`);
+    const formData = new FormData();
+    formData.append(
+      "file",
+      new Blob([fileContent], { type: "text/plain; charset=utf-8" }),
+      `${saveDirectory}/${fileName}`
+    );
+    console.log("Debug: formData", JSON.stringify({ formData }));
+
+    const response = await fetch(`protocol-http.cgi?action=save-file`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
 
     //const payload = JSON.stringify({
     //  fileName: `${saveDirectory}/${fileName}`,
@@ -502,25 +516,15 @@ async function saveFileHttp(fileName, fileContent, overwrite = false) {
     //  overwrite: overwrite, // Default to not overwrite
     //});
 
-    const payload = JSON.stringify({
-      fileName: encodeURIComponent(`${saveDirectory}/${fileName}`),
-      fileContent: encodeBase64UTF8(fileContent), // Direct raw content
-      overwrite: overwrite, // Default to not overwrite
-    });
+    //const payload = JSON.stringify({
+    //  fileName: encodeURIComponent(`${saveDirectory}/${fileName}`),
+    //  fileContent: encodeBase64UTF8(fileContent), // Direct raw content
+    //  overwrite: overwrite, // Default to not overwrite
+    //});
 
     //console.log("Debug: Payload", payload.toString());
 
-    console.log("Debug: Payload", payload);
-
-    const response = await fetch(`protocol-http.cgi?action=save-file`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: payload,
-    });
-
-    const result = await response.json();
+    //console.log("Debug: Payload", payload);
 
     if (result.fileExists) {
       const userWantsToOverwrite = confirm(
