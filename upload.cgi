@@ -1,10 +1,11 @@
 #!/bin/sh
 
-echo "Content-Type: application/json; charset=utf-8"
-echo ""
+#echo "Content-Type: application/json; charset=utf-8"
+#echo ""
 
 # Read the entire input
 CONTENT=$(cat)
+#read CONTENT
 echo "Debug: Full Content Received:" >> /tmp/cgi-debug.log
 echo "$CONTENT" >> /tmp/cgi-debug.log
 
@@ -66,21 +67,37 @@ if ! echo "$sanitized_path" | grep -q "^${root_dir}"; then
     exit 1
 fi
 
-if [ -f "$sanitized_path" ]; then
-    if [ "$overwrite" = "true" ]; then
-    # Overwrite the file
-    if echo "$FILE_CONTENT" > "$sanitized_path"; then
-        echo '{ "success": true, "message": "File overwritten successfully." }'
-    else
-        echo '{ "success": false, "message": "Failed to overwrite the file." }'
-    fi
-    else
-    # Inform client the file exists
-    echo '{ "success": false, "message": "File already exists.", "fileExists": true }'
-    fi
+#if [ "$overwrite" = false ] && [ -f "$sanitized_path" ]; then
+#    echo '{ "success": false, "message": "File already exists." }'
+#else
+#    echo "$FILE_CONTENT" > "$sanitized_path" && echo '{ "success": true, "message": "File saved successfully." }' || echo '{ "success": false, "message": "Failed to save the file." }'
+#fi
+
+#if [ -f "$sanitized_path" ]; then
+#    if [ "$overwrite" = "true" ]; then
+#    # Overwrite the file
+#    if echo "$FILE_CONTENT" > "$sanitized_path"; then
+#        echo '{ "success": true, "message": "File overwritten successfully." }'
+#    else
+#        echo '{ "success": false, "message": "Failed to overwrite the file." }'
+#    fi
+#    else
+#    # Inform client the file exists
+#    echo '{ "success": false, "message": "File already exists.", "fileExists": true }'
+#    fi
+#else
+#    # Save the file as it doesn't exist
+#    if echo "$FILE_CONTENT" > "$sanitized_path"; then
+#    echo '{ "success": true, "message": "File saved successfully." }'
+#    else
+#    echo '{ "success": false, "message": "Failed to save the file." }'
+#    fi
+#fi
+
+if [ -f "$sanitized_path" ] && [ "$overwrite" != "true" ]; then
+    echo '{ "success": false, "fileExists": true, "message": "File already exists." }'
 else
-    # Save the file as it doesn't exist
-    if echo "$FILE_CONTENT" > "$sanitized_path"; then
+    if printf "%s" "$FILE_CONTENT" > "$sanitized_path"; then
     echo '{ "success": true, "message": "File saved successfully." }'
     else
     echo '{ "success": false, "message": "Failed to save the file." }'

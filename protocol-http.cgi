@@ -140,6 +140,7 @@ case "$action" in
       else
         echo '{ "success": false, "message": "Failed to save the file." }'
       fi
+    fi
     ;;
 
   create-folder)
