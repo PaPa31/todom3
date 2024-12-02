@@ -492,16 +492,16 @@ async function saveFileHttp(fileName, fileContent) {
     const formData = new FormData();
     const filePath = `${saveDirectory}/${fileName}`;
     formData.append("filename", filePath);
-    //formData.append(
-    //  "file",
-    //  new Blob([fileContent], {
-    //    type: "text/plain; charset=utf-8",
-    //  }),
-    //  filePath
-    //);
-    //formData.append("overwrite", "false");
-    formData.append("file", fileContent);
+    formData.append(
+      "file",
+      new Blob([fileContent], {
+        type: "text/plain; charset=utf-8",
+      }),
+      filePath
+    );
     formData.append("overwrite", "false");
+    //formData.append("file", fileContent);
+    //formData.append("overwrite", "false");
 
     // this forEach block only for console.log formData :)
     formData.forEach((value, key) => {
