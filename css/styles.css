@@ -1300,7 +1300,7 @@ li:not(.folded) .top-in-li {
   padding-bottom: 2px;
 }
 
-li:not(.folded) .top-in-li.sticky {
+li:not(.folded) .top-in-li.sticken {
   background-color: var(--todom-background);
   position: fixed;
   top: 0;
@@ -1309,12 +1309,12 @@ li:not(.folded) .top-in-li.sticky {
   transform: translateY(-100%);
 }
 
-li:not(.folded) .top-in-li.sticky.show {
+li:not(.folded) .top-in-li.sticken.showen {
   transform: translateY(0);
   transition: transform 0.3s ease-in-out;
 }
 
-li:not(.folded) .top-in-li.sticky.hide {
+li:not(.folded) .top-in-li.sticken.hiden {
   transform: translateY(-100%);
   transition: transform 0.3s ease-in-out;
 }

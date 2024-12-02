@@ -26,23 +26,26 @@ function handleLiScroll(event) {
     sticky = true;
     stickyNumber = indexedItems.indexOf(li.id) * 1;
     topInLi.style.width = `${topInLiWidth}px`;
-    topInLi.classList.add("sticky");
+    // renamed classes (to sticken, showen and hiden) because
+    // sticky menu stopped working with "injected stylesheet"
+    // possibly due to some Chrome extensions or .epub books
+    topInLi.classList.add("sticken");
 
     // double requestAnimationFrame ensures that the DOM update is fully processed before applying the next class
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        topInLi.classList.add("show");
+        topInLi.classList.add("showen");
       });
     });
   }
 
   function removeClasses() {
-    topInLi.classList.add("hide");
+    topInLi.classList.add("hiden");
     topInLi.addEventListener(
       "transitionend",
       function () {
         li.style.paddingTop = "";
-        topInLi.classList.remove("sticky", "show", "hide");
+        topInLi.classList.remove("sticken", "showen", "hiden");
         sticky = false;
         stickyNumber = undefined;
         topInLi.style.width = "";
@@ -51,29 +54,29 @@ function handleLiScroll(event) {
     );
   }
 
-  // Apply sticky class and padding
+  // Apply sticken class and padding
   if (
     !belowHeightLimit &&
     rect.top < suspendTop &&
     rect.bottom > predictBottom
   ) {
-    if (!topInLi.classList.contains("sticky")) {
+    if (!topInLi.classList.contains("sticken")) {
       addStickyClass();
     }
   } else {
-    if (topInLi.classList.contains("sticky")) {
+    if (topInLi.classList.contains("sticken")) {
       removeClasses();
     }
   }
 
-  // Remove sticky class and padding when the li is no longer in the viewport
+  // Remove sticken class and padding when the li is no longer in the viewport
   if (
     rect.bottom <= predictBottom &&
     !topVisible &&
     !fullyVisible &&
     !belowHeightLimit
   ) {
-    if (topInLi.classList.contains("sticky")) {
+    if (topInLi.classList.contains("sticken")) {
       removeClasses();
     }
   }
@@ -125,13 +128,13 @@ function unobserveLiElements(li) {
   removeScrollListener(li);
   const topInLi = li.querySelector(".top-in-li");
   if (!topInLi) return; // Skip if there's no .top-in-li div
-  if (topInLi.classList.contains("sticky")) {
-    topInLi.classList.add("hide");
+  if (topInLi.classList.contains("sticken")) {
+    topInLi.classList.add("hiden");
     topInLi.addEventListener(
       "transitionend",
       function () {
         li.style.paddingTop = "";
-        topInLi.classList.remove("sticky", "show", "hide");
+        topInLi.classList.remove("sticken", "showen", "hiden");
         sticky = false;
         topInLi.style.width = "";
       },
