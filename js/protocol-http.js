@@ -486,45 +486,42 @@ function encodeBase64UTF8(input) {
 }
 
 // Function to save the file content to the server
-async function saveFileHttp(fileName, fileContent, overwrite = false) {
+async function saveFileHttp(fileName, fileContent) {
   try {
     console.log(`File size: ${fileContent.length} bytes`);
     const formData = new FormData();
-    formData.append(
-      "file",
-      new Blob([fileContent], { type: "text/plain; charset=utf-8" }),
-      `${saveDirectory}/${fileName}`
-    );
-    console.log("Debug: formData", JSON.stringify({ formData }));
+    const filePath = `${saveDirectory}/${fileName}`;
+    formData.append("filename", filePath);
+    //formData.append(
+    //  "file",
+    //  new Blob([fileContent], {
+    //    type: "text/plain; charset=utf-8",
+    //  }),
+    //  filePath
+    //);
+    //formData.append("overwrite", "false");
+    formData.append("file", fileContent);
+    formData.append("overwrite", "false");
 
-    const response = await fetch(`protocol-http.cgi?action=save-file`, {
+    // this forEach block only for console.log formData :)
+    formData.forEach((value, key) => {
+      if (value instanceof File) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          console.log(`File content for ${key}:`, reader.result);
+        };
+        reader.readAsText(value);
+      } else {
+        console.log(`${key}: ${value}`);
+      }
+    });
+
+    const response = await fetch(`cgi-bin/upload.cgi`, {
       method: "POST",
       body: formData,
     });
 
     const result = await response.json();
-
-    //const payload = JSON.stringify({
-    //  fileName: `${saveDirectory}/${fileName}`,
-    //  fileContent: btoa(fileContent),
-    //  overwrite: overwrite,
-    //});
-
-    //const payload = new URLSearchParams({
-    //  fileName: `${saveDirectory}/${fileName}`,
-    //  fileContent: encodeBase64UTF8(fileContent), // Direct raw content
-    //  overwrite: overwrite, // Default to not overwrite
-    //});
-
-    //const payload = JSON.stringify({
-    //  fileName: encodeURIComponent(`${saveDirectory}/${fileName}`),
-    //  fileContent: encodeBase64UTF8(fileContent), // Direct raw content
-    //  overwrite: overwrite, // Default to not overwrite
-    //});
-
-    //console.log("Debug: Payload", payload.toString());
-
-    //console.log("Debug: Payload", payload);
 
     if (result.fileExists) {
       const userWantsToOverwrite = confirm(
@@ -532,7 +529,18 @@ async function saveFileHttp(fileName, fileContent, overwrite = false) {
       );
       if (userWantsToOverwrite) {
         // Retry with overwrite set to true
-        await saveFileHttp(fileName, fileContent, true);
+        formData.set("overwrite", "true");
+        const overwriteResponse = await fetch(`cgi-bin/upload.cgi`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const overwriteResult = await overwriteResponse.json();
+        if (overwriteResult.success) {
+          console.log("File overwritten successfully.");
+        } else {
+          console.error("Error overwriting file: ", overwriteResult.message);
+        }
       } else {
         console.log("File save canceled by user.");
       }

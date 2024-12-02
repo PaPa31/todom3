@@ -67,99 +67,48 @@ url_decode() {
 
 case "$action" in
   save-file)
-    # Read raw input
-    read_raw_content
-    echo "Debug: CONTENT=$CONTENT" >> /tmp/cgi-debug.log
-    echo "Content-Length: $CONTENT_LENGTH" >> /tmp/cgi-debug.log
+    # Read the entire input and log it
+    CONTENT=$(cat)
+    echo "Debug: Full Content Received:" >> /tmp/cgi-debug.log
+    echo "$CONTENT" >> /tmp/cgi-debug.log
 
-    # Extract the boundary from the headers
-    BOUNDARY=$(echo "$CONTENT_TYPE" | sed 's/.*boundary=//')
-    # Extract the boundary directly from the first line
-    #BOUNDARY=$(echo "$CONTENT" | awk 'NR==1 { print $0; exit }')
+    # Extract boundary and log it
+    BOUNDARY=$(echo "$CONTENT" | head -n 1 | tr -d '\r')
+    echo "Debug: Extracted Boundary: $BOUNDARY" >> /tmp/cgi-debug.log
 
-    # Debug: Log content and boundary
-    echo "Debug: BOUNDARY=$BOUNDARY" >> /tmp/cgi-debug.log
+    # Extract the segment containing the filename and log it
+    FILENAME_SEGMENT=$(echo "$CONTENT" | grep -A2 "name=\"filename\"" | tr -d '\r')
+    echo "Debug: Filename Segment: $FILENAME_SEGMENT" >> /tmp/cgi-debug.log
 
-    #echo "----------->$CONTENT_TYPE" >> /tmp/cgi-debug.log
-    #echo "------------>$FILE_NAME" >> /tmp/cgi-debug.log
+    # Extract the filename value from the segment and log it
+    FILENAME=$(echo "$FILENAME_SEGMENT" | tail -n 1)
+    echo "Debug: Extracted Filename Value: $FILENAME" >> /tmp/cgi-debug.log
 
-    # Use awk to extract the part containing the filename
-    #HEADER=$(echo "$CONTENT" | awk -v RS="--$BOUNDARY" '/filename="/')
-    #echo "Debug: HEADER=$HEADER" >> /tmp/cgi-debug.log
-
-    # Extract filename using a regex
-    #FILENAME=$(echo "$HEADER" | grep -oP 'filename="\K[^"]+')
-    # Extract filename using shell string processing
-    FILENAME=$(echo "$CONTENT" | grep -o 'filename="[^"]*"' | head -n 1 | cut -d'"' -f2)
-    # Check if filename is found
+    # Final log for validation
     if [ -z "$FILENAME" ]; then
-        echo '{"status":"error", "message":"Filename not found"}'
-        exit 1
+        echo "Debug: Filename is empty or extraction failed" >> /tmp/cgi-debug.log
+    else
+        echo "Debug: Final Filename: $FILENAME" >> /tmp/cgi-debug.log
     fi
 
-    # Extract filename
-    #FILENAME=$(echo "$CONTENT" | awk -v RS="--$BOUNDARY" '/filename="/ { 
-    #    match($0, /filename="([^"]+)"/, arr); 
-    #    print arr[1]; 
-    #    exit; 
-    #}')
+    # Find start of file content
+    FILE_START=$(echo "$CONTENT" | grep -n "name=\"file\"" | cut -d ':' -f 1)
 
-    echo "Debug: FILENAME=$FILENAME" >> /tmp/cgi-debug.log
+    # Extract content from the line after 'name="file"' to the next boundary
+    FILE_CONTENT=$(echo "$CONTENT" | tail -n +$((FILE_START + 2)) | sed "/$BOUNDARY/,\$d")
 
-    # Extract file content
-    #FILECONTENT=$(echo "$CONTENT" | awk -v RS="--$BOUNDARY" '/filename="/ { 
-    #    sub(/^.*\r\n\r\n/, "", $0); 
-    #    sub(/\r\n--$/, "", $0); 
-    #    print; 
-    #    exit; 
-    #}')
+    # Trim leading and trailing whitespace (if any)
+    FILE_CONTENT=$(echo "$FILE_CONTENT" | sed '/^$/d')
+    echo "Debug: Final File Content:" >> /tmp/cgi-debug.log
+    echo "$FILE_CONTENT" >> /tmp/cgi-debug.log
 
-    # Extract file content (everything after the blank line in the part with the file content)
-    FILECONTENT=$(echo "$CONTENT" | awk -v RS="--$BOUNDARY" '/filename="/ {
-        sub(/^.*\r\n\r\n/, "", $0); 
-        sub(/\r\n--$/, "", $0); 
-        print; 
-        exit;
-    }')
+    # Extract the overwrite segment
+    OVERWRITE_SEGMENT=$(echo "$CONTENT" | grep -A2 "name=\"overwrite\"" | tr -d '\r')
+    echo "Debug: Owerwrite Segment: $OVERWRITE_SEGMENT" >> /tmp/cgi-debug.log
 
-    echo "Debug: FILECONTENT=$FILECONTENT" >> /tmp/cgi-debug.log
- 
-    # Extract `filename` and `data`
-    #fileName=$(echo "$CONTENT" | sed -n 's/.*fileName=\([^&]*\).*/\1/p')
-    #fileName=$(echo "$CONTENT" | sed -n 's/.*\"fileName\":\"\([^\"]*\)\".*/\1/p')
-    #fileName=$(parse_json_field "$CONTENT" "fileName")
-    #echo "Debug: Decoded fileName=$fileName" >> /tmp/cgi-debug.log
-    #fileName=$(urldecode "$fileName")
-    #echo "Debug: Decoded fileName=$fileName" >> /tmp/cgi-debug.log
-
-
-    #fileContent=$(echo "$CONTENT" | sed -n 's/^.*fileContent=\([^&]*\)&.*$/\1/p')
-    #fileContent=$(parse_json_field "$CONTENT" "fileContent")
-    #fileContent=$(echo "$CONTENT" | sed -n 's/.*\"fileContent\":\"\([^\"]*\)\".*/\1/p')
-    #echo "Debug: Decoded fileContent=$fileContent" >> /tmp/cgi-debug.log
-    #fileContent=$(urldecode "$fileContent")
-    #echo "Debug: Decoded fileContent=$fileContent" >> /tmp/cgi-debug.log
-
-    #overwrite=$(echo "$CONTENT" | sed -n 's/^.*overwrite=\(.*\)$/\1/p')
-    #overwrite=$(parse_json_field "$CONTENT" "overwrite")
-    #overwrite=$(echo "$CONTENT" | sed -n 's/.*\"overwrite\":\([^\}]*\).*/\1/p')
-    #echo "Debug: Decoded overwrite=$overwrite" >> /tmp/cgi-debug.log
-    #overwrite=$(urldecode "$overwrite")
-    #echo "Debug: Decoded overwrite=$overwrite" >> /tmp/cgi-debug.log
-  
-    # Decode Base64 and save to file
-    #fileContent=$(echo "$fileContent" | base64 -d )
-    #echo "Debug: Decoded base64 fileContent=$fileContent" >> /tmp/cgi-debug.log
-
-    # Decode URL-encoded values
-    #fileName=$(url_decode "$fileName")
-    #fileContent=$(url_decode "$fileContent")
-
-    # Decode URL-encoded content and replace + with space
-    #fileContent=$(echo "$fileContent" | sed 's/+/ /g' )
-
-
-
+    # Extract overwrite value (last line of the segment)
+    OVERWRITE=$(echo "$OVERWRITE_SEGMENT" | tail -n 1)
+    echo "Debug: Extracted overwrite: $OVERWRITE" >> /tmp/cgi-debug.log
 
     # Sanitize file path
     sanitized_path="${root_dir}/${FILENAME}"
@@ -171,16 +120,26 @@ case "$action" in
     fi
 
     # Save or overwrite the file
+    #if [ -f "$sanitized_path" ] && [ "$overwrite" != "true" ]; then
+    #  echo '{ "success": false, "fileExists": true, "message": "File already exists." }'
+    #else
+    #  #if printf "%s" "$fileContent" > "$sanitized_path"; then
+    #  if echo "$FILE_CONTENT" > "$sanitized_path"; then
+    #    echo '{ "success": true, "message": "File saved successfully." }'
+    #  else
+    #    echo '{ "success": false, "message": "Failed to save the file." }'
+    #  fi
+    #fi
+
+    # Save or overwrite the file
     if [ -f "$sanitized_path" ] && [ "$overwrite" != "true" ]; then
       echo '{ "success": false, "fileExists": true, "message": "File already exists." }'
     else
-      #if printf "%s" "$fileContent" > "$sanitized_path"; then
-      if echo "$FILECONTENT" > "$sanitized_path"; then
+      if printf "%s" "$FILE_CONTENT" > "$sanitized_path"; then
         echo '{ "success": true, "message": "File saved successfully." }'
       else
         echo '{ "success": false, "message": "Failed to save the file." }'
       fi
-    fi
     ;;
 
   create-folder)
@@ -196,6 +155,7 @@ case "$action" in
     ;;
 
   open-directory)
+    echo "Debug: I inside the open-directory" >> /tmp/cgi-debug.log
     if [ -d "$absolute_path" ]; then
       # It's a directory, list contents
       echo '{ "success": true, "tree": ['
