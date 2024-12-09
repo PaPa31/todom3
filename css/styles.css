@@ -582,8 +582,11 @@ pre {
 }
 
 /* to overset the 'ol li ol' rule in _scaffolding.scss */
-ol li ol {
-  margin: 0 0 1em 0;
+ol li ol,
+ol li ul {
+  /* dublicate */
+  /*margin: 0 0 1em 0;*/
+  padding-left: 1.625em;
 }
 
 p,
