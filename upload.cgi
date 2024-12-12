@@ -63,8 +63,12 @@ FILE_CONTENT=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
     }
 ')
 
+
+# this is how I caught `\r` (carriage return)
+#echo -en "$FILE_CONTENT" | tr -d '\r' > /tmp/remove-return.txt
+
 echo "Debug: Final File Content:" >> /tmp/cgi-debug.log
-echo "$FILE_CONTENT" >> /tmp/cgi-debug.log
+echo "[$FILE_CONTENT]" >> /tmp/cgi-debug.log
 
 # Extract the overwrite segment
 OVERWRITE_SEGMENT=$(echo "$CONTENT" | grep -A2 "name=\"overwrite\"" | tr -d '\r')
@@ -83,10 +87,11 @@ if ! echo "$sanitized_path" | grep -q "^${root_dir}"; then
     exit 1
 fi
 
-if [ -f "$sanitized_path" ] && [ "$overwrite" != "true" ]; then
+if [ -f "$sanitized_path" ] && [ "$OVERWRITE" != "true" ]; then
     echo '{ "success": false, "fileExists": true, "message": "File already exists." }'
 else
-    if printf "%s" "$FILE_CONTENT" > "$sanitized_path"; then
+    # the only way to remove the redundand `\r` that is added when extracting
+    if printf "%s" "$FILE_CONTENT" | tr -d '\r' > "$sanitized_path"; then
     echo '{ "success": true, "message": "File saved successfully." }'
     else
     echo '{ "success": false, "message": "Failed to save the file." }'
