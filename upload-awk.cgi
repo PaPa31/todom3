@@ -46,6 +46,7 @@ fi
 #    in_file && $0 !~ /^[[:space:]]*$/ { print }  # Ignore blank lines
 #')
 
+START_TIME=$(date +%s)
 FILE_CONTENT=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
     BEGIN { in_file=0; skip_next=0; leading_blank_removed=0 }
     $0 ~ "name=\"file\"" { in_file=1; skip_next=1; next }
@@ -62,13 +63,15 @@ FILE_CONTENT=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
         }
     }
 ')
-
+END_TIME=$(date +%s)
+TIME_ELAPSED=$((END_TIME - START_TIME))
 
 # this is how I caught `\r` (carriage return)
 #echo -en "$FILE_CONTENT" | tr -d '\r' > /tmp/remove-return.txt
 
 echo "Debug: Final File Content:" >> /tmp/cgi-debug.log
 echo "[$FILE_CONTENT]" >> /tmp/cgi-debug.log
+echo "AWK Parsing Time: ${TIME_ELAPSED} s" >> /tmp/cgi-debug.log
 
 # Extract the overwrite segment
 OVERWRITE_SEGMENT=$(echo "$CONTENT" | grep -A2 "name=\"overwrite\"" | tr -d '\r')
