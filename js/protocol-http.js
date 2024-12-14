@@ -519,7 +519,7 @@ async function saveFileHttp(fileName, fileContent) {
       }
     });
 
-    const response = await fetch(`upload.cgi`, {
+    const response = await fetch(`upload-awk.cgi`, {
       method: "POST",
       body: formData,
     });
@@ -533,7 +533,7 @@ async function saveFileHttp(fileName, fileContent) {
       if (userWantsToOverwrite) {
         // Retry with overwrite set to true
         formData.set("overwrite", "true");
-        const overwriteResponse = await fetch(`upload.cgi`, {
+        const overwriteResponse = await fetch(`upload-awk.cgi`, {
           method: "POST",
           body: formData,
         });
