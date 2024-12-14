@@ -491,21 +491,23 @@ function encodeBase64UTF8(input) {
 // Function to save the file content to the server
 async function saveFileHttp(fileName, fileContent) {
   try {
+    const startTotal = performance.now(); // Start overall timer
+
     console.log(`File size: ${fileContent.length} bytes`);
     const formData = new FormData();
     const filePath = `${saveDirectory}/${fileName}`;
     formData.append("filename", filePath);
-    formData.append(
-      "file",
-      new Blob([fileContent], {
-        type: "text/plain; charset=utf-8",
-      }),
-      filePath
-    );
+
+    const fileBlob = new Blob([fileContent], {
+      type: "text/plain; charset=utf-8",
+    });
+    formData.append("file", fileBlob, filePath);
     formData.append("overwrite", "false");
     //formData.append("file", fileContent);
     //formData.append("overwrite", "false");
 
+    // Timer for preparing FormData
+    const startFormData = performance.now();
     // this forEach block only for console.log formData :)
     formData.forEach((value, key) => {
       if (value instanceof File) {
@@ -518,27 +520,53 @@ async function saveFileHttp(fileName, fileContent) {
         console.log(`${key}: ${value}`);
       }
     });
+    const endFormData = performance.now();
+    console.log(
+      `Time to prepare FormData: ${(endFormData - startFormData).toFixed(2)} ms`
+    );
 
+    // Timer for sending the HTTP request
+    const startRequest = performance.now();
     const response = await fetch(`upload-awk.cgi`, {
       method: "POST",
       body: formData,
     });
+    const endRequest = performance.now();
+    console.log(
+      `Time to send HTTP request and receive response: ${(
+        endRequest - startRequest
+      ).toFixed(2)} ms`
+    );
 
+    const startResponseParse = performance.now();
     const result = await response.json();
+    const endResponseParse = performance.now();
+    console.log(
+      `Time to parse server response: ${(
+        endResponseParse - startResponseParse
+      ).toFixed(2)} ms`
+    );
 
     if (result.fileExists) {
       const userWantsToOverwrite = confirm(
         `File "${fileName}" already exists. Do you want to overwrite it?`
       );
       if (userWantsToOverwrite) {
+        const startOverwriteRequest = performance.now();
         // Retry with overwrite set to true
         formData.set("overwrite", "true");
         const overwriteResponse = await fetch(`upload-awk.cgi`, {
           method: "POST",
           body: formData,
         });
-
         const overwriteResult = await overwriteResponse.json();
+        const endOverwriteRequest = performance.now();
+        console.log(
+          `Time for overwrite request: ${(
+            endOverwriteRequest - startOverwriteRequest
+          ).toFixed(2)} ms`
+        );
+
         if (overwriteResult.success) {
           console.log("File overwritten successfully.");
         } else {
@@ -552,6 +580,13 @@ async function saveFileHttp(fileName, fileContent) {
     } else {
       console.error("File save failed: ", result.message);
     }
+
+    const endTotal = performance.now();
+    console.log(
+      `Total time for saveFileHttp function: ${(endTotal - startTotal).toFixed(
+        2
+      )} ms`
+    );
   } catch (error) {
     console.error("Error saving the file: ", error);
   }
