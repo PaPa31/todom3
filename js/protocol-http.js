@@ -498,16 +498,16 @@ async function saveFileHttp(fileName, fileContent) {
     const filePath = `${saveDirectory}/${fileName}`;
     formData.append("filename", filePath);
 
-    const fileBlob = new Blob([fileContent], {
-      type: "text/plain; charset=utf-8",
-    });
-    formData.append("file", fileBlob, filePath);
+    //const fileBlob = new Blob([fileContent], {
+    //  type: "text/plain; charset=utf-8",
+    //});
+    formData.append("file", fileContent); // Directly append content as string
     formData.append("overwrite", "false");
     //formData.append("file", fileContent);
     //formData.append("overwrite", "false");
 
     // Timer for preparing FormData
-    const startFormData = performance.now();
+    //const startFormData = performance.now();
     // this forEach block only for console.log formData :)
     //formData.forEach((value, key) => {
     //  if (value instanceof File) {
@@ -521,8 +521,11 @@ async function saveFileHttp(fileName, fileContent) {
     //  }
     //});
     const endFormData = performance.now();
+    //console.log(
+    //  `Time to prepare FormData: ${(endFormData - startFormData).toFixed(2)} ms`
+    //);
     console.log(
-      `Time to prepare FormData: ${(endFormData - startFormData).toFixed(2)} ms`
+      `Time to prepare FormData: ${(endFormData - startTotal).toFixed(2)} ms`
     );
 
     // Timer for sending the HTTP request
