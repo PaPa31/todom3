@@ -509,17 +509,17 @@ async function saveFileHttp(fileName, fileContent) {
     // Timer for preparing FormData
     const startFormData = performance.now();
     // this forEach block only for console.log formData :)
-    formData.forEach((value, key) => {
-      if (value instanceof File) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          console.log(`File content for ${key}:`, reader.result);
-        };
-        reader.readAsText(value);
-      } else {
-        console.log(`${key}: ${value}`);
-      }
-    });
+    //formData.forEach((value, key) => {
+    //  if (value instanceof File) {
+    //    const reader = new FileReader();
+    //    reader.onload = () => {
+    //      console.log(`File content for ${key}:`, reader.result);
+    //    };
+    //    reader.readAsText(value);
+    //  } else {
+    //    console.log(`${key}: ${value}`);
+    //  }
+    //});
     const endFormData = performance.now();
     console.log(
       `Time to prepare FormData: ${(endFormData - startFormData).toFixed(2)} ms`
