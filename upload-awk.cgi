@@ -7,13 +7,13 @@ echo ""
 CONTENT=$(cat)
 #read CONTENT
 echo "Debug: Full Content Received:" > /tmp/cgi-debug.log
-echo "[$CONTENT]" >> /tmp/cgi-debug.log
+#echo "[$CONTENT]" >> /tmp/cgi-debug.log
 
 root_dir="/www"  # Adjust based on actual document root
 
 # Extract boundary
 BOUNDARY=$(echo "$CONTENT" | head -n 1 | tr -d '\r')
-echo "Debug: Extracted Boundary: $BOUNDARY" >> /tmp/cgi-debug.log
+echo "Debug: Extracted Boundary: [$BOUNDARY]" >> /tmp/cgi-debug.log
 
 # Extract the filename segment
 FILENAME_SEGMENT=$(echo "$CONTENT" | grep -A2 "name=\"filename\"" | tr -d '\r')
@@ -29,40 +29,22 @@ else
     echo "Debug: Final Filename: $FILENAME" >> /tmp/cgi-debug.log
 fi
 
-# Extract and process file content dynamically
-#FILE_CONTENT=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
-#    BEGIN { in_file=0; skip_next=0 }
-#    $0 ~ "name=\"file\"" { in_file=1; skip_next=1; next }
-#    skip_next { skip_next=0; next }  # Skip the Content-Type line
-#    in_file && $0 ~ boundary { exit }
-#    in_file { print }
-#')
-
-#FILE_CONTENT=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
-#    BEGIN { in_file=0; skip_next=0 }
-#    $0 ~ "name=\"file\"" { in_file=1; skip_next=1; next }
-#    skip_next { skip_next=0; next }  # Skip the Content-Type line
-#    in_file && $0 ~ boundary { exit }
-#    in_file && $0 !~ /^[[:space:]]*$/ { print }  # Ignore blank lines
-#')
-
 START_TIME=$(date +%s)
+
 FILE_CONTENT=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
-    BEGIN { in_file=0; skip_next=0; leading_blank_removed=0 }
+    BEGIN { in_file=0; skip_next=0; first_line=1 }
     $0 ~ "name=\"file\"" { in_file=1; skip_next=1; next }
     skip_next { skip_next=0; next }  # Skip the Content-Type line
     in_file && $0 ~ boundary { exit }
     in_file {
-        if (!leading_blank_removed) {
-            if ($0 !~ /^[[:space:]]*$/) {  # First non-blank line
-                leading_blank_removed=1;
-                print;
-            }
-        } else {
-            print;
+        if (first_line && $0 ~ /^[[:space:]]*$/) {
+            first_line=0; next  # Skip the first leading newline
         }
+        first_line=0
+        print
     }
 ')
+
 END_TIME=$(date +%s)
 TIME_ELAPSED=$((END_TIME - START_TIME))
 
@@ -70,7 +52,8 @@ TIME_ELAPSED=$((END_TIME - START_TIME))
 #echo -en "$FILE_CONTENT" | tr -d '\r' > /tmp/remove-return.txt
 
 echo "Debug: Final File Content:" >> /tmp/cgi-debug.log
-echo "[$FILE_CONTENT]" >> /tmp/cgi-debug.log
+#echo "[$FILE_CONTENT]" >> /tmp/cgi-debug.log
+#echo -n "$FILE_CONTENT" | hexdump -C >> /tmp/cgi-debug.log
 echo "AWK Parsing Time: ${TIME_ELAPSED} s" >> /tmp/cgi-debug.log
 
 # Extract the overwrite segment
