@@ -6,12 +6,13 @@ echo ""
 # Read POST data
 #env > /tmp/cgi-environment-2.log
 CONTENT_LENGTH_MY=$CONTENT_LENGTH
-echo "Debug: Full Content Received:" > /tmp/cgi-debug.log
+echo "SED with DD" > /tmp/cgi-debug.log
+echo "Debug: Full Content Received:" >> /tmp/cgi-debug.log
 echo "$CONTENT_LENGTH_MY" >> /tmp/cgi-debug.log
 
 CONTENT=$(dd bs=1 count=$CONTENT_LENGTH_MY 2>/dev/null)
 echo "Debug: Full Content Received:" >> /tmp/cgi-debug.log
-echo "[$CONTENT]" >> /tmp/cgi-debug.log
+#echo "[$CONTENT]" >> /tmp/cgi-debug.log
 
 root_dir="/www"  # Adjust based on actual document root
 
@@ -36,24 +37,37 @@ else
     echo "Debug: Final Filename: $FILENAME" >> /tmp/cgi-debug.log
 fi
 
-echo "Debug: Sanitized Filename:" >> /tmp/cgi-debug.log
-echo -n "$FILENAME" | hexdump -C >> /tmp/cgi-debug.log
+#echo "Debug: Sanitized Filename:" >> /tmp/cgi-debug.log
+#echo -n "$FILENAME" | hexdump -C >> /tmp/cgi-debug.log
+
+# Start timing
+START_TIMER=$(awk '{print $1}' /proc/uptime)
+#START_TIME=$(date +%s)
+#START_TIME=$(awk '{ print $1 }' /proc/uptime | cut -d. -f1)
 
 # Parse file content
-FILE_CONTENT=$(echo "$CONTENT" | sed -n "/name=\"file\"/,/$BOUNDARY/p" | sed '1,3d;$d' )
-echo "Debug: Final File Content:" >> /tmp/cgi-debug.log
+FILE_CONTENT=$(echo "$CONTENT" | sed -n "/name=\"file\"/,/$BOUNDARY/p" | sed '1,2d;$d' )
+
+# End timing
+END_TIMER=$(awk '{print $1}' /proc/uptime)
+#END_TIME=$(date +%s)
+#END_TIME=$(awk '{ print $1 }' /proc/uptime | cut -d. -f1)
+TIME_ELAPSED=$(echo "$END_TIMER - $START_TIMER" | bc)
+
+#echo "Debug: Final File Content:" >> /tmp/cgi-debug.log
 
 #echo -en "$FILE_CONTENT" | tr -d '\r' > /tmp/remove-return.txt
 
-echo "[$FILE_CONTENT]" >> /tmp/cgi-debug.log
+#echo "$FILE_CONTENT" >> /tmp/cgi-debug.log
 #echo -n "$FILE_CONTENT" | hexdump -C >> /tmp/cgi-debug.log
+echo "SED Parsing Time: ${TIME_ELAPSED} s" >> /tmp/cgi-debug.log
 
 # Parse overwrite flag
 OVERWRITE=$(echo "$CONTENT" | grep -A2 'name="overwrite"' | tail -n1 | tr -d '\r')
 echo "Debug: Extracted overwrite: $OVERWRITE" >> /tmp/cgi-debug.log
 
-echo "Debug: Sanitized OVERWRITE:" >> /tmp/cgi-debug.log
-echo -n "$OVERWRITE" | hexdump -C >> /tmp/cgi-debug.log
+#echo "Debug: Sanitized OVERWRITE:" >> /tmp/cgi-debug.log
+#echo -n "$OVERWRITE" | hexdump -C >> /tmp/cgi-debug.log
 
 
 # Sanitize file path

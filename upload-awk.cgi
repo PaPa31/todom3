@@ -6,7 +6,8 @@ echo ""
 # Read the entire input
 CONTENT=$(cat)
 #read CONTENT
-echo "Debug: Full Content Received:" > /tmp/cgi-debug.log
+echo "AWK with CAT" > /tmp/cgi-debug.log
+echo "Debug: Full Content Received:" >> /tmp/cgi-debug.log
 #echo "[$CONTENT]" >> /tmp/cgi-debug.log
 
 root_dir="/www"  # Adjust based on actual document root
@@ -35,25 +36,32 @@ else
     echo "Debug: Final Filename: $FILENAME" >> /tmp/cgi-debug.log
 fi
 
+# Start timing
+START_TIMER=$(awk '{print $1}' /proc/uptime)
 #START_TIME=$(date +%s)
-START_TIME=$(awk '{ print $1 }' /proc/uptime | cut -d. -f1)
+#START_TIME=$(awk '{ print $1 }' /proc/uptime | cut -d. -f1)
 
-FILE_CONTENT=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
-    BEGIN { in_file=0; skip_next=0; first_line=1 }
-    $0 ~ "name=\"file\"" { in_file=1; skip_next=1; next }
-    skip_next { skip_next=0; next }  # Skip the Content-Type line
-    in_file && $0 ~ boundary { exit }
-    in_file {
-        if (first_line && $0 ~ /^[[:space:]]*$/) {
-            first_line=0; next  # Skip the first leading newline
-        }
-        first_line=0
-        print
-    }
-')
+#FILE_CONTENT=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
+#    BEGIN { in_file=0; skip_next=0; first_line=1 }
+#    $0 ~ "name=\"file\"" { in_file=1; skip_next=1; next }
+#    skip_next { skip_next=0; next }  # Skip the Content-Type line
+#    in_file && $0 ~ boundary { exit }
+#    in_file {
+#        if (first_line && $0 ~ /^[[:space:]]*$/) {
+#            first_line=0; next  # Skip the first leading newline
+#        }
+#        first_line=0
+#        print
+#    }
+#')
 
-END_TIME=$(awk '{ print $1 }' /proc/uptime | cut -d. -f1)
-TIME_ELAPSED=$((END_TIME - START_TIME))
+FILE_CONTENT=$(echo "$CONTENT" | sed -n "/name=\"file\"/,/$BOUNDARY/p" | sed '1,2d;$d' )
+
+# End timing
+END_TIMER=$(awk '{print $1}' /proc/uptime)
+TIME_ELAPSED=$(echo "$END_TIMER - $START_TIMER" | bc)
+#END_TIME=$(awk '{ print $1 }' /proc/uptime | cut -d. -f1)
+#TIME_ELAPSED=$((END_TIME - START_TIME))
 #END_TIME=$(date +%s)
 #TIME_ELAPSED=$((END_TIME - START_TIME))
 
