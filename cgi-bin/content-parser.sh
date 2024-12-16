@@ -19,7 +19,8 @@ Content-Type: text/plain; charset=utf-8
 ------WebKitFormBoundaryyiJnvEr2Xm6vAaAa
 Content-Disposition: form-data; name="overwrite"
 
-false'
+false
+------WebKitFormBoundaryyiJnvEr2Xm6vAaAa--'
 
 # Debug
 echo "Debug: Full Content Received:" > /tmp/cgi-debug.log

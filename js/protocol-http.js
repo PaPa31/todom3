@@ -530,7 +530,7 @@ async function saveFileHttp(fileName, fileContent) {
 
     // Timer for sending the HTTP request
     const startRequest = performance.now();
-    const response = await fetch(`upload-awk.cgi`, {
+    const response = await fetch(`upload-test.cgi`, {
       method: "POST",
       body: formData,
     });
@@ -558,7 +558,7 @@ async function saveFileHttp(fileName, fileContent) {
         const startOverwriteRequest = performance.now();
         // Retry with overwrite set to true
         formData.set("overwrite", "true");
-        const overwriteResponse = await fetch(`upload-awk.cgi`, {
+        const overwriteResponse = await fetch(`upload-test.cgi`, {
           method: "POST",
           body: formData,
         });
