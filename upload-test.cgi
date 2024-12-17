@@ -13,24 +13,14 @@ root_dir="/www"  # Adjust as necessary
 DEBUG="true"  # Toggle debugging
 HEX="false"   # Toggle hex debugging
 
-# VS Code regex to help to replace `DEBUG && echo ..` to `log_debug ..`
-# Find:`(^\s*)DEBUG && echo (.*) >> /tmp/cgi-debug.log`
-# Replace:`$1log_debug $2`
-
-
-# Timer function to measure execution time
-measure_time() {
+measure_time_no_subshell() {
     local start=$(awk '{print $1}' /proc/uptime)
-    "$@"  # Execute the passed command(s)
+    "$@"
     local end=$(awk '{print $1}' /proc/uptime)
-    echo $(echo "$end - $start" | bc)
+    elapsed=$(echo "$end - $start" | bc)
 }
 
 log_debug() {
-    [ "$DEBUG" = "true" ] && echo "$1" >> /tmp/cgi-debug.log
-}
-
-log_debug2() {
     if [ "$DEBUG" = "true" ]; then
         echo "$@" >> /tmp/cgi-debug.log
     fi
@@ -40,14 +30,13 @@ log_debug2() {
 [ "$DEBUG" = "true" ] && : > /tmp/cgi-debug.log  # Clear log on start
 log_debug "Upload Test Script Started"
 
-
 # Function to log server information
 server_info() {
     CURRENT_SERVER="$SERVER_SOFTWARE"
     log_debug "Server: $CURRENT_SERVER"
 
     CUR_SER=$(echo "$CURRENT_SERVER" | grep -oE '^[^/]+')
-    env > "/tmp/cgi-environment-$CUR_SER.log"
+    [ "$DEBUG" = "true" ] && env > "/tmp/cgi-environment-$CUR_SER.log"
 
     CURRENT_CGI="$GATEWAY_INTERFACE"
     log_debug "Gateway Interface: $CURRENT_CGI"
@@ -60,8 +49,8 @@ server_info() {
 upload_cat() {
     log_debug "Upload Method: cat"
     CONTENT=$(cat)
-    log_debug "Debug: Full Content Received:"
-    [ "$DEBUG" = "true" ] && echo "[$CONTENT]" >> /tmp/cgi-debug.log
+    #log_debug "Debug: Full Content Received:"
+    #[ "$DEBUG" = "true" ] && echo "[$CONTENT]" >> /tmp/cgi-debug.log
     [ "$DEBUG" = "true" ] && echo "$CONTENT" | tr -d '\r' > /tmp/full-request-body.log
 }
 
@@ -89,11 +78,9 @@ parse_boundary() {
 
 # Function to parse and sanitize the filename
 parse_filename() {
-    log_debug "Extracted Content (from parse_filename): $CONTENT"
-    log_debug "Extracted Boundary (from parse_filename): $BOUNDARY"
-    #FILENAME=$(echo "$CONTENT" | grep -A2 'name="filename"' | tail -n1 | tr -d '\r')
-    FILENAME=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
-    $0 ~ boundary { getline; if ($0 ~ "name=\"filename\"") { getline; getline; print $0; exit } }' | tr -d '\r')
+    FILENAME=$(echo "$CONTENT" | grep -A2 'name="filename"' | tail -n1 | tr -d '\r')
+    #FILENAME=$(echo "$CONTENT" | awk -v boundary="$BOUNDARY" '
+    #$0 ~ boundary { getline; if ($0 ~ "name=\"filename\"") { getline; getline; print $0; exit } }' | tr -d '\r')
 
     if [ -z "$FILENAME" ]; then
         log_debug "Debug: Filename is empty or extraction failed"
@@ -139,25 +126,25 @@ write_file_to_disk() {
 CONTENT_LENGTH_MY="$CONTENT_LENGTH"
 log_debug "Content Length: $CONTENT_LENGTH_MY"
 
-elapsed=$(measure_time server_info)
+measure_time_no_subshell server_info
 log_debug "Elapsed Time (server_info): ${elapsed}s"
 
-elapsed=$(measure_time upload_cat)  # Replace upload_cat with another function if needed
+measure_time_no_subshell upload_cat
 log_debug "Elapsed Time (upload): ${elapsed}s"
 
-elapsed=$(measure_time parse_boundary)
+measure_time_no_subshell parse_boundary
 log_debug "Elapsed Time (parse_boundary): ${elapsed}s"
 
-elapsed=$(measure_time parse_filename)
+measure_time_no_subshell parse_filename
 log_debug "Elapsed Time (parse_filename): ${elapsed}s"
 
-elapsed=$(measure_time parse_file_content)
+measure_time_no_subshell parse_file_content
 log_debug "Elapsed Time (parse_file_content): ${elapsed}s"
 
-elapsed=$(measure_time parse_overwrite_flag)
+measure_time_no_subshell parse_overwrite_flag
 log_debug "Elapsed Time (parse_overwrite_flag): ${elapsed}s"
 
-elapsed=$(measure_time write_file_to_disk)
+measure_time_no_subshell write_file_to_disk
 log_debug "Elapsed Time (write_file_to_disk): ${elapsed}s"
 
 main_timer_stop=$(awk '{print $1}' /proc/uptime)
