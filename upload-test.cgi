@@ -39,6 +39,7 @@ log_debug "Upload Test Script Started"
 
 # Server info logging
 server_info() {
+    log_debug "Script Name: $SCRIPT_NAME"
     log_debug "Server: $SERVER_SOFTWARE"
     log_debug "Gateway Interface: $GATEWAY_INTERFACE"
     log_debug "Server Protocol: $SERVER_PROTOCOL"
@@ -68,19 +69,18 @@ upload_dd_chunked() {
 parse_boundary() {
     BOUNDARY=$(echo "$CONTENT_TYPE" | sed -n 's/.*boundary=\(.*\)/\1/p')
     [ -z "$BOUNDARY" ] && error_response "Boundary not found."
-    log_debug "Extracted Boundary: $BOUNDARY"
+    #log_debug "Extracted Boundary: $BOUNDARY"
 }
 
-# Parse and sanitize filename
+# Parse filename
 parse_filename() {
     FILENAME=$(echo "$CONTENT" | grep -A2 'name="filename"' | tail -n1 | tr -d '\r')
-    if [ -z "$FILENAME" ]; then
-        log_debug "Filename is empty or extraction failed"
-        error_response "Filename extraction failed."
-    fi
+    [ -z "$FILENAME" ] && error_response "Filename extraction failed."
+}
 
+sanitize_filename() {
     sanitized_path="$root_dir/$FILENAME"
-    log_debug "Sanitized Path: $sanitized_path"
+    #log_debug "Sanitized Path: $sanitized_path"
 
     # Validate path
     if ! echo "$sanitized_path" | grep -q "^$root_dir"; then
@@ -97,7 +97,7 @@ parse_file_content() {
 # Parse overwrite flag
 parse_overwrite_flag() {
     OVERWRITE=$(echo "$CONTENT" | grep -A2 'name="overwrite"' | tail -n1 | tr -d '\r')
-    log_debug "Extracted Overwrite Flag: $OVERWRITE"
+    #log_debug "Extracted Overwrite Flag: $OVERWRITE"
 }
 
 # Write file to disk
@@ -128,6 +128,9 @@ log_debug "Elapsed Time (parse_boundary): ${elapsed}s"
 
 measure_time parse_filename
 log_debug "Elapsed Time (parse_filename): ${elapsed}s"
+
+measure_time sanitize_filename
+log_debug "Elapsed Time (sanitize_filename): ${elapsed}s"
 
 measure_time parse_file_content
 log_debug "Elapsed Time (parse_file_content): ${elapsed}s"
