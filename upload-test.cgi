@@ -6,9 +6,6 @@ echo ""
 
 main_timer_start=$(awk '{print $1}' /proc/uptime)
 
-# test files:
-# 1-byte 71739-bytes
-
 # Document root for file storage
 root_dir="/www"  # Adjust as necessary
 
@@ -49,44 +46,31 @@ server_info() {
     [ "$DEBUG" = "true" ] && env > "/tmp/cgi-environment.log"
 }
 
-# File upload handling
-upload_cat() {
-    #log_debug "Upload Method: cat"
-    CONTENT=$(cat)  # 0.6s 0.11s
-    #[ "$DEBUG" = "true" ] && echo "$CONTENT" | tr -d '\r' > /tmp/full-request-body.log
+# Read input without loading full content into memory
+read_input_stream() {
+    temp_file=$(mktemp /tmp/upload-XXXXXX)
+    dd bs=4k count=$((CONTENT_LENGTH / 4096 + 1)) 2>/dev/null > "$temp_file"
+    echo "$temp_file"
 }
 
-upload_dd_entire() {
-    #log_debug "Upload Method: dd (entire)"
-    CONTENT=$(dd bs=1 count="$CONTENT_LENGTH" 2>/dev/null) # 0.11s 8.71s
-    #[ "$DEBUG" = "true" ] && echo "$CONTENT" | tr -d '\r' > /tmp/full-request-body.log
-}
-
-upload_dd_chunked() {
-    #log_debug "Upload Method: dd (chunked)"
-    CONTENT=$(dd bs=4k count=$((CONTENT_LENGTH / 4096 + 1)) 2>/dev/null)  # 0.06s 0.12s
-    #[ "$DEBUG" = "true" ] && echo "$CONTENT" | tr -d '\r' > /tmp/full-request-body.log
-}
-
-# Function to extract boundary from headers
+# Extract boundary from headers
 parse_boundary() {
-    #BOUNDARY=$(echo "$CONTENT_TYPE" | awk '/boundary=/{print substr($0, index($0, "boundary=") + 9); exit}' <&0)  # 0.08s
-    BOUNDARY=$(echo "$CONTENT_TYPE" | sed -n 's/.*boundary=\(.*\)/\1/p')  # 0.07s 0.07s
+    BOUNDARY=$(echo "$CONTENT_TYPE" | sed -n 's/.*boundary=\(.*\)/\1/p')
     [ -z "$BOUNDARY" ] && error_response "Boundary not found."
-    #log_debug "Extracted Boundary: $BOUNDARY"
+    log_debug "Extracted Boundary: $BOUNDARY"
 }
 
-# Parse filename
+# Extract filename from input
 parse_filename() {
-    #FILENAME=$(echo "$CONTENT" | grep -A2 'name="filename"' | tail -n1 | tr -d '\r')  # 0.13s
-    FILENAME=$(echo "$CONTENT" | awk -v RS="\r\n" '/Content-Disposition:.*name="filename"/ {getline; getline; print $0; exit}' <&0)  # 0.08s 0.22s
-    #FILENAME=$(echo "$CONTENT" | awk '/name="filename"/{getline; getline; print $0}' | tr -d '\r')  # 0.11s
+    local temp_file="$1"
+    FILENAME=$(grep -A2 'name="filename"' "$temp_file" | tail -n1 | tr -d '\r')
     [ -z "$FILENAME" ] && error_response "Filename extraction failed."
+    log_debug "Extracted Filename: $FILENAME"
 }
 
 sanitize_filename() {
     sanitized_path="$root_dir/$FILENAME"
-    #log_debug "Sanitized Path: $sanitized_path"
+    log_debug "Sanitized Path: $sanitized_path"
 
     # Validate path
     if ! echo "$sanitized_path" | grep -q "^$root_dir"; then
@@ -94,16 +78,20 @@ sanitize_filename() {
     fi
 }
 
-# Parse file content
+# Extract file content from input
 parse_file_content() {
-    FILE_CONTENT=$(echo "$CONTENT" | sed -n "/name=\"file\"/,/$BOUNDARY/p" | sed '1,2d;$d')  # 0.14s  0.72s
+    local temp_file="$1"
+    local start_line=$(grep -n 'name="file"' "$temp_file" | cut -d: -f1)
+    local end_line=$(grep -n -- "--$BOUNDARY--" "$temp_file" | cut -d: -f1)
+    FILE_CONTENT=$(sed -n "$((start_line + 2)),$((end_line - 1))p" "$temp_file")
     [ "$DEBUG" = "true" ] && echo "$FILE_CONTENT" | tr -d '\r' > /tmp/cgi-file-content.txt
 }
 
 # Parse overwrite flag
 parse_overwrite_flag() {
-    OVERWRITE=$(echo "$CONTENT" | grep -A2 'name="overwrite"' | tail -n1 | tr -d '\r')  # 0.13s 0.36s
-    #log_debug "Extracted Overwrite Flag: $OVERWRITE"
+    local temp_file="$1"
+    OVERWRITE=$(grep -A2 'name="overwrite"' "$temp_file" | tail -n1 | tr -d '\r')
+    log_debug "Extracted Overwrite Flag: $OVERWRITE"
 }
 
 # Write file to disk
@@ -112,13 +100,12 @@ write_file_to_disk() {
         error_response "File already exists and overwrite is disabled."
     fi
 
-    if echo -n "$FILE_CONTENT" | tr -d '\r' > "$sanitized_path"; then  # 0.07s 0.22s
+    if echo -n "$FILE_CONTENT" | tr -d '\r' > "$sanitized_path"; then
         echo '{"success": true, "message": "File saved successfully."}'
     else
         error_response "Failed to save the file."
     fi
 }
-
 
 # Main script logic
 log_debug "Content Length: $CONTENT_LENGTH"
@@ -126,27 +113,29 @@ log_debug "Content Length: $CONTENT_LENGTH"
 measure_time server_info
 log_debug "Elapsed Time (server_info): ${elapsed}s"
 
-measure_time upload_cat
-log_debug "Elapsed Time (upload): ${elapsed}s"
+input_file=$(measure_time read_input_stream)
+log_debug "Elapsed Time (read_input_stream): ${elapsed}s"
 
 measure_time parse_boundary
 log_debug "Elapsed Time (parse_boundary): ${elapsed}s"
 
-measure_time parse_filename
+measure_time parse_filename "$input_file"
 log_debug "Elapsed Time (parse_filename): ${elapsed}s"
 
 measure_time sanitize_filename
 log_debug "Elapsed Time (sanitize_filename): ${elapsed}s"
 
-measure_time parse_file_content
+measure_time parse_file_content "$input_file"
 log_debug "Elapsed Time (parse_file_content): ${elapsed}s"
 
-measure_time parse_overwrite_flag
+measure_time parse_overwrite_flag "$input_file"
 log_debug "Elapsed Time (parse_overwrite_flag): ${elapsed}s"
 
 measure_time write_file_to_disk
 log_debug "Elapsed Time (write_file_to_disk): ${elapsed}s"
 
+rm -f "$input_file"
+
 main_timer_stop=$(awk '{print $1}' /proc/uptime)
-all_time=$(echo "$main_timer_stop - $main_timer_start" | bc)  # 1.29s 2.47s
+all_time=$(echo "$main_timer_stop - $main_timer_start" | bc)
 log_debug "Total Elapsed Time: ${all_time}s"
