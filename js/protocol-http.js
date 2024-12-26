@@ -489,25 +489,29 @@ function encodeBase64UTF8(input) {
 }
 
 async function saveFileHttp(fileName, fileContent) {
-  const file = new File([fileContent], fileName, { type: "text/plain" });
-  const filePath = `${saveDirectory}/${fileName}`;
+  const url = `../${saveDirectory}/${fileName}`;
+  const xhr = new XMLHttpRequest();
 
-  //WebDAV
-  const url = "../" + filePath;
-  try {
-    const response = await fetch(url, {
-      method: "PUT",
-      body: file,
-    });
-    await response.text();
+  xhr.open("PUT", url, true);
+  xhr.setRequestHeader("Authorization", "Basic " + btoa("papa31:Visid00r"));
+  xhr.setRequestHeader("Content-Type", "text/plain");
 
-    if (response.ok) {
+  xhr.onload = function () {
+    if (xhr.status >= 200 && xhr.status < 300) {
       console.log("File uploaded successfully");
     } else {
-      console.error("Upload failed", response.status, response.statusText);
+      console.error("Upload failed", xhr.status, xhr.statusText);
     }
-  } catch (error) {
-    console.error("Error:", error);
+  };
+
+  xhr.onerror = function () {
+    console.error("Network error occurred during upload.");
+  };
+
+  try {
+    xhr.send(fileContent);
+  } catch (err) {
+    console.error("Error during upload:", err);
   }
 }
 
