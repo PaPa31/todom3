@@ -489,16 +489,16 @@ function encodeBase64UTF8(input) {
 }
 
 async function saveFileHttp(fileName, fileContent) {
-  const url = `../${saveDirectory}/${fileName}`;
+  const path = `${saveDirectory}/${fileName}`;
+  const url = `cgi-bin/binary-file-upload.sh?${encodeURIComponent(path)}`;
   const xhr = new XMLHttpRequest();
 
-  xhr.open("PUT", url, true);
-  xhr.setRequestHeader("Authorization", "Basic " + btoa("papa31:Visid00r"));
-  xhr.setRequestHeader("Content-Type", "text/plain");
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/octet-stream"); // Binary data MIME type
 
   xhr.onload = function () {
     if (xhr.status >= 200 && xhr.status < 300) {
-      console.log("File uploaded successfully");
+      console.log("File uploaded successfully:", xhr.responseText);
     } else {
       console.error("Upload failed", xhr.status, xhr.statusText);
     }
