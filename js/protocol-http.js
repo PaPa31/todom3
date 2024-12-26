@@ -488,8 +488,31 @@ function encodeBase64UTF8(input) {
   return btoa(unescape(encodeURIComponent(input)));
 }
 
-// Function to save the file content to the server
 async function saveFileHttp(fileName, fileContent) {
+  const file = new File([fileContent], fileName, { type: "text/plain" });
+  const filePath = `${saveDirectory}/${fileName}`;
+
+  //WebDAV
+  const url = "../" + filePath;
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      body: file,
+    });
+    await response.text();
+
+    if (response.ok) {
+      console.log("File uploaded successfully");
+    } else {
+      console.error("Upload failed", response.status, response.statusText);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Function to save the file content to the server
+async function saveFileHttp2(fileName, fileContent) {
   try {
     const startTotal = performance.now(); // Start overall timer
 
