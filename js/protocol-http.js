@@ -653,4 +653,5 @@ async function passFolderHttp(folderName) {
     return;
   }
   saveFileHttp(newFileName, input.value);
+  return newFileName;
 }

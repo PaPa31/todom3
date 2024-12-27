@@ -278,7 +278,7 @@ function scrollToTargetAdjusted(targetElement, offset) {
   );
 }
 
-function extractFolderAndCreateFileName() {
+function splitDateIntoFolderNameAndFileName() {
   let savedDate;
 
   if (itemIndexToEdit != null) {
@@ -290,12 +290,10 @@ function extractFolderAndCreateFileName() {
   } else {
     savedDate = getFullCurrentDate();
   }
-  const folderName = savedDate.substring(0, 7);
-  const fileBaseName = savedDate.substring(8);
-  const meaningPartName = generateFileNameUniversal(input.value, true);
-  const fileName = fileBaseName + "-" + meaningPartName + ".md";
+  const dateFolderName = savedDate.substring(0, 7);
+  const datePartFileName = savedDate.substring(8);
 
-  return { folderName, fileName };
+  return { dateFolderName, datePartFileName };
 }
 
 const saveItemFromFile = (fileName) => {
@@ -349,7 +347,7 @@ function drawFile(fileSize) {
 }
 
 const fileDownload = async (drawItemOnly = false) => {
-  const path = extractFolderAndCreateFileName();
+  const path = splitDateIntoFolderNameAndFileName();
 
   var blob = new Blob([input.value], {
     type: "text/plain;charset=utf-8",
@@ -358,12 +356,22 @@ const fileDownload = async (drawItemOnly = false) => {
   const fileSize = blob.size;
 
   if (window.protocol === "file:") {
-    await saveFileFile(path.fileName, blob, fileSize, drawItemOnly);
+    const meaningPartFileName = generateFileNameUniversal(input.value, true);
+    const fileName = path.datePartFileName + "-" + meaningPartFileName + ".md";
+    await saveFileFile(fileName, blob, fileSize, drawItemOnly);
   } else {
-    await passFolderHttp(path.folderName);
+    let newFileName = await passFolderHttp(path.dateFolderName);
+    //I copy/pasted below check from nested passFolderHttp func
+    // I don't if this is really necessary
+    if (!newFileName) {
+      console.log("Save operation canceled or no file name provided.");
+      //return;
+      const meaningPartFileName = generateFileNameUniversal(input.value, true);
+      newFileName = path.datePartFileName + "-" + meaningPartFileName + ".md";
+    }
     if (drawItemOnly) saveItem();
     else {
-      pushFilesArray(path.fileName);
+      pushFilesArray(newFileName);
       drawFile(fileSize);
     }
   }
