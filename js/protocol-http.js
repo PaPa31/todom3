@@ -489,6 +489,11 @@ function encodeBase64UTF8(input) {
 }
 
 async function saveFileHttp(fileName, fileContent) {
+  if (!fileName || !fileContent) {
+    console.error("Invalid file name or content.");
+    return;
+  }
+
   const path = `${saveDirectory}/${fileName}`;
   const url = `cgi-bin/binary-file-upload.sh?${encodeURIComponent(path)}`;
   const xhr = new XMLHttpRequest();
