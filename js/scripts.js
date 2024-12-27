@@ -415,38 +415,79 @@ function getFullCurrentDate() {
   return y + "-" + m + "-" + d + "-" + t;
 }
 
-// Universal transliteration function
-function transliterateUniversal(text) {
-  const before = text;
-  const after = before
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
-    .toLowerCase();
-  return after;
+function transliterate(text) {
+  const charMap = {
+    а: "a",
+    б: "b",
+    в: "v",
+    г: "g",
+    д: "d",
+    е: "e",
+    ж: "zh",
+    з: "z",
+    и: "i",
+    й: "y",
+    к: "k",
+    л: "l",
+    м: "m",
+    н: "n",
+    о: "o",
+    п: "p",
+    р: "r",
+    с: "s",
+    т: "t",
+    у: "u",
+    ф: "f",
+    х: "kh",
+    ц: "ts",
+    ч: "ch",
+    ш: "sh",
+    щ: "shch",
+    ь: "",
+    ъ: "",
+    ы: "y",
+    э: "e",
+    ю: "yu",
+    я: "ya",
+  };
+
+  return text
+    .split("") // Split into characters
+    .map((char) => {
+      const mappedChar = charMap[char];
+      return mappedChar !== undefined ? mappedChar : char; // Ensure exact matches
+    })
+    .join(""); // Reassemble the string
 }
 
 // Filename generation function
 function generateFileNameUniversal(noteContent, useTranslit = false) {
+  const startTime = performance.now(); // Start timer
   // Trim and clean the content
   let cleanedContent = noteContent
     .slice(0, 50)
     .replace(/[^\p{L}\p{N}\s]+/gu, "")
-    .trim();
+    .trim()
+    .toLowerCase();
 
   // Apply transliteration if enabled
   if (useTranslit) {
-    cleanedContent = transliterateUniversal(cleanedContent);
+    //inspectUnicode(cleanedContent);
+    cleanedContent = transliterate(cleanedContent);
   }
 
   // Replace spaces with hyphens and truncate to the first 21 characters
   const truncatedContent = cleanedContent
     .slice(0, 21)
     .replace(/\s+/g, "-")
-    .replace(/-$/, "")
-    .toLowerCase();
+    .replace(/-$/, "");
 
   // Combine with base name and extension
+
+  const endTime = performance.now();
+  console.log(`Average Execution Time: ${(endTime - startTime).toFixed(4)} ms`);
+  console.log("Traslit:", truncatedContent);
+
   return truncatedContent;
 }
 
