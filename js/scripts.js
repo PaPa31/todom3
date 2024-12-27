@@ -292,8 +292,8 @@ function extractFolderAndCreateFileName() {
   }
   const folderName = savedDate.substring(0, 7);
   const fileBaseName = savedDate.substring(8);
-  const fileName =
-    fileBaseName + "-" + getFirstCharsWithTrim(input.value) + ".md";
+  const meaningPartName = generateFileNameUniversal(input.value, true);
+  const fileName = fileBaseName + "-" + meaningPartName + ".md";
 
   return { folderName, fileName };
 }
@@ -407,16 +407,51 @@ function getFullCurrentDate() {
   return y + "-" + m + "-" + d + "-" + t;
 }
 
-function getFirstCharsWithTrim(s) {
-  s = s.replace(/[^\p{L}\p{N}]+/gu, " ");
-  s = s.replace(/(^\s*)|(\s*$)/gi, "");
-  s = s.replace(/[ ]{2,}/gi, " ");
-  s = s.replace(/\n /, "\n");
-  s = s.toLowerCase();
-  s = s.replace(/\s+/g, "-");
-  s = s.slice(0, 21);
-  return s.replace(/-$/, "");
+// Universal transliteration function
+function transliterateUniversal(text) {
+  const before = text;
+  const after = before
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .toLowerCase();
+  return after;
 }
+
+// Filename generation function
+function generateFileNameUniversal(noteContent, useTranslit = false) {
+  // Trim and clean the content
+  let cleanedContent = noteContent
+    .slice(0, 50)
+    .replace(/[^\p{L}\p{N}\s]+/gu, "")
+    .trim();
+
+  // Apply transliteration if enabled
+  if (useTranslit) {
+    cleanedContent = transliterateUniversal(cleanedContent);
+  }
+
+  // Replace spaces with hyphens and truncate to the first 21 characters
+  const truncatedContent = cleanedContent
+    .slice(0, 21)
+    .replace(/\s+/g, "-")
+    .replace(/-$/, "")
+    .toLowerCase();
+
+  // Combine with base name and extension
+  return truncatedContent;
+}
+
+//function getFirstCharsWithTrim(s) {
+//  s = s.replace(/[^\p{L}\p{N}]+/gu, " ");
+//  s = s.replace(/(^\s*)|(\s*$)/gi, "");
+//  s = s.replace(/[ ]{2,}/gi, " ");
+//  s = s.replace(/\n /, "\n");
+//  s = s.toLowerCase();
+//  s = s.replace(/\s+/g, "-");
+//  s = s.slice(0, 21);
+//  return s.replace(/-$/, "");
+//}
 
 function pushFilesArray(fileName) {
   let _fileName;

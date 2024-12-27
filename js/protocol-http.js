@@ -14,13 +14,6 @@ const directoryStack = [];
 
 let saveDirectory = rootDirectory;
 
-//function onSaveButtonClick() {
-//  const fileName =
-//    getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
-//  const fileContent = input.value;
-//  saveFileHttp(fileName, fileContent); // Save the file using the selected directory
-//}
-
 async function openAllFiles(currentDirectory) {
   console.log("Start loading!!");
 
@@ -200,8 +193,8 @@ function createDirectoryModal(
 
   if (save) {
     if (initialFileName === null) {
-      initialFileName =
-        getCurrentDate() + "-" + getFirstCharsWithTrim(input.value) + ".md";
+      const meaningPartName = generateFileNameUniversal(input.value, true);
+      initialFileName = getCurrentDate() + "-" + meaningPartName + ".md";
     }
     // Create "Create Folder" button
     const createFolderButton = document.createElement("button");
