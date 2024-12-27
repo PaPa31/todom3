@@ -1,4 +1,5 @@
 #!/bin/sh
+
 echo "Content-type: text/plain"
 echo ""
 
@@ -13,23 +14,30 @@ FILE_PATH=$(decode_url "$QUERY_STRING")
 # Define a base directory for uploads
 BASE_DIR="/www"
 
-# Sanitize and ensure the file path is under the allowed directory
-SANITIZED_PATH=$(echo "$FILE_PATH" | sed 's#\.\./##g') # Remove ../ to prevent directory traversal
+# Sanitize and validate the file path
+# Only latin or digit in filename
+# Remove ../ to prevent directory traversal
+SANITIZED_PATH=$(echo "$FILE_PATH" | sed 's#[^a-zA-Z0-9._/-]##g' | sed 's#\.\./##g')
 FULL_PATH="$BASE_DIR/$SANITIZED_PATH"
 
-# Create the directory if it doesn't exist
+# Ensure the path starts with the base directory
+case "$FULL_PATH" in
+    "$BASE_DIR"*) ;; # OK
+    *) echo "Error: Invalid file path"; exit 1 ;;
+esac
+
+# Ensure the target directory exists
 DIR_PATH=$(dirname "$FULL_PATH")
-mkdir -p "$DIR_PATH" || {
-  echo "Failed to create directory: $DIR_PATH"
-  exit 1
-}
+if ! mkdir -p "$DIR_PATH"; then
+    echo "Error: Failed to create directory $DIR_PATH"
+    exit 1
+fi
 
-# Save raw binary data to the file
-cat > "$FULL_PATH" || {
-  echo "Failed to save file: $FULL_PATH"
-  exit 1
-}
-
+# Write the file and check for success
+if ! cat > "$FULL_PATH"; then
+    echo "Error: Failed to write file to $FULL_PATH"
+    exit 1
+fi
 
 # Respond with success
 echo "File saved as $FULL_PATH"
