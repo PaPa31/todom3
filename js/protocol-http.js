@@ -152,7 +152,7 @@ async function openDirectory(directoryPath, save = false) {
 }
 
 // Function to create and show the directory modal
-function createDirectoryModal(
+async function createDirectoryModal(
   directories,
   onDirectorySelected,
   onBackButtonClick,
@@ -193,7 +193,10 @@ function createDirectoryModal(
 
   if (save) {
     if (initialFileName === null) {
-      const meaningPartName = generateFileNameUniversal(input.value, true);
+      const meaningPartName = await generateFileNameUniversal(
+        input.value,
+        true
+      );
       initialFileName = getCurrentDate() + "-" + meaningPartName + ".md";
     }
     // Create "Create Folder" button

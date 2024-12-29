@@ -415,7 +415,186 @@ function getFullCurrentDate() {
   return y + "-" + m + "-" + d + "-" + t;
 }
 
-function transliterate(text) {
+//<-----------------Start--------------------->
+
+// Step 1: Script Detection Function
+function detectScript(text) {
+  if (/[\u0400-\u04FF]/.test(text)) return "cyrillic"; // Cyrillic script
+  if (/[\u0370-\u03FF]/.test(text)) return "greek"; // Greek script
+  if (/[\u0600-\u06FF]/.test(text)) return "arabic"; // Arabic script
+  if (/[\u4E00-\u9FFF]/.test(text)) return "chinese"; // Chinese characters
+  return "latin"; // Default to Latin script
+}
+
+// Step 2: Transliteration Maps
+const transliterationMaps = {
+  cyrillic: {
+    а: "a",
+    б: "b",
+    в: "v",
+    г: "g",
+    д: "d",
+    е: "e",
+    ё: "yo",
+    ж: "zh",
+    з: "z",
+    и: "i",
+    й: "y",
+    к: "k",
+    л: "l",
+    м: "m",
+    н: "n",
+    о: "o",
+    п: "p",
+    р: "r",
+    с: "s",
+    т: "t",
+    у: "u",
+    ф: "f",
+    х: "kh",
+    ц: "ts",
+    ч: "ch",
+    ш: "sh",
+    щ: "shch",
+    ъ: "",
+    ы: "y",
+    ь: "",
+    э: "e",
+    ю: "yu",
+    я: "ya",
+  },
+  greek: {
+    α: "a",
+    β: "b",
+    γ: "g",
+    δ: "d",
+    ε: "e",
+    ζ: "z",
+    η: "i",
+    θ: "th",
+    ι: "i",
+    κ: "k",
+    λ: "l",
+    μ: "m",
+    ν: "n",
+    ξ: "x",
+    ο: "o",
+    π: "p",
+    ρ: "r",
+    σ: "s",
+    τ: "t",
+    υ: "u",
+    φ: "ph",
+    χ: "ch",
+    ψ: "ps",
+    ω: "o",
+  },
+};
+
+// Step 3: Transliteration with Character Maps
+function transliterateWithCharMap(text) {
+  const script = detectScript(text);
+  const charMap = transliterationMaps[script];
+  if (!charMap) return text; // No transliteration for Latin or unsupported scripts
+
+  return text
+    .split("")
+    .map((char) => charMap[char] || char)
+    .join("");
+}
+
+// Step 4: Transliteration Library Loading
+function loadTransliterationLibrary() {
+  return new Promise((resolve, reject) => {
+    if (window.transliterate) {
+      resolve(); // Already loaded
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "libs/transliteration-2.1.8.min.js";
+    script.async = true;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+async function transliterateWithLibrary(text) {
+  try {
+    await loadTransliterationLibrary();
+    return window.transliterate(text);
+  } catch (error) {
+    console.error("Failed to load transliteration library:", error);
+    return text;
+  }
+}
+
+// Step 5: Google Transliteration API Fallback
+async function transliterateWithGoogle(text, apiKey) {
+  const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
+  const body = {
+    q: text,
+    target: "en",
+    format: "text",
+  };
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await response.json();
+    return data.data.translations[0].translatedText || text;
+  } catch (error) {
+    console.error("Google Transliteration API failed:", error);
+    return text;
+  }
+}
+
+// Step 6: Main Transliteration Function
+async function transliterate(text, apiKey) {
+  let result = transliterateWithCharMap(text);
+  if (result !== text) return result;
+
+  result = await transliterateWithLibrary(text);
+  if (result !== text) return result;
+
+  return await transliterateWithGoogle(text, apiKey);
+}
+
+// Step 7: Slugification
+async function universalSlugifyDynamic(text, options = {}) {
+  const { maxLength = 50 } = options;
+  const transliteratedText = await transliterate(text, showPhrase());
+
+  return transliteratedText
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s-]+/g, "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .slice(0, maxLength);
+}
+
+// Step 8: Filename Generation
+async function generateFileNameUniversal(noteContent, useTranslit = false) {
+  const cleanedContent = noteContent
+    .slice(0, 50)
+    .replace(/[^\p{L}\p{N}\s]+/gu, "")
+    .trim()
+    .toLowerCase();
+
+  const content = useTranslit
+    ? await universalSlugifyDynamic(cleanedContent)
+    : cleanedContent.replace(/\s+/g, "-").slice(0, 21).replace(/-$/, "");
+
+  return `${content}`;
+}
+
+//<-----------------End----------------------->
+
+function transliterate2(text) {
   const charMap = {
     а: "a",
     б: "b",
@@ -461,7 +640,7 @@ function transliterate(text) {
 }
 
 // Filename generation function
-function generateFileNameUniversal(noteContent, useTranslit = false) {
+function generateFileNameUniversal2(noteContent, useTranslit = false) {
   const startTime = performance.now(); // Start timer
   // Trim and clean the content
   let cleanedContent = noteContent
