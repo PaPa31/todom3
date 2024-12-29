@@ -556,10 +556,18 @@ async function transliterateWithLibrary(text) {
   // Ensure library is loaded only once
   try {
     await loadTransliterationLibrary();
+
     if (typeof window.transliterate === "function") {
       const result = window.transliterate(text);
       console.log("Library Transliteration:", result);
-      return result;
+
+      // Heuristic check: Ensure the output is meaningful
+      if (result && /^[a-zA-Z\s-]+$/.test(result) && result !== text) {
+        return result;
+      } else {
+        console.warn("Library transliteration result is poor; skipping.");
+        throw new Error("Poor transliteration output from library.");
+      }
     } else {
       throw new Error(
         "Transliteration library loaded, but `transliterate` is undefined."
@@ -595,6 +603,43 @@ async function transliterateWithGoogle(text, apiKey) {
 
 // Step 6: Main Transliteration Function
 async function transliterate(text, apiKey) {
+  console.log("Input Text:", text);
+
+  // Step 1: Character map transliteration
+  const resultFromCharMap = transliterateWithCharMap(text);
+  if (resultFromCharMap !== text) {
+    console.log("CharMap Transliteration Result:", resultFromCharMap);
+    return resultFromCharMap;
+  }
+
+  // Step 2: Library transliteration
+  try {
+    const resultFromLibrary = await transliterateWithLibrary(text);
+    if (resultFromLibrary && resultFromLibrary !== text) {
+      console.log("Library Transliteration Result:", resultFromLibrary);
+      return resultFromLibrary;
+    }
+  } catch (err) {
+    console.warn("Library transliteration failed:", err);
+  }
+
+  // Step 3: Google API transliteration
+  try {
+    const resultFromGoogle = await transliterateWithGoogle(text, apiKey);
+    if (resultFromGoogle && resultFromGoogle !== text) {
+      console.log("Google API Transliteration Result:", resultFromGoogle);
+      return resultFromGoogle;
+    }
+  } catch (err) {
+    console.error("Google API transliteration failed:", err);
+  }
+
+  // Final fallback: return the original text
+  console.warn("All transliteration methods failed. Returning original text.");
+  return text;
+}
+
+async function transliterate3(text, apiKey) {
   console.log("Input Text:", text);
 
   // Use a Set to track completed methods and avoid duplicate retries
