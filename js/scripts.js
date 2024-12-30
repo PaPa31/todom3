@@ -519,14 +519,7 @@ async function transliterateWithLibrary(text) {
     if (typeof window.transliterate === "function") {
       const result = window.transliterate(text);
       console.log("Library Transliteration:", result);
-
-      // Heuristic check: Ensure the output is meaningful
-      if (result && /^[a-zA-Z\s-]+$/.test(result) && result !== text) {
-        return result;
-      } else {
-        console.warn("Library transliteration result is poor; skipping.");
-        throw new Error("Poor transliteration output from library.");
-      }
+      return result;
     } else {
       throw new Error(
         "Transliteration library loaded, but `transliterate` is undefined."
@@ -603,9 +596,24 @@ async function universalSlugifyDynamic(text, options = {}) {
   const { maxLength = 50 } = options;
   console.log("Original Text for Slugify:", text);
 
+  // Step 1: Detect and skip already transliterated text
+  if (isLikelyTransliterated(text)) {
+    console.log("Text is already transliterated. Using as-is for slugify.");
+    return text
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+      .replace(/[^\w\s-]+/g, "") // Remove non-alphanumeric characters
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-") // Replace spaces with hyphens
+      .slice(0, maxLength);
+  }
+
+  // Step 2: Transliterate if needed
   const transliteratedText = await transliterate(text, showPhrase());
   console.log("Transliterated Text for Slugify:", transliteratedText);
 
+  // Step 3: Slugify transliterated text
   const slugifiedText = transliteratedText
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -643,6 +651,14 @@ async function generateFileNameUniversal(noteContent, useTranslit = false) {
 
   return `${content}`;
 }
+
+// Helper: Detect likely transliterated text
+const isLikelyTransliterated = (text) => {
+  // Not always apostroph is a trasliterated mark
+  //return /^[a-zA-Z' -]+$/.test(text) && /[']/g.test(text);
+  // Heuristic check: Ensure the output is meaningful
+  return /^[a-zA-Z\s-]+$/.test(text);
+};
 
 //<-----------------End----------------------->
 
