@@ -648,6 +648,7 @@ async function transliterate3(text, apiKey) {
   // Step 1: Character map transliteration
   if (!attemptedMethods.has("charMap")) {
     const resultFromCharMap = transliterateWithCharMap(text);
+    console.log("CharMap Transliteration:", resultFromCharMap);
     attemptedMethods.add("charMap");
     if (resultFromCharMap !== text) {
       console.log("CharMap Transliteration Result:", resultFromCharMap);
@@ -658,7 +659,9 @@ async function transliterate3(text, apiKey) {
   // Step 2: Library transliteration
   if (!attemptedMethods.has("library")) {
     try {
+      console.log("Attempting Library Transliteration...");
       const resultFromLibrary = await transliterateWithLibrary(text);
+      console.log("Library Transliteration:", resultFromLibrary);
       attemptedMethods.add("library");
       if (resultFromLibrary && resultFromLibrary !== text) {
         console.log("Library Transliteration Result:", resultFromLibrary);
@@ -672,7 +675,9 @@ async function transliterate3(text, apiKey) {
   // Step 3: Google API transliteration
   if (!attemptedMethods.has("google")) {
     try {
+      console.log("Attempting Google Transliteration...");
       const resultFromGoogle = await transliterateWithGoogle(text, apiKey);
+      console.log("Google Transliteration:", resultFromGoogle);
       attemptedMethods.add("google");
       if (resultFromGoogle && resultFromGoogle !== text) {
         console.log("Google Transliteration Result:", resultFromGoogle);
@@ -720,9 +725,12 @@ async function transliterate2(text, apiKey) {
 // Step 7: Slugification
 async function universalSlugifyDynamic(text, options = {}) {
   const { maxLength = 50 } = options;
-  const transliteratedText = await transliterate(text, showPhrase());
+  console.log("Original Text for Slugify:", text);
 
-  return transliteratedText
+  const transliteratedText = await transliterate(text, showPhrase());
+  console.log("Transliterated Text for Slugify:", transliteratedText);
+
+  const slugifiedText = transliteratedText
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^\w\s-]+/g, "")
@@ -730,19 +738,28 @@ async function universalSlugifyDynamic(text, options = {}) {
     .toLowerCase()
     .replace(/\s+/g, "-")
     .slice(0, maxLength);
+
+  console.log("Final Slugified Text:", slugifiedText);
+  return slugifiedText;
 }
 
 // Step 8: Filename Generation
 async function generateFileNameUniversal(noteContent, useTranslit = false) {
+  console.log("Original Note Content:", noteContent);
+
   const cleanedContent = noteContent
     .slice(0, 50)
     .replace(/[^\p{L}\p{N}\s]+/gu, "")
     .trim()
     .toLowerCase();
 
+  console.log("Cleaned Note Content:", cleanedContent);
+
   const content = useTranslit
     ? await universalSlugifyDynamic(cleanedContent)
     : cleanedContent.replace(/\s+/g, "-").slice(0, 21).replace(/-$/, "");
+
+  console.log("Generated File Name Content:", content);
 
   return `${content}`;
 }
