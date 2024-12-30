@@ -469,9 +469,12 @@ function transliterateWithCharMap(text) {
   if (!charMap) return text; // No transliteration for Latin or unsupported scripts
 
   return text
-    .split("")
-    .map((char) => charMap[char] || char)
-    .join("");
+    .split("") // Split into characters
+    .map((char) => {
+      const mappedChar = charMap[char];
+      return mappedChar !== undefined ? mappedChar : char; // Ensure exact matches
+    })
+    .join(""); // Reassemble the string
 }
 
 // Step 4: Transliteration Library Loading
