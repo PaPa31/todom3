@@ -488,7 +488,7 @@ function loadTransliterationLibrary() {
 
   return new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = "libs/transliteration-2.1.8.min.js"; // Path to the transliteration library
+    script.src = "libs/transliteration-2.3.5/bundle.umd.min.js"; // Path to the transliteration library
     script.async = true;
 
     script.onload = () => {
