@@ -420,9 +420,6 @@ function getFullCurrentDate() {
 // Step 1: Script Detection Function
 function detectScript(text) {
   if (/[\u0400-\u04FF]/.test(text)) return "cyrillic"; // Cyrillic script
-  if (/[\u0370-\u03FF]/.test(text)) return "greek"; // Greek script
-  if (/[\u0600-\u06FF]/.test(text)) return "arabic"; // Arabic script
-  if (/[\u4E00-\u9FFF]/.test(text)) return "chinese"; // Chinese characters
   return "latin"; // Default to Latin script
 }
 
@@ -462,32 +459,6 @@ const transliterationMaps = {
     э: "e",
     ю: "yu",
     я: "ya",
-  },
-  greek: {
-    α: "a",
-    β: "b",
-    γ: "g",
-    δ: "d",
-    ε: "e",
-    ζ: "z",
-    η: "i",
-    θ: "th",
-    ι: "i",
-    κ: "k",
-    λ: "l",
-    μ: "m",
-    ν: "n",
-    ξ: "x",
-    ο: "o",
-    π: "p",
-    ρ: "r",
-    σ: "s",
-    τ: "t",
-    υ: "u",
-    φ: "ph",
-    χ: "ch",
-    ψ: "ps",
-    ω: "o",
   },
 };
 
@@ -533,21 +504,6 @@ function loadTransliterationLibrary() {
 
     script.onerror = () =>
       reject(new Error("Failed to load transliteration library."));
-    document.head.appendChild(script);
-  });
-}
-
-function loadTransliterationLibrary2() {
-  return new Promise((resolve, reject) => {
-    if (window.transliterate) {
-      resolve(); // Already loaded
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = "libs/transliteration-2.1.8.min.js";
-    script.async = true;
-    script.onload = resolve;
-    script.onerror = reject;
     document.head.appendChild(script);
   });
 }
@@ -639,89 +595,6 @@ async function transliterate(text, apiKey) {
   return text;
 }
 
-async function transliterate3(text, apiKey) {
-  console.log("Input Text:", text);
-
-  // Use a Set to track completed methods and avoid duplicate retries
-  const attemptedMethods = new Set();
-
-  // Step 1: Character map transliteration
-  if (!attemptedMethods.has("charMap")) {
-    const resultFromCharMap = transliterateWithCharMap(text);
-    console.log("CharMap Transliteration:", resultFromCharMap);
-    attemptedMethods.add("charMap");
-    if (resultFromCharMap !== text) {
-      console.log("CharMap Transliteration Result:", resultFromCharMap);
-      return resultFromCharMap;
-    }
-  }
-
-  // Step 2: Library transliteration
-  if (!attemptedMethods.has("library")) {
-    try {
-      console.log("Attempting Library Transliteration...");
-      const resultFromLibrary = await transliterateWithLibrary(text);
-      console.log("Library Transliteration:", resultFromLibrary);
-      attemptedMethods.add("library");
-      if (resultFromLibrary && resultFromLibrary !== text) {
-        console.log("Library Transliteration Result:", resultFromLibrary);
-        return resultFromLibrary;
-      }
-    } catch (err) {
-      console.error("Library transliteration failed:", err);
-    }
-  }
-
-  // Step 3: Google API transliteration
-  if (!attemptedMethods.has("google")) {
-    try {
-      console.log("Attempting Google Transliteration...");
-      const resultFromGoogle = await transliterateWithGoogle(text, apiKey);
-      console.log("Google Transliteration:", resultFromGoogle);
-      attemptedMethods.add("google");
-      if (resultFromGoogle && resultFromGoogle !== text) {
-        console.log("Google Transliteration Result:", resultFromGoogle);
-        return resultFromGoogle;
-      }
-    } catch (err) {
-      console.error("Google API transliteration failed:", err);
-    }
-  }
-
-  // Final fallback: return the original text
-  console.warn("All transliteration methods failed. Returning original text.");
-  return text;
-}
-
-async function transliterate2(text, apiKey) {
-  console.log("Input Text:", text);
-
-  // Step 1: Try character map transliteration
-  const resultFromCharMap = transliterateWithCharMap(text);
-  if (resultFromCharMap !== text) return resultFromCharMap;
-
-  // Step 2: Try library transliteration (with a single attempt)
-  try {
-    const resultFromLibrary = await transliterateWithLibrary(text);
-    if (resultFromLibrary && resultFromLibrary !== text)
-      return resultFromLibrary;
-  } catch (err) {
-    console.error("Library transliteration failed:", err);
-  }
-
-  // Step 3: Fallback to Google API (with a single attempt)
-  try {
-    const resultFromGoogle = await transliterateWithGoogle(text, apiKey);
-    if (resultFromGoogle && resultFromGoogle !== text) return resultFromGoogle;
-  } catch (err) {
-    console.error("Google API transliteration failed:", err);
-  }
-
-  // Final fallback: return the original text
-  console.warn("All transliteration methods failed. Returning original text.");
-  return text;
-}
-
 // Step 7: Slugification
 async function universalSlugifyDynamic(text, options = {}) {
   const { maxLength = 50 } = options;
@@ -745,6 +618,7 @@ async function universalSlugifyDynamic(text, options = {}) {
 
 // Step 8: Filename Generation
 async function generateFileNameUniversal(noteContent, useTranslit = false) {
+  const startTime = performance.now(); // Start timer
   console.log("Original Note Content:", noteContent);
 
   const cleanedContent = noteContent
@@ -758,6 +632,9 @@ async function generateFileNameUniversal(noteContent, useTranslit = false) {
   const content = useTranslit
     ? await universalSlugifyDynamic(cleanedContent)
     : cleanedContent.replace(/\s+/g, "-").slice(0, 21).replace(/-$/, "");
+
+  const endTime = performance.now();
+  console.log(`Average Execution Time: ${(endTime - startTime).toFixed(4)} ms`);
 
   console.log("Generated File Name Content:", content);
 
