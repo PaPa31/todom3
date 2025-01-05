@@ -599,37 +599,33 @@ async function universalSlugifyDynamic(text, options = {}) {
   const { maxLength = 50 } = options;
   console.log("Original Text for Latinized and Slugify:", text);
 
-  // Step 1: Detect and skip already transliterated text
-  if (certainlyLatinized(text)) {
+  // Step 1: Normalize and strip accents/diacritics
+  let normalizedText = text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove diacritics
+
+  console.log("Normalized text:", normalizedText);
+
+  // Step 2: Transliterate if not already Latinized
+  if (!certainlyLatinized(normalizedText)) {
+    console.log("Start of Latinization");
+
+    normalizedText = await transliterate(normalizedText, showPhrase());
+  } else {
     console.log(
       "Text is already Latinized. Proceeding with slugification only."
     );
-    return text
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
-      .replace(/[^\w\s-]+/g, "") // Remove non-alphanumeric characters
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, "-") // Replace spaces with hyphens
-      .slice(0, maxLength);
   }
 
-  // Step 2: Transliterate if needed
-  const transliteratedText = await transliterate(text, showPhrase());
-  console.log("Transliterated Text for Slugify:", transliteratedText);
-
-  // Step 3: Slugify transliterated text
-  const slugifiedText = transliteratedText
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\w\s-]+/g, "")
+  // Step 3: Replace invalid characters with a hyphen
+  const slugifiedText = normalizedText
+    .replace(/[^\w\s-]+/g, "") // Remove non-alphanumeric characters
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
     .trim()
     .toLowerCase()
-    .replace(/\s+/g, "-")
-    .slice(0, maxLength);
+    .slice(0, maxLength); // Limit length to maxLength
 
-  console.log("Final Slugified Text:", slugifiedText);
-  return slugifiedText;
+  // Ensure filename is safe and ASCII-compatible
+  console.log("Slugified Filename:", slugifiedText || "unknown");
+  return slugifiedText || "unknown"; // Fallback if slugification fails
 }
 
 // Step 8: Filename Generation
@@ -639,7 +635,7 @@ async function generateFileNameUniversal(noteContent, useTranslit = false) {
 
   const cleanedContent = noteContent
     .slice(0, 50)
-    .replace(/[^\p{L}\p{N}\s]+/gu, "")
+    .replace(/[^\p{L}\p{N}\s]+/gu, "-")
     .trim()
     .toLowerCase();
 
