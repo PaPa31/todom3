@@ -418,9 +418,12 @@ function getFullCurrentDate() {
 //<-----------------Start--------------------->
 
 // Step 1: Script Detection Function
+// Enhanced Script Detection Function
 function detectScript(text) {
   if (/[\u0400-\u04FF]/.test(text)) return "cyrillic"; // Cyrillic script
-  return "latin"; // Default to Latin script
+  if (/[\u0600-\u06FF]/.test(text)) return "arabic"; // Arabic script
+  if (/^[\u0000-\u007F\u0100-\u017F\s-]+$/.test(text)) return "latin"; // Latin or already Latinized
+  return "unknown"; // Default if no match
 }
 
 // Step 2: Transliteration Maps
@@ -594,11 +597,13 @@ async function transliterate(text, apiKey) {
 // Step 7: Slugification
 async function universalSlugifyDynamic(text, options = {}) {
   const { maxLength = 50 } = options;
-  console.log("Original Text for Slugify:", text);
+  console.log("Original Text for Latinized and Slugify:", text);
 
   // Step 1: Detect and skip already transliterated text
-  if (isLikelyTransliterated(text)) {
-    console.log("Text is already transliterated. Using as-is for slugify.");
+  if (certainlyLatinized(text)) {
+    console.log(
+      "Text is already Latinized. Proceeding with slugification only."
+    );
     return text
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
@@ -652,13 +657,10 @@ async function generateFileNameUniversal(noteContent, useTranslit = false) {
   return `${content}`;
 }
 
-// Helper: Detect likely transliterated text
-const isLikelyTransliterated = (text) => {
-  // Not always apostroph is a trasliterated mark
-  //return /^[a-zA-Z' -]+$/.test(text) && /[']/g.test(text);
-  // Heuristic check: Ensure the output is meaningful
-  return /^[a-zA-Z\s-]+$/.test(text);
-};
+// Detect if the text is certainly Latinized (already in Latin script)
+function certainlyLatinized(text) {
+  return detectScript(text) === "latin";
+}
 
 //<-----------------End----------------------->
 
