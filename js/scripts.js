@@ -485,7 +485,7 @@ let libraryLoaded = false; // Track library load status globally
 
 function loadTransliterationLibrary() {
   if (libraryLoaded) {
-    console.log("Library already loaded.");
+    //console.log("Library already loaded.");
     return Promise.resolve();
   }
 
@@ -497,7 +497,7 @@ function loadTransliterationLibrary() {
     script.onload = () => {
       if (typeof window.transliterate === "function") {
         libraryLoaded = true;
-        console.log("Transliteration library loaded successfully.");
+        //console.log("Transliteration library loaded successfully.");
         resolve();
       } else {
         reject(
@@ -521,7 +521,7 @@ async function transliterateWithLibrary(text) {
 
     if (typeof window.transliterate === "function") {
       const result = window.transliterate(text);
-      console.log("Library Transliteration:", result);
+      //console.log("Library Transliteration:", result);
       return result;
     } else {
       throw new Error(
@@ -558,12 +558,12 @@ async function transliterateWithGoogle(text, apiKey) {
 
 // Step 6: Main Transliteration Function
 async function transliterate(text, apiKey) {
-  console.log("Input Text:", text);
+  //console.log("Input Text:", text);
 
   // Step 1: Character map transliteration
   const resultFromCharMap = transliterateWithCharMap(text);
   if (resultFromCharMap !== text) {
-    console.log("CharMap Transliteration Result:", resultFromCharMap);
+    //console.log("CharMap Transliteration Result:", resultFromCharMap);
     return resultFromCharMap;
   }
 
@@ -571,7 +571,7 @@ async function transliterate(text, apiKey) {
   try {
     const resultFromLibrary = await transliterateWithLibrary(text);
     if (resultFromLibrary && resultFromLibrary !== text) {
-      console.log("Library Transliteration Result:", resultFromLibrary);
+      //console.log("Library Transliteration Result:", resultFromLibrary);
       return resultFromLibrary;
     }
   } catch (err) {
@@ -597,22 +597,22 @@ async function transliterate(text, apiKey) {
 // Step 7: Slugification
 async function universalSlugifyDynamic(text, options = {}) {
   const { maxLength = 50 } = options;
-  console.log("Original Text for Latinized and Slugify:", text);
+  //console.log("Original Text for Latinized and Slugify:", text);
 
   // Step 1: Normalize and strip accents/diacritics
   let normalizedText = text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove diacritics
 
-  console.log("Normalized text:", normalizedText);
+  //console.log("Normalized text:", normalizedText);
 
   // Step 2: Transliterate if not already Latinized
   if (!certainlyLatinized(normalizedText)) {
-    console.log("Start of Latinization");
+    //console.log("Start of Latinization");
 
     normalizedText = await transliterate(normalizedText, showPhrase());
   } else {
-    console.log(
-      "Text is already Latinized. Proceeding with slugification only."
-    );
+    //console.log(
+    //  "Text is already Latinized. Proceeding with slugification only."
+    //);
   }
 
   // Step 3: Replace invalid characters with a hyphen
@@ -624,14 +624,14 @@ async function universalSlugifyDynamic(text, options = {}) {
     .slice(0, maxLength); // Limit length to maxLength
 
   // Ensure filename is safe and ASCII-compatible
-  console.log("Slugified Filename:", slugifiedText || "unknown");
+  //console.log("Slugified Filename:", slugifiedText || "unknown");
   return slugifiedText || "unknown"; // Fallback if slugification fails
 }
 
 // Step 8: Filename Generation
 async function generateFileNameUniversal(noteContent, useTranslit = false) {
   const startTime = performance.now(); // Start timer
-  console.log("Original Note Content:", noteContent);
+  //console.log("Original Note Content:", noteContent);
 
   const cleanedContent = noteContent
     .slice(0, 50)
@@ -639,7 +639,7 @@ async function generateFileNameUniversal(noteContent, useTranslit = false) {
     .trim()
     .toLowerCase();
 
-  console.log("Cleaned Note Content:", cleanedContent);
+  //console.log("Cleaned Note Content:", cleanedContent);
 
   const content = useTranslit
     ? await universalSlugifyDynamic(cleanedContent)
@@ -648,7 +648,7 @@ async function generateFileNameUniversal(noteContent, useTranslit = false) {
   const endTime = performance.now();
   console.log(`Average Execution Time: ${(endTime - startTime).toFixed(4)} ms`);
 
-  console.log("Generated File Name Content:", content);
+  //console.log("Generated File Name Content:", content);
 
   return `${content}`;
 }
