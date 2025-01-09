@@ -658,6 +658,69 @@ function certainlyLatinized(text) {
   return detectScript(text) === "latin";
 }
 
+async function testLatinizationAndSlugification() {
+  const testCases = [
+    // Simple Latinized Text
+    { input: "hello world", expected: "hello-world" },
+    { input: "dynamic-slugifier", expected: "dynamic-slugifier" },
+    { input: "neobrabotannyye dannyye", expected: "neobrabotannyye-dannyye" },
+
+    // Non-Latin Script
+    { input: "Привет мир", expected: "privet-mir" },
+    { input: "مرحبا بالعالم", expected: "mrhb-blaalm" },
+    { input: "你好，世界", expected: "ni-hao-shi-jie" },
+
+    // Mixed Script
+    { input: "Привет 123 world", expected: "privet-123-world" },
+    { input: "مرحبا Hello", expected: "mrhb-hello" },
+    { input: "你好123world", expected: "ni-hao-123-world" },
+
+    // Special Characters
+    { input: "hello @world!", expected: "hello-world" },
+    { input: "Привет! Мир?", expected: "privet-mir" },
+
+    // Excessively Long Inputs
+    {
+      input:
+        "This is a very long string that exceeds fifty characters in length",
+      expected: "this-is-a-very-long-string-that-exceeds-fifty-ch",
+    },
+    {
+      input: "Очень длинный текст, превышающий лимит символов",
+      expected: "ochen-dlinnyy-tekst-prevyshayushchiy-limit-simvo",
+    },
+
+    // Edge Cases
+    { input: "", expected: "" },
+    { input: "     ", expected: "" },
+    { input: "@#$%^&*", expected: "" },
+    { input: "𐍈𐍈𐍈", expected: "unknown" },
+  ];
+
+  let passedTests = 0;
+
+  for (const { input, expected } of testCases) {
+    const output = await universalSlugifyDynamic(input, { maxLength: 50 });
+    const result = output === expected ? "PASSED" : "FAILED";
+
+    console.log(
+      `Input: "${input}"\nExpected: "${expected}"\nOutput: "${output}"\nResult: ${result}\n`
+    );
+
+    if (result === "PASSED") passedTests++;
+  }
+
+  console.log(
+    `\n${passedTests}/${testCases.length} tests passed (${(
+      (passedTests / testCases.length) *
+      100
+    ).toFixed(2)}%).`
+  );
+}
+
+// Run the tests
+testLatinizationAndSlugification();
+
 //<-----------------End----------------------->
 
 function transliterate2(text) {
