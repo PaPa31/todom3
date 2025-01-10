@@ -514,14 +514,14 @@ function loadTransliterationLibrary() {
   });
 }
 
-async function transliterateWithLibrary(text) {
+async function transliterateWithLibrary(text, translitOrSlugify) {
   // Ensure library is loaded only once
   try {
     await loadTransliterationLibrary();
 
-    if (typeof window.transliterate === "function") {
-      const result = window.transliterate(text);
-      //console.log("Library Transliteration:", result);
+    if (typeof window[translitOrSlugify] === "function") {
+      const result = window[translitOrSlugify](text);
+      console.log("Library Transliteration or Slugification:", result);
       return result;
     } else {
       throw new Error(
@@ -557,21 +557,25 @@ async function transliterateWithGoogle(text, apiKey) {
 }
 
 // Step 6: Main Transliteration Function
-async function transliterate(text, apiKey) {
+async function transliterate(text, apiKey, slug = false) {
   //console.log("Input Text:", text);
 
   // Step 1: Character map transliteration
-  const resultFromCharMap = transliterateWithCharMap(text);
-  if (resultFromCharMap !== text) {
-    //console.log("CharMap Transliteration Result:", resultFromCharMap);
-    return resultFromCharMap;
-  }
+  //const resultFromCharMap = transliterateWithCharMap(text);
+  //if (resultFromCharMap !== text) {
+  //  //console.log("CharMap Transliteration Result:", resultFromCharMap);
+  //  return resultFromCharMap;
+  //}
 
   // Step 2: Library transliteration
   try {
-    const resultFromLibrary = await transliterateWithLibrary(text);
+    const translitOrSlugify = slug ? "slugify" : "transliterate";
+    const resultFromLibrary = await transliterateWithLibrary(
+      text,
+      translitOrSlugify
+    );
     if (resultFromLibrary && resultFromLibrary !== text) {
-      //console.log("Library Transliteration Result:", resultFromLibrary);
+      console.log("Library Transliteration Result:", resultFromLibrary);
       return resultFromLibrary;
     }
   } catch (err) {
@@ -579,15 +583,15 @@ async function transliterate(text, apiKey) {
   }
 
   // Step 3: Google API transliteration
-  try {
-    const resultFromGoogle = await transliterateWithGoogle(text, apiKey);
-    if (resultFromGoogle && resultFromGoogle !== text) {
-      console.log("Google API Transliteration Result:", resultFromGoogle);
-      return resultFromGoogle;
-    }
-  } catch (err) {
-    console.error("Google API transliteration failed:", err);
-  }
+  //try {
+  //  const resultFromGoogle = await transliterateWithGoogle(text, apiKey);
+  //  if (resultFromGoogle && resultFromGoogle !== text) {
+  //    console.log("Google API Transliteration Result:", resultFromGoogle);
+  //    return resultFromGoogle;
+  //  }
+  //} catch (err) {
+  //  console.error("Google API transliteration failed:", err);
+  //}
 
   // Final fallback: return the original text
   console.warn("All transliteration methods failed. Returning original text.");
@@ -606,22 +610,23 @@ async function universalSlugifyDynamic(text, options = {}) {
 
   // Step 2: Transliterate if not already Latinized
   if (!certainlyLatinized(normalizedText)) {
-    //console.log("Start of Latinization");
+    console.log("Start of Latinization");
 
     normalizedText = await transliterate(normalizedText, showPhrase());
   } else {
-    //console.log(
-    //  "Text is already Latinized. Proceeding with slugification only."
-    //);
+    console.log(
+      "Text is already Latinized. Proceeding with slugification only."
+    );
   }
 
   // Step 3: Replace invalid characters with a hyphen
-  const slugifiedText = normalizedText
-    .replace(/[^\w\s-]+/g, "") // Remove non-alphanumeric characters
-    .replace(/\s+/g, "-") // Replace spaces with hyphens
-    .trim()
-    .toLowerCase()
-    .slice(0, maxLength); // Limit length to maxLength
+  //const slugifiedText = normalizedText
+  //  .replace(/[^\w\s-]+/g, "") // Remove non-alphanumeric characters
+  //  .replace(/\s+/g, "-") // Replace spaces with hyphens
+  //  .trim()
+  //  .toLowerCase()
+  //  .slice(0, maxLength); // Limit length to maxLength
+  const slugifiedText = await transliterate(normalizedText, showPhrase(), true);
 
   // Ensure filename is safe and ASCII-compatible
   //console.log("Slugified Filename:", slugifiedText || "unknown");
