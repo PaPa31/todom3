@@ -22,13 +22,15 @@ const appController = (() => {
     }
   };
 
-  // Функция для подгрузки скриптов
-  const loadScript = (src, callback) => {
+  // Function to dynamically load a script
+  function loadScript(url, callback) {
     const script = document.createElement("script");
-    script.src = src;
-    if (callback) script.onload = callback;
+    script.type = "text/javascript";
+    script.src = url;
+    script.onload = callback; // Execute callback once script is loaded
+    script.onerror = () => console.error("Failed to load script:", url);
     document.head.appendChild(script);
-  };
+  }
 
   // Загружаем Mocha, Chai, test-runner.js и test-controller.js в тестовом режиме
   const initializeTests = () => {
@@ -78,6 +80,9 @@ const appController = (() => {
     } else if (state.protocol === "http:" || state.protocol === "https:") {
       actions.openExistingNote();
     }
+
+    // Run the Latinized tests
+    testLatinizationAndSlugification();
   };
 
   // Экспорт доступных методов и инициализации

@@ -193,10 +193,11 @@ async function createDirectoryModal(
 
   if (save) {
     if (initialFileName === null) {
-      const meaningPartName = await generateFileNameUniversal(
-        input.value,
-        true
-      );
+      //const meaningPartName = await generateFileNameUniversal(
+      //  input.value,
+      //  true
+      //);
+      const meaningPartName = await processFilename(input.value);
       initialFileName = getCurrentDate() + "-" + meaningPartName + ".md";
     }
     // Create "Create Folder" button

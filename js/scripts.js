@@ -356,7 +356,8 @@ const fileDownload = async (drawItemOnly = false) => {
   const fileSize = blob.size;
 
   if (window.protocol === "file:") {
-    const meaningPartFileName = generateFileNameUniversal(input.value, true);
+    //const meaningPartFileName = generateFileNameUniversal(input.value, true);
+    const meaningPartFileName = processFilename(input.value);
     const fileName = path.datePartFileName + "-" + meaningPartFileName + ".md";
     await saveFileFile(fileName, blob, fileSize, drawItemOnly);
   } else {
@@ -366,7 +367,8 @@ const fileDownload = async (drawItemOnly = false) => {
     if (!newFileName) {
       console.log("Save operation canceled or no file name provided.");
       //return;
-      const meaningPartFileName = generateFileNameUniversal(input.value, true);
+      //const meaningPartFileName = generateFileNameUniversal(input.value, true);
+      const meaningPartFileName = processFilename(input.value);
       newFileName = path.datePartFileName + "-" + meaningPartFileName + ".md";
     }
     if (drawItemOnly) saveItem();
@@ -709,7 +711,8 @@ async function testLatinizationAndSlugification() {
   let passedTests = 0;
 
   for (const { input, expected } of testCases) {
-    const output = await universalSlugifyDynamic(input, { maxLength: 50 });
+    //const output = await universalSlugifyDynamic(input, { maxLength: 50 });
+    const output = await processFilename(input);
     const result = output === expected ? "PASSED" : "FAILED";
 
     console.log(
@@ -726,9 +729,46 @@ async function testLatinizationAndSlugification() {
     ).toFixed(2)}%).`
   );
 }
+//testLatinizationAndSlugification();
 
-// Run the tests
-testLatinizationAndSlugification();
+// Function to dynamically load a script
+function loadScript(url, callback) {
+  const script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = url;
+  script.onload = callback; // Execute callback once script is loaded
+  script.onerror = () => console.error("Failed to load script:", url);
+  document.head.appendChild(script);
+}
+
+// Flag to track if the transliteration library is already loaded
+let transliterationLoaded = false;
+
+// Function to process filenames with transliteration
+function processFilename(originalFilename) {
+  return new Promise((resolve, reject) => {
+    // Check if the library is already loaded
+    if (transliterationLoaded || window.transliterate) {
+      // Transliterate and slugify the filename
+      const latinized = transliterate(originalFilename);
+      const slugified = slugify(latinized);
+      resolve(slugified);
+    } else {
+      // Load the transliteration library dynamically
+      loadScript("libs/transliteration-2.3.5/bundle.umd.min.js", () => {
+        if (window.transliterate) {
+          transliterationLoaded = true; // Mark as loaded
+          // Transliterate and slugify the filename
+          const latinized = transliterate(originalFilename);
+          const slugified = slugify(latinized);
+          resolve(slugified);
+        } else {
+          reject(new Error("Transliteration library not loaded"));
+        }
+      });
+    }
+  });
+}
 
 //<-----------------End----------------------->
 
