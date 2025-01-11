@@ -557,7 +557,7 @@ async function transliterateWithGoogle(text, apiKey) {
 }
 
 // Step 6: Main Transliteration Function
-async function transliterate(text, apiKey, slug = false) {
+async function transliterate3(text, apiKey, slug = false) {
   //console.log("Input Text:", text);
 
   // Step 1: Character map transliteration
@@ -612,7 +612,7 @@ async function universalSlugifyDynamic(text, options = {}) {
   if (!certainlyLatinized(normalizedText)) {
     console.log("Start of Latinization");
 
-    normalizedText = await transliterate(normalizedText, showPhrase());
+    normalizedText = await transliterate3(normalizedText, showPhrase());
   } else {
     console.log(
       "Text is already Latinized. Proceeding with slugification only."
@@ -626,7 +626,11 @@ async function universalSlugifyDynamic(text, options = {}) {
   //  .trim()
   //  .toLowerCase()
   //  .slice(0, maxLength); // Limit length to maxLength
-  const slugifiedText = await transliterate(normalizedText, showPhrase(), true);
+  const slugifiedText = await transliterate3(
+    normalizedText,
+    showPhrase(),
+    true
+  );
 
   // Ensure filename is safe and ASCII-compatible
   //console.log("Slugified Filename:", slugifiedText || "unknown");
@@ -786,7 +790,7 @@ function generateFileNameUniversal2(noteContent, useTranslit = false) {
   // Apply transliteration if enabled
   if (useTranslit) {
     //inspectUnicode(cleanedContent);
-    cleanedContent = transliterate(cleanedContent);
+    cleanedContent = transliterate2(cleanedContent);
   }
 
   // Replace spaces with hyphens and truncate to the first 21 characters
