@@ -419,16 +419,20 @@ function getFullCurrentDate() {
 
 //<-----------------Start--------------------->
 
-// Step 1: Script Detection Function
-// Enhanced Script Detection Function
-function detectScript(text) {
-  if (/[\u0400-\u04FF]/.test(text)) return "cyrillic"; // Cyrillic script
-  if (/[\u0600-\u06FF]/.test(text)) return "arabic"; // Arabic script
-  if (/^[\u0000-\u007F\u0100-\u017F\s-]+$/.test(text)) return "latin"; // Latin or already Latinized
-  return "unknown"; // Default if no match
+// Function to dynamically load a script
+function loadScript(url, callback) {
+  const script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = url;
+  script.onload = callback; // Execute callback once script is loaded
+  script.onerror = () => console.error("Failed to load script:", url);
+  document.head.appendChild(script);
 }
 
-// Step 2: Transliteration Maps
+// Flag to track if the transliteration library is already loaded
+let transliterationLoaded = false;
+
+// Transliteration character maps (fallback for Cyrillic)
 const transliterationMaps = {
   cyrillic: {
     а: "a",
@@ -467,303 +471,49 @@ const transliterationMaps = {
   },
 };
 
-// Step 3: Transliteration with Character Maps
+// Detect script type of a given string
+function detectScript(text) {
+  if (/[\u0400-\u04FF]/.test(text)) return "cyrillic"; // Cyrillic
+  if (/^[\u0000-\u007F\u0100-\u017F\s-]+$/.test(text)) return "latin"; // Latin
+  return "unknown"; // Other scripts
+}
+
+// Transliterate using character maps
 function transliterateWithCharMap(text) {
   const script = detectScript(text);
   const charMap = transliterationMaps[script];
-  if (!charMap) return text; // No transliteration for Latin or unsupported scripts
+  if (!charMap) return text; // No transliteration for unsupported scripts
 
   return text
-    .split("") // Split into characters
-    .map((char) => {
-      const mappedChar = charMap[char];
-      return mappedChar !== undefined ? mappedChar : char; // Ensure exact matches
-    })
-    .join(""); // Reassemble the string
+    .split("")
+    .map((char) => charMap[char] || char) // Map characters or keep original
+    .join("");
 }
 
-// Step 4: Transliteration Library Loading
-let libraryLoaded = false; // Track library load status globally
-
-function loadTransliterationLibrary() {
-  if (libraryLoaded) {
-    //console.log("Library already loaded.");
-    return Promise.resolve();
-  }
-
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = "libs/transliteration-2.3.5/bundle.umd.min.js"; // Path to the transliteration library
-    script.async = true;
-
-    script.onload = () => {
-      if (typeof window.transliterate === "function") {
-        libraryLoaded = true;
-        //console.log("Transliteration library loaded successfully.");
-        resolve();
-      } else {
-        reject(
-          new Error(
-            "Library loaded, but `transliterate` function is undefined."
-          )
-        );
-      }
-    };
-
-    script.onerror = () =>
-      reject(new Error("Failed to load transliteration library."));
-    document.head.appendChild(script);
-  });
-}
-
-async function transliterateWithLibrary(text, translitOrSlugify) {
-  // Ensure library is loaded only once
-  try {
-    await loadTransliterationLibrary();
-
-    if (typeof window[translitOrSlugify] === "function") {
-      const result = window[translitOrSlugify](text);
-      console.log("Library Transliteration or Slugification:", result);
-      return result;
-    } else {
-      throw new Error(
-        "Transliteration library loaded, but `transliterate` is undefined."
-      );
-    }
-  } catch (err) {
-    console.error("Error in transliterateWithLibrary:", err.message);
-    throw err; // Bubble up to the main function
-  }
-}
-
-// Step 5: Google Transliteration API Fallback
-async function transliterateWithGoogle(text, apiKey) {
-  const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
-  const body = {
-    q: text,
-    target: "en",
-    format: "text",
-  };
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const data = await response.json();
-    return data.data.translations[0].translatedText || text;
-  } catch (error) {
-    console.error("Google Transliteration API failed:", error);
-    return text;
-  }
-}
-
-// Step 6: Main Transliteration Function
-async function transliterate3(text, apiKey, slug = false) {
-  //console.log("Input Text:", text);
-
-  // Step 1: Character map transliteration
-  //const resultFromCharMap = transliterateWithCharMap(text);
-  //if (resultFromCharMap !== text) {
-  //  //console.log("CharMap Transliteration Result:", resultFromCharMap);
-  //  return resultFromCharMap;
-  //}
-
-  // Step 2: Library transliteration
-  try {
-    const translitOrSlugify = slug ? "slugify" : "transliterate";
-    const resultFromLibrary = await transliterateWithLibrary(
-      text,
-      translitOrSlugify
-    );
-    if (resultFromLibrary && resultFromLibrary !== text) {
-      console.log("Library Transliteration Result:", resultFromLibrary);
-      return resultFromLibrary;
-    }
-  } catch (err) {
-    console.warn("Library transliteration failed:", err);
-  }
-
-  // Step 3: Google API transliteration
-  //try {
-  //  const resultFromGoogle = await transliterateWithGoogle(text, apiKey);
-  //  if (resultFromGoogle && resultFromGoogle !== text) {
-  //    console.log("Google API Transliteration Result:", resultFromGoogle);
-  //    return resultFromGoogle;
-  //  }
-  //} catch (err) {
-  //  console.error("Google API transliteration failed:", err);
-  //}
-
-  // Final fallback: return the original text
-  console.warn("All transliteration methods failed. Returning original text.");
-  return text;
-}
-
-// Step 7: Slugification
-async function universalSlugifyDynamic(text, options = {}) {
-  const { maxLength = 50 } = options;
-  //console.log("Original Text for Latinized and Slugify:", text);
-
-  // Step 1: Normalize and strip accents/diacritics
-  let normalizedText = text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove diacritics
-
-  //console.log("Normalized text:", normalizedText);
-
-  // Step 2: Transliterate if not already Latinized
-  if (!certainlyLatinized(normalizedText)) {
-    console.log("Start of Latinization");
-
-    normalizedText = await transliterate3(normalizedText, showPhrase());
-  } else {
-    console.log(
-      "Text is already Latinized. Proceeding with slugification only."
-    );
-  }
-
-  // Step 3: Replace invalid characters with a hyphen
-  //const slugifiedText = normalizedText
-  //  .replace(/[^\w\s-]+/g, "") // Remove non-alphanumeric characters
-  //  .replace(/\s+/g, "-") // Replace spaces with hyphens
-  //  .trim()
-  //  .toLowerCase()
-  //  .slice(0, maxLength); // Limit length to maxLength
-  const slugifiedText = await transliterate3(
-    normalizedText,
-    showPhrase(),
-    true
-  );
-
-  // Ensure filename is safe and ASCII-compatible
-  //console.log("Slugified Filename:", slugifiedText || "unknown");
-  return slugifiedText || "unknown"; // Fallback if slugification fails
-}
-
-// Step 8: Filename Generation
-async function generateFileNameUniversal(noteContent, useTranslit = false) {
-  const startTime = performance.now(); // Start timer
-  //console.log("Original Note Content:", noteContent);
-
-  const cleanedContent = noteContent
-    .slice(0, 50)
-    .replace(/[^\p{L}\p{N}\s]+/gu, "-")
-    .trim()
-    .toLowerCase();
-
-  //console.log("Cleaned Note Content:", cleanedContent);
-
-  const content = useTranslit
-    ? await universalSlugifyDynamic(cleanedContent)
-    : cleanedContent.replace(/\s+/g, "-").slice(0, 21).replace(/-$/, "");
-
-  const endTime = performance.now();
-  console.log(`Average Execution Time: ${(endTime - startTime).toFixed(4)} ms`);
-
-  //console.log("Generated File Name Content:", content);
-
-  return `${content}`;
-}
-
-// Detect if the text is certainly Latinized (already in Latin script)
-function certainlyLatinized(text) {
-  return detectScript(text) === "latin";
-}
-
-async function testLatinizationAndSlugification() {
-  const testCases = [
-    // Simple Latinized Text
-    { input: "hello world", expected: "hello-world" },
-    { input: "dynamic-slugifier", expected: "dynamic-slugifier" },
-    { input: "neobrabotannyye dannyye", expected: "neobrabotannyye-dannyye" },
-
-    // Non-Latin Script
-    { input: "Привет мир", expected: "privet-mir" },
-    { input: "مرحبا بالعالم", expected: "mrhb-blaalm" },
-    { input: "你好，世界", expected: "ni-hao-shi-jie" },
-
-    // Mixed Script
-    { input: "Привет 123 world", expected: "privet-123-world" },
-    { input: "مرحبا Hello", expected: "mrhb-hello" },
-    { input: "你好123world", expected: "ni-hao-123-world" },
-
-    // Special Characters
-    { input: "hello @world!", expected: "hello-world" },
-    { input: "Привет! Мир?", expected: "privet-mir" },
-
-    // Excessively Long Inputs
-    {
-      input:
-        "This is a very long string that exceeds fifty characters in length",
-      expected: "this-is-a-very-long-string-that-exceeds-fifty-ch",
-    },
-    {
-      input: "Очень длинный текст, превышающий лимит символов",
-      expected: "ochen-dlinnyy-tekst-prevyshayushchiy-limit-simvo",
-    },
-
-    // Edge Cases
-    { input: "", expected: "" },
-    { input: "     ", expected: "" },
-    { input: "@#$%^&*", expected: "" },
-    { input: "𐍈𐍈𐍈", expected: "unknown" },
-  ];
-
-  let passedTests = 0;
-
-  for (const { input, expected } of testCases) {
-    //const output = await universalSlugifyDynamic(input, { maxLength: 50 });
-    const output = await processFilename(input);
-    const result = output === expected ? "PASSED" : "FAILED";
-
-    console.log(
-      `Input: "${input}"\nExpected: "${expected}"\nOutput: "${output}"\nResult: ${result}\n`
-    );
-
-    if (result === "PASSED") passedTests++;
-  }
-
-  console.log(
-    `\n${passedTests}/${testCases.length} tests passed (${(
-      (passedTests / testCases.length) *
-      100
-    ).toFixed(2)}%).`
-  );
-}
-//testLatinizationAndSlugification();
-
-// Function to dynamically load a script
-function loadScript(url, callback) {
-  const script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = url;
-  script.onload = callback; // Execute callback once script is loaded
-  script.onerror = () => console.error("Failed to load script:", url);
-  document.head.appendChild(script);
-}
-
-// Flag to track if the transliteration library is already loaded
-let transliterationLoaded = false;
-
-// Function to process filenames with transliteration
+// Process filenames with transliteration and slugification
 function processFilename(originalFilename) {
   return new Promise((resolve, reject) => {
     // Check if the library is already loaded
-    if (transliterationLoaded || window.transliterate) {
+    if (transliterationLoaded || (window.transliterate && window.slugify)) {
       // Transliterate and slugify the filename
       const latinized = transliterate(originalFilename);
       const slugified = slugify(latinized);
       resolve(slugified);
     } else {
-      // Load the transliteration library dynamically
+      // Fallback to character map transliteration
+      const fallbackLatinized = transliterateWithCharMap(originalFilename);
+
+      // Dynamically load transliteration library for future use
       loadScript("libs/transliteration-2.3.5/bundle.umd.min.js", () => {
-        if (window.transliterate) {
+        if (window.transliterate && window.slugify) {
           transliterationLoaded = true; // Mark as loaded
-          // Transliterate and slugify the filename
-          const latinized = transliterate(originalFilename);
+          const latinized = transliterate(fallbackLatinized);
           const slugified = slugify(latinized);
           resolve(slugified);
         } else {
-          reject(new Error("Transliteration library not loaded"));
+          // Use fallback transliteration only if library fails
+          console.warn("Using fallback transliteration.");
+          resolve(fallbackLatinized.replace(/\s+/g, "-").toLowerCase());
         }
       });
     }
@@ -771,82 +521,6 @@ function processFilename(originalFilename) {
 }
 
 //<-----------------End----------------------->
-
-function transliterate2(text) {
-  const charMap = {
-    а: "a",
-    б: "b",
-    в: "v",
-    г: "g",
-    д: "d",
-    е: "e",
-    ж: "zh",
-    з: "z",
-    и: "i",
-    й: "y",
-    к: "k",
-    л: "l",
-    м: "m",
-    н: "n",
-    о: "o",
-    п: "p",
-    р: "r",
-    с: "s",
-    т: "t",
-    у: "u",
-    ф: "f",
-    х: "kh",
-    ц: "ts",
-    ч: "ch",
-    ш: "sh",
-    щ: "shch",
-    ь: "",
-    ъ: "",
-    ы: "y",
-    э: "e",
-    ю: "yu",
-    я: "ya",
-  };
-
-  return text
-    .split("") // Split into characters
-    .map((char) => {
-      const mappedChar = charMap[char];
-      return mappedChar !== undefined ? mappedChar : char; // Ensure exact matches
-    })
-    .join(""); // Reassemble the string
-}
-
-// Filename generation function
-function generateFileNameUniversal2(noteContent, useTranslit = false) {
-  const startTime = performance.now(); // Start timer
-  // Trim and clean the content
-  let cleanedContent = noteContent
-    .slice(0, 50)
-    .replace(/[^\p{L}\p{N}\s]+/gu, "")
-    .trim()
-    .toLowerCase();
-
-  // Apply transliteration if enabled
-  if (useTranslit) {
-    //inspectUnicode(cleanedContent);
-    cleanedContent = transliterate2(cleanedContent);
-  }
-
-  // Replace spaces with hyphens and truncate to the first 21 characters
-  const truncatedContent = cleanedContent
-    .slice(0, 21)
-    .replace(/\s+/g, "-")
-    .replace(/-$/, "");
-
-  // Combine with base name and extension
-
-  const endTime = performance.now();
-  console.log(`Average Execution Time: ${(endTime - startTime).toFixed(4)} ms`);
-  console.log("Traslit:", truncatedContent);
-
-  return truncatedContent;
-}
 
 //function getFirstCharsWithTrim(s) {
 //  s = s.replace(/[^\p{L}\p{N}]+/gu, " ");

@@ -1,14 +1,22 @@
-// test-runner.js: Простая обертка для выполнения тестов
+// test-runner.js: Simple wrapper for running tests
 
-function runTest(testName, testFunc) {
-  try {
-    console.log(`Выполнение теста: ${testName}`);
-    testFunc();
-    console.log(`✅ ${testName} прошел успешно`);
-  } catch (error) {
-    console.error(`❌ Ошибка в тесте ${testName}:`, error.message);
-  } finally {
-    // Очистка после теста (можно расширить при необходимости)
-    console.log(`Завершение теста: ${testName}`);
-  }
-}
+const testRunner = {
+  tests: [],
+  addTest(testName, testFunc) {
+    this.tests.push({ testName, testFunc });
+  },
+  runAllTests() {
+    this.tests.forEach(({ testName, testFunc }) => {
+      try {
+        console.log(`Running test: ${testName}`);
+        testFunc();
+        console.log(`✅ ${testName} passed`);
+      } catch (error) {
+        console.error(`❌ Error in test ${testName}:`, error.message);
+      }
+    });
+  },
+};
+
+// Make available globally
+window.testRunner = testRunner;
