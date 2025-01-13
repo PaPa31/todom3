@@ -493,29 +493,43 @@ function transliterateWithCharMap(text) {
 // Process filenames with transliteration and slugification
 function processFilename(originalFilename) {
   return new Promise((resolve, reject) => {
-    // Check if the library is already loaded
+    // Ensure the library is loaded only once
     if (transliterationLoaded || (window.transliterate && window.slugify)) {
       // Transliterate and slugify the filename
       const latinized = transliterate(originalFilename);
       const slugified = slugify(latinized);
       resolve(slugified);
-    } else {
-      // Fallback to character map transliteration
-      const fallbackLatinized = transliterateWithCharMap(originalFilename);
+    } else if (!window.transliterationLoading) {
+      // Mark the library as loading
+      window.transliterationLoading = true;
 
       // Dynamically load transliteration library for future use
       loadScript("libs/transliteration-2.3.5/bundle.umd.min.js", () => {
         if (window.transliterate && window.slugify) {
           transliterationLoaded = true; // Mark as loaded
-          const latinized = transliterate(fallbackLatinized);
+          window.transliterationLoading = false; // Reset loading flag
+          const latinized = transliterate(originalFilename);
           const slugified = slugify(latinized);
           resolve(slugified);
         } else {
           // Use fallback transliteration only if library fails
           console.warn("Using fallback transliteration.");
-          resolve(fallbackLatinized.replace(/\s+/g, "-").toLowerCase());
+          window.transliterationLoading = false; // Reset loading flag
+          resolve(
+            transliterateWithCharMap(originalFilename)
+              .replace(/\s+/g, "-")
+              .toLowerCase()
+          );
         }
       });
+    } else {
+      // Wait for the library to load and then proceed
+      const interval = setInterval(() => {
+        if (transliterationLoaded || window.transliterationLoading === false) {
+          clearInterval(interval);
+          resolve(processFilename(originalFilename)); // Retry processing
+        }
+      }, 50);
     }
   });
 }
