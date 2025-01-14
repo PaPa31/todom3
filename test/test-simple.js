@@ -1,35 +1,36 @@
 // test-simple.js: Simple wrapper to run tests without Mocha, maximum backward compatibility
 
+// Unified test runner
 function runTest(testName, testFunc) {
-  console.log("Running Test: " + testName);
-  try {
-    // Execute the test function and capture its result
-    var result = testFunc(function (error, output) {
-      if (error) {
-        console.error("❌ Failed:\n" + testName + "\n" + error.message);
-      } else {
-        console.log("✅ Passed:\n" + testName + '\nOutput  : "' + output + '"');
-      }
-    });
+  //console.log("Running Test: " + testName);
 
-    // Handle promises returned from the test function
+  function done(error, output) {
+    if (error) {
+      console.error("❌ " + testName + "\n" + error.message);
+    } else {
+      console.log("✅ " + testName + '\nOutput  : "' + output + '"');
+    }
+  }
+
+  try {
+    const result = testFunc(done); // Pass `done` to the test function
+
+    // Handle asynchronous tests that return promises
     if (result && typeof result.then === "function") {
       result
         .then(function (output) {
-          console.log(
-            "✅ Passed:\n" + testName + '\nOutput  : "' + output + '"'
-          );
+          done(null, output);
         })
         .catch(function (error) {
-          console.error("❌ Failed:\n" + testName + "\n" + error.message);
+          done(error, null);
         });
     }
   } catch (error) {
-    console.error("❌ Failed:\n" + testName + "\n" + error.message);
+    done(error, null);
   }
 }
 
-// Wrapper for localStorage with backup/restore
+// Wrapper for localStorage with backup/restore functionality
 function withLocalStorageSetup(testFunc) {
   var originalStorage = {};
   for (var i = 0; i < localStorage.length; i++) {
@@ -48,6 +49,17 @@ function withLocalStorageSetup(testFunc) {
 }
 
 // Tests for dark mode
+//runTest("Dark mode is enabled", function (done) {
+//  withLocalStorageSetup(function () {
+//    localStorage.setItem("todomDarkMode", "set");
+//    var output = isDarkMode();
+//    if (output !== "set") {
+//      done(new Error("Dark mode should be enabled"), null);
+//    } else {
+//      done(null, output);
+//    }
+//  });
+//});
 runTest("Dark mode is enabled", function () {
   withLocalStorageSetup(function () {
     localStorage.setItem("todomDarkMode", "set");
@@ -57,36 +69,45 @@ runTest("Dark mode is enabled", function () {
   });
 });
 
-runTest("Dark mode is disabled", function () {
+runTest("Dark mode is disabled", function (done) {
   withLocalStorageSetup(function () {
     localStorage.removeItem("todomDarkMode");
-    if (isDarkMode() !== null) {
-      throw new Error("Dark mode should be disabled");
+    var output = isDarkMode();
+    if (output !== null) {
+      done(new Error("Dark mode should be disabled"), null);
+    } else {
+      done(null, output);
     }
   });
 });
 
 // Tests for list order
-runTest("Reversed order is enabled", function () {
+runTest("Reversed order is enabled", function (done) {
   withLocalStorageSetup(function () {
     localStorage.setItem("todomListReverseOrder", "set");
-    if (isReversed() !== "set") {
-      throw new Error("Reversed order should be enabled");
+    var output = isReversed();
+    if (output !== "set") {
+      done(new Error("Reversed order should be enabled"), null);
+    } else {
+      done(null, output);
     }
   });
 });
 
-runTest("Reversed order is disabled", function () {
+runTest("Reversed order is disabled", function (done) {
   withLocalStorageSetup(function () {
     localStorage.removeItem("todomListReverseOrder");
-    if (isReversed() !== null) {
-      throw new Error("Reversed order should be disabled");
+    var output = isReversed();
+    if (output !== null) {
+      done(new Error("Reversed order should be disabled"), null);
+    } else {
+      done(null, output);
     }
   });
 });
 
 // Slugification tests
-[
+var slugTests = [
   { input: "hello world", expected: "hello-world" },
   { input: "Привет мир", expected: "privet-mir" },
   { input: "你好，世界", expected: "ni-hao-shi-jie" },
@@ -95,40 +116,39 @@ runTest("Reversed order is disabled", function () {
     input: "Очень длинный текст, превышающий лимит символов",
     expected: "ochen-dlinnyy-tekst-prevyshayushchiy-limit-simvo",
   },
-].forEach(function (testCase) {
+];
+
+slugTests.forEach(function (testCase) {
   runTest(
-    'Input   : "' + testCase.input + '"\nExpected: "' + testCase.expected + '"',
+    'Slugify\nInput   : "' +
+      testCase.input +
+      '"\nExpected: "' +
+      testCase.expected +
+      '"',
     function (done) {
       var result = processFilename(testCase.input);
       if (result && typeof result.then === "function") {
+        // Handle async slugification
         result
           .then(function (output) {
             if (output !== testCase.expected) {
-              done(new Error('Output  : "' + output + '"'), null);
+              done(new Error(`Output  : "${output}"`), null);
             } else {
-              done(null, output); // Pass output on success
+              done(null, output);
             }
           })
           .catch(function (error) {
             done(
-              new Error("Error during slugification: " + error.message),
+              new Error(`Error during slugification: ${error.message}`),
               null
             );
           });
       } else {
+        // Handle sync slugification
         if (result !== testCase.expected) {
-          done(
-            new Error(
-              '\nExpected: "' +
-                testCase.expected +
-                '"\nOutput : "' +
-                result +
-                '"'
-            ),
-            null
-          );
+          done(new Error(`\nOutput  : "${result}"`), null);
         } else {
-          done(null, result); // Pass output on success
+          done(null, result);
         }
       }
     }
