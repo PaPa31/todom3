@@ -5,23 +5,25 @@ function runTest(testName, testFunc) {
   try {
     var result = testFunc(function (error) {
       if (error) {
-        console.error("❌ " + testName + " failed: " + error.message);
+        console.error("❌ Failed:\n" + testName + error.message);
       } else {
-        console.log("✅ " + testName + " passed");
+        // What I need to insert after the `testName` to view the `output` value
+        // Currently I see: `[object HTMLTextAreaElement]`
+        console.log("✅ Passed:\n" + testName + output);
       }
     });
 
     if (result && typeof result.then === "function") {
       result
         .then(function () {
-          console.log("✅ " + testName + " passed");
+          console.log("✅ Passed:\n" + testName + output);
         })
         .catch(function (error) {
-          console.error("❌ " + testName + " failed: " + error.message);
+          console.error("❌ Failed:\n" + testName + error.message);
         });
     }
   } catch (error) {
-    console.error("❌ " + testName + " failed: " + error.message);
+    console.error("❌ Failed:\n" + testName + error.message);
   }
 }
 
@@ -87,22 +89,26 @@ runTest("Reversed order is disabled", function () {
   { input: "Привет мир", expected: "privet-mir" },
   { input: "你好，世界", expected: "ni-hao-shi-jie" },
   { input: "hello @world!", expected: "hello-world" },
+  {
+    input: "Очень длинный текст, превышающий лимит символов",
+    expected: "ochen-dlinnyy-tekst-prevyshayushchiy-limit-simvo",
+  },
 ].forEach(function (testCase) {
   runTest(
-    'Input "' + testCase.input + '" should become "' + testCase.expected + '"',
+    'Input   : "' +
+      testCase.input +
+      '"\nExpected: "' +
+      testCase.expected +
+      '"\n',
     function (done) {
       var result = processFilename(testCase.input);
       if (result && typeof result.then === "function") {
         result
           .then(function (output) {
             if (output !== testCase.expected) {
-              done(
-                new Error(
-                  'Expected "' + testCase.expected + '", got "' + output + '"'
-                )
-              );
+              done(new Error('Result  : "' + output + '"'));
             } else {
-              done();
+              done(console.log('Result  : "' + output + '"'));
             }
           })
           .catch(function (error) {
@@ -111,7 +117,7 @@ runTest("Reversed order is disabled", function () {
       } else {
         if (result !== testCase.expected) {
           throw new Error(
-            'Expected "' + testCase.expected + '", got "' + result + '"'
+            '\nExpected: "' + testCase.expected + '"\nResult : "' + result + '"'
           );
         }
       }
