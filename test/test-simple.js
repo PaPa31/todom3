@@ -3,27 +3,29 @@
 function runTest(testName, testFunc) {
   console.log("Running Test: " + testName);
   try {
-    var result = testFunc(function (error) {
+    // Execute the test function and capture its result
+    var result = testFunc(function (error, output) {
       if (error) {
-        console.error("❌ Failed:\n" + testName + error.message);
+        console.error("❌ Failed:\n" + testName + "\n" + error.message);
       } else {
-        // What I need to insert after the `testName` to view the `output` value
-        // Currently I see: `[object HTMLTextAreaElement]`
-        console.log("✅ Passed:\n" + testName + output);
+        console.log("✅ Passed:\n" + testName + '\nOutput  : "' + output + '"');
       }
     });
 
+    // Handle promises returned from the test function
     if (result && typeof result.then === "function") {
       result
-        .then(function () {
-          console.log("✅ Passed:\n" + testName + output);
+        .then(function (output) {
+          console.log(
+            "✅ Passed:\n" + testName + '\nOutput  : "' + output + '"'
+          );
         })
         .catch(function (error) {
-          console.error("❌ Failed:\n" + testName + error.message);
+          console.error("❌ Failed:\n" + testName + "\n" + error.message);
         });
     }
   } catch (error) {
-    console.error("❌ Failed:\n" + testName + error.message);
+    console.error("❌ Failed:\n" + testName + "\n" + error.message);
   }
 }
 
@@ -95,30 +97,38 @@ runTest("Reversed order is disabled", function () {
   },
 ].forEach(function (testCase) {
   runTest(
-    'Input   : "' +
-      testCase.input +
-      '"\nExpected: "' +
-      testCase.expected +
-      '"\n',
+    'Input   : "' + testCase.input + '"\nExpected: "' + testCase.expected + '"',
     function (done) {
       var result = processFilename(testCase.input);
       if (result && typeof result.then === "function") {
         result
           .then(function (output) {
             if (output !== testCase.expected) {
-              done(new Error('Result  : "' + output + '"'));
+              done(new Error('Output  : "' + output + '"'), null);
             } else {
-              done(console.log('Result  : "' + output + '"'));
+              done(null, output); // Pass output on success
             }
           })
           .catch(function (error) {
-            done(new Error("Error during slugification: " + error.message));
+            done(
+              new Error("Error during slugification: " + error.message),
+              null
+            );
           });
       } else {
         if (result !== testCase.expected) {
-          throw new Error(
-            '\nExpected: "' + testCase.expected + '"\nResult : "' + result + '"'
+          done(
+            new Error(
+              '\nExpected: "' +
+                testCase.expected +
+                '"\nOutput : "' +
+                result +
+                '"'
+            ),
+            null
           );
+        } else {
+          done(null, result); // Pass output on success
         }
       }
     }
