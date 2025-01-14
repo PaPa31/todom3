@@ -32,18 +32,20 @@ const appController = (() => {
     //script.onload = callback; // Execute callback once script is loaded
 
     script.onload = function () {
-      if (callback) callback();
+      console.log(`Successfully loaded script: ${url}`);
+      if (callback) callback(true);
     };
 
     script.onreadystatechange = function () {
       if (this.readyState === "loaded" || this.readyState === "complete") {
-        if (callback) callback();
+        console.log(`Legacy browser detected; script ready: ${url}`);
+        if (callback) callback(true);
       }
     };
 
     script.onerror = function () {
       console.log(`Failed to load script: ${url}`);
-      if (callback) callback(); // Ensure fallback logic proceeds
+      if (callback) callback(false); // Ensure fallback logic proceeds
     };
 
     // For maximum backward compatibility
@@ -52,7 +54,7 @@ const appController = (() => {
       head.appendChild(script);
     } else {
       console.log("Failed to append script. <head> not found.");
-      if (callback) callback(); // Proceed gracefully even if <head> is missing
+      if (callback) callback(false); // Proceed gracefully even if <head> is missing
     }
   }
 
@@ -76,14 +78,22 @@ const appController = (() => {
     //});
 
     // To simulate the absence of mocha, I rename the `test` directory to `test1`
-    loadScript("test1/mocha.js", function () {
-      // Check if Mocha is available and initialize it
-      if (typeof mocha !== "undefined" && typeof mocha.setup === "function") {
-        state.mochaAvailable = true;
-        console.log("Mocha loaded and initialized.");
-        mocha.setup("bdd"); // Example setup
+    loadScript("test1/mocha.js", function (loaded) {
+      if (loaded) {
+        // Check if Mocha is properly initialized
+        if (typeof mocha !== "undefined" && typeof mocha.setup === "function") {
+          state.mochaAvailable = true;
+          console.log("Mocha loaded and initialized.");
+          mocha.setup("bdd"); // Example setup
+        } else {
+          console.warn(
+            "Mocha script loaded, but the object was not initialized."
+          );
+        }
       } else {
-        console.log("Mocha script loaded, but the object was not initialized.");
+        console.error(
+          "Mocha script could not be loaded. Please verify the path or existence of the file."
+        );
       }
       callback();
     });
