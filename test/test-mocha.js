@@ -1,5 +1,8 @@
 // test-mocha.js: Tests for Mocha and Chai
 
+// Ensure Chai's expect is available globally
+const { assert, expect } = chai;
+
 describe("Checking if Chai works", function () {
   it("'expect' should be available", function () {
     expect(true).to.be.true;
@@ -47,6 +50,33 @@ describe("Tests for earliest-togglers.js", function () {
     const initialMode = getDateMode();
     const nextMode = toggleDateMode();
     expect(nextMode).to.equal((initialMode + 1) % 4);
+  });
+});
+
+// Tests for Dark Mode
+describe("Dark Mode Tests", () => {
+  before(() => {
+    // Ensure the document starts in a known state
+    document.documentElement.classList.remove("dark");
+    localStorage.removeItem("darkMode");
+  });
+
+  it("should initialize in light mode by default", () => {
+    expect(document.documentElement.classList.contains("dark")).to.be.false;
+  });
+
+  it("should enable dark mode when toggle is called", () => {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("darkMode", "true");
+    expect(document.documentElement.classList.contains("dark")).to.be.true;
+    expect(localStorage.getItem("darkMode")).to.equal("true");
+  });
+
+  it("should disable dark mode when toggled off", () => {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("darkMode", "false");
+    expect(document.documentElement.classList.contains("dark")).to.be.false;
+    expect(localStorage.getItem("darkMode")).to.equal("false");
   });
 });
 
