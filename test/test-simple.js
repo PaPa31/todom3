@@ -28,70 +28,63 @@ function runTest(testName, testLogic) {
 }
 
 // Wrapper for localStorage with backup/restore functionality
-function withLocalStorageSetup(testFunc) {
-  var originalStorage = {};
-  for (var i = 0; i < localStorage.length; i++) {
-    var key = localStorage.key(i);
+function withLocalStorageKeySetup(keys, testFunc) {
+  // Backup the relevant localStorage keys
+  const originalStorage = {};
+  keys.forEach((key) => {
     originalStorage[key] = localStorage.getItem(key);
-  }
+  });
 
   try {
+    // Run the test function
     testFunc();
   } finally {
-    localStorage.clear();
-    for (var key in originalStorage) {
-      localStorage.setItem(key, originalStorage[key]);
-    }
+    // Restore only the relevant localStorage keys
+    keys.forEach((key) => {
+      if (originalStorage[key] !== null) {
+        localStorage.setItem(key, originalStorage[key]);
+      } else {
+        localStorage.removeItem(key);
+      }
+    });
   }
 }
 
 // Tests for dark mode
 runTest("Dark mode is enabled", function (done) {
-  withLocalStorageSetup(function () {
-    const input = { key: "todomDarkMode", value: "set" };
-    const expected = "set";
-
-    localStorage.setItem(input.key, input.value);
+  withLocalStorageKeySetup(["todomDarkMode"], function () {
+    localStorage.setItem("todomDarkMode", "set");
     const output = isDarkMode();
-
-    done(input, expected, output);
+    const expected = "set";
+    done("set", expected, output);
   });
 });
 
 runTest("Dark mode is disabled", function (done) {
-  withLocalStorageSetup(function () {
-    const input = { key: "todomDarkMode", value: null };
-    const expected = null;
-
-    localStorage.removeItem(input.key);
+  withLocalStorageKeySetup(["todomDarkMode"], function () {
+    localStorage.removeItem("todomDarkMode");
     const output = isDarkMode();
-
-    done(input, expected, output);
+    const expected = null;
+    done(null, expected, output);
   });
 });
 
 // Tests for list order
 runTest("Reversed order is enabled", function (done) {
-  withLocalStorageSetup(function () {
-    const input = { key: "todomListReverseOrder", value: "set" };
-    const expected = "set";
-
-    localStorage.setItem(input.key, input.value);
+  withLocalStorageKeySetup(["todomListReverseOrder"], function () {
+    localStorage.setItem("todomListReverseOrder", "set");
     const output = isReversed();
-
-    done(input, expected, output);
+    const expected = "set";
+    done("set", expected, output);
   });
 });
 
-runTest("Reversed order is disabled", function (done) {
-  withLocalStorageSetup(function () {
-    const input = { key: "todomListReverseOrder", value: null };
-    const expected = null;
-
-    localStorage.removeItem(input.key);
+runTest("Reversed order is enabled", function (done) {
+  withLocalStorageKeySetup(["todomListReverseOrder"], function () {
+    localStorage.removeItem("todomListReverseOrder");
     const output = isReversed();
-
-    done(input, expected, output);
+    const expected = null;
+    done(null, expected, output);
   });
 });
 
@@ -108,7 +101,7 @@ var slugTests = [
 ];
 
 slugTests.forEach(function ({ input, expected }) {
-  runTest(`Slugify Input: "${input}"`, function (done) {
+  runTest(`Slugify`, function (done) {
     const output = processFilename(input);
     if (output && typeof output.then === "function") {
       // Handle asynchronous slugification
