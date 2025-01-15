@@ -8,11 +8,12 @@ const appController = (() => {
   // State object
   const state = {
     protocol: window.protocol,
-    testMode: window.location.search.includes("test=true"),
     mochaAvailable: false,
     note: null,
     file: null,
     folder: null,
+    // Remove premature testMode initialization
+    // testMode: window.location.search.includes("test=true"),
   };
 
   // Loading scripts depending on the protocol
@@ -58,6 +59,7 @@ const appController = (() => {
     }
   }
 
+  // Function to load CSS
   function loadCSS(url) {
     const link = document.createElement("link");
     link.rel = "stylesheet";
@@ -70,6 +72,7 @@ const appController = (() => {
     }
   }
 
+  // Detect Mocha for tests
   function detectMocha(callback) {
     // To simulate the absence of mocha, I rename the `test` directory to `test1`
     loadScript("test/mocha.js", function (loaded) {
@@ -93,6 +96,7 @@ const appController = (() => {
     });
   }
 
+  // Initialize tests
   function initializeTests() {
     if (state.testMode) {
       console.log("Test mode enabled.");
@@ -136,8 +140,35 @@ const appController = (() => {
     saveFile: () => console.log("Saving file"),
   };
 
+  // Initialize dark mode
+  function initializeDarkMode() {
+    const darkMode = localStorage.getItem("todomDarkMode");
+    document.documentElement.classList.toggle("dark", darkMode === "set");
+    const darkButton = document.getElementById("dark-button");
+    if (darkButton) {
+      darkButton.innerHTML = darkMode === "set" ? icons.moon : icons.sun;
+    }
+  }
+
+  // Initialize test mode
+  function initializeTestMode() {
+    state.testMode = window.location.search.includes("test=true"); // Initialize here
+    if (state.testMode) {
+      console.log("Test mode is active!");
+      // Additional logic for test mode can go here
+    }
+  }
+
+  // Initialize application states
+  function initializeAppStates() {
+    initializeDarkMode();
+    initializeTestMode();
+    // Add other modes or states here
+  }
+
   // Application initialization
   const initializeApp = () => {
+    initializeAppStates();
     loadProtocolScripts();
     initializeTests();
 
@@ -150,6 +181,7 @@ const appController = (() => {
   };
 
   // Export available methods and initialization
+  // Return the public API
   return {
     initialize: initializeApp,
     actions: actions,
