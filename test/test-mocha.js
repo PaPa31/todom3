@@ -50,6 +50,77 @@ describe("Tests for earliest-togglers.js", function () {
   });
 });
 
+describe("Dark Mode Tests", () => {
+  beforeEach(() => {
+    // Clear localStorage before each test
+    localStorage.clear();
+    document.documentElement.classList.remove("dark");
+  });
+
+  it("should initialize in light mode by default", () => {
+    assert.isFalse(document.documentElement.classList.contains("dark"));
+  });
+
+  it("should enable dark mode when toggled", () => {
+    // Simulate user toggling dark mode
+    toggleDarkMode();
+
+    // Assert dark mode is applied
+    assert.isTrue(document.documentElement.classList.contains("dark"));
+    assert.equal(localStorage.getItem("todomDarkMode"), "set");
+  });
+
+  it("should disable dark mode when toggled off", () => {
+    // Set dark mode and then toggle it off
+    localStorage.setItem("todomDarkMode", "set");
+    toggleDarkMode();
+
+    // Assert dark mode is disabled
+    assert.isFalse(document.documentElement.classList.contains("dark"));
+    assert.equal(localStorage.getItem("todomDarkMode"), "");
+  });
+
+  it("should restore dark mode from localStorage on initialization", () => {
+    // Simulate dark mode preference in localStorage
+    localStorage.setItem("todomDarkMode", "set");
+
+    // Simulate initialization
+    initializeDarkMode();
+
+    // Assert dark mode is restored
+    assert.isTrue(document.documentElement.classList.contains("dark"));
+  });
+
+  it("should handle missing or corrupted localStorage gracefully", () => {
+    // Simulate corrupted localStorage value
+    localStorage.setItem("todomDarkMode", "invalid");
+
+    // Simulate initialization
+    initializeDarkMode();
+
+    // Assert app defaults to light mode
+    assert.isFalse(document.documentElement.classList.contains("dark"));
+  });
+
+  it("should update the toggle button icon appropriately", () => {
+    const button = document.createElement("button");
+    button.id = "dark-button";
+    document.body.appendChild(button);
+
+    // Simulate dark mode toggle
+    toggleDarkMode();
+
+    // Assert the button icon is updated
+    assert.include(button.innerHTML, "moon");
+
+    // Toggle back to light mode
+    toggleDarkMode();
+
+    // Assert the button icon is updated again
+    assert.include(button.innerHTML, "sun");
+  });
+});
+
 describe("Tests for list-order.js", function () {
   let originalListOrder;
   const contentElement = document.getElementById("content");

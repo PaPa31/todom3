@@ -72,7 +72,7 @@ const appController = (() => {
 
   function detectMocha(callback) {
     // To simulate the absence of mocha, I rename the `test` directory to `test1`
-    loadScript("test1/mocha.js", function (loaded) {
+    loadScript("test/mocha.js", function (loaded) {
       if (loaded) {
         // Check if Mocha is properly initialized
         if (typeof mocha !== "undefined" && typeof mocha.setup === "function") {
