@@ -71,12 +71,6 @@ const appController = (() => {
   }
 
   function detectMocha(callback) {
-    //loadScript("test/mocha.js", () => {
-    //  state.mochaAvailable = window.mocha && typeof mocha.run === "function";
-    //  console.log(`Mocha detected: ${state.mochaAvailable}`);
-    //  callback();
-    //});
-
     // To simulate the absence of mocha, I rename the `test` directory to `test1`
     loadScript("test1/mocha.js", function (loaded) {
       if (loaded) {
@@ -98,20 +92,6 @@ const appController = (() => {
       callback();
     });
   }
-
-  const initializeMocha = (callback) => {
-    loadScript("test/mocha.js", () => {
-      try {
-        mocha.setup("bdd"); // Explicitly initialize Mocha
-        state.mochaAvailable = true;
-        console.log("Mocha initialized successfully.");
-        callback(true);
-      } catch (error) {
-        console.error("Failed to initialize Mocha:", error);
-        callback(false);
-      }
-    });
-  };
 
   function initializeTests() {
     if (state.testMode) {
