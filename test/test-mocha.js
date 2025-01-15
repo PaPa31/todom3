@@ -54,7 +54,7 @@ describe("Tests for earliest-togglers.js", function () {
 });
 
 // Tests for Dark Mode
-describe("Dark Mode Tests", () => {
+describe("Dark Mode Tests3", () => {
   before(() => {
     // Ensure the document starts in a known state
     document.documentElement.classList.remove("dark");
@@ -80,11 +80,12 @@ describe("Dark Mode Tests", () => {
   });
 });
 
-describe("Dark Mode Tests", () => {
+describe("Dark Mode Tests2", () => {
   beforeEach(() => {
     // Clear localStorage before each test
-    localStorage.clear();
-    document.documentElement.classList.remove("dark");
+    // We can't clear localStorage - we store all draft notes in localStorage
+    //localStorage.clear();
+    //document.documentElement.classList.remove("dark");
   });
 
   it("should initialize in light mode by default", () => {
@@ -115,7 +116,7 @@ describe("Dark Mode Tests", () => {
     localStorage.setItem("todomDarkMode", "set");
 
     // Simulate initialization
-    initializeDarkMode();
+    appController.initializeDarkMode();
 
     // Assert dark mode is restored
     assert.isTrue(document.documentElement.classList.contains("dark"));
@@ -126,7 +127,7 @@ describe("Dark Mode Tests", () => {
     localStorage.setItem("todomDarkMode", "invalid");
 
     // Simulate initialization
-    initializeDarkMode();
+    appController.initializeDarkMode();
 
     // Assert app defaults to light mode
     assert.isFalse(document.documentElement.classList.contains("dark"));

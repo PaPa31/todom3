@@ -185,6 +185,8 @@ const appController = (() => {
   return {
     initialize: initializeApp,
     actions: actions,
+    // Expose private methods for testing
+    initializeDarkMode, // <-- Added for testing
   };
 })();
 
