@@ -36,12 +36,16 @@ darkButton.addEventListener("click", (e) => {
 
 // when DarkReader is enabled, on startup light mode blinks (especially on http server)
 // workaround: disable DarkReader
-const darkMode = isDarkMode();
-document.documentElement.classList.toggle("dark", darkMode);
-darkButton.innerHTML = darkMode ? icons.moon : icons.sun;
+// Initialize dark mode
+function initializeDarkMode() {
+  const darkMode = isDarkMode();
+  document.documentElement.classList.toggle("dark", darkMode);
+  darkButton.innerHTML = darkMode ? icons.moon : icons.sun;
+}
+initializeDarkMode();
 
 function isDarkMode() {
-  return localStorage.getItem("todomDarkMode");
+  return localStorage.getItem("todomDarkMode") === "set";
 }
 
 function toggleDarkMode() {

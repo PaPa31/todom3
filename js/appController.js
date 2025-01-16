@@ -172,24 +172,6 @@ const appController = (() => {
     }
   }
 
-  // Initialize dark mode
-  function initializeDarkMode() {
-    const darkMode = isDarkMode();
-    document.documentElement.classList.toggle("dark", darkMode);
-    darkButton.innerHTML = darkMode ? icons.moon : icons.sun;
-  }
-
-  function isDarkMode() {
-    return localStorage.getItem("todomDarkMode") === "set";
-  }
-
-  function toggleDarkMode() {
-    const darkMode = isDarkMode();
-    localStorage.setItem("todomDarkMode", darkMode ? "" : "set");
-    document.documentElement.classList.toggle("dark", !darkMode);
-    return !darkMode;
-  }
-
   // Initialize test mode
   function initializeTestMode() {
     state.testMode = window.location.search.includes("test=true"); // Initialize here
@@ -225,7 +207,7 @@ const appController = (() => {
   return {
     initialize: initializeApp,
     actions: actions,
-    initializeDarkMode, // Exposed for testing
+    //initializeDarkMode, // Exposed for testing
     withLocalStorageKeySetup, // Expose this for testing
   };
 })();
