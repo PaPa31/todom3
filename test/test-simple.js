@@ -27,29 +27,6 @@ function runTest(testName, testLogic) {
   }
 }
 
-// Wrapper for localStorage with backup/restore functionality
-function withLocalStorageKeySetup(keys, testFunc) {
-  // Backup the relevant localStorage keys
-  const originalStorage = {};
-  keys.forEach((key) => {
-    originalStorage[key] = localStorage.getItem(key);
-  });
-
-  try {
-    // Run the test function
-    testFunc();
-  } finally {
-    // Restore only the relevant localStorage keys
-    keys.forEach((key) => {
-      if (originalStorage[key] !== null) {
-        localStorage.setItem(key, originalStorage[key]);
-      } else {
-        localStorage.removeItem(key);
-      }
-    });
-  }
-}
-
 // Tests for dark mode
 runTest("Dark mode is enabled", function (done) {
   withLocalStorageKeySetup(["todomDarkMode"], function () {

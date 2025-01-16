@@ -140,14 +140,45 @@ const appController = (() => {
     saveFile: () => console.log("Saving file"),
   };
 
+  // Wrapper for localStorage with backup/restore functionality
+  function withLocalStorageKeySetup(keys, testFunc) {
+    // Backup the relevant localStorage keys
+    const originalStorage = {};
+    keys.forEach((key) => {
+      originalStorage[key] = localStorage.getItem(key);
+    });
+
+    try {
+      // Run the test function
+      testFunc();
+    } finally {
+      // Restore only the relevant localStorage keys
+      keys.forEach((key) => {
+        if (originalStorage[key] !== null) {
+          localStorage.setItem(key, originalStorage[key]);
+        } else {
+          localStorage.removeItem(key);
+        }
+      });
+    }
+  }
+
   // Initialize dark mode
   function initializeDarkMode() {
-    const darkMode = localStorage.getItem("todomDarkMode");
-    document.documentElement.classList.toggle("dark", darkMode === "set");
-    const darkButton = document.getElementById("dark-button");
-    if (darkButton) {
-      darkButton.innerHTML = darkMode === "set" ? icons.moon : icons.sun;
-    }
+    const darkMode = isDarkMode();
+    document.documentElement.classList.toggle("dark", darkMode);
+    darkButton.innerHTML = darkMode ? icons.moon : icons.sun;
+  }
+
+  function isDarkMode() {
+    return localStorage.getItem("todomDarkMode") === "set";
+  }
+
+  function toggleDarkMode() {
+    const darkMode = isDarkMode();
+    localStorage.setItem("todomDarkMode", darkMode ? "" : "set");
+    document.documentElement.classList.toggle("dark", !darkMode);
+    return !darkMode;
   }
 
   // Initialize test mode
