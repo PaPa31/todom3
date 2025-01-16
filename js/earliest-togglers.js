@@ -1,21 +1,8 @@
+// early-togglers.js -- aggregates all settings that affect the user interface
+// It should be run as early as possible to avoid flickering
+
+// <----- Start Dark Mode ----->
 const darkButton = document.getElementById("dark-button");
-const dateButton = document.getElementById("show-date");
-
-var listItems = document.getElementById("list-items"); // global variable
-
-const MODES = {
-  HIDE_BOTH: 0,
-  HIDE_DATE: 1,
-  HIDE_SAVE: 2,
-  SHOW_BOTH: 3,
-};
-
-const VALID_MODES = [
-  MODES.HIDE_BOTH,
-  MODES.HIDE_DATE,
-  MODES.HIDE_SAVE,
-  MODES.SHOW_BOTH,
-];
 
 const icons = {
   moon: `
@@ -45,7 +32,7 @@ function initializeDarkMode() {
 initializeDarkMode();
 
 function isDarkMode() {
-  return localStorage.getItem("todomDarkMode") === "set";
+  return localStorage.getItem("todomDarkMode");
 }
 
 function toggleDarkMode() {
@@ -54,6 +41,26 @@ function toggleDarkMode() {
   document.documentElement.classList.toggle("dark", !darkMode);
   return !darkMode;
 }
+// <----- End Dark Mode ----->
+
+// <----- Start Reverse Order Mode ----->
+const dateButton = document.getElementById("show-date");
+
+var listItems = document.getElementById("list-items"); // global variable
+
+const MODES = {
+  HIDE_BOTH: 0,
+  HIDE_DATE: 1,
+  HIDE_SAVE: 2,
+  SHOW_BOTH: 3,
+};
+
+const VALID_MODES = [
+  MODES.HIDE_BOTH,
+  MODES.HIDE_DATE,
+  MODES.HIDE_SAVE,
+  MODES.SHOW_BOTH,
+];
 
 // Initialize state
 dateButton.addEventListener("click", function (e) {
@@ -127,3 +134,4 @@ function updateButtonText(dateMode) {
       break;
   }
 }
+// <----- End Reverse Order Mode ----->
