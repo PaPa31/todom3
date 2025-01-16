@@ -9,15 +9,16 @@ function runTest(testName, testLogic) {
     const success = expected === output;
     const status = success ? "✅ SUCCESS" : "❌ FAILURE";
 
-    console.log(
+    const message =
       `${status} - ${testName}\n` +
-        `Input   : ${JSON.stringify(input)}\n` +
-        `Expected: ${JSON.stringify(expected)}\n` +
-        `Output  : ${JSON.stringify(output)}`
-    );
+      `Input   : ${JSON.stringify(input)}\n` +
+      `Expected: ${JSON.stringify(expected)}\n` +
+      `Output  : ${JSON.stringify(output)}`;
 
-    if (!success) {
-      console.error(`Test failed for input: ${JSON.stringify(input)}`);
+    if (success) {
+      console.log(message);
+    } else {
+      console.error(message);
     }
   }
 
