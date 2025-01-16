@@ -1,4 +1,5 @@
-// test-simple.js: Simple wrapper to run tests without Mocha, maximum backward compatibility
+// test-simple.js: Wrapper to run tests without Mocha, maximum backward compatibility
+// with callbacks to return result
 
 // Unified test runner with detailed logging
 function runTest(testName, testLogic) {
@@ -48,21 +49,27 @@ runTest("Dark mode is disabled", function (done) {
 
 // Tests for list order
 runTest("Reversed order is enabled", function (done) {
-  withLocalStorageKeySetup(["todomListReverseOrder"], function () {
-    localStorage.setItem("todomListReverseOrder", "set");
-    const output = isReversed();
-    const expected = "set";
-    done("set", expected, output);
-  });
+  appController.withLocalStorageKeySetup(
+    ["todomListReverseOrder"],
+    function () {
+      localStorage.setItem("todomListReverseOrder", "set");
+      const output = isReversed();
+      const expected = "set";
+      done("set", expected, output);
+    }
+  );
 });
 
-runTest("Reversed order is enabled", function (done) {
-  withLocalStorageKeySetup(["todomListReverseOrder"], function () {
-    localStorage.removeItem("todomListReverseOrder");
-    const output = isReversed();
-    const expected = null;
-    done(null, expected, output);
-  });
+runTest("Reversed order is disabled", function (done) {
+  appController.withLocalStorageKeySetup(
+    ["todomListReverseOrder"],
+    function () {
+      localStorage.removeItem("todomListReverseOrder");
+      const output = isReversed();
+      const expected = null;
+      done(null, expected, output);
+    }
+  );
 });
 
 // Slugification tests

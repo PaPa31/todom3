@@ -54,6 +54,35 @@ describe("Tests for earliest-togglers.js", function () {
 });
 
 // Tests for Dark Mode
+// Refactored Mocha Tests for Backward Compatibility
+describe("Dark Mode Tests4", function () {
+  beforeEach(function () {
+    document.documentElement.classList.remove("dark");
+    localStorage.removeItem("todomDarkMode");
+  });
+
+  it("should initialize in light mode by default", function () {
+    assert.isFalse(document.documentElement.classList.contains("dark"));
+  });
+
+  it("should enable dark mode when toggled", function () {
+    appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
+      toggleDarkMode();
+      assert.isTrue(document.documentElement.classList.contains("dark"));
+      assert.equal(localStorage.getItem("todomDarkMode"), "set");
+    });
+  });
+
+  it("should disable dark mode when toggled off", function () {
+    appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
+      localStorage.setItem("todomDarkMode", "set");
+      toggleDarkMode();
+      assert.isFalse(document.documentElement.classList.contains("dark"));
+      assert.equal(localStorage.getItem("todomDarkMode"), "");
+    });
+  });
+});
+
 describe("Dark Mode Tests3", () => {
   before(() => {
     // Ensure the document starts in a known state

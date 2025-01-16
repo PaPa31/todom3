@@ -140,26 +140,35 @@ const appController = (() => {
     saveFile: () => console.log("Saving file"),
   };
 
-  // Wrapper for localStorage with backup/restore functionality
+  // Refactored `withLocalStorageKeySetup` for backward compatibility
   function withLocalStorageKeySetup(keys, testFunc) {
     // Backup the relevant localStorage keys
-    const originalStorage = {};
-    keys.forEach((key) => {
+    var originalStorage = {};
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
       originalStorage[key] = localStorage.getItem(key);
-    });
+    }
 
+    var error;
     try {
       // Run the test function
       testFunc();
-    } finally {
-      // Restore only the relevant localStorage keys
-      keys.forEach((key) => {
-        if (originalStorage[key] !== null) {
-          localStorage.setItem(key, originalStorage[key]);
-        } else {
-          localStorage.removeItem(key);
-        }
-      });
+    } catch (err) {
+      error = err;
+    }
+
+    // Restore only the relevant localStorage keys
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      if (originalStorage[key] !== null) {
+        localStorage.setItem(key, originalStorage[key]);
+      } else {
+        localStorage.removeItem(key);
+      }
+    }
+
+    if (error) {
+      throw error;
     }
   }
 
@@ -216,8 +225,8 @@ const appController = (() => {
   return {
     initialize: initializeApp,
     actions: actions,
-    // Expose private methods for testing
-    initializeDarkMode, // <-- Added for testing
+    initializeDarkMode, // Exposed for testing
+    withLocalStorageKeySetup, // Expose this for testing
   };
 })();
 
