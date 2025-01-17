@@ -32,13 +32,13 @@ describe("Tests for earliest-togglers.js", function () {
   });
 
   it("Dark mode enabled", function () {
-    localStorage.setItem("todomDarkMode", "set");
-    expect(isDarkMode()).to.equal("set");
+    localStorage.setItem("todomDarkMode", "enabled");
+    expect(getDarkModeFromStorage()).to.be.true;
   });
 
   it("Dark mode disabled", function () {
     localStorage.removeItem("todomDarkMode");
-    expect(isDarkMode()).to.be.null;
+    expect(getDarkModeFromStorage()).to.be.false;
   });
 
   it("Default date mode", function () {
@@ -56,10 +56,25 @@ describe("Tests for earliest-togglers.js", function () {
 // Tests for Dark Mode
 // Refactored Mocha Tests for Backward Compatibility
 //describe("Dark Mode Tests4", function () {
+//  // This is illogical logic :) from AI
 //  beforeEach(function () {
 //    document.documentElement.classList.remove("dark");
 //    localStorage.removeItem("todomDarkMode");
 //  });
+
+//  //let originalDarkMode;
+
+//  //beforeEach(function () {
+//  //  originalDarkMode = localStorage.getItem("todomDarkMode");
+//  //});
+
+//  //afterEach(function () {
+//  //  if (originalDarkMode !== null) {
+//  //    localStorage.setItem("todomDarkMode", originalDarkMode);
+//  //  } else {
+//  //    localStorage.removeItem("todomDarkMode");
+//  //  }
+//  //});
 
 //  it("should initialize in light mode by default", function () {
 //    assert.isFalse(document.documentElement.classList.contains("dark"));
@@ -69,13 +84,13 @@ describe("Tests for earliest-togglers.js", function () {
 //    appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
 //      toggleDarkMode();
 //      assert.isTrue(document.documentElement.classList.contains("dark"));
-//      assert.equal(localStorage.getItem("todomDarkMode"), "set");
+//      assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
 //    });
 //  });
 
 //  it("should disable dark mode when toggled off", function () {
 //    appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
-//      localStorage.setItem("todomDarkMode", "set");
+//      localStorage.setItem("todomDarkMode", "enabled");
 //      toggleDarkMode();
 //      assert.isFalse(document.documentElement.classList.contains("dark"));
 //      assert.equal(localStorage.getItem("todomDarkMode"), "");
@@ -96,9 +111,9 @@ describe("Tests for earliest-togglers.js", function () {
 
 //  it("should enable dark mode when toggle is called", () => {
 //    document.documentElement.classList.add("dark");
-//    localStorage.setItem("todomDarkMode", "set");
+//    localStorage.setItem("todomDarkMode", "enabled");
 //    expect(document.documentElement.classList.contains("dark")).to.be.true;
-//    expect(localStorage.getItem("todomDarkMode")).to.equal("set");
+//    expect(localStorage.getItem("todomDarkMode")).to.equal("enabled");
 //  });
 
 //  it("should disable dark mode when toggled off", () => {
@@ -110,13 +125,27 @@ describe("Tests for earliest-togglers.js", function () {
 //});
 
 //describe("Dark Mode Tests2", () => {
-//  beforeEach(() => {
-//    // Clear localStorage before each test
-//    // We can't clear localStorage - we store all draft notes in localStorage
-//    //localStorage.clear();
-//    document.documentElement.classList.remove("dark");
-//    localStorage.removeItem("todomDarkMode");
+//  let originalDarkMode;
+
+//  beforeEach(function () {
+//    originalDarkMode = localStorage.getItem("todomDarkMode");
 //  });
+
+//  afterEach(function () {
+//    if (originalDarkMode !== null) {
+//      localStorage.setItem("todomDarkMode", originalDarkMode);
+//    } else {
+//      localStorage.removeItem("todomDarkMode");
+//    }
+//  });
+
+//  //beforeEach(() => {
+//  //  // Clear localStorage before each test
+//  //  // We can't clear localStorage - we store all draft notes in localStorage
+//  //  //localStorage.clear();
+//  //  document.documentElement.classList.remove("dark");
+//  //  localStorage.removeItem("todomDarkMode");
+//  //});
 
 //  it("should initialize in light mode by default", () => {
 //    assert.isFalse(document.documentElement.classList.contains("dark"));
@@ -128,12 +157,12 @@ describe("Tests for earliest-togglers.js", function () {
 
 //    // Assert dark mode is applied
 //    assert.isTrue(document.documentElement.classList.contains("dark"));
-//    assert.equal(localStorage.getItem("todomDarkMode"), "set");
+//    assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
 //  });
 
 //  it("should disable dark mode when toggled off", () => {
 //    // Set dark mode and then toggle it off
-//    localStorage.setItem("todomDarkMode", "set");
+//    localStorage.setItem("todomDarkMode", "enabled");
 //    toggleDarkMode();
 
 //    // Assert dark mode is disabled
@@ -143,7 +172,7 @@ describe("Tests for earliest-togglers.js", function () {
 
 //  it("should restore dark mode from localStorage on initialization", () => {
 //    // Simulate dark mode preference in localStorage
-//    localStorage.setItem("todomDarkMode", "set");
+//    localStorage.setItem("todomDarkMode", "enabled");
 
 //    // Simulate initialization
 //    initializeDarkMode();
@@ -205,8 +234,8 @@ describe("Tests for earliest-togglers.js", function () {
 //  });
 
 //  it("Enable reverse order", function () {
-//    localStorage.setItem("todomListReverseOrder", "set");
-//    expect(isReversed()).to.equal("set");
+//    localStorage.setItem("todomListReverseOrder", "enabled");
+//    expect(isReversed()).to.equal("enabled");
 //  });
 
 //  it("Disable reverse order", function () {

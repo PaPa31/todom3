@@ -32,19 +32,19 @@ function runTest(testName, testLogic) {
 // Tests for dark mode
 runTest("Dark mode is enabled", function (done) {
   appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
-    localStorage.setItem("todomDarkMode", "set");
-    const output = isDarkMode();
-    const expected = "set";
-    done("set", expected, output);
+    localStorage.setItem("todomDarkMode", "enabled");
+    const output = getDarkModeFromStorage();
+    const expected = true;
+    done("enabled", expected, output);
   });
 });
 
 runTest("Dark mode is disabled", function (done) {
   appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
     localStorage.removeItem("todomDarkMode");
-    const output = isDarkMode();
-    const expected = null;
-    done(null, expected, output);
+    const output = getDarkModeFromStorage();
+    const expected = false;
+    done("disabled", expected, output);
   });
 });
 

@@ -184,7 +184,7 @@ const appController = (() => {
 
   // Initialize application states
   function initializeAppStates() {
-    initializeDarkMode();
+    //initializeDarkMode();
     initializeTestMode();
     // Add other modes or states here
   }

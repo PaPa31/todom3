@@ -15,32 +15,37 @@ const icons = {
     </svg>`,
 };
 
-darkButton.addEventListener("click", (e) => {
-  e.stopPropagation();
-  const darkMode = toggleDarkMode();
-  darkButton.innerHTML = darkMode ? icons.moon : icons.sun;
-});
-
+document.addEventListener("DOMContentLoaded", () =>
+  darkButton.addEventListener("click", handleDarkModeToggle)
+);
 // when DarkReader is enabled, on startup light mode blinks (especially on http server)
 // workaround: disable DarkReader
 // Initialize dark mode
 function initializeDarkMode() {
-  const darkMode = isDarkMode();
-  document.documentElement.classList.toggle("dark", darkMode);
-  darkButton.innerHTML = darkMode ? icons.moon : icons.sun;
+  const isDark = getDarkModeFromStorage();
+  updateDarkModeUI(isDark);
+}
+
+function handleDarkModeToggle() {
+  const isDark = getDarkModeFromStorage();
+  const newDarkModeState = !isDark;
+  setDarkModeInStorage(newDarkModeState);
+  updateDarkModeUI(newDarkModeState);
+}
+
+function getDarkModeFromStorage() {
+  return localStorage.getItem("todomDarkMode") === "enabled";
+}
+
+function setDarkModeInStorage(isDark) {
+  localStorage.setItem("todomDarkMode", isDark ? "enabled" : "disabled");
+}
+
+function updateDarkModeUI(isDark) {
+  document.documentElement.classList.toggle("dark", isDark);
+  darkButton.innerHTML = isDark ? icons.moon : icons.sun;
 }
 initializeDarkMode();
-
-function isDarkMode() {
-  return localStorage.getItem("todomDarkMode");
-}
-
-function toggleDarkMode() {
-  const darkMode = isDarkMode();
-  localStorage.setItem("todomDarkMode", darkMode ? "" : "set");
-  document.documentElement.classList.toggle("dark", !darkMode);
-  return !darkMode;
-}
 // <----- End Dark Mode ----->
 
 // <----- Start Reverse Order Mode ----->
