@@ -34,8 +34,8 @@
   --mocha-code-number: #2f6fad;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+/*@media (prefers-color-scheme: dark) {*/
+.dark {
      --mocha-color: #fff;
      --mocha-bg-color: #222;
      --mocha-test-pass-color: #00d6b2;
@@ -68,7 +68,7 @@
      --mocha-code-keyword: #e3a470;
      --mocha-code-number: #4ca7ff;
   }
-}
+/*}*/
 
 body {
   margin:0;

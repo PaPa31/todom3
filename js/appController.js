@@ -13,6 +13,7 @@ const appController = (() => {
     file: null,
     folder: null,
     // Remove premature testMode initialization
+    // Pre-initializing the testMode state directly in the global state object can lead to unnecessary issues or errors when specific initialization logic depends on initializeTestMode.
     // testMode: window.location.search.includes("test=true"),
   };
 
