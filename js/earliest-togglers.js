@@ -2,9 +2,9 @@
 // It should be run as early as possible to avoid flickering
 
 // <----- Start Dark Mode ----->
-const darkButton = document.getElementById("dark-button");
+var darkButton = document.getElementById("dark-button");
 
-const icons = {
+var icons = {
   moon: `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="dark-toggle-icon">
       <path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path>
@@ -22,13 +22,13 @@ document.addEventListener("DOMContentLoaded", () =>
 // workaround: disable DarkReader
 // Initialize dark mode
 function initializeDarkMode() {
-  const isDark = getDarkModeFromStorage();
+  var isDark = getDarkModeFromStorage();
   updateDarkModeUI(isDark);
 }
 
 function handleDarkModeToggle() {
-  const isDark = getDarkModeFromStorage();
-  const newDarkModeState = !isDark;
+  var isDark = getDarkModeFromStorage();
+  var newDarkModeState = !isDark;
   setDarkModeInStorage(newDarkModeState);
   updateDarkModeUI(newDarkModeState);
 }
@@ -49,18 +49,18 @@ initializeDarkMode();
 // <----- End Dark Mode ----->
 
 // <----- Start Reverse Order Mode ----->
-const dateButton = document.getElementById("show-date");
+var dateButton = document.getElementById("show-date");
 
 var listItems = document.getElementById("list-items"); // global variable
 
-const MODES = {
+var MODES = {
   HIDE_BOTH: 0,
   HIDE_DATE: 1,
   HIDE_SAVE: 2,
   SHOW_BOTH: 3,
 };
 
-const VALID_MODES = [
+var VALID_MODES = [
   MODES.HIDE_BOTH,
   MODES.HIDE_DATE,
   MODES.HIDE_SAVE,
@@ -69,20 +69,20 @@ const VALID_MODES = [
 
 // Initialize state
 dateButton.addEventListener("click", function (e) {
-  const dateMode = toggleDateMode();
+  var dateMode = toggleDateMode();
   updateButtonText(dateMode);
   updateDateDisplay(dateMode);
 
   e.stopPropagation();
 });
 
-const dateMode = getDateMode();
+var dateMode = getDateMode();
 updateButtonText(dateMode);
 updateDateDisplay(dateMode);
 
 function getDateMode() {
-  const storedMode = localStorage.getItem("todomDateMode");
-  const parsedMode = parseInt(storedMode);
+  var storedMode = localStorage.getItem("todomDateMode");
+  var parsedMode = parseInt(storedMode);
 
   // Check if the mode is valid; if not, reset to the default (HIDE_BOTH)
   if (!VALID_MODES.includes(parsedMode)) {
@@ -93,8 +93,8 @@ function getDateMode() {
 }
 
 function toggleDateMode() {
-  const dateMode = getDateMode();
-  const nextMode = (dateMode + 1) % 4; // Rotate through the 4 states
+  var dateMode = getDateMode();
+  var nextMode = (dateMode + 1) % 4; // Rotate through the 4 states
   localStorage.setItem("todomDateMode", nextMode);
   return nextMode;
 }
