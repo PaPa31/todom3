@@ -113,8 +113,8 @@ describe("Dark Mode Tests4", function () {
   });
 });
 
-describe("Dark Mode Tests3", () => {
-  //before(() => {
+describe("Dark Mode Tests3", function () {
+  //before(function () {
   //  // Ensure the document starts in a known state
   //  darkButton.innerHTML = icons.sun;
   //  document.documentElement.classList.remove("dark");
@@ -146,11 +146,11 @@ describe("Dark Mode Tests3", () => {
     initializeDarkMode();
   });
 
-  it("should initialize in light mode by default", () => {
+  it("should initialize in light mode by default", function () {
     expect(document.documentElement.classList.contains("dark")).to.be.false;
   });
 
-  it("should enable dark mode when toggle is called", () => {
+  it("should enable dark mode when toggle is called", function () {
     darkButton.innerHTML = icons.moon;
     document.documentElement.classList.add("dark");
     localStorage.setItem("todomDarkMode", "enabled");
@@ -159,7 +159,7 @@ describe("Dark Mode Tests3", () => {
     expect(darkButton.innerHTML).include("moon-icon");
   });
 
-  it("should disable dark mode when toggled off", () => {
+  it("should disable dark mode when toggled off", function () {
     darkButton.innerHTML = icons.sun;
     document.documentElement.classList.remove("dark");
     localStorage.removeItem("todomDarkMode");
@@ -169,7 +169,7 @@ describe("Dark Mode Tests3", () => {
   });
 });
 
-describe("Dark Mode Tests2", () => {
+describe("Dark Mode Tests2", function () {
   let originalDarkMode;
 
   beforeEach(function () {
@@ -195,7 +195,7 @@ describe("Dark Mode Tests2", () => {
     initializeDarkMode();
   });
 
-  //beforeEach(() => {
+  //beforeEach(function () {
   //  // Clear localStorage before each test
   //  // We can't clear localStorage - we store all draft notes in localStorage
   //  //localStorage.clear();
@@ -203,11 +203,11 @@ describe("Dark Mode Tests2", () => {
   //  localStorage.removeItem("todomDarkMode");
   //});
 
-  it("should initialize in light mode by default", () => {
+  it("should initialize in light mode by default", function () {
     assert.isFalse(document.documentElement.classList.contains("dark"));
   });
 
-  it("should enable dark mode when toggled", () => {
+  it("should enable dark mode when toggled", function () {
     // Simulate user toggling dark mode
     handleDarkModeToggle();
 
@@ -216,7 +216,7 @@ describe("Dark Mode Tests2", () => {
     assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
   });
 
-  it("should disable dark mode when toggled off", () => {
+  it("should disable dark mode when toggled off", function () {
     // Set dark mode and then toggle it off
     darkButton.innerHTML = icons.moon;
     document.documentElement.classList.add("dark");
@@ -228,7 +228,7 @@ describe("Dark Mode Tests2", () => {
     assert.equal(localStorage.getItem("todomDarkMode"), "disabled");
   });
 
-  it("should restore dark mode from localStorage on initialization", () => {
+  it("should restore dark mode from localStorage on initialization", function () {
     // Simulate dark mode preference in localStorage
     localStorage.setItem("todomDarkMode", "enabled");
 
@@ -239,7 +239,7 @@ describe("Dark Mode Tests2", () => {
     assert.isTrue(document.documentElement.classList.contains("dark"));
   });
 
-  it("should handle missing or corrupted localStorage gracefully", () => {
+  it("should handle missing or corrupted localStorage gracefully", function () {
     // Simulate corrupted localStorage value
     localStorage.setItem("todomDarkMode", "invalid");
 
@@ -250,7 +250,7 @@ describe("Dark Mode Tests2", () => {
     assert.isFalse(document.documentElement.classList.contains("dark"));
   });
 
-  it("should update the toggle button icon appropriately", () => {
+  it("should update the toggle button icon appropriately", function () {
     //const button = document.createElement("button");
     //button.id = "dark-button";
     //document.body.appendChild(button);
