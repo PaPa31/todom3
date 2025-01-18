@@ -232,7 +232,7 @@ async function createDirectoryModal(
       if (newFileName) {
         saveDirectory = currentDirectory; // Set the current directory as the save location
         modalContainer.style.display = "none";
-        document.documentElement.style.overflow = "";
+        html.style.overflow = "";
 
         // Reset `initialFileName` after saving
         initialFileName = null;
@@ -261,7 +261,7 @@ async function createDirectoryModal(
 
       modalContainer.style.display = "none"; // Hide the modal after opening files
       // Remove the style to allow scrolling
-      document.documentElement.style.overflow = "";
+      html.style.overflow = "";
     };
     buttonLine.appendChild(openAllButton);
 
@@ -271,7 +271,7 @@ async function createDirectoryModal(
       if (selectedFiles.length > 0) {
         openSelectedFiles(selectedFiles); // Pass all selected files to be opened
         modalContainer.style.display = "none";
-        document.documentElement.style.overflow = "";
+        html.style.overflow = "";
       } else {
         alert("Please select at least one file to open.");
       }
@@ -298,7 +298,7 @@ async function createDirectoryModal(
   closeButton.onclick = function () {
     modalContainer.style.display = "none"; // Hide the modal on close
     // Remove the style to allow scrolling
-    document.documentElement.style.overflow = "";
+    html.style.overflow = "";
 
     // Reset `initialFileName` if the modal is closed
     initialFileName = null;
@@ -376,14 +376,14 @@ async function createDirectoryModal(
   document.body.appendChild(modalContainer);
 
   // Add the style to hide scrollbar thumb
-  document.documentElement.style.overflow = "hidden";
+  html.style.overflow = "hidden";
 
   // Close modal when clicking outside of it
   window.addEventListener("click", function (event) {
     if (event.target === modalContainer) {
       modalContainer.style.display = "none";
       // Remove the style to allow scrolling
-      document.documentElement.style.overflow = "";
+      html.style.overflow = "";
 
       // Reset `initialFileName` if clicking outside the modal
       initialFileName = null;

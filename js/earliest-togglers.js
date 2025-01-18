@@ -2,6 +2,7 @@
 // It should be run as early as possible to avoid flickering
 
 // <----- Start Dark Mode ----->
+var html = document.documentElement;
 var darkButton = document.getElementById("dark-button");
 
 var icons = {
@@ -42,7 +43,7 @@ function setDarkModeInStorage(isDark) {
 }
 
 function updateDarkModeUI(isDark) {
-  document.documentElement.classList.toggle("dark", isDark);
+  html.classList.toggle("dark", isDark);
   darkButton.innerHTML = isDark ? icons.moon : icons.sun;
 }
 initializeDarkMode();

@@ -1,5 +1,4 @@
 // for shortening
-const html = document.documentElement;
 
 // ---------------------- MAIN FORM -------------------------
 

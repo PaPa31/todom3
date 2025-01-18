@@ -220,7 +220,6 @@ const initializeItemState = () => {
 
 // --------------- from scripts.js -------------------
 ("use strict");
-const html = document.documentElement;
 const form = document.querySelector("form");
 
 const input = document.getElementById("input");

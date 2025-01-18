@@ -60,7 +60,7 @@ describe("Dark Mode Tests4", function () {
   //beforeEach(function () {
   //  // Force turn off dark mode
   //  darkButton.innerHTML = icons.sun;
-  //  document.documentElement.classList.remove("dark");
+  //  html.classList.remove("dark");
   //  localStorage.removeItem("todomDarkMode");
   //});
 
@@ -76,7 +76,7 @@ describe("Dark Mode Tests4", function () {
 
     // Force turn off dark mode
     darkButton.innerHTML = icons.sun;
-    document.documentElement.classList.remove("dark");
+    html.classList.remove("dark");
     localStorage.removeItem("todomDarkMode");
   });
 
@@ -90,13 +90,13 @@ describe("Dark Mode Tests4", function () {
   });
 
   it("should initialize in light mode by default", function () {
-    assert.isFalse(document.documentElement.classList.contains("dark"));
+    assert.isFalse(html.classList.contains("dark"));
   });
 
   it("should enable dark mode when toggled", function () {
     appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
       handleDarkModeToggle();
-      assert.isTrue(document.documentElement.classList.contains("dark"));
+      assert.isTrue(html.classList.contains("dark"));
       assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
     });
   });
@@ -104,10 +104,10 @@ describe("Dark Mode Tests4", function () {
   it("should disable dark mode when toggled off", function () {
     appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
       darkButton.innerHTML = icons.moon;
-      document.documentElement.classList.add("dark");
+      html.classList.add("dark");
       localStorage.setItem("todomDarkMode", "enabled");
       handleDarkModeToggle();
-      assert.isFalse(document.documentElement.classList.contains("dark"));
+      assert.isFalse(html.classList.contains("dark"));
       assert.equal(localStorage.getItem("todomDarkMode"), "disabled");
     });
   });
@@ -117,7 +117,7 @@ describe("Dark Mode Tests3", function () {
   //before(function () {
   //  // Ensure the document starts in a known state
   //  darkButton.innerHTML = icons.sun;
-  //  document.documentElement.classList.remove("dark");
+  //  html.classList.remove("dark");
   //  localStorage.removeItem("todomDarkMode");
   //});
 
@@ -133,7 +133,7 @@ describe("Dark Mode Tests3", function () {
 
     // Force turn off dark mode
     darkButton.innerHTML = icons.sun;
-    document.documentElement.classList.remove("dark");
+    html.classList.remove("dark");
     localStorage.removeItem("todomDarkMode");
   });
 
@@ -147,23 +147,23 @@ describe("Dark Mode Tests3", function () {
   });
 
   it("should initialize in light mode by default", function () {
-    expect(document.documentElement.classList.contains("dark")).to.be.false;
+    expect(html.classList.contains("dark")).to.be.false;
   });
 
   it("should enable dark mode when toggle is called", function () {
     darkButton.innerHTML = icons.moon;
-    document.documentElement.classList.add("dark");
+    html.classList.add("dark");
     localStorage.setItem("todomDarkMode", "enabled");
-    expect(document.documentElement.classList.contains("dark")).to.be.true;
+    expect(html.classList.contains("dark")).to.be.true;
     expect(localStorage.getItem("todomDarkMode")).to.equal("enabled");
     expect(darkButton.innerHTML).include("moon-icon");
   });
 
   it("should disable dark mode when toggled off", function () {
     darkButton.innerHTML = icons.sun;
-    document.documentElement.classList.remove("dark");
+    html.classList.remove("dark");
     localStorage.removeItem("todomDarkMode");
-    expect(document.documentElement.classList.contains("dark")).to.be.false;
+    expect(html.classList.contains("dark")).to.be.false;
     expect(localStorage.getItem("todomDarkMode")).to.equal(null);
     expect(darkButton.innerHTML).include("sun-icon");
   });
@@ -182,7 +182,7 @@ describe("Dark Mode Tests2", function () {
 
     // Force turn off dark mode
     darkButton.innerHTML = icons.sun;
-    document.documentElement.classList.remove("dark");
+    html.classList.remove("dark");
     localStorage.removeItem("todomDarkMode");
   });
 
@@ -199,12 +199,12 @@ describe("Dark Mode Tests2", function () {
   //  // Clear localStorage before each test
   //  // We can't clear localStorage - we store all draft notes in localStorage
   //  //localStorage.clear();
-  //  document.documentElement.classList.remove("dark");
+  //  html.classList.remove("dark");
   //  localStorage.removeItem("todomDarkMode");
   //});
 
   it("should initialize in light mode by default", function () {
-    assert.isFalse(document.documentElement.classList.contains("dark"));
+    assert.isFalse(html.classList.contains("dark"));
   });
 
   it("should enable dark mode when toggled", function () {
@@ -212,19 +212,19 @@ describe("Dark Mode Tests2", function () {
     handleDarkModeToggle();
 
     // Assert dark mode is applied
-    assert.isTrue(document.documentElement.classList.contains("dark"));
+    assert.isTrue(html.classList.contains("dark"));
     assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
   });
 
   it("should disable dark mode when toggled off", function () {
     // Set dark mode and then toggle it off
     darkButton.innerHTML = icons.moon;
-    document.documentElement.classList.add("dark");
+    html.classList.add("dark");
     localStorage.setItem("todomDarkMode", "enabled");
     handleDarkModeToggle();
 
     // Assert dark mode is disabled
-    assert.isFalse(document.documentElement.classList.contains("dark"));
+    assert.isFalse(html.classList.contains("dark"));
     assert.equal(localStorage.getItem("todomDarkMode"), "disabled");
   });
 
@@ -236,7 +236,7 @@ describe("Dark Mode Tests2", function () {
     initializeDarkMode();
 
     // Assert dark mode is restored
-    assert.isTrue(document.documentElement.classList.contains("dark"));
+    assert.isTrue(html.classList.contains("dark"));
   });
 
   it("should handle missing or corrupted localStorage gracefully", function () {
@@ -247,7 +247,7 @@ describe("Dark Mode Tests2", function () {
     initializeDarkMode();
 
     // Assert app defaults to light mode
-    assert.isFalse(document.documentElement.classList.contains("dark"));
+    assert.isFalse(html.classList.contains("dark"));
   });
 
   it("should update the toggle button icon appropriately", function () {
