@@ -82,7 +82,7 @@ describe("Tests for earliest-togglers.js", function () {
 
 //  it("should enable dark mode when toggled", function () {
 //    appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
-//      toggleDarkMode();
+//      handleDarkModeToggle();
 //      assert.isTrue(document.documentElement.classList.contains("dark"));
 //      assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
 //    });
@@ -91,7 +91,7 @@ describe("Tests for earliest-togglers.js", function () {
 //  it("should disable dark mode when toggled off", function () {
 //    appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
 //      localStorage.setItem("todomDarkMode", "enabled");
-//      toggleDarkMode();
+//      handleDarkModeToggle();
 //      assert.isFalse(document.documentElement.classList.contains("dark"));
 //      assert.equal(localStorage.getItem("todomDarkMode"), "");
 //    });
@@ -124,136 +124,149 @@ describe("Tests for earliest-togglers.js", function () {
 //  });
 //});
 
-//describe("Dark Mode Tests2", () => {
-//  let originalDarkMode;
+describe("Dark Mode Tests2", () => {
+  let originalDarkMode;
 
-//  beforeEach(function () {
-//    originalDarkMode = localStorage.getItem("todomDarkMode");
-//  });
+  beforeEach(function () {
+    originalDarkMode = localStorage.getItem("todomDarkMode");
 
-//  afterEach(function () {
-//    if (originalDarkMode !== null) {
-//      localStorage.setItem("todomDarkMode", originalDarkMode);
-//    } else {
-//      localStorage.removeItem("todomDarkMode");
-//    }
-//  });
+    // This is wrong logic :) from AI
+    // Clear localStorage before each test
+    // We can't clear localStorage completely - we store all draft notes in localStorage
+    //localStorage.clear();
 
-//  //beforeEach(() => {
-//  //  // Clear localStorage before each test
-//  //  // We can't clear localStorage - we store all draft notes in localStorage
-//  //  //localStorage.clear();
-//  //  document.documentElement.classList.remove("dark");
-//  //  localStorage.removeItem("todomDarkMode");
-//  //});
+    // Force turn off dark mode
+    darkButton.innerHTML = icons.sun;
+    document.documentElement.classList.remove("dark");
+    localStorage.removeItem("todomDarkMode");
+  });
 
-//  it("should initialize in light mode by default", () => {
-//    assert.isFalse(document.documentElement.classList.contains("dark"));
-//  });
+  afterEach(function () {
+    if (originalDarkMode !== null) {
+      localStorage.setItem("todomDarkMode", originalDarkMode);
+    } else {
+      localStorage.removeItem("todomDarkMode");
+    }
+    initializeDarkMode();
+  });
 
-//  it("should enable dark mode when toggled", () => {
-//    // Simulate user toggling dark mode
-//    toggleDarkMode();
+  //beforeEach(() => {
+  //  // Clear localStorage before each test
+  //  // We can't clear localStorage - we store all draft notes in localStorage
+  //  //localStorage.clear();
+  //  document.documentElement.classList.remove("dark");
+  //  localStorage.removeItem("todomDarkMode");
+  //});
 
-//    // Assert dark mode is applied
-//    assert.isTrue(document.documentElement.classList.contains("dark"));
-//    assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
-//  });
+  it("should initialize in light mode by default", () => {
+    assert.isFalse(document.documentElement.classList.contains("dark"));
+  });
 
-//  it("should disable dark mode when toggled off", () => {
-//    // Set dark mode and then toggle it off
-//    localStorage.setItem("todomDarkMode", "enabled");
-//    toggleDarkMode();
+  it("should enable dark mode when toggled", () => {
+    // Simulate user toggling dark mode
+    handleDarkModeToggle();
 
-//    // Assert dark mode is disabled
-//    assert.isFalse(document.documentElement.classList.contains("dark"));
-//    assert.equal(localStorage.getItem("todomDarkMode"), "");
-//  });
+    // Assert dark mode is applied
+    assert.isTrue(document.documentElement.classList.contains("dark"));
+    assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
+  });
 
-//  it("should restore dark mode from localStorage on initialization", () => {
-//    // Simulate dark mode preference in localStorage
-//    localStorage.setItem("todomDarkMode", "enabled");
+  it("should disable dark mode when toggled off", () => {
+    // Set dark mode and then toggle it off
+    darkButton.innerHTML = icons.moon;
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("todomDarkMode", "enabled");
+    handleDarkModeToggle();
 
-//    // Simulate initialization
-//    initializeDarkMode();
+    // Assert dark mode is disabled
+    assert.isFalse(document.documentElement.classList.contains("dark"));
+    assert.equal(localStorage.getItem("todomDarkMode"), "disabled");
+  });
 
-//    // Assert dark mode is restored
-//    assert.isTrue(document.documentElement.classList.contains("dark"));
-//  });
+  it("should restore dark mode from localStorage on initialization", () => {
+    // Simulate dark mode preference in localStorage
+    localStorage.setItem("todomDarkMode", "enabled");
 
-//  it("should handle missing or corrupted localStorage gracefully", () => {
-//    // Simulate corrupted localStorage value
-//    localStorage.setItem("todomDarkMode", "invalid");
+    // Simulate initialization
+    initializeDarkMode();
 
-//    // Simulate initialization
-//    initializeDarkMode();
+    // Assert dark mode is restored
+    assert.isTrue(document.documentElement.classList.contains("dark"));
+  });
 
-//    // Assert app defaults to light mode
-//    assert.isFalse(document.documentElement.classList.contains("dark"));
-//  });
+  it("should handle missing or corrupted localStorage gracefully", () => {
+    // Simulate corrupted localStorage value
+    localStorage.setItem("todomDarkMode", "invalid");
 
-//  it("should update the toggle button icon appropriately", () => {
-//    const button = document.createElement("button");
-//    button.id = "dark-button";
-//    document.body.appendChild(button);
+    // Simulate initialization
+    initializeDarkMode();
 
-//    // Simulate dark mode toggle
-//    toggleDarkMode();
+    // Assert app defaults to light mode
+    assert.isFalse(document.documentElement.classList.contains("dark"));
+  });
 
-//    // Assert the button icon is updated
-//    assert.include(button.innerHTML, "moon");
+  it("should update the toggle button icon appropriately", () => {
+    //const button = document.createElement("button");
+    //button.id = "dark-button";
+    //document.body.appendChild(button);
 
-//    // Toggle back to light mode
-//    toggleDarkMode();
+    // Simulate dark mode toggle
+    handleDarkModeToggle();
 
-//    // Assert the button icon is updated again
-//    assert.include(button.innerHTML, "sun");
-//  });
-//});
+    // Assert the button icon is updated
+    assert.include(darkButton.innerHTML, "moon-icon");
 
-//describe("Tests for list-order.js", function () {
-//  let originalListOrder;
-//  const contentElement = document.getElementById("content");
+    // Toggle back to light mode
+    handleDarkModeToggle();
 
-//  beforeEach(function () {
-//    originalListOrder = localStorage.getItem("todomListReverseOrder");
-//    contentElement.classList.remove("reversed");
-//  });
+    // Assert the button icon is updated again
+    assert.include(darkButton.innerHTML, "sun-icon");
+  });
+});
 
-//  afterEach(function () {
-//    if (originalListOrder !== null) {
-//      localStorage.setItem("todomListReverseOrder", originalListOrder);
-//    } else {
-//      localStorage.removeItem("todomListReverseOrder");
-//    }
-//    if (isReversed()) {
-//      contentElement.classList.add("reversed");
-//    } else {
-//      contentElement.classList.remove("reversed");
-//    }
-//  });
+describe("Tests for list-order.js", function () {
+  let originalListOrder;
+  const contentElement = document.getElementById("content");
 
-//  it("Enable reverse order", function () {
-//    localStorage.setItem("todomListReverseOrder", "enabled");
-//    expect(isReversed()).to.equal("enabled");
-//  });
+  beforeEach(function () {
+    originalListOrder = localStorage.getItem("todomListReverseOrder");
+    contentElement.classList.remove("reversed");
+  });
 
-//  it("Disable reverse order", function () {
-//    localStorage.removeItem("todomListReverseOrder");
-//    expect(isReversed()).to.be.null;
-//  });
+  afterEach(function () {
+    if (originalListOrder !== null) {
+      localStorage.setItem("todomListReverseOrder", originalListOrder);
+    } else {
+      localStorage.removeItem("todomListReverseOrder");
+    }
+    if (isReversed()) {
+      contentElement.classList.add("reversed");
+    } else {
+      contentElement.classList.remove("reversed");
+    }
+  });
 
-//  it("Add class 'reversed'", function () {
-//    toggleReversedMode();
-//    expect(contentElement.classList.contains("reversed")).to.be.true;
-//  });
+  it("Enable reverse order", function () {
+    localStorage.setItem("todomListReverseOrder", "enabled");
+    expect(isReversed()).to.equal("enabled");
+  });
 
-//  it("Removing class 'reversed'", function () {
-//    toggleReversedMode();
-//    toggleReversedMode();
-//    expect(contentElement.classList.contains("reversed")).to.be.false;
-//  });
-//});
+  it("Disable reverse order", function () {
+    localStorage.removeItem("todomListReverseOrder");
+    expect(isReversed()).to.be.null;
+  });
+
+  it("Add class 'reversed'", function () {
+    toggleReversedMode();
+    expect(contentElement.classList.contains("reversed")).to.be.true;
+  });
+
+  it("Removing class 'reversed'", function () {
+    toggleReversedMode();
+    toggleReversedMode();
+    expect(contentElement.classList.contains("reversed")).to.be.false;
+  });
+});
 
 // Tests for `latinization.js`
 describe("Slugification Tests", function () {

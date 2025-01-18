@@ -246,11 +246,11 @@ button#dark-button svg {
   position: absolute;
 }
 
-.light-toggle-icon {
+.sun-icon {
   color: #c40022;
 }
 
-.dark-toggle-icon {
+.moon-icon {
   color: #a4a400;
 }
 
