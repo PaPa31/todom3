@@ -17,7 +17,10 @@ var icons = {
 };
 
 document.addEventListener("DOMContentLoaded", () =>
-  darkButton.addEventListener("click", handleDarkModeToggle)
+  darkButton.addEventListener("click", function (e) {
+    e.stopPropagation();
+    handleDarkModeToggle(darkButton);
+  })
 );
 // when DarkReader is enabled, on startup light mode blinks (especially on http server)
 // workaround: disable DarkReader
@@ -27,11 +30,11 @@ function initializeDarkMode() {
   updateDarkModeUI(isDark);
 }
 
-function handleDarkModeToggle() {
+function handleDarkModeToggle(button) {
   var isDark = getDarkModeFromStorage();
   var newDarkModeState = !isDark;
   setDarkModeInStorage(newDarkModeState);
-  updateDarkModeUI(newDarkModeState);
+  updateDarkModeUI(newDarkModeState, button);
 }
 
 function getDarkModeFromStorage() {
@@ -42,10 +45,11 @@ function setDarkModeInStorage(isDark) {
   localStorage.setItem("todomDarkMode", isDark ? "enabled" : "disabled");
 }
 
-function updateDarkModeUI(isDark) {
+function updateDarkModeUI(isDark, buttonEl = darkButton) {
   html.classList.toggle("dark", isDark);
-  darkButton.innerHTML = isDark ? icons.moon : icons.sun;
+  buttonEl.innerHTML = isDark ? icons.moon : icons.sun;
 }
+// we should initilize dark mode as early as possible to avoid flickering
 initializeDarkMode();
 // <----- End Dark Mode ----->
 

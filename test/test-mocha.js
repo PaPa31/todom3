@@ -247,21 +247,25 @@ describe("Dark Mode Tests2", function () {
   });
 
   it("should update the toggle button icon appropriately", function () {
-    //const button = document.createElement("button");
-    //button.id = "dark-button";
-    //document.body.appendChild(button);
+    // add new button
+    var newDarkButton = document.createElement("button");
+    newDarkButton.id = "dark-button";
+    document.body.appendChild(newDarkButton);
 
     // Simulate dark mode toggle
-    handleDarkModeToggle();
+    handleDarkModeToggle(newDarkButton);
 
     // Assert the button icon is updated
-    assert.include(darkButton.innerHTML, "moon-icon");
+    assert.include(newDarkButton.innerHTML, "moon-icon");
 
     // Toggle back to light mode
-    handleDarkModeToggle();
+    handleDarkModeToggle(newDarkButton);
 
     // Assert the button icon is updated again
-    assert.include(darkButton.innerHTML, "sun-icon");
+    assert.include(newDarkButton.innerHTML, "sun-icon");
+
+    // remove new button
+    document.body.removeChild(newDarkButton);
   });
 });
 
