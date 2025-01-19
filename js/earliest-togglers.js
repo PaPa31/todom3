@@ -49,7 +49,7 @@ function updateDarkModeUI(isDark) {
 initializeDarkMode();
 // <----- End Dark Mode ----->
 
-// <----- Start Reverse Order Mode ----->
+// <----- Start Date Mode ----->
 var dateButton = document.getElementById("show-date");
 
 var listItems = document.getElementById("list-items"); // global variable
@@ -140,4 +140,4 @@ function updateButtonText(dateMode) {
       break;
   }
 }
-// <----- End Reverse Order Mode ----->
+// <----- End Date Mode ----->
