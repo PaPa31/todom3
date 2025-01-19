@@ -66,7 +66,7 @@ describe("Dark Mode Tests4", function () {
 
   let originalDarkMode;
 
-  beforeEach(function () {
+  before(function () {
     originalDarkMode = localStorage.getItem("todomDarkMode");
 
     // This is wrong logic :) from AI
@@ -80,7 +80,7 @@ describe("Dark Mode Tests4", function () {
     localStorage.removeItem("todomDarkMode");
   });
 
-  afterEach(function () {
+  after(function () {
     if (originalDarkMode !== null) {
       localStorage.setItem("todomDarkMode", originalDarkMode);
     } else {
@@ -94,22 +94,18 @@ describe("Dark Mode Tests4", function () {
   });
 
   it("should enable dark mode when toggled", function () {
-    appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
-      handleDarkModeToggle();
-      assert.isTrue(html.classList.contains("dark"));
-      assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
-    });
+    handleDarkModeToggle();
+    assert.isTrue(html.classList.contains("dark"));
+    assert.equal(localStorage.getItem("todomDarkMode"), "enabled");
   });
 
   it("should disable dark mode when toggled off", function () {
-    appController.withLocalStorageKeySetup(["todomDarkMode"], function () {
-      darkButton.innerHTML = icons.moon;
-      html.classList.add("dark");
-      localStorage.setItem("todomDarkMode", "enabled");
-      handleDarkModeToggle();
-      assert.isFalse(html.classList.contains("dark"));
-      assert.equal(localStorage.getItem("todomDarkMode"), "disabled");
-    });
+    darkButton.innerHTML = icons.moon;
+    html.classList.add("dark");
+    localStorage.setItem("todomDarkMode", "enabled");
+    handleDarkModeToggle();
+    assert.isFalse(html.classList.contains("dark"));
+    assert.equal(localStorage.getItem("todomDarkMode"), "disabled");
   });
 });
 
@@ -172,7 +168,7 @@ describe("Dark Mode Tests3", function () {
 describe("Dark Mode Tests2", function () {
   let originalDarkMode;
 
-  beforeEach(function () {
+  before(function () {
     originalDarkMode = localStorage.getItem("todomDarkMode");
 
     // This is wrong logic :) from AI
@@ -186,7 +182,7 @@ describe("Dark Mode Tests2", function () {
     localStorage.removeItem("todomDarkMode");
   });
 
-  afterEach(function () {
+  after(function () {
     if (originalDarkMode !== null) {
       localStorage.setItem("todomDarkMode", originalDarkMode);
     } else {
