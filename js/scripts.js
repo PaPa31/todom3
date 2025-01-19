@@ -491,6 +491,7 @@ function transliterateWithCharMap(text) {
 
 // Process filenames with transliteration and slugification
 function processFilename(originalFilename) {
+  originalFilename = originalFilename.slice(0, 24);
   return new Promise((resolve, reject) => {
     // Ensure the library is loaded only once
     if (transliterationLoaded || (window.transliterate && window.slugify)) {
