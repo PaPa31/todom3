@@ -7,7 +7,7 @@ echo "Content-Type: application/json; charset=utf-8"
 echo ""
 
 # Log incoming request (for debugging)
-echo "Action: $QUERY_STRING" >> /tmp/cgi-debug.log
+echo "Action: $QUERY_STRING" > /tmp/cgi-debug.log
 
 # Parse action and path from QUERY_STRING
 action=$(echo "$QUERY_STRING" | sed -n 's/.*action=\([^&]*\).*/\1/p')
