@@ -493,16 +493,34 @@ async function saveFileHttp(fileName, fileContent) {
 
   const path = `${saveDirectory}/${fileName}`;
   const url = `cgi-bin/binary-file-upload.sh?${encodeURIComponent(path)}`;
-  const xhr = new XMLHttpRequest();
 
+  const xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
-  xhr.setRequestHeader("Content-Type", "application/octet-stream"); // Binary data MIME type
+  xhr.setRequestHeader("Content-Type", "application/octet-stream");
 
   xhr.onload = function () {
+    const response = xhr.responseText.trim();
+
     if (xhr.status >= 200 && xhr.status < 300) {
-      console.log("File uploaded successfully:", xhr.responseText);
+      if (response === "EXTRA_OVERWRITE_NEEDED") {
+        if (confirm("File already exists. Do you want to overwrite it?")) {
+          sendExtraInfo(url, "overwrite=true");
+        } else {
+          console.log("User canceled file overwrite.");
+        }
+      } else if (response === "EXTRA_DIRCREATE_NEEDED") {
+        if (
+          confirm("The directory does not exist. Do you want to create it?")
+        ) {
+          sendExtraInfo(url, "dircreate=true");
+        } else {
+          console.log("User canceled directory creation.");
+        }
+      } else {
+        console.log("File uploaded successfully:", response);
+      }
     } else {
-      console.error("Upload failed", xhr.status, xhr.statusText);
+      console.error("Upload failed:", xhr.status, xhr.statusText, response);
     }
   };
 
@@ -511,9 +529,33 @@ async function saveFileHttp(fileName, fileContent) {
   };
 
   try {
-    xhr.send(fileContent);
+    xhr.send(fileContent); // Send file content only once
   } catch (err) {
     console.error("Error during upload:", err);
+  }
+}
+
+function sendExtraInfo(url, extraData) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", `${url}&${extraData}`, true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  xhr.onload = function () {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      console.log("File saved with extra confirmation:", xhr.responseText);
+    } else {
+      console.error("Extra request failed:", xhr.status, xhr.statusText);
+    }
+  };
+
+  xhr.onerror = function () {
+    console.error("Network error during extra request.");
+  };
+
+  try {
+    xhr.send(); // No file content sent in second request
+  } catch (err) {
+    console.error("Error during extra request:", err);
   }
 }
 
