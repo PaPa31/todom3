@@ -66,93 +66,47 @@ url_decode() {
 
 
 case "$action" in
-  save-file)
-    # Read the entire input and log it
-    CONTENT=$(cat)
-    echo "Debug: Full Content Received:" >> /tmp/cgi-debug.log
-    echo "$CONTENT" >> /tmp/cgi-debug.log
-
-    # Extract boundary and log it
-    BOUNDARY=$(echo "$CONTENT" | head -n 1 | tr -d '\r')
-    echo "Debug: Extracted Boundary: $BOUNDARY" >> /tmp/cgi-debug.log
-
-    # Extract the segment containing the filename and log it
-    FILENAME_SEGMENT=$(echo "$CONTENT" | grep -A2 "name=\"filename\"" | tr -d '\r')
-    echo "Debug: Filename Segment: $FILENAME_SEGMENT" >> /tmp/cgi-debug.log
-
-    # Extract the filename value from the segment and log it
-    FILENAME=$(echo "$FILENAME_SEGMENT" | tail -n 1)
-    echo "Debug: Extracted Filename Value: $FILENAME" >> /tmp/cgi-debug.log
-
-    # Final log for validation
-    if [ -z "$FILENAME" ]; then
-        echo "Debug: Filename is empty or extraction failed" >> /tmp/cgi-debug.log
-    else
-        echo "Debug: Final Filename: $FILENAME" >> /tmp/cgi-debug.log
-    fi
-
-    # Find start of file content
-    FILE_START=$(echo "$CONTENT" | grep -n "name=\"file\"" | cut -d ':' -f 1)
-
-    # Extract content from the line after 'name="file"' to the next boundary
-    FILE_CONTENT=$(echo "$CONTENT" | tail -n +$((FILE_START + 2)) | sed "/$BOUNDARY/,\$d")
-
-    # Trim leading and trailing whitespace (if any)
-    FILE_CONTENT=$(echo "$FILE_CONTENT" | sed '/^$/d')
-    echo "Debug: Final File Content:" >> /tmp/cgi-debug.log
-    echo "$FILE_CONTENT" >> /tmp/cgi-debug.log
-
-    # Extract the overwrite segment
-    OVERWRITE_SEGMENT=$(echo "$CONTENT" | grep -A2 "name=\"overwrite\"" | tr -d '\r')
-    echo "Debug: Owerwrite Segment: $OVERWRITE_SEGMENT" >> /tmp/cgi-debug.log
-
-    # Extract overwrite value (last line of the segment)
-    OVERWRITE=$(echo "$OVERWRITE_SEGMENT" | tail -n 1)
-    echo "Debug: Extracted overwrite: $OVERWRITE" >> /tmp/cgi-debug.log
-
-    # Sanitize file path
-    sanitized_path="${root_dir}/${FILENAME}"
-    echo "Debug: sanitized_path=$sanitized_path" >> /tmp/cgi-debug.log
-
-    if ! echo "$sanitized_path" | grep -q "^${root_dir}"; then
-      echo '{ "success": false, "message": "Invalid file path." }'
-      exit 1
-    fi
-
-    # Save or overwrite the file
-    #if [ -f "$sanitized_path" ] && [ "$overwrite" != "true" ]; then
-    #  echo '{ "success": false, "fileExists": true, "message": "File already exists." }'
-    #else
-    #  #if printf "%s" "$fileContent" > "$sanitized_path"; then
-    #  if echo "$FILE_CONTENT" > "$sanitized_path"; then
-    #    echo '{ "success": true, "message": "File saved successfully." }'
-    #  else
-    #    echo '{ "success": false, "message": "Failed to save the file." }'
-    #  fi
-    #fi
-
-    # Save or overwrite the file
-    if [ -f "$sanitized_path" ] && [ "$overwrite" != "true" ]; then
-      echo '{ "success": false, "fileExists": true, "message": "File already exists." }'
-    else
-      if printf "%s" "$FILE_CONTENT" > "$sanitized_path"; then
-        echo '{ "success": true, "message": "File saved successfully." }'
-      else
-        echo '{ "success": false, "message": "Failed to save the file." }'
-      fi
-    fi
-    ;;
-
   create-folder)
     read_raw_content
     echo "Debug: CONTENT=$CONTENT" >> /tmp/cgi-debug.log
     directory=$(echo "$CONTENT" | sed -n 's/.*"directory":"\([^"]*\)".*/\1/p')
     folderName=$(echo "$CONTENT" | sed -n 's/.*"folderName":"\([^"]*\)".*/\1/p')
+    #confirmFlag=$(echo "$CONTENT" | sed -n 's/.*"confirm":"\([^"]*\)".*/\1/p')
+    confirmFlag=$(echo "$CONTENT" | sed -n 's/.*"confirm":\([^,}]*\).*/\1/p') # Extract confirmation flag
 
     targetPath="${root_dir}/${directory}/${folderName}"
 
-    mkdir -p "$targetPath"
-    [ $? -eq 0 ] && echo '{ "success": true, "message": "Folder created successfully." }' || echo '{ "success": false, "message": "Failed to create folder." }'
+    if [ -d "$targetPath" ]; then
+      echo '{ "success": false, "message": "Folder already exists." }'
+      exit 0
+    fi
+
+    parentDir=$(dirname "$targetPath")
+
+    # If the parent directory doesn't exist, return EXTRA_DIRECTORY_CREATE_NEEDED
+    if [ ! -d "$parentDir" ]; then
+        echo '{ "success": false, "message": "EXTRA_DIRECTORY_CREATE_NEEDED" }'
+        exit 0
+    fi
+
+    echo "Confirm flag received: $confirmFlag" >> /tmp/cgi-debug.log
+    echo "Folder to create: $targetPath" >> /tmp/cgi-debug.log
+
+
+    # If confirmation is required, check before creating the folder
+    if [ "$confirmFlag" = "true" ]; then
+        mkdir -p "$targetPath"
+        if [ $? -eq 0 ]; then
+            echo '{ "success": true, "message": "Folder created successfully." }'
+        else
+            echo '{ "success": false, "message": "Failed to create folder." }'
+        fi
+        exit 0
+    fi
+
+    # Default case (without confirmation, the folder is not created)
+    echo '{ "success": false, "message": "EXTRA_DIRECTORY_CREATE_NEEDED" }'
+    exit 0
     ;;
 
   open-directory)

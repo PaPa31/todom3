@@ -508,14 +508,6 @@ async function saveFileHttp(fileName, fileContent) {
         } else {
           console.log("User canceled file overwrite.");
         }
-      } else if (response === "EXTRA_DIRCREATE_NEEDED") {
-        if (
-          confirm("The directory does not exist. Do you want to create it?")
-        ) {
-          sendExtraInfo(url, "dircreate=true");
-        } else {
-          console.log("User canceled directory creation.");
-        }
       } else {
         console.log("File uploaded successfully:", response);
       }
@@ -529,7 +521,7 @@ async function saveFileHttp(fileName, fileContent) {
   };
 
   try {
-    xhr.send(fileContent); // Send file content only once
+    xhr.send(fileContent);
   } catch (err) {
     console.error("Error during upload:", err);
   }
@@ -667,37 +659,84 @@ async function saveFileHttp2(fileName, fileContent) {
 }
 
 // Function to create a new folder
-async function createNewFolder(currentDirectory, folderName) {
-  try {
-    const response = await fetch(`protocol-http.cgi?action=create-folder`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        directory: currentDirectory,
-        folderName: folderName,
-      }),
-    });
+async function createNewFolder(directory, folderName) {
+  if (!directory || !folderName) {
+    console.error("Invalid directory or folder name.");
+    return false; // ⬅️ Return false for invalid input
+  }
 
-    if (!response.ok) {
-      throw new Error("Failed to create folder.");
+  // Initial request without confirmation
+  let requestData = JSON.stringify({ directory, folderName, confirm: false });
+
+  let response = await fetch("protocol-http.cgi?action=create-folder", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: requestData,
+  });
+
+  let data = await response.json();
+
+  // Handle server response
+  if (data.success) {
+    console.log("✅ Folder created successfully.");
+    return true; // ✅ SUCCESS, folder created!
+  } else if (data.message === "EXTRA_DIRECTORY_CREATE_NEEDED") {
+    if (
+      !confirm("The parent directory does not exist. Do you want to create it?")
+    ) {
+      console.log("🚫 User canceled parent directory creation.");
+      return false;
     }
 
-    const result = await response.json();
-    console.log("Folder created successfully:", result);
-  } catch (error) {
-    console.error("Error creating folder:", error);
+    // Retry request with confirmation
+    requestData = JSON.stringify({ directory, folderName, confirm: true });
+
+    response = await fetch("protocol-http.cgi?action=create-folder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: requestData,
+    });
+
+    data = await response.json();
+
+    if (data.success) {
+      console.log("✅ Folder created successfully on second attempt.");
+      return true;
+    } else {
+      console.error("❌ Failed to create folder:", data.message);
+      return false;
+    }
+  } else if (data.message === "Folder already exists.") {
+    console.log("✅ Folder already exists, proceeding...");
+    return true; // ✅ Folder exists, so we proceed!
+  } else {
+    console.error("❌ Failed to create folder:", data.message);
+    return false;
   }
 }
 
 async function passFolderHttp(folderName) {
   const folderPath = rootDirectory + "/" + folderName;
-  const newFileName = await openDirectory(folderPath, true);
-  if (!newFileName) {
-    console.log("Save operation canceled or no file name provided.");
+  console.log("📂 Attempting to create/open folder:", folderPath);
+
+  // 🟢 First, check/create the folder if necessary
+  const folderCreated = await createNewFolder(rootDirectory, folderName);
+  console.log("📂 Folder creation result:", folderCreated);
+  if (!folderCreated) {
+    console.log("❌ Failed to create folder or user canceled.");
     return;
   }
+
+  // 🟢 Now, proceed to save the file
+  const newFileName = await openDirectory(folderPath, true);
+  console.log("📂 Open directory result:", newFileName);
+
+  if (!newFileName) {
+    console.log("❌ Save operation canceled or no file name provided.");
+    return;
+  }
+
+  console.log("💾 Attempting to save file:", newFileName);
   saveFileHttp(newFileName, input.value);
   return newFileName;
 }

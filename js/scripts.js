@@ -346,30 +346,32 @@ function drawFile(fileSize) {
 }
 
 const fileDownload = async (drawItemOnly = false) => {
+  console.log("📂 Starting file download...");
   const path = splitDateIntoFolderNameAndFileName();
+  console.log("📂 Split date result:", path);
 
   var blob = new Blob([input.value], {
     type: "text/plain;charset=utf-8",
   });
 
   const fileSize = blob.size;
+  console.log("💾 Blob created with size:", fileSize);
 
   if (window.protocol === "file:") {
-    //const meaningPartFileName = generateFileNameUniversal(input.value, true);
+    console.log("📂 Saving locally...");
     const meaningPartFileName = processFilename(input.value);
     const fileName = path.datePartFileName + "-" + meaningPartFileName + ".md";
     await saveFileFile(fileName, blob, fileSize, drawItemOnly);
   } else {
+    console.log("🌐 Attempting to pass folder to server:", path.dateFolderName);
     let newFileName = await passFolderHttp(path.dateFolderName);
-    //I copy/pasted below check from nested passFolderHttp func
-    // I don't if this is really necessary
+    console.log("📂 Received filename from passFolderHttp:", newFileName);
+
     if (!newFileName) {
-      console.log("Save operation canceled or no file name provided.");
-      //return;
-      //const meaningPartFileName = generateFileNameUniversal(input.value, true);
-      const meaningPartFileName = processFilename(input.value);
-      newFileName = path.datePartFileName + "-" + meaningPartFileName + ".md";
+      console.log("❌ Save operation canceled or no file name provided.");
+      return;
     }
+
     if (drawItemOnly) saveItem();
     else {
       pushFilesArray(newFileName);

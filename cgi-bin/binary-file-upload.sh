@@ -66,11 +66,12 @@ if [ -e "$FULL_PATH" ]; then
     fi
     exit 0
 elif [ ! -d "$(dirname "$FULL_PATH")" ]; then
-    cat > "$TEMP_FILE"
-    if [ -f "$TEMP_FILE" ]; then
-        echo "EXTRA_DIRCREATE_NEEDED"
+    mkdir -p "$(dirname "$FULL_PATH")"
+    if [ $? -eq 0 ]; then
+        cat > "$FULL_PATH"
+        echo "File saved as $FULL_PATH"
     else
-        echo "Error: Failed to write temporary file $TEMP_FILE"
+        echo "Error: Failed to create directory."
     fi
     exit 0
 fi
