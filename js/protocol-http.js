@@ -682,9 +682,11 @@ async function createNewFolder(directory, folderName) {
     return true; // ✅ SUCCESS, folder created!
   } else if (data.message === "EXTRA_DIRECTORY_CREATE_NEEDED") {
     if (
-      !confirm("The parent directory does not exist. Do you want to create it?")
+      !confirm(
+        `The parent directory '${folderName}' directory does not exist. \nDo you want to create it?`
+      )
     ) {
-      console.log("🚫 User canceled parent directory creation.");
+      console.log(`🚫 User canceled "${folderName}"  directory creation.`);
       return false;
     }
 
