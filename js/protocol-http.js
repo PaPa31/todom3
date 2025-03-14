@@ -659,14 +659,18 @@ async function saveFileHttp2(fileName, fileContent) {
 }
 
 // Function to create a new folder
-async function createNewFolder(directory, folderName) {
+async function createNewFolder(directory, folderName, confirmFlag = false) {
   if (!directory || !folderName) {
     console.error("Invalid directory or folder name.");
     return false; // ⬅️ Return false for invalid input
   }
 
   // Initial request without confirmation
-  let requestData = JSON.stringify({ directory, folderName, confirm: false });
+  let requestData = JSON.stringify({
+    directory,
+    folderName,
+    confirm: confirmFlag,
+  });
 
   let response = await fetch("protocol-http.cgi?action=create-folder", {
     method: "POST",
@@ -686,7 +690,7 @@ async function createNewFolder(directory, folderName) {
         `The parent directory '${folderName}' directory does not exist. \nDo you want to create it?`
       )
     ) {
-      console.log(`🚫 User canceled "${folderName}"  directory creation.`);
+      console.log(`🚫 User canceled "${folderName}" directory creation.`);
       return false;
     }
 
@@ -721,8 +725,8 @@ async function passFolderHttp(folderName) {
   const folderPath = rootDirectory + "/" + folderName;
   console.log("📂 Attempting to create/open folder:", folderPath);
 
-  // 🟢 First, check/create the folder if necessary
-  const folderCreated = await createNewFolder(rootDirectory, folderName);
+  // 🟢 Add true, to create folderName (yyyy-mm) automatically
+  const folderCreated = await createNewFolder(rootDirectory, folderName, true);
   console.log("📂 Folder creation result:", folderCreated);
   if (!folderCreated) {
     console.log("❌ Failed to create folder or user canceled.");
