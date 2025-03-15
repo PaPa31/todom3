@@ -48,8 +48,50 @@ function createEditor(parentLi, editIndex, text) {
 
   const resizableDiv = dual.querySelector(".resizable-div");
 
-  const inputListener = () =>
+  // Track details state only when needed
+  let detailsStates = {};
+  resizableDiv.addEventListener("toggle", (event) => {
+    if (event.target.tagName === "DETAILS") {
+      const summaryText =
+        event.target.querySelector("summary")?.textContent ||
+        `index-${[...resizableDiv.querySelectorAll("details")].indexOf(
+          event.target
+        )}`;
+      detailsStates[summaryText] = event.target.open;
+    }
+  });
+
+  const inputListener = () => {
+    if (resizableDiv.querySelector("details")) {
+      // Save state only if <details> exists
+      resizableDiv.querySelectorAll("details").forEach((details) => {
+        const summaryText =
+          details.querySelector("summary")?.textContent ||
+          `index-${[...resizableDiv.querySelectorAll("details")].indexOf(
+            details
+          )}`;
+        detailsStates[summaryText] = details.open;
+      });
+    }
+
+    // Update preview
     mdUpdate(resizableDiv, _textArea.value, editIndex);
+
+    // Restore state only if <details> exists
+    resizableDiv.querySelectorAll("details").forEach((details) => {
+      const summaryText =
+        details.querySelector("summary")?.textContent ||
+        `index-${[...resizableDiv.querySelectorAll("details")].indexOf(
+          details
+        )}`;
+      if (detailsStates[summaryText]) {
+        details.setAttribute("open", "");
+      } else {
+        details.removeAttribute("open");
+      }
+    });
+  };
+
   __addListener("input", _textArea, inputListener);
 
   editor[editIndex] = !editor[editIndex]; //1
