@@ -565,10 +565,45 @@ function pushFilesArray(fileName) {
 }
 
 const mdToTagsWithoutShape = (el, text) => {
-  el.innerHTML = markdown(text);
+  const newEl = document.createElement("div");
+  newEl.innerHTML = markdown(text);
+
+  // Update only changed parts without wiping out the entire element
+  updateDOM(el, newEl);
+
   addButtonsAndWrapperToGalleries(el);
   addClickListenersToImages(el);
   waitForIframe(el);
+};
+
+// Function to update only necessary parts of the DOM
+const updateDOM = (target, source) => {
+  const targetChildren = Array.from(target.childNodes);
+  const sourceChildren = Array.from(source.childNodes);
+
+  let i = 0;
+  for (; i < sourceChildren.length; i++) {
+    if (!targetChildren[i]) {
+      target.appendChild(sourceChildren[i]); // Append new elements
+    } else if (
+      targetChildren[i].nodeType === 3 &&
+      sourceChildren[i].nodeType === 3
+    ) {
+      // Update text nodes if different
+      if (targetChildren[i].textContent !== sourceChildren[i].textContent) {
+        targetChildren[i].textContent = sourceChildren[i].textContent;
+      }
+    } else if (!targetChildren[i].isEqualNode(sourceChildren[i])) {
+      // Replace only if elements are different
+      target.replaceChild(sourceChildren[i], targetChildren[i]);
+    }
+  }
+
+  // Remove extra elements if new content is shorter
+  while (i < targetChildren.length) {
+    target.removeChild(targetChildren[i]);
+    i++;
+  }
 };
 
 const markdown = (s) => {
