@@ -48,55 +48,29 @@ function createEditor(parentLi, editIndex, text) {
 
   const resizableDiv = dual.querySelector(".resizable-div");
 
-  // Track details state only when needed
-  let detailsStates = {};
-
-  const toggleListener = (event) => {
-    if (event.target.tagName === "DETAILS") {
-      const summaryText =
-        event.target.querySelector("summary")?.textContent ||
-        `index-${[...resizableDiv.querySelectorAll("details")].indexOf(
-          event.target
-        )}`;
-      detailsStates[summaryText] = event.target.open;
-    }
-  };
-  __addListener("toggle", resizableDiv, toggleListener);
+  // Track state in a Map
+  const detailsState = new Map();
 
   const inputListener = () => {
-    if (resizableDiv.querySelector("details")) {
-      // Save state only if <details> exists
-      resizableDiv.querySelectorAll("details").forEach((details) => {
-        const summaryText =
-          details.querySelector("summary")?.textContent ||
-          `index-${[...resizableDiv.querySelectorAll("details")].indexOf(
-            details
-          )}`;
-        detailsStates[summaryText] = details.open;
-      });
-    }
+    // 1. Store state before updating
+    resizableDiv.querySelectorAll("details").forEach((el, index) => {
+      detailsState.set(index, el.open); // Store `open` state by index
+    });
 
-    // Update preview
+    // 2. Update preview with new markdown content
     mdUpdate(resizableDiv, _textArea.value, editIndex);
 
-    // Restore state only if <details> exists
-    resizableDiv.querySelectorAll("details").forEach((details) => {
-      const summaryText =
-        details.querySelector("summary")?.textContent ||
-        `index-${[...resizableDiv.querySelectorAll("details")].indexOf(
-          details
-        )}`;
-      if (detailsStates[summaryText]) {
-        details.setAttribute("open", "");
-      } else {
-        details.removeAttribute("open");
+    // 3. Restore state after updating
+    resizableDiv.querySelectorAll("details").forEach((el, index) => {
+      if (detailsState.has(index)) {
+        el.open = detailsState.get(index);
       }
     });
   };
 
   __addListener("input", _textArea, inputListener);
 
-  editor[editIndex] = !editor[editIndex]; //1
+  editor[editIndex] = !editor[editIndex]; //1 Toggle editor state
 }
 
 function removeEditor(parentLi, editIndex) {
@@ -109,14 +83,6 @@ function removeEditor(parentLi, editIndex) {
     _editor.remove();
   }
   editor[editIndex] = !editor[editIndex]; //2
-
-  // Also clean resizableDiv listener
-  const _resizableDiv = parentLi.querySelector(
-    ".dual > .md-item > .resizable-div"
-  );
-  if (_resizableDiv) {
-    __removeListener("toggle", _resizableDiv);
-  }
 }
 
 function __addListener(eventName, listenerEl, callback) {
