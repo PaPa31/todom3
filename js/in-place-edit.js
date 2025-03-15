@@ -50,7 +50,8 @@ function createEditor(parentLi, editIndex, text) {
 
   // Track details state only when needed
   let detailsStates = {};
-  resizableDiv.addEventListener("toggle", (event) => {
+
+  const toggleListener = (event) => {
     if (event.target.tagName === "DETAILS") {
       const summaryText =
         event.target.querySelector("summary")?.textContent ||
@@ -59,7 +60,8 @@ function createEditor(parentLi, editIndex, text) {
         )}`;
       detailsStates[summaryText] = event.target.open;
     }
-  });
+  };
+  __addListener("toggle", resizableDiv, toggleListener);
 
   const inputListener = () => {
     if (resizableDiv.querySelector("details")) {
@@ -107,6 +109,14 @@ function removeEditor(parentLi, editIndex) {
     _editor.remove();
   }
   editor[editIndex] = !editor[editIndex]; //2
+
+  // Also clean resizableDiv listener
+  const _resizableDiv = parentLi.querySelector(
+    ".dual > .md-item > .resizable-div"
+  );
+  if (_resizableDiv) {
+    __removeListener("toggle", _resizableDiv);
+  }
 }
 
 function __addListener(eventName, listenerEl, callback) {
