@@ -1360,6 +1360,7 @@ li:not(.folded) .dual {
 .editor textarea {
   height: 100%;
   border-width: 1px; /*for Firefox*/
+  overflow-y: auto; /* Fixed jumps when scrollbar appear/disappear */
 }
 
 /* ----- Start Built-in Modules & Pre-defined styles ----- */
