@@ -978,11 +978,21 @@ if (input.value) {
 //  Инициализация `marked` с уникальными id
 const renderer = new marked.Renderer();
 const slugger = new marked.Slugger();
+const headingIdMap = new Map(); // Store stable IDs
 
 renderer.heading = (text, level) => {
   // Добавляем префикс `note-` чтобы не конфликтовать с 'mocha'
   // Добавляем постфикс для уникальности
-  const slug = `note-${slugger.slug(text)}`;
+  let slug;
+
+  // If the heading already exists, reuse the same ID
+  if (headingIdMap.has(text)) {
+    slug = headingIdMap.get(text);
+  } else {
+    slug = `note-${slugger.slug(text)}`;
+    headingIdMap.set(text, slug);
+  }
+
   return `<h${level} id="${slug}">${text}</h${level}>`;
 };
 
