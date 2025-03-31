@@ -52,6 +52,11 @@ function createEditor(parentLi, editIndex, text) {
   const detailsState = new Map();
 
   const inputListener = () => {
+    console.log(
+      "🔵 Before updateDOM() - resizableDiv.innerHTML:",
+      resizableDiv.innerHTML
+    );
+
     // 1. Store state before updating
     resizableDiv.querySelectorAll("details").forEach((el, index) => {
       detailsState.set(index, el.open); // Store `open` state by index
@@ -59,6 +64,11 @@ function createEditor(parentLi, editIndex, text) {
 
     // 2. Update preview with new markdown content
     mdUpdate(resizableDiv, _textArea.value, editIndex);
+
+    console.log(
+      "🟢 After updateDOM() - resizableDiv.innerHTML:",
+      resizableDiv.innerHTML
+    );
 
     // 3. Restore state after updating
     resizableDiv.querySelectorAll("details").forEach((el, index) => {
