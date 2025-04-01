@@ -1830,14 +1830,21 @@ object {
 }
 /*end SVG*/
 
-.question {
+/* css inside markdown start */
+/* Use a more specific selector to reduce browser workload */
+/* I think I should only use hardcoded inline-style! */
+/* To reduce ebox cpu load */
+
+/*.question {
   width: 75%;
   margin: 20px 0px;
   margin-left: auto;
   background-color: var(--todom-input-background);
   padding: 10px;
   border-radius: 5px;
-}
+}*/
+
+/* css inside markdown end*/
 
 /* ----- End Built-in Modules & Pre-defined styles ----- */
 @media (max-width: 412px) {
