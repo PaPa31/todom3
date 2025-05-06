@@ -1844,6 +1844,65 @@ object {
   border-radius: 5px;
 }
 
+.ldr-con {
+  border: 1px solid var(--todom-textBlockQuote-border, #ccc);
+  border-radius: 4px;
+  padding: 1em;
+  cursor: default;
+  position: relative; /* add for close x icon */
+}
+
+.ldr-btn {
+  color: red;
+  cursor: pointer;
+  font-family: monospace;
+  display: inline-block;
+  margin-top: 1em;
+  width: fit-content;
+}
+
+.ldr-btn::before,
+.ldr-btn::after {
+  content: "[";
+  color: red;
+  font-family: monospace;
+}
+
+.ldr-btn:hover::before,
+.ldr-btn:hover::after {
+  content: "-";
+}
+
+
+
+/* Transparent overlay edge that allows collapsing */
+.ldr-edge {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ldr-edge::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 12px solid rgba(255, 0, 0, 0.05); /* light red for visibility */
+  transition: background 0.2s;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+/* Ensure content stays interactive */
+.ldr-con > *:not(.ldr-edge):not(#x-button) {
+  position: relative;
+  z-index: 2;
+}
+
+.ldr-con:hover .ldr-edge::before {
+  background: rgba(255, 0, 0, 0.02); /* light highlight on hover */
+}
+
 /* css inside markdown end*/
 
 /* ----- End Built-in Modules & Pre-defined styles ----- */

@@ -135,3 +135,36 @@ const waitForIframe = (resizableDiv) => {
     });
   }
 };
+
+function toggleLoader(el, event) {
+//   if (event.target !== el) return;
+
+//   Only allow collapse on click to edge or close button
+  if (
+    el.className === 'ldr-con' &&
+    !event.target.classList.contains('ldr-edge') &&
+    event.target.id !== 'x-button'
+  ) return;
+  
+  if (el.className === 'ldr-con') {
+      el.innerHTML = el.dataset.old;
+      el.className = 'ldr-btn';
+  } else {
+      el.dataset.old = el.innerHTML;
+      fetch(el.dataset.ldr).then(r => r.text()).then(t => {
+        el.innerHTML = `
+          <div class="ldr-edge"></div>
+          ${markdown(t)}
+          <button id="x-button" type="button" class="bared btn" title="Close"></button>`;
+        el.className = 'ldr-con';
+      });
+  }
+}
+
+function waitForLoader(resizableDiv) {
+   resizableDiv.querySelectorAll('[data-ldr]').forEach(el => {
+      el.classList.add('ldr-btn');
+      el.addEventListener('click', e => toggleLoader(el, e));
+   });
+
+}

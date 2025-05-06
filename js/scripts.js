@@ -574,6 +574,7 @@ const mdToTagsWithoutShape = (el, text) => {
   addButtonsAndWrapperToGalleries(el);
   addClickListenersToImages(el);
   waitForIframe(el);
+  waitForLoader(el);
 };
 
 // Function to update only necessary parts of the DOM
