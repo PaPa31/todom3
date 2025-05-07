@@ -140,7 +140,7 @@ this.classList.replace('ldr-btn','ldr-con');
          this.dataset.old = this.innerHTML;
          fetch(this.dataset.src).then(r => r.text()).then(t => {
            this.innerHTML =
-             `<button id='x-button' type='button' class='bared btn' onclick='this.parentNode.click()' title='Close'></button>` +
+             `<button id='x-but2' type='button' class='bared btn x-but' onclick='this.parentNode.click()' title='Close'></button>` +
              markdown(t);
            this.classList.replace('ldr-btn', 'ldr-con');
          });
@@ -248,7 +248,7 @@ function toggleLoader(el, event) {
     el.dataset.old = el.innerHTML;
     fetch(el.dataset.src).then(function(r) { return r.text(); }).then(function(t) {
       el.innerHTML = markdown(t) +
-        "<button id='x-button' type='button' class='bared btn' onclick='this.parentNode.click()' title='Close'></button>";
+        "<button id='x-but2' type='button' class='bared btn x-but' onclick='this.parentNode.click()' title='Close'></button>";
       el.className = 'ldr-con';
     });
   }
@@ -291,7 +291,7 @@ function toggleLoader(el, event) {
   if (
     el.className === 'ldr-con' &&
     !event.target.classList.contains('ldr-edge') &&
-    event.target.id !== 'x-button'
+    event.target.id !== 'x-but2'
   ) return;
   
   if (el.className === 'ldr-con') {
@@ -303,7 +303,7 @@ function toggleLoader(el, event) {
         el.innerHTML = `
           <div class="ldr-edge"></div>
           ${markdown(t)}
-          <button id="x-button" type="button" class="bared btn" title="Close"></button>`;
+          <button id="x-but2" type="button" class="bared btn x-but" title="Close"></button>`;
         el.className = 'ldr-con';
       });
   }

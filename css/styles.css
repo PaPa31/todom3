@@ -835,8 +835,8 @@ ol.preview-outer p {
   position: relative;
 }
 
-#x-button,
-#return-last-input {
+.x-but,
+.rtn-last {
   position: absolute;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -844,7 +844,7 @@ ol.preview-outer p {
   z-index: 5;
 }
 
-#x-button {
+.x-but {
   background-image: url(../img/x.svg);
   width: 33px;
   height: 33px;
@@ -853,7 +853,7 @@ ol.preview-outer p {
   background-size: 33px;
 }
 
-#return-last-input {
+.rtn-last {
   background-image: url(../img/rotate-ccw-2.svg);
   width: 23px;
   height: 23px;
@@ -921,8 +921,8 @@ ol.preview-outer p {
   /*position: absolute;*/
 }
 
-#x-button:hover,
-#return-last-input:hover {
+.x-but:hover,
+.rtn-last:hover {
   opacity: 1;
 }
 
@@ -1894,7 +1894,7 @@ object {
 }
 
 /* Ensure content stays interactive */
-.ldr-con > *:not(.ldr-edge):not(#x-button) {
+.ldr-con > *:not(.ldr-edge):not(.x-but) {
   position: relative;
   z-index: 2;
 }

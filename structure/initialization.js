@@ -225,8 +225,8 @@ const form = document.querySelector("form");
 const input = document.getElementById("input");
 const preview = document.getElementById("preview");
 
-const xButton = document.getElementById("x-button");
-const returnInputButton = document.getElementById("return-last-input");
+const xButton = document.getElementById("x-but1");
+const returnInputButton = document.getElementById("rtn-last1");
 
 const deleteAllItemsButton = document.getElementById("delete-all-items");
 const restoreTrashedItemButton = document.getElementById(
