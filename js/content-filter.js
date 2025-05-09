@@ -137,25 +137,19 @@ const waitForIframe = (resizableDiv) => {
 };
 
 function toggleLoader(el, event) {
-//   if (event.target !== el) return;
+  // Thanks God it works!
+  if (event.target !== el && !event.target.classList.contains('x-but')) return;
 
-//   Only allow collapse on click to edge or close button
-  if (
-    el.className === 'ldr-con' &&
-    !event.target.classList.contains('ldr-edge') &&
-    event.target.id !== 'x-but2'
-  ) return;
-  
   if (el.className === 'ldr-con') {
       el.innerHTML = el.dataset.old;
       el.className = 'ldr-btn';
   } else {
       el.dataset.old = el.innerHTML;
       fetch(el.dataset.ldr).then(r => r.text()).then(t => {
-        el.innerHTML = `
-          <div class="ldr-edge"></div>
-          ${markdown(t)}
-          <button id="x-but2" type="button" class="bared btn x-but" title="Close"></button>`;
+        el.innerHTML = '<div class="ldr-inner">' +
+          markdown(t) +
+          '</div>' +
+          '<button type="button" class="bared btn x-but" title="Close"></button>';
         el.className = 'ldr-con';
       });
   }

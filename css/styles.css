@@ -1830,20 +1830,7 @@ object {
 }
 /*end SVG*/
 
-/* css inside markdown start */
-/* Use a more specific selector to reduce browser workload */
-/* I think I should only use hardcoded inline-style! */
-/* To reduce ebox cpu load */
-
-.question {
-  width: 75%;
-  margin: 20px 0px;
-  margin-left: auto;
-  background-color: var(--todom-input-background);
-  padding: 10px;
-  border-radius: 5px;
-}
-
+/*start loader*/
 .ldr-con {
   border: 1px solid var(--todom-textBlockQuote-border, #ccc);
   border-radius: 4px;
@@ -1873,37 +1860,43 @@ object {
   content: "-";
 }
 
-
-
-/* Transparent overlay edge that allows collapsing */
-.ldr-edge {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 1;
-  pointer-events: none;
+.ldr-inner {
+  position: relative;
+  z-index: 2;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
-.ldr-edge::before {
+.ldr-con::before {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   border: 12px solid rgba(255, 0, 0, 0.05); /* light red for visibility */
-  transition: background 0.2s;
   pointer-events: auto;
   z-index: 1;
 }
 
-/* Ensure content stays interactive */
-.ldr-con > *:not(.ldr-edge):not(.x-but) {
-  position: relative;
-  z-index: 2;
-}
-
-.ldr-con:hover .ldr-edge::before {
+.ldr-con:hover .ldr-inner {
   background: rgba(255, 0, 0, 0.02); /* light highlight on hover */
+  transition: background 0.2s;
+}
+/* loader end */
+
+/* ------- Start css inside markdown ----- */
+/* Use a more specific selector to reduce browser workload */
+/* I think I should only use hardcoded inline-style! */
+/* To reduce ebox cpu load */
+
+.question {
+  width: 75%;
+  margin: 20px 0px;
+  margin-left: auto;
+  background-color: var(--todom-input-background);
+  padding: 10px;
+  border-radius: 5px;
 }
 
-/* css inside markdown end*/
+/* ----- End css inside markdown ----- */
 
 /* ----- End Built-in Modules & Pre-defined styles ----- */
 @media (max-width: 412px) {
