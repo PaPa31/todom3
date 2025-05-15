@@ -156,9 +156,18 @@ function toggleLoader(el, event) {
 }
 
 function waitForLoader(resizableDiv) {
-   resizableDiv.querySelectorAll('[data-ldr]').forEach(el => {
-      el.classList.add('ldr-btn');
-      el.addEventListener('click', e => toggleLoader(el, e));
-   });
+  resizableDiv.querySelectorAll('[data-ldr]').forEach(el => {
+    el.classList.add('ldr-btn');
+    el.setAttribute('tabindex', '0'); // Make focusable
 
+    el.addEventListener('click', e => toggleLoader(el, e));
+
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault(); // Prevent page scroll on Space
+        toggleLoader(el, e);
+      }
+    });
+  });
 }
+
