@@ -1,0 +1,15 @@
+<div class="top-in-li">
+    <button class="btn-toggler fold-button btn" title="fold/unfold one" onclick="foldOneItem(event, findParentTagOrClassRecursive(this))">
+        <span></span>
+    </button>
+    <div class="main-act">
+        <button class="edit-item btn" ctrl="true" title="Click -> edit, Ctrl+click - merge with input area" onclick="selectEditor(event, this)"></button>
+        <button class="delete-one-item btn" ctrl="true" title="Double-click -> Trash, Ctrl+click -> delete" onclick="deleteOneItem(event, findParentTagOrClassRecursive(this))"></button>
+    </div>
+    <div class="save-history">
+        <button class="previous-save btn" title="Show previous save" disable="true" onclick="previousSave(this)"></button>
+        <span class="counter-save">1</span>
+        <button class="next-save btn" title="Show previous save" disable="true" onclick="nextSave(this)"></button>
+        <button class="delete-current-save btn" title="Delete current save" onclick="deleteCurrentSave(this)"></button>
+    </div>
+</div>

@@ -149,7 +149,7 @@ function toggleLoader(el, event) {
         el.innerHTML = '<div class="ldr-inner">' +
           markdown(t) +
           '</div>' +
-          '<button type="button" class="bared btn x-but" title="Close"></button>';
+          '<button class="bared btn x-but" title="Close"></button>';
         el.className = 'ldr-con';
       });
   }

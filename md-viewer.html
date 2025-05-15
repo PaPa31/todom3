@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markdown Viewer</title>
+  <script src="/todom3/js/marked.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="/todom3/css/styles.css" />
+</head>
+<body>
+<!--   <div id="content">Loading...</div> -->
+
+        <div class="container">
+            <div class="flex-row w-1440">
+                <div id="content" class="flex-small">
+                    <div id="first-button-row" class="flex-row">
+                        <div id="tools" class="flex-small">
+                            <button id="dark-button" type="button" class="btn-toggler btn-flex btn"></button>
+                        </div>
+                    </div>
+                    <div id="main-listing" class="flex-row markdown-body">
+                        <ol id="list-items">
+                            <li id="0">
+                            
+<div class="top-in-li">
+    <button class="btn-toggler fold-button btn" title="fold/unfold one" onclick="foldOneItem(event, findParentTagOrClassRecursive(this))">
+        <span></span>
+    </button>
+    <div class="main-act">
+        <button class="edit-item btn" ctrl="true" title="Click -> edit, Ctrl+click - merge with input area" onclick="selectEditor(event, this)"></button>
+        <button class="delete-one-item btn" ctrl="true" title="Double-click -> Trash, Ctrl+click -> delete" onclick="deleteOneItem(event, findParentTagOrClassRecursive(this))"></button>
+    </div>
+    <div class="save-history">
+        <button class="previous-save btn" title="Show previous save" disable="true" onclick="previousSave(this)"></button>
+        <span class="counter-save">1</span>
+        <button class="next-save btn" title="Show previous save" disable="true" onclick="nextSave(this)"></button>
+        <button class="delete-current-save btn" title="Delete current save" onclick="deleteCurrentSave(this)"></button>
+    </div>
+</div>
+
+<div class="dual">
+    <div class="md-item">
+        <div class="resizable-div">
+            Loading ...
+        </div>
+    </div>
+</div>
+                        
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script type="text/javascript" src="/todom3/js/earliest-togglers.js"></script>
+
+<script>
+(function() {
+console.log("Viewer loaded, path =", window.location.pathname);
+// var resizableDiv = document.getElementById("0");
+var resizableDiv = document.querySelector(".resizable-div");
+
+if (!window.location.pathname.endsWith(".md")) {
+    resizableDiv.textContent = "Not a Markdown file.";
+    return;
+}
+
+const rawURL = "/raw" + window.location.pathname;
+console.log("Fetching raw markdown from:", rawURL);
+
+fetch(rawURL)
+    .then(r => {
+    if (!r.ok) throw new Error("Status " + r.status);
+    return r.text();
+    })
+    .then(md => {
+    console.log("Fetched MD (snippet):", md.slice(0,50));
+    resizableDiv.innerHTML = marked.parse(md);
+    })
+    .catch(e => {
+    console.error("MD load error:", e);
+    resizableDiv.textContent = "Error loading file.";
+    });
+})();
+</script>
+
+
+</body>
+</html>
