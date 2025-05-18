@@ -145,7 +145,7 @@ function toggleLoader(el, event) {
       el.className = 'ldr-btn';
   } else {
       el.dataset.old = el.innerHTML;
-      fetch(el.dataset.ldr).then(r => r.text()).then(t => {
+      fetch(el.dataset.ldr || el.dataset.src).then(r => r.text()).then(t => {
         el.innerHTML = '<div class="ldr-inner">' +
           markdown(t) +
           '</div>' +
