@@ -157,10 +157,16 @@ function toggleLoader(el, event) {
 
 function waitForLoader(resizableDiv) {
   resizableDiv.querySelectorAll('[data-ldr]').forEach(el => {
+    if (el.__loaderInitialized) return; // Prevent multiple listeners
+
+    el.__loaderInitialized = true; // Custom flag to mark initialization
     el.classList.add('ldr-btn');
     el.setAttribute('tabindex', '0'); // Make focusable
 
-    el.addEventListener('click', e => toggleLoader(el, e));
+   el.addEventListener('click', e => {
+    console.log('Click from:', el.dataset.ldr);
+    toggleLoader(el, e);
+  });
 
     el.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
