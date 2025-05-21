@@ -458,7 +458,10 @@ ol#list-files .main-act {
 #preview > :first-child,
 #position > :first-child {
   margin-top: 0;
-  flex: 1;
+/* Caution: `flex: 1` breaks iframe height, 
+ * when iframe is a single element inside note  */
+/*   flex: 1; */
+  flex: auto;
 }
 
 ol#list-items .folded .md-item :first-child {

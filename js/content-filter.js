@@ -109,12 +109,12 @@ const coverDivMaker = (iframe) => {
 
 const replaceImageWithIframe = function (e) {
   const papa = e.target.parentNode,
-    targetEl = findParentTagOrClassRecursive(papa, undefined, "dual");
-  targetEl.style.width = targetEl.offsetWidth + "px";
-  targetEl.style.height = targetEl.offsetHeight + "px";
+    tH = papa.offsetHeight;
+
   const iframe = createEl("iframe", {
     class: "ytb-iframe",
     src: papa.dataset.url + "?autoplay=1&rel=0",
+    style: "height:" + tH + "px",
     frameborder: "0",
     allowfullscreen: "1",
     allowTranparency: "true",
