@@ -544,9 +544,15 @@ const foldOneItem = (e, liDOM) => {
     const fileIndexToFold = indexedFiles.indexOf(liDOM.id) * 1;
     filesArray[fileIndexToFold].fold = !filesArray[fileIndexToFold].fold;
   }
+  clearInlineStyle(liDOM);
   observerToggle(liDOM);
   foldGreen(liDOM);
 };
+
+function clearInlineStyle(liDOM) {
+  const dual = liDOM.querySelector(".dual");
+  dual.style = "";
+}
 
 const initialCheckFold = (stateVar) => {
   if (stateVar) {
