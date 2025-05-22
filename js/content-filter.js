@@ -83,9 +83,9 @@ const getYoutubeThumbnail = (url) => {
 
 function dateStringToDate(dateStr) {
   let dateString = new Date(dateStr).toString().split(" ");
-  if (dateString.length === 8) {
+  if (dateString.length >= 8) {
     return `${dateString[2]} ${dateString[1]} ${dateString[3]}`;
-  } else if (dateString.length === 6) {
+  } else {
     return `${dateString[5]} ${dateString[4]} ${dateString[6]}`;
   }
 }
