@@ -54,52 +54,6 @@ function afterHttpOpen() {
   showItemSortingArrows(foldedClass.childElementCount);
 }
 
-// Function to handle directory selection
-//function onDirectorySelected(selectedDirectory) {
-//  // Push the current directory onto the stack
-//  directoryStack.push(currentDirectory);
-//  // Concatenate the current directory and the selected one
-//  const newPath = `${currentDirectory}/${selectedDirectory}`;
-
-//  // Fetch and update data for the selected directory
-//  openDirectory(newPath);
-//}
-
-// Function to handle the Back button click
-//async function onBackButtonClick() {
-//  try {
-//    // Pop the last directory from the stack
-//    const previousPath = directoryStack.pop();
-
-//    // Update the current directory to the previous one
-//    currentDirectory = previousPath;
-
-//    // Fetch data for the previous directory
-//    const response = await fetch(
-//      `http://192.168.0.14:8000/open-directory?path=${previousPath}`,
-//      {
-//        method: "GET",
-//        mode: "cors",
-//      }
-//    );
-
-//    const fileTree = await response.json();
-
-//    if (fileTree.success) {
-//      // Update the UI with data for the previous directory
-//      createDirectoryModal(
-//        fileTree.tree.map((file) => file.name),
-//        onDirectorySelected,
-//        onBackButtonClick
-//      );
-//    } else {
-//      console.error(fileTree.error);
-//    }
-//  } catch (error) {
-//    console.error(error);
-//  }
-//}
-
 // Function to open a directory
 async function openDirectory(directoryPath, save = false) {
   return new Promise(async (resolve, reject) => {
@@ -126,7 +80,6 @@ async function openDirectory(directoryPath, save = false) {
         // Show the directory modal with the correct behavior (open or save)
         createDirectoryModal(
           fileTree.tree.map((file) => file),
-          //onDirectorySelected(currentDirectory),
           (selectedDirectory) => {
             // Push the current directory onto the stack
             directoryStack.push(currentDirectory);
@@ -134,11 +87,6 @@ async function openDirectory(directoryPath, save = false) {
               resolve
             );
           },
-          () => {
-            currentDirectory = directoryStack.pop();
-            openDirectory(currentDirectory, save).then(resolve);
-          },
-          //onBackButtonClick,
           save,
           resolve // Pass resolve to resolve when modal is done
         );
@@ -155,7 +103,6 @@ async function openDirectory(directoryPath, save = false) {
 async function createDirectoryModal(
   directories,
   onDirectorySelected,
-  onBackButtonClick,
   save = false,
   resolve
 ) {
@@ -193,12 +140,10 @@ async function createDirectoryModal(
 
   if (save) {
     if (initialFileName === null) {
-      //const meaningPartName = await generateFileNameUniversal(
-      //  input.value,
-      //  true
-      //);
+      const savedDate = getSavedDate();
+      const datePartFileName = savedDate.substring(8);
       const meaningPartName = await processFilename(input.value);
-      initialFileName = getCurrentDate() + "-" + meaningPartName + ".md";
+      initialFileName = datePartFileName + "-" + meaningPartName + ".md";
     }
     // Create "Create Folder" button
     const createFolderButton = document.createElement("button");
