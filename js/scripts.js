@@ -342,12 +342,16 @@ function drawFile(fileSize) {
   updateUI6();
 }
 
+function ensureFinalNewline(text) {
+  return text.endsWith('\n') ? text : text + '\n';
+}
+
 const fileDownload = async (drawItemOnly = false) => {
   console.log("📂 Starting file download...");
   const savedDate = getSavedDate();
   console.log("📂 Split date result:", savedDate);
 
-  var blob = new Blob([input.value], {
+  var blob = new Blob([ensureFinalNewline(input.value)], {
     type: "text/plain;charset=utf-8",
   });
 

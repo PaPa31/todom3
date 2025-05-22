@@ -688,6 +688,6 @@ async function passFolderHttp(folderName) {
   }
 
   console.log("💾 Attempting to save file:", newFileName);
-  saveFileHttp(newFileName, input.value);
+  saveFileHttp(newFileName, ensureFinalNewline(input.value));
   return newFileName;
 }
