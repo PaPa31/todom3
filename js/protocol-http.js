@@ -148,7 +148,8 @@ async function createDirectoryModal(
     // Create "Create Folder" button
     const createFolderButton = document.createElement("button");
     createFolderButton.textContent = "Create Folder";
-    createFolderButton.onclick = function () {
+    createFolderButton.onclick = function (event) {
+      event.stopPropagation();
       const folderName = prompt("Enter new folder name:");
       if (folderName && folderName.trim()) {
         createNewFolder(currentDirectory, folderName.trim()).then(() => {
@@ -166,13 +167,15 @@ async function createDirectoryModal(
     topSection.appendChild(inputField);
 
     // Add an event listener to update the global `initialFileName` when the user changes the input
-    inputField.addEventListener("input", function () {
+    inputField.addEventListener("input", function (event) {
+      event.stopPropagation();
       initialFileName = inputField.value.trim(); // Update the global variable
     });
 
     // Create save button
     soButton.textContent = "Save Here";
-    soButton.onclick = function () {
+    soButton.onclick = function (event) {
+      event.stopPropagation();
       const newFileName = inputField.value.trim();
       if (newFileName) {
         saveDirectory = currentDirectory; // Set the current directory as the save location
@@ -201,7 +204,8 @@ async function createDirectoryModal(
 
     const openAllButton = document.createElement("button");
     openAllButton.textContent = "Open All Files";
-    openAllButton.onclick = function () {
+    openAllButton.onclick = function (event) {
+      event.stopPropagation();
       openAllFiles(currentDirectory);
 
       modalContainer.style.display = "none"; // Hide the modal after opening files
@@ -212,7 +216,8 @@ async function createDirectoryModal(
 
     // Create open button
     soButton.textContent = "Open";
-    soButton.onclick = function () {
+    soButton.onclick = function (event) {
+      event.stopPropagation();
       if (selectedFiles.length > 0) {
         openSelectedFiles(selectedFiles); // Pass all selected files to be opened
         modalContainer.style.display = "none";
@@ -228,7 +233,8 @@ async function createDirectoryModal(
   backButton.textContent = "Back";
   backButton.style.visibility =
     directoryStack.length > 0 ? "visible" : "hidden";
-  backButton.onclick = function () {
+  backButton.onclick = function (event) {
+    event.stopPropagation();
     currentDirectory = directoryStack.pop();
     openDirectory(currentDirectory, save).then(resolve);
   };
@@ -240,7 +246,8 @@ async function createDirectoryModal(
   const closeButton = document.createElement("div");
   closeButton.classList.add("close");
   closeButton.innerHTML = "&times;"; // Times symbol for close
-  closeButton.onclick = function () {
+  closeButton.onclick = function (event) {
+    event.stopPropagation();
     modalContainer.style.display = "none"; // Hide the modal on close
     // Remove the style to allow scrolling
     html.style.overflow = "";
@@ -274,7 +281,8 @@ async function createDirectoryModal(
     // if it's a directory, open it
     if (directory.isDirectory) {
       directoryLink.classList.add("directory-link");
-      directoryLink.onclick = function () {
+      directoryLink.onclick = function (event) {
+        event.stopPropagation();
         directoryStack.push(currentDirectory);
         openDirectory(`${currentDirectory}/${directory.name}`, save).then(
           resolve
@@ -285,7 +293,8 @@ async function createDirectoryModal(
     } else {
       // If it's a file, style it and handle file opening on click
       directoryLink.classList.add("file-link"); // Apply file styling
-      directoryLink.onclick = function () {
+      directoryLink.onclick = function (event) {
+        event.stopPropagation();
         if (save) {
           inputField.value = directory.name;
         } else {
@@ -324,7 +333,8 @@ async function createDirectoryModal(
   html.style.overflow = "hidden";
 
   // Close modal when clicking outside of it
-  window.addEventListener("click", function (event) {
+  modalContainer.addEventListener("click", function (event) {
+    event.stopPropagation();
     if (event.target === modalContainer) {
       modalContainer.style.display = "none";
       // Remove the style to allow scrolling
