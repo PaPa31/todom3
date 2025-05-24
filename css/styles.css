@@ -1187,6 +1187,13 @@ textarea:active {
   scroll-behavior: smooth;
   max-height: 160px;
   overflow: hidden;
+  position: relative; 
+  /*Without it - unexpected behavior 
+   *of all child elements with rules 
+   *added manually in the md editor, 
+   *especially with absolute position: 
+   * eg edit this /2025-05/04-135246-compare-code-by-overl.md
+   * and try disable position: relative rule*/
 }
 
 #position {
