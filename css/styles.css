@@ -254,11 +254,6 @@ button#dark-button svg {
   color: #a4a400;
 }
 
-button#fold-global-toggle {
-  width: auto;
-  padding-bottom: 2px;
-}
-
 button {
   transition: all 0.2s ease;
 }
@@ -661,19 +656,19 @@ table {
   border: 1px solid transparent !important;
 }
 
-#fold-global-toggle::after {
+.collapse-expand>div::after {
   content: "<";
 }
 
-#fold-global-toggle.fold::after {
+.collapse-expand.fold>div::after {
   content: ">";
 }
 
-#fold-global-toggle::before {
+.collapse-expand>div::before {
   content: ">";
 }
 
-#fold-global-toggle.fold::before {
+.collapse-expand.fold>div::before {
   content: "<";
 }
 
@@ -773,7 +768,7 @@ h6 {
   padding: 0;
 }
 
-#first-button-row .btn-flex {
+#open-save-buttons .btn-flex {
   padding: 0 3%;
 }
 
@@ -791,7 +786,7 @@ h6 {
 
 #tools {
   display: flex;
-  flex: 1;
+  flex: none;
   justify-content: flex-end;
 }
 
@@ -806,6 +801,18 @@ h6 {
 
 #fold-global-toggle {
   flex: none;
+  padding: 1px 1px 1px 1px;
+  font-size: 1.86rem;
+}
+
+#fold-global-toggle > div {
+  transform: rotate(-90deg);
+}
+
+#double-width-toggle {
+  flex: none;
+  padding-bottom: 2px;
+  font-size: 1.8rem;
 }
 
 #deletion-control-buttons {
@@ -1945,7 +1952,7 @@ object {
 
   #preview,
   #position {
-    max-height: 301px;
+    max-height: 247px;
   }
 
   #position {
@@ -1955,7 +1962,7 @@ object {
     * not sync due to scroll to view
     */
     /*margin-top: -301px;*/
-    max-height: 301px;
+    max-height: 247px;
   }
 
   .container > .flex-row > .flex-small:first-child {
@@ -1968,5 +1975,9 @@ object {
 
   .container > .flex-row > .flex-small {
     width: 50%;
+  }
+
+  .dbl-width.markdown-body > ol#list-items > li {
+    width: 202%;
   }
 }

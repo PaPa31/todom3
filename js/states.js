@@ -1,5 +1,7 @@
 const foldAllToggleButton = document.getElementById("fold-global-toggle");
 const itemsFilesToggleButton = document.getElementById("items-files-toggle");
+const doubleWidthToggle = document.getElementById("double-width-toggle");
+const mainListing = document.getElementById("main-listing");
 
 let foldedClass = document.getElementById("list-items");
 
@@ -773,5 +775,11 @@ itemsFilesToggleButton.addEventListener("click", function (e) {
     initializeFileState();
   }
   showOrHideDeleteAllItems();
+  e.stopPropagation();
+});
+
+doubleWidthToggle.addEventListener("click", function (e) {
+  mainListing.classList.toggle("dbl-width");
+  doubleWidthToggle.classList.toggle("fold");
   e.stopPropagation();
 });
