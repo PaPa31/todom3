@@ -123,6 +123,10 @@ async function createDirectoryModal(
   // Create modal content
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal-content", "flex-row");
+  modalContent.addEventListener("click", function (event) {
+    event.stopPropagation();
+  });
+
 
   const buttonLine = document.createElement("div");
   buttonLine.classList.add("button-line");
@@ -324,9 +328,10 @@ async function createDirectoryModal(
   html.style.overflow = "hidden";
 
   // Close modal when clicking outside of it
-  window.addEventListener("click", function (event) {
+  modalContainer.addEventListener("click", function handleModalClick(event) {
     if (event.target === modalContainer) {
       modalContainer.style.display = "none";
+
       // Remove the style to allow scrolling
       html.style.overflow = "";
 
@@ -334,6 +339,9 @@ async function createDirectoryModal(
       initialFileName = null;
 
       resolve(null);
+
+      // 🧼 Optional: remove the listener if the modal won't be reused immediately
+      modalContainer.removeEventListener("click", handleModalClick);
     }
   });
 }
