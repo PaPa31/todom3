@@ -657,19 +657,23 @@ table {
 }
 
 .collapse-expand>div::after {
-  content: "<";
+  content: "";
+  background-image: url(../img/chevron-left.svg);
 }
 
 .collapse-expand.fold>div::after {
-  content: ">";
+  content: "";
+  background-image: url(../img/chevron-right.svg);
 }
 
 .collapse-expand>div::before {
-  content: ">";
+  content: "";
+  background-image: url(../img/chevron-right.svg);
 }
 
 .collapse-expand.fold>div::before {
-  content: "<";
+  content: "";
+  background-image: url(../img/chevron-left.svg);
 }
 
 h1,
@@ -799,20 +803,15 @@ h6 {
   flex: 0 200px;
 }
 
-#fold-global-toggle {
+.collapse-expand {
   flex: none;
-  padding: 1px 1px 1px 1px;
-  font-size: 1.86rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #fold-global-toggle > div {
-  transform: rotate(-90deg);
-}
-
-#double-width-toggle {
-  flex: none;
-  padding-bottom: 2px;
-  font-size: 1.8rem;
+  transform: rotate(90deg);
 }
 
 #deletion-control-buttons {
@@ -981,6 +980,17 @@ button.delete-current-save {
   padding: 0;
   margin: 0 5px;
   display: block;
+  float: left;
+}
+
+button.collapse-expand > div::before,
+button.collapse-expand > div::after {
+  width: 14px;
+  height: 19px;
+  background-size: 31px;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+  background-position: center center;
   float: left;
 }
 
