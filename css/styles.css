@@ -1940,6 +1940,13 @@ object {
   }
 }
 
+@media (min-width: 750px) {
+  #main-listing.dbl-width {
+    width: calc(100vw - 10px);
+    max-width: 1370px;
+  }
+}
+
 @media (min-width: 1320px) {
   .container {
     max-width: 1440px;
@@ -1985,9 +1992,5 @@ object {
 
   .container > .flex-row > .flex-small {
     width: 50%;
-  }
-
-  .dbl-width.markdown-body > ol#list-items > li {
-    width: 202%;
   }
 }
