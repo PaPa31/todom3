@@ -810,6 +810,10 @@ h6 {
   justify-content: center;
 }
 
+#double-width-toggle {
+  display: none;
+}
+
 #fold-global-toggle > div {
   transform: rotate(90deg);
 }
@@ -1941,6 +1945,10 @@ object {
 }
 
 @media (min-width: 750px) {
+  #double-width-toggle {
+    display: inherit;
+  }
+
   #main-listing.dbl-width {
     width: calc(100vw - 10px);
     max-width: 1370px;
