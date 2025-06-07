@@ -65,7 +65,7 @@ esac
 
 # change absolute path to relative
 # because `/todom*` is working directory
-# base_url="..$base_url"
+base_url="..$base_url"
 
 # Function to generate HTML tags
 is_image() {
