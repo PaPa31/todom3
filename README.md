@@ -43,9 +43,8 @@ If you insert a block like this:
 
 ```html
 <ul class="gallery">
-  <li><img src="../public/img/cf-inside/cf-corsair-2GB-01.png" /></li>
-  <li><img src="../public/img/cf-inside/cf-corsair-2GB-02.png" /></li>
-  <li><img src="../public/img/cf-inside/cf-corsair-2GB-03.png" /></li>
+  <li><img src="/webdav/img/atmega-16/block-diagram.jpg" /></li>
+  <li><img src="/webdav/img/atmega-16/atmega16-microcontroller.jpg" /></li>
 </ul>
 ```
 
@@ -64,12 +63,9 @@ The script generates multiple `<img>` tags wrapped in a `<ul>` with the class "g
 <summary>Script</summary>
 
 ```sh
-#!/bin/bash
+#!/bin/sh
 
-# Usage:
-# "create_html_image_tags.sh /home/papa31/static/public/img/vortex86/btplug asc" (or desc)
-
-#set -x
+# Universal version compatible with BusyBox ash (OpenWrt) and modern shells
 
 # Function to display help
 show_help() {
@@ -88,13 +84,15 @@ show_help() {
 }
 
 # Check for help flag
-if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-  show_help
-  exit 0
-fi
+case "$1" in
+  -h|--help)
+    show_help
+    exit 0
+    ;;
+esac
 
 # Default to the current directory if none is provided
-IMG_DIR=${1:-.}
+IMG_DIR="${1:-.}"
 
 # Check if the provided argument is a directory
 if [ ! -d "$IMG_DIR" ]; then
@@ -103,24 +101,45 @@ if [ ! -d "$IMG_DIR" ]; then
   exit 1
 fi
 
-# Determine the sorting order, default to ascending (asc)
-ORDER=${2:-asc}
-SORT_TYPE=${3:-mtime} # Default sort type is modification time
+# Determine sorting order and type
+ORDER="${2:-asc}"
+SORT_TYPE="${3:-mtime}"
 
-# Convert the IMG_DIR to its absolute path
-abs_img_dir=$(realpath "$IMG_DIR")
+# Get absolute path without realpath (portable)
+abs_img_dir=$(cd "$IMG_DIR" 2>/dev/null && pwd)
 
-# Extract the path after the "img" directory
-parent_dir=$(echo "$abs_img_dir" | sed 's#.*/img/##')
+# Detect base path after public/img, webdav/img, or img
+case "$abs_img_dir" in
+  */public/img/*)
+    parent_dir=${abs_img_dir#*/public/img/}
+    base_url="/public/img"
+    ;;
+  */webdav/img/*)
+    parent_dir=${abs_img_dir#*/webdav/img/}
+    base_url="/webdav/img"
+    ;;
+  */img/*)
+    parent_dir=${abs_img_dir#*/img/}
+    base_url="/img"
+    ;;
+  *)
+    parent_dir="$(basename "$abs_img_dir")"
+    base_url="/img"
+    ;;
+esac
 
 # Function to generate HTML tags
+is_image() {
+  case "$1" in
+    *.jpg|*.jpeg|*.png|*.gif|*.webp|*.bmp|*.svg|*.tiff|*.ico) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 generate_html_tags() {
-  local img_list=$1
-  for img in $img_list; do
-    img_path="$IMG_DIR/$img"
-    if [ -f "$img_path" ]; then
-      filename=$(basename "$img_path")
-      echo "  <li><img src=\"../public/img/$parent_dir/$filename\" /></li>"
+  for img in "$@"; do
+    if [ -f "$IMG_DIR/$img" ] && is_image "$img"; then
+      echo "  <li><img src=\"$base_url/$parent_dir/$img\" /></li>"
     fi
   done
 }
@@ -128,20 +147,16 @@ generate_html_tags() {
 # Begin the HTML output
 echo '<ul class="gallery">'
 
-# Sorting and looping through each image file in the directory
-if [ "$SORT_TYPE" == "name" ]; then
-  if [ "$ORDER" == "asc" ]; then
-    generate_html_tags "$(ls "$IMG_DIR" | sort)"
-  else
-    generate_html_tags "$(ls "$IMG_DIR" | sort -r)"
-  fi
+# Collect image list
+if [ "$SORT_TYPE" = "name" ]; then
+  list=$(ls "$IMG_DIR" | sort)
+  [ "$ORDER" = "desc" ] && list=$(echo "$list" | sort -r)
 else
-  if [ "$ORDER" == "asc" ]; then
-    generate_html_tags "$(ls -rt "$IMG_DIR")"
-  else
-    generate_html_tags "$(ls -t "$IMG_DIR")"
-  fi
+  [ "$ORDER" = "asc" ] && list=$(ls -rt "$IMG_DIR") || list=$(ls -t "$IMG_DIR")
 fi
+
+# Call function with list
+generate_html_tags $list
 
 # End the HTML output
 echo '</ul>'
