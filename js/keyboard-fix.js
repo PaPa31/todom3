@@ -1,4 +1,12 @@
 let isKeyboardOpen = false;
+let lastScrollY = window.scrollY;
+let lastOffsetTop = window.visualViewport.offsetTop;
+
+function logState(eventName) {
+  console.log(
+    `[${eventName}] scrollY=${window.scrollY}, offsetTop=${window.visualViewport.offsetTop}, viewportHeight=${window.visualViewport.height}, keyboardOpen=${isKeyboardOpen}`
+  );
+}
 
 function updateStickyPositionForKeyboard() {
   const yOffset = window.visualViewport.offsetTop;
@@ -6,12 +14,17 @@ function updateStickyPositionForKeyboard() {
     el.style.position = "fixed";
     el.style.transform = `translateY(${yOffset}px)`;
   });
+  
+  
+  logState("📐 updateStickyPosition");
 }
 
 function restoreStickyDefaults() {
   document.querySelectorAll(".top-in-li.sticken").forEach((el) => {
     el.style.transform = "";
   });
+  
+  logState("🔁 restoreSticky");
 }
 
 window.visualViewport?.addEventListener("resize", () => {
@@ -23,18 +36,33 @@ window.visualViewport?.addEventListener("resize", () => {
   } else {
     restoreStickyDefaults();
   }
+  
+  logState("📏 resize");
 });
 
 window.visualViewport?.addEventListener("scroll", () => {
   if (isKeyboardOpen) updateStickyPositionForKeyboard();
+  logState("📜 visualViewport scroll");
 });
 
 // Optional: fallback listener
 document.addEventListener("focusin", () => {
-  setTimeout(() => updateStickyPositionForKeyboard(), 150);
+  setTimeout(() => {
+    logState("🟢 focusin");
+    updateStickyPositionForKeyboard();
+  }, 150);
 });
 
 document.addEventListener("focusout", () => {
-  setTimeout(() => restoreStickyDefaults(), 150);
+  setTimeout(() => {
+    logState("🔴 focusout");
+    restoreStickyDefaults();
+  }, 150);
 });
 
+window.addEventListener("scroll", () => {
+  if (Math.abs(window.scrollY - lastScrollY) > 50) {
+    logState("🌀 window scroll");
+    lastScrollY = window.scrollY;
+  }
+});
