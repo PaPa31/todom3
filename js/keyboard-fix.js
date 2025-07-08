@@ -1,11 +1,21 @@
 let isKeyboardOpen = false;
 let lastScrollY = window.scrollY;
 let lastOffsetTop = window.visualViewport.offsetTop;
+let lastKeyboardState = null;
 
 function logState(eventName) {
-  console.log(
-    `[${eventName}] scrollY=${window.scrollY}, offsetTop=${window.visualViewport.offsetTop}, viewportHeight=${window.visualViewport.height}, keyboardOpen=${isKeyboardOpen}`
-  );
+  const state = {
+    scrollY: window.scrollY,
+    offsetTop: window.visualViewport.offsetTop,
+    viewportHeight: window.visualViewport.height,
+    keyboardOpen: isKeyboardOpen,
+  };
+
+  const stateStr = JSON.stringify(state);
+  if (stateStr !== lastKeyboardState) {
+    console.log(`[${eventName}]`, state);
+    lastKeyboardState = stateStr;
+  }
 }
 
 function updateStickyPositionForKeyboard() {
@@ -14,8 +24,7 @@ function updateStickyPositionForKeyboard() {
     el.style.position = "fixed";
     el.style.transform = `translateY(${yOffset}px)`;
   });
-  
-  
+
   logState("📐 updateStickyPosition");
 }
 
@@ -23,7 +32,7 @@ function restoreStickyDefaults() {
   document.querySelectorAll(".top-in-li.sticken").forEach((el) => {
     el.style.transform = "";
   });
-  
+
   logState("🔁 restoreSticky");
 }
 
@@ -36,7 +45,7 @@ window.visualViewport?.addEventListener("resize", () => {
   } else {
     restoreStickyDefaults();
   }
-  
+
   logState("📏 resize");
 });
 
