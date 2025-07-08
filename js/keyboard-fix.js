@@ -2,6 +2,7 @@ let isKeyboardOpen = false;
 let lastScrollY = window.scrollY;
 let lastOffsetTop = window.visualViewport.offsetTop;
 let lastKeyboardState = null;
+let lastAppliedOffset = 0;
 
 function logState(eventName) {
   const state = {
@@ -20,12 +21,14 @@ function logState(eventName) {
 
 function updateStickyPositionForKeyboard() {
   const yOffset = window.visualViewport.offsetTop;
-  document.querySelectorAll(".top-in-li.sticken").forEach((el) => {
-    el.style.position = "fixed";
-    el.style.transform = `translateY(${yOffset}px)`;
-  });
-
-  logState("📐 updateStickyPosition");
+  if (yOffset !== lastAppliedOffset) {
+    document.querySelectorAll(".top-in-li.sticken").forEach((el) => {
+      el.style.position = "fixed";
+      el.style.transform = `translateY(${yOffset}px)`;
+    });
+    lastAppliedOffset = yOffset;
+    logState("📐 updateStickyPosition");
+  }
 }
 
 function restoreStickyDefaults() {
