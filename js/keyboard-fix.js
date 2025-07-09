@@ -23,8 +23,7 @@ function updateStickyPositionForKeyboard() {
   const yOffset = window.visualViewport.offsetTop;
   if (yOffset !== lastAppliedOffset) {
     document.querySelectorAll(".top-in-li.sticken").forEach((el) => {
-      el.style.position = "fixed";
-      el.style.transform = `translateY(${yOffset}px)`;
+      el.style.setProperty("--todom-sticken-yoffset", `${yOffset}px`);
     });
     lastAppliedOffset = yOffset;
     logState("📐 updateStickyPosition");

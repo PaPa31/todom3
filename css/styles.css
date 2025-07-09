@@ -1346,7 +1346,7 @@ li:not(.folded) .top-in-li.sticken {
 }
 
 li:not(.folded) .top-in-li.sticken.showen {
-  transform: translateY(0);
+  transform: translateY(var(--todom-sticken-yoffset));
   transition: transform 0.3s ease-in-out;
 }
 
