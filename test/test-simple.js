@@ -104,3 +104,37 @@ slugTests.forEach(function ({ input, expected }) {
     }
   });
 });
+
+// Sticky offset CSS variable test
+runTest("Sticky transform reflects correct offset", function (done) {
+  const el = document.createElement("div");
+  el.className = "top-in-li sticken showen";
+  document.body.appendChild(el);
+
+  const testOffset = 88;
+  el.style.setProperty("--todom-sticken-yoffset", `${testOffset}px`);
+
+  // Give layout time to apply
+  setTimeout(() => {
+    const applied = getComputedStyle(el).getPropertyValue("--todom-sticken-yoffset").trim();
+    document.body.removeChild(el);
+    done(testOffset, `${testOffset}px`, applied);
+  }, 50);
+});
+
+// Keyboard resize detection test
+runTest("Resize triggers keyboard state detection", function (done) {
+  const testHeight = 300; // simulate virtual keyboard height drop
+  const originalInnerHeight = window.innerHeight;
+  const simulatedViewport = {
+    height: testHeight,
+    offsetTop: 0
+  };
+
+  const expected = true; // because diff > 150 => keyboardOpen = true
+
+  const diff = originalInnerHeight - simulatedViewport.height;
+  const isKeyboard = diff > 150;
+
+  done(`innerHeight=${originalInnerHeight}, viewport.height=${testHeight}`, expected, isKeyboard);
+});

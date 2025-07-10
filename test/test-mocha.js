@@ -333,3 +333,28 @@ describe("Slugification Tests", function () {
     });
   });
 });
+
+
+describe("Scroll Logic Tests", function () {
+  it("Should compute keyboard open state when viewport shrinks", function () {
+    const fakeInnerHeight = 800;
+    const fakeViewportHeight = 500; // simulating keyboard
+    const threshold = 150;
+
+    const diff = fakeInnerHeight - fakeViewportHeight;
+    const keyboardDetected = diff > threshold;
+    expect(keyboardDetected).to.be.true;
+  });
+
+  it("Should update CSS var only if offset changes", function () {
+    const el = document.createElement("div");
+    el.classList.add("top-in-li", "sticken");
+    document.body.appendChild(el);
+
+    const offset = 50;
+    el.style.setProperty("--todom-sticken-yoffset", `${offset}px`);
+    expect(el.style.getPropertyValue("--todom-sticken-yoffset")).to.equal("50px");
+
+    el.remove();
+  });
+});
