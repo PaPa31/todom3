@@ -33,6 +33,7 @@ function updateStickyPositionForKeyboard() {
 function restoreStickyDefaults() {
   document.querySelectorAll(".top-in-li.sticken").forEach((el) => {
     el.style.transform = "";
+    el.style.removeProperty("--todom-sticken-yoffset"); // 🧼 Reset sticky offset
   });
 
   logState("🔁 restoreSticky");
