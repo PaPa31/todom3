@@ -5,6 +5,7 @@ let lastKeyboardState = null;
 let lastAppliedOffset = 0;
 
 function logState(eventName) {
+  return; // stop log
   const state = {
     scrollY: window.scrollY,
     offsetTop: window.visualViewport.offsetTop,

@@ -588,7 +588,7 @@ const updateDOM = (target, source) => {
   let i = 0;
   for (; i < sourceChildren.length; i++) {
     if (!targetChildren[i]) {
-      console.log("Appending new element:", sourceChildren[i]);
+//       console.log("Appending new element:", sourceChildren[i]);
       target.appendChild(sourceChildren[i]); // Append new elements
     } else if (
       targetChildren[i].tagName === "IMG" &&
@@ -599,10 +599,10 @@ const updateDOM = (target, source) => {
 
       // ✅ Keep existing image if `src` is the same
       if (targetImg.src !== sourceImg.src) {
-        console.log("Replacing image:", sourceImg.src);
+//         console.log("Replacing image:", sourceImg.src);
         target.replaceChild(sourceImg, targetImg);
       } else {
-        console.log("Keeping existing image:", sourceImg.src);
+//         console.log("Keeping existing image:", sourceImg.src);
 
         // Ensure no unnecessary reloads
         targetImg.src = sourceImg.src; // Redundant but forces browser consistency
@@ -619,23 +619,18 @@ const updateDOM = (target, source) => {
     ) {
       // ✅ Instead of replacing, only update `innerHTML` if it changed
       if (targetChildren[i].innerHTML !== sourceChildren[i].innerHTML) {
-        console.log("Updating content of:", targetChildren[i]);
+//         console.log("Updating content of:", targetChildren[i]);
         targetChildren[i].innerHTML = sourceChildren[i].innerHTML;
       }
     } else {
-      console.log(
-        "Replacing element:",
-        targetChildren[i],
-        "with",
-        sourceChildren[i]
-      );
+//       console.log("Replacing element:", targetChildren[i], "with", sourceChildren[i]);
       target.replaceChild(sourceChildren[i], targetChildren[i]);
     }
   }
 
   // Remove extra elements if new content is shorter
   while (i < targetChildren.length) {
-    console.log("Removing extra element:", targetChildren[i]);
+//     console.log("Removing extra element:", targetChildren[i]);
     target.removeChild(targetChildren[i]);
     i++;
   }
