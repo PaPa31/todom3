@@ -1868,15 +1868,15 @@ object {
   padding: 1em;
   cursor: default;
   position: relative; /* add for close x icon */
+  display: block; /* for data-ldr with span */
 }
 
 .ldr-btn {
   color: red;
   cursor: pointer;
-  font-family: monospace;
   display: inline-block;
-  margin-top: 1em;
   width: fit-content;
+  padding-bottom: 1rem;
 }
 
 .ldr-btn::before,
