@@ -849,7 +849,8 @@ ol.preview-outer p {
 }
 
 .x-but,
-.rtn-last {
+.rtn-last,
+.open-raw {
   position: absolute;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -1911,6 +1912,19 @@ object {
   background: rgba(255, 0, 0, 0.02); /* light highlight on hover */
   transition: background 0.2s;
 }
+
+.open-raw {
+  display: inline-block;
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  color: #a00;
+  text-decoration: none;
+}
+
+.open-raw:hover {
+  text-decoration: underline;
+}
+
 /* loader end */
 
 /* ------- Start css inside markdown ----- */
