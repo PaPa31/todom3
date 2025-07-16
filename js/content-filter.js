@@ -138,14 +138,20 @@ const waitForIframe = (resizableDiv) => {
 
 // ✅ Fixed: Don't wrap markdown in <a>. Use <div> and insert <a> only in collapsed state
 
-// 🧠 Fix for edge click on `.ldr-con::before` to collapse the block
+// ✅ Dual Viewer Toggle with open-raw bypass fix
 
 function toggleLoader(el, event) {
   console.log('[toggleLoader] Triggered by', event.target);
 
   const isCloseBtn = event.target.classList.contains('x-but');
+  const isOpenRaw = event.target.classList.contains('open-raw');
   const isCollapsed = el.classList.contains('ldr-btn');
-  const isOverlay = event.target === el; // Handles .ldr-con::before
+  const isOverlay = event.target === el;
+
+  if (isOpenRaw) {
+    console.log('[toggleLoader] Ignored: click on open-raw');
+    return; // allow default browser behavior
+  }
 
   if (!isCollapsed && !isCloseBtn && !isOverlay) {
     console.log('[toggleLoader] Ignored: click inside expanded content');
