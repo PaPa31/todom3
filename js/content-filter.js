@@ -138,7 +138,7 @@ const waitForIframe = (resizableDiv) => {
 
 // ✅ Fixed: Don't wrap markdown in <a>. Use <div> and insert <a> only in collapsed state
 
-// ✅ Dual Viewer Toggle with open-raw bypass fix
+// ✅ Dual Viewer Toggle with open-raw bypass fix and click handler guard
 
 function toggleLoader(el, event) {
   console.log('[toggleLoader] Triggered by', event.target);
@@ -209,8 +209,11 @@ function waitForLoader(resizableDiv) {
     console.log('[waitForLoader] Initialized:', label);
 
     el.addEventListener('click', e => {
-      if (e.ctrlKey || e.metaKey || e.button === 1) {
-        console.log('[click] Bypassed: new tab action');
+      if (
+        e.ctrlKey || e.metaKey || e.button === 1 ||
+        e.target.classList.contains('open-raw')
+      ) {
+        console.log('[click] Bypassed: browser-managed link');
         return;
       }
       e.preventDefault();
