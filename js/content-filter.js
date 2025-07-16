@@ -138,14 +138,16 @@ const waitForIframe = (resizableDiv) => {
 
 // ✅ Fixed: Don't wrap markdown in <a>. Use <div> and insert <a> only in collapsed state
 
-// ✅ Dual Viewer Toggle with strict click guard and logging
+// 🧠 Fix for edge click on `.ldr-con::before` to collapse the block
 
 function toggleLoader(el, event) {
   console.log('[toggleLoader] Triggered by', event.target);
 
   const isCloseBtn = event.target.classList.contains('x-but');
   const isCollapsed = el.classList.contains('ldr-btn');
-  if (!isCollapsed && !isCloseBtn) {
+  const isOverlay = event.target === el; // Handles .ldr-con::before
+
+  if (!isCollapsed && !isCloseBtn && !isOverlay) {
     console.log('[toggleLoader] Ignored: click inside expanded content');
     return;
   }
