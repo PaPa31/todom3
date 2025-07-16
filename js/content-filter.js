@@ -138,7 +138,7 @@ const waitForIframe = (resizableDiv) => {
 
 // ✅ Fixed: Don't wrap markdown in <a>. Use <div> and insert <a> only in collapsed state
 
-// ✅ Dual Viewer Toggle with simplified syntax + mobile ↗ icon support
+// ✅ Dual Viewer Toggle with simplified syntax + mobile ↗ icon support — FIXED
 
 function toggleLoader(el, event) {
   console.log('[toggleLoader] Triggered by', event.target);
@@ -170,8 +170,8 @@ function toggleLoader(el, event) {
     el.className = 'ldr-btn';
     console.log('[toggleLoader] Collapsed back to link');
   } else {
-    const label = el.dataset.label || el.textContent.trim();
-    el.dataset._originalLabel = label;
+    const rawLabel = el.dataset._originalLabel || el.textContent.trim();
+    el.dataset._originalLabel = rawLabel;
     const src = el.dataset.ldr || el.dataset.src;
     console.log('[toggleLoader] Fetching markdown from:', src);
 
@@ -205,15 +205,17 @@ function waitForLoader(resizableDiv) {
     }
 
     el.__loaderInitialized = true;
-    const label = el.textContent.trim() || el.dataset.label || 'Untitled';
-    el.dataset._originalLabel = label;
+
+    const cleanLabel = el.textContent.replace(/↗/g, '').trim();
+    el.dataset._originalLabel = cleanLabel;
+
     el.classList.add('ldr-btn');
     el.setAttribute('tabindex', '0');
     el.innerHTML = `
-      <a href="/md.sh?${el.dataset.ldr}" target="_blank">${label}</a>
+      <a href="/md.sh?${el.dataset.ldr}" target="_blank">${cleanLabel}</a>
       <a class="open-ext" href="/md.sh?${el.dataset.ldr}" target="_blank" title="Open in viewer">↗</a>
     `;
-    console.log('[waitForLoader] Initialized:', label);
+    console.log('[waitForLoader] Initialized:', cleanLabel);
 
     el.addEventListener('click', e => {
       if (
