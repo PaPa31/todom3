@@ -138,42 +138,75 @@ const waitForIframe = (resizableDiv) => {
 
 // ✅ Fixed: Don't wrap markdown in <a>. Use <div> and insert <a> only in collapsed state
 
+// ✅ Dual Viewer Toggle with debug logs for papa31
+
 function toggleLoader(el, event) {
-  if (event.target !== el && !event.target.classList.contains('x-but')) return;
+  console.log('[toggleLoader] Triggered by', event.target);
+
+  if (event.target !== el && !event.target.classList.contains('x-but')) {
+    console.log('[toggleLoader] Ignored: click was not on loader or close button');
+    return;
+  }
 
   const isExpanded = el.classList.contains('ldr-con');
+  console.log('[toggleLoader] isExpanded:', isExpanded);
+
   if (isExpanded) {
     const label = el.dataset.label || 'Untitled';
     el.innerHTML = `<a href="/md.sh?${el.dataset.ldr}" target="_blank">${label}</a>`;
     el.className = 'ldr-btn';
+    console.log('[toggleLoader] Collapsed back to link');
   } else {
     el.dataset.label = el.textContent.trim();
-    fetch(el.dataset.ldr || el.dataset.src).then(r => r.text()).then(t => {
-      const fullURL = '/md.sh?' + (el.dataset.ldr || el.dataset.src);
+    const src = el.dataset.ldr || el.dataset.src;
+    console.log('[toggleLoader] Fetching markdown from:', src);
+
+    fetch(src).then(r => {
+      if (!r.ok) throw new Error('Fetch failed with status ' + r.status);
+      return r.text();
+    }).then(t => {
+      const fullURL = '/md.sh?' + src;
       el.innerHTML = '<div class="ldr-inner">' +
         markdown(t) +
         '<div><a href="' + fullURL + '" target="_blank" class="open-raw">[⇱ open in viewer]</a></div>' +
         '</div>' +
         '<button class="bared btn x-but" title="Close"></button>';
       el.className = 'ldr-con';
+      console.log('[toggleLoader] Markdown loaded and displayed');
+    }).catch(e => {
+      console.error('[toggleLoader] Error fetching markdown:', e);
+      el.innerHTML = '<div class="ldr-inner">Error loading file.</div>';
+      el.className = 'ldr-con';
     });
   }
 }
 
 function waitForLoader(resizableDiv) {
-  resizableDiv.querySelectorAll('[data-ldr]').forEach(el => {
-    if (el.__loaderInitialized) return;
-    el.__loaderInitialized = true;
+  console.log('[waitForLoader] Initializing...');
 
+  resizableDiv.querySelectorAll('[data-ldr]').forEach(el => {
+    if (el.__loaderInitialized) {
+      console.log('[waitForLoader] Already initialized:', el.dataset.ldr);
+      return;
+    }
+
+    el.__loaderInitialized = true;
     const label = el.textContent.trim() || el.dataset.label || 'Untitled';
     el.dataset.label = label;
     el.classList.add('ldr-btn');
     el.setAttribute('tabindex', '0');
     el.innerHTML = `<a href="/md.sh?${el.dataset.ldr}" target="_blank">${label}</a>`;
+    console.log('[waitForLoader] Initialized:', label);
 
     el.addEventListener('click', e => {
-      if (el.classList.contains('ldr-con')) return;
-      if (e.ctrlKey || e.metaKey || e.button === 1) return;
+      if (el.classList.contains('ldr-con')) {
+        console.log('[click] Ignored: already expanded');
+        return;
+      }
+      if (e.ctrlKey || e.metaKey || e.button === 1) {
+        console.log('[click] Bypassed: new tab action');
+        return;
+      }
       e.preventDefault();
       toggleLoader(el, e);
     });
@@ -186,6 +219,7 @@ function waitForLoader(resizableDiv) {
     });
   });
 }
+
 
 
 
