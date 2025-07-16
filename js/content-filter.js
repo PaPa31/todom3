@@ -138,13 +138,13 @@ const waitForIframe = (resizableDiv) => {
 
 // ✅ Fixed: Don't wrap markdown in <a>. Use <div> and insert <a> only in collapsed state
 
-// ✅ Dual Viewer Toggle with simplified syntax support
+// ✅ Dual Viewer Toggle with simplified syntax + mobile ↗ icon support
 
 function toggleLoader(el, event) {
   console.log('[toggleLoader] Triggered by', event.target);
 
   const isCloseBtn = event.target.classList.contains('x-but');
-  const isOpenRaw = event.target.classList.contains('open-raw');
+  const isOpenRaw = event.target.classList.contains('open-raw') || event.target.classList.contains('open-ext');
   const isCollapsed = el.classList.contains('ldr-btn');
   const isOverlay = event.target === el;
 
@@ -162,8 +162,11 @@ function toggleLoader(el, event) {
   console.log('[toggleLoader] isExpanded:', isExpanded);
 
   if (isExpanded) {
-    const label = el.dataset.label || el.dataset._originalLabel || 'Untitled';
-    el.innerHTML = `<a href="/md.sh?${el.dataset.ldr}" target="_blank">${label}</a>`;
+    const label = el.dataset._originalLabel || 'Untitled';
+    el.innerHTML = `
+      <a href="/md.sh?${el.dataset.ldr}" target="_blank">${label}</a>
+      <a class="open-ext" href="/md.sh?${el.dataset.ldr}" target="_blank" title="Open in viewer">↗</a>
+    `;
     el.className = 'ldr-btn';
     console.log('[toggleLoader] Collapsed back to link');
   } else {
@@ -206,13 +209,17 @@ function waitForLoader(resizableDiv) {
     el.dataset._originalLabel = label;
     el.classList.add('ldr-btn');
     el.setAttribute('tabindex', '0');
-    el.innerHTML = `<a href="/md.sh?${el.dataset.ldr}" target="_blank">${label}</a>`;
+    el.innerHTML = `
+      <a href="/md.sh?${el.dataset.ldr}" target="_blank">${label}</a>
+      <a class="open-ext" href="/md.sh?${el.dataset.ldr}" target="_blank" title="Open in viewer">↗</a>
+    `;
     console.log('[waitForLoader] Initialized:', label);
 
     el.addEventListener('click', e => {
       if (
         e.ctrlKey || e.metaKey || e.button === 1 ||
-        e.target.classList.contains('open-raw')
+        e.target.classList.contains('open-raw') ||
+        e.target.classList.contains('open-ext')
       ) {
         console.log('[click] Bypassed: browser-managed link');
         return;
