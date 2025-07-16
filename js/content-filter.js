@@ -138,13 +138,14 @@ const waitForIframe = (resizableDiv) => {
 
 // ✅ Fixed: Don't wrap markdown in <a>. Use <div> and insert <a> only in collapsed state
 
-// ✅ Dual Viewer Toggle with debug logs for papa31
+// ✅ Dual Viewer Toggle with fixed click detection and logging
 
 function toggleLoader(el, event) {
   console.log('[toggleLoader] Triggered by', event.target);
 
-  if (event.target !== el && !event.target.classList.contains('x-but')) {
-    console.log('[toggleLoader] Ignored: click was not on loader or close button');
+  // Accept clicks inside el (not just direct hit), or from .x-but
+  if (!el.contains(event.target) && !event.target.classList.contains('x-but')) {
+    console.log('[toggleLoader] Ignored: click was not inside loader or close button');
     return;
   }
 
@@ -199,10 +200,6 @@ function waitForLoader(resizableDiv) {
     console.log('[waitForLoader] Initialized:', label);
 
     el.addEventListener('click', e => {
-      if (el.classList.contains('ldr-con')) {
-        console.log('[click] Ignored: already expanded');
-        return;
-      }
       if (e.ctrlKey || e.metaKey || e.button === 1) {
         console.log('[click] Bypassed: new tab action');
         return;
@@ -219,6 +216,7 @@ function waitForLoader(resizableDiv) {
     });
   });
 }
+
 
 
 
