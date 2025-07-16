@@ -137,53 +137,52 @@ const waitForIframe = (resizableDiv) => {
 };
 
 function toggleLoader(el, event) {
-  // Thanks God it works!
-   // Only allow toggle if user clicks directly on the loader element or close button
   if (event.target !== el && !event.target.classList.contains('x-but')) return;
 
-  if (el.className === 'ldr-con') {
-      el.innerHTML = el.dataset.old;
-      el.className = 'ldr-btn';
+  const isExpanded = el.classList.contains('ldr-con');
+  if (isExpanded) {
+    const label = el.dataset.label || 'Untitled';
+    el.innerHTML = `<a href="${el.dataset.ldr}" target="_blank">${label}</a>`;
+    el.className = 'ldr-btn';
   } else {
-      el.dataset.old = el.innerHTML;
-      fetch(el.dataset.ldr || el.dataset.src).then(r => r.text()).then(t => {
-        const fullURL = '../md.sh?' + (el.dataset.ldr || el.dataset.src);
-        el.innerHTML = '<div class="ldr-inner">' +
-          markdown(t) +
-          '</div>' +
-          '<a href="' + fullURL + '" target="_blank" class="open-raw">[⇱ open in viewer]</a>' +
-          '<button class="bared btn x-but" title="Close"></button>';
-          el.className = 'ldr-con';
-      });
+    el.dataset.label = el.textContent.trim();
+    fetch(el.dataset.ldr || el.dataset.src).then(r => r.text()).then(t => {
+      const fullURL = (el.dataset.ldr || el.dataset.src);
+      el.innerHTML = '<div class="ldr-inner">' +
+        markdown(t) +
+        '<div><a href="' + fullURL + '" target="_blank" class="open-raw">[⇱ open in viewer]</a></div>' +
+        '</div>' +
+        '<button class="bared btn x-but" title="Close"></button>';
+      el.className = 'ldr-con';
+    });
   }
 }
 
 function waitForLoader(resizableDiv) {
   resizableDiv.querySelectorAll('[data-ldr]').forEach(el => {
-    if (el.__loaderInitialized) return; // Prevent multiple listeners
+    if (el.__loaderInitialized) return;
+    el.__loaderInitialized = true;
 
-    el.__loaderInitialized = true; // Custom flag to mark initialization
+    const label = el.textContent.trim() || el.dataset.label || 'Untitled';
+    el.dataset.label = label;
     el.classList.add('ldr-btn');
-    el.setAttribute('tabindex', '0'); // Make focusable
+    el.setAttribute('tabindex', '0');
+    el.innerHTML = `<a href="/md.sh?${el.dataset.ldr}" target="_blank">${label}</a>`;
 
-   el.addEventListener('click', e => {
-    // Fix: Don't trigger if user clicks inside ldr-con (for selection, copy, etc.)
-    if (el.className === 'ldr-con') return;
-     
-    // Allow ctrl+click, middle click (new tab), or if already expanded
-    if (e.ctrlKey || e.metaKey || e.button === 1) return;
-
-    e.preventDefault(); // cancel normal link navigation
-    toggleLoader(el, e);
-  });
-
+    el.addEventListener('click', e => {
+      if (el.classList.contains('ldr-con')) return;
+      if (e.ctrlKey || e.metaKey || e.button === 1) return;
+      e.preventDefault();
+      toggleLoader(el, e);
+    });
 
     el.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault(); // Prevent page scroll on Space
+        e.preventDefault();
         toggleLoader(el, e);
       }
     });
   });
 }
+
 
