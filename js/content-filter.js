@@ -136,18 +136,20 @@ const waitForIframe = (resizableDiv) => {
   }
 };
 
+// ✅ Fixed: Don't wrap markdown in <a>. Use <div> and insert <a> only in collapsed state
+
 function toggleLoader(el, event) {
   if (event.target !== el && !event.target.classList.contains('x-but')) return;
 
   const isExpanded = el.classList.contains('ldr-con');
   if (isExpanded) {
     const label = el.dataset.label || 'Untitled';
-    el.innerHTML = `<a href="${el.dataset.ldr}" target="_blank">${label}</a>`;
+    el.innerHTML = `<a href="/md.sh?${el.dataset.ldr}" target="_blank">${label}</a>`;
     el.className = 'ldr-btn';
   } else {
     el.dataset.label = el.textContent.trim();
     fetch(el.dataset.ldr || el.dataset.src).then(r => r.text()).then(t => {
-      const fullURL = (el.dataset.ldr || el.dataset.src);
+      const fullURL = '/md.sh?' + (el.dataset.ldr || el.dataset.src);
       el.innerHTML = '<div class="ldr-inner">' +
         markdown(t) +
         '<div><a href="' + fullURL + '" target="_blank" class="open-raw">[⇱ open in viewer]</a></div>' +
@@ -184,5 +186,6 @@ function waitForLoader(resizableDiv) {
     });
   });
 }
+
 
 
