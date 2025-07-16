@@ -1862,7 +1862,7 @@ object {
 }
 /*end SVG*/
 
-/*start loader*/
+/*start loader(dual viewer toggle)*/
 .ldr-con {
   border: 1px solid var(--todom-textBlockQuote-border, #ccc);
   border-radius: 4px;
@@ -1924,8 +1924,7 @@ object {
 .open-raw:hover {
   text-decoration: underline;
 }
-
-/* loader end */
+/* loader(dual viewer toggle) end */
 
 /* ------- Start css inside markdown ----- */
 /* Use a more specific selector to reduce browser workload */
