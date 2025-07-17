@@ -1885,18 +1885,6 @@ object {
   line-height: 1.4;
 }
 
-.ldr-btn::before,
-.ldr-btn::after {
-  content: "[";
-  font-family: monospace;
-  color: red;
-}
-
-.ldr-btn:hover::before,
-.ldr-btn:hover::after {
-  content: "-";
-}
-
 .ldr-btn a {
   color: red;
   text-decoration: none;
