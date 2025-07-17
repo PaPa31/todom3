@@ -14,12 +14,15 @@ var icons = {
     </svg>`,
 };
 
-document.addEventListener("DOMContentLoaded", () =>
-  darkButton.addEventListener("click", function (e) {
-    e.stopPropagation();
-    handleDarkModeToggle(darkButton);
-  })
-);
+// Safely bind the button (if it exists)
+document.addEventListener("DOMContentLoaded", () => {
+  if (darkButton) {
+    darkButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+      handleDarkModeToggle(darkButton);
+    });
+  }
+});
 // when DarkReader is enabled, on startup light mode blinks (especially on http server)
 // workaround: disable DarkReader
 // Initialize dark mode
@@ -45,7 +48,9 @@ function setDarkModeInStorage(isDark) {
 
 function updateDarkModeUI(isDark, buttonEl = darkButton) {
   html.classList.toggle("dark", isDark);
-  buttonEl.innerHTML = isDark ? icons.moon : icons.sun;
+  if (buttonEl) {
+    buttonEl.innerHTML = isDark ? icons.moon : icons.sun;
+  }
 }
 // we should initilize dark mode as early as possible to avoid flickering
 initializeDarkMode();
