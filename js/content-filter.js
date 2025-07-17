@@ -141,26 +141,20 @@ const waitForIframe = (resizableDiv) => {
 // ✅ Dual Viewer Toggle with simplified syntax + mobile ↗ icon support — FIXED
 
 function toggleLoader(el, event) {
-  console.log('[toggleLoader] Triggered by', event.target);
-
   const isCloseBtn = event.target.classList.contains('x-but');
   const isOpenRaw = event.target.classList.contains('open-raw') || event.target.classList.contains('open-ext');
   const isCollapsed = el.classList.contains('ldr-btn');
   const isOverlay = event.target === el;
 
   if (isOpenRaw) {
-    console.log('[toggleLoader] Ignored: click on open-raw');
     return;
   }
 
   if (!isCollapsed && !isCloseBtn && !isOverlay) {
-    console.log('[toggleLoader] Ignored: click inside expanded content');
     return;
   }
 
   const isExpanded = el.classList.contains('ldr-con');
-  console.log('[toggleLoader] isExpanded:', isExpanded);
-
   if (isExpanded) {
     const label = el.dataset._originalLabel || 'Untitled';
     el.innerHTML = `
@@ -168,12 +162,10 @@ function toggleLoader(el, event) {
       <a class="open-ext" href="/md.sh?${el.dataset.ldr}" target="_blank" title="Open in viewer">↗</a>
     `;
     el.className = 'ldr-btn';
-    console.log('[toggleLoader] Collapsed back to link');
   } else {
     const rawLabel = el.dataset._originalLabel || el.textContent.trim();
     el.dataset._originalLabel = rawLabel;
     const src = el.dataset.ldr || el.dataset.src;
-    console.log('[toggleLoader] Fetching markdown from:', src);
 
     fetch(src).then(r => {
       if (!r.ok) throw new Error('Fetch failed with status ' + r.status);
@@ -186,9 +178,7 @@ function toggleLoader(el, event) {
         '</div>' +
         '<button class="bared btn x-but" title="Close"></button>';
       el.className = 'ldr-con';
-      console.log('[toggleLoader] Markdown loaded and displayed');
     }).catch(e => {
-      console.error('[toggleLoader] Error fetching markdown:', e);
       el.innerHTML = '<div class="ldr-inner">Error loading file.</div>';
       el.className = 'ldr-con';
     });
@@ -196,11 +186,8 @@ function toggleLoader(el, event) {
 }
 
 function waitForLoader(resizableDiv) {
-  console.log('[waitForLoader] Initializing...');
-
   resizableDiv.querySelectorAll('[data-ldr]').forEach(el => {
     if (el.__loaderInitialized) {
-      console.log('[waitForLoader] Already initialized:', el.dataset.ldr);
       return;
     }
 
@@ -215,7 +202,6 @@ function waitForLoader(resizableDiv) {
       <a href="/md.sh?${el.dataset.ldr}" target="_blank">${cleanLabel}</a>
       <a class="open-ext" href="/md.sh?${el.dataset.ldr}" target="_blank" title="Open in viewer">↗</a>
     `;
-    console.log('[waitForLoader] Initialized:', cleanLabel);
 
     el.addEventListener('click', e => {
       if (
@@ -223,7 +209,6 @@ function waitForLoader(resizableDiv) {
         e.target.classList.contains('open-raw') ||
         e.target.classList.contains('open-ext')
       ) {
-        console.log('[click] Bypassed: browser-managed link');
         return;
       }
       e.preventDefault();
