@@ -9,7 +9,7 @@ describe("Checking if Chai works", function () {
   });
 });
 
-describe("Tests for earliest-togglers.js", function () {
+describe("Tests for dark mode and date mode", function () {
   let originalDarkMode, originalDateMode;
 
   beforeEach(function () {
