@@ -1880,6 +1880,16 @@ object {
   padding-bottom: 1rem;
 }
 
+.ldr-btn a {
+  color: red;
+  text-decoration: none;
+}
+
+.ldr-btn a:hover {
+  color: red;
+  text-decoration: underline;
+}
+
 .ldr-btn::before,
 .ldr-btn::after {
   content: "[";
@@ -1923,6 +1933,20 @@ object {
 
 .open-raw:hover {
   text-decoration: underline;
+}
+
+/* External viewer icon */
+.open-ext {
+  margin-left: 0.4em;
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.5em;
+  vertical-align: middle;
+}
+
+.open-ext:hover {
+  text-decoration: underline;
+  color: #a00;
 }
 /* loader(dual viewer toggle) end */
 
