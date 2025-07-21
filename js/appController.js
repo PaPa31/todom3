@@ -1,37 +1,14 @@
-// appController.js
+// appController.js (Modular, max backward compatibility, comments preserved)
 
-//Global protocol definition for compatibility
+// Global protocol definition for compatibility
 window.protocol = window.location.protocol;
 
-// Initialize the application state
-const appController = (() => {
-  // State object
-  const state = {
-    protocol: window.protocol,
-    mochaAvailable: false,
-    note: null,
-    file: null,
-    folder: null,
-    // Remove premature testMode initialization
-    // Pre-initializing the testMode state directly in the global state object can lead to unnecessary issues or errors when specific initialization logic depends on initializeTestMode.
-    // testMode: window.location.search.includes("test=true"),
-  };
-
-  // Loading scripts depending on the protocol
-  const loadProtocolScripts = () => {
-    if (state.protocol === "file:") {
-      loadScript("js/protocol-file.js");
-    } else if (state.protocol === "http:" || state.protocol === "https:") {
-      loadScript("js/protocol-http.js");
-    }
-  };
-
-  // Function to dynamically load a script
+// === Module: Loader ===
+var Loader = (function () {
   function loadScript(url, callback) {
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = url;
-    //script.onload = callback; // Execute callback once script is loaded
 
     script.onload = function () {
       console.log(`Successfully loaded script: ${url}`);
@@ -47,71 +24,64 @@ const appController = (() => {
 
     script.onerror = function () {
       console.log(`Failed to load script: ${url}`);
-      if (callback) callback(false); // Ensure fallback logic proceeds
+      if (callback) callback(false);
     };
 
-    // For maximum backward compatibility
     const head = document.getElementsByTagName("head")[0];
-    if (head) {
-      head.appendChild(script);
-    } else {
+    if (head) head.appendChild(script);
+    else {
       console.log("Failed to append script. <head> not found.");
-      if (callback) callback(false); // Proceed gracefully even if <head> is missing
+      if (callback) callback(false);
     }
   }
 
-  // Function to load CSS
   function loadCSS(url) {
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = url;
     const head = document.getElementsByTagName("head")[0];
-    if (head) {
-      head.appendChild(link);
-    } else {
-      console.log(`Failed to append stylesheet. <head> not found.`);
-    }
+    if (head) head.appendChild(link);
+    else console.log("Failed to append stylesheet. <head> not found.");
   }
 
-  // Detect Mocha for tests
-  function detectMocha(callback) {
-    // To simulate the absence of mocha, I rename the `test` directory to `test1`
-    loadScript("test/mocha.js", function (loaded) {
+  return {
+    loadScript,
+    loadCSS,
+  };
+})();
+
+// === Module: Test ===
+var Test = (function () {
+  function detectMocha(state, callback) {
+    Loader.loadScript("test/mocha.js", function (loaded) {
       if (loaded) {
-        // Check if Mocha is properly initialized
         if (typeof mocha !== "undefined" && typeof mocha.setup === "function") {
           state.mochaAvailable = true;
           console.log("Mocha loaded and initialized.");
-          mocha.setup("bdd"); // Example setup
+          mocha.setup("bdd");
         } else {
-          console.warn(
-            "Mocha script loaded, but the object was not initialized."
-          );
+          console.warn("Mocha script loaded, but the object was not initialized.");
         }
       } else {
-        console.error(
-          "Mocha script could not be loaded. Please verify the path or existence of the file."
-        );
+        console.error("Mocha script could not be loaded.");
       }
       callback();
     });
   }
 
-  // Initialize tests
-  function initializeTests() {
+  function initializeTests(state) {
     if (state.testMode) {
       console.log("Test mode enabled.");
-
-      detectMocha(() => {
+      detectMocha(state, function () {
         if (state.mochaAvailable) {
           console.log("Initializing Mocha tests...");
-          loadCSS("test/mocha.css");
-          loadScript("test/chai.min.js", () => {
+          Loader.loadCSS("test/mocha.css");
+          Loader.loadScript("test/chai.min.js", function () {
             try {
               mocha.setup("bdd");
-              window.expect = chai.expect; // Make `expect` globally available
-              loadScript("test/test-config.js", () => {
-                loadScript("test/test-mocha.js", () => {
+              window.expect = chai.expect;
+              Loader.loadScript("test/test-config.js", function () {
+                Loader.loadScript("test/test-mocha.js", function () {
                   mocha.run();
                 });
               });
@@ -120,47 +90,84 @@ const appController = (() => {
             }
           });
         } else {
-          console.warn("Mocha is not available. Running simple tests...");
-          loadScript("test/test-config.js", () => {
-            loadScript("test/test-simple.js");
+          console.warn("Mocha not available. Running fallback tests...");
+          Loader.loadScript("test/test-config.js", function () {
+            Loader.loadScript("test/test-simple.js");
           });
         }
       });
     }
   }
 
-  // Application actions
-  const actions = {
-    createNote: () => console.log("Creating new note"),
-    openExistingNote: () => {
-      state.note = localStorage.getItem("note") || null;
-      console.log("Opening existing note from localStorage:", state.note);
-    },
-    openFile: () => console.log("Opening file"),
-    openFolder: () => console.log("Opening folder"),
-    saveFile: () => console.log("Saving file"),
+  return {
+    initializeTests,
   };
+})();
 
-  // Refactored `withLocalStorageKeySetup` for backward compatibility
+// === Module: Mode ===
+var Mode = (function () {
+  function initializeTestMode(state) {
+    state.testMode = window.location.search.includes("test=true");
+    if (state.testMode) {
+      console.log("Test mode is active!");
+    }
+  }
+
+  return {
+    initializeTestMode,
+  };
+})();
+
+// === Module: Actions ===
+var Actions = (function () {
+  function createNote() {
+    console.log("Creating new note");
+  }
+
+  function openExistingNote(state) {
+    state.note = localStorage.getItem("note") || null;
+    console.log("Opening existing note from localStorage:", state.note);
+  }
+
+  function openFile() {
+    console.log("Opening file");
+  }
+
+  function openFolder() {
+    console.log("Opening folder");
+  }
+
+  function saveFile() {
+    console.log("Saving file");
+  }
+
+  return {
+    createNote,
+    openExistingNote,
+    openFile,
+    openFolder,
+    saveFile,
+  };
+})();
+
+// === Module: Storage ===
+var Storage = (function () {
   function withLocalStorageKeySetup(keys, testFunc) {
-    // Backup the relevant localStorage keys
-    var originalStorage = {};
-    for (var i = 0; i < keys.length; i++) {
-      var key = keys[i];
+    const originalStorage = {};
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
       originalStorage[key] = localStorage.getItem(key);
     }
 
-    var error;
+    let error;
     try {
-      // Run the test function
       testFunc();
     } catch (err) {
       error = err;
     }
 
-    // Restore only the relevant localStorage keys
-    for (var i = 0; i < keys.length; i++) {
-      var key = keys[i];
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
       if (originalStorage[key] !== null) {
         localStorage.setItem(key, originalStorage[key]);
       } else {
@@ -168,50 +175,52 @@ const appController = (() => {
       }
     }
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
   }
 
-  // Initialize test mode
-  function initializeTestMode() {
-    state.testMode = window.location.search.includes("test=true"); // Initialize here
-    if (state.testMode) {
-      console.log("Test mode is active!");
-      // Additional logic for test mode can go here
-    }
-  }
-
-  // Initialize application states
-  function initializeAppStates() {
-    //initializeDarkMode();
-    initializeTestMode();
-    // Add other modes or states here
-  }
-
-  // Application initialization
-  const initializeApp = () => {
-    initializeAppStates();
-    loadProtocolScripts();
-    initializeTests();
-
-    // Perform actions depending on the protocol
-    if (state.protocol === "file:") {
-      actions.openExistingNote();
-    } else if (state.protocol === "http:" || state.protocol === "https:") {
-      actions.openExistingNote();
-    }
-  };
-
-  // Export available methods and initialization
-  // Return the public API
   return {
-    initialize: initializeApp,
-    actions: actions,
-    //initializeDarkMode, // Exposed for testing
-    withLocalStorageKeySetup, // Expose this for testing
+    withLocalStorageKeySetup,
   };
 })();
 
-// Initialize the application when the DOM loads
+// === Main Application Controller ===
+var appController = (function () {
+  const state = {
+    protocol: window.protocol,
+    mochaAvailable: false,
+    note: null,
+    file: null,
+    folder: null,
+  };
+
+  function loadProtocolScripts() {
+    if (state.protocol === "file:") {
+      Loader.loadScript("js/protocol-file.js");
+    } else if (state.protocol === "http:" || state.protocol === "https:") {
+      Loader.loadScript("js/protocol-http.js");
+    }
+  }
+
+  function initializeAppStates() {
+    Mode.initializeTestMode(state);
+  }
+
+  function initializeApp() {
+    initializeAppStates();
+    loadProtocolScripts();
+    Test.initializeTests(state);
+
+    if (state.protocol === "file:" || state.protocol.startsWith("http")) {
+      Actions.openExistingNote(state);
+    }
+  }
+
+  return {
+    initialize: initializeApp,
+    actions: Actions,
+    withLocalStorageKeySetup: Storage.withLocalStorageKeySetup,
+  };
+})();
+
 document.addEventListener("DOMContentLoaded", appController.initialize);
+
