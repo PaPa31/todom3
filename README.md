@@ -221,3 +221,13 @@ http://192.168.0.77/md.sh?/webdav/md/chron/2025-04/05-080834-lpunpack-super-img.
 ```
 
 And you can see md content parsed as HTML.
+
+### 8. dual-link
+
+Now you can place "source of true" as a "dual-link":
+
+```
+<div class="data-ldr" data-ldr="/webdav/md/chron/2025-07/14-193805-ntfs-risky-for-linux.md">NTFS risky for Linux</div>
+```
+
+After this you can open link in two ways: 1) as extansible embedded content (iside a parent note) or 2) as standalone HTML page
