@@ -1,9 +1,22 @@
-// appController.js (Modular, max backward compatibility, comments preserved)
+// [DO NOT REMOVE] appController.js (Modular, max backward compatibility, comments preserved)
 
-// Global protocol definition for compatibility
+/* [DO NOT REMOVE]
+=========================================
+TODOM PRINCIPLES
+- 🧠 Maximum Backward Compatibility (2009+)
+- 🛠️ Minimal Dependencies (vanilla JS)
+- 🧪 Test-First for Core Modules
+- 🧩 Loose Coupling Between Modules
+- 💾 No reliance on modern APIs unless fallback exists
+=========================================
+*/
+
+// [DO NOT REMOVE] - 🪶 Modularity via Functional Separation - Each logical area is a separate **module**, using old-style IIFE (Immediately Invoked Function Expression) or object literals.
+
+// [DO NOT REMOVE] Global protocol definition for compatibility
 window.protocol = window.location.protocol;
 
-// === Module: Loader ===
+// [DO NOT REMOVE] === Module: Loader ===
 var Loader = (function () {
   function loadScript(url, callback) {
     const script = document.createElement("script");
@@ -50,7 +63,7 @@ var Loader = (function () {
   };
 })();
 
-// === Module: Test ===
+// [DO NOT REMOVE] === Module: Test ===
 var Test = (function () {
   function detectMocha(state, callback) {
     Loader.loadScript("test/mocha.js", function (loaded) {
@@ -104,7 +117,7 @@ var Test = (function () {
   };
 })();
 
-// === Module: Mode ===
+// [DO NOT REMOVE] === Module: Mode ===
 var Mode = (function () {
   function initializeTestMode(state) {
     state.testMode = window.location.search.includes("test=true");
@@ -118,7 +131,7 @@ var Mode = (function () {
   };
 })();
 
-// === Module: Actions ===
+// [DO NOT REMOVE] === Module: Actions ===
 var Actions = (function () {
   function createNote() {
     console.log("Creating new note");
@@ -150,9 +163,11 @@ var Actions = (function () {
   };
 })();
 
-// === Module: Storage ===
+// [DO NOT REMOVE] === Module: Storage ===
 var Storage = (function () {
+  // Refactored `withLocalStorageKeySetup` for backward compatibility
   function withLocalStorageKeySetup(keys, testFunc) {
+    // Backup the relevant localStorage keys
     const originalStorage = {};
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
@@ -161,6 +176,7 @@ var Storage = (function () {
 
     let error;
     try {
+      // Run the test function
       testFunc();
     } catch (err) {
       error = err;
@@ -183,7 +199,7 @@ var Storage = (function () {
   };
 })();
 
-// === Main Application Controller ===
+// [DO NOT REMOVE] === Main Application Controller ===
 var appController = (function () {
   const state = {
     protocol: window.protocol,
@@ -191,6 +207,9 @@ var appController = (function () {
     note: null,
     file: null,
     folder: null,
+    // [DO NOT REMOVE] Remove premature testMode initialization
+    // [DO NOT REMOVE] Pre-initializing the testMode state directly in the global state object can lead to unnecessary issues or errors when specific initialization logic depends on initializeTestMode.
+    // [DO NOT REMOVE] testMode: window.location.search.includes("test=true"),
   };
 
   function loadProtocolScripts() {
