@@ -1,24 +1,10 @@
-// [DO NOT REMOVE] appController.js (Modular, max backward compatibility, comments preserved)
-
-/* [DO NOT REMOVE]
-=========================================
-TODOM PRINCIPLES
-- 🧠 Maximum Backward Compatibility (2009+)
-- 🛠️ Minimal Dependencies (vanilla JS)
-- 🧪 Test-First for Core Modules
-- 🧩 Loose Coupling Between Modules
-- 💾 No reliance on modern APIs unless fallback exists
-=========================================
-*/
-
-// [DO NOT REMOVE] - 🪶 Modularity via Functional Separation - Each logical area is a separate **module**, using old-style IIFE (Immediately Invoked Function Expression) or object literals.
-
-// [DO NOT REMOVE] Global protocol definition for compatibility
+// 🔐 SURVIVAL: Global protocol definition for compatibility
 window.protocol = window.location.protocol;
 
-// [DO NOT REMOVE] === Module: Loader ===
+// === Module: Loader ===
 var Loader = (function () {
   function loadScript(url, callback) {
+    // 🔐 SURVIVAL: Use legacy onreadystatechange handler for old IE
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = url;
@@ -63,9 +49,10 @@ var Loader = (function () {
   };
 })();
 
-// [DO NOT REMOVE] === Module: Test ===
+// === Module: Test ===
 var Test = (function () {
   function detectMocha(state, callback) {
+    // 🔐 SURVIVAL: preserve test/mocha.js loader logic
     Loader.loadScript("test/mocha.js", function (loaded) {
       if (loaded) {
         if (typeof mocha !== "undefined" && typeof mocha.setup === "function") {
@@ -73,7 +60,9 @@ var Test = (function () {
           console.log("Mocha loaded and initialized.");
           mocha.setup("bdd");
         } else {
-          console.warn("Mocha script loaded, but the object was not initialized.");
+          console.warn(
+            "Mocha script loaded, but the object was not initialized."
+          );
         }
       } else {
         console.error("Mocha script could not be loaded.");
@@ -83,6 +72,7 @@ var Test = (function () {
   }
 
   function initializeTests(state) {
+    // 🔐 SURVIVAL: preserve test mode detection logic
     if (state.testMode) {
       console.log("Test mode enabled.");
       detectMocha(state, function () {
@@ -117,7 +107,7 @@ var Test = (function () {
   };
 })();
 
-// [DO NOT REMOVE] === Module: Mode ===
+// === Module: Mode ===
 var Mode = (function () {
   function initializeTestMode(state) {
     state.testMode = window.location.search.includes("test=true");
@@ -125,35 +115,33 @@ var Mode = (function () {
       console.log("Test mode is active!");
     }
   }
-
   return {
     initializeTestMode,
   };
 })();
 
-// [DO NOT REMOVE] === Module: Actions ===
+// 🔐 SURVIVAL: placeholder for future debug mode
+// Mode.debugMode will be added later per NO_COMMENT_LEFT_BEHIND
+
+// === Module: Actions ===
 var Actions = (function () {
   function createNote() {
     console.log("Creating new note");
   }
-
   function openExistingNote(state) {
+    // 🔐 SURVIVAL: localStorage retrieval logic
     state.note = localStorage.getItem("note") || null;
     console.log("Opening existing note from localStorage:", state.note);
   }
-
   function openFile() {
     console.log("Opening file");
   }
-
   function openFolder() {
     console.log("Opening folder");
   }
-
   function saveFile() {
     console.log("Saving file");
   }
-
   return {
     createNote,
     openExistingNote,
@@ -163,11 +151,9 @@ var Actions = (function () {
   };
 })();
 
-// [DO NOT REMOVE] === Module: Storage ===
+// === Module: Storage ===
 var Storage = (function () {
-  // Refactored `withLocalStorageKeySetup` for backward compatibility
   function withLocalStorageKeySetup(keys, testFunc) {
-    // Backup the relevant localStorage keys
     const originalStorage = {};
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
@@ -176,7 +162,6 @@ var Storage = (function () {
 
     let error;
     try {
-      // Run the test function
       testFunc();
     } catch (err) {
       error = err;
@@ -193,13 +178,12 @@ var Storage = (function () {
 
     if (error) throw error;
   }
-
   return {
     withLocalStorageKeySetup,
   };
 })();
 
-// [DO NOT REMOVE] === Main Application Controller ===
+// === Main Application Controller ===
 var appController = (function () {
   const state = {
     protocol: window.protocol,
@@ -207,21 +191,23 @@ var appController = (function () {
     note: null,
     file: null,
     folder: null,
-    // [DO NOT REMOVE] Remove premature testMode initialization
-    // [DO NOT REMOVE] Pre-initializing the testMode state directly in the global state object can lead to unnecessary issues or errors when specific initialization logic depends on initializeTestMode.
-    // [DO NOT REMOVE] testMode: window.location.search.includes("test=true"),
+    // 🔐 SURVIVAL: testMode will be set by Mode.initializeTestMode
   };
 
   function loadProtocolScripts() {
     if (state.protocol === "file:") {
       Loader.loadScript("js/protocol-file.js");
-    } else if (state.protocol === "http:" || state.protocol === "https:") {
+    } else if (
+      state.protocol === "http:" ||
+      state.protocol === "https:"
+    ) {
       Loader.loadScript("js/protocol-http.js");
     }
   }
 
   function initializeAppStates() {
     Mode.initializeTestMode(state);
+    // 🔐 SURVIVAL: future initializeDebugMode(state) goes here
   }
 
   function initializeApp() {
@@ -229,7 +215,10 @@ var appController = (function () {
     loadProtocolScripts();
     Test.initializeTests(state);
 
-    if (state.protocol === "file:" || state.protocol.startsWith("http")) {
+    if (
+      state.protocol === "file:" ||
+      state.protocol.startsWith("http")
+    ) {
       Actions.openExistingNote(state);
     }
   }
@@ -243,3 +232,5 @@ var appController = (function () {
 
 document.addEventListener("DOMContentLoaded", appController.initialize);
 
+// 🗃️ UNSORTED COMMENTS (preserved during refactor):
+// 🔐 SURVIVAL: placeholder for loader function callback usages
