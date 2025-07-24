@@ -1,32 +1,34 @@
-// 🔐 SURVIVAL: Global protocol definition for compatibility
+// appController.js [SURVIVAL MODE]
+
+// 🔐 R1: Global protocol definition for compatibility
 window.protocol = window.location.protocol;
 
 // === Module: Loader ===
 var Loader = (function () {
   function loadScript(url, callback) {
-    // 🔐 SURVIVAL: Use legacy onreadystatechange handler for old IE
-    const script = document.createElement("script");
+    // 🔐 R1: Use legacy-compatible handlers
+    var script = document.createElement("script");
     script.type = "text/javascript";
     script.src = url;
 
     script.onload = function () {
-      console.log(`Successfully loaded script: ${url}`);
+      console.log("Successfully loaded script: " + url);
       if (callback) callback(true);
     };
 
     script.onreadystatechange = function () {
       if (this.readyState === "loaded" || this.readyState === "complete") {
-        console.log(`Legacy browser detected; script ready: ${url}`);
+        console.log("Legacy browser detected; script ready: " + url);
         if (callback) callback(true);
       }
     };
 
     script.onerror = function () {
-      console.log(`Failed to load script: ${url}`);
+      console.log("Failed to load script: " + url);
       if (callback) callback(false);
     };
 
-    const head = document.getElementsByTagName("head")[0];
+    var head = document.getElementsByTagName("head")[0];
     if (head) head.appendChild(script);
     else {
       console.log("Failed to append script. <head> not found.");
@@ -35,34 +37,31 @@ var Loader = (function () {
   }
 
   function loadCSS(url) {
-    const link = document.createElement("link");
+    var link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = url;
-    const head = document.getElementsByTagName("head")[0];
+    var head = document.getElementsByTagName("head")[0];
     if (head) head.appendChild(link);
     else console.log("Failed to append stylesheet. <head> not found.");
   }
 
   return {
-    loadScript,
-    loadCSS,
+    loadScript: loadScript,
+    loadCSS: loadCSS
   };
 })();
 
 // === Module: Test ===
 var Test = (function () {
   function detectMocha(state, callback) {
-    // 🔐 SURVIVAL: preserve test/mocha.js loader logic
-    Loader.loadScript("test/mocha.js", function (loaded) {
+    Loader.loadScript("test1/mocha.js", function (loaded) {
       if (loaded) {
         if (typeof mocha !== "undefined" && typeof mocha.setup === "function") {
           state.mochaAvailable = true;
           console.log("Mocha loaded and initialized.");
           mocha.setup("bdd");
         } else {
-          console.warn(
-            "Mocha script loaded, but the object was not initialized."
-          );
+          console.warn("Mocha script loaded, but mocha object not initialized.");
         }
       } else {
         console.error("Mocha script could not be loaded.");
@@ -72,12 +71,10 @@ var Test = (function () {
   }
 
   function initializeTests(state) {
-    // 🔐 SURVIVAL: preserve test mode detection logic
     if (state.testMode) {
       console.log("Test mode enabled.");
       detectMocha(state, function () {
         if (state.mochaAvailable) {
-          console.log("Initializing Mocha tests...");
           Loader.loadCSS("test/mocha.css");
           Loader.loadScript("test/chai.min.js", function () {
             try {
@@ -88,12 +85,11 @@ var Test = (function () {
                   mocha.run();
                 });
               });
-            } catch (error) {
-              console.error("Error during Mocha initialization:", error);
+            } catch (e) {
+              console.error("Error during Mocha init:", e);
             }
           });
         } else {
-          console.warn("Mocha not available. Running fallback tests...");
           Loader.loadScript("test/test-config.js", function () {
             Loader.loadScript("test/test-simple.js");
           });
@@ -103,111 +99,110 @@ var Test = (function () {
   }
 
   return {
-    initializeTests,
+    initializeTests: initializeTests
   };
 })();
 
 // === Module: Mode ===
 var Mode = (function () {
   function initializeTestMode(state) {
-    state.testMode = window.location.search.includes("test=true");
+    state.testMode = window.location.search.indexOf("test=true") !== -1;
     if (state.testMode) {
       console.log("Test mode is active!");
     }
   }
+
   return {
-    initializeTestMode,
+    initializeTestMode: initializeTestMode
   };
 })();
-
-// 🔐 SURVIVAL: placeholder for future debug mode
-// Mode.debugMode will be added later per NO_COMMENT_LEFT_BEHIND
 
 // === Module: Actions ===
 var Actions = (function () {
   function createNote() {
     console.log("Creating new note");
   }
+
   function openExistingNote(state) {
-    // 🔐 SURVIVAL: localStorage retrieval logic
     state.note = localStorage.getItem("note") || null;
     console.log("Opening existing note from localStorage:", state.note);
   }
+
   function openFile() {
     console.log("Opening file");
   }
+
   function openFolder() {
     console.log("Opening folder");
   }
+
   function saveFile() {
     console.log("Saving file");
   }
+
   return {
-    createNote,
-    openExistingNote,
-    openFile,
-    openFolder,
-    saveFile,
+    createNote: createNote,
+    openExistingNote: openExistingNote,
+    openFile: openFile,
+    openFolder: openFolder,
+    saveFile: saveFile
   };
 })();
 
 // === Module: Storage ===
 var Storage = (function () {
   function withLocalStorageKeySetup(keys, testFunc) {
-    const originalStorage = {};
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
+    var originalStorage = {};
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
       originalStorage[key] = localStorage.getItem(key);
     }
 
-    let error;
+    var error;
     try {
       testFunc();
     } catch (err) {
       error = err;
     }
 
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      if (originalStorage[key] !== null) {
-        localStorage.setItem(key, originalStorage[key]);
+    for (var j = 0; j < keys.length; j++) {
+      var k = keys[j];
+      if (originalStorage[k] !== null) {
+        localStorage.setItem(k, originalStorage[k]);
       } else {
-        localStorage.removeItem(key);
+        localStorage.removeItem(k);
       }
     }
 
     if (error) throw error;
   }
+
   return {
-    withLocalStorageKeySetup,
+    withLocalStorageKeySetup: withLocalStorageKeySetup
   };
 })();
 
-// === Main Application Controller ===
+// === Main Controller: App ===
 var appController = (function () {
-  const state = {
+  var state = {
     protocol: window.protocol,
     mochaAvailable: false,
     note: null,
     file: null,
-    folder: null,
-    // 🔐 SURVIVAL: testMode will be set by Mode.initializeTestMode
+    folder: null
   };
 
   function loadProtocolScripts() {
     if (state.protocol === "file:") {
       Loader.loadScript("js/protocol-file.js");
-    } else if (
-      state.protocol === "http:" ||
-      state.protocol === "https:"
-    ) {
+    } else if (state.protocol === "http:" || state.protocol === "https:") {
       Loader.loadScript("js/protocol-http.js");
     }
   }
 
   function initializeAppStates() {
     Mode.initializeTestMode(state);
-    // 🔐 SURVIVAL: future initializeDebugMode(state) goes here
+    // 🔐 R2: debugMode placeholder remains for future
   }
 
   function initializeApp() {
@@ -215,10 +210,7 @@ var appController = (function () {
     loadProtocolScripts();
     Test.initializeTests(state);
 
-    if (
-      state.protocol === "file:" ||
-      state.protocol.startsWith("http")
-    ) {
+    if (state.protocol === "file:" || state.protocol.indexOf("http") === 0) {
       Actions.openExistingNote(state);
     }
   }
@@ -227,10 +219,12 @@ var appController = (function () {
     initialize: initializeApp,
     actions: Actions,
     withLocalStorageKeySetup: Storage.withLocalStorageKeySetup,
+    state: state // 🔐 R6: expose for debug observation
   };
 })();
 
-document.addEventListener("DOMContentLoaded", appController.initialize);
+// 🔐 R4: Global attach for debug access
+window.appController = appController;
 
-// 🗃️ UNSORTED COMMENTS (preserved during refactor):
-// 🔐 SURVIVAL: placeholder for loader function callback usages
+// 🔐 R3: Bind startup
+document.addEventListener("DOMContentLoaded", appController.initialize);
