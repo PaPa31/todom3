@@ -17,14 +17,36 @@ const createEl = (tag, attr, pa) => {
   return el;
 };
 
-const filterVideoIdFromUrl = (url) => {
-  var video_id, result;
-  if ((result = url.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/))) {
-    video_id = result.pop();
-  } else if ((result = url.match(/youtu.be\/(.{11})/))) {
-    video_id = result.pop();
+const extractYoutubeVideoId = (url) => {
+  try {
+    const u = new URL(url);
+
+    // youtu.be/<id>
+    if (u.hostname.includes("youtu.be")) {
+      return u.pathname.slice(1, 12);
+    }
+
+    // youtube.com/watch?v=<id>
+    const v = u.searchParams.get("v");
+    if (v) return v.slice(0, 11);
+
+    // /embed/<id>
+    let match = u.pathname.match(/\/embed\/([^/?]+)/);
+    if (match) return match[1].slice(0, 11);
+
+    // /shorts/<id>
+    match = u.pathname.match(/\/shorts\/([^/?]+)/);
+    if (match) return match[1].slice(0, 11);
+
+    // /live/<id>
+    match = u.pathname.match(/\/live\/([^/?]+)/);
+    if (match) return match[1].slice(0, 11);
+
+    return null;
+  } catch (err) {
+    console.error(err);
+    return null;
   }
-  return video_id;
 };
 
 const parseStrToHTML = (jsonStr) => {
@@ -41,7 +63,7 @@ const parseStrToHTML = (jsonStr) => {
 
 const getYoutubeSnippet = async (url, snipDiv) => {
   var key = showPhrase();
-  var VIDEO_ID = filterVideoIdFromUrl(url);
+  var VIDEO_ID = extractYoutubeVideoId(url);
   var url =
     "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" +
     VIDEO_ID +
@@ -71,10 +93,17 @@ const getYoutubeSnippet = async (url, snipDiv) => {
 
 const getYoutubeThumbnail = (url) => {
   try {
-    const video_id = filterVideoIdFromUrl(url);
+    const video_id = extractYoutubeVideoId(url);
+
     if (video_id) {
-      return "https://img.youtube.com/vi_webp/" + video_id + "/mqdefault.webp";
+      return (
+        "https://img.youtube.com/vi_webp/" +
+        video_id +
+        "/mqdefault.webp"
+      );
     }
+
+    return null;
   } catch (err) {
     console.error(err);
     return null;
@@ -107,20 +136,40 @@ const coverDivMaker = (iframe) => {
   return coverDiv;
 };
 
+const buildYoutubeEmbedUrl = (url) => {
+  const id = extractYoutubeVideoId(url);
+
+  if (!id) return null;
+
+  return (
+    "https://www.youtube.com/embed/" +
+    id +
+    "?autoplay=1&rel=0"
+  );
+};
+
 const replaceImageWithIframe = function (e) {
   const papa = e.target.parentNode,
     tH = papa.offsetHeight;
 
+  const embedUrl = buildYoutubeEmbedUrl(papa.dataset.url);
+
+  if (!embedUrl) {
+    alert("Invalid YouTube URL");
+    return;
+  }
+
   const iframe = createEl("iframe", {
     class: "ytb-iframe",
-    src: papa.dataset.url + "?autoplay=1&rel=0",
+    src: embedUrl,
     style: "height:" + tH + "px",
     frameborder: "0",
     allowfullscreen: "1",
-    allowTranparency: "true",
+    allowTransparency: "true",
     allow:
       "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
   });
+
   papa.parentNode.replaceChild(iframe, papa);
 };
 
