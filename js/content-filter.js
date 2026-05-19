@@ -55,7 +55,7 @@ const parseStrToHTML = (jsonStr) => {
     return `<a href="${url}">${url}</a>`;
   };
   const transformedUrl = (url) =>
-    urlRegex.test(url) ? url.replaceAll(urlRegex, urlReplacer) : url;
+    url.replace(urlRegex, urlReplacer);
   let lines = jsonStr.split("\n");
   let transformedLines = lines.map((line) => transformedUrl(line)).join("<br>");
   return transformedLines;
