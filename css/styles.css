@@ -1997,14 +1997,6 @@ object {
     margin: 0;
 }
 
-.center > p:not(:first-child) > strong {
-    display: block; /*visual trick*/
-    /*It makes <strong> behave like a block element, so margin-top works.*/
-    /*One subtle difference: The margin belongs to <strong>, not its parent <p>.*/
-    /*Visually, however, it can create the spacing you want.*/
-    margin-top: 2rem;
-}
-
 /* ----- End css inside markdown ----- */
 
 /* ----- End Built-in Modules & Pre-defined styles ----- */
