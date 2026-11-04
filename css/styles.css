@@ -1711,7 +1711,25 @@ ul.gallery {
   display: block;
 }
 
-/* carousel end*/
+/*carousel end*/
+
+/*box-1 start*/
+
+div.gallery {
+  display: flex;
+  flex-direction: column;
+}
+
+div.gallery img {
+  margin: 0 10px;
+}
+
+div.gallery div {
+  float: left;
+  padding: 10px
+}
+
+/*box-1 end*/
 
 /*start modal image*/
 .modal-image {
