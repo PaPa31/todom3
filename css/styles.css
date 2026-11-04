@@ -1640,7 +1640,7 @@ a.file-link.selected {
   overflow: hidden; /* Hide overflow to prevent scrollbars */
 }
 
-.gallery {
+ul.gallery {
   display: flex;
   gap: 3px;
   list-style-type: none;
