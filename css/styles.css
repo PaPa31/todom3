@@ -1718,15 +1718,48 @@ ul.gallery {
 div.gallery {
   display: flex;
   flex-direction: column;
+  gap: 2rem; /* Modern way to space out rows without margin hacks */
+  width: fit-content;
+  max-width: 600px; /* Prevents text from stretching too wide */
+  margin: 2rem 0;
+  padding: 2rem;
+  border-radius: 8px; /* Optional: rounds the corners nicely */
 }
 
+/* Individual Row Item */
+div.gallery > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Vertically centers image and text */
+  gap: 1.5rem; /* Space between image and text block */
+}
+
+/* Fixed Image Container Wrapper */
+div.gallery > div > div:first-child {
+  flex-shrink: 0; /* Prevents the image from shrinking */
+  width: 120px;   /* Consistent layout: sets a uniform width for images */
+  display: flex;
+  justify-content: center;
+}
+
+/* Image styling to make it responsive inside its wrapper */
 div.gallery img {
-  margin: 0 10px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
 }
 
-div.gallery div {
-  float: left;
-  padding: 10px
+/* Text Content Wrapper */
+div.gallery > div > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* Clean, tight spacing between paragraphs */
+}
+
+/* Reset paragraph margins inside the gallery to let flex gap do the work */
+div.gallery p {
+  margin: 0;
 }
 
 /*box-1 end*/
