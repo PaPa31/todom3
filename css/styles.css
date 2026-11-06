@@ -1719,11 +1719,11 @@ div.gallery {
   display: flex;
   flex-direction: column;
   gap: 2rem; /* Modern way to space out rows without margin hacks */
-  width: fit-content;
-  max-width: 600px; /* Prevents text from stretching too wide */
+  max-width: 600px;
   margin: 2rem 0;
   padding: 2rem;
-  border-radius: 8px; /* Optional: rounds the corners nicely */
+  border: 1px solid #7b7b7bbd;
+  border-radius: 8px;
 }
 
 /* Individual Row Item */
