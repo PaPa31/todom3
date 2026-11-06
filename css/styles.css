@@ -121,10 +121,10 @@ html {
 }
 
 body {
-  color: var(--todom-foreground);
-  background-color: var(--todom-background);
   margin: 0;
   line-height: 1.3;
+  color: var(--todom-foreground);
+  background-color: var(--todom-background);
 }
 
 .container::after {
@@ -164,10 +164,6 @@ button,
   -webkit-appearance: none;
   appearance: none;
   display: inline-block;
-  border: 1px solid var(--todom-border);
-  background-color: var(--todom-button-background);
-  color: var(--todom-button-foreground);
-  border-radius: 4px;
   font-weight: 600;
   font-family: Arial;
   text-transform: none;
@@ -175,15 +171,19 @@ button,
   text-align: center;
   cursor: pointer;
   text-decoration: none;
+  border: 1px solid var(--todom-border);
+  border-radius: 4px;
+  color: var(--todom-button-foreground);
+  background-color: var(--todom-button-background);
 }
 
 .btn-toggler {
   width: 39px;
   height: 39px;
-  border-radius: 6px;
   position: relative;
   opacity: 0.6;
   padding: 0;
+  border-radius: 6px;
 }
 
 .btn-toggler:hover {
@@ -200,13 +200,13 @@ button.btn-toggler:focus {
 }
 
 button#show-date {
-  color: var(--todom-inputLabelEdit-foreground);
   font-weight: 300;
   padding: 0 !important;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: stretch;
+  color: var(--todom-inputLabelEdit-foreground);
 }
 
 button#show-date > span {
@@ -226,8 +226,8 @@ button#show-date > hr {
   flex: 0 1 auto;
   margin: 0;
   border-top: none;
-  border-color: var(--todom-inputLabelEdit-foreground);
   border-radius: 0px;
+  border-color: var(--todom-inputLabelEdit-foreground);
 }
 
 button#show-date > span.red {
@@ -279,8 +279,8 @@ textarea::-webkit-scrollbar {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--todom-border);
   border-radius: 5px;
+  background-color: var(--todom-border);
 }
 
 ::-webkit-scrollbar-corner {
@@ -421,10 +421,7 @@ ol#list-files .main-act {
 
 .md-item .resizable-div::after {
   content: var(--todom-after-current-date, "");
-  color: var(--todom-inputLabelEdit-foreground);
-  background-color: var(--todom-before-background);
   padding: 2px 4px;
-  border-radius: 5px;
   width: 160px;
   display: var(--todom-after-display, initial);
   text-align: center;
@@ -432,14 +429,14 @@ ol#list-files .main-act {
   top: 0;
   right: 0;
   z-index: 1;
+  border-radius: 5px;
+  color: var(--todom-inputLabelEdit-foreground);
+  background-color: var(--todom-before-background);
 }
 
 .md-item .resizable-div::before {
   content: var(--todom-before-current-save, "");
-  color: var(--todom-inputLabelEdit-foreground);
-  background-color: var(--todom-before-background);
   padding: 2px 4px;
-  border-radius: 5px;
   width: 30px;
   display: var(--todom-before-display, initial);
   text-align: center;
@@ -447,6 +444,9 @@ ol#list-files .main-act {
   top: 0;
   left: 0;
   z-index: 1;
+  border-radius: 5px;
+  color: var(--todom-inputLabelEdit-foreground);
+  background-color: var(--todom-before-background);
 }
 
 .resizable-div > :first-child,
@@ -495,8 +495,8 @@ ol#list-items .folded .md-item :not(:first-child) {
 
 .resizable-div td,
 .resizable-div th {
-  border: 1px solid var(--todom-md-table);
   padding: 5px;
+  border: 1px solid var(--todom-md-table);
 }
 
 .resizable-div thead > tr {
@@ -539,13 +539,13 @@ pre {
 }
 
 .markdown-body :not(pre) > code {
-  border: none;
   padding: 0.1em 0.4em;
   margin: 0;
   white-space: break-spaces;
+  border: none;
+  border-radius: 6px;
   color: var(--todom-foreground);
   background-color: var(--todom-textPreformat-background);
-  border-radius: 6px;
 }
 
 .markdown-body blockquote {
@@ -562,9 +562,9 @@ pre {
   margin-top: 5px;
   padding: 12px;
   /*overflow: auto;*/
+  border-radius: 6px;
   color: var(--todom-text-foreground);
   background-color: var(--todom-textCodeBlock-background);
-  border-radius: 6px;
 }
 
 .markdown-body blockquote p {
@@ -576,8 +576,8 @@ pre {
   height: 0.06em;
   padding: 0;
   margin: 24px 0;
-  background-color: var(--todom-textBlockQuote-border);
   border: 0;
+  background-color: var(--todom-textBlockQuote-border);
 }
 
 /* to overset the 'ol li ol' rule in _scaffolding.scss */
@@ -622,21 +622,21 @@ table {
 }
 
 .button-default {
-  background-color: transparent;
   border: 1px solid var(--todom-button-border);
   color: var(--todom-button-foreground);
+  background-color: transparent;
 }
 
 .button-default:hover {
-  background-color: var(--todom-button-hoverBackground);
   border-color: var(--todom-button-hoverBackground);
   color: var(--todom-button-hoverForeground);
+  background-color: var(--todom-button-hoverBackground);
 }
 
 .button-default:active {
+  border-color: var(--todom-button-active);
   color: var(--todom-button-active);
   background-color: var(--todom-button-active);
-  border-color: var(--todom-button-active);
 }
 
 [disable="true"] {
@@ -947,8 +947,8 @@ ol.preview-outer p {
 .main-act,
 .save-history {
   padding: 3px 0 2px !important;
-  background-color: transparent !important;
   width: auto;
+  background-color: transparent !important;
 }
 
 ol#list-items .main-act {
@@ -963,10 +963,10 @@ span.counter-save {
   width: 25px;
   text-align: center;
   margin: auto;
-  color: var(--todom-inputLabelEdit-foreground);
   font-weight: bold;
   font-size: large;
   line-height: 1;
+  color: var(--todom-inputLabelEdit-foreground);
 }
 
 button.delete-one-item,
@@ -976,27 +976,27 @@ button.next-save,
 button.delete-current-save {
   width: 29px;
   height: 29px;
-  background-size: auto;
-  background-repeat: no-repeat;
   opacity: 0.6;
-  background-color: initial;
-  border: 1px solid transparent;
-  background-position: center center;
   padding: 0;
   margin: 0 5px;
   display: block;
   float: left;
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 1px solid transparent;
+  background-color: initial;
 }
 
 button.collapse-expand > div::before,
 button.collapse-expand > div::after {
   width: 14px;
   height: 19px;
+  opacity: 0.6;
+  float: left;
   background-size: 31px;
   background-repeat: no-repeat;
-  opacity: 0.6;
   background-position: center center;
-  float: left;
 }
 
 button.delete-one-item {
@@ -1033,13 +1033,13 @@ button.delete-current-save:hover {
 
 .bared {
   padding: initial;
-  background-color: initial !important;
   border: initial !important;
+  background-color: initial !important;
 }
 
 .bared:hover {
-  background-color: initial;
   border: initial;
+  background-color: initial;
 }
 
 .visible {
@@ -1136,8 +1136,8 @@ textarea#output {
 
 [type="text"],
 textarea {
-  background-color: var(--todom-input-background);
   color: var(--todom-foreground);
+  background-color: var(--todom-input-background);
 }
 
 textarea:focus,
@@ -1157,9 +1157,9 @@ textarea:active {
 }
 
 #input-label > div {
-  border-radius: 3px;
   padding: 0 4px;
   text-align: center;
+  border-radius: 3px;
   color: var(--todom-inputLabelNew-foreground);
 }
 
@@ -1168,8 +1168,8 @@ textarea:active {
 }
 
 #input-label > span:last-child {
-  border-radius: 0 3px 3px 0;
   width: 93%;
+  border-radius: 0 3px 3px 0;
 }
 
 .border {
@@ -1186,15 +1186,15 @@ textarea:active {
 }
 
 .button-edit:hover {
+  border-color: var(--todom-button-edit-hoverBackground);
   color: var(--todom-max);
   background-color: var(--todom-button-edit-hoverBackground);
-  border-color: var(--todom-button-edit-hoverBackground);
 }
 
 .button-edit:active {
+  border-color: var(--todom-button-active);
   color: var(--todom-button-active);
   background-color: var(--todom-button-active);
-  border-color: var(--todom-button-active);
 }
 
 #preview,
@@ -1219,18 +1219,18 @@ textarea:active {
 }
 
 #position {
-  background-color: transparent;
-  color: transparent;
   overflow: hidden;
   /*max-height: 76px;*/
   max-height: 160px;
+  color: transparent;
+  background-color: transparent;
 }
 
 #position * {
-  background-color: transparent;
-  color: transparent;
   border-color: transparent;
   /*color: #851919a3;*/
+  color: transparent;
+  background-color: transparent;
 }
 
 #preview:empty,
@@ -1249,13 +1249,12 @@ textarea:active {
 #output,
 #position {
   position: absolute;
-  /*border-color: red;*/
   /*z-index: -1;*/
   resize: none;
+  /*border-color: red;*/
 }
 
 #output {
-  border: 1px solid transparent;
   position: relative;
   width: 100%;
   padding: 0.75em;
@@ -1263,6 +1262,7 @@ textarea:active {
   border-radius: 4px;
   margin: 0;
   margin-top: -156px;
+  border: 1px solid transparent;
 }
 
 /*#input,
@@ -1310,8 +1310,8 @@ textarea:active {
 
 #output {
   opacity: 0;
-  /*color: red;*/
   visibility: hidden;
+  /*color: red;*/
 }
 
 #output,
@@ -1338,12 +1338,12 @@ li:not(.folded) .top-in-li {
 }
 
 li:not(.folded) .top-in-li.sticken {
-  background-color: var(--todom-background);
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 5;
   transform: translateY(-100%);
+  background-color: var(--todom-background);
 }
 
 li:not(.folded) .top-in-li.sticken.showen {
@@ -1440,12 +1440,12 @@ image is undefined */
   position: absolute;
   padding: 0 4px;
   top: 0;
-  background-color: var(--todom-background-translucent);
-  color: var(--todom-youtube-desc-color);
   display: none;
   overflow-y: auto;
   max-height: 100%;
   z-index: 1;
+  color: var(--todom-youtube-desc-color);
+  background-color: var(--todom-background-translucent);
 }
 
 .ytb-snip > * {
@@ -1473,9 +1473,9 @@ image is undefined */
 }
 
 .folded .ytb-title {
-  background-color: var(--todom-background-translucent);
   padding: 4px;
   border-radius: 4px;
+  background-color: var(--todom-background-translucent);
 }
 
 .ytb-title::before {
@@ -1496,11 +1496,7 @@ image is undefined */
 
 .ytb-play {
   position: absolute;
-  background: url(./../img/youtube-2.svg) no-repeat;
-  background-position: center;
   cursor: pointer;
-  background-size: 68px;
-  border: 0;
   display: flex !important;
   width: 70px;
   height: 50px;
@@ -1508,6 +1504,10 @@ image is undefined */
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+  background: url(./../img/youtube-2.svg) no-repeat;
+  background-position: center;
+  background-size: 68px;
+  border: 0;
 }
 
 .folded .ytb-play {
@@ -1527,7 +1527,6 @@ image is undefined */
 }
 
 .modal-container {
-  background-color: var(--todom-modal-container-bg);
   display: none;
   position: fixed;
   top: 0;
@@ -1537,10 +1536,10 @@ image is undefined */
   overflow-y: auto;
   padding-top: 20px;
   z-index: 6;
+  background-color: var(--todom-modal-container-bg);
 }
 
 .modal-content {
-  background-color: var(--todom-background);
   position: absolute;
   left: 50%;
   bottom: 50%;
@@ -1549,12 +1548,13 @@ image is undefined */
   max-height: calc(100% - 40px);
   width: 75%;
   border-radius: 8px;
+  background-color: var(--todom-background);
 }
 
 .top-section {
-  background-color: var(--todom-input-background);
   padding: 20px;
   border-radius: 0 0 8px 8px;
+  background-color: var(--todom-input-background);
 }
 
 .top-section input {
@@ -1570,17 +1570,17 @@ image is undefined */
   overflow-y: auto;
 }
 .modal-content .close {
-  color: var(--todom-button-background);
   float: right;
   font-size: 28px;
   font-weight: bold;
+  color: var(--todom-button-background);
 }
 
 .modal-content .close:hover,
 .modal-content .close:focus {
-  color: var(--todom-button-hoverBackground);
   text-decoration: none;
   cursor: pointer;
+  color: var(--todom-button-hoverBackground);
 }
 
 .modal-content ul {
@@ -1593,12 +1593,12 @@ image is undefined */
 }
 
 .modal-content button {
-  background-color: #4caf50;
-  color: white;
   padding: 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  color: white;
+  background-color: #4caf50;
 }
 
 .modal-content button:hover {
@@ -1618,13 +1618,13 @@ image is undefined */
 }*/
 
 .directory-link {
-  color: #5252cd; /* Style for directories */
   font-weight: bold;
+  color: #5252cd; /* Style for directories */
 }
 
 .file-link {
-  color: green; /* Style for files */
   font-style: italic;
+  color: green; /* Style for files */
 }
 
 a.file-link.selected {
@@ -1656,13 +1656,13 @@ ul.gallery {
 }
 
 .gallery img {
-  border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease; /* Add transition effect for hover */
   flex: 0 0 auto; /* Ensure images don't grow or shrink */
   width: 100px;
   height: 100px;
   object-fit: cover;
+  border-radius: 5px;
 }
 
 .gallery > img {
@@ -1682,11 +1682,11 @@ ul.gallery {
   top: 50%;
   transform: translateY(-50%);
   padding: 10px;
-  background-color: rgba(170, 10, 10, 0.5);
-  border: none;
-  color: #fff;
   cursor: pointer;
   z-index: 1;
+  border: none;
+  color: #fff;
+  background-color: rgba(170, 10, 10, 0.5);
 }
 
 .gallery-wrapper .prev-btn {
@@ -1722,8 +1722,8 @@ div.gallery {
   max-width: 600px;
   margin: 2rem 0;
   padding: 2rem;
-  border: 1px solid #7b7b7bbd;
   border-radius: 8px;
+  border: 1px solid #7b7b7bbd;
 }
 
 /* Individual Row Item */
@@ -1773,10 +1773,10 @@ div.gallery p {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.9);
   display: flex; /* Ensure modal content is centered */
   align-items: center;
   justify-content: center;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .modal-image-content {
@@ -1786,12 +1786,12 @@ div.gallery p {
 
 .modal-image .close {
   text-shadow: 0 0 black;
-  color: #fff;
   font-size: 3rem;
   position: absolute;
   top: 10px;
   right: 20px;
   cursor: pointer;
+  color: #fff;
 }
 
 .modal-image button {
@@ -1800,8 +1800,8 @@ div.gallery p {
   top: 50%;
   transform: translateY(-50%);
   padding: 10px;
-  background-color: rgba(29, 72, 14, 0.5);
   border: none;
+  background-color: rgba(29, 72, 14, 0.5);
 }
 
 .modal-image:hover button {
@@ -1831,15 +1831,15 @@ div.gallery p {
 /*start details*/
 
 details {
-  border: 1px solid transparent;
   padding: 10px 10px 30px;
+  border: 1px solid transparent;
 }
 
 details[open] {
-  border: 1px dotted red;
   border-radius: 4px;
   padding-bottom: 0;
   margin-bottom: 30px;
+  border: 1px dotted red;
 }
 
 details[open] > summary {
@@ -1848,13 +1848,13 @@ details[open] > summary {
 
 summary {
   cursor: pointer;
-  border: 1px dotted green;
-  border-radius: 4px;
   padding: 10px;
   outline: none;
   width: fit-content;
   margin-left: -11px;
   margin-top: -11px;
+  border-radius: 4px;
+  border: 1px dotted green;
 }
 
 summary:focus-visible {
@@ -1916,14 +1916,14 @@ object {
 /*start loader(dual viewer toggle)*/
 /* Improved loader (dual viewer toggle) styles for mobile + desktop */
 .ldr-con {
-  border: 1px solid var(--todom-textBlockQuote-border, #ccc);
-  border-radius: 6px;
   padding: 1em;
   cursor: default;
   position: relative;
   display: block;
   box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   text-align: initial; /*to disable parent .center*/
+  border-radius: 6px;
+  border: 1px solid var(--todom-textBlockQuote-border, #ccc);
 }
 
 .ldr-btn {
@@ -1931,16 +1931,16 @@ object {
   align-items: center;
   gap: 0.5em;
   font-size: 1rem;
-  color: red;
   cursor: pointer;
   padding-bottom: 1rem;
   line-height: 1.4;
+  color: red;
 }
 
 .ldr-btn a {
-  color: red;
   text-decoration: none;
   font-weight: 500;
+  color: red;
 }
 
 .ldr-btn a:hover {
@@ -1957,22 +1957,22 @@ object {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  border: 12px solid rgba(255, 0, 0, 0.05);
   pointer-events: auto;
   z-index: 1;
+  border: 12px solid rgba(255, 0, 0, 0.05);
 }
 
 .ldr-con:hover .ldr-inner {
-  background: rgba(255, 0, 0, 0.02);
   transition: background 0.2s;
+  background-color: rgba(255, 0, 0, 0.02);
 }
 
 .open-raw {
   display: inline-block;
   margin-top: 0.5em;
   font-size: 0.9em;
-  color: #a00;
   text-decoration: none;
+  color: #a00;
 }
 
 .open-raw:hover {
@@ -1982,14 +1982,14 @@ object {
 .open-ext {
   text-decoration: none;
   font-size: 1.1em;
-  color: #a00;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.1em 0.3em;
-  border-radius: 4px;
   transition: background 0.2s;
   line-height: 1;
+  border-radius: 4px;
+  color: #a00;
 }
 
 .open-ext::after {
@@ -2000,9 +2000,9 @@ object {
 }
 
 .open-ext:hover {
-  background: rgba(255, 0, 0, 0.08);
-  color: #800;
   text-decoration: none;
+  color: #800;
+  background: rgba(255, 0, 0, 0.08);
 }
 
 /* Mobile-specific tweaks */
@@ -2028,24 +2028,24 @@ object {
   width: 75%;
   margin: 20px 0px;
   margin-left: auto;
-  background-color: var(--todom-input-background);
   padding: 10px;
   border-radius: 5px;
+  background-color: var(--todom-input-background);
 }
 
 .center {
-    text-align: center;
-    width: 50%;
-    min-width: fit-content;
-    margin: auto;
-    margin-bottom: 1rem;
-    background-color: var(--todom-input-background);
-    padding: 10px;
-    border-radius: 15px;
+  text-align: center;
+  width: 50%;
+  min-width: fit-content;
+  margin: auto;
+  margin-bottom: 1rem;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: var(--todom-input-background);
 }
 
 .center p {
-    margin: 0;
+  margin: 0;
 }
 
 /* ----- End css inside markdown ----- */
