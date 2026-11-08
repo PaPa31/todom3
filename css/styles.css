@@ -1938,7 +1938,7 @@ div.ldr-btn {
   font-size: 1rem;
   cursor: pointer;
   line-height: 1.4;
-  color: red;
+  color: var(--todom-textLinkHidden-foreground);
 }
 
 .ldr-btn a {
