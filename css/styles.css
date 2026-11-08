@@ -1930,13 +1930,13 @@ object {
   border: 1px solid var(--todom-textBlockQuote-border, #ccc);
 }
 
+div.ldr-btn {
+  padding-bottom: 1rem;
+}
+
 .ldr-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
   font-size: 1rem;
   cursor: pointer;
-  padding-bottom: 1rem;
   line-height: 1.4;
   color: red;
 }
