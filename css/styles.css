@@ -44,6 +44,8 @@
   --todom-textBlockQuote-border: #d0d7de;
   --todom-textLink-foreground: #5b92df;
   --todom-textEdit-background: #a41111;
+  --todom-textLinkHidden-foreground: #956900;
+  --todom-textLinkHidden-background: #b37c0036;
 
   --todom-focusOutline: #fff;
   --todom-textPreformat-background: #dfdfdf;
@@ -90,6 +92,8 @@
   --todom-textBlockQuote-border: #444c56;
   --todom-textLink-foreground: #6ca872;
   --todom-textEdit-background: #a16c0a;
+  --todom-textLinkHidden-foreground: #a6863b;
+  --todom-textLinkHidden-background: #95690042;
 
   --todom-focusOutline: #2b2b2b;
   --todom-textPreformat-background: #464646;
@@ -1940,7 +1944,7 @@ object {
 .ldr-btn a {
   text-decoration: none;
   font-weight: 500;
-  color: red;
+  color: var(--todom-textLinkHidden-foreground);
 }
 
 .ldr-btn a:hover {
@@ -2001,8 +2005,8 @@ object {
 
 .open-ext:hover {
   text-decoration: none;
-  color: #800;
-  background: rgba(255, 0, 0, 0.08);
+  color: var(--todom-textLinkHidden-foreground);
+  background: var(--todom-textLinkHidden-background);
 }
 
 /* Mobile-specific tweaks */
