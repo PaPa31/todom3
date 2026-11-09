@@ -1930,7 +1930,7 @@ object {
   border: 1px solid var(--todom-textBlockQuote-border, #ccc);
 }
 
-div.ldr-btn {
+div[data-ldr] {
   padding-bottom: 1rem;
 }
 
